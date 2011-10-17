@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class PortletPreferencesLocalServiceWrapper
-	implements PortletPreferencesLocalService {
+	implements PortletPreferencesLocalService,
+		ServiceWrapper<PortletPreferencesLocalService> {
 	public PortletPreferencesLocalServiceWrapper(
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 		_portletPreferencesLocalService = portletPreferencesLocalService;
@@ -363,11 +364,26 @@ public class PortletPreferencesLocalServiceWrapper
 			ownerType, plid, portletId, xml);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PortletPreferencesLocalService getWrappedPortletPreferencesLocalService() {
 		return _portletPreferencesLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	public PortletPreferencesLocalService getWrappedService() {
+		return _portletPreferencesLocalService;
+	}
+
+	public void setWrappedService(
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}

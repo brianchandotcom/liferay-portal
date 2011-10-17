@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRAction}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.mobiledevicerules.model;
  * @see       MDRAction
  * @generated
  */
-public class MDRActionWrapper implements MDRAction {
+public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	public MDRActionWrapper(MDRAction mdrAction) {
 		_mdrAction = mdrAction;
 	}
@@ -654,7 +656,14 @@ public class MDRActionWrapper implements MDRAction {
 		_mdrAction.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MDRAction getWrappedMDRAction() {
+		return _mdrAction;
+	}
+
+	public MDRAction getWrappedModel() {
 		return _mdrAction;
 	}
 

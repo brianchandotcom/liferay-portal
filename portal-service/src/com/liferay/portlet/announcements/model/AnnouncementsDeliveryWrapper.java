@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsDelivery}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.announcements.model;
  * @see       AnnouncementsDelivery
  * @generated
  */
-public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
+public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
+	ModelWrapper<AnnouncementsDelivery> {
 	public AnnouncementsDeliveryWrapper(
 		AnnouncementsDelivery announcementsDelivery) {
 		_announcementsDelivery = announcementsDelivery;
@@ -302,7 +305,14 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery {
 		_announcementsDelivery.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AnnouncementsDelivery getWrappedAnnouncementsDelivery() {
+		return _announcementsDelivery;
+	}
+
+	public AnnouncementsDelivery getWrappedModel() {
 		return _announcementsDelivery;
 	}
 

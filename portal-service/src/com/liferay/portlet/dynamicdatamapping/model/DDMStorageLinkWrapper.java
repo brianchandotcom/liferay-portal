@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMStorageLink}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see       DDMStorageLink
  * @generated
  */
-public class DDMStorageLinkWrapper implements DDMStorageLink {
+public class DDMStorageLinkWrapper implements DDMStorageLink,
+	ModelWrapper<DDMStorageLink> {
 	public DDMStorageLinkWrapper(DDMStorageLink ddmStorageLink) {
 		_ddmStorageLink = ddmStorageLink;
 	}
@@ -239,7 +242,14 @@ public class DDMStorageLinkWrapper implements DDMStorageLink {
 		return _ddmStorageLink.getStructure();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDMStorageLink getWrappedDDMStorageLink() {
+		return _ddmStorageLink;
+	}
+
+	public DDMStorageLink getWrappedModel() {
 		return _ddmStorageLink;
 	}
 

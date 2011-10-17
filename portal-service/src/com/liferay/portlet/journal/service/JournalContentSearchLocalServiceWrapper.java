@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalContentSearchLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.journal.service;
  * @generated
  */
 public class JournalContentSearchLocalServiceWrapper
-	implements JournalContentSearchLocalService {
+	implements JournalContentSearchLocalService,
+		ServiceWrapper<JournalContentSearchLocalService> {
 	public JournalContentSearchLocalServiceWrapper(
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 		_journalContentSearchLocalService = journalContentSearchLocalService;
@@ -348,11 +351,26 @@ public class JournalContentSearchLocalServiceWrapper
 			privateLayout, layoutId, portletId, articleIds);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public JournalContentSearchLocalService getWrappedJournalContentSearchLocalService() {
 		return _journalContentSearchLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedJournalContentSearchLocalService(
+		JournalContentSearchLocalService journalContentSearchLocalService) {
+		_journalContentSearchLocalService = journalContentSearchLocalService;
+	}
+
+	public JournalContentSearchLocalService getWrappedService() {
+		return _journalContentSearchLocalService;
+	}
+
+	public void setWrappedService(
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 		_journalContentSearchLocalService = journalContentSearchLocalService;
 	}

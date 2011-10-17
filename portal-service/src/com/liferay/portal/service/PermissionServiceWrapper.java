@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PermissionService
  * @generated
  */
-public class PermissionServiceWrapper implements PermissionService {
+public class PermissionServiceWrapper implements PermissionService,
+	ServiceWrapper<PermissionService> {
 	public PermissionServiceWrapper(PermissionService permissionService) {
 		_permissionService = permissionService;
 	}
@@ -378,11 +379,25 @@ public class PermissionServiceWrapper implements PermissionService {
 			resourceId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PermissionService getWrappedPermissionService() {
 		return _permissionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPermissionService(PermissionService permissionService) {
+		_permissionService = permissionService;
+	}
+
+	public PermissionService getWrappedService() {
+		return _permissionService;
+	}
+
+	public void setWrappedService(PermissionService permissionService) {
 		_permissionService = permissionService;
 	}
 

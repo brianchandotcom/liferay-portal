@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       MembershipRequest
  * @generated
  */
-public class MembershipRequestWrapper implements MembershipRequest {
+public class MembershipRequestWrapper implements MembershipRequest,
+	ModelWrapper<MembershipRequest> {
 	public MembershipRequestWrapper(MembershipRequest membershipRequest) {
 		_membershipRequest = membershipRequest;
 	}
@@ -348,7 +349,14 @@ public class MembershipRequestWrapper implements MembershipRequest {
 		_membershipRequest.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MembershipRequest getWrappedMembershipRequest() {
+		return _membershipRequest;
+	}
+
+	public MembershipRequest getWrappedModel() {
 		return _membershipRequest;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.service;
  * @see       SCProductEntryService
  * @generated
  */
-public class SCProductEntryServiceWrapper implements SCProductEntryService {
+public class SCProductEntryServiceWrapper implements SCProductEntryService,
+	ServiceWrapper<SCProductEntryService> {
 	public SCProductEntryServiceWrapper(
 		SCProductEntryService scProductEntryService) {
 		_scProductEntryService = scProductEntryService;
@@ -71,12 +74,26 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService {
 			repoGroupId, repoArtifactId, licenseIds, thumbnails, fullImages);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SCProductEntryService getWrappedSCProductEntryService() {
 		return _scProductEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSCProductEntryService(
 		SCProductEntryService scProductEntryService) {
+		_scProductEntryService = scProductEntryService;
+	}
+
+	public SCProductEntryService getWrappedService() {
+		return _scProductEntryService;
+	}
+
+	public void setWrappedService(SCProductEntryService scProductEntryService) {
 		_scProductEntryService = scProductEntryService;
 	}
 

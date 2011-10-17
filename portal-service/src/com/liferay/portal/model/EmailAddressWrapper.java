@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       EmailAddress
  * @generated
  */
-public class EmailAddressWrapper implements EmailAddress {
+public class EmailAddressWrapper implements EmailAddress,
+	ModelWrapper<EmailAddress> {
 	public EmailAddressWrapper(EmailAddress emailAddress) {
 		_emailAddress = emailAddress;
 	}
@@ -369,7 +370,14 @@ public class EmailAddressWrapper implements EmailAddress {
 		return _emailAddress.getType();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public EmailAddress getWrappedEmailAddress() {
+		return _emailAddress;
+	}
+
+	public EmailAddress getWrappedModel() {
 		return _emailAddress;
 	}
 

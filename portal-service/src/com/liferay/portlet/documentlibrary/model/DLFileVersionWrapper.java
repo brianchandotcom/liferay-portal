@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileVersion}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileVersion
  * @generated
  */
-public class DLFileVersionWrapper implements DLFileVersion {
+public class DLFileVersionWrapper implements DLFileVersion,
+	ModelWrapper<DLFileVersion> {
 	public DLFileVersionWrapper(DLFileVersion dlFileVersion) {
 		_dlFileVersion = dlFileVersion;
 	}
@@ -620,7 +623,14 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		_dlFileVersion.setExtraSettingsProperties(extraSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileVersion getWrappedDLFileVersion() {
+		return _dlFileVersion;
+	}
+
+	public DLFileVersion getWrappedModel() {
 		return _dlFileVersion;
 	}
 

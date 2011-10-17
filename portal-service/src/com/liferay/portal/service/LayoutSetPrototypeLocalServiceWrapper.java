@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class LayoutSetPrototypeLocalServiceWrapper
-	implements LayoutSetPrototypeLocalService {
+	implements LayoutSetPrototypeLocalService,
+		ServiceWrapper<LayoutSetPrototypeLocalService> {
 	public LayoutSetPrototypeLocalServiceWrapper(
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
@@ -305,11 +306,26 @@ public class LayoutSetPrototypeLocalServiceWrapper
 			settings);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutSetPrototypeLocalService getWrappedLayoutSetPrototypeLocalService() {
 		return _layoutSetPrototypeLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	public LayoutSetPrototypeLocalService getWrappedService() {
+		return _layoutSetPrototypeLocalService;
+	}
+
+	public void setWrappedService(
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}

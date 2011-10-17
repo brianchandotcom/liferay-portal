@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Company
  * @generated
  */
-public class CompanyWrapper implements Company {
+public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	public CompanyWrapper(Company company) {
 		_company = company;
 	}
@@ -442,7 +442,14 @@ public class CompanyWrapper implements Company {
 		_company.setKeyObj(keyObj);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Company getWrappedCompany() {
+		return _company;
+	}
+
+	public Company getWrappedModel() {
 		return _company;
 	}
 

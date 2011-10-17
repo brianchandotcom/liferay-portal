@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityCounter}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialActivityCounter
  * @generated
  */
-public class SocialActivityCounterWrapper implements SocialActivityCounter {
+public class SocialActivityCounterWrapper implements SocialActivityCounter,
+	ModelWrapper<SocialActivityCounter> {
 	public SocialActivityCounterWrapper(
 		SocialActivityCounter socialActivityCounter) {
 		_socialActivityCounter = socialActivityCounter;
@@ -358,7 +361,14 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter {
 		return _socialActivityCounter.isActivePeriod();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialActivityCounter getWrappedSocialActivityCounter() {
+		return _socialActivityCounter;
+	}
+
+	public SocialActivityCounter getWrappedModel() {
 		return _socialActivityCounter;
 	}
 

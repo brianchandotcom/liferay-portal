@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLAppService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLAppService
  * @generated
  */
-public class DLAppServiceWrapper implements DLAppService {
+public class DLAppServiceWrapper implements DLAppService,
+	ServiceWrapper<DLAppService> {
 	public DLAppServiceWrapper(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
@@ -53,7 +56,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -105,7 +108,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -159,7 +162,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1753,7 +1756,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1808,7 +1811,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1864,7 +1867,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param serviceContext the service context to be applied. Can specify the
 	file entry's asset category IDs, asset tag names, and expando
 	bridge attributes. In a Liferay repository, it may include:
-	
+
 	<ul>
 	<li>
 	fileEntryTypeId - ID for a custom file entry type
@@ -1949,7 +1952,7 @@ public class DLAppServiceWrapper implements DLAppService {
 	* @param description the folder's new description
 	* @param serviceContext the service context to be applied. In a Liferay
 	repository, it may include:
-	
+
 	<ul>
 	<li>
 	defaultFileEntryTypeId - the file entry type to default all
@@ -2025,11 +2028,25 @@ public class DLAppServiceWrapper implements DLAppService {
 			lockUuid);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLAppService getWrappedDLAppService() {
 		return _dlAppService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	public DLAppService getWrappedService() {
+		return _dlAppService;
+	}
+
+	public void setWrappedService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
 

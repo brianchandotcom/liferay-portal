@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiPageResource}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.wiki.model;
  * @see       WikiPageResource
  * @generated
  */
-public class WikiPageResourceWrapper implements WikiPageResource {
+public class WikiPageResourceWrapper implements WikiPageResource,
+	ModelWrapper<WikiPageResource> {
 	public WikiPageResourceWrapper(WikiPageResource wikiPageResource) {
 		_wikiPageResource = wikiPageResource;
 	}
@@ -200,7 +203,14 @@ public class WikiPageResourceWrapper implements WikiPageResource {
 		_wikiPageResource.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public WikiPageResource getWrappedWikiPageResource() {
+		return _wikiPageResource;
+	}
+
+	public WikiPageResource getWrappedModel() {
 		return _wikiPageResource;
 	}
 

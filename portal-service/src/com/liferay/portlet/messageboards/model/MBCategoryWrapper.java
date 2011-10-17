@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBCategory}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBCategory
  * @generated
  */
-public class MBCategoryWrapper implements MBCategory {
+public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	public MBCategoryWrapper(MBCategory mbCategory) {
 		_mbCategory = mbCategory;
 	}
@@ -434,7 +436,14 @@ public class MBCategoryWrapper implements MBCategory {
 		return _mbCategory.isRoot();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBCategory getWrappedMBCategory() {
+		return _mbCategory;
+	}
+
+	public MBCategory getWrappedModel() {
 		return _mbCategory;
 	}
 

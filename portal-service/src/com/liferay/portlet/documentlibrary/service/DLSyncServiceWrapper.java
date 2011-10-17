@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLSyncService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLSyncService
  * @generated
  */
-public class DLSyncServiceWrapper implements DLSyncService {
+public class DLSyncServiceWrapper implements DLSyncService,
+	ServiceWrapper<DLSyncService> {
 	public DLSyncServiceWrapper(DLSyncService dlSyncService) {
 		_dlSyncService = dlSyncService;
 	}
@@ -56,11 +59,25 @@ public class DLSyncServiceWrapper implements DLSyncService {
 			deltaInputStream, size, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLSyncService getWrappedDLSyncService() {
 		return _dlSyncService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLSyncService(DLSyncService dlSyncService) {
+		_dlSyncService = dlSyncService;
+	}
+
+	public DLSyncService getWrappedService() {
+		return _dlSyncService;
+	}
+
+	public void setWrappedService(DLSyncService dlSyncService) {
 		_dlSyncService = dlSyncService;
 	}
 

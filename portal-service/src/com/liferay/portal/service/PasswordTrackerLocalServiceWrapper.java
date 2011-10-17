@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class PasswordTrackerLocalServiceWrapper
-	implements PasswordTrackerLocalService {
+	implements PasswordTrackerLocalService,
+		ServiceWrapper<PasswordTrackerLocalService> {
 	public PasswordTrackerLocalServiceWrapper(
 		PasswordTrackerLocalService passwordTrackerLocalService) {
 		_passwordTrackerLocalService = passwordTrackerLocalService;
@@ -274,11 +275,26 @@ public class PasswordTrackerLocalServiceWrapper
 		_passwordTrackerLocalService.trackPassword(userId, encPassword);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PasswordTrackerLocalService getWrappedPasswordTrackerLocalService() {
 		return _passwordTrackerLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPasswordTrackerLocalService(
+		PasswordTrackerLocalService passwordTrackerLocalService) {
+		_passwordTrackerLocalService = passwordTrackerLocalService;
+	}
+
+	public PasswordTrackerLocalService getWrappedService() {
+		return _passwordTrackerLocalService;
+	}
+
+	public void setWrappedService(
 		PasswordTrackerLocalService passwordTrackerLocalService) {
 		_passwordTrackerLocalService = passwordTrackerLocalService;
 	}

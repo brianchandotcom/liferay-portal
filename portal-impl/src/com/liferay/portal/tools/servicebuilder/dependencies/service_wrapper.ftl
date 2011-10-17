@@ -1,5 +1,7 @@
 package ${packagePath}.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ${entity.name}${sessionTypeName}Service}.
@@ -9,7 +11,7 @@ package ${packagePath}.service;
  * @see       ${entity.name}${sessionTypeName}Service
  * @generated
  */
-public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.name}${sessionTypeName}Service {
+public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.name}${sessionTypeName}Service, ServiceWrapper<${entity.name}${sessionTypeName}Service> {
 
 	public ${entity.name}${sessionTypeName}ServiceWrapper(${entity.name}${sessionTypeName}Service ${entity.varName}${sessionTypeName}Service) {
 		_${entity.varName}${sessionTypeName}Service = ${entity.varName}${sessionTypeName}Service;
@@ -67,11 +69,25 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 		</#if>
 	</#list>
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ${entity.name}${sessionTypeName}Service getWrapped${entity.name}${sessionTypeName}Service() {
 		return _${entity.varName}${sessionTypeName}Service;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrapped${entity.name}${sessionTypeName}Service(${entity.name}${sessionTypeName}Service ${entity.varName}${sessionTypeName}Service) {
+		_${entity.varName}${sessionTypeName}Service = ${entity.varName}${sessionTypeName}Service;
+	}
+
+	public ${entity.name}${sessionTypeName}Service getWrappedService() {
+		return _${entity.varName}${sessionTypeName}Service;
+	}
+
+	public void setWrappedService(${entity.name}${sessionTypeName}Service ${entity.varName}${sessionTypeName}Service) {
 		_${entity.varName}${sessionTypeName}Service = ${entity.varName}${sessionTypeName}Service;
 	}
 

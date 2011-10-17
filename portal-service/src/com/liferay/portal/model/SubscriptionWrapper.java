@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       Subscription
  * @generated
  */
-public class SubscriptionWrapper implements Subscription {
+public class SubscriptionWrapper implements Subscription,
+	ModelWrapper<Subscription> {
 	public SubscriptionWrapper(Subscription subscription) {
 		_subscription = subscription;
 	}
@@ -318,7 +319,14 @@ public class SubscriptionWrapper implements Subscription {
 		_subscription.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Subscription getWrappedSubscription() {
+		return _subscription;
+	}
+
+	public Subscription getWrappedModel() {
 		return _subscription;
 	}
 

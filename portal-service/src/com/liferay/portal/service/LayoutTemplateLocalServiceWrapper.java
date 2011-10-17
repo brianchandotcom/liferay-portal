@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class LayoutTemplateLocalServiceWrapper
-	implements LayoutTemplateLocalService {
+	implements LayoutTemplateLocalService,
+		ServiceWrapper<LayoutTemplateLocalService> {
 	public LayoutTemplateLocalServiceWrapper(
 		LayoutTemplateLocalService layoutTemplateLocalService) {
 		_layoutTemplateLocalService = layoutTemplateLocalService;
@@ -114,11 +115,26 @@ public class LayoutTemplateLocalServiceWrapper
 		_layoutTemplateLocalService.uninstallLayoutTemplates(themeId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutTemplateLocalService getWrappedLayoutTemplateLocalService() {
 		return _layoutTemplateLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutTemplateLocalService(
+		LayoutTemplateLocalService layoutTemplateLocalService) {
+		_layoutTemplateLocalService = layoutTemplateLocalService;
+	}
+
+	public LayoutTemplateLocalService getWrappedService() {
+		return _layoutTemplateLocalService;
+	}
+
+	public void setWrappedService(
 		LayoutTemplateLocalService layoutTemplateLocalService) {
 		_layoutTemplateLocalService = layoutTemplateLocalService;
 	}

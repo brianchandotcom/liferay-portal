@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link PollsQuestion}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.polls.model;
  * @see       PollsQuestion
  * @generated
  */
-public class PollsQuestionWrapper implements PollsQuestion {
+public class PollsQuestionWrapper implements PollsQuestion,
+	ModelWrapper<PollsQuestion> {
 	public PollsQuestionWrapper(PollsQuestion pollsQuestion) {
 		_pollsQuestion = pollsQuestion;
 	}
@@ -602,7 +605,14 @@ public class PollsQuestionWrapper implements PollsQuestion {
 		return _pollsQuestion.isExpired(serviceContext, defaultCreateDate);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PollsQuestion getWrappedPollsQuestion() {
+		return _pollsQuestion;
+	}
+
+	public PollsQuestion getWrappedModel() {
 		return _pollsQuestion;
 	}
 

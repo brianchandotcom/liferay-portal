@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryType}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileEntryType
  * @generated
  */
-public class DLFileEntryTypeWrapper implements DLFileEntryType {
+public class DLFileEntryTypeWrapper implements DLFileEntryType,
+	ModelWrapper<DLFileEntryType> {
 	public DLFileEntryTypeWrapper(DLFileEntryType dlFileEntryType) {
 		_dlFileEntryType = dlFileEntryType;
 	}
@@ -333,7 +336,14 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 		return _dlFileEntryType.getDDMStructures();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileEntryType getWrappedDLFileEntryType() {
+		return _dlFileEntryType;
+	}
+
+	public DLFileEntryType getWrappedModel() {
 		return _dlFileEntryType;
 	}
 

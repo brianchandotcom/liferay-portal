@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       TicketLocalService
  * @generated
  */
-public class TicketLocalServiceWrapper implements TicketLocalService {
+public class TicketLocalServiceWrapper implements TicketLocalService,
+	ServiceWrapper<TicketLocalService> {
 	public TicketLocalServiceWrapper(TicketLocalService ticketLocalService) {
 		_ticketLocalService = ticketLocalService;
 	}
@@ -261,12 +262,26 @@ public class TicketLocalServiceWrapper implements TicketLocalService {
 		return _ticketLocalService.getTicket(key);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public TicketLocalService getWrappedTicketLocalService() {
 		return _ticketLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedTicketLocalService(
 		TicketLocalService ticketLocalService) {
+		_ticketLocalService = ticketLocalService;
+	}
+
+	public TicketLocalService getWrappedService() {
+		return _ticketLocalService;
+	}
+
+	public void setWrappedService(TicketLocalService ticketLocalService) {
 		_ticketLocalService = ticketLocalService;
 	}
 

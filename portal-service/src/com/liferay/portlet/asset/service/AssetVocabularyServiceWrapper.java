@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetVocabularyService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.service;
  * @see       AssetVocabularyService
  * @generated
  */
-public class AssetVocabularyServiceWrapper implements AssetVocabularyService {
+public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
+	ServiceWrapper<AssetVocabularyService> {
 	public AssetVocabularyServiceWrapper(
 		AssetVocabularyService assetVocabularyService) {
 		_assetVocabularyService = assetVocabularyService;
@@ -171,12 +174,26 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService {
 			titleMap, descriptionMap, settings, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetVocabularyService getWrappedAssetVocabularyService() {
 		return _assetVocabularyService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetVocabularyService(
 		AssetVocabularyService assetVocabularyService) {
+		_assetVocabularyService = assetVocabularyService;
+	}
+
+	public AssetVocabularyService getWrappedService() {
+		return _assetVocabularyService;
+	}
+
+	public void setWrappedService(AssetVocabularyService assetVocabularyService) {
 		_assetVocabularyService = assetVocabularyService;
 	}
 

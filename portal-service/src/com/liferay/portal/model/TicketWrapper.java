@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Ticket
  * @generated
  */
-public class TicketWrapper implements Ticket {
+public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	public TicketWrapper(Ticket ticket) {
 		_ticket = ticket;
 	}
@@ -302,7 +302,14 @@ public class TicketWrapper implements Ticket {
 		return _ticket.isExpired();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Ticket getWrappedTicket() {
+		return _ticket;
+	}
+
+	public Ticket getWrappedModel() {
 		return _ticket;
 	}
 

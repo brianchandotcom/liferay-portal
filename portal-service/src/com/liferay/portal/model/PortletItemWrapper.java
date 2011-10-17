@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       PortletItem
  * @generated
  */
-public class PortletItemWrapper implements PortletItem {
+public class PortletItemWrapper implements PortletItem,
+	ModelWrapper<PortletItem> {
 	public PortletItemWrapper(PortletItem portletItem) {
 		_portletItem = portletItem;
 	}
@@ -336,7 +337,14 @@ public class PortletItemWrapper implements PortletItem {
 		_portletItem.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PortletItem getWrappedPortletItem() {
+		return _portletItem;
+	}
+
+	public PortletItem getWrappedModel() {
 		return _portletItem;
 	}
 

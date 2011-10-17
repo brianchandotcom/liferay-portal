@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       LayoutSet
  * @generated
  */
-public class LayoutSetWrapper implements LayoutSet {
+public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	public LayoutSetWrapper(LayoutSet layoutSet) {
 		_layoutSet = layoutSet;
 	}
@@ -475,7 +475,14 @@ public class LayoutSetWrapper implements LayoutSet {
 		_layoutSet.setSettingsProperties(settingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutSet getWrappedLayoutSet() {
+		return _layoutSet;
+	}
+
+	public LayoutSet getWrappedModel() {
 		return _layoutSet;
 	}
 

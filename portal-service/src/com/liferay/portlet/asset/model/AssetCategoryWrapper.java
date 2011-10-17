@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetCategory}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.model;
  * @see       AssetCategory
  * @generated
  */
-public class AssetCategoryWrapper implements AssetCategory {
+public class AssetCategoryWrapper implements AssetCategory,
+	ModelWrapper<AssetCategory> {
 	public AssetCategoryWrapper(AssetCategory assetCategory) {
 		_assetCategory = assetCategory;
 	}
@@ -646,7 +649,14 @@ public class AssetCategoryWrapper implements AssetCategory {
 		return _assetCategory.isRootCategory();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetCategory getWrappedAssetCategory() {
+		return _assetCategory;
+	}
+
+	public AssetCategory getWrappedModel() {
 		return _assetCategory;
 	}
 

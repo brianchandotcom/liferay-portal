@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       ResourceCode
  * @generated
  */
-public class ResourceCodeWrapper implements ResourceCode {
+public class ResourceCodeWrapper implements ResourceCode,
+	ModelWrapper<ResourceCode> {
 	public ResourceCodeWrapper(ResourceCode resourceCode) {
 		_resourceCode = resourceCode;
 	}
@@ -199,7 +200,14 @@ public class ResourceCodeWrapper implements ResourceCode {
 		_resourceCode.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ResourceCode getWrappedResourceCode() {
+		return _resourceCode;
+	}
+
+	public ResourceCode getWrappedModel() {
 		return _resourceCode;
 	}
 

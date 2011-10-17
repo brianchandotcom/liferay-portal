@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       EmailAddressService
  * @generated
  */
-public class EmailAddressServiceWrapper implements EmailAddressService {
+public class EmailAddressServiceWrapper implements EmailAddressService,
+	ServiceWrapper<EmailAddressService> {
 	public EmailAddressServiceWrapper(EmailAddressService emailAddressService) {
 		_emailAddressService = emailAddressService;
 	}
@@ -66,12 +67,26 @@ public class EmailAddressServiceWrapper implements EmailAddressService {
 			typeId, primary);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public EmailAddressService getWrappedEmailAddressService() {
 		return _emailAddressService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedEmailAddressService(
 		EmailAddressService emailAddressService) {
+		_emailAddressService = emailAddressService;
+	}
+
+	public EmailAddressService getWrappedService() {
+		return _emailAddressService;
+	}
+
+	public void setWrappedService(EmailAddressService emailAddressService) {
 		_emailAddressService = emailAddressService;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BookmarksFolderService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.bookmarks.service;
  * @see       BookmarksFolderService
  * @generated
  */
-public class BookmarksFolderServiceWrapper implements BookmarksFolderService {
+public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
+	ServiceWrapper<BookmarksFolderService> {
 	public BookmarksFolderServiceWrapper(
 		BookmarksFolderService bookmarksFolderService) {
 		_bookmarksFolderService = bookmarksFolderService;
@@ -92,12 +95,26 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService {
 			name, description, mergeWithParentFolder, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public BookmarksFolderService getWrappedBookmarksFolderService() {
 		return _bookmarksFolderService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedBookmarksFolderService(
 		BookmarksFolderService bookmarksFolderService) {
+		_bookmarksFolderService = bookmarksFolderService;
+	}
+
+	public BookmarksFolderService getWrappedService() {
+		return _bookmarksFolderService;
+	}
+
+	public void setWrappedService(BookmarksFolderService bookmarksFolderService) {
 		_bookmarksFolderService = bookmarksFolderService;
 	}
 

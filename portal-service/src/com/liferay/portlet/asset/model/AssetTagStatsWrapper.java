@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetTagStats}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.model;
  * @see       AssetTagStats
  * @generated
  */
-public class AssetTagStatsWrapper implements AssetTagStats {
+public class AssetTagStatsWrapper implements AssetTagStats,
+	ModelWrapper<AssetTagStats> {
 	public AssetTagStatsWrapper(AssetTagStats assetTagStats) {
 		_assetTagStats = assetTagStats;
 	}
@@ -209,7 +212,14 @@ public class AssetTagStatsWrapper implements AssetTagStats {
 		_assetTagStats.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetTagStats getWrappedAssetTagStats() {
+		return _assetTagStats;
+	}
+
+	public AssetTagStats getWrappedModel() {
 		return _assetTagStats;
 	}
 

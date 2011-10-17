@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiPageService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.wiki.service;
  * @see       WikiPageService
  * @generated
  */
-public class WikiPageServiceWrapper implements WikiPageService {
+public class WikiPageServiceWrapper implements WikiPageService,
+	ServiceWrapper<WikiPageService> {
 	public WikiPageServiceWrapper(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
 	}
@@ -212,11 +215,25 @@ public class WikiPageServiceWrapper implements WikiPageService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WikiPageService getWrappedWikiPageService() {
 		return _wikiPageService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWikiPageService(WikiPageService wikiPageService) {
+		_wikiPageService = wikiPageService;
+	}
+
+	public WikiPageService getWrappedService() {
+		return _wikiPageService;
+	}
+
+	public void setWrappedService(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
 	}
 

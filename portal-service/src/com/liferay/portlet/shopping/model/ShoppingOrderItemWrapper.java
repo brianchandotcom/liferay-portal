@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingOrderItem}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.model;
  * @see       ShoppingOrderItem
  * @generated
  */
-public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
+public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
+	ModelWrapper<ShoppingOrderItem> {
 	public ShoppingOrderItemWrapper(ShoppingOrderItem shoppingOrderItem) {
 		_shoppingOrderItem = shoppingOrderItem;
 	}
@@ -308,7 +311,14 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem {
 		_shoppingOrderItem.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ShoppingOrderItem getWrappedShoppingOrderItem() {
+		return _shoppingOrderItem;
+	}
+
+	public ShoppingOrderItem getWrappedModel() {
 		return _shoppingOrderItem;
 	}
 

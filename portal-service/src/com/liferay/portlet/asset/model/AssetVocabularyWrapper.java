@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetVocabulary}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.model;
  * @see       AssetVocabulary
  * @generated
  */
-public class AssetVocabularyWrapper implements AssetVocabulary {
+public class AssetVocabularyWrapper implements AssetVocabulary,
+	ModelWrapper<AssetVocabulary> {
 	public AssetVocabularyWrapper(AssetVocabulary assetVocabulary) {
 		_assetVocabulary = assetVocabulary;
 	}
@@ -599,7 +602,14 @@ public class AssetVocabularyWrapper implements AssetVocabulary {
 		_assetVocabulary.setSettingsProperties(settingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetVocabulary getWrappedAssetVocabulary() {
+		return _assetVocabulary;
+	}
+
+	public AssetVocabulary getWrappedModel() {
 		return _assetVocabulary;
 	}
 

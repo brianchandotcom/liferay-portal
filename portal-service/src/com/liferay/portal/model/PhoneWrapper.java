@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Phone
  * @generated
  */
-public class PhoneWrapper implements Phone {
+public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	public PhoneWrapper(Phone phone) {
 		_phone = phone;
 	}
@@ -387,7 +387,14 @@ public class PhoneWrapper implements Phone {
 		return _phone.getType();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Phone getWrappedPhone() {
+		return _phone;
+	}
+
+	public Phone getWrappedModel() {
 		return _phone;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ClusterGroupLocalService
  * @generated
  */
-public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService {
+public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService,
+	ServiceWrapper<ClusterGroupLocalService> {
 	public ClusterGroupLocalServiceWrapper(
 		ClusterGroupLocalService clusterGroupLocalService) {
 		_clusterGroupLocalService = clusterGroupLocalService;
@@ -257,11 +258,26 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		return _clusterGroupLocalService.addWholeClusterGroup(name);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ClusterGroupLocalService getWrappedClusterGroupLocalService() {
 		return _clusterGroupLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedClusterGroupLocalService(
+		ClusterGroupLocalService clusterGroupLocalService) {
+		_clusterGroupLocalService = clusterGroupLocalService;
+	}
+
+	public ClusterGroupLocalService getWrappedService() {
+		return _clusterGroupLocalService;
+	}
+
+	public void setWrappedService(
 		ClusterGroupLocalService clusterGroupLocalService) {
 		_clusterGroupLocalService = clusterGroupLocalService;
 	}

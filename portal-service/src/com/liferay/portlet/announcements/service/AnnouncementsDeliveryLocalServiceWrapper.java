@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsDeliveryLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.announcements.service;
  * @generated
  */
 public class AnnouncementsDeliveryLocalServiceWrapper
-	implements AnnouncementsDeliveryLocalService {
+	implements AnnouncementsDeliveryLocalService,
+		ServiceWrapper<AnnouncementsDeliveryLocalService> {
 	public AnnouncementsDeliveryLocalServiceWrapper(
 		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
 		_announcementsDeliveryLocalService = announcementsDeliveryLocalService;
@@ -309,11 +312,26 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 			email, sms, website);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AnnouncementsDeliveryLocalService getWrappedAnnouncementsDeliveryLocalService() {
 		return _announcementsDeliveryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAnnouncementsDeliveryLocalService(
+		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
+		_announcementsDeliveryLocalService = announcementsDeliveryLocalService;
+	}
+
+	public AnnouncementsDeliveryLocalService getWrappedService() {
+		return _announcementsDeliveryLocalService;
+	}
+
+	public void setWrappedService(
 		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
 		_announcementsDeliveryLocalService = announcementsDeliveryLocalService;
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiNode}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.wiki.model;
  * @see       WikiNode
  * @generated
  */
-public class WikiNodeWrapper implements WikiNode {
+public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	public WikiNodeWrapper(WikiNode wikiNode) {
 		_wikiNode = wikiNode;
 	}
@@ -345,7 +347,14 @@ public class WikiNodeWrapper implements WikiNode {
 		_wikiNode.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public WikiNode getWrappedWikiNode() {
+		return _wikiNode;
+	}
+
+	public WikiNode getWrappedModel() {
 		return _wikiNode;
 	}
 

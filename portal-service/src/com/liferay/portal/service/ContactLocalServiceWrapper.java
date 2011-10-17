@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ContactLocalService
  * @generated
  */
-public class ContactLocalServiceWrapper implements ContactLocalService {
+public class ContactLocalServiceWrapper implements ContactLocalService,
+	ServiceWrapper<ContactLocalService> {
 	public ContactLocalServiceWrapper(ContactLocalService contactLocalService) {
 		_contactLocalService = contactLocalService;
 	}
@@ -241,12 +242,26 @@ public class ContactLocalServiceWrapper implements ContactLocalService {
 		_contactLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ContactLocalService getWrappedContactLocalService() {
 		return _contactLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedContactLocalService(
 		ContactLocalService contactLocalService) {
+		_contactLocalService = contactLocalService;
+	}
+
+	public ContactLocalService getWrappedService() {
+		return _contactLocalService;
+	}
+
+	public void setWrappedService(ContactLocalService contactLocalService) {
 		_contactLocalService = contactLocalService;
 	}
 

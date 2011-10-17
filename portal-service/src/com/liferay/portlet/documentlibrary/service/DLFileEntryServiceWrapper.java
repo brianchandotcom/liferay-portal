@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFileEntryService
  * @generated
  */
-public class DLFileEntryServiceWrapper implements DLFileEntryService {
+public class DLFileEntryServiceWrapper implements DLFileEntryService,
+	ServiceWrapper<DLFileEntryService> {
 	public DLFileEntryServiceWrapper(DLFileEntryService dlFileEntryService) {
 		_dlFileEntryService = dlFileEntryService;
 	}
@@ -255,12 +258,26 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService {
 		return _dlFileEntryService.verifyFileEntryCheckOut(fileEntryId, lockUuid);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFileEntryService getWrappedDLFileEntryService() {
 		return _dlFileEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFileEntryService(
 		DLFileEntryService dlFileEntryService) {
+		_dlFileEntryService = dlFileEntryService;
+	}
+
+	public DLFileEntryService getWrappedService() {
+		return _dlFileEntryService;
+	}
+
+	public void setWrappedService(DLFileEntryService dlFileEntryService) {
 		_dlFileEntryService = dlFileEntryService;
 	}
 

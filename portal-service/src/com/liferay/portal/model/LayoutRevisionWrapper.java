@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutRevision
  * @generated
  */
-public class LayoutRevisionWrapper implements LayoutRevision {
+public class LayoutRevisionWrapper implements LayoutRevision,
+	ModelWrapper<LayoutRevision> {
 	public LayoutRevisionWrapper(LayoutRevision layoutRevision) {
 		_layoutRevision = layoutRevision;
 	}
@@ -1425,7 +1426,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		_layoutRevision.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutRevision getWrappedLayoutRevision() {
+		return _layoutRevision;
+	}
+
+	public LayoutRevision getWrappedModel() {
 		return _layoutRevision;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BlogsStatsUserLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.blogs.service;
  * @generated
  */
 public class BlogsStatsUserLocalServiceWrapper
-	implements BlogsStatsUserLocalService {
+	implements BlogsStatsUserLocalService,
+		ServiceWrapper<BlogsStatsUserLocalService> {
 	public BlogsStatsUserLocalServiceWrapper(
 		BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		_blogsStatsUserLocalService = blogsStatsUserLocalService;
@@ -357,11 +360,26 @@ public class BlogsStatsUserLocalServiceWrapper
 		_blogsStatsUserLocalService.updateStatsUser(groupId, userId, displayDate);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public BlogsStatsUserLocalService getWrappedBlogsStatsUserLocalService() {
 		return _blogsStatsUserLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedBlogsStatsUserLocalService(
+		BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		_blogsStatsUserLocalService = blogsStatsUserLocalService;
+	}
+
+	public BlogsStatsUserLocalService getWrappedService() {
+		return _blogsStatsUserLocalService;
+	}
+
+	public void setWrappedService(
 		BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		_blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}

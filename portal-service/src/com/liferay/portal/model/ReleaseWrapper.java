@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Release
  * @generated
  */
-public class ReleaseWrapper implements Release {
+public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	public ReleaseWrapper(Release release) {
 		_release = release;
 	}
@@ -280,7 +280,14 @@ public class ReleaseWrapper implements Release {
 		_release.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Release getWrappedRelease() {
+		return _release;
+	}
+
+	public Release getWrappedModel() {
 		return _release;
 	}
 

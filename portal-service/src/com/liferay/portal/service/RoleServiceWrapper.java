@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       RoleService
  * @generated
  */
-public class RoleServiceWrapper implements RoleService {
+public class RoleServiceWrapper implements RoleService,
+	ServiceWrapper<RoleService> {
 	public RoleServiceWrapper(RoleService roleService) {
 		_roleService = roleService;
 	}
@@ -283,11 +284,25 @@ public class RoleServiceWrapper implements RoleService {
 			subtype);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public RoleService getWrappedRoleService() {
 		return _roleService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedRoleService(RoleService roleService) {
+		_roleService = roleService;
+	}
+
+	public RoleService getWrappedService() {
+		return _roleService;
+	}
+
+	public void setWrappedService(RoleService roleService) {
 		_roleService = roleService;
 	}
 

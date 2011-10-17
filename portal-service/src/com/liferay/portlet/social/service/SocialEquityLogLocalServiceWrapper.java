@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityLogLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialEquityLogLocalServiceWrapper
-	implements SocialEquityLogLocalService {
+	implements SocialEquityLogLocalService,
+		ServiceWrapper<SocialEquityLogLocalService> {
 	public SocialEquityLogLocalServiceWrapper(
 		SocialEquityLogLocalService socialEquityLogLocalService) {
 		_socialEquityLogLocalService = socialEquityLogLocalService;
@@ -608,11 +611,26 @@ public class SocialEquityLogLocalServiceWrapper
 		_socialEquityLogLocalService.updateRanks(groupId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialEquityLogLocalService getWrappedSocialEquityLogLocalService() {
 		return _socialEquityLogLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialEquityLogLocalService(
+		SocialEquityLogLocalService socialEquityLogLocalService) {
+		_socialEquityLogLocalService = socialEquityLogLocalService;
+	}
+
+	public SocialEquityLogLocalService getWrappedService() {
+		return _socialEquityLogLocalService;
+	}
+
+	public void setWrappedService(
 		SocialEquityLogLocalService socialEquityLogLocalService) {
 		_socialEquityLogLocalService = socialEquityLogLocalService;
 	}

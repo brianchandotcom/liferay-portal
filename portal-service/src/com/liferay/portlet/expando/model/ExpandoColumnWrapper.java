@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoColumn}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.expando.model;
  * @see       ExpandoColumn
  * @generated
  */
-public class ExpandoColumnWrapper implements ExpandoColumn {
+public class ExpandoColumnWrapper implements ExpandoColumn,
+	ModelWrapper<ExpandoColumn> {
 	public ExpandoColumnWrapper(ExpandoColumn expandoColumn) {
 		_expandoColumn = expandoColumn;
 	}
@@ -271,7 +274,14 @@ public class ExpandoColumnWrapper implements ExpandoColumn {
 		_expandoColumn.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ExpandoColumn getWrappedExpandoColumn() {
+		return _expandoColumn;
+	}
+
+	public ExpandoColumn getWrappedModel() {
 		return _expandoColumn;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       LayoutService
  * @generated
  */
-public class LayoutServiceWrapper implements LayoutService {
+public class LayoutServiceWrapper implements LayoutService,
+	ServiceWrapper<LayoutService> {
 	public LayoutServiceWrapper(LayoutService layoutService) {
 		_layoutService = layoutService;
 	}
@@ -915,11 +916,25 @@ public class LayoutServiceWrapper implements LayoutService {
 		return _layoutService.updatePriority(plid, priority);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutService getWrappedLayoutService() {
 		return _layoutService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutService(LayoutService layoutService) {
+		_layoutService = layoutService;
+	}
+
+	public LayoutService getWrappedService() {
+		return _layoutService;
+	}
+
+	public void setWrappedService(LayoutService layoutService) {
 		_layoutService = layoutService;
 	}
 

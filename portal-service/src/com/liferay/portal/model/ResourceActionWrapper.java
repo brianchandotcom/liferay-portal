@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       ResourceAction
  * @generated
  */
-public class ResourceActionWrapper implements ResourceAction {
+public class ResourceActionWrapper implements ResourceAction,
+	ModelWrapper<ResourceAction> {
 	public ResourceActionWrapper(ResourceAction resourceAction) {
 		_resourceAction = resourceAction;
 	}
@@ -199,7 +200,14 @@ public class ResourceActionWrapper implements ResourceAction {
 		_resourceAction.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ResourceAction getWrappedResourceAction() {
+		return _resourceAction;
+	}
+
+	public ResourceAction getWrappedModel() {
 		return _resourceAction;
 	}
 

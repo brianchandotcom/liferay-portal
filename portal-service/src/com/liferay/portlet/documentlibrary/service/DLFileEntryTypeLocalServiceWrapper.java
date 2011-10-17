@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryTypeLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @generated
  */
 public class DLFileEntryTypeLocalServiceWrapper
-	implements DLFileEntryTypeLocalService {
+	implements DLFileEntryTypeLocalService,
+		ServiceWrapper<DLFileEntryTypeLocalService> {
 	public DLFileEntryTypeLocalServiceWrapper(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
@@ -371,11 +374,26 @@ public class DLFileEntryTypeLocalServiceWrapper
 			fileEntryTypeIds, defaultFileEntryTypeId, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFileEntryTypeLocalService getWrappedDLFileEntryTypeLocalService() {
 		return _dlFileEntryTypeLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	public DLFileEntryTypeLocalService getWrappedService() {
+		return _dlFileEntryTypeLocalService;
+	}
+
+	public void setWrappedService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}

@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       RepositoryEntry
  * @generated
  */
-public class RepositoryEntryWrapper implements RepositoryEntry {
+public class RepositoryEntryWrapper implements RepositoryEntry,
+	ModelWrapper<RepositoryEntry> {
 	public RepositoryEntryWrapper(RepositoryEntry repositoryEntry) {
 		_repositoryEntry = repositoryEntry;
 	}
@@ -218,7 +219,14 @@ public class RepositoryEntryWrapper implements RepositoryEntry {
 		_repositoryEntry.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public RepositoryEntry getWrappedRepositoryEntry() {
+		return _repositoryEntry;
+	}
+
+	public RepositoryEntry getWrappedModel() {
 		return _repositoryEntry;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBDiscussionLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBDiscussionLocalService
  * @generated
  */
-public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService {
+public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService,
+	ServiceWrapper<MBDiscussionLocalService> {
 	public MBDiscussionLocalServiceWrapper(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 		_mbDiscussionLocalService = mbDiscussionLocalService;
@@ -274,11 +277,26 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		return _mbDiscussionLocalService.getThreadDiscussion(threadId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBDiscussionLocalService getWrappedMBDiscussionLocalService() {
 		return _mbDiscussionLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	public MBDiscussionLocalService getWrappedService() {
+		return _mbDiscussionLocalService;
+	}
+
+	public void setWrappedService(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}

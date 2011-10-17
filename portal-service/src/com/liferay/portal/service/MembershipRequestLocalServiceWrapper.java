@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class MembershipRequestLocalServiceWrapper
-	implements MembershipRequestLocalService {
+	implements MembershipRequestLocalService,
+		ServiceWrapper<MembershipRequestLocalService> {
 	public MembershipRequestLocalServiceWrapper(
 		MembershipRequestLocalService membershipRequestLocalService) {
 		_membershipRequestLocalService = membershipRequestLocalService;
@@ -305,11 +306,26 @@ public class MembershipRequestLocalServiceWrapper
 			membershipRequestId, replyComments, statusId, addUserToGroup);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MembershipRequestLocalService getWrappedMembershipRequestLocalService() {
 		return _membershipRequestLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMembershipRequestLocalService(
+		MembershipRequestLocalService membershipRequestLocalService) {
+		_membershipRequestLocalService = membershipRequestLocalService;
+	}
+
+	public MembershipRequestLocalService getWrappedService() {
+		return _membershipRequestLocalService;
+	}
+
+	public void setWrappedService(
 		MembershipRequestLocalService membershipRequestLocalService) {
 		_membershipRequestLocalService = membershipRequestLocalService;
 	}

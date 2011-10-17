@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       ClusterGroup
  * @generated
  */
-public class ClusterGroupWrapper implements ClusterGroup {
+public class ClusterGroupWrapper implements ClusterGroup,
+	ModelWrapper<ClusterGroup> {
 	public ClusterGroupWrapper(ClusterGroup clusterGroup) {
 		_clusterGroup = clusterGroup;
 	}
@@ -212,7 +213,14 @@ public class ClusterGroupWrapper implements ClusterGroup {
 		return _clusterGroup.getClusterNodeIdsArray();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ClusterGroup getWrappedClusterGroup() {
+		return _clusterGroup;
+	}
+
+	public ClusterGroup getWrappedModel() {
 		return _clusterGroup;
 	}
 

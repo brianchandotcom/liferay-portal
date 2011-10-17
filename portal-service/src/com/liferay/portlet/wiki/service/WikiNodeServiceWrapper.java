@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiNodeService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.wiki.service;
  * @see       WikiNodeService
  * @generated
  */
-public class WikiNodeServiceWrapper implements WikiNodeService {
+public class WikiNodeServiceWrapper implements WikiNodeService,
+	ServiceWrapper<WikiNodeService> {
 	public WikiNodeServiceWrapper(WikiNodeService wikiNodeService) {
 		_wikiNodeService = wikiNodeService;
 	}
@@ -84,11 +87,25 @@ public class WikiNodeServiceWrapper implements WikiNodeService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WikiNodeService getWrappedWikiNodeService() {
 		return _wikiNodeService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
+	public WikiNodeService getWrappedService() {
+		return _wikiNodeService;
+	}
+
+	public void setWrappedService(WikiNodeService wikiNodeService) {
 		_wikiNodeService = wikiNodeService;
 	}
 

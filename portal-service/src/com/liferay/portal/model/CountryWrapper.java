@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Country
  * @generated
  */
-public class CountryWrapper implements Country {
+public class CountryWrapper implements Country, ModelWrapper<Country> {
 	public CountryWrapper(Country country) {
 		_country = country;
 	}
@@ -284,7 +284,14 @@ public class CountryWrapper implements Country {
 		return _country.toXmlString();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Country getWrappedCountry() {
+		return _country;
+	}
+
+	public Country getWrappedModel() {
 		return _country;
 	}
 

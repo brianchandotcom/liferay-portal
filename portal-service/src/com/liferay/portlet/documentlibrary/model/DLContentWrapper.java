@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLContent}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLContent
  * @generated
  */
-public class DLContentWrapper implements DLContent {
+public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	public DLContentWrapper(DLContent dlContent) {
 		_dlContent = dlContent;
 	}
@@ -272,7 +274,14 @@ public class DLContentWrapper implements DLContent {
 		_dlContent.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLContent getWrappedDLContent() {
+		return _dlContent;
+	}
+
+	public DLContent getWrappedModel() {
 		return _dlContent;
 	}
 

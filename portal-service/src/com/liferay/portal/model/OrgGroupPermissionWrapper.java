@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       OrgGroupPermission
  * @generated
  */
-public class OrgGroupPermissionWrapper implements OrgGroupPermission {
+public class OrgGroupPermissionWrapper implements OrgGroupPermission,
+	ModelWrapper<OrgGroupPermission> {
 	public OrgGroupPermissionWrapper(OrgGroupPermission orgGroupPermission) {
 		_orgGroupPermission = orgGroupPermission;
 	}
@@ -188,7 +189,14 @@ public class OrgGroupPermissionWrapper implements OrgGroupPermission {
 		return _orgGroupPermission.containsOrganization(organizations);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public OrgGroupPermission getWrappedOrgGroupPermission() {
+		return _orgGroupPermission;
+	}
+
+	public OrgGroupPermission getWrappedModel() {
 		return _orgGroupPermission;
 	}
 

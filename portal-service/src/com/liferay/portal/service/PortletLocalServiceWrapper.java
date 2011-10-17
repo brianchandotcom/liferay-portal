@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PortletLocalService
  * @generated
  */
-public class PortletLocalServiceWrapper implements PortletLocalService {
+public class PortletLocalServiceWrapper implements PortletLocalService,
+	ServiceWrapper<PortletLocalService> {
 	public PortletLocalServiceWrapper(PortletLocalService portletLocalService) {
 		_portletLocalService = portletLocalService;
 	}
@@ -400,12 +401,26 @@ public class PortletLocalServiceWrapper implements PortletLocalService {
 			active);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PortletLocalService getWrappedPortletLocalService() {
 		return _portletLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPortletLocalService(
 		PortletLocalService portletLocalService) {
+		_portletLocalService = portletLocalService;
+	}
+
+	public PortletLocalService getWrappedService() {
+		return _portletLocalService;
+	}
+
+	public void setWrappedService(PortletLocalService portletLocalService) {
 		_portletLocalService = portletLocalService;
 	}
 

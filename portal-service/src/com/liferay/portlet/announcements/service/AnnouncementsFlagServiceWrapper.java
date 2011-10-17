@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsFlagService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.announcements.service;
  * @see       AnnouncementsFlagService
  * @generated
  */
-public class AnnouncementsFlagServiceWrapper implements AnnouncementsFlagService {
+public class AnnouncementsFlagServiceWrapper implements AnnouncementsFlagService,
+	ServiceWrapper<AnnouncementsFlagService> {
 	public AnnouncementsFlagServiceWrapper(
 		AnnouncementsFlagService announcementsFlagService) {
 		_announcementsFlagService = announcementsFlagService;
@@ -48,11 +51,26 @@ public class AnnouncementsFlagServiceWrapper implements AnnouncementsFlagService
 		return _announcementsFlagService.getFlag(entryId, value);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AnnouncementsFlagService getWrappedAnnouncementsFlagService() {
 		return _announcementsFlagService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAnnouncementsFlagService(
+		AnnouncementsFlagService announcementsFlagService) {
+		_announcementsFlagService = announcementsFlagService;
+	}
+
+	public AnnouncementsFlagService getWrappedService() {
+		return _announcementsFlagService;
+	}
+
+	public void setWrappedService(
 		AnnouncementsFlagService announcementsFlagService) {
 		_announcementsFlagService = announcementsFlagService;
 	}

@@ -23,16 +23,31 @@ package com.liferay.portal.service;
  * @see       AccountService
  * @generated
  */
-public class AccountServiceWrapper implements AccountService {
+public class AccountServiceWrapper implements AccountService,
+	ServiceWrapper<AccountService> {
 	public AccountServiceWrapper(AccountService accountService) {
 		_accountService = accountService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AccountService getWrappedAccountService() {
 		return _accountService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAccountService(AccountService accountService) {
+		_accountService = accountService;
+	}
+
+	public AccountService getWrappedService() {
+		return _accountService;
+	}
+
+	public void setWrappedService(AccountService accountService) {
 		_accountService = accountService;
 	}
 

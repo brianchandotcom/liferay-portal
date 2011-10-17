@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class LayoutRevisionLocalServiceWrapper
-	implements LayoutRevisionLocalService {
+	implements LayoutRevisionLocalService,
+		ServiceWrapper<LayoutRevisionLocalService> {
 	public LayoutRevisionLocalServiceWrapper(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 		_layoutRevisionLocalService = layoutRevisionLocalService;
@@ -409,11 +410,26 @@ public class LayoutRevisionLocalServiceWrapper
 			layoutRevisionId, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutRevisionLocalService getWrappedLayoutRevisionLocalService() {
 		return _layoutRevisionLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutRevisionLocalService(
+		LayoutRevisionLocalService layoutRevisionLocalService) {
+		_layoutRevisionLocalService = layoutRevisionLocalService;
+	}
+
+	public LayoutRevisionLocalService getWrappedService() {
+		return _layoutRevisionLocalService;
+	}
+
+	public void setWrappedService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 		_layoutRevisionLocalService = layoutRevisionLocalService;
 	}

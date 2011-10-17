@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PasswordPolicyService
  * @generated
  */
-public class PasswordPolicyServiceWrapper implements PasswordPolicyService {
+public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
+	ServiceWrapper<PasswordPolicyService> {
 	public PasswordPolicyServiceWrapper(
 		PasswordPolicyService passwordPolicyService) {
 		_passwordPolicyService = passwordPolicyService;
@@ -73,12 +74,26 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService {
 			lockoutDuration, resetFailureCount, resetTicketMaxAge);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PasswordPolicyService getWrappedPasswordPolicyService() {
 		return _passwordPolicyService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPasswordPolicyService(
 		PasswordPolicyService passwordPolicyService) {
+		_passwordPolicyService = passwordPolicyService;
+	}
+
+	public PasswordPolicyService getWrappedService() {
+		return _passwordPolicyService;
+	}
+
+	public void setWrappedService(PasswordPolicyService passwordPolicyService) {
 		_passwordPolicyService = passwordPolicyService;
 	}
 

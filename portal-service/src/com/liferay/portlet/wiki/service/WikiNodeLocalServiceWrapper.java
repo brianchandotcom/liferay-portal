@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiNodeLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.wiki.service;
  * @see       WikiNodeLocalService
  * @generated
  */
-public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService {
+public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
+	ServiceWrapper<WikiNodeLocalService> {
 	public WikiNodeLocalServiceWrapper(
 		WikiNodeLocalService wikiNodeLocalService) {
 		_wikiNodeLocalService = wikiNodeLocalService;
@@ -397,12 +400,26 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WikiNodeLocalService getWrappedWikiNodeLocalService() {
 		return _wikiNodeLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	public WikiNodeLocalService getWrappedService() {
+		return _wikiNodeLocalService;
+	}
+
+	public void setWrappedService(WikiNodeLocalService wikiNodeLocalService) {
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 

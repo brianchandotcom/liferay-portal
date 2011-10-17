@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       WorkflowDefinitionLink
  * @generated
  */
-public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink {
+public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
+	ModelWrapper<WorkflowDefinitionLink> {
 	public WorkflowDefinitionLinkWrapper(
 		WorkflowDefinitionLink workflowDefinitionLink) {
 		_workflowDefinitionLink = workflowDefinitionLink;
@@ -375,7 +376,14 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink {
 		_workflowDefinitionLink.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public WorkflowDefinitionLink getWrappedWorkflowDefinitionLink() {
+		return _workflowDefinitionLink;
+	}
+
+	public WorkflowDefinitionLink getWrappedModel() {
 		return _workflowDefinitionLink;
 	}
 

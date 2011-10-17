@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalStructure}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see       JournalStructure
  * @generated
  */
-public class JournalStructureWrapper implements JournalStructure {
+public class JournalStructureWrapper implements JournalStructure,
+	ModelWrapper<JournalStructure> {
 	public JournalStructureWrapper(JournalStructure journalStructure) {
 		_journalStructure = journalStructure;
 	}
@@ -604,7 +607,14 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.getMergedXsd();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public JournalStructure getWrappedJournalStructure() {
+		return _journalStructure;
+	}
+
+	public JournalStructure getWrappedModel() {
 		return _journalStructure;
 	}
 

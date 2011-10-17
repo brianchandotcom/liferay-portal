@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetLinkLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.service;
  * @see       AssetLinkLocalService
  * @generated
  */
-public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService {
+public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
+	ServiceWrapper<AssetLinkLocalService> {
 	public AssetLinkLocalServiceWrapper(
 		AssetLinkLocalService assetLinkLocalService) {
 		_assetLinkLocalService = assetLinkLocalService;
@@ -441,12 +444,26 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService {
 		_assetLinkLocalService.updateLinks(userId, entryId, linkEntryIds, typeId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetLinkLocalService getWrappedAssetLinkLocalService() {
 		return _assetLinkLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetLinkLocalService(
 		AssetLinkLocalService assetLinkLocalService) {
+		_assetLinkLocalService = assetLinkLocalService;
+	}
+
+	public AssetLinkLocalService getWrappedService() {
+		return _assetLinkLocalService;
+	}
+
+	public void setWrappedService(AssetLinkLocalService assetLinkLocalService) {
 		_assetLinkLocalService = assetLinkLocalService;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoTable}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.expando.model;
  * @see       ExpandoTable
  * @generated
  */
-public class ExpandoTableWrapper implements ExpandoTable {
+public class ExpandoTableWrapper implements ExpandoTable,
+	ModelWrapper<ExpandoTable> {
 	public ExpandoTableWrapper(ExpandoTable expandoTable) {
 		_expandoTable = expandoTable;
 	}
@@ -213,7 +216,14 @@ public class ExpandoTableWrapper implements ExpandoTable {
 		return _expandoTable.isDefaultTable();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ExpandoTable getWrappedExpandoTable() {
+		return _expandoTable;
+	}
+
+	public ExpandoTable getWrappedModel() {
 		return _expandoTable;
 	}
 

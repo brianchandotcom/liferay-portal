@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquitySetting}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialEquitySetting
  * @generated
  */
-public class SocialEquitySettingWrapper implements SocialEquitySetting {
+public class SocialEquitySettingWrapper implements SocialEquitySetting,
+	ModelWrapper<SocialEquitySetting> {
 	public SocialEquitySettingWrapper(SocialEquitySetting socialEquitySetting) {
 		_socialEquitySetting = socialEquitySetting;
 	}
@@ -331,7 +334,14 @@ public class SocialEquitySettingWrapper implements SocialEquitySetting {
 		_socialEquitySetting.update(equityActionMapping);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialEquitySetting getWrappedSocialEquitySetting() {
+		return _socialEquitySetting;
+	}
+
+	public SocialEquitySetting getWrappedModel() {
 		return _socialEquitySetting;
 	}
 

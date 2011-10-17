@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBBanLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBBanLocalService
  * @generated
  */
-public class MBBanLocalServiceWrapper implements MBBanLocalService {
+public class MBBanLocalServiceWrapper implements MBBanLocalService,
+	ServiceWrapper<MBBanLocalService> {
 	public MBBanLocalServiceWrapper(MBBanLocalService mbBanLocalService) {
 		_mbBanLocalService = mbBanLocalService;
 	}
@@ -302,11 +305,25 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService {
 		return _mbBanLocalService.hasBan(groupId, banUserId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBBanLocalService getWrappedMBBanLocalService() {
 		return _mbBanLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBBanLocalService(MBBanLocalService mbBanLocalService) {
+		_mbBanLocalService = mbBanLocalService;
+	}
+
+	public MBBanLocalService getWrappedService() {
+		return _mbBanLocalService;
+	}
+
+	public void setWrappedService(MBBanLocalService mbBanLocalService) {
 		_mbBanLocalService = mbBanLocalService;
 	}
 

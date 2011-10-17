@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class UserGroupGroupRoleLocalServiceWrapper
-	implements UserGroupGroupRoleLocalService {
+	implements UserGroupGroupRoleLocalService,
+		ServiceWrapper<UserGroupGroupRoleLocalService> {
 	public UserGroupGroupRoleLocalServiceWrapper(
 		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
 		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
@@ -340,11 +341,26 @@ public class UserGroupGroupRoleLocalServiceWrapper
 			groupId, roleName);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public UserGroupGroupRoleLocalService getWrappedUserGroupGroupRoleLocalService() {
 		return _userGroupGroupRoleLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedUserGroupGroupRoleLocalService(
+		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
+		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
+	}
+
+	public UserGroupGroupRoleLocalService getWrappedService() {
+		return _userGroupGroupRoleLocalService;
+	}
+
+	public void setWrappedService(
 		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
 		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
 	}

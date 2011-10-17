@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       TeamService
  * @generated
  */
-public class TeamServiceWrapper implements TeamService {
+public class TeamServiceWrapper implements TeamService,
+	ServiceWrapper<TeamService> {
 	public TeamServiceWrapper(TeamService teamService) {
 		_teamService = teamService;
 	}
@@ -88,11 +89,25 @@ public class TeamServiceWrapper implements TeamService {
 		return _teamService.updateTeam(teamId, name, description);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public TeamService getWrappedTeamService() {
 		return _teamService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedTeamService(TeamService teamService) {
+		_teamService = teamService;
+	}
+
+	public TeamService getWrappedService() {
+		return _teamService;
+	}
+
+	public void setWrappedService(TeamService teamService) {
 		_teamService = teamService;
 	}
 

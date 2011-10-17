@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       VirtualHostLocalService
  * @generated
  */
-public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService {
+public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
+	ServiceWrapper<VirtualHostLocalService> {
 	public VirtualHostLocalServiceWrapper(
 		VirtualHostLocalService virtualHostLocalService) {
 		_virtualHostLocalService = virtualHostLocalService;
@@ -278,11 +279,26 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService {
 			layoutSetId, hostname);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public VirtualHostLocalService getWrappedVirtualHostLocalService() {
 		return _virtualHostLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedVirtualHostLocalService(
+		VirtualHostLocalService virtualHostLocalService) {
+		_virtualHostLocalService = virtualHostLocalService;
+	}
+
+	public VirtualHostLocalService getWrappedService() {
+		return _virtualHostLocalService;
+	}
+
+	public void setWrappedService(
 		VirtualHostLocalService virtualHostLocalService) {
 		_virtualHostLocalService = virtualHostLocalService;
 	}

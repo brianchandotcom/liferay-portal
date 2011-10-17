@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoRowLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.expando.service;
  * @see       ExpandoRowLocalService
  * @generated
  */
-public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService {
+public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
+	ServiceWrapper<ExpandoRowLocalService> {
 	public ExpandoRowLocalServiceWrapper(
 		ExpandoRowLocalService expandoRowLocalService) {
 		_expandoRowLocalService = expandoRowLocalService;
@@ -398,12 +401,26 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService {
 		return _expandoRowLocalService.getRowsCount(className, tableName);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ExpandoRowLocalService getWrappedExpandoRowLocalService() {
 		return _expandoRowLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedExpandoRowLocalService(
 		ExpandoRowLocalService expandoRowLocalService) {
+		_expandoRowLocalService = expandoRowLocalService;
+	}
+
+	public ExpandoRowLocalService getWrappedService() {
+		return _expandoRowLocalService;
+	}
+
+	public void setWrappedService(ExpandoRowLocalService expandoRowLocalService) {
 		_expandoRowLocalService = expandoRowLocalService;
 	}
 

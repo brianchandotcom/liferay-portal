@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       ListType
  * @generated
  */
-public class ListTypeWrapper implements ListType {
+public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	public ListTypeWrapper(ListType listType) {
 		_listType = listType;
 	}
@@ -176,7 +176,14 @@ public class ListTypeWrapper implements ListType {
 		return _listType.toXmlString();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ListType getWrappedListType() {
+		return _listType;
+	}
+
+	public ListType getWrappedModel() {
 		return _listType;
 	}
 

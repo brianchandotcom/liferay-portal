@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link PollsVoteService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.polls.service;
  * @see       PollsVoteService
  * @generated
  */
-public class PollsVoteServiceWrapper implements PollsVoteService {
+public class PollsVoteServiceWrapper implements PollsVoteService,
+	ServiceWrapper<PollsVoteService> {
 	public PollsVoteServiceWrapper(PollsVoteService pollsVoteService) {
 		_pollsVoteService = pollsVoteService;
 	}
@@ -35,11 +38,25 @@ public class PollsVoteServiceWrapper implements PollsVoteService {
 		return _pollsVoteService.addVote(questionId, choiceId, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PollsVoteService getWrappedPollsVoteService() {
 		return _pollsVoteService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPollsVoteService(PollsVoteService pollsVoteService) {
+		_pollsVoteService = pollsVoteService;
+	}
+
+	public PollsVoteService getWrappedService() {
+		return _pollsVoteService;
+	}
+
+	public void setWrappedService(PollsVoteService pollsVoteService) {
 		_pollsVoteService = pollsVoteService;
 	}
 

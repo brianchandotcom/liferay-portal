@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       User
  * @generated
  */
-public class UserWrapper implements User {
+public class UserWrapper implements User, ModelWrapper<User> {
 	public UserWrapper(User user) {
 		_user = user;
 	}
@@ -1206,7 +1206,14 @@ public class UserWrapper implements User {
 		return _user.getWebsites();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public User getWrappedUser() {
+		return _user;
+	}
+
+	public User getWrappedModel() {
 		return _user;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.calendar.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link CalEventLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.calendar.service;
  * @see       CalEventLocalService
  * @generated
  */
-public class CalEventLocalServiceWrapper implements CalEventLocalService {
+public class CalEventLocalServiceWrapper implements CalEventLocalService,
+	ServiceWrapper<CalEventLocalService> {
 	public CalEventLocalServiceWrapper(
 		CalEventLocalService calEventLocalService) {
 		_calEventLocalService = calEventLocalService;
@@ -480,12 +483,26 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService {
 			firstReminder, secondReminder, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public CalEventLocalService getWrappedCalEventLocalService() {
 		return _calEventLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedCalEventLocalService(
 		CalEventLocalService calEventLocalService) {
+		_calEventLocalService = calEventLocalService;
+	}
+
+	public CalEventLocalService getWrappedService() {
+		return _calEventLocalService;
+	}
+
+	public void setWrappedService(CalEventLocalService calEventLocalService) {
 		_calEventLocalService = calEventLocalService;
 	}
 

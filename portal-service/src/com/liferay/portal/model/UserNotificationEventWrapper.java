@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       UserNotificationEvent
  * @generated
  */
-public class UserNotificationEventWrapper implements UserNotificationEvent {
+public class UserNotificationEventWrapper implements UserNotificationEvent,
+	ModelWrapper<UserNotificationEvent> {
 	public UserNotificationEventWrapper(
 		UserNotificationEvent userNotificationEvent) {
 		_userNotificationEvent = userNotificationEvent;
@@ -320,7 +321,14 @@ public class UserNotificationEventWrapper implements UserNotificationEvent {
 		_userNotificationEvent.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserNotificationEvent getWrappedUserNotificationEvent() {
+		return _userNotificationEvent;
+	}
+
+	public UserNotificationEvent getWrappedModel() {
 		return _userNotificationEvent;
 	}
 

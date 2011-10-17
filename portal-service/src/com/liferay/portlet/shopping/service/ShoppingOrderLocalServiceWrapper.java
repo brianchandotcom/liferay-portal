@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingOrderLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.shopping.service;
  * @generated
  */
 public class ShoppingOrderLocalServiceWrapper
-	implements ShoppingOrderLocalService {
+	implements ShoppingOrderLocalService,
+		ServiceWrapper<ShoppingOrderLocalService> {
 	public ShoppingOrderLocalServiceWrapper(
 		ShoppingOrderLocalService shoppingOrderLocalService) {
 		_shoppingOrderLocalService = shoppingOrderLocalService;
@@ -425,11 +428,26 @@ public class ShoppingOrderLocalServiceWrapper
 			ccNumber, ccExpMonth, ccExpYear, ccVerNumber, comments);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ShoppingOrderLocalService getWrappedShoppingOrderLocalService() {
 		return _shoppingOrderLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedShoppingOrderLocalService(
+		ShoppingOrderLocalService shoppingOrderLocalService) {
+		_shoppingOrderLocalService = shoppingOrderLocalService;
+	}
+
+	public ShoppingOrderLocalService getWrappedService() {
+		return _shoppingOrderLocalService;
+	}
+
+	public void setWrappedService(
 		ShoppingOrderLocalService shoppingOrderLocalService) {
 		_shoppingOrderLocalService = shoppingOrderLocalService;
 	}

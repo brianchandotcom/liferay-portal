@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       MembershipRequestService
  * @generated
  */
-public class MembershipRequestServiceWrapper implements MembershipRequestService {
+public class MembershipRequestServiceWrapper implements MembershipRequestService,
+	ServiceWrapper<MembershipRequestService> {
 	public MembershipRequestServiceWrapper(
 		MembershipRequestService membershipRequestService) {
 		_membershipRequestService = membershipRequestService;
@@ -57,11 +58,26 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 			reviewComments, statusId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MembershipRequestService getWrappedMembershipRequestService() {
 		return _membershipRequestService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMembershipRequestService(
+		MembershipRequestService membershipRequestService) {
+		_membershipRequestService = membershipRequestService;
+	}
+
+	public MembershipRequestService getWrappedService() {
+		return _membershipRequestService;
+	}
+
+	public void setWrappedService(
 		MembershipRequestService membershipRequestService) {
 		_membershipRequestService = membershipRequestService;
 	}

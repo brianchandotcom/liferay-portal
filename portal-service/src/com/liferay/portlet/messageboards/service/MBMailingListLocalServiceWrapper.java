@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBMailingListLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.messageboards.service;
  * @generated
  */
 public class MBMailingListLocalServiceWrapper
-	implements MBMailingListLocalService {
+	implements MBMailingListLocalService,
+		ServiceWrapper<MBMailingListLocalService> {
 	public MBMailingListLocalServiceWrapper(
 		MBMailingListLocalService mbMailingListLocalService) {
 		_mbMailingListLocalService = mbMailingListLocalService;
@@ -330,11 +333,26 @@ public class MBMailingListLocalServiceWrapper
 			allowAnonymous, active, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBMailingListLocalService getWrappedMBMailingListLocalService() {
 		return _mbMailingListLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBMailingListLocalService(
+		MBMailingListLocalService mbMailingListLocalService) {
+		_mbMailingListLocalService = mbMailingListLocalService;
+	}
+
+	public MBMailingListLocalService getWrappedService() {
+		return _mbMailingListLocalService;
+	}
+
+	public void setWrappedService(
 		MBMailingListLocalService mbMailingListLocalService) {
 		_mbMailingListLocalService = mbMailingListLocalService;
 	}

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Account
  * @generated
  */
-public class AccountWrapper implements Account {
+public class AccountWrapper implements Account, ModelWrapper<Account> {
 	public AccountWrapper(Account account) {
 		_account = account;
 	}
@@ -435,7 +435,14 @@ public class AccountWrapper implements Account {
 		_account.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Account getWrappedAccount() {
+		return _account;
+	}
+
+	public Account getWrappedModel() {
 		return _account;
 	}
 

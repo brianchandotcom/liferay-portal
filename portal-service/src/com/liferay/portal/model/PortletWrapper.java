@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Portlet
  * @generated
  */
-public class PortletWrapper implements Portlet {
+public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public PortletWrapper(Portlet portlet) {
 		_portlet = portlet;
 	}
@@ -2809,7 +2809,14 @@ public class PortletWrapper implements Portlet {
 		return _portlet.equals(obj);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Portlet getWrappedPortlet() {
+		return _portlet;
+	}
+
+	public Portlet getWrappedModel() {
 		return _portlet;
 	}
 

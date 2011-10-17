@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       PortletPreferences
  * @generated
  */
-public class PortletPreferencesWrapper implements PortletPreferences {
+public class PortletPreferencesWrapper implements PortletPreferences,
+	ModelWrapper<PortletPreferences> {
 	public PortletPreferencesWrapper(PortletPreferences portletPreferences) {
 		_portletPreferences = portletPreferences;
 	}
@@ -236,7 +237,14 @@ public class PortletPreferencesWrapper implements PortletPreferences {
 		_portletPreferences.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PortletPreferences getWrappedPortletPreferences() {
+		return _portletPreferences;
+	}
+
+	public PortletPreferences getWrappedModel() {
 		return _portletPreferences;
 	}
 

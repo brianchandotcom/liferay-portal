@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityGroupSetting}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialEquityGroupSetting
  * @generated
  */
-public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting {
+public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting,
+	ModelWrapper<SocialEquityGroupSetting> {
 	public SocialEquityGroupSettingWrapper(
 		SocialEquityGroupSetting socialEquityGroupSetting) {
 		_socialEquityGroupSetting = socialEquityGroupSetting;
@@ -255,7 +258,14 @@ public class SocialEquityGroupSettingWrapper implements SocialEquityGroupSetting
 		_socialEquityGroupSetting.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialEquityGroupSetting getWrappedSocialEquityGroupSetting() {
+		return _socialEquityGroupSetting;
+	}
+
+	public SocialEquityGroupSetting getWrappedModel() {
 		return _socialEquityGroupSetting;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       UserService
  * @generated
  */
-public class UserServiceWrapper implements UserService {
+public class UserServiceWrapper implements UserService,
+	ServiceWrapper<UserService> {
 	public UserServiceWrapper(UserService userService) {
 		_userService = userService;
 	}
@@ -1238,11 +1239,25 @@ public class UserServiceWrapper implements UserService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public UserService getWrappedUserService() {
 		return _userService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedUserService(UserService userService) {
+		_userService = userService;
+	}
+
+	public UserService getWrappedService() {
+		return _userService;
+	}
+
+	public void setWrappedService(UserService userService) {
 		_userService = userService;
 	}
 

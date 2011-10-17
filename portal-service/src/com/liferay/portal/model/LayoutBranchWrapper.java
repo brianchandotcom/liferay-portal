@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutBranch
  * @generated
  */
-public class LayoutBranchWrapper implements LayoutBranch {
+public class LayoutBranchWrapper implements LayoutBranch,
+	ModelWrapper<LayoutBranch> {
 	public LayoutBranchWrapper(LayoutBranch layoutBranch) {
 		_layoutBranch = layoutBranch;
 	}
@@ -336,7 +337,14 @@ public class LayoutBranchWrapper implements LayoutBranch {
 		_layoutBranch.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutBranch getWrappedLayoutBranch() {
+		return _layoutBranch;
+	}
+
+	public LayoutBranch getWrappedModel() {
 		return _layoutBranch;
 	}
 

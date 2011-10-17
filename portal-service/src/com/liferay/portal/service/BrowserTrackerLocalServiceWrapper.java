@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class BrowserTrackerLocalServiceWrapper
-	implements BrowserTrackerLocalService {
+	implements BrowserTrackerLocalService,
+		ServiceWrapper<BrowserTrackerLocalService> {
 	public BrowserTrackerLocalServiceWrapper(
 		BrowserTrackerLocalService browserTrackerLocalService) {
 		_browserTrackerLocalService = browserTrackerLocalService;
@@ -265,11 +266,26 @@ public class BrowserTrackerLocalServiceWrapper
 			browserKey);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public BrowserTrackerLocalService getWrappedBrowserTrackerLocalService() {
 		return _browserTrackerLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedBrowserTrackerLocalService(
+		BrowserTrackerLocalService browserTrackerLocalService) {
+		_browserTrackerLocalService = browserTrackerLocalService;
+	}
+
+	public BrowserTrackerLocalService getWrappedService() {
+		return _browserTrackerLocalService;
+	}
+
+	public void setWrappedService(
 		BrowserTrackerLocalService browserTrackerLocalService) {
 		_browserTrackerLocalService = browserTrackerLocalService;
 	}

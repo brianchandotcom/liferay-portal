@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Region
  * @generated
  */
-public class RegionWrapper implements Region {
+public class RegionWrapper implements Region, ModelWrapper<Region> {
 	public RegionWrapper(Region region) {
 		_region = region;
 	}
@@ -221,7 +221,14 @@ public class RegionWrapper implements Region {
 		return _region.toXmlString();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Region getWrappedRegion() {
+		return _region;
+	}
+
+	public Region getWrappedModel() {
 		return _region;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductEntry}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.model;
  * @see       SCProductEntry
  * @generated
  */
-public class SCProductEntryWrapper implements SCProductEntry {
+public class SCProductEntryWrapper implements SCProductEntry,
+	ModelWrapper<SCProductEntry> {
 	public SCProductEntryWrapper(SCProductEntry scProductEntry) {
 		_scProductEntry = scProductEntry;
 	}
@@ -451,7 +454,14 @@ public class SCProductEntryWrapper implements SCProductEntry {
 		return _scProductEntry.getScreenshots();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SCProductEntry getWrappedSCProductEntry() {
+		return _scProductEntry;
+	}
+
+	public SCProductEntry getWrappedModel() {
 		return _scProductEntry;
 	}
 

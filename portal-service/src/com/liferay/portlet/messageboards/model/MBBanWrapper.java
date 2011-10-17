@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBBan}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBBan
  * @generated
  */
-public class MBBanWrapper implements MBBan {
+public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	public MBBanWrapper(MBBan mbBan) {
 		_mbBan = mbBan;
 	}
@@ -311,7 +313,14 @@ public class MBBanWrapper implements MBBan {
 		_mbBan.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBBan getWrappedMBBan() {
+		return _mbBan;
+	}
+
+	public MBBan getWrappedModel() {
 		return _mbBan;
 	}
 

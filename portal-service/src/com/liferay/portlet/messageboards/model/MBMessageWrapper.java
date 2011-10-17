@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBMessage}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBMessage
  * @generated
  */
-public class MBMessageWrapper implements MBMessage {
+public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	public MBMessageWrapper(MBMessage mbMessage) {
 		_mbMessage = mbMessage;
 	}
@@ -781,7 +783,14 @@ public class MBMessageWrapper implements MBMessage {
 		_mbMessage.setAttachmentsDir(attachmentsDir);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBMessage getWrappedMBMessage() {
+		return _mbMessage;
+	}
+
+	public MBMessage getWrappedModel() {
 		return _mbMessage;
 	}
 

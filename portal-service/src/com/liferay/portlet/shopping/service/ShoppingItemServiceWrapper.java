@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingItemService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.service;
  * @see       ShoppingItemService
  * @generated
  */
-public class ShoppingItemServiceWrapper implements ShoppingItemService {
+public class ShoppingItemServiceWrapper implements ShoppingItemService,
+	ServiceWrapper<ShoppingItemService> {
 	public ShoppingItemServiceWrapper(ShoppingItemService shoppingItemService) {
 		_shoppingItemService = shoppingItemService;
 	}
@@ -124,12 +127,26 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ShoppingItemService getWrappedShoppingItemService() {
 		return _shoppingItemService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedShoppingItemService(
 		ShoppingItemService shoppingItemService) {
+		_shoppingItemService = shoppingItemService;
+	}
+
+	public ShoppingItemService getWrappedService() {
+		return _shoppingItemService;
+	}
+
+	public void setWrappedService(ShoppingItemService shoppingItemService) {
 		_shoppingItemService = shoppingItemService;
 	}
 

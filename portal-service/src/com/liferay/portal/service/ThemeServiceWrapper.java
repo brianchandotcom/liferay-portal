@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ThemeService
  * @generated
  */
-public class ThemeServiceWrapper implements ThemeService {
+public class ThemeServiceWrapper implements ThemeService,
+	ServiceWrapper<ThemeService> {
 	public ThemeServiceWrapper(ThemeService themeService) {
 		_themeService = themeService;
 	}
@@ -37,11 +38,25 @@ public class ThemeServiceWrapper implements ThemeService {
 		return _themeService.getWARThemes();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ThemeService getWrappedThemeService() {
 		return _themeService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedThemeService(ThemeService themeService) {
+		_themeService = themeService;
+	}
+
+	public ThemeService getWrappedService() {
+		return _themeService;
+	}
+
+	public void setWrappedService(ThemeService themeService) {
 		_themeService = themeService;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ResourceLocalService
  * @generated
  */
-public class ResourceLocalServiceWrapper implements ResourceLocalService {
+public class ResourceLocalServiceWrapper implements ResourceLocalService,
+	ServiceWrapper<ResourceLocalService> {
 	public ResourceLocalServiceWrapper(
 		ResourceLocalService resourceLocalService) {
 		_resourceLocalService = resourceLocalService;
@@ -385,12 +386,26 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService {
 			newPrimKey);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ResourceLocalService getWrappedResourceLocalService() {
 		return _resourceLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedResourceLocalService(
 		ResourceLocalService resourceLocalService) {
+		_resourceLocalService = resourceLocalService;
+	}
+
+	public ResourceLocalService getWrappedService() {
+		return _resourceLocalService;
+	}
+
+	public void setWrappedService(ResourceLocalService resourceLocalService) {
 		_resourceLocalService = resourceLocalService;
 	}
 

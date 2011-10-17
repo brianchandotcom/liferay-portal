@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDLRecord}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.dynamicdatalists.model;
  * @see       DDLRecord
  * @generated
  */
-public class DDLRecordWrapper implements DDLRecord {
+public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	public DDLRecordWrapper(DDLRecord ddlRecord) {
 		_ddlRecord = ddlRecord;
 	}
@@ -478,7 +480,14 @@ public class DDLRecordWrapper implements DDLRecord {
 		return _ddlRecord.getStatus();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDLRecord getWrappedDDLRecord() {
+		return _ddlRecord;
+	}
+
+	public DDLRecord getWrappedModel() {
 		return _ddlRecord;
 	}
 

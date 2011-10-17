@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BlogsEntry}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.blogs.model;
  * @see       BlogsEntry
  * @generated
  */
-public class BlogsEntryWrapper implements BlogsEntry {
+public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	public BlogsEntryWrapper(BlogsEntry blogsEntry) {
 		_blogsEntry = blogsEntry;
 	}
@@ -661,7 +663,14 @@ public class BlogsEntryWrapper implements BlogsEntry {
 		_blogsEntry.setSmallImageType(smallImageType);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public BlogsEntry getWrappedBlogsEntry() {
+		return _blogsEntry;
+	}
+
+	public BlogsEntry getWrappedModel() {
 		return _blogsEntry;
 	}
 

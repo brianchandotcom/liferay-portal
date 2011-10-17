@@ -209,7 +209,8 @@ public class SocialActivityLocalServiceImpl
 		}
 
 		if ((activity.getActivityId() > 0) ||
-			(mirrorActivity.getActivityId() > 0)) {
+			((mirrorActivity != null) &&
+			 (mirrorActivity.getActivityId() > 0))) {
 
 			throw new PortalException(
 				"Activity and mirror activity must not have primary keys set");

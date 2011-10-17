@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
@@ -61,7 +62,8 @@ public class NonceUtil {
 		while (_nonceDelayQueue.poll() != null);
 	}
 
-	private static final long _NONCE_EXPIRATION = 10 * Time.MINUTE;
+	private static final long _NONCE_EXPIRATION =
+		PropsValues.WEBDAV_NONCE_EXPIRATION * Time.MINUTE;
 
 	private static DelayQueue<NonceDelayed> _nonceDelayQueue =
 		new DelayQueue<NonceDelayed>();

@@ -131,14 +131,14 @@ public class PortletURLImpl
 	}
 
 	public PortletURLImpl(
-		PortletRequestImpl portletRequestImpl, String portletId, long plid,
+		PortletRequest portletRequest, String portletId, long plid,
 		String lifecycle) {
 
 		this(
-			portletRequestImpl.getHttpServletRequest(), portletId, plid,
+			PortalUtil.getHttpServletRequest(portletRequest), portletId, plid,
 			lifecycle);
 
-		_portletRequest = portletRequestImpl;
+		_portletRequest = portletRequest;
 	}
 
 	public void addParameterIncludedInPath(String name) {

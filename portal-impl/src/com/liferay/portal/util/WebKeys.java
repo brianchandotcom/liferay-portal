@@ -366,6 +366,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String SESSION_LISTENER = "SESSION_LISTENER";
 
+	public static final String SETUP_WIZARD_DEFAULT_LOCALE = "SETUP_WIZARD_DEFAULT_LOCALE";
+
 	public static final String SETUP_WIZARD_FINISHED = "SETUP_WIZARD_FINISHED";
 
 	public static final String SETUP_WIZARD_PASSWORD_UPDATED = "SETUP_WIZARD_PASSWORD_UPDATED";

@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 	public void testEditMBCategoryMailingListActiveActions()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,28 +31,7 @@ public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -68,10 +47,10 @@ public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[1]/a/strong"));
+			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[5]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
 <#if (fieldValue == "")>
-	<#assign fieldValue = field.predefinedValue>
+	<#assign fieldValue = fieldStructure.predefinedValue>
 </#if>
 
 <#if (fieldRawValue?is_date)>
@@ -11,7 +11,7 @@
 <div class="aui-field-wrapper-content lfr-forms-field-wrapper">
 	<@aui.input label=label name=namespacedFieldName type="hidden" value=fieldRawValue!"" />
 
-	<@aui.input cssClass=cssClass helpMessage=field.tip label=label name="${namespacedFieldName}formattedDate" type="text" value=fieldValue>
+	<@aui.input cssClass=cssClass helpMessage=fieldStructure.tip label=label name="${namespacedFieldName}formattedDate" type="text" value=fieldValue>
 		<@aui.validator name="date" />
 
 		<#if required>
@@ -19,7 +19,7 @@
 		</#if>
 	</@aui.input>
 
-	${field.children}
+	${fieldStructure.children}
 </div>
 
 <@aui.script use="aui-datepicker">

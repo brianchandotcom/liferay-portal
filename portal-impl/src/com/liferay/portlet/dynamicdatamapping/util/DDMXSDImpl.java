@@ -155,20 +155,20 @@ public class DDMXSDImpl implements DDMXSD {
 				freeMarkerContext.put("fields", fields);
 			}
 
-			Map<String, Object> field =
-				(Map<String, Object>)freeMarkerContext.get("field");
+			Map<String, Object> fieldStructure =
+				(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
 			String childrenHTML = getHTML(
 				pageContext, dynamicElementElement, fields, namespace, mode,
 				readOnly, locale);
 
-			field.put("children", childrenHTML);
+			fieldStructure.put("children", childrenHTML);
 
 			String fieldNamespace = dynamicElementElement.attributeValue(
 				"fieldNamespace", _DEFAULT_NAMESPACE);
 
 			boolean required = GetterUtil.getBoolean(
-				String.valueOf(field.get("required")));
+				String.valueOf(fieldStructure.get("required")));
 
 			if (readOnly) {
 				fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;
@@ -376,8 +376,8 @@ public class DDMXSDImpl implements DDMXSD {
 			parentFieldContext = getFieldContext(parentElement, locale);
 		}
 
-		freeMarkerContext.put("field", fieldContext);
-		freeMarkerContext.put("parentField", parentFieldContext);
+		freeMarkerContext.put("fieldStructure", fieldContext);
+		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
 
 		return freeMarkerContext;
 	}

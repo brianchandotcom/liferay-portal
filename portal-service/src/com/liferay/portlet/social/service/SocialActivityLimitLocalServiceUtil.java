@@ -255,6 +255,16 @@ public class SocialActivityLimitLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivityLimit addActivityLimit(
+		long userId, long groupId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName, int limitPeriod)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addActivityLimit(userId, groupId, classNameId, classPK,
+			activityType, activityCounterName, limitPeriod);
+	}
+
 	public static SocialActivityLimitLocalService getService() {
 		if (_service == null) {
 			_service = (SocialActivityLimitLocalService)PortalBeanLocatorUtil.locate(SocialActivityLimitLocalService.class.getName());

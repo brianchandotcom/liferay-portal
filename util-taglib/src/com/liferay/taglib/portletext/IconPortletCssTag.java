@@ -40,6 +40,13 @@ public class IconPortletCssTag extends IconTag {
 		setCssClass("portlet-css portlet-css-icon lfr-js-required");
 		setImage("../portlet/portlet_css");
 		setMessage("look-and-feel");
+
+		String onClick =
+			"Liferay.Portlet.loadCSSEditor('".concat(
+				portletDisplay.getId()).concat("'); return false;");
+
+		setOnClick(onClick);
+
 		setToolTip(false);
 		setUrl(portletDisplay.getURLPortletCss());
 

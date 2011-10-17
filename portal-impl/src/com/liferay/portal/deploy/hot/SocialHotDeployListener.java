@@ -101,7 +101,9 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent) throws Exception {
+	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();

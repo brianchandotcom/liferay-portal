@@ -5,14 +5,14 @@
 
 <#-- CSS class -->
 
-<#assign cssClass = field.fieldCssClass!"">
+<#assign cssClass = fieldStructure.fieldCssClass!"">
 
 <#-- Field name -->
 
-<#assign fieldName = field.name>
+<#assign fieldName = fieldStructure.name>
 
-<#assign parentName = parentField.name!"">
-<#assign parentType = parentField.type!"">
+<#assign parentName = parentFieldStructure.name!"">
+<#assign parentType = parentFieldStructure.type!"">
 
 <#assign isChildField = parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select"))>
 
@@ -24,10 +24,10 @@
 
 <#-- Predefined value -->
 
-<#assign predefinedValue = field.predefinedValue!"">
+<#assign predefinedValue = fieldStructure.predefinedValue!"">
 
 <#if isChildField>
-	<#assign predefinedValue = parentField.predefinedValue!"">
+	<#assign predefinedValue = parentFieldStructure.predefinedValue!"">
 </#if>
 
 <#-- Field value -->
@@ -44,9 +44,9 @@
 
 <#-- Label -->
 
-<#assign label = field.label!"">
+<#assign label = fieldStructure.label!"">
 
-<#if field.showLabel?? && (field.showLabel == "false")>
+<#if fieldStructure.showLabel?? && (fieldStructure.showLabel == "false")>
 	<#assign label = "">
 </#if>
 
@@ -54,7 +54,7 @@
 
 <#assign required = false>
 
-<#if field.required?? && (field.required == "true")>
+<#if fieldStructure.required?? && (fieldStructure.required == "true")>
 	<#assign required = true>
 </#if>
 

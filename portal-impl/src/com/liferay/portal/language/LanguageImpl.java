@@ -95,7 +95,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(locale, pattern);
 
-			if (arguments != null) {
+			if ((arguments != null) && (arguments.length > 0)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];
@@ -160,7 +160,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(pageContext, pattern);
 
-			if (arguments != null) {
+			if ((arguments != null) && (arguments.length > 0)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];
@@ -228,7 +228,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(pageContext, pattern);
 
-			if (arguments != null) {
+			if ((arguments != null) && (arguments.length > 0)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];
@@ -295,7 +295,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(portletConfig, locale, pattern);
 
-			if (arguments != null) {
+			if ((arguments != null) && (arguments.length > 0)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];

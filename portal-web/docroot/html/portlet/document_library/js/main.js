@@ -34,6 +34,8 @@ AUI().add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var DOCUMENT_LIBRARY_GROUP = 'document-library';
+
 		var REFRESH_FOLDERS = 'refreshFolders';
 
 		var ROWS_PER_PAGE = 'rowsPerPage';
@@ -131,11 +133,11 @@ AUI().add(
 							{
 								circular: false,
 								containers: '.document-entries-paginator',
-								firstPageLinkLabel: '<<',
-								lastPageLinkLabel: '>>',
-								nextPageLinkLabel: '>',
+								firstPageLinkLabel: '&lt;&lt;',
+								lastPageLinkLabel: '&gt;&gt;',
+								nextPageLinkLabel: '&gt;',
 								page: entryPage,
-								prevPageLinkLabel: '<',
+								prevPageLinkLabel: '&lt;',
 								rowsPerPage: config.entryRowsPerPage,
 								rowsPerPageOptions: config.entryRowsPerPageOptions,
 								total: config.entriesTotal
@@ -155,11 +157,11 @@ AUI().add(
 								alwaysVisible: false,
 								circular: false,
 								containers: '.folder-paginator',
-								firstPageLinkLabel: '<<',
-								lastPageLinkLabel: '>>',
-								nextPageLinkLabel: '>',
+								firstPageLinkLabel: '&lt;&lt;',
+								lastPageLinkLabel: '&gt;&gt;',
+								nextPageLinkLabel: '&gt;',
 								page: folderPage,
-								prevPageLinkLabel: '<',
+								prevPageLinkLabel: '&lt;',
 								rowsPerPage: config.folderRowsPerPage,
 								rowsPerPageOptions: config.folderRowsPerPageOptions,
 								total: config.foldersTotal
@@ -476,11 +478,23 @@ AUI().add(
 
 						dd.removeInvalid('a');
 
+						dd.set('groups', DOCUMENT_LIBRARY_GROUP);
+
 						dd.plug(
-							A.Plugin.DDProxy,
-							{
-								moveOnEnd: false
-							}
+							[
+								{
+									cfg: {
+										moveOnEnd: false
+									},
+									fn: A.Plugin.DDProxy
+								},
+								{
+									cfg: {
+										constrain2node: instance._documentLibraryContainer
+									},
+									fn: A.Plugin.DDConstrained
+								}
+							]
 						);
 
 						instance._initDropTargets();
@@ -491,7 +505,14 @@ AUI().add(
 					_initDropTargets: function() {
 						var instance = this;
 
-						instance._documentLibraryContainer.all('[data-folder="true"]').plug(A.Plugin.Drop);
+						var items = instance._documentLibraryContainer.all('[data-folder="true"]');
+
+						items.plug(
+							A.Plugin.Drop,
+							{
+								groups: DOCUMENT_LIBRARY_GROUP
+							}
+						);
 					},
 
 					_initHover: function() {
@@ -643,7 +664,7 @@ AUI().add(
 						var dragNode = event.drag.get('node');
 						var dropTarget = event.drop.get('node');
 
-						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget
+						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget;
 
 						if (!dragNode.compareTo(dropTarget)) {
 							dropTarget.addClass(CSS_ACTIVE_AREA);
@@ -875,7 +896,7 @@ AUI().add(
 							displayStyleButtonsContainer.setContent(displayStyleButtons);
 						}
 
-						var sortButton = instance.byId('sortButton');
+						var sortButton = instance.one('#sortButton', content);
 
 						if (sortButton) {
 							var sortButtonContainer = instance.byId('sortButtonContainer');
@@ -1123,6 +1144,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
+		requires: ['aui-paginator', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
 	}
 );

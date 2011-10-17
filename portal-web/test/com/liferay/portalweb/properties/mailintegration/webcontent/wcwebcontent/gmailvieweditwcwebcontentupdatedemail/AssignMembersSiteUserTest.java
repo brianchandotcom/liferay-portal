@@ -54,11 +54,11 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[4]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -150,6 +150,7 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("userfn userln"),
 					selenium.getText("//tr[3]/td[2]"));
 				assertEquals(RuntimeVariables.replace("usersn"),
@@ -160,8 +161,8 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 					RuntimeVariables.replace("User Selected"));
 				assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
 				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace("Update Associations"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(

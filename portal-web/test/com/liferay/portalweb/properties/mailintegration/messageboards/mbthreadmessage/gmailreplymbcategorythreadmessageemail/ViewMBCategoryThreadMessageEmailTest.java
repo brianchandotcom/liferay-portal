@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 	public void testViewMBCategoryThreadMessageEmail()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name");
 		Thread.sleep(60000);
 
 		for (int second = 0;; second++) {
@@ -32,7 +32,7 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,9 +42,6 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
@@ -68,7 +65,8 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("2"),
 			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+		assertEquals(RuntimeVariables.replace("2"),
+			selenium.getText("//td[5]/a"));
 		assertTrue(selenium.isPartialText("//td[6]/a", "By: userfn userln"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Message Subject"));

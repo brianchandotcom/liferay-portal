@@ -64,14 +64,14 @@ public class TearDownUserTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("View All Users"),
+				assertEquals(RuntimeVariables.replace("Search All Users"),
 					selenium.getText("//a[@id='_125_allUsersLink']"));
 				selenium.clickAt("//a[@id='_125_allUsersLink']",
-					RuntimeVariables.replace("View All Users"));
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("usersn"));
+					RuntimeVariables.replace("userfn"));
 				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -98,15 +98,18 @@ public class TearDownUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace(
+						"\u00ab Back to Users and Organizations Home"),
+					selenium.getText("//a[@id='_125_TabsBack']"));
 				selenium.clickAt("//a[@id='_125_TabsBack']",
 					RuntimeVariables.replace(
 						"\u00ab Back to Users and Organizations Home"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("View All Users"),
+				assertEquals(RuntimeVariables.replace("Search All Users"),
 					selenium.getText("//span/a/span"));
 				selenium.clickAt("//span/a/span",
-					RuntimeVariables.replace("View All Users"));
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.saveScreenShotAndSource();
 

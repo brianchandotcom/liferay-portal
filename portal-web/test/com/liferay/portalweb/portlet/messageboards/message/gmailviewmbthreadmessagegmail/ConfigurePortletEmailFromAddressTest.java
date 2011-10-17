@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 	public void testConfigurePortletEmailFromAddress()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -42,16 +42,14 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -124,5 +122,7 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("liferay.qa.server.trunk@gmail.com",
+			selenium.getValue("//input[@id='_86_emailFromAddress']"));
 	}
 }

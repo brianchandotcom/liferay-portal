@@ -4182,7 +4182,9 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityImpl" name="SocialActivity">
 		<table name="SocialActivity" />
-		<attributes />
+		<attributes>
+			<transient name="assetEntry" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" name="SocialActivityAchievement">
 		<table name="SocialActivityAchievement" />
@@ -4194,7 +4196,9 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityLimitImpl" name="SocialActivityLimit">
 		<table name="SocialActivityLimit" />
-		<attributes />
+		<attributes>
+			<transient name="count" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivitySettingImpl" name="SocialActivitySetting">
 		<table name="SocialActivitySetting" />

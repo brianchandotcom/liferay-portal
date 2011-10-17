@@ -57,7 +57,7 @@ public class AddSiteTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -70,10 +70,28 @@ public class AddSiteTest extends BaseTestCase {
 		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			RuntimeVariables.replace("Site"));
 		selenium.waitForPageToLoad("30000");
+		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 60) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_134_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Site Name"));
@@ -86,6 +104,6 @@ public class AddSiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[4]/td[1]/a"));
 	}
 }

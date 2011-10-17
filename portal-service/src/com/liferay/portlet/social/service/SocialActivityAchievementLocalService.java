@@ -231,4 +231,9 @@ public interface SocialActivityAchievementLocalService
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void addActivityAchievement(long userId, long groupId,
+		com.liferay.portlet.social.model.SocialAchievement achievement)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

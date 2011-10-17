@@ -9,6 +9,16 @@
 <tr><td rowspan="1" colspan="3">GmailServer_TearDownEmailTest</td></tr>
 </thead><tbody>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
 	<td>openWindow</td>
 	<td>http://www.gmail.com/</td>
 	<td>gmail</td>
@@ -25,23 +35,18 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>10000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
-	<td>SignedIn</td>
+	<td>SignedIn1</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${SignedIn}</td>
-	<td>SignedOut</td>
+	<td>!${SignedIn1}</td>
+	<td>SignedOut1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -60,12 +65,12 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>SignedOut</td>
+	<td>SignedOut1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>link=Sign in as a different user</td>
+	<td>link=Sign out and sign in as a different user</td>
 	<td>signInAsADifferentUserPresent</td>
 </tr>
 <tr>
@@ -75,8 +80,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Sign in as a different user</td>
-	<td>Sign in as a different user</td>
+	<td>link=Sign out and sign in as a different user</td>
+	<td>Sign out and sign in as a different user</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -170,12 +175,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>15000</td>
 	<td></td>
 </tr>
 <tr>
@@ -205,12 +205,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>10000</td>
 	<td></td>
 </tr>
 <tr>

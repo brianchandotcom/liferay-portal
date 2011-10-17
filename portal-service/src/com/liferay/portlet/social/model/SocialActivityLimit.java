@@ -32,4 +32,7 @@ public interface SocialActivityLimit extends SocialActivityLimitModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialActivityLimitImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public int getCount(int limitPeriod);
+
+	public void setCount(int limitPeriod, int count);
 }

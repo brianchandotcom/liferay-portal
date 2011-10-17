@@ -375,6 +375,16 @@ public class SocialActivityWrapper implements SocialActivity {
 		_socialActivity.persist();
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry getAssetEntry()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivity.getAssetEntry();
+	}
+
+	public void setAssetEntry(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		_socialActivity.setAssetEntry(assetEntry);
+	}
+
 	public SocialActivity getWrappedSocialActivity() {
 		return _socialActivity;
 	}

@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 	public void testConfigureMBPortletEmailFromGmailServer()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name");
 
 		for (int second = 0;; second++) {
 			if (second >= 60) {
@@ -31,7 +31,7 @@ public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Site Name")) {
+				if (selenium.isElementPresent("link=Message Boards Test Page")) {
 					break;
 				}
 			}
@@ -41,9 +41,6 @@ public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
-		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));

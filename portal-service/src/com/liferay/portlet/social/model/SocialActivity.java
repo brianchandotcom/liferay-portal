@@ -31,4 +31,9 @@ public interface SocialActivity extends SocialActivityModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialActivityImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portlet.asset.model.AssetEntry getAssetEntry()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void setAssetEntry(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry);
 }

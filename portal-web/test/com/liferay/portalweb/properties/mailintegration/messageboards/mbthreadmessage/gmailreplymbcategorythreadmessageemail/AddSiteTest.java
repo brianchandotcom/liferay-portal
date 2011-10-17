@@ -68,8 +68,11 @@ public class AddSiteTest extends BaseTestCase {
 		}
 
 		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Site"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
-			RuntimeVariables.replace("User"));
+			RuntimeVariables.replace("Site"));
 		selenium.waitForPageToLoad("30000");
 		selenium.saveScreenShotAndSource();
 
@@ -101,6 +104,6 @@ public class AddSiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[4]/td[1]/a"));
 	}
 }

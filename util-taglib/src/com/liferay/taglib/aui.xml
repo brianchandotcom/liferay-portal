@@ -604,6 +604,13 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>data</name>
+				<inputType><![CDATA[java.util.Map<java.lang.String,java.lang.Object>]]></inputType>
+				<outputType><![CDATA[java.util.Map<java.lang.String,java.lang.Object>]]></outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

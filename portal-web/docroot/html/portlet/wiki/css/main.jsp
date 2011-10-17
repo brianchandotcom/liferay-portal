@@ -270,6 +270,8 @@
 
 	.entry-links h2 {
 		border-width: 0;
+		font-size: 1em;
+		font-weight: bold;
 	}
 
 	.page-info {

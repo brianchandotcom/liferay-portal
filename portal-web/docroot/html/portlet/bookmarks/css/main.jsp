@@ -27,6 +27,6 @@
 	}
 
 	.lfr-panel-content {
-		overflow:auto;
+		overflow: auto;
 	}
 }

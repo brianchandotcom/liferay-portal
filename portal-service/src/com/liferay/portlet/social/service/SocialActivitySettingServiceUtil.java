@@ -37,6 +37,44 @@ public class SocialActivitySettingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
+		long groupId, java.lang.String className, int activityType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getActivityDefinition(groupId, className, activityType);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> getActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActivityDefinitions(groupId, className);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getJSONActivityDefinitions(groupId, className);
+	}
+
+	public static void updateActivitySetting(long groupId,
+		java.lang.String className, boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateActivitySetting(groupId, className, enabled);
+	}
+
+	public static void updateActivitySettings(long groupId,
+		java.lang.String className, int activityType,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> counters)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateActivitySettings(groupId, className, activityType, counters);
+	}
+
 	public static SocialActivitySettingService getService() {
 		if (_service == null) {
 			_service = (SocialActivitySettingService)PortalBeanLocatorUtil.locate(SocialActivitySettingService.class.getName());

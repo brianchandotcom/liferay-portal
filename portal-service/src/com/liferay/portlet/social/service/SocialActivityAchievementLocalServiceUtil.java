@@ -261,6 +261,13 @@ public class SocialActivityAchievementLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void addActivityAchievement(long userId, long groupId,
+		com.liferay.portlet.social.model.SocialAchievement achievement)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().addActivityAchievement(userId, groupId, achievement);
+	}
+
 	public static SocialActivityAchievementLocalService getService() {
 		if (_service == null) {
 			_service = (SocialActivityAchievementLocalService)PortalBeanLocatorUtil.locate(SocialActivityAchievementLocalService.class.getName());

@@ -566,7 +566,7 @@
 }
 
 .ie7 .aui-paginator-link {
-	font-size: 0;
+	color: transparent;
 	overflow: hidden;
 	text-indent: 0;
 }
@@ -578,12 +578,17 @@
 	text-shadow: -1px -1px #003C57;
 }
 
+.ie7 .aui-paginator-current-page {
+	color: #FFF;
+}
+
 .aui-paginator-page-link {
 	text-indent: 0;
 	height: auto;
 }
 
 .ie7 .aui-paginator-page-link {
+	color: #1F1E1E;
 	font-size: 1em;
 	height: auto;
 	overflow: visible;

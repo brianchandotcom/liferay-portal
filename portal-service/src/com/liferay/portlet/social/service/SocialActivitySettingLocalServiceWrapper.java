@@ -250,6 +250,48 @@ public class SocialActivitySettingLocalServiceWrapper
 		_socialActivitySettingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
+		long groupId, java.lang.String className, int activityType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingLocalService.getActivityDefinition(groupId,
+			className, activityType);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> getActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingLocalService.getActivityDefinitions(groupId,
+			className);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getActivitySettings(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingLocalService.getActivitySettings(groupId);
+	}
+
+	public boolean isEnabled(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingLocalService.isEnabled(groupId, classNameId);
+	}
+
+	public void updateActivitySetting(long groupId, java.lang.String className,
+		boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingLocalService.updateActivitySetting(groupId,
+			className, enabled);
+	}
+
+	public void updateActivitySettings(long groupId,
+		java.lang.String className, int activityType,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> activityCounterDefinitions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingLocalService.updateActivitySettings(groupId,
+			className, activityType, activityCounterDefinitions);
+	}
+
 	public SocialActivitySettingLocalService getWrappedSocialActivitySettingLocalService() {
 		return _socialActivitySettingLocalService;
 	}

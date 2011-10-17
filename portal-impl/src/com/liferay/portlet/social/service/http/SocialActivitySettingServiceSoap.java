@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.social.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,81 @@ package com.liferay.portlet.social.service.http;
  * @generated
  */
 public class SocialActivitySettingServiceSoap {
+	public static com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
+		long groupId, java.lang.String className, int activityType)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.social.model.SocialActivityDefinition returnValue =
+				SocialActivitySettingServiceUtil.getActivityDefinition(groupId,
+					className, activityType);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivityDefinition[] getActivityDefinitions(
+		long groupId, java.lang.String className) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> returnValue =
+				SocialActivitySettingServiceUtil.getActivityDefinitions(groupId,
+					className);
+
+			return returnValue.toArray(new com.liferay.portlet.social.model.SocialActivityDefinition[returnValue.size()]);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getJSONActivityDefinitions(long groupId,
+		java.lang.String className) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONArray returnValue = SocialActivitySettingServiceUtil.getJSONActivityDefinitions(groupId,
+					className);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateActivitySetting(long groupId,
+		java.lang.String className, boolean enabled) throws RemoteException {
+		try {
+			SocialActivitySettingServiceUtil.updateActivitySetting(groupId,
+				className, enabled);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateActivitySettings(long groupId,
+		java.lang.String className, int activityType,
+		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> counters)
+		throws RemoteException {
+		try {
+			SocialActivitySettingServiceUtil.updateActivitySettings(groupId,
+				className, activityType, counters);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SocialActivitySettingServiceSoap.class);
 }

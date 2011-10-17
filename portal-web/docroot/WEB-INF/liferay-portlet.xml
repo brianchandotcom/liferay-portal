@@ -236,8 +236,8 @@
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>12.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory</asset-renderer-factory>
-		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.DLFileEntryAtomCollectionAdapter</atom-collection-adapter>
-		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.DLFolderAtomCollectionAdapter</atom-collection-adapter>
+		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.FileEntryAtomCollectionAdapter</atom-collection-adapter>
+		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.FolderAtomCollectionAdapter</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFileEntryCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFolderCustomAttributesDisplay</custom-attributes-display>
 		<workflow-handler>com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler</workflow-handler>

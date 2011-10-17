@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseMediaAtomCollectionAdapter;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -27,10 +29,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -43,52 +42,52 @@ import java.util.List;
 /**
  * @author Igor Spasic
  */
-public class DLFileEntryAtomCollectionAdapter
-	extends BaseMediaAtomCollectionAdapter<DLFileEntry> {
+public class FileEntryAtomCollectionAdapter
+	extends BaseMediaAtomCollectionAdapter<FileEntry> {
 
 	public String getCollectionName() {
-		return _COLLECTION_NAME;
+		return COLLECTION_NAME;
 	}
 
-	public List<String> getEntryAuthors(DLFileEntry dlFileEntry) {
+	public List<String> getEntryAuthors(FileEntry fileEntry) {
 		List<String> authors = new ArrayList<String>();
 
-		authors.add(dlFileEntry.getUserName());
+		authors.add(fileEntry.getUserName());
 
 		return authors;
 	}
 
 	public AtomEntryContent getEntryContent(
-		DLFileEntry dlFileEntry, AtomRequestContext atomRequestContext) {
+		FileEntry fileEntry, AtomRequestContext atomRequestContext) {
 
 		AtomEntryContent atomEntryContent = new AtomEntryContent(
 			AtomEntryContent.Type.MEDIA);
 
-		atomEntryContent.setMimeType(dlFileEntry.getMimeType());
+		atomEntryContent.setMimeType(fileEntry.getMimeType());
 
 		String srcLink = AtomUtil.createEntryLink(
-			atomRequestContext, _COLLECTION_NAME,
-			dlFileEntry.getFileEntryId() + ":media");
+			atomRequestContext, COLLECTION_NAME,
+			fileEntry.getFileEntryId() + ":media");
 
 		atomEntryContent.setSrcLink(srcLink);
 
 		return atomEntryContent;
 	}
 
-	public String getEntryId(DLFileEntry dlFileEntry) {
-		return String.valueOf(dlFileEntry.getPrimaryKey());
+	public String getEntryId(FileEntry fileEntry) {
+		return String.valueOf(fileEntry.getPrimaryKey());
 	}
 
-	public String getEntrySummary(DLFileEntry dlFileEntry) {
-		return dlFileEntry.getDescription();
+	public String getEntrySummary(FileEntry fileEntry) {
+		return fileEntry.getDescription();
 	}
 
-	public String getEntryTitle(DLFileEntry dlFileEntry) {
-		return dlFileEntry.getTitle();
+	public String getEntryTitle(FileEntry fileEntry) {
+		return fileEntry.getTitle();
 	}
 
-	public Date getEntryUpdated(DLFileEntry dlFileEntry) {
-		return dlFileEntry.getModifiedDate();
+	public Date getEntryUpdated(FileEntry fileEntry) {
+		return fileEntry.getModifiedDate();
 	}
 
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
@@ -97,21 +96,21 @@ public class DLFileEntryAtomCollectionAdapter
 	}
 
 	@Override
-	public String getMediaContentType(DLFileEntry dlFileEntry) {
-		return dlFileEntry.getMimeType();
+	public String getMediaContentType(FileEntry fileEntry) {
+		return fileEntry.getMimeType();
 	}
 
 	@Override
-	public String getMediaName(DLFileEntry dlFileEntry) {
-		return dlFileEntry.getTitle();
+	public String getMediaName(FileEntry fileEntry) {
+		return fileEntry.getTitle();
 	}
 
 	@Override
-	public InputStream getMediaStream(DLFileEntry dlFileEntry)
+	public InputStream getMediaStream(FileEntry fileEntry)
 		throws AtomException {
 
 		try {
-			return dlFileEntry.getContentStream();
+			return fileEntry.getContentStream();
 		}
 		catch (Exception ex) {
 			throw new AtomException(SC_INTERNAL_SERVER_ERROR, ex);
@@ -125,69 +124,65 @@ public class DLFileEntryAtomCollectionAdapter
 
 		long fileEntryId = GetterUtil.getLong(resourceName);
 
-		DLFileEntryServiceUtil.deleteFileEntry(fileEntryId);
+		DLAppServiceUtil.deleteFileEntry(fileEntryId);
 	}
 
 	@Override
-	protected DLFileEntry doGetEntry(
+	protected FileEntry doGetEntry(
 			String resourceName, AtomRequestContext atomRequestContext)
 		throws Exception {
 
 		long fileEntryId = GetterUtil.getLong(resourceName);
 
-		return DLFileEntryServiceUtil.getFileEntry(fileEntryId);
+		return DLAppServiceUtil.getFileEntry(fileEntryId);
 	}
 
 	@Override
-	protected Iterable<DLFileEntry> doGetFeedEntries(
+	protected Iterable<FileEntry> doGetFeedEntries(
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long groupId = 0;
-
 		long folderId = atomRequestContext.getLongParameter("folderId");
 
-		if (folderId != 0) {
-			DLFolder dlFolder = DLFolderServiceUtil.getFolder(folderId);
+		long repositoryId = 0;
 
-			groupId = dlFolder.getGroupId();
+		if (folderId != 0) {
+			Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+			repositoryId = folder.getRepositoryId();
 		}
 		else {
-			groupId = atomRequestContext.getLongParameter("groupId");
+			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
-		int count = DLFileEntryServiceUtil.getFileEntriesCount(
-			groupId, folderId);
+		int count = DLAppServiceUtil.getFileEntriesCount(
+			repositoryId, folderId);
 
-		AtomPager atomPager = new AtomPager(
-			atomRequestContext, count);
+		AtomPager atomPager = new AtomPager(atomRequestContext, count);
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-		return DLFileEntryServiceUtil.getFileEntries(
-			groupId, folderId, atomPager.getStart(), atomPager.getEnd() + 1,
-			new EntryNameComparator());
+		return DLAppServiceUtil.getFileEntries(
+			repositoryId, folderId, atomPager.getStart(),
+			atomPager.getEnd() + 1, new EntryNameComparator());
 	}
 
 	@Override
-	protected DLFileEntry doPostEntry(
+	protected FileEntry doPostEntry(
 			String title, String summary, String content, Date date,
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long groupId = 0;
-		long repositoryId = 0;
-
 		long folderId = atomRequestContext.getLongParameter("folderId");
 
-		if (folderId != 0) {
-			DLFolder dlFolder = DLFolderServiceUtil.getFolder(folderId);
+		long repositoryId = 0;
 
-			groupId = dlFolder.getGroupId();
-			repositoryId = dlFolder.getRepositoryId();
+		if (folderId != 0) {
+			Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+			repositoryId = folder.getRepositoryId();
 		}
 		else {
-			groupId = atomRequestContext.getLongParameter("groupId");
 			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
@@ -204,33 +199,29 @@ public class DLFileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.addFileEntry(
-			groupId, repositoryId, folderId, title, mimeType, title, summary,
-			null, 0, null, null, contentInputStream, contentDecoded.length,
-			serviceContext);
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			repositoryId, folderId, title, mimeType, title, summary, null,
+			contentInputStream, contentDecoded.length, serviceContext);
 
-		return dlFileEntry;
+		return fileEntry;
 	}
 
 	@Override
-	protected DLFileEntry doPostMedia(
+	protected FileEntry doPostMedia(
 			String mimeType, String slug, InputStream inputStream,
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long groupId = 0;
-		long repositoryId = 0;
-
 		long folderId = atomRequestContext.getLongParameter("folderId");
 
-		if (folderId != 0) {
-			DLFolder dlFolder = DLFolderServiceUtil.getFolder(folderId);
+		long repositoryId = 0;
 
-			groupId = dlFolder.getGroupId();
-			repositoryId = dlFolder.getRepositoryId();
+		if (folderId != 0) {
+			Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+			repositoryId = folder.getRepositoryId();
 		}
 		else {
-			groupId = atomRequestContext.getLongParameter("groupId");
 			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
@@ -249,17 +240,16 @@ public class DLFileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLFileEntry dlFileEntry = DLFileEntryServiceUtil.addFileEntry(
-			groupId, repositoryId, folderId, title, mimeType, title,
-			description, null, 0, null, null, contentInputStream,
-			content.length, serviceContext);
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			repositoryId, folderId, title, mimeType, title, description, null,
+			contentInputStream, content.length, serviceContext);
 
-		return dlFileEntry;
+		return fileEntry;
 	}
 
 	@Override
 	protected void doPutEntry(
-			DLFileEntry dlFileEntry, String title, String summary,
+			FileEntry fileEntry, String title, String summary,
 			String content, Date date, AtomRequestContext atomRequestContext)
 		throws Exception {
 
@@ -276,14 +266,14 @@ public class DLFileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLFileEntryServiceUtil.updateFileEntry(dlFileEntry.getFileEntryId(),
-			title, mimeType, title, summary, null, true, 0, null, null,
-			contentInputStream, contentDecoded.length, serviceContext);
+		DLAppServiceUtil.updateFileEntry(fileEntry.getFileEntryId(),
+			title, mimeType, title, summary, null, true, contentInputStream,
+			contentDecoded.length, serviceContext);
 	}
 
 	@Override
 	protected void doPutMedia(
-			DLFileEntry dlFileEntry, String mimeType, String slug,
+			FileEntry fileEntry, String mimeType, String slug,
 			InputStream inputStream, AtomRequestContext atomRequestContext)
 		throws Exception {
 
@@ -302,11 +292,11 @@ public class DLFileEntryAtomCollectionAdapter
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLFileEntryServiceUtil.updateFileEntry(dlFileEntry.getFileEntryId(),
-			slug, mimeType, title, description, null, true, 0, null, null,
-			contentInputStream, content.length, serviceContext);
+		DLAppServiceUtil.updateFileEntry(fileEntry.getFileEntryId(),
+			slug, mimeType, title, description, null, true, contentInputStream,
+			content.length, serviceContext);
 	}
 
-	static final String _COLLECTION_NAME = "files";
+	protected static final String COLLECTION_NAME = "files";
 
 }

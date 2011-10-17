@@ -14,11 +14,57 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portlet.social.model.SocialAchievement;
+import com.liferay.portlet.social.model.SocialActivityAchievement;
 import com.liferay.portlet.social.service.base.SocialActivityAchievementLocalServiceBaseImpl;
 
 /**
+ * @author Zsolt Berentey
  * @author Brian Wing Shun Chan
  */
 public class SocialActivityAchievementLocalServiceImpl
 	extends SocialActivityAchievementLocalServiceBaseImpl {
+
+	public void addActivityAchievement(
+			long userId, long groupId, SocialAchievement achievement)
+		throws PortalException, SystemException {
+
+		SocialActivityAchievement activityAchievement =
+			socialActivityAchievementPersistence.fetchByG_U_N(
+				groupId, userId, achievement.getName());
+
+		if (activityAchievement != null) {
+			return;
+		}
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		long activityAchievementId = counterLocalService.increment();
+
+		activityAchievement = socialActivityAchievementPersistence.create(
+			activityAchievementId);
+
+		activityAchievement.setGroupId(groupId);
+		activityAchievement.setCompanyId(user.getCompanyId());
+		activityAchievement.setUserId(userId);
+		activityAchievement.setCreateDate(System.currentTimeMillis());
+
+		int count = socialActivityAchievementPersistence.countByG_N(
+			groupId, achievement.getName());
+
+		if (count == 0) {
+			activityAchievement.setFirstInGroup(true);
+		}
+
+		activityAchievement.setName(achievement.getName());
+
+		socialActivityAchievementPersistence.update(activityAchievement, false);
+
+		// TODO
+
+	}
+
 }

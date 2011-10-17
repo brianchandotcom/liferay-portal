@@ -71,16 +71,16 @@
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent1Present</td>
+	<td>webContentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${webContent1Present}</td>
-	<td>WebContent1NotPresent</td>
+	<td>!${webContentPresent}</td>
+	<td>WebContentNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_15_allRowIds</td>
+	<td>//input[@name='_15_allRowIds']</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
@@ -94,128 +94,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>WebContent1NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent2Present}</td>
-	<td>WebContent2NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td>Checkbox</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>WebContent2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent3Present}</td>
-	<td>WebContent3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td>Checkbox</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent4Present}</td>
-	<td>WebContent4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td>Checkbox</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>webContent5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${webContent5Present}</td>
-	<td>WebContent5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>_15_allRowIds</td>
-	<td>Checkbox</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>WebContent5NotPresent</td>
+	<td>WebContentNotPresent</td>
 	<td></td>
 </tr>
 

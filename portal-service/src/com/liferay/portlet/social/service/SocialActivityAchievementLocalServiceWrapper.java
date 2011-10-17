@@ -250,6 +250,14 @@ public class SocialActivityAchievementLocalServiceWrapper
 		_socialActivityAchievementLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void addActivityAchievement(long userId, long groupId,
+		com.liferay.portlet.social.model.SocialAchievement achievement)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityAchievementLocalService.addActivityAchievement(userId,
+			groupId, achievement);
+	}
+
 	public SocialActivityAchievementLocalService getWrappedSocialActivityAchievementLocalService() {
 		return _socialActivityAchievementLocalService;
 	}

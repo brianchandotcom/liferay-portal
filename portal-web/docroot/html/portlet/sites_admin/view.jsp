@@ -112,6 +112,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 	headerNames.add("active");
 	headerNames.add("pending-requests");
+	headerNames.add("tags");
 
 	headerNames.add(StringPool.BLANK);
 
@@ -222,6 +223,20 @@ pageContext.setAttribute("portletURL", portletURL);
 		else {
 			row.addText(StringPool.BLANK);
 		}
+	%>
+
+		<liferay-util:buffer var="assetTagsSummary">
+			<liferay-ui:asset-tags-summary
+				className="<%= Group.class.getName() %>"
+				classPK="<%= group.getGroupId() %>"
+			/>
+		</liferay-util:buffer>
+
+	<%
+
+		// Tags
+
+		row.addText(assetTagsSummary);
 
 		// Action
 

@@ -157,7 +157,7 @@ AUI().add(
 						var fieldName = rule.fieldName;
 						var validatorName = rule.validatorName;
 
-						if (rule.body && !rule.isCustom) {
+						if (rule.body && !rule.custom) {
 							value = rule.body;
 						}
 
@@ -171,7 +171,9 @@ AUI().add(
 
 						fieldRules[validatorName] = value;
 
-						if (rule.isCustom) {
+						fieldRules.custom = rule.custom;
+
+						if (rule.custom) {
 							DEFAULTS_FORM_VALIDATOR.RULES[validatorName] = rule.body;
 						}
 

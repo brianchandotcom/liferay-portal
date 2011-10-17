@@ -52,6 +52,12 @@ if (fileEntry != null) {
 	folder = fileEntry.getFolder();
 }
 
+DLFolder dlFolder = DLFolderLocalServiceUtil.fetchFolder(folderId);
+
+if (dlFolder == null) {
+	folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+}
+
 FileVersion fileVersion = null;
 
 long fileVersionId = 0;
@@ -166,7 +172,7 @@ else if (dlFileEntryType != null) {
 	<portlet:param name="uploader" value="classic" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
+<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -214,6 +220,17 @@ else if (dlFileEntryType != null) {
 			</c:if>
 		</aui:field-wrapper>
 
+		<c:if test="<%= dlFolder == null %>">
+
+			<%
+			folderId = 0;
+			%>
+
+			<aui:script>
+				document.<portlet:namespace />fm.<portlet:namespace />folderId.value = 0;
+			</aui:script>
+		</c:if>
+
 		<%
 		String folderName = StringPool.BLANK;
 
@@ -228,7 +245,6 @@ else if (dlFileEntryType != null) {
 		else {
 			folderName = LanguageUtil.get(pageContext, "documents-home");
 		}
-
 		%>
 
 		<portlet:renderURL var="viewFolderURL">
@@ -246,7 +262,13 @@ else if (dlFileEntryType != null) {
 			</aui:validator>
 		</aui:input>
 
-		<aui:input name="title" />
+		<aui:input name="title">
+			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
+				function(val, fieldNode, ruleValue) {
+					return ((val != '') || A.one('#<portlet:namespace />file').val() != '');
+				}
+			</aui:validator>
+		</aui:input>
 
 		<c:if test='<%= ((folder == null) || folder.isSupportsMetadata()) %>'>
 			<aui:input name="description" />

@@ -19,21 +19,33 @@
 <aui:script position="inline">
 	Liferay.Util.addInputFocus();
 
-	<c:if test="<%= !themeDisplay.isStatePopUp() %>">
-
-		<%
-		String scroll = ParamUtil.getString(request, "scroll");
-		%>
-
-		<c:if test="<%= Validator.isNotNull(scroll) %>">
-			Liferay.on(
-				'allPortletsReady',
-				function(event) {
-					document.getElementById('<%= HtmlUtil.escape(scroll) %>').scrollIntoView();
+	<c:choose>
+		<c:when test="<%= themeDisplay.isStatePopUp() %>">
+			Liferay.Util.getTop().Liferay.fire(
+				'popupReady',
+				{
+					doc: document,
+					win: window,
+					windowName: Liferay.Util.getWindowName()
 				}
 			);
-		</c:if>
-	</c:if>
+		</c:when>
+		<c:otherwise>
+
+			<%
+			String scroll = ParamUtil.getString(request, "scroll");
+			%>
+
+			<c:if test="<%= Validator.isNotNull(scroll) %>">
+				Liferay.on(
+					'allPortletsReady',
+					function(event) {
+						document.getElementById('<%= HtmlUtil.escape(scroll) %>').scrollIntoView();
+					}
+				);
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 </aui:script>
 
 <aui:script use="aui-base">

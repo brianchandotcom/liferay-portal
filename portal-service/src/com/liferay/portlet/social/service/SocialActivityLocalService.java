@@ -267,15 +267,12 @@ public interface SocialActivityLocalService extends PersistedModelLocalService {
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social activity or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addActivity(
-		long userId, long groupId, java.util.Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -290,14 +287,18 @@ public interface SocialActivityLocalService extends PersistedModelLocalService {
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social activity or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addActivity(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addActivity(
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -318,16 +319,12 @@ public interface SocialActivityLocalService extends PersistedModelLocalService {
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social stored activity, or the existing activity if it
-	matches the parameters, or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addUniqueActivity(
-		long userId, long groupId, java.util.Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -347,14 +344,12 @@ public interface SocialActivityLocalService extends PersistedModelLocalService {
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social stored activity, or an existing activity that matches
-	the parameters, or <code>null</code> if an import is processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addUniqueActivity(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

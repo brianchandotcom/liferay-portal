@@ -14,8 +14,14 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -24,6 +30,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,13 +62,22 @@ public class SetupWizardAction extends Action {
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
-		if (Validator.isNull(cmd)) {
-			return mapping.findForward("portal.setup_wizard");
-		}
-
 		try {
-			if (cmd.equals(Constants.UPDATE)) {
-				SetupWizardUtil.processSetup(request);
+			if (Validator.isNull(cmd)) {
+				return mapping.findForward("portal.setup_wizard");
+			}
+			else if (cmd.equals(Constants.TRANSLATE)) {
+				SetupWizardUtil.updateLanguage(request, response);
+
+				return mapping.findForward("portal.setup_wizard");
+			}
+			else if (cmd.equals(Constants.TEST)) {
+				testDatabase(request, response);
+
+				return null;
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				SetupWizardUtil.updateSetup(request, response);
 			}
 
 			response.sendRedirect(
@@ -80,6 +97,53 @@ public class SetupWizardAction extends Action {
 				return null;
 			}
 		}
+	}
+
+	protected void putMessage(
+		HttpServletRequest request, JSONObject jsonObject, String key,
+		Object... arguments) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String message = LanguageUtil.format(
+			themeDisplay.getLocale(), key, arguments);
+
+		jsonObject.put("message", message);
+	}
+
+	protected void testDatabase(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			SetupWizardUtil.testDatabase(request);
+
+			jsonObject.put("success", true);
+
+			putMessage(
+				request, jsonObject,
+				"database-connection-was-established-sucessfully");
+		}
+		catch (ClassNotFoundException cnfe) {
+			putMessage(
+				request, jsonObject, "database-driver-x-is-not-present",
+				cnfe.getLocalizedMessage());
+		}
+		catch (SQLException sqle) {
+			putMessage(
+				request, jsonObject,
+				"database-connection-could-not-be-established");
+		}
+
+		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+		response.setHeader(
+			HttpHeaders.CACHE_CONTROL,
+			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+
+		ServletResponseUtil.write(response, jsonObject.toString());
 	}
 
 }

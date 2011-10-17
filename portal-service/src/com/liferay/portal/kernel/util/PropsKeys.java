@@ -24,9 +24,9 @@ public interface PropsKeys {
 	public static final String ADMIN_DEFAULT_ROLE_NAMES = "admin.default.role.names";
 
 	public static final String ADMIN_DEFAULT_USER_GROUP_NAMES = "admin.default.user.group.names";
-
+	
 	public static final String ADMIN_EMAIL_FROM_ADDRESS = "admin.email.from.address";
-
+	
 	public static final String ADMIN_EMAIL_FROM_NAME = "admin.email.from.name";
 
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_BODY = "admin.email.password.reset.body";
@@ -346,6 +346,10 @@ public interface PropsKeys {
 	public static final String COMMUNITIES_CONTROL_PANEL_MEMBERS_VISIBLE = "communities.control.panel.members.visible";
 
 	public static final String COMPANY_DEFAULT_HOME_URL = "company.default.home.url";
+
+	public static final String COMPANY_DEFAULT_LOCALE = "company.default.locale";
+
+	public static final String COMPANY_DEFAULT_TIME_ZONE = "company.default.time.zone";
 
 	public static final String COMPANY_DEFAULT_WEB_ID = "company.default.web.id";
 
@@ -1381,6 +1385,8 @@ public interface PropsKeys {
 
 	public static final String NTLM_AUTH_ENABLED = "ntlm.auth.enabled";
 
+	public static final String NTLM_AUTH_NEGOTIATE_FLAGS = "ntlm.auth.negotiate.flags";
+
 	public static final String NTLM_DOMAIN = "ntlm.auth.domain";
 
 	public static final String NTLM_DOMAIN_CONTROLLER = "ntlm.auth.domain.controller";
@@ -1721,7 +1727,11 @@ public interface PropsKeys {
 
 	public static final String SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE = "session.verify.serializable.attribute";
 
+	public static final String SETUP_DATABASE_DRIVER_CLASS_NAME = "setup.database.driverClassName";
+
 	public static final String SETUP_DATABASE_TYPES = "setup.database.types";
+
+	public static final String SETUP_DATABASE_URL = "setup.database.url";
 
 	public static final String SETUP_WIZARD_ENABLED = "setup.wizard.enabled";
 
@@ -1800,6 +1810,8 @@ public interface PropsKeys {
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
+
+	public static final String SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH = "social.activity.counter.period.length";
 
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
 
@@ -2032,6 +2044,8 @@ public interface PropsKeys {
 	public static final String WEB_SERVER_PROXY_LEGACY_MODE = "web.server.proxy.legacy.mode";
 
 	public static final String WEBDAV_IGNORE = "webdav.ignore";
+
+	public static final String WEBDAV_NONCE_EXPIRATION = "webdav.nonce.expiration";
 
 	public static final String WIDGET_SERVLET_MAPPING = "widget.servlet.mapping";
 

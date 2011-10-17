@@ -22,6 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SignOutTest extends BaseTestCase {
 	public void testSignOut() throws Exception {
+		selenium.selectWindow("null");
+		selenium.saveScreenShotAndSource();
+		selenium.selectFrame("relative=top");
+		selenium.saveScreenShotAndSource();
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

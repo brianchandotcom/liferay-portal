@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
+import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -25,7 +26,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -88,26 +89,16 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social activity or <code>null</code> if an import is
-	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addActivity(
+	public void addActivity(
 			long userId, long groupId, Date createDate, String className,
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
 		if (ImportExportThreadLocal.isImportInProcess()) {
-			return null;
-		}
-
-		if ((type == SocialActivityConstants.TYPE_ADD_VOTE) ||
-			(type == SocialActivityConstants.TYPE_SUBSCRIBE) ||
-			(type == SocialActivityConstants.TYPE_UNSUBSCRIBE) ||
-			(type == SocialActivityConstants.TYPE_VIEW)) {
-
-			return null;
+			return;
 		}
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -124,11 +115,7 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		long activityId = counterLocalService.increment(
-			SocialActivity.class.getName());
-
-		SocialActivity activity = socialActivityPersistence.create(
-			activityId);
+		SocialActivity activity = socialActivityPersistence.create(0);
 
 		activity.setGroupId(groupId);
 		activity.setCompanyId(user.getCompanyId());
@@ -141,30 +128,29 @@ public class SocialActivityLocalServiceImpl
 		activity.setExtraData(extraData);
 		activity.setReceiverUserId(receiverUserId);
 
-		socialActivityPersistence.update(activity, false);
+		AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		activity.setAssetEntry(assetEntry);
+
+		SocialActivity mirrorActivity = null;
 
 		if ((receiverUserId > 0) && (userId != receiverUserId)) {
-			long mirrorActivityId = counterLocalService.increment(
-				SocialActivity.class.getName());
-
-			SocialActivity mirrorActivity = socialActivityPersistence.create(
-				mirrorActivityId);
+			mirrorActivity = socialActivityPersistence.create(0);
 
 			mirrorActivity.setGroupId(groupId);
 			mirrorActivity.setCompanyId(user.getCompanyId());
 			mirrorActivity.setUserId(receiverUserId);
 			mirrorActivity.setCreateDate(createDate.getTime());
-			mirrorActivity.setMirrorActivityId(activityId);
 			mirrorActivity.setClassNameId(classNameId);
 			mirrorActivity.setClassPK(classPK);
 			mirrorActivity.setType(type);
 			mirrorActivity.setExtraData(extraData);
 			mirrorActivity.setReceiverUserId(user.getUserId());
-
-			socialActivityPersistence.update(mirrorActivity, false);
+			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
-		return activity;
+		socialActivityLocalService.addActivity(activity, mirrorActivity);
 	}
 
 	/**
@@ -178,15 +164,17 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social activity or <code>null</code> if an import is
-	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addActivity(
+	public void addActivity(
 			long userId, long groupId, String className, long classPK, int type,
 			String extraData, long receiverUserId)
 		throws PortalException, SystemException {
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			return;
+		}
 
 		Date createDate = new Date();
 
@@ -206,9 +194,54 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		return addActivity(
+		addActivity(
 			userId, groupId, createDate, className, classPK, type, extraData,
 			receiverUserId);
+	}
+
+	@Async
+	public void addActivity(
+			SocialActivity activity, SocialActivity mirrorActivity)
+		throws PortalException, SystemException {
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		if ((activity.getActivityId() > 0) ||
+			(mirrorActivity.getActivityId() > 0)) {
+
+			throw new PortalException(
+				"Activity and mirror activity must not have primary keys set");
+		}
+
+		SocialActivityDefinition activityDefinition =
+			socialActivitySettingLocalService.getActivityDefinition(
+				activity.getGroupId(), activity.getClassName(),
+				activity.getType());
+
+		if ((activityDefinition == null) ||
+			activityDefinition.isLogActivity()) {
+
+			long activityId = counterLocalService.increment(
+				SocialActivity.class.getName());
+
+			activity.setActivityId(activityId);
+
+			socialActivityPersistence.update(activity, false);
+
+			if (mirrorActivity != null) {
+				long mirrorActivityId = counterLocalService.increment(
+					SocialActivity.class.getName());
+
+				mirrorActivity.setActivityId(mirrorActivityId);
+				mirrorActivity.setMirrorActivityId(activity.getPrimaryKey());
+
+				socialActivityPersistence.update(mirrorActivity, false);
+			}
+		}
+
+		//socialActivityCounterLocalService.addActivityStats(activity);
 	}
 
 	/**
@@ -228,13 +261,10 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social stored activity, or the existing activity if it
-	 *         matches the parameters, or <code>null</code> if an import is
-	 *         processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addUniqueActivity(
+	public void addUniqueActivity(
 			long userId, long groupId, Date createDate, String className,
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
@@ -247,10 +277,10 @@ public class SocialActivityLocalServiceImpl
 				type, receiverUserId);
 
 		if (socialActivity != null) {
-			return socialActivity;
+			return;
 		}
 
-		return addActivity(
+		addActivity(
 			userId, groupId, createDate, className, classPK, type, extraData,
 			receiverUserId);
 	}
@@ -271,17 +301,25 @@ public class SocialActivityLocalServiceImpl
 	 * @param  type the activity's type
 	 * @param  extraData any extra data regarding the activity
 	 * @param  receiverUserId the primary key of the receiving user
-	 * @return the social stored activity, or an existing activity that matches
-	 *         the parameters, or <code>null</code> if an import is processing
 	 * @throws PortalException if the user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public SocialActivity addUniqueActivity(
+	public void addUniqueActivity(
 			long userId, long groupId, String className, long classPK, int type,
 			String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		return addUniqueActivity(
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		List<SocialActivity> socialActivities =
+			socialActivityPersistence.findByG_U_C_C_T_R(
+				groupId, userId, classNameId, classPK, type, receiverUserId);
+
+		if (!socialActivities.isEmpty()) {
+			return;
+		}
+
+		addActivity(
 			userId, groupId, new Date(), className, classPK, type, extraData,
 			receiverUserId);
 	}
@@ -295,6 +333,8 @@ public class SocialActivityLocalServiceImpl
 	public void deleteActivities(AssetEntry assetEntry) throws SystemException {
 		socialActivityPersistence.removeByC_C(
 			assetEntry.getClassNameId(), assetEntry.getClassPK());
+
+		//socialActivityCounterLocalService.deleteActivityCounters(assetEntry);
 	}
 
 	/**
@@ -356,6 +396,9 @@ public class SocialActivityLocalServiceImpl
 		for (SocialActivity activity : activities) {
 			socialActivityPersistence.remove(activity);
 		}
+
+		//socialActivityCounterLocalService.deleteActivityCounters(
+		//	PortalUtil.getClassNameId(User.class.getName()), userId);
 	}
 
 	/**

@@ -4,6 +4,6 @@
 	<#assign label = label + " (" + languageUtil.get(locale, "required") + ")">
 </#if>
 
-<@aui.select cssClass=cssClass helpMessage=field.tip label=label name=namespacedFieldName>
-	${field.children}
+<@aui.select cssClass=cssClass helpMessage=fieldStructure.tip label=label name=namespacedFieldName>
+	${fieldStructure.children}
 </@aui.select>

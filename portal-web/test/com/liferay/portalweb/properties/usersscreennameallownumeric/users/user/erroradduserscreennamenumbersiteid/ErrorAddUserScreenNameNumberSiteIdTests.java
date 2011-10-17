@@ -30,7 +30,7 @@ public class ErrorAddUserScreenNameNumberSiteIdTests extends BaseTests {
 		testSuite.addTestSuite(AddSitesTest.class);
 		testSuite.addTestSuite(
 			ErrorAddUserScreenNameNumberSiteIdTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

@@ -30,10 +30,10 @@ public class PropsValues {
 	public static String[] ADMIN_DEFAULT_USER_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES));
 
 	public static final String ADMIN_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+	
+	public static String ADMIN_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
-    public static String ADMIN_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_NAME);
-
-	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
+    public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
 
 	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES));
 
@@ -276,6 +276,10 @@ public class PropsValues {
 	public static final long COMBO_CHECK_TIMESTAMP_INTERVAL = GetterUtil.getLong(PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP_INTERVAL));
 
 	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_HOME_URL);
+
+	public static String COMPANY_DEFAULT_LOCALE = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_LOCALE);
+
+	public static String COMPANY_DEFAULT_TIME_ZONE = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
 
 	public static String COMPANY_DEFAULT_WEB_ID = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID);
 
@@ -639,6 +643,8 @@ public class PropsValues {
 
 	public static final boolean JAVASCRIPT_LOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_LOG_ENABLED));
 
+	public static final String JDBC_DEFAULT_DRIVER_CLASS_NAME = PropsUtil.get(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
+
 	public static final String JDBC_DEFAULT_LIFERAY_POOL_PROVIDER = PropsUtil.get(PropsKeys.JDBC_DEFAULT_LIFERAY_POOL_PROVIDER);
 
 	public static final String JDBC_DEFAULT_PASSWORD = PropsUtil.get(PropsKeys.JDBC_DEFAULT_PASSWORD);
@@ -977,6 +983,8 @@ public class PropsValues {
 
 	public static final boolean NTLM_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.NTLM_AUTH_ENABLED));
 
+	public static final String NTLM_AUTH_NEGOTIATE_FLAGS = GetterUtil.getString(PropsUtil.get(PropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS));
+
 	public static final String NTLM_DOMAIN = PropsUtil.get(PropsKeys.NTLM_DOMAIN);
 
 	public static final String NTLM_DOMAIN_CONTROLLER = PropsUtil.get(PropsKeys.NTLM_DOMAIN_CONTROLLER);
@@ -1301,6 +1309,8 @@ public class PropsValues {
 
 	public static final String[] SITES_FORM_UPDATE_SEO = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_SEO);
 
+	public static final String SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH = PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
+
 	public static final int SOCIAL_EQUITY_EQUITY_LOG_CHECK_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SOCIAL_EQUITY_EQUITY_LOG_CHECK_INTERVAL));
 
 	public static final boolean SOCIAL_EQUITY_EQUITY_LOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_EQUITY_EQUITY_LOG_ENABLED));
@@ -1466,6 +1476,8 @@ public class PropsValues {
 	public static final boolean WEB_SERVER_PROXY_LEGACY_MODE =  GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_PROXY_LEGACY_MODE));
 
 	public static final String[] WEBDAV_IGNORE = PropsUtil.getArray(PropsKeys.WEBDAV_IGNORE);
+
+	public static final int WEBDAV_NONCE_EXPIRATION = GetterUtil.getInteger(PropsUtil.get(PropsKeys.WEBDAV_NONCE_EXPIRATION));
 
 	public static final String WIDGET_SERVLET_MAPPING = PropsUtil.get(PropsKeys.WIDGET_SERVLET_MAPPING);
 

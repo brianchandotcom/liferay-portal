@@ -231,4 +231,10 @@ public interface SocialActivityLimitLocalService
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portlet.social.model.SocialActivityLimit addActivityLimit(
+		long userId, long groupId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName, int limitPeriod)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

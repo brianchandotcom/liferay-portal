@@ -32,4 +32,5 @@ public interface SocialActivityCounter extends SocialActivityCounterModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.social.model.impl.SocialActivityCounterImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public boolean isActivePeriod();
 }

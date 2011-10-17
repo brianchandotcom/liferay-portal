@@ -75,6 +75,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -306,8 +307,26 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			defaultUser.setPassword("password");
 			defaultUser.setScreenName(String.valueOf(defaultUser.getUserId()));
 			defaultUser.setEmailAddress("default@" + company.getMx());
-			defaultUser.setLanguageId(LocaleUtil.getDefault().toString());
-			defaultUser.setTimeZoneId(TimeZoneUtil.getDefault().getID());
+
+			if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_LOCALE)) {
+				defaultUser.setLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE);
+			}
+			else {
+				Locale locale = LocaleUtil.getDefault();
+
+				defaultUser.setLanguageId(locale.toString());
+			}
+
+			if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
+				defaultUser.setTimeZoneId(
+					PropsValues.COMPANY_DEFAULT_TIME_ZONE);
+			}
+			else {
+				TimeZone timeZone = TimeZoneUtil.getDefault();
+
+				defaultUser.setTimeZoneId(timeZone.getID());
+			}
+
 			defaultUser.setGreeting(
 				LanguageUtil.format(
 					defaultUser.getLocale(), "welcome-x", StringPool.BLANK,

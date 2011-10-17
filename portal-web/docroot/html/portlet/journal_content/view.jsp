@@ -87,10 +87,16 @@ try {
 						<c:choose>
 							<c:when test="<%= print %>">
 								<div class="print-action">
+
+									<%
+									String taglibOnClick = "Liferay.Portlet.openConfiguration(\'#p_p_id_" + portletDisplay.getId() + "_\', \'" + portletDisplay.getId() + "\', \'" + portletDisplay.getURLConfiguration() + " \', \'" + portletDisplay.getNamespace() + "\'); return false;";
+									%>
+
 									<liferay-ui:icon
 										image="print"
 										label="<%= true %>"
 										message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle()}) %>'
+										onClick="<%= taglibOnClick %>"
 										url="javascript:print();"
 									/>
 								</div>

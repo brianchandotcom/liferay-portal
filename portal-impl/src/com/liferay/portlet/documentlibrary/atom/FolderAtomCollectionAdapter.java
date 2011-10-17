@@ -19,12 +19,12 @@ import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,51 +33,52 @@ import java.util.List;
 /**
  * @author Igor Spasic
  */
-public class DLFolderAtomCollectionAdapter
-	extends BaseAtomCollectionAdapter<DLFolder> {
+public class FolderAtomCollectionAdapter
+	extends BaseAtomCollectionAdapter<Folder> {
 
 	public String getCollectionName() {
 		return _COLLECTION_NAME;
 	}
 
-	public List<String> getEntryAuthors(DLFolder dlFolder) {
+	public List<String> getEntryAuthors(Folder folder) {
 		List<String> authors = new ArrayList<String>();
 
-		authors.add(dlFolder.getUserName());
+		authors.add(folder.getUserName());
 
 		return authors;
 	}
 
 	public AtomEntryContent getEntryContent(
-		DLFolder dlFolder, AtomRequestContext atomRequestContext) {
+		Folder folder, AtomRequestContext atomRequestContext) {
 
 		AtomEntryContent atomEntryContent = new AtomEntryContent(
 			AtomEntryContent.Type.XML);
 
 		String srcLink = AtomUtil.createCollectionLink(
 			atomRequestContext,
-			DLFileEntryAtomCollectionAdapter._COLLECTION_NAME) + "?folderId=" +
-				dlFolder.getFolderId();
+			FileEntryAtomCollectionAdapter.COLLECTION_NAME);
+
+		srcLink += "?folderId=" + folder.getFolderId();
 
 		atomEntryContent.setSrcLink(srcLink);
 
 		return atomEntryContent;
 	}
 
-	public String getEntryId(DLFolder dlFolder) {
-		return String.valueOf(dlFolder.getPrimaryKey());
+	public String getEntryId(Folder folder) {
+		return String.valueOf(folder.getPrimaryKey());
 	}
 
-	public String getEntrySummary(DLFolder dlFolder) {
-		return dlFolder.getDescription();
+	public String getEntrySummary(Folder folder) {
+		return folder.getDescription();
 	}
 
-	public String getEntryTitle(DLFolder dlFolder) {
-		return dlFolder.getName();
+	public String getEntryTitle(Folder folder) {
+		return folder.getName();
 	}
 
-	public Date getEntryUpdated(DLFolder dlFolder) {
-		return dlFolder.getModifiedDate();
+	public Date getEntryUpdated(Folder folder) {
+		return folder.getModifiedDate();
 	}
 
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
@@ -92,99 +93,88 @@ public class DLFolderAtomCollectionAdapter
 
 		long folderEntryId = GetterUtil.getLong(resourceName);
 
-		DLFolderServiceUtil.deleteFolder(folderEntryId);
+		DLAppServiceUtil.deleteFolder(folderEntryId);
 	}
 
 	@Override
-	protected DLFolder doGetEntry(
+	protected Folder doGetEntry(
 			String resourceName, AtomRequestContext atomRequestContext)
 		throws Exception {
 
 		long folderEntryId = GetterUtil.getLong(resourceName);
 
-		return DLFolderServiceUtil.getFolder(folderEntryId);
+		return DLAppServiceUtil.getFolder(folderEntryId);
 	}
 
 	@Override
-	protected Iterable<DLFolder> doGetFeedEntries(
+	protected Iterable<Folder> doGetFeedEntries(
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long groupId = 0;
-
-		long parentFolderId = atomRequestContext.getLongParameter(
-			"parentFolderId");
-
-		if (parentFolderId != 0) {
-			DLFolder dlParentFolder = DLFolderServiceUtil.getFolder(
-				parentFolderId);
-
-			groupId = dlParentFolder.getGroupId();
-		}
-		else {
-			groupId = atomRequestContext.getLongParameter("groupId");
-		}
-
-		int count = DLFolderServiceUtil.getFoldersCount(
-			groupId, parentFolderId);
-
-		AtomPager atomPager = new AtomPager(atomRequestContext, count);
-
-		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
-
-		return DLFolderServiceUtil.getFolders(
-			groupId, parentFolderId, atomPager.getStart(),
-			atomPager.getEnd() + 1, new EntryNameComparator());
-	}
-
-	@Override
-	protected DLFolder doPostEntry(
-			String title, String summary, String content, Date date,
-			AtomRequestContext atomRequestContext)
-		throws Exception {
-
-		long groupId = 0;
 		long repositoryId = 0;
 
 		long parentFolderId = atomRequestContext.getLongParameter(
 			"parentFolderId");
 
 		if (parentFolderId != 0) {
-			DLFolder dlParentFolder = DLFolderServiceUtil.getFolder(
-				parentFolderId);
+			Folder parentFolder = DLAppServiceUtil.getFolder(parentFolderId);
 
-			groupId = dlParentFolder.getGroupId();
-			repositoryId = dlParentFolder.getRepositoryId();
+			repositoryId = parentFolder.getRepositoryId();
 		}
 		else {
-			groupId = atomRequestContext.getLongParameter("groupId");
+			repositoryId = atomRequestContext.getLongParameter("repositoryId");
+		}
+
+		int count = DLAppServiceUtil.getFoldersCount(
+			repositoryId, parentFolderId);
+
+		AtomPager atomPager = new AtomPager(atomRequestContext, count);
+
+		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
+
+		return DLAppServiceUtil.getFolders(
+			repositoryId, parentFolderId, atomPager.getStart(),
+			atomPager.getEnd() + 1, new EntryNameComparator());
+	}
+
+	@Override
+	protected Folder doPostEntry(
+			String title, String summary, String content, Date date,
+			AtomRequestContext atomRequestContext)
+		throws Exception {
+
+		long repositoryId = 0;
+
+		long parentFolderId = atomRequestContext.getLongParameter(
+			"parentFolderId");
+
+		if (parentFolderId != 0) {
+			Folder parentFolder = DLAppServiceUtil.getFolder(parentFolderId);
+
+			repositoryId = parentFolder.getRepositoryId();
+		}
+		else {
 			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			groupId, repositoryId, false, parentFolderId, title, summary,
-			serviceContext);
+		Folder folder = DLAppServiceUtil.addFolder(
+			repositoryId, parentFolderId, title, summary, serviceContext);
 
-		return dlFolder;
+		return folder;
 	}
 
 	@Override
 	protected void doPutEntry(
-			DLFolder dlFolder, String title, String summary,
+			Folder folder, String title, String summary,
 			String content, Date date, AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long defaultFileEntryTypeId = 0;
-		List<Long> fileEntryTypeIds = new ArrayList<Long>();
-		boolean overrideFileEntryTypes = false;
-
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLFolderServiceUtil.updateFolder(
-			dlFolder.getFolderId(), title, summary, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
+		DLAppServiceUtil.updateFolder(
+			folder.getFolderId(), title, summary, serviceContext);
 	}
 
 	private static final String _COLLECTION_NAME = "folders";

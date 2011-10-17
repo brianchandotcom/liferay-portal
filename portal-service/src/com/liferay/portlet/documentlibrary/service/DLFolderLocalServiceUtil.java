@@ -295,6 +295,12 @@ public class DLFolderLocalServiceUtil {
 		getService().deleteFolder(folderId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFolder(folderId);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

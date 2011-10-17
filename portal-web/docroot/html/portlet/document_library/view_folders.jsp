@@ -119,6 +119,10 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						<liferay-portlet:renderURL varImpl="viewDocumentsHomeURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+							<portlet:param name="entryStart" value="0" />
+							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+							<portlet:param name="folderStart" value="0" />
+							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewDocumentsHomeFoldersURL">
@@ -174,7 +178,12 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						<c:if test="<%= rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 							<liferay-portlet:renderURL varImpl="viewRecentDocumentsURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
+								<portlet:param name="navigation" value="recent-documents" />
 								<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewRecentDocumentsEntriesURL">
@@ -204,7 +213,12 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 
 							<liferay-portlet:renderURL varImpl="viewMyDocumentsURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
+								<portlet:param name="navigation" value="my-documents" />
 								<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewMyDocumentsEntriesURL">
@@ -241,6 +255,10 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 									<portlet:param name="struts_action" value="/document_library/view" />
 									<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 									<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
+									<portlet:param name="entryStart" value="0" />
+									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+									<portlet:param name="folderStart" value="0" />
+									<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 								</liferay-portlet:renderURL>
 
 								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewBasicFileEntryTypeEntriesURL">
@@ -277,6 +295,10 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 									<portlet:param name="struts_action" value="/document_library/view" />
 									<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 									<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
+									<portlet:param name="entryStart" value="0" />
+									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+									<portlet:param name="folderStart" value="0" />
+									<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 								</liferay-portlet:renderURL>
 
 								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewFileEntryTypeEntriesURL">
@@ -318,6 +340,10 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								<liferay-portlet:renderURL varImpl="viewURL">
 									<portlet:param name="struts_action" value="/document_library/view" />
 									<portlet:param name="folderId" value="<%= String.valueOf(mountFolder.getFolderId()) %>" />
+									<portlet:param name="entryStart" value="0" />
+									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+									<portlet:param name="folderStart" value="0" />
+									<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 								</liferay-portlet:renderURL>
 
 								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewFoldersURL">
@@ -370,6 +396,10 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						<liferay-portlet:renderURL varImpl="viewURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+							<portlet:param name="entryStart" value="0" />
+							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+							<portlet:param name="folderStart" value="0" />
+							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewFoldersURL">
@@ -411,6 +441,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						<%
 						for (Folder curFolder : folders) {
 							int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId());
+							int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
 
 							request.setAttribute("view_entries.jsp-folder", curFolder);
 							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
@@ -421,6 +452,10 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							<liferay-portlet:renderURL varImpl="viewURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewFoldersURL">
@@ -455,7 +490,14 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								</c:if>
 
 								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" data-show-siblings="<%= Boolean.TRUE.toString() %>" href="<%= viewURL.toString() %>">
-									<liferay-ui:icon image="folder" />
+									<c:choose>
+										<c:when test="<%= (foldersCount + fileEntriesCount) > 0 %>">
+											<liferay-ui:icon image="folder_full_document" />
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:icon image="folder_empty" />
+										</c:otherwise>
+									</c:choose>
 
 									<span class="entry-title">
 										<%= curFolder.getName() %>

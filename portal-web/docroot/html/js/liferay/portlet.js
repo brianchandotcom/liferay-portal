@@ -473,100 +473,6 @@
 					);
 				}
 
-				if (!themeDisplay.layoutMaximized) {
-					var interactionHandle = portlet.on(
-						['focus', 'mousedown'],
-						function(event) {
-							interactionHandle.detach();
-
-							var configurationLink = portlet.all('.portlet-configuration a');
-
-							configurationLink.on(
-								'click',
-								function(event) {
-									var configurationURL = event.currentTarget.attr('href');
-
-									instance.openConfiguration(portlet, portletId, configurationURL, namespacedId);
-
-									event.preventDefault();
-								}
-							);
-
-							var minimizeLink = portlet.one('.portlet-minimize a');
-
-							if (minimizeLink) {
-								minimizeLink.on(
-									'click',
-									function(event) {
-										instance.minimize(portlet, minimizeLink);
-
-										event.halt();
-									}
-								);
-							}
-
-							var maximizeLink = portlet.one('.portlet-maximize a');
-
-							if (maximizeLink) {
-								maximizeLink.on(
-									'click',
-									function(event) {
-										submitForm(document.hrefFm, event.currentTarget.attr('href'));
-
-										event.halt();
-									}
-								);
-							}
-
-							var closeLink = portlet.one('.portlet-close a');
-
-							if (closeLink) {
-								closeLink.on(
-									'click',
-									function(event) {
-										instance.close(portlet);
-
-										event.halt();
-									}
-								);
-							}
-
-							var refreshLink = portlet.one('.portlet-refresh a');
-
-							if (refreshLink) {
-								refreshLink.on(
-									'click',
-									A.bind(instance.refresh, instance, portlet)
-								);
-							}
-
-							var printLink = portlet.one('.portlet-print a');
-
-							if (printLink) {
-								printLink.on(
-									'click',
-									function(event) {
-										location.href = event.currentTarget.attr('href');
-
-										event.halt();
-									}
-								);
-							}
-
-							var portletCSSLink = portlet.one('.portlet-css a');
-
-							if (portletCSSLink) {
-								portletCSSLink.on(
-									'click',
-									function(event) {
-										instance._loadCSSEditor(portletId);
-									}
-								);
-							}
-						}
-					);
-				}
-
 				Liferay.fire(
 					'portletReady',
 					{
@@ -729,7 +635,7 @@
 
 	Liferay.provide(
 		Portlet,
-		'_loadCSSEditor',
+		'loadCSSEditor',
 		function(portletId) {
 			Liferay.PortletCSS.init(portletId);
 		},

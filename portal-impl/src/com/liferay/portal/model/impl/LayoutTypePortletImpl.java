@@ -1376,7 +1376,7 @@ public class LayoutTypePortletImpl
 		if (hasUserPreferences() &&
 			((customizable == null) ? isCustomizable() : customizable) &&
 			((columnDisabled == null) ?
-				!isColumnDisabled(columnId) : columnDisabled)) {
+				!isColumnDisabled(columnId) : !columnDisabled)) {
 
 			return getUserPreference(columnId);
 		}

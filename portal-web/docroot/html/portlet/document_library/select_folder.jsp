@@ -82,12 +82,6 @@ if (folder != null) {
 
 		sb.append("<img align=\"left\" border=\"0\" src=\"");
 		sb.append(themeDisplay.getPathThemeImages());
-		sb.append("/common/folder.png\">");
-		sb.append(curFolder.getName());
-
-		row.addText(sb.toString(), rowURL);
-
-		// Statistics
 
 		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(repositoryId, curFolder.getFolderId(), false);
 
@@ -97,6 +91,19 @@ if (folder != null) {
 		subfolderIds.add(curFolder.getFolderId());
 
 		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(repositoryId, subfolderIds, WorkflowConstants.STATUS_APPROVED);
+
+		if ((foldersCount + fileEntriesCount) > 0) {
+			sb.append("/common/folder_full_document.png\">");
+		}
+		else {
+			sb.append("/common/folder_empty.png\">");
+		}
+
+		sb.append(curFolder.getName());
+
+		row.addText(sb.toString(), rowURL);
+
+		// Statistics
 
 		row.addText(String.valueOf(foldersCount), rowURL);
 		row.addText(String.valueOf(fileEntriesCount), rowURL);

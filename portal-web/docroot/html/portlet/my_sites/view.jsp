@@ -107,6 +107,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		headerNames.add("online-now");
 	}
 
+	headerNames.add("tags");
 	headerNames.add(StringPool.BLANK);
 
 	searchContainer.setHeaderNames(headerNames);
@@ -185,6 +186,20 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			row.addText(String.valueOf(onlineCount));
 		}
+	%>
+
+		<liferay-util:buffer var="assetTagsSummary">
+			<liferay-ui:asset-tags-summary
+				className="<%= Group.class.getName() %>"
+				classPK="<%= group.getGroupId() %>"
+			/>
+		</liferay-util:buffer>
+
+	<%
+
+		// Tags
+
+		row.addText(assetTagsSummary);
 
 		// Action
 

@@ -69,6 +69,7 @@ if (Validator.isNotNull(portletResource)) {
 	portletPreferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
+boolean advancedConfiguration = GetterUtil.getBoolean(portletPreferences.getValue("advancedConfiguration", null), false);
 boolean displayAssetTypeFacet = GetterUtil.getBoolean(portletPreferences.getValue("displayAssetTypeFacet", null), true);
 boolean displayAssetTagsFacet = GetterUtil.getBoolean(portletPreferences.getValue("displayAssetTagsFacet", null), true);
 boolean displayAssetCategoriesFacet = GetterUtil.getBoolean(portletPreferences.getValue("displayAssetCategoriesFacet", null), true);
@@ -86,7 +87,7 @@ boolean displayOpenSearchResults = GetterUtil.getBoolean(portletPreferences.getV
 
 String searchConfiguration = portletPreferences.getValue("searchConfiguration", StringPool.BLANK);
 
-if (Validator.isNull(searchConfiguration)) {
+if (!advancedConfiguration && Validator.isNull(searchConfiguration)) {
 	StringBundler sb = new StringBundler(6);
 
 	sb.append("{facets: [");

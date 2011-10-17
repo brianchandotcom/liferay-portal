@@ -80,6 +80,6 @@ public class AddDLFolderTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText("//div/a/span[2]"));
 	}
 }

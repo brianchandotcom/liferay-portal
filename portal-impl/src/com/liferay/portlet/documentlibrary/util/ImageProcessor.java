@@ -31,7 +31,6 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.RenderedImage;
@@ -151,10 +150,7 @@ public class ImageProcessor extends DLPreviewableProcessor {
 
 	private void _generateImages(FileVersion fileVersion) {
 		try {
-			InputStream inputStream =
-				DLFileEntryLocalServiceUtil.getFileAsStream(
-					fileVersion.getUserId(), fileVersion.getFileEntryId(),
-					fileVersion.getVersion(), false);
+			InputStream inputStream = fileVersion.getContentStream(false);
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
 

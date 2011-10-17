@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Image;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
@@ -240,27 +239,12 @@ public class DLAppHelperLocalServiceImpl
 		AssetEntry assetEntry = null;
 
 		boolean visible = false;
-		int height = 0;
-		int width = 0;
 
 		boolean addDraftAssetEntry = false;
 
 		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-			long largeImageId = dlFileEntry.getLargeImageId();
-
-			if (dlFileVersion != null) {
-				largeImageId = dlFileVersion.getLargeImageId();
-			}
-
-			Image largeImage = imageLocalService.getImage(largeImageId);
-
-			if (largeImage != null) {
-				height = largeImage.getHeight();
-				width = largeImage.getWidth();
-			}
 
 			if (dlFileVersion.isApproved()) {
 				visible = true;
@@ -286,8 +270,8 @@ public class DLAppHelperLocalServiceImpl
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
 				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, height, width,
-				null, false);
+				fileEntry.getDescription(), null, null, null, 0, 0, null,
+				false);
 		}
 		else {
 			assetEntry = assetEntryLocalService.updateEntry(
@@ -296,8 +280,8 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getFileEntryId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, visible, null,
 				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, height, width,
-				null, false);
+				fileEntry.getDescription(), null, null, null, 0, 0, null,
+				false);
 
 			List<DLFileShortcut> dlFileShortcuts =
 				dlFileShortcutPersistence.findByToFileEntryId(
@@ -312,7 +296,7 @@ public class DLAppHelperLocalServiceImpl
 					assetCategoryIds, assetTagNames, true,
 					null, null, null, null, fileEntry.getMimeType(),
 					fileEntry.getTitle(), fileEntry.getDescription(), null,
-					null, null, height, width, null, false);
+					null, null, 0, 0, null, false);
 			}
 		}
 

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -212,15 +213,15 @@ public class JournalRSSUtil {
 
 		List<SyndEnclosure> enclosures = new ArrayList<SyndEnclosure>();
 
-		Image image = getImage(url);
+		Object[] imageProperties = getImageProperties(url);
 
-		if (image != null) {
+		if (imageProperties != null) {
 			SyndEnclosure enclosure = new SyndEnclosureImpl();
 
-			enclosure.setLength(image.getSize());
+			enclosure.setLength((Long)imageProperties[0]);
 
 			enclosure.setType(
-				MimeTypesUtil.getContentType("*." + image.getType()));
+				MimeTypesUtil.getContentType("*." + imageProperties[1]));
 
 			enclosure.setUrl(portalURL + url);
 
@@ -233,19 +234,19 @@ public class JournalRSSUtil {
 	public static List<SyndLink> getIGLinks(String portalURL, String url) {
 		List<SyndLink> links = new ArrayList<SyndLink>();
 
-		Image image = getImage(url);
+		Object[] imageProperties = getImageProperties(url);
 
-		if (image != null) {
+		if (imageProperties != null) {
 			SyndLink link = new SyndLinkImpl();
 
 			link.setHref(portalURL + url);
 
-			link.setLength(image.getSize());
+			link.setLength((Long)imageProperties[0]);
 
 			link.setRel("enclosure");
 
 			link.setType(
-				MimeTypesUtil.getContentType("*." + image.getType()));
+				MimeTypesUtil.getContentType("*." + imageProperties[1]));
 
 			links.add(link);
 		}
@@ -286,28 +287,37 @@ public class JournalRSSUtil {
 				}
 			}
 		}
-		else if (parameters.containsKey("uuid") &&
-				 parameters.containsKey("groupId")) {
 
-			try {
-				String uuid = parameters.get("uuid")[0];
-				long groupId = GetterUtil.getLong(parameters.get("groupId")[0]);
+		return image;
+	}
 
-				FileEntry fileEntry =
-					DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-						uuid, groupId);
+	protected static Object[] getImageProperties(String url) {
+		long size = 0;
+		String type = null;
 
-				image = ImageLocalServiceUtil.getImage(
-					fileEntry.getLargeImageId());
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
-				}
+		Image image = getImage(url);
+
+		if (image != null) {
+			size = image.getSize();
+			type = image.getType();
+		}
+		else {
+			FileEntry fileEntry = getFileEntry(url);
+
+			if ((fileEntry != null) &&
+				ImageProcessor.getImageMimeTypes().contains(
+					fileEntry.getMimeType())) {
+
+				size = fileEntry.getSize();
+				type = fileEntry.getExtension();
 			}
 		}
 
-		return image;
+		if (Validator.isNotNull(type)) {
+			return new Object[] { size, type };
+		}
+
+		return null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);

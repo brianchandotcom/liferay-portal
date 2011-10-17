@@ -132,14 +132,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return _document.getCreationDate().getTime();
 	}
 
-	public long getCustom1ImageId() {
-		return 0;
-	}
-
-	public long getCustom2ImageId() {
-		return 0;
-	}
-
 	public String getExtension() {
 		return FileUtil.getExtension(getTitle());
 	}
@@ -238,14 +230,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
-	public String getImageType() {
-		return null;
-	}
-
-	public long getLargeImageId() {
-		return 0;
-	}
-
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
@@ -333,10 +317,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return _document.getLastModificationDate().getTime();
 	}
 
-	public String getNameWithExtension() {
-		return _document.getName() + StringPool.PERIOD + getExtension();
-	}
-
 	@Override
 	public long getPrimaryKey() {
 		return _fileEntryId;
@@ -356,10 +336,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	public long getSize() {
 		return _document.getContentStreamLength();
-	}
-
-	public long getSmallImageId() {
-		return 0;
 	}
 
 	public String getTitle() {

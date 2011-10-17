@@ -36,11 +36,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,6 +52,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ImageConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -63,7 +65,6 @@ import com.liferay.portal.service.ImageServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -72,10 +73,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 
@@ -221,6 +222,12 @@ public class WebServerServlet extends HttpServlet {
 					sendFile(request, response, user, pathArray);
 				}
 				else {
+					boolean redirected = checkImageId(request, response);
+
+					if (redirected) {
+						return;
+					}
+
 					Image image = getImage(request, true);
 
 					if (image != null) {
@@ -245,6 +252,58 @@ public class WebServerServlet extends HttpServlet {
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
 		}
+	}
+
+	protected boolean checkImageId(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		boolean redirected = false;
+
+		long imageId = getImageId(request);
+
+		if (imageId == 0) {
+			return redirected;
+		}
+
+		try {
+
+			// Permamently redirect legacy Image Gallery URLs
+
+			DLFileEntry dlFileEntry = ImageServiceUtil.getDLFileEntry(imageId);
+
+			if (dlFileEntry != null) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("/documents/");
+				sb.append(dlFileEntry.getGroupId());
+				sb.append(StringPool.SLASH);
+				sb.append(dlFileEntry.getFolderId());
+				sb.append(StringPool.SLASH);
+				sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(
+					dlFileEntry.getTitle())));
+				sb.append("?version=");
+				sb.append(dlFileEntry.getVersion());
+
+				if (imageId == dlFileEntry.getSmallImageId()) {
+					sb.append("&imageThumbnail=1");
+				}
+				else if (imageId == dlFileEntry.getSmallImageId()) {
+					sb.append("&imageThumbnail=2");
+				}
+				else if (imageId == dlFileEntry.getSmallImageId()) {
+					sb.append("&imageThumbnail=3");
+				}
+
+				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+				response.setHeader(HttpHeaders.LOCATION, sb.toString());
+
+				redirected = true;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return redirected;
 	}
 
 	protected Image getDefaultImage(HttpServletRequest request, long imageId) {
@@ -291,43 +350,39 @@ public class WebServerServlet extends HttpServlet {
 			long folderId = GetterUtil.getLong(pathArray[1]);
 			String fileName = HttpUtil.decodeURL(pathArray[2], true);
 
+			if (fileName.contains(StringPool.QUESTION)) {
+				fileName = fileName.substring(
+					0, fileName.indexOf(StringPool.QUESTION));
+			}
+
 			return DLAppServiceUtil.getFileEntry(groupId, folderId, fileName);
 		}
 	}
 
-	protected Image getImage(HttpServletRequest request, boolean getDefault)
+	protected Image getImage(
+			HttpServletRequest request, boolean getDefault)
 		throws PortalException, SystemException {
-
-		long imageId = getImageId(request);
 
 		Image image = null;
 
-		if (imageId > 0) {
-			image = ImageServiceUtil.getImage(imageId);
+		long imageId = getImageId(request);
 
+		if (imageId > 0) {
 			String path = GetterUtil.getString(request.getPathInfo());
 
 			if (path.startsWith("/user_female_portrait") ||
 				path.startsWith("/user_male_portrait") ||
 				path.startsWith("/user_portrait")) {
 
-				image = getUserPortraitImageResized(image, imageId);
-			}
-			else {
-				long dlFileEntryId = ParamUtil.getLong(
-					request, "dlFileEntryId");
-				boolean dlSmallImage = ParamUtil.getBoolean(
-					request, "dlSmallImage");
+				image = ImageServiceUtil.getImage(imageId);
 
-				if ((dlFileEntryId > 0) && dlSmallImage) {
-					image = getImageThumbnail(image, dlFileEntryId);
-				}
+				image = getUserPortraitImageResized(image, imageId);
 			}
 		}
 		else {
 			String uuid = ParamUtil.getString(request, "uuid");
 			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean igSmallImage = ParamUtil.getBoolean(
+			boolean smallImage = ParamUtil.getBoolean(
 				request, "igSmallImage");
 
 			if (Validator.isNotNull(uuid) && (groupId > 0)) {
@@ -336,14 +391,7 @@ public class WebServerServlet extends HttpServlet {
 						DLAppServiceUtil.getFileEntryByUuidAndGroupId(
 							uuid, groupId);
 
-					if (igSmallImage) {
-						image = ImageLocalServiceUtil.getImage(
-							fileEntry.getSmallImageId());
-					}
-					else {
-						image = ImageLocalServiceUtil.getImage(
-							fileEntry.getLargeImageId());
-					}
+					image = convertFileEntry(smallImage, fileEntry);
 				}
 				catch (Exception e) {
 				}
@@ -363,20 +411,69 @@ public class WebServerServlet extends HttpServlet {
 		return image;
 	}
 
+	protected Image convertFileEntry(boolean smallImage, FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		try {
+			Image image = new ImageImpl();
+
+			InputStream is = null;
+
+			if (smallImage) {
+				is = ImageProcessor.getThumbnailAsStream(
+					fileEntry.getFileVersion());
+			}
+			else {
+				is = fileEntry.getContentStream();
+			}
+
+			byte[] bytes = FileUtil.getBytes(is);
+
+			image.setTextObj(bytes);
+			image.setModifiedDate(fileEntry.getModifiedDate());
+
+			return image;
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
 	protected byte[] getImageBytes(HttpServletRequest request, Image image) {
 		if (!PropsValues.IMAGE_AUTO_SCALE) {
 			return image.getTextObj();
 		}
 
-		int height = ParamUtil.getInteger(request, "height", image.getHeight());
-		int width = ParamUtil.getInteger(request, "width", image.getWidth());
-
-		if ((height >= image.getHeight()) && (width >= image.getWidth())) {
-			return image.getTextObj();
-		}
-
 		try {
-			ImageBag imageBag = ImageProcessorUtil.read(image.getTextObj());
+			ImageBag imageBag = null;
+
+			if (image.getImageId() == 0) {
+				imageBag = ImageProcessorUtil.read(image.getTextObj());
+
+				RenderedImage renderedImage = imageBag.getRenderedImage();
+
+				image.setHeight(renderedImage.getHeight());
+				image.setWidth(renderedImage.getWidth());
+			}
+
+			int height = ParamUtil.getInteger(
+				request, "height", image.getHeight());
+			int width = ParamUtil.getInteger(
+				request, "width", image.getWidth());
+
+			if ((height >= image.getHeight()) && (width >= image.getWidth())) {
+				return image.getTextObj();
+			}
+
+			if (image.getImageId() != 0) {
+				imageBag = ImageProcessorUtil.read(image.getTextObj());
+			}
 
 			RenderedImage renderedImage = ImageProcessorUtil.scale(
 				imageBag.getRenderedImage(), height, width);
@@ -426,31 +523,6 @@ public class WebServerServlet extends HttpServlet {
 		return imageId;
 	}
 
-	protected Image getImageThumbnail(Image image, long dlFileEntryId)
-		throws PortalException, SystemException {
-
-		if (image == null) {
-			return null;
-		}
-
-		long igThumbnailMaxDimension = PrefsPropsUtil.getLong(
-			PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION);
-
-		if ((image.getHeight() <= igThumbnailMaxDimension) &&
-			(image.getWidth() <= igThumbnailMaxDimension)) {
-
-			return image;
-		}
-
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
-			dlFileEntryId);
-
-		DLFileEntryLocalServiceUtil.updateSmallImage(
-			dlFileEntry.getSmallImageId(), dlFileEntry.getLargeImageId());
-
-		return ImageServiceUtil.getImage(image.getImageId());
-	}
-
 	@Override
 	protected long getLastModified(HttpServletRequest request) {
 		try {
@@ -458,7 +530,10 @@ public class WebServerServlet extends HttpServlet {
 
 			Image image = getImage(request, true);
 
-			if (image == null) {
+			if (image != null) {
+				modifiedDate = image.getModifiedDate();
+			}
+			else {
 				String path = HttpUtil.fixPath(request.getPathInfo());
 
 				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
@@ -481,9 +556,6 @@ public class WebServerServlet extends HttpServlet {
 				else {
 					modifiedDate = fileEntry.getModifiedDate();
 				}
-			}
-			else {
-				modifiedDate = image.getModifiedDate();
 			}
 
 			if (modifiedDate == null) {
@@ -670,6 +742,7 @@ public class WebServerServlet extends HttpServlet {
 
 		String targetExtension = ParamUtil.getString(
 			request, "targetExtension");
+		int imageThumbnail = ParamUtil.getInteger(request, "imageThumbnail");
 		boolean documentThumbnail = ParamUtil.getBoolean(
 			request, "documentThumbnail");
 		int previewFileIndex = ParamUtil.getInteger(
@@ -682,7 +755,27 @@ public class WebServerServlet extends HttpServlet {
 		InputStream inputStream = null;
 		long contentLength = 0;
 
-		if (documentThumbnail) {
+		if ((imageThumbnail > 0) && (imageThumbnail < 3)) {
+			fileName = FileUtil.stripExtension(fileName).concat(
+				StringPool.PERIOD).concat(fileVersion.getExtension());
+
+			if (imageThumbnail == 1) {
+				inputStream = ImageProcessor.getThumbnailAsStream(fileVersion);
+				contentLength = ImageProcessor.getThumbnailFileSize(
+					fileVersion);
+			}
+			else if (imageThumbnail == 2) {
+				inputStream = ImageProcessor.getCustom1AsStream(fileVersion);
+				contentLength = ImageProcessor.getCustom1FileSize(fileVersion);
+			}
+			else if (imageThumbnail == 3) {
+				inputStream = ImageProcessor.getCustom2AsStream(fileVersion);
+				contentLength = ImageProcessor.getCustom2FileSize(fileVersion);
+			}
+
+			converted = true;
+		}
+		else if (documentThumbnail) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
 			inputStream = PDFProcessor.getThumbnailAsStream(fileVersion);

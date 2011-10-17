@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,15 +25,18 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.model.Image;
-import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.RenderedImage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -45,34 +46,92 @@ import java.util.Vector;
 
 /**
  * @author Sergio González
+ * @author Alexander Chow
  */
-public class ImageProcessor implements DLProcessor {
+public class ImageProcessor extends DLPreviewableProcessor {
 
 	public static void generateImages(FileVersion fileVersion) {
 		_instance._generateImages(fileVersion);
+	}
+
+	public static InputStream getCustom1AsStream(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance._getCustomAsStream(
+			fileVersion, fileVersion.getExtension(), 1);
+	}
+
+	public static long getCustom1FileSize(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance._getCustomFileSize(
+			fileVersion, fileVersion.getExtension(), 1);
+	}
+
+	public static InputStream getCustom2AsStream(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance._getCustomAsStream(
+			fileVersion, fileVersion.getExtension(), 2);
+	}
+
+	public static long getCustom2FileSize(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance._getCustomFileSize(
+			fileVersion, fileVersion.getExtension(), 2);
 	}
 
 	public static Set<String> getImageMimeTypes() {
 		return _imageMimeTypes;
 	}
 
-	public static boolean hasImages(FileVersion fileVersion) {
-		if (_hasImages(fileVersion.getSmallImageId()) &&
-			_hasImages(fileVersion.getLargeImageId())) {
+	public static InputStream getThumbnailAsStream(FileVersion fileVersion)
+		throws Exception {
 
-			return true;
-		}
-		else {
-			return false;
-		}
+		return _instance.doGetThumbnailAsStream(
+			fileVersion, fileVersion.getExtension());
 	}
 
-	public static boolean hasLargeImage(FileVersion fileVersion) {
-		return _hasImages(fileVersion.getLargeImageId());
+	public static long getThumbnailFileSize(FileVersion fileVersion)
+		throws Exception {
+
+		return _instance.doGetThumbnailFileSize(
+			fileVersion, fileVersion.getExtension());
 	}
 
-	public static boolean hasSmallImage(FileVersion fileVersion) {
-		return _hasImages(fileVersion.getSmallImageId());
+	public static boolean hasImages(FileEntry fileEntry, String version) {
+		boolean hasImages = false;
+
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+			hasImages = _instance._hasImages(fileVersion);
+
+			if (!hasImages) {
+				_instance._queueGeneration(fileVersion);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return hasImages;
+	}
+
+	public static boolean hasThumbnailImage(FileVersion fileVersion) {
+		return _instance._hasThumbnailImage(fileVersion);
+	}
+
+	public static void storeThumbnail(
+			long companyId, long groupId, long fileEntryId, long fileVersionId,
+			long custom1ImageId, long custom2ImageId, InputStream is,
+			String type)
+		throws Exception {
+
+		_instance._storeThumbnail(
+			companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
+			custom2ImageId, is, type);
 	}
 
 	public void trigger(FileEntry fileEntry) {
@@ -90,23 +149,6 @@ public class ImageProcessor implements DLProcessor {
 		_instance._queueGeneration(fileVersion);
 	}
 
-	private static boolean _hasImages(long imageId) {
-		boolean hasImages = false;
-
-		try {
-			Image image = ImageLocalServiceUtil.getImage(imageId);
-
-			if (image != null) {
-				hasImages = true;
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return hasImages;
-	}
-
 	private void _generateImages(FileVersion fileVersion) {
 		try {
 			InputStream inputStream =
@@ -121,11 +163,30 @@ public class ImageProcessor implements DLProcessor {
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
 			if (renderedImage != null) {
-				_saveImages(fileVersion.getLargeImageId(), renderedImage,
-					fileVersion.getSmallImageId(),
-					fileVersion.getCustom1ImageId(),
-					fileVersion.getCustom2ImageId(), bytes,
-					fileVersion.getMimeType());
+				String imageType = imageBag.getType();
+
+				_saveThumbnailImage(
+					fileVersion, renderedImage,
+					PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION,
+					getThumbnailFilePath(fileVersion, imageType));
+
+				if (PrefsPropsUtil.getInteger(
+						PropsKeys.IG_IMAGE_CUSTOM_1_MAX_DIMENSION) > 0) {
+
+					_saveThumbnailImage(
+						fileVersion, renderedImage,
+						PropsKeys.IG_IMAGE_CUSTOM_1_MAX_DIMENSION,
+						_getCustom1FilePath(fileVersion, imageType));
+				}
+
+				if (PrefsPropsUtil.getInteger(
+						PropsKeys.IG_IMAGE_CUSTOM_2_MAX_DIMENSION) > 0) {
+
+					_saveThumbnailImage(
+						fileVersion, renderedImage,
+						PropsKeys.IG_IMAGE_CUSTOM_2_MAX_DIMENSION,
+						_getCustom2FilePath(fileVersion, imageType));
+				}
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -138,6 +199,107 @@ public class ImageProcessor implements DLProcessor {
 		}
 	}
 
+	private String _getCustom1FilePath(
+		FileVersion fileVersion, String type) {
+
+		return _getCustomFilePath(fileVersion, type, 1);
+	}
+
+	private String _getCustom2FilePath(
+		FileVersion fileVersion, String type) {
+
+		return _getCustomFilePath(fileVersion, type, 2);
+	}
+
+	private InputStream _getCustomAsStream(
+			FileVersion fileVersion, String type, int index)
+		throws Exception {
+
+		return DLStoreUtil.getFileAsStream(
+			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
+			_getCustomFilePath(fileVersion, type, index));
+	}
+
+	private String _getCustomFilePath(
+		FileVersion fileVersion, String type, int index) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getPathSegment(fileVersion, false));
+		sb.append(StringPool.DASH);
+		sb.append(index);
+		sb.append(StringPool.PERIOD);
+		sb.append(type);
+
+		return sb.toString();
+	}
+
+	private long _getCustomFileSize(
+			FileVersion fileVersion, String type, int index)
+		throws Exception {
+
+		return DLStoreUtil.getFileSize(
+			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
+			_getCustomFilePath(fileVersion, type, index));
+	}
+
+	private boolean _hasCustomImage(FileVersion fileVersion, int index) {
+		try {
+			String type = fileVersion.getExtension();
+
+			return DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), REPOSITORY_ID,
+				_getCustomFilePath(fileVersion, type, index));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
+	}
+
+	private boolean _hasImages(FileVersion fileVersion) {
+		if (!_hasThumbnailImage(fileVersion)) {
+			return false;
+		}
+
+		try {
+			if (PrefsPropsUtil.getInteger(
+					PropsKeys.IG_IMAGE_CUSTOM_1_MAX_DIMENSION) > 0) {
+
+				if (!_hasCustomImage(fileVersion, 1)) {
+					return false;
+				}
+			}
+
+			if (PrefsPropsUtil.getInteger(
+					PropsKeys.IG_IMAGE_CUSTOM_2_MAX_DIMENSION) > 0) {
+
+				if (!_hasCustomImage(fileVersion, 2)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return true;
+	}
+
+	private boolean _hasThumbnailImage(FileVersion fileVersion) {
+		try {
+			return DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), REPOSITORY_ID,
+				getThumbnailFilePath(fileVersion, fileVersion.getExtension()));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
+	}
+
 	private boolean _isSupportedImage(FileVersion fileVersion) {
 		if (fileVersion == null) {
 			return false;
@@ -148,7 +310,7 @@ public class ImageProcessor implements DLProcessor {
 
 	private void _queueGeneration(FileVersion fileVersion) {
 		if (!_fileEntries.contains(fileVersion.getFileVersionId()) &&
-			_isSupportedImage(fileVersion) && !hasImages(fileVersion)) {
+			_isSupportedImage(fileVersion) && !_hasImages(fileVersion)) {
 			_fileEntries.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(
@@ -157,52 +319,70 @@ public class ImageProcessor implements DLProcessor {
 		}
 	}
 
-	private void _saveImages(
-			long largeImageId, RenderedImage renderedImage, long smallImageId,
-			long custom1ImageId, long custom2ImageId, byte[] bytes,
-			String contentType)
-		throws PortalException, SystemException {
+	private void _saveThumbnailImage(
+			FileVersion fileVersion, RenderedImage renderedImage,
+			String maxDimensionPropsKey, String filePath)
+		throws Exception {
+
+		File file = _scaleImage(
+			renderedImage, fileVersion.getMimeType(),
+			PrefsPropsUtil.getInteger(maxDimensionPropsKey));
 
 		try {
-
-			// Image
-
-			ImageLocalServiceUtil.updateImage(largeImageId, bytes);
-
-			// Thumbnail and custom sizes
-
-			_saveScaledImage(
-				renderedImage, smallImageId, contentType,
-				PrefsPropsUtil.getInteger(
-					PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION));
-
-			if (custom1ImageId > 0) {
-				_saveScaledImage(
-					renderedImage, custom1ImageId, contentType,
-					PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION);
-			}
-
-			if (custom2ImageId > 0) {
-				_saveScaledImage(
-					renderedImage, custom2ImageId, contentType,
-					PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION);
-			}
+			addFileToStore(
+				fileVersion.getCompanyId(), THUMBNAIL_PATH, filePath, file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		finally {
+			FileUtil.delete(file);
 		}
 	}
 
-	private void _saveScaledImage(
-			RenderedImage renderedImage, long imageId, String contentType,
-			int dimension)
-		throws IOException, PortalException, SystemException {
+	private File _scaleImage(
+			RenderedImage renderedImage, String contentType, int dimension)
+		throws IOException {
 
 		RenderedImage thumbnail = ImageProcessorUtil.scale(
 			renderedImage, dimension, dimension);
 
-		ImageLocalServiceUtil.updateImage(
-			imageId, ImageProcessorUtil.getBytes(thumbnail, contentType));
+		byte[] bytes = ImageProcessorUtil.getBytes(thumbnail, contentType);
+
+		return FileUtil.createTempFile(bytes);
+	}
+
+	private void _storeThumbnail(
+			long companyId, long groupId, long fileEntryId, long fileVersionId,
+			long custom1ImageId, long custom2ImageId, InputStream is,
+			String type)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getPathSegment(groupId, fileEntryId, fileVersionId, false));
+
+		if (custom1ImageId != 0) {
+			sb.append(StringPool.DASH);
+			sb.append(1);
+		}
+		else if (custom2ImageId != 0) {
+			sb.append(StringPool.DASH);
+			sb.append(2);
+		}
+
+		sb.append(StringPool.PERIOD);
+		sb.append(type);
+
+		String filePath = sb.toString();
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile(is);
+
+			addFileToStore(companyId, THUMBNAIL_PATH, filePath, file);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImageProcessor.class);

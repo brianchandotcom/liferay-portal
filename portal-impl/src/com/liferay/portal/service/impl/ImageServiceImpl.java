@@ -29,7 +29,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
  */
 public class ImageServiceImpl extends ImageServiceBaseImpl {
 
-	public Image getImage(long imageId)
+	public DLFileEntry getDLFileEntry(long imageId)
 		throws PortalException, SystemException {
 
 		DLFileEntry fileEntry = dlFileEntryFinder.fetchByAnyImageId(imageId);
@@ -38,6 +38,12 @@ public class ImageServiceImpl extends ImageServiceBaseImpl {
 			DLFileEntryPermission.check(
 				getPermissionChecker(), fileEntry, ActionKeys.VIEW);
 		}
+
+		return fileEntry;
+	}
+
+	public Image getImage(long imageId)
+		throws PortalException, SystemException {
 
 		return imageLocalService.getImage(imageId);
 	}

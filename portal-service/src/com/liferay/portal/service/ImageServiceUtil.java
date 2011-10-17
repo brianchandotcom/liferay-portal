@@ -43,6 +43,13 @@ public class ImageServiceUtil {
 		return getService().getImage(imageId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntry(
+		long imageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDLFileEntry(imageId);
+	}
+
 	public static ImageService getService() {
 		if (_service == null) {
 			_service = (ImageService)PortalBeanLocatorUtil.locate(ImageService.class.getName());

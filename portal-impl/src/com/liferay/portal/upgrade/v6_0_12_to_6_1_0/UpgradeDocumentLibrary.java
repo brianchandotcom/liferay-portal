@@ -164,11 +164,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			long smallImageId = 0;
-			long largeImageId = 0;
-			long custom1ImageId = 0;
-			long custom2ImageId = 0;
-
 			while (rs.next()) {
 				long fileVersionId = rs.getLong("fileVersionId");
 				long userId = rs.getLong("userId");
@@ -186,63 +181,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				dlFileVersion.setMimeType(mimeType);
 				dlFileVersion.setVersion(version);
 
-				smallImageId = increment();
-
-				dlFileVersion.setSmallImageId(smallImageId);
-
-				largeImageId = increment();
-
-				dlFileVersion.setLargeImageId(largeImageId);
-
-				if (PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION > 0) {
-					custom1ImageId = increment();
-
-					dlFileVersion.setCustom1ImageId(custom1ImageId);
-				}
-
-				if (PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION > 0) {
-					custom2ImageId = increment();
-
-					dlFileVersion.setCustom2ImageId(custom2ImageId);
-				}
-
 				if (_imageMimeTypes.contains(mimeType)) {
 					FileVersion fileVersion = new LiferayFileVersion(
 						dlFileVersion);
 
 					ImageProcessor.generateImages(fileVersion);
 				}
-
-				StringBundler sb = new StringBundler();
-
-				sb.append("update DLFileVersion set smallImageId = ");
-				sb.append(smallImageId);
-				sb.append(", largeImageId = ");
-				sb.append(largeImageId);
-				sb.append(", custom1ImageId = ");
-				sb.append(custom1ImageId);
-				sb.append(", custom2ImageId = ");
-				sb.append(custom2ImageId);
-				sb.append(" where fileVersionId = ");
-				sb.append(fileVersionId);
-
-				runSQL(sb.toString());
 			}
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("update DLFileEntry set smallImageId = ");
-			sb.append(smallImageId);
-			sb.append(", largeImageId = ");
-			sb.append(largeImageId);
-			sb.append(", custom1ImageId = ");
-			sb.append(custom1ImageId);
-			sb.append(", custom2ImageId = ");
-			sb.append(custom2ImageId);
-			sb.append(" where fileEntryId = ");
-			sb.append(fileEntryId);
-
-			runSQL(sb.toString());
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

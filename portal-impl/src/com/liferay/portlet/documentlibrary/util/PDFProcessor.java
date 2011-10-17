@@ -59,7 +59,7 @@ import org.im4java.process.ProcessStarter;
  * @author Mika Koivisto
  * @author Juan González
  */
-public class PDFProcessor extends DLPreviewableProcessor {
+public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	public static final String PREVIEW_TYPE = ImageProcessor.TYPE_PNG;
 

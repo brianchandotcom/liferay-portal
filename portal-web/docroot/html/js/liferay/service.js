@@ -88,7 +88,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Image",
 	{
-		getImage: true
+		getImage: true,
+		getDLFileEntry: true
 	}
 );
 

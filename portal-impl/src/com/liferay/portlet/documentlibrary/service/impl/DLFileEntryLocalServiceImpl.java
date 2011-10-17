@@ -157,16 +157,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntry.setSize(size);
 		dlFileEntry.setReadCount(DLFileEntryConstants.DEFAULT_READ_COUNT);
-		dlFileEntry.setSmallImageId(counterLocalService.increment());
-		dlFileEntry.setLargeImageId(counterLocalService.increment());
-
-		if (PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION > 0) {
-			dlFileEntry.setCustom1ImageId(counterLocalService.increment());
-		}
-
-		if (PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION > 0) {
-			dlFileEntry.setCustom2ImageId(counterLocalService.increment());
-		}
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
@@ -984,12 +974,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.setVersionUserName(dlFileVersion.getUserName());
 				dlFileEntry.setModifiedDate(dlFileVersion.getCreateDate());
 				dlFileEntry.setSize(dlFileVersion.getSize());
-				dlFileEntry.setSmallImageId(dlFileVersion.getSmallImageId());
-				dlFileEntry.setLargeImageId(dlFileVersion.getLargeImageId());
-				dlFileEntry.setCustom1ImageId(
-					dlFileVersion.getCustom1ImageId());
-				dlFileEntry.setCustom2ImageId(
-					dlFileVersion.getCustom2ImageId());
 
 				dlFileEntryPersistence.update(dlFileEntry, false);
 			}
@@ -1140,10 +1124,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
-		dlFileVersion.setSmallImageId(dlFileEntry.getSmallImageId());
-		dlFileVersion.setLargeImageId(dlFileEntry.getLargeImageId());
-		dlFileVersion.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
-		dlFileVersion.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
 		dlFileVersion.setStatus(status);
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());
@@ -1276,15 +1256,6 @@ public class DLFileEntryLocalServiceImpl
 
 		expandoValueLocalService.deleteValues(
 			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
-
-		// Images
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			imageLocalService.deleteImage(dlFileVersion.getSmallImageId());
-			imageLocalService.deleteImage(dlFileVersion.getLargeImageId());
-			imageLocalService.deleteImage(dlFileVersion.getCustom1ImageId());
-			imageLocalService.deleteImage(dlFileVersion.getCustom2ImageId());
-		}
 
 		// Lock
 
@@ -1657,17 +1628,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
-		dlFileVersion.setSmallImageId(counterLocalService.increment());
-		dlFileVersion.setLargeImageId(counterLocalService.increment());
-
-		if (PropsValues.IG_IMAGE_CUSTOM_1_MAX_DIMENSION > 0) {
-			dlFileVersion.setCustom1ImageId(counterLocalService.increment());
-		}
-
-		if (PropsValues.IG_IMAGE_CUSTOM_2_MAX_DIMENSION > 0) {
-			dlFileVersion.setCustom2ImageId(counterLocalService.increment());
-		}
-
 		dlFileVersion.setStatus(status);
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());

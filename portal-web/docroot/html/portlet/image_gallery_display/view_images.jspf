@@ -47,17 +47,8 @@
 						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry, fileVersion.getVersion());
 						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
 
-						Image smallImage = ImageLocalServiceUtil.getImage(fileVersion.getSmallImageId());
-
-						long smallImageId = 0;
 						int smallImageHeight = 100;
 						int smallImageWidth = 100;
-
-						if (smallImage != null) {
-							smallImageId = smallImage.getImageId();
-							smallImageHeight = smallImage.getHeight();
-							smallImageWidth = smallImage.getWidth();
-						}
 
 						int topMargin = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageHeight;
 						int sideMargin = (PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) - smallImageWidth) / 2;
@@ -66,16 +57,9 @@
 						String src = StringPool.BLANK;
 						String style = StringPool.BLANK;
 
-						Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
-
-						if (largeImage != null) {
-							href = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId()) + "&fileName=" + HttpUtil.encodeURL(fileEntry.getTitle() + StringPool.PERIOD + largeImage.getType());
-							src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&fileEntryId=" + fileEntry.getFileEntryId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
-							style = "max-height: " + smallImageHeight + "px; margin: " + topMargin + "px " + sideMargin + "px 0px " + sideMargin + "px; max-width: " + smallImageWidth + "px;";
-
-							if (smallImage != null) {
-								src = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId + "&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
-							}
+						if (ImageProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
+							href = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
+							src = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=1&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 						}
 						else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
 							href = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";
@@ -95,7 +79,7 @@
 						}
 						%>
 
-						<a class="image-thumbnail preview" <%= (supportedAudio || supportedVideo) ? "data-options=\"width=640&height=500&thumbnailURL=" + HtmlUtil.escapeURL(themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(fileVersion.getTitle())) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1")) + "\"" : StringPool.BLANK %> href="<%= href %>" largeImageId="<%= (largeImage != null) ? largeImage.getImageId() : 0 %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+						<a class="image-thumbnail preview" <%= (supportedAudio || supportedVideo) ? "data-options=\"width=640&height=500&thumbnailURL=" + HtmlUtil.escapeURL(themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(fileVersion.getTitle())) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1")) + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
 							<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="<%= style %>" />
 
 							<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
@@ -126,7 +110,7 @@
 						List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 						%>
 
-						<div id="<portlet:namespace />categorizacionContainer_<%= (largeImage != null) ? largeImage.getImageId() : 0 %>" style="display: none;">
+						<div id="<portlet:namespace />categorizationContainer_<%= fileEntry.getFileEntryId() %>" style="display: none;">
 							<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
 								<liferay-ui:asset-categories-summary
 									className="<%= DLFileEntryConstants.getClassName() %>"

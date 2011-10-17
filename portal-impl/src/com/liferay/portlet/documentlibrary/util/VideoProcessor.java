@@ -50,7 +50,7 @@ import java.util.Vector;
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class VideoProcessor extends DLPreviewableProcessor {
+public class VideoProcessor extends DefaultPreviewableProcessor {
 
 	public static final String PREVIEW_TYPE = "flv";
 

@@ -91,14 +91,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return creationDate.getTime();
 	}
 
-	public long getCustom1ImageId() {
-		return 0;
-	}
-
-	public long getCustom2ImageId() {
-		return 0;
-	}
-
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return null;
@@ -151,14 +143,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
-	public String getImageType() {
-		return null;
-	}
-
-	public long getLargeImageId() {
-		return 0;
-	}
-
 	public String getMimeType() {
 		return _document.getContentStreamMimeType();
 	}
@@ -182,10 +166,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return modificationDate.getTime();
 	}
 
-	public String getNameWithExtension() {
-		return _document.getName() + StringPool.PERIOD + getExtension();
-	}
-
 	@Override
 	public long getPrimaryKey() {
 		return _fileVersionId;
@@ -201,10 +181,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 	public long getSize() {
 		return _document.getContentStreamLength();
-	}
-
-	public long getSmallImageId() {
-		return 0;
 	}
 
 	public int getStatus() {

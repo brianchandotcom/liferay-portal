@@ -63,10 +63,6 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public Date getCreateDate();
 
-	public long getCustom1ImageId();
-
-	public long getCustom2ImageId();
-
 	public String getDescription();
 
 	public String getExtension();
@@ -99,10 +95,6 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public String getIcon();
 
-	public String getImageType();
-
-	public long getLargeImageId();
-
 	/**
 	 * Retrieves the latest file version. In a Liferay repository, this means
 	 * the latest version regardless of workflow state. In third-party
@@ -122,15 +114,11 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public Date getModifiedDate();
 
-	public String getNameWithExtension();
-
 	public int getReadCount();
 
 	public long getRepositoryId();
 
 	public long getSize();
-
-	public long getSmallImageId();
 
 	public String getTitle();
 

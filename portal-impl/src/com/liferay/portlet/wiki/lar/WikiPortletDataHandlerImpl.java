@@ -78,6 +78,8 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
+		Element dlFileEntryTypesElement = pagesElement.addElement(
+			"dl-file-entry-types");
 		Element dlFoldersElement = pagesElement.addElement("dl-folders");
 		Element dlFileEntriesElement = pagesElement.addElement(
 			"dl-file-entries");
@@ -93,8 +95,9 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 		for (WikiPage page : pages) {
 			exportPage(
 				portletDataContext, nodesElement, pagesElement,
-				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				igFoldersElement, igImagesElement, page, true);
+				dlFileEntryTypesElement, dlFoldersElement, dlFileEntriesElement,
+				dlFileRanksElement, igFoldersElement, igImagesElement, page,
+				true);
 		}
 	}
 
@@ -309,10 +312,10 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	protected static void exportPage(
 			PortletDataContext portletDataContext, Element nodesElement,
-			Element pagesElement, Element dlFoldersElement,
-			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element igFoldersElement, Element igImagesElement,
-			WikiPage page, boolean checkDateRange)
+			Element pagesElement, Element dlFileEntryTypesElement,
+			Element dlFoldersElement, Element dlFileEntriesElement,
+			Element dlFileRanksElement, Element igFoldersElement,
+			Element igImagesElement, WikiPage page, boolean checkDateRange)
 		throws Exception {
 
 		if (!portletDataContext.isWithinDateRange(page.getModifiedDate())) {
@@ -336,9 +339,10 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			String content =
 				JournalPortletDataHandlerImpl.exportReferencedContent(
-					portletDataContext, dlFoldersElement, dlFileEntriesElement,
-					dlFileRanksElement, igFoldersElement, igImagesElement,
-					pageElement, page.getContent(), checkDateRange);
+					portletDataContext, dlFileEntryTypesElement,
+					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
+					igFoldersElement, igImagesElement, pageElement,
+					page.getContent(), checkDateRange);
 
 			page.setContent(content);
 

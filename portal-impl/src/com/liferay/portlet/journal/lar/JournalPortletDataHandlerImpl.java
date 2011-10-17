@@ -128,10 +128,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	public static void exportArticle(
 			PortletDataContext portletDataContext, Element articlesElement,
 			Element structuresElement, Element templatesElement,
-			Element dlFoldersElement, Element dlFileEntriesElement,
-			Element dlFileRanksElement, Element igFoldersElement,
-			Element igImagesElement, JournalArticle article,
-			boolean checkDateRange)
+			Element dlFileEntryTypesElement, Element dlFoldersElement,
+			Element dlFileEntriesElement, Element dlFileRanksElement,
+			Element igFoldersElement, Element igImagesElement,
+			JournalArticle article, boolean checkDateRange)
 		throws Exception {
 
 		if (checkDateRange &&
@@ -202,9 +202,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			articleElement.addAttribute("template-uuid", template.getUuid());
 
 			exportTemplate(
-				portletDataContext, templatesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
-				igImagesElement, template, checkDateRange);
+				portletDataContext, templatesElement, dlFileEntryTypesElement,
+				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
+				igFoldersElement, igImagesElement, template, checkDateRange);
 		}
 
 		Image smallImage = ImageUtil.fetchByPrimaryKey(
@@ -261,9 +261,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				_NAMESPACE, "embedded-assets")) {
 
 			String content = exportReferencedContent(
-				portletDataContext, dlFoldersElement, dlFileEntriesElement,
-				dlFileRanksElement, igFoldersElement, igImagesElement,
-				articleElement, article.getContent(), checkDateRange);
+				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
+				dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
+				igImagesElement, articleElement, article.getContent(),
+				checkDateRange);
 
 			article.setContent(content);
 		}
@@ -273,15 +274,17 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	public static String exportReferencedContent(
-			PortletDataContext portletDataContext, Element dlFoldersElement,
+			PortletDataContext portletDataContext,
+			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
 			Element igFoldersElement, Element igImagesElement,
 			Element entityElement, String content, boolean checkDateRange)
 		throws Exception {
 
 		content = exportDLFileEntries(
-			portletDataContext, dlFoldersElement, dlFileEntriesElement,
-			dlFileRanksElement, entityElement, content, false);
+			portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
+			dlFileEntriesElement, dlFileRanksElement, entityElement, content,
+			false);
 		content = exportLayoutFriendlyURLs(portletDataContext, content);
 		content = exportLinksToLayout(portletDataContext, content);
 
@@ -1288,7 +1291,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected static String exportDLFileEntries(
-			PortletDataContext portletDataContext, Element dlFoldersElement,
+			PortletDataContext portletDataContext,
+			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
 			Element entityElement, String content, boolean checkDateRange)
 		throws Exception {
@@ -1445,8 +1449,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				dlReferenceElement.addAttribute("path", path);
 
 				DLPortletDataHandlerImpl.exportFileEntry(
-					portletDataContext, dlFoldersElement, dlFileEntriesElement,
-					dlFileRanksElement, fileEntry, checkDateRange);
+					portletDataContext, dlFileEntryTypesElement,
+					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
+					fileEntry, checkDateRange);
 
 				String dlReference = "[$dl-reference=" + path + "$]";
 
@@ -1726,10 +1731,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	protected static void exportTemplate(
 			PortletDataContext portletDataContext, Element templatesElement,
-			Element dlFoldersElement, Element dlFileEntriesElement,
-			Element dlFileRanksElement, Element igFoldersElement,
-			Element igImagesElement, JournalTemplate template,
-			boolean checkDateRange)
+			Element dlFileEntryTypesElement, Element dlFoldersElement,
+			Element dlFileEntriesElement, Element dlFileRanksElement,
+			Element igFoldersElement, Element igImagesElement,
+			JournalTemplate template, boolean checkDateRange)
 		throws Exception {
 
 		String path = getTemplatePath(portletDataContext, template);
@@ -1764,9 +1769,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				_NAMESPACE, "embedded-assets")) {
 
 			String content = exportReferencedContent(
-				portletDataContext, dlFoldersElement, dlFileEntriesElement,
-				dlFileRanksElement, igFoldersElement, igImagesElement,
-				templateElement, template.getXsl(), checkDateRange);
+				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
+				dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
+				igImagesElement, templateElement, template.getXsl(),
+				checkDateRange);
 
 			template.setXsl(content);
 		}
@@ -2114,6 +2120,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		Element templatesElement = rootElement.addElement("templates");
+		Element dlFileEntryTypesElement = rootElement.addElement(
+			"dl-file-entry-types");
 		Element dlFoldersElement = rootElement.addElement("dl-folders");
 		Element dlFilesElement = rootElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
@@ -2128,9 +2136,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					template.getModifiedDate())) {
 
 				exportTemplate(
-					portletDataContext, templatesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, igFoldersElement,
-					igImagesElement, template, true);
+					portletDataContext, templatesElement,
+					dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
+					dlFileRanksElement, igFoldersElement, igImagesElement,
+					template, true);
 			}
 		}
 
@@ -2155,9 +2164,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			for (JournalArticle article : articles) {
 				exportArticle(
 					portletDataContext, articlesElement, structuresElement,
-					templatesElement, dlFoldersElement, dlFilesElement,
-					dlFileRanksElement, igFoldersElement, igImagesElement,
-					article, true);
+					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
+					dlFilesElement, dlFileRanksElement, igFoldersElement,
+					igImagesElement, article, true);
 			}
 		}
 

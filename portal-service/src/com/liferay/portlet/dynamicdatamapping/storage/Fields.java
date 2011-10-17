@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +29,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Fields {
+public class Fields implements Serializable {
 
 	public boolean contains(String name) {
 		return _fieldsMap.containsKey(name);

@@ -70,6 +70,8 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntryType newDLFileEntryType = _persistence.create(pk);
 
+		newDLFileEntryType.setUuid(randomString());
+
 		newDLFileEntryType.setGroupId(nextLong());
 
 		newDLFileEntryType.setCompanyId(nextLong());
@@ -90,6 +92,8 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey());
 
+		assertEquals(existingDLFileEntryType.getUuid(),
+			newDLFileEntryType.getUuid());
 		assertEquals(existingDLFileEntryType.getFileEntryTypeId(),
 			newDLFileEntryType.getFileEntryTypeId());
 		assertEquals(existingDLFileEntryType.getGroupId(),
@@ -229,6 +233,12 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntryTypeModelImpl existingDLFileEntryTypeModelImpl = (DLFileEntryTypeModelImpl)_persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey());
 
+		assertTrue(Validator.equals(
+				existingDLFileEntryTypeModelImpl.getUuid(),
+				existingDLFileEntryTypeModelImpl.getOriginalUuid()));
+		assertEquals(existingDLFileEntryTypeModelImpl.getGroupId(),
+			existingDLFileEntryTypeModelImpl.getOriginalGroupId());
+
 		assertEquals(existingDLFileEntryTypeModelImpl.getGroupId(),
 			existingDLFileEntryTypeModelImpl.getOriginalGroupId());
 		assertTrue(Validator.equals(
@@ -240,6 +250,8 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 		long pk = nextLong();
 
 		DLFileEntryType dlFileEntryType = _persistence.create(pk);
+
+		dlFileEntryType.setUuid(randomString());
 
 		dlFileEntryType.setGroupId(nextLong());
 

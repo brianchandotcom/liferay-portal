@@ -559,6 +559,7 @@ create table DLFileEntryMetadata (
 );
 
 create table DLFileEntryType (
+	uuid_ VARCHAR(75) null,
 	fileEntryTypeId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

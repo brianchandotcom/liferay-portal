@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Field {
+public class Field implements Serializable {
 
 	public Field() {
 	}

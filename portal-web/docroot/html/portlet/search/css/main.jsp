@@ -251,6 +251,17 @@
 	}
 }
 
+.portlet-search.portlet-configuration {
+	.aui-fieldset-content {
+		padding-top: 0.5em;
+	}
+
+	.search-configuration-text {
+		height: 15em;
+		width: 100%;
+	}
+}
+
 .ie .portlet-search {
 	.full-query .container, .result td.value .container {
 		height: expression(this.scrollHeight > 100 ? "100px" : "auto");

@@ -45,6 +45,9 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
@@ -117,6 +120,7 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace(""),

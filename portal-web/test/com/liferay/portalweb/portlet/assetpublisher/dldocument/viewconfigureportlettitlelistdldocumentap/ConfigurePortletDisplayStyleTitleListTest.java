@@ -45,6 +45,9 @@ public class ConfigurePortletDisplayStyleTitleListTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));

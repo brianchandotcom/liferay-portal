@@ -70,7 +70,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				}
 
 				boolean dmDocumentPresent = selenium.isElementPresent(
-						"//span[@class='document-title']");
+						"//span[@class='entry-title']");
 
 				if (!dmDocumentPresent) {
 					label = 2;
@@ -138,7 +138,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace(
-						"There are no documents in this folder."),
+						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 2:

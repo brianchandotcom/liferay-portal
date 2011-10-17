@@ -90,8 +90,8 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText("//div/a/span[2]"));
+		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("DM Folder Name"));
 		Thread.sleep(5000);
 
@@ -114,8 +114,8 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//div[@id='_20_folderContainer']",
 				"DM Folder Name"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText("//div[@id='_20_entries']/div/a/span[2]"));
+		selenium.clickAt("//div[@id='_20_entries']/div/a/span[2]",
 			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
@@ -127,8 +127,9 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download (0.8k)"),
 			selenium.getText("//span[1]/span/a/span"));
 		assertTrue(selenium.isPartialText(
-				"//div[2]/div[2]/div/div[2]/div[2]/div[1]", "ISO-8859-1"));
-		assertTrue(selenium.isPartialText("//div[2]/div[2]/div[2]", "text/plain"));
+				"//div[2]/div[2]/div/div[1]/div[2]/div[1]", "ISO-8859-1"));
+		assertTrue(selenium.isPartialText("//div[2]/div/div[1]/div[2]/div[2]",
+				"text/plain"));
 		assertEquals(RuntimeVariables.replace("1.0"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));

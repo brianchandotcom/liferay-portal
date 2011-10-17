@@ -1413,10 +1413,6 @@
 		<field name="fileEntryTypeId" type="long" />
 		<field name="version" type="String" />
 		<field name="size" type="long" />
-		<field name="smallImageId" type="long" />
-		<field name="largeImageId" type="long" />
-		<field name="custom1ImageId" type="long" />
-		<field name="custom2ImageId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

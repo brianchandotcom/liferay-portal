@@ -188,24 +188,20 @@ if (folder != null) {
 		sb.append("parent.");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectDocumentLibrary('");
+		sb.append(themeDisplay.getPathContext());
+		sb.append("/documents/");
+		sb.append(groupId);
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getFolderId());
+		sb.append(StringPool.SLASH);
+		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
 
-		if (ImageProcessor.hasImages(fileEntry.getFileVersion())) {
-			sb.append(themeDisplay.getPathImage());
-			sb.append("/image_gallery?uuid=");
-			sb.append(fileEntry.getUuid());
-			sb.append("&groupId=");
-			sb.append(fileEntry.getGroupId());
+		if (ImageProcessor.getImageMimeTypes().contains(
+				fileEntry.getMimeType())) {
+
 			sb.append("&t=");
-			sb.append(WebServerServletTokenUtil.getToken(fileEntry.getLargeImageId()));
-		}
-		else {
-			sb.append(themeDisplay.getPathContext());
-			sb.append("/documents/");
-			sb.append(groupId);
-			sb.append(StringPool.SLASH);
-			sb.append(fileEntry.getFolderId());
-			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+			sb.append(WebServerServletTokenUtil.getToken(
+				fileEntry.getFileEntryId()));
 		}
 
 		sb.append("', '");

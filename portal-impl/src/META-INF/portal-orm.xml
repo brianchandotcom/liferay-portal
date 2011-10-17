@@ -1876,10 +1876,6 @@
 			<basic name="size">
 				<column name="SIZE_" />
 			</basic>
-			<basic name="smallImageId" />
-			<basic name="largeImageId" />
-			<basic name="custom1ImageId" />
-			<basic name="custom2ImageId" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
 			<basic name="statusByUserName" />

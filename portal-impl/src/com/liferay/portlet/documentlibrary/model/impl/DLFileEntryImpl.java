@@ -23,10 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -201,29 +198,6 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
-	public String getImageType() {
-		if (_imageType == null) {
-			try {
-				Image largeImage = ImageLocalServiceUtil.getImage(
-					getLargeImageId());
-
-				if (largeImage != null) {
-					_imageType = largeImage.getType();
-				}
-				else {
-					_imageType = StringPool.BLANK;
-				}
-			}
-			catch (Exception e) {
-				_imageType = StringPool.BLANK;
-
-				_log.error(e);
-			}
-		}
-
-		return _imageType;
-	}
-
 	public DLFileVersion getLatestFileVersion(boolean trusted)
 		throws PortalException, SystemException {
 
@@ -271,26 +245,6 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		}
 
 		return sb.toString();
-	}
-
-	public String getNameWithExtension() {
-		String nameWithExtension = getName();
-
-		if (Validator.isNull(nameWithExtension)) {
-			nameWithExtension = String.valueOf(getFileEntryId());
-		}
-
-		String type = getImageType();
-
-		return getNameWithExtension(nameWithExtension, type);
-	}
-
-	public static String getNameWithExtension(String name, String type) {
-		if (Validator.isNotNull(type)) {
-			name = name.concat(StringPool.PERIOD).concat(type);
-		}
-
-		return name;
 	}
 
 	public boolean hasLock() {

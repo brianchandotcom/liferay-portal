@@ -2412,10 +2412,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileVersions.size() - 1);
 
 		FileEntry destinationFileEntry = toRepository.addFileEntry(
-			newFolderId, fileEntry.getNameWithExtension(),
-			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
-			latestFileVersion.getDescription(), StringPool.BLANK,
-			latestFileVersion.getContentStream(false),
+			newFolderId, fileEntry.getTitle(), latestFileVersion.getMimeType(),
+			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
+			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
 		for (int i = fileVersions.size() - 2; i >= 0 ; i--) {
@@ -2425,8 +2424,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			try {
 				destinationFileEntry = toRepository.updateFileEntry(
-					destinationFileEntry.getFileEntryId(),
-					fileEntry.getNameWithExtension(),
+					destinationFileEntry.getFileEntryId(), fileEntry.getTitle(),
 					destinationFileEntry.getMimeType(),
 					destinationFileEntry.getTitle(),
 					destinationFileEntry.getDescription(), StringPool.BLANK,

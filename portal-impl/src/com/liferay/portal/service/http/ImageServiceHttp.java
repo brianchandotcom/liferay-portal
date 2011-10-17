@@ -88,8 +88,47 @@ public class ImageServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntry(
+		HttpPrincipal httpPrincipal, long imageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(ImageServiceUtil.class.getName(),
+					"getDLFileEntry", _getDLFileEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, imageId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.documentlibrary.model.DLFileEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ImageServiceHttp.class);
 	private static final Class<?>[] _getImageParameterTypes0 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getDLFileEntryParameterTypes1 = new Class[] {
 			long.class
 		};
 }

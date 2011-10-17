@@ -106,11 +106,8 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/tunnel-web/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
-Image smallImage = ImageLocalServiceUtil.getImage(fileVersion.getSmallImageId());
-Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
-
 boolean hasAudio = AudioProcessor.hasAudio(fileEntry, fileVersion.getVersion());
-boolean hasImages = ImageProcessor.hasImages(fileVersion);
+boolean hasImages = ImageProcessor.hasImages(fileEntry, fileVersion.getVersion());
 boolean hasPDFImages = PDFProcessor.hasImages(fileEntry, fileVersion.getVersion());
 boolean hasVideo = VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion());
 
@@ -209,20 +206,21 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<%
 						String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(extension) + ".png";
 
+
+						String thumbnailParam = null;
+
 						if (hasImages) {
-							long smallImageId = 0;
-
-							if (smallImage != null) {
-								smallImageId = smallImage.getImageId();
-							}
-
-							thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+							thumbnailParam = "&imageThumbnail=1";
 						}
 						else if (hasPDFImages) {
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&documentThumbnail=1";
+							thumbnailParam = "&documentThumbnail=1";
 						}
-						else if (hasVideo){
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&videoThumbnail=1";
+						else if (hasVideo) {
+							thumbnailParam = "&videoThumbnail=1";
+						}
+
+						if (Validator.isNotNull(thumbnailParam)) {
+							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileEntry.getVersion() + thumbnailParam;
 						}
 
 						if (layoutAssetEntry != null) {
@@ -295,7 +293,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						String videoThumbnailURL = null;
 
 						if (hasImages) {
-							previewFileURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
+							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&imagePreview=1") + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 
 							previewFileCount = 1;
 						}
@@ -375,7 +373,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= largeImage.getImageId() %>&t=<%= WebServerServletTokenUtil.getToken(largeImage.getImageId()) %>" style="max-height: 480px; max-width: 700px;" />
+												<img src="<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&imagePreview=1&t=") + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId()) %>" style="max-height: 480px; max-width: 700px;" />
 											</div>
 										</div>
 									</c:when>

@@ -48,10 +48,6 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setSize(model.getSize());
-		soapModel.setSmallImageId(model.getSmallImageId());
-		soapModel.setLargeImageId(model.getLargeImageId());
-		soapModel.setCustom1ImageId(model.getCustom1ImageId());
-		soapModel.setCustom2ImageId(model.getCustom2ImageId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -244,38 +240,6 @@ public class DLFileVersionSoap implements Serializable {
 		_size = size;
 	}
 
-	public long getSmallImageId() {
-		return _smallImageId;
-	}
-
-	public void setSmallImageId(long smallImageId) {
-		_smallImageId = smallImageId;
-	}
-
-	public long getLargeImageId() {
-		return _largeImageId;
-	}
-
-	public void setLargeImageId(long largeImageId) {
-		_largeImageId = largeImageId;
-	}
-
-	public long getCustom1ImageId() {
-		return _custom1ImageId;
-	}
-
-	public void setCustom1ImageId(long custom1ImageId) {
-		_custom1ImageId = custom1ImageId;
-	}
-
-	public long getCustom2ImageId() {
-		return _custom2ImageId;
-	}
-
-	public void setCustom2ImageId(long custom2ImageId) {
-		_custom2ImageId = custom2ImageId;
-	}
-
 	public int getStatus() {
 		return _status;
 	}
@@ -325,10 +289,6 @@ public class DLFileVersionSoap implements Serializable {
 	private long _fileEntryTypeId;
 	private String _version;
 	private long _size;
-	private long _smallImageId;
-	private long _largeImageId;
-	private long _custom1ImageId;
-	private long _custom2ImageId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

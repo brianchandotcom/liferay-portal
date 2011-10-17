@@ -48,7 +48,7 @@ import java.util.Vector;
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class AudioProcessor extends DLPreviewableProcessor {
+public class AudioProcessor extends DefaultPreviewableProcessor {
 
 	public static final String PREVIEW_TYPE = "mp3";
 

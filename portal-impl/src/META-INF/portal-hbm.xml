@@ -1527,10 +1527,6 @@
 		<property name="fileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
-		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="largeImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="custom1ImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="custom2ImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

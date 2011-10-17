@@ -32,7 +32,7 @@ import java.util.Date;
 public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{fileVersionId=");
 		sb.append(fileVersionId);
@@ -68,14 +68,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		sb.append(version);
 		sb.append(", size=");
 		sb.append(size);
-		sb.append(", smallImageId=");
-		sb.append(smallImageId);
-		sb.append(", largeImageId=");
-		sb.append(largeImageId);
-		sb.append(", custom1ImageId=");
-		sb.append(custom1ImageId);
-		sb.append(", custom2ImageId=");
-		sb.append(custom2ImageId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -166,10 +158,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		}
 
 		dlFileVersionImpl.setSize(size);
-		dlFileVersionImpl.setSmallImageId(smallImageId);
-		dlFileVersionImpl.setLargeImageId(largeImageId);
-		dlFileVersionImpl.setCustom1ImageId(custom1ImageId);
-		dlFileVersionImpl.setCustom2ImageId(custom2ImageId);
 		dlFileVersionImpl.setStatus(status);
 		dlFileVersionImpl.setStatusByUserId(statusByUserId);
 
@@ -209,10 +197,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 	public long fileEntryTypeId;
 	public String version;
 	public long size;
-	public long smallImageId;
-	public long largeImageId;
-	public long custom1ImageId;
-	public long custom2ImageId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

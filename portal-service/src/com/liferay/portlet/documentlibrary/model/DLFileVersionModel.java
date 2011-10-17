@@ -324,62 +324,6 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setSize(long size);
 
 	/**
-	 * Returns the small image ID of this document library file version.
-	 *
-	 * @return the small image ID of this document library file version
-	 */
-	public long getSmallImageId();
-
-	/**
-	 * Sets the small image ID of this document library file version.
-	 *
-	 * @param smallImageId the small image ID of this document library file version
-	 */
-	public void setSmallImageId(long smallImageId);
-
-	/**
-	 * Returns the large image ID of this document library file version.
-	 *
-	 * @return the large image ID of this document library file version
-	 */
-	public long getLargeImageId();
-
-	/**
-	 * Sets the large image ID of this document library file version.
-	 *
-	 * @param largeImageId the large image ID of this document library file version
-	 */
-	public void setLargeImageId(long largeImageId);
-
-	/**
-	 * Returns the custom1 image ID of this document library file version.
-	 *
-	 * @return the custom1 image ID of this document library file version
-	 */
-	public long getCustom1ImageId();
-
-	/**
-	 * Sets the custom1 image ID of this document library file version.
-	 *
-	 * @param custom1ImageId the custom1 image ID of this document library file version
-	 */
-	public void setCustom1ImageId(long custom1ImageId);
-
-	/**
-	 * Returns the custom2 image ID of this document library file version.
-	 *
-	 * @return the custom2 image ID of this document library file version
-	 */
-	public long getCustom2ImageId();
-
-	/**
-	 * Sets the custom2 image ID of this document library file version.
-	 *
-	 * @param custom2ImageId the custom2 image ID of this document library file version
-	 */
-	public void setCustom2ImageId(long custom2ImageId);
-
-	/**
 	 * Returns the status of this document library file version.
 	 *
 	 * @return the status of this document library file version

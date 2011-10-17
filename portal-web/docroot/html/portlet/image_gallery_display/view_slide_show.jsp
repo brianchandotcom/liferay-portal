@@ -70,9 +70,11 @@ int defaultSpeed = 3000;
 			FileEntry fileEntry = (FileEntry)fileEntries.get(0);
 
 			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			String largeSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 		%>
 
-			<img border="0" name="<portlet:namespace />slideShow" src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= WebServerServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>" />
+			<img border="0" name="<portlet:namespace />slideShow" src="<%= largeSrc %>" />
 
 		<%
 		}
@@ -90,9 +92,11 @@ int defaultSpeed = 3000;
 		FileEntry fileEntry = (FileEntry)fileEntries.get(i);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		String largeSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 	%>
 
-		<portlet:namespace />imgArray[<%= i %>] = "<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= fileVersion.getLargeImageId() %>&t=<%= WebServerServletTokenUtil.getToken(fileVersion.getLargeImageId()) %>";
+		<portlet:namespace />imgArray[<%= i %>] = "<%= largeSrc %>";
 
 	<%
 	}

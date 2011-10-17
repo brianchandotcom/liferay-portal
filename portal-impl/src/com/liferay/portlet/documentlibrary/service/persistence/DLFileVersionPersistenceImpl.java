@@ -478,10 +478,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		dlFileVersionImpl.setFileEntryTypeId(dlFileVersion.getFileEntryTypeId());
 		dlFileVersionImpl.setVersion(dlFileVersion.getVersion());
 		dlFileVersionImpl.setSize(dlFileVersion.getSize());
-		dlFileVersionImpl.setSmallImageId(dlFileVersion.getSmallImageId());
-		dlFileVersionImpl.setLargeImageId(dlFileVersion.getLargeImageId());
-		dlFileVersionImpl.setCustom1ImageId(dlFileVersion.getCustom1ImageId());
-		dlFileVersionImpl.setCustom2ImageId(dlFileVersion.getCustom2ImageId());
 		dlFileVersionImpl.setStatus(dlFileVersion.getStatus());
 		dlFileVersionImpl.setStatusByUserId(dlFileVersion.getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(dlFileVersion.getStatusByUserName());

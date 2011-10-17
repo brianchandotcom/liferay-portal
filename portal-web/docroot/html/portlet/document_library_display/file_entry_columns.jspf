@@ -69,11 +69,8 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 
 				if (fileShortcut == null) {
-					if (ImageProcessor.hasLargeImage(fileEntry.getFileVersion())) {
-						thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + fileEntry.getLargeImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getLargeImageId());
-					}
-					else if (ImageProcessor.hasSmallImage(fileEntry.getFileVersion())) {
-						thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + fileEntry.getSmallImageId() +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(fileEntry.getSmallImageId());
+					if (ImageProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
+						thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=1&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 					}
 					else if (PDFProcessor.hasImages(fileEntry, fileEntry.getVersion())) {
 						thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&documentThumbnail=1";

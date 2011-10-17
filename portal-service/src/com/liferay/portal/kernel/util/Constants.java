@@ -27,6 +27,8 @@ public interface Constants {
 
 	public static final String ADD_MULTIPLE = "add_multiple";
 
+	public static final String ADD_VOTE = "add_vote";
+
 	public static final String APPROVE = "approve";
 
 	public static final String ASSIGN = "assign";

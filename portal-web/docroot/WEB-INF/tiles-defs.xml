@@ -1069,6 +1069,10 @@
 
 	<definition name="portlet.polls_display" extends="portlet" />
 
+	<definition name="portlet.polls_display.add_question_redirect" extends="portlet.polls_display">
+		<put name="portlet_content" value="/portlet/polls_display/add_question_redirect.jsp" />
+	</definition>
+
 	<definition name="portlet.polls_display.error" extends="portlet.polls_display">
 		<put name="portlet_content" value="/portlet/polls_display/error.jsp" />
 	</definition>

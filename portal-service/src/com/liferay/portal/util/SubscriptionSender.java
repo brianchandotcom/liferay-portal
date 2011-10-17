@@ -346,7 +346,7 @@ public class SubscriptionSender implements Serializable {
 
 		try {
 			return SubscriptionPermissionUtil.contains(
-					user, className, classPK);
+				user, className, classPK);
 		}
 		catch (Exception e) {
 			return false;

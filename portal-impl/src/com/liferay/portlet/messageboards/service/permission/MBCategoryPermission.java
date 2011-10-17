@@ -87,7 +87,7 @@ public class MBCategoryPermission {
 
 		try {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-					categoryId);
+				categoryId);
 
 			return contains(permissionChecker, category, actionId);
 		}

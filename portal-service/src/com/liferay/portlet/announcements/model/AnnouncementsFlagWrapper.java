@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsFlag}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.announcements.model;
  * @see       AnnouncementsFlag
  * @generated
  */
-public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
+public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
+	ModelWrapper<AnnouncementsFlag> {
 	public AnnouncementsFlagWrapper(AnnouncementsFlag announcementsFlag) {
 		_announcementsFlag = announcementsFlag;
 	}
@@ -238,7 +241,14 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
 		_announcementsFlag.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AnnouncementsFlag getWrappedAnnouncementsFlag() {
+		return _announcementsFlag;
+	}
+
+	public AnnouncementsFlag getWrappedModel() {
 		return _announcementsFlag;
 	}
 

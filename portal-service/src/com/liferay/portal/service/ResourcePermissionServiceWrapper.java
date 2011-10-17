@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class ResourcePermissionServiceWrapper
-	implements ResourcePermissionService {
+	implements ResourcePermissionService,
+		ServiceWrapper<ResourcePermissionService> {
 	public ResourcePermissionServiceWrapper(
 		ResourcePermissionService resourcePermissionService) {
 		_resourcePermissionService = resourcePermissionService;
@@ -215,11 +216,26 @@ public class ResourcePermissionServiceWrapper
 			companyId, name, primKey, roleIdsToActionIds);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ResourcePermissionService getWrappedResourcePermissionService() {
 		return _resourcePermissionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedResourcePermissionService(
+		ResourcePermissionService resourcePermissionService) {
+		_resourcePermissionService = resourcePermissionService;
+	}
+
+	public ResourcePermissionService getWrappedService() {
+		return _resourcePermissionService;
+	}
+
+	public void setWrappedService(
 		ResourcePermissionService resourcePermissionService) {
 		_resourcePermissionService = resourcePermissionService;
 	}

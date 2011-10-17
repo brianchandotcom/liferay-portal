@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       OrganizationLocalService
  * @generated
  */
-public class OrganizationLocalServiceWrapper implements OrganizationLocalService {
+public class OrganizationLocalServiceWrapper implements OrganizationLocalService,
+	ServiceWrapper<OrganizationLocalService> {
 	public OrganizationLocalServiceWrapper(
 		OrganizationLocalService organizationLocalService) {
 		_organizationLocalService = organizationLocalService;
@@ -1270,11 +1271,26 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			regionId, countryId, statusId, comments, site, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public OrganizationLocalService getWrappedOrganizationLocalService() {
 		return _organizationLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+		_organizationLocalService = organizationLocalService;
+	}
+
+	public OrganizationLocalService getWrappedService() {
+		return _organizationLocalService;
+	}
+
+	public void setWrappedService(
 		OrganizationLocalService organizationLocalService) {
 		_organizationLocalService = organizationLocalService;
 	}

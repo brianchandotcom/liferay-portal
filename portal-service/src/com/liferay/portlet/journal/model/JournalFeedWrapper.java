@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalFeed}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see       JournalFeed
  * @generated
  */
-public class JournalFeedWrapper implements JournalFeed {
+public class JournalFeedWrapper implements JournalFeed,
+	ModelWrapper<JournalFeed> {
 	public JournalFeedWrapper(JournalFeed journalFeed) {
 		_journalFeed = journalFeed;
 	}
@@ -563,7 +566,14 @@ public class JournalFeedWrapper implements JournalFeed {
 		_journalFeed.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public JournalFeed getWrappedJournalFeed() {
+		return _journalFeed;
+	}
+
+	public JournalFeed getWrappedModel() {
 		return _journalFeed;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       UserGroupService
  * @generated
  */
-public class UserGroupServiceWrapper implements UserGroupService {
+public class UserGroupServiceWrapper implements UserGroupService,
+	ServiceWrapper<UserGroupService> {
 	public UserGroupServiceWrapper(UserGroupService userGroupService) {
 		_userGroupService = userGroupService;
 	}
@@ -202,11 +203,25 @@ public class UserGroupServiceWrapper implements UserGroupService {
 			description, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public UserGroupService getWrappedUserGroupService() {
 		return _userGroupService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedUserGroupService(UserGroupService userGroupService) {
+		_userGroupService = userGroupService;
+	}
+
+	public UserGroupService getWrappedService() {
+		return _userGroupService;
+	}
+
+	public void setWrappedService(UserGroupService userGroupService) {
 		_userGroupService = userGroupService;
 	}
 

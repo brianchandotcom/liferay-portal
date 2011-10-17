@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       WebsiteLocalService
  * @generated
  */
-public class WebsiteLocalServiceWrapper implements WebsiteLocalService {
+public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
+	ServiceWrapper<WebsiteLocalService> {
 	public WebsiteLocalServiceWrapper(WebsiteLocalService websiteLocalService) {
 		_websiteLocalService = websiteLocalService;
 	}
@@ -275,12 +276,26 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService {
 			primary);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WebsiteLocalService getWrappedWebsiteLocalService() {
 		return _websiteLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWebsiteLocalService(
 		WebsiteLocalService websiteLocalService) {
+		_websiteLocalService = websiteLocalService;
+	}
+
+	public WebsiteLocalService getWrappedService() {
+		return _websiteLocalService;
+	}
+
+	public void setWrappedService(WebsiteLocalService websiteLocalService) {
 		_websiteLocalService = websiteLocalService;
 	}
 

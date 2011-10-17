@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ClassNameService
  * @generated
  */
-public class ClassNameServiceWrapper implements ClassNameService {
+public class ClassNameServiceWrapper implements ClassNameService,
+	ServiceWrapper<ClassNameService> {
 	public ClassNameServiceWrapper(ClassNameService classNameService) {
 		_classNameService = classNameService;
 	}
@@ -48,11 +49,25 @@ public class ClassNameServiceWrapper implements ClassNameService {
 		return _classNameService.getClassNameId(value);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ClassNameService getWrappedClassNameService() {
 		return _classNameService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedClassNameService(ClassNameService classNameService) {
+		_classNameService = classNameService;
+	}
+
+	public ClassNameService getWrappedService() {
+		return _classNameService;
+	}
+
+	public void setWrappedService(ClassNameService classNameService) {
 		_classNameService = classNameService;
 	}
 

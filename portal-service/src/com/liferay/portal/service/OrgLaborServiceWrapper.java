@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       OrgLaborService
  * @generated
  */
-public class OrgLaborServiceWrapper implements OrgLaborService {
+public class OrgLaborServiceWrapper implements OrgLaborService,
+	ServiceWrapper<OrgLaborService> {
 	public OrgLaborServiceWrapper(OrgLaborService orgLaborService) {
 		_orgLaborService = orgLaborService;
 	}
@@ -69,11 +70,25 @@ public class OrgLaborServiceWrapper implements OrgLaborService {
 			thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public OrgLaborService getWrappedOrgLaborService() {
 		return _orgLaborService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedOrgLaborService(OrgLaborService orgLaborService) {
+		_orgLaborService = orgLaborService;
+	}
+
+	public OrgLaborService getWrappedService() {
+		return _orgLaborService;
+	}
+
+	public void setWrappedService(OrgLaborService orgLaborService) {
 		_orgLaborService = orgLaborService;
 	}
 

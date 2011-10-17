@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       VirtualHost
  * @generated
  */
-public class VirtualHostWrapper implements VirtualHost {
+public class VirtualHostWrapper implements VirtualHost,
+	ModelWrapper<VirtualHost> {
 	public VirtualHostWrapper(VirtualHost virtualHost) {
 		_virtualHost = virtualHost;
 	}
@@ -199,7 +200,14 @@ public class VirtualHostWrapper implements VirtualHost {
 		_virtualHost.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public VirtualHost getWrappedVirtualHost() {
+		return _virtualHost;
+	}
+
+	public VirtualHost getWrappedModel() {
 		return _virtualHost;
 	}
 

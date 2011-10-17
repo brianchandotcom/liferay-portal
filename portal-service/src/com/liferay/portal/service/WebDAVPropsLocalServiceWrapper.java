@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       WebDAVPropsLocalService
  * @generated
  */
-public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService {
+public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
+	ServiceWrapper<WebDAVPropsLocalService> {
 	public WebDAVPropsLocalServiceWrapper(
 		WebDAVPropsLocalService webDAVPropsLocalService) {
 		_webDAVPropsLocalService = webDAVPropsLocalService;
@@ -264,11 +265,26 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService {
 		_webDAVPropsLocalService.storeWebDAVProps(webDavProps);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WebDAVPropsLocalService getWrappedWebDAVPropsLocalService() {
 		return _webDAVPropsLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWebDAVPropsLocalService(
+		WebDAVPropsLocalService webDAVPropsLocalService) {
+		_webDAVPropsLocalService = webDAVPropsLocalService;
+	}
+
+	public WebDAVPropsLocalService getWrappedService() {
+		return _webDAVPropsLocalService;
+	}
+
+	public void setWrappedService(
 		WebDAVPropsLocalService webDAVPropsLocalService) {
 		_webDAVPropsLocalService = webDAVPropsLocalService;
 	}

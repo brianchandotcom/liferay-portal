@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetTag}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.asset.model;
  * @see       AssetTag
  * @generated
  */
-public class AssetTagWrapper implements AssetTag {
+public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	public AssetTagWrapper(AssetTag assetTag) {
 		_assetTag = assetTag;
 	}
@@ -309,7 +311,14 @@ public class AssetTagWrapper implements AssetTag {
 		_assetTag.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetTag getWrappedAssetTag() {
+		return _assetTag;
+	}
+
+	public AssetTag getWrappedModel() {
 		return _assetTag;
 	}
 

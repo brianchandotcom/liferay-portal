@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       LockLocalService
  * @generated
  */
-public class LockLocalServiceWrapper implements LockLocalService {
+public class LockLocalServiceWrapper implements LockLocalService,
+	ServiceWrapper<LockLocalService> {
 	public LockLocalServiceWrapper(LockLocalService lockLocalService) {
 		_lockLocalService = lockLocalService;
 	}
@@ -341,11 +342,25 @@ public class LockLocalServiceWrapper implements LockLocalService {
 		_lockLocalService.unlock(className, key, owner, retrieveFromCache);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LockLocalService getWrappedLockLocalService() {
 		return _lockLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLockLocalService(LockLocalService lockLocalService) {
+		_lockLocalService = lockLocalService;
+	}
+
+	public LockLocalService getWrappedService() {
+		return _lockLocalService;
+	}
+
+	public void setWrappedService(LockLocalService lockLocalService) {
 		_lockLocalService = lockLocalService;
 	}
 

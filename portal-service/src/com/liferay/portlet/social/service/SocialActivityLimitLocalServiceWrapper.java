@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityLimitLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialActivityLimitLocalServiceWrapper
-	implements SocialActivityLimitLocalService {
+	implements SocialActivityLimitLocalService,
+		ServiceWrapper<SocialActivityLimitLocalService> {
 	public SocialActivityLimitLocalServiceWrapper(
 		SocialActivityLimitLocalService socialActivityLimitLocalService) {
 		_socialActivityLimitLocalService = socialActivityLimitLocalService;
@@ -260,11 +263,26 @@ public class SocialActivityLimitLocalServiceWrapper
 			limitPeriod);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialActivityLimitLocalService getWrappedSocialActivityLimitLocalService() {
 		return _socialActivityLimitLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialActivityLimitLocalService(
+		SocialActivityLimitLocalService socialActivityLimitLocalService) {
+		_socialActivityLimitLocalService = socialActivityLimitLocalService;
+	}
+
+	public SocialActivityLimitLocalService getWrappedService() {
+		return _socialActivityLimitLocalService;
+	}
+
+	public void setWrappedService(
 		SocialActivityLimitLocalService socialActivityLimitLocalService) {
 		_socialActivityLimitLocalService = socialActivityLimitLocalService;
 	}

@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class PortletPreferencesServiceWrapper
-	implements PortletPreferencesService {
+	implements PortletPreferencesService,
+		ServiceWrapper<PortletPreferencesService> {
 	public PortletPreferencesServiceWrapper(
 		PortletPreferencesService portletPreferencesService) {
 		_portletPreferencesService = portletPreferencesService;
@@ -73,11 +74,26 @@ public class PortletPreferencesServiceWrapper
 			name, portletId, preferences);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PortletPreferencesService getWrappedPortletPreferencesService() {
 		return _portletPreferencesService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPortletPreferencesService(
+		PortletPreferencesService portletPreferencesService) {
+		_portletPreferencesService = portletPreferencesService;
+	}
+
+	public PortletPreferencesService getWrappedService() {
+		return _portletPreferencesService;
+	}
+
+	public void setWrappedService(
 		PortletPreferencesService portletPreferencesService) {
 		_portletPreferencesService = portletPreferencesService;
 	}

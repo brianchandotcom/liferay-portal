@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetLink}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.asset.model;
  * @see       AssetLink
  * @generated
  */
-public class AssetLinkWrapper implements AssetLink {
+public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	public AssetLinkWrapper(AssetLink assetLink) {
 		_assetLink = assetLink;
 	}
@@ -309,7 +311,14 @@ public class AssetLinkWrapper implements AssetLink {
 		_assetLink.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetLink getWrappedAssetLink() {
+		return _assetLink;
+	}
+
+	public AssetLink getWrappedModel() {
 		return _assetLink;
 	}
 

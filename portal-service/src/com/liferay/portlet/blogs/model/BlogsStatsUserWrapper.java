@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BlogsStatsUser}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.blogs.model;
  * @see       BlogsStatsUser
  * @generated
  */
-public class BlogsStatsUserWrapper implements BlogsStatsUser {
+public class BlogsStatsUserWrapper implements BlogsStatsUser,
+	ModelWrapper<BlogsStatsUser> {
 	public BlogsStatsUserWrapper(BlogsStatsUser blogsStatsUser) {
 		_blogsStatsUser = blogsStatsUser;
 	}
@@ -330,7 +333,14 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser {
 		_blogsStatsUser.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public BlogsStatsUser getWrappedBlogsStatsUser() {
+		return _blogsStatsUser;
+	}
+
+	public BlogsStatsUser getWrappedModel() {
 		return _blogsStatsUser;
 	}
 

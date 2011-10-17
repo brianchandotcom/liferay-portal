@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityLog}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialEquityLog
  * @generated
  */
-public class SocialEquityLogWrapper implements SocialEquityLog {
+public class SocialEquityLogWrapper implements SocialEquityLog,
+	ModelWrapper<SocialEquityLog> {
 	public SocialEquityLogWrapper(SocialEquityLog socialEquityLog) {
 		_socialEquityLog = socialEquityLog;
 	}
@@ -377,7 +380,14 @@ public class SocialEquityLogWrapper implements SocialEquityLog {
 		return _socialEquityLog.getLifespan();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialEquityLog getWrappedSocialEquityLog() {
+		return _socialEquityLog;
+	}
+
+	public SocialEquityLog getWrappedModel() {
 		return _socialEquityLog;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivitySetting}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialActivitySetting
  * @generated
  */
-public class SocialActivitySettingWrapper implements SocialActivitySetting {
+public class SocialActivitySettingWrapper implements SocialActivitySetting,
+	ModelWrapper<SocialActivitySetting> {
 	public SocialActivitySettingWrapper(
 		SocialActivitySetting socialActivitySetting) {
 		_socialActivitySetting = socialActivitySetting;
@@ -264,7 +267,14 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting {
 		_socialActivitySetting.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialActivitySetting getWrappedSocialActivitySetting() {
+		return _socialActivitySetting;
+	}
+
+	public SocialActivitySetting getWrappedModel() {
 		return _socialActivitySetting;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link RatingsEntryLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.ratings.service;
  * @see       RatingsEntryLocalService
  * @generated
  */
-public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService {
+public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService,
+	ServiceWrapper<RatingsEntryLocalService> {
 	public RatingsEntryLocalServiceWrapper(
 		RatingsEntryLocalService ratingsEntryLocalService) {
 		_ratingsEntryLocalService = ratingsEntryLocalService;
@@ -301,11 +304,26 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 			classPK, score, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public RatingsEntryLocalService getWrappedRatingsEntryLocalService() {
 		return _ratingsEntryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	public RatingsEntryLocalService getWrappedService() {
+		return _ratingsEntryLocalService;
+	}
+
+	public void setWrappedService(
 		RatingsEntryLocalService ratingsEntryLocalService) {
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Website
  * @generated
  */
-public class WebsiteWrapper implements Website {
+public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	public WebsiteWrapper(Website website) {
 		_website = website;
 	}
@@ -369,7 +369,14 @@ public class WebsiteWrapper implements Website {
 		return _website.getType();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Website getWrappedWebsite() {
+		return _website;
+	}
+
+	public Website getWrappedModel() {
 		return _website;
 	}
 

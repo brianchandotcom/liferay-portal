@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       UserLocalService
  * @generated
  */
-public class UserLocalServiceWrapper implements UserLocalService {
+public class UserLocalServiceWrapper implements UserLocalService,
+	ServiceWrapper<UserLocalService> {
 	public UserLocalServiceWrapper(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -2850,11 +2851,25 @@ public class UserLocalServiceWrapper implements UserLocalService {
 		_userLocalService.verifyEmailAddress(ticketKey);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public UserLocalService getWrappedUserLocalService() {
 		return _userLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	public UserLocalService getWrappedService() {
+		return _userLocalService;
+	}
+
+	public void setWrappedService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 

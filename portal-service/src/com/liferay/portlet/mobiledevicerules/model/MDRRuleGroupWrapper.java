@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRuleGroup}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.mobiledevicerules.model;
  * @see       MDRRuleGroup
  * @generated
  */
-public class MDRRuleGroupWrapper implements MDRRuleGroup {
+public class MDRRuleGroupWrapper implements MDRRuleGroup,
+	ModelWrapper<MDRRuleGroup> {
 	public MDRRuleGroupWrapper(MDRRuleGroup mdrRuleGroup) {
 		_mdrRuleGroup = mdrRuleGroup;
 	}
@@ -551,7 +554,14 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 		return _mdrRuleGroup.getRules();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MDRRuleGroup getWrappedMDRRuleGroup() {
+		return _mdrRuleGroup;
+	}
+
+	public MDRRuleGroup getWrappedModel() {
 		return _mdrRuleGroup;
 	}
 

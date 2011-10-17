@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRule}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.mobiledevicerules.model;
  * @see       MDRRule
  * @generated
  */
-public class MDRRuleWrapper implements MDRRule {
+public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	public MDRRuleWrapper(MDRRule mdrRule) {
 		_mdrRule = mdrRule;
 	}
@@ -609,7 +611,14 @@ public class MDRRuleWrapper implements MDRRule {
 		_mdrRule.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MDRRule getWrappedMDRRule() {
+		return _mdrRule;
+	}
+
+	public MDRRule getWrappedModel() {
 		return _mdrRule;
 	}
 

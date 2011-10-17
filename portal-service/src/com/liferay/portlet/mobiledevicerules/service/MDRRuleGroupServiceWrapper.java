@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRuleGroupService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.mobiledevicerules.service;
  * @see       MDRRuleGroupService
  * @generated
  */
-public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService {
+public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
+	ServiceWrapper<MDRRuleGroupService> {
 	public MDRRuleGroupServiceWrapper(MDRRuleGroupService mdrRuleGroupService) {
 		_mdrRuleGroupService = mdrRuleGroupService;
 	}
@@ -95,12 +98,26 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService {
 			descriptionMap, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MDRRuleGroupService getWrappedMDRRuleGroupService() {
 		return _mdrRuleGroupService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMDRRuleGroupService(
 		MDRRuleGroupService mdrRuleGroupService) {
+		_mdrRuleGroupService = mdrRuleGroupService;
+	}
+
+	public MDRRuleGroupService getWrappedService() {
+		return _mdrRuleGroupService;
+	}
+
+	public void setWrappedService(MDRRuleGroupService mdrRuleGroupService) {
 		_mdrRuleGroupService = mdrRuleGroupService;
 	}
 

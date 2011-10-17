@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       ResourceTypePermission
  * @generated
  */
-public class ResourceTypePermissionWrapper implements ResourceTypePermission {
+public class ResourceTypePermissionWrapper implements ResourceTypePermission,
+	ModelWrapper<ResourceTypePermission> {
 	public ResourceTypePermissionWrapper(
 		ResourceTypePermission resourceTypePermission) {
 		_resourceTypePermission = resourceTypePermission;
@@ -245,7 +246,14 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission {
 		return _resourceTypePermission.isGroupScope();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ResourceTypePermission getWrappedResourceTypePermission() {
+		return _resourceTypePermission;
+	}
+
+	public ResourceTypePermission getWrappedModel() {
 		return _resourceTypePermission;
 	}
 

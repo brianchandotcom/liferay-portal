@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutPrototype
  * @generated
  */
-public class LayoutPrototypeWrapper implements LayoutPrototype {
+public class LayoutPrototypeWrapper implements LayoutPrototype,
+	ModelWrapper<LayoutPrototype> {
 	public LayoutPrototypeWrapper(LayoutPrototype layoutPrototype) {
 		_layoutPrototype = layoutPrototype;
 	}
@@ -383,7 +384,14 @@ public class LayoutPrototypeWrapper implements LayoutPrototype {
 		return _layoutPrototype.getLayout();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutPrototype getWrappedLayoutPrototype() {
+		return _layoutPrototype;
+	}
+
+	public LayoutPrototype getWrappedModel() {
 		return _layoutPrototype;
 	}
 

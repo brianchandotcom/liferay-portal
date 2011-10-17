@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialRelation}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialRelation
  * @generated
  */
-public class SocialRelationWrapper implements SocialRelation {
+public class SocialRelationWrapper implements SocialRelation,
+	ModelWrapper<SocialRelation> {
 	public SocialRelationWrapper(SocialRelation socialRelation) {
 		_socialRelation = socialRelation;
 	}
@@ -254,7 +257,14 @@ public class SocialRelationWrapper implements SocialRelation {
 		_socialRelation.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialRelation getWrappedSocialRelation() {
+		return _socialRelation;
+	}
+
+	public SocialRelation getWrappedModel() {
 		return _socialRelation;
 	}
 

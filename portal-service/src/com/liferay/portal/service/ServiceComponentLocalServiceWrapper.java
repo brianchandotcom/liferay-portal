@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class ServiceComponentLocalServiceWrapper
-	implements ServiceComponentLocalService {
+	implements ServiceComponentLocalService,
+		ServiceWrapper<ServiceComponentLocalService> {
 	public ServiceComponentLocalServiceWrapper(
 		ServiceComponentLocalService serviceComponentLocalService) {
 		_serviceComponentLocalService = serviceComponentLocalService;
@@ -284,11 +285,26 @@ public class ServiceComponentLocalServiceWrapper
 		_serviceComponentLocalService.verifyDB();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ServiceComponentLocalService getWrappedServiceComponentLocalService() {
 		return _serviceComponentLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedServiceComponentLocalService(
+		ServiceComponentLocalService serviceComponentLocalService) {
+		_serviceComponentLocalService = serviceComponentLocalService;
+	}
+
+	public ServiceComponentLocalService getWrappedService() {
+		return _serviceComponentLocalService;
+	}
+
+	public void setWrappedService(
 		ServiceComponentLocalService serviceComponentLocalService) {
 		_serviceComponentLocalService = serviceComponentLocalService;
 	}

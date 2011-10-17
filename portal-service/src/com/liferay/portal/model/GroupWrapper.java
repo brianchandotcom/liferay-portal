@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Group
  * @generated
  */
-public class GroupWrapper implements Group {
+public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public GroupWrapper(Group group) {
 		_group = group;
 	}
@@ -565,7 +565,14 @@ public class GroupWrapper implements Group {
 		_group.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Group getWrappedGroup() {
+		return _group;
+	}
+
+	public Group getWrappedModel() {
 		return _group;
 	}
 

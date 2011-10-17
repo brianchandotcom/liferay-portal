@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCLicenseLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.service;
  * @see       SCLicenseLocalService
  * @generated
  */
-public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService {
+public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
+	ServiceWrapper<SCLicenseLocalService> {
 	public SCLicenseLocalServiceWrapper(
 		SCLicenseLocalService scLicenseLocalService) {
 		_scLicenseLocalService = scLicenseLocalService;
@@ -323,12 +326,26 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService {
 			openSource, active, recommended);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SCLicenseLocalService getWrappedSCLicenseLocalService() {
 		return _scLicenseLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSCLicenseLocalService(
 		SCLicenseLocalService scLicenseLocalService) {
+		_scLicenseLocalService = scLicenseLocalService;
+	}
+
+	public SCLicenseLocalService getWrappedService() {
+		return _scLicenseLocalService;
+	}
+
+	public void setWrappedService(SCLicenseLocalService scLicenseLocalService) {
 		_scLicenseLocalService = scLicenseLocalService;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetCategoryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.service;
  * @see       AssetCategoryService
  * @generated
  */
-public class AssetCategoryServiceWrapper implements AssetCategoryService {
+public class AssetCategoryServiceWrapper implements AssetCategoryService,
+	ServiceWrapper<AssetCategoryService> {
 	public AssetCategoryServiceWrapper(
 		AssetCategoryService assetCategoryService) {
 		_assetCategoryService = assetCategoryService;
@@ -171,12 +174,26 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService {
 			categoryProperties, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetCategoryService getWrappedAssetCategoryService() {
 		return _assetCategoryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetCategoryService(
 		AssetCategoryService assetCategoryService) {
+		_assetCategoryService = assetCategoryService;
+	}
+
+	public AssetCategoryService getWrappedService() {
+		return _assetCategoryService;
+	}
+
+	public void setWrappedService(AssetCategoryService assetCategoryService) {
 		_assetCategoryService = assetCategoryService;
 	}
 

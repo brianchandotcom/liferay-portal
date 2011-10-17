@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoValueService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.expando.service;
  * @see       ExpandoValueService
  * @generated
  */
-public class ExpandoValueServiceWrapper implements ExpandoValueService {
+public class ExpandoValueServiceWrapper implements ExpandoValueService,
+	ServiceWrapper<ExpandoValueService> {
 	public ExpandoValueServiceWrapper(ExpandoValueService expandoValueService) {
 		_expandoValueService = expandoValueService;
 	}
@@ -82,12 +85,26 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService {
 			tableName, columnName, classPK);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ExpandoValueService getWrappedExpandoValueService() {
 		return _expandoValueService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedExpandoValueService(
 		ExpandoValueService expandoValueService) {
+		_expandoValueService = expandoValueService;
+	}
+
+	public ExpandoValueService getWrappedService() {
+		return _expandoValueService;
+	}
+
+	public void setWrappedService(ExpandoValueService expandoValueService) {
 		_expandoValueService = expandoValueService;
 	}
 

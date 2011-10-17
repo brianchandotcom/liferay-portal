@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       CompanyLocalService
  * @generated
  */
-public class CompanyLocalServiceWrapper implements CompanyLocalService {
+public class CompanyLocalServiceWrapper implements CompanyLocalService,
+	ServiceWrapper<CompanyLocalService> {
 	public CompanyLocalServiceWrapper(CompanyLocalService companyLocalService) {
 		_companyLocalService = companyLocalService;
 	}
@@ -727,12 +728,26 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService {
 			sendPassword, strangers, strangersWithMx, strangersVerify, siteLogo);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public CompanyLocalService getWrappedCompanyLocalService() {
 		return _companyLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedCompanyLocalService(
 		CompanyLocalService companyLocalService) {
+		_companyLocalService = companyLocalService;
+	}
+
+	public CompanyLocalService getWrappedService() {
+		return _companyLocalService;
+	}
+
+	public void setWrappedService(CompanyLocalService companyLocalService) {
 		_companyLocalService = companyLocalService;
 	}
 

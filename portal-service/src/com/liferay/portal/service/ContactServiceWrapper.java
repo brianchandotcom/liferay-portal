@@ -23,16 +23,31 @@ package com.liferay.portal.service;
  * @see       ContactService
  * @generated
  */
-public class ContactServiceWrapper implements ContactService {
+public class ContactServiceWrapper implements ContactService,
+	ServiceWrapper<ContactService> {
 	public ContactServiceWrapper(ContactService contactService) {
 		_contactService = contactService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ContactService getWrappedContactService() {
 		return _contactService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedContactService(ContactService contactService) {
+		_contactService = contactService;
+	}
+
+	public ContactService getWrappedService() {
+		return _contactService;
+	}
+
+	public void setWrappedService(ContactService contactService) {
 		_contactService = contactService;
 	}
 

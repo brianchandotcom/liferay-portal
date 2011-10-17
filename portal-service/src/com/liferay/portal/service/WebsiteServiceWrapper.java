@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       WebsiteService
  * @generated
  */
-public class WebsiteServiceWrapper implements WebsiteService {
+public class WebsiteServiceWrapper implements WebsiteService,
+	ServiceWrapper<WebsiteService> {
 	public WebsiteServiceWrapper(WebsiteService websiteService) {
 		_websiteService = websiteService;
 	}
@@ -63,11 +64,25 @@ public class WebsiteServiceWrapper implements WebsiteService {
 		return _websiteService.updateWebsite(websiteId, url, typeId, primary);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WebsiteService getWrappedWebsiteService() {
 		return _websiteService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWebsiteService(WebsiteService websiteService) {
+		_websiteService = websiteService;
+	}
+
+	public WebsiteService getWrappedService() {
+		return _websiteService;
+	}
+
+	public void setWrappedService(WebsiteService websiteService) {
 		_websiteService = websiteService;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ImageLocalService
  * @generated
  */
-public class ImageLocalServiceWrapper implements ImageLocalService {
+public class ImageLocalServiceWrapper implements ImageLocalService,
+	ServiceWrapper<ImageLocalService> {
 	public ImageLocalServiceWrapper(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}
@@ -328,11 +329,25 @@ public class ImageLocalServiceWrapper implements ImageLocalService {
 			width, size);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ImageLocalService getWrappedImageLocalService() {
 		return _imageLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	public ImageLocalService getWrappedService() {
+		return _imageLocalService;
+	}
+
+	public void setWrappedService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}
 

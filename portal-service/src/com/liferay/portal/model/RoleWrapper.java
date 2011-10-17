@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Role
  * @generated
  */
-public class RoleWrapper implements Role {
+public class RoleWrapper implements Role, ModelWrapper<Role> {
 	public RoleWrapper(Role role) {
 		_role = role;
 	}
@@ -530,7 +530,14 @@ public class RoleWrapper implements Role {
 		return _role.isTeam();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Role getWrappedRole() {
+		return _role;
+	}
+
+	public Role getWrappedModel() {
 		return _role;
 	}
 

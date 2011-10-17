@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLContentLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLContentLocalService
  * @generated
  */
-public class DLContentLocalServiceWrapper implements DLContentLocalService {
+public class DLContentLocalServiceWrapper implements DLContentLocalService,
+	ServiceWrapper<DLContentLocalService> {
 	public DLContentLocalServiceWrapper(
 		DLContentLocalService dlContentLocalService) {
 		_dlContentLocalService = dlContentLocalService;
@@ -338,12 +341,26 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 			newRepositoryId, oldPath, newPath);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLContentLocalService getWrappedDLContentLocalService() {
 		return _dlContentLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLContentLocalService(
 		DLContentLocalService dlContentLocalService) {
+		_dlContentLocalService = dlContentLocalService;
+	}
+
+	public DLContentLocalService getWrappedService() {
+		return _dlContentLocalService;
+	}
+
+	public void setWrappedService(DLContentLocalService dlContentLocalService) {
 		_dlContentLocalService = dlContentLocalService;
 	}
 

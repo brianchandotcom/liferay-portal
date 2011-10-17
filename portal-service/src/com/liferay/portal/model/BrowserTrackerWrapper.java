@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       BrowserTracker
  * @generated
  */
-public class BrowserTrackerWrapper implements BrowserTracker {
+public class BrowserTrackerWrapper implements BrowserTracker,
+	ModelWrapper<BrowserTracker> {
 	public BrowserTrackerWrapper(BrowserTracker browserTracker) {
 		_browserTracker = browserTracker;
 	}
@@ -201,7 +202,14 @@ public class BrowserTrackerWrapper implements BrowserTracker {
 		_browserTracker.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public BrowserTracker getWrappedBrowserTracker() {
+		return _browserTracker;
+	}
+
+	public BrowserTracker getWrappedModel() {
 		return _browserTracker;
 	}
 

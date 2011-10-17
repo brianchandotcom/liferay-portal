@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       UserGroupGroupRole
  * @generated
  */
-public class UserGroupGroupRoleWrapper implements UserGroupGroupRole {
+public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
+	ModelWrapper<UserGroupGroupRole> {
 	public UserGroupGroupRoleWrapper(UserGroupGroupRole userGroupGroupRole) {
 		_userGroupGroupRole = userGroupGroupRole;
 	}
@@ -183,7 +184,14 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole {
 		_userGroupGroupRole.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserGroupGroupRole getWrappedUserGroupGroupRole() {
+		return _userGroupGroupRole;
+	}
+
+	public UserGroupGroupRole getWrappedModel() {
 		return _userGroupGroupRole;
 	}
 

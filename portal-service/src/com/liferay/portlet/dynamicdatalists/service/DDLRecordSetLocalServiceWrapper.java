@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDLRecordSetLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatalists.service;
  * @see       DDLRecordSetLocalService
  * @generated
  */
-public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService {
+public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService,
+	ServiceWrapper<DDLRecordSetLocalService> {
 	public DDLRecordSetLocalServiceWrapper(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
@@ -419,11 +422,26 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 			minDisplayRows, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDLRecordSetLocalService getWrappedDDLRecordSetLocalService() {
 		return _ddlRecordSetLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	public DDLRecordSetLocalService getWrappedService() {
+		return _ddlRecordSetLocalService;
+	}
+
+	public void setWrappedService(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}

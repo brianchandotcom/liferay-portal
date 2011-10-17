@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       WebDAVProps
  * @generated
  */
-public class WebDAVPropsWrapper implements WebDAVProps {
+public class WebDAVPropsWrapper implements WebDAVProps,
+	ModelWrapper<WebDAVProps> {
 	public WebDAVPropsWrapper(WebDAVProps webDAVProps) {
 		_webDAVProps = webDAVProps;
 	}
@@ -292,7 +293,14 @@ public class WebDAVPropsWrapper implements WebDAVProps {
 		_webDAVProps.store();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public WebDAVProps getWrappedWebDAVProps() {
+		return _webDAVProps;
+	}
+
+	public WebDAVProps getWrappedModel() {
 		return _webDAVProps;
 	}
 

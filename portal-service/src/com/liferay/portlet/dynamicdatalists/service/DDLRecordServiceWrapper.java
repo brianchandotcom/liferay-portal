@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDLRecordService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatalists.service;
  * @see       DDLRecordService
  * @generated
  */
-public class DDLRecordServiceWrapper implements DDLRecordService {
+public class DDLRecordServiceWrapper implements DDLRecordService,
+	ServiceWrapper<DDLRecordService> {
 	public DDLRecordServiceWrapper(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}
@@ -70,11 +73,25 @@ public class DDLRecordServiceWrapper implements DDLRecordService {
 			fieldsMap, mergeFields, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDLRecordService getWrappedDDLRecordService() {
 		return _ddlRecordService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
+	}
+
+	public DDLRecordService getWrappedService() {
+		return _ddlRecordService;
+	}
+
+	public void setWrappedService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}
 

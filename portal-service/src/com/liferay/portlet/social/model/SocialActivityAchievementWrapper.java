@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityAchievement}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.model;
  * @generated
  */
 public class SocialActivityAchievementWrapper
-	implements SocialActivityAchievement {
+	implements SocialActivityAchievement,
+		ModelWrapper<SocialActivityAchievement> {
 	public SocialActivityAchievementWrapper(
 		SocialActivityAchievement socialActivityAchievement) {
 		_socialActivityAchievement = socialActivityAchievement;
@@ -285,7 +288,14 @@ public class SocialActivityAchievementWrapper
 		_socialActivityAchievement.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialActivityAchievement getWrappedSocialActivityAchievement() {
+		return _socialActivityAchievement;
+	}
+
+	public SocialActivityAchievement getWrappedModel() {
 		return _socialActivityAchievement;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityAchievementLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialActivityAchievementLocalServiceWrapper
-	implements SocialActivityAchievementLocalService {
+	implements SocialActivityAchievementLocalService,
+		ServiceWrapper<SocialActivityAchievementLocalService> {
 	public SocialActivityAchievementLocalServiceWrapper(
 		SocialActivityAchievementLocalService socialActivityAchievementLocalService) {
 		_socialActivityAchievementLocalService = socialActivityAchievementLocalService;
@@ -258,11 +261,26 @@ public class SocialActivityAchievementLocalServiceWrapper
 			groupId, achievement);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialActivityAchievementLocalService getWrappedSocialActivityAchievementLocalService() {
 		return _socialActivityAchievementLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialActivityAchievementLocalService(
+		SocialActivityAchievementLocalService socialActivityAchievementLocalService) {
+		_socialActivityAchievementLocalService = socialActivityAchievementLocalService;
+	}
+
+	public SocialActivityAchievementLocalService getWrappedService() {
+		return _socialActivityAchievementLocalService;
+	}
+
+	public void setWrappedService(
 		SocialActivityAchievementLocalService socialActivityAchievementLocalService) {
 		_socialActivityAchievementLocalService = socialActivityAchievementLocalService;
 	}

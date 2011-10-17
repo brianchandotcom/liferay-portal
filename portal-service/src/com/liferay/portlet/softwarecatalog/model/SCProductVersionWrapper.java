@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductVersion}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.model;
  * @see       SCProductVersion
  * @generated
  */
-public class SCProductVersionWrapper implements SCProductVersion {
+public class SCProductVersionWrapper implements SCProductVersion,
+	ModelWrapper<SCProductVersion> {
 	public SCProductVersionWrapper(SCProductVersion scProductVersion) {
 		_scProductVersion = scProductVersion;
 	}
@@ -382,7 +385,14 @@ public class SCProductVersionWrapper implements SCProductVersion {
 		return _scProductVersion.getProductEntry();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SCProductVersion getWrappedSCProductVersion() {
+		return _scProductVersion;
+	}
+
+	public SCProductVersion getWrappedModel() {
 		return _scProductVersion;
 	}
 

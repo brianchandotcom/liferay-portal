@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialRequest}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialRequest
  * @generated
  */
-public class SocialRequestWrapper implements SocialRequest {
+public class SocialRequestWrapper implements SocialRequest,
+	ModelWrapper<SocialRequest> {
 	public SocialRequestWrapper(SocialRequest socialRequest) {
 		_socialRequest = socialRequest;
 	}
@@ -411,7 +414,14 @@ public class SocialRequestWrapper implements SocialRequest {
 		_socialRequest.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialRequest getWrappedSocialRequest() {
+		return _socialRequest;
+	}
+
+	public SocialRequest getWrappedModel() {
 		return _socialRequest;
 	}
 

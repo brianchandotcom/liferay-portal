@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityCounterLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialActivityCounterLocalServiceWrapper
-	implements SocialActivityCounterLocalService {
+	implements SocialActivityCounterLocalService,
+		ServiceWrapper<SocialActivityCounterLocalService> {
 	public SocialActivityCounterLocalServiceWrapper(
 		SocialActivityCounterLocalService socialActivityCounterLocalService) {
 		_socialActivityCounterLocalService = socialActivityCounterLocalService;
@@ -250,11 +253,26 @@ public class SocialActivityCounterLocalServiceWrapper
 		_socialActivityCounterLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialActivityCounterLocalService getWrappedSocialActivityCounterLocalService() {
 		return _socialActivityCounterLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialActivityCounterLocalService(
+		SocialActivityCounterLocalService socialActivityCounterLocalService) {
+		_socialActivityCounterLocalService = socialActivityCounterLocalService;
+	}
+
+	public SocialActivityCounterLocalService getWrappedService() {
+		return _socialActivityCounterLocalService;
+	}
+
+	public void setWrappedService(
 		SocialActivityCounterLocalService socialActivityCounterLocalService) {
 		_socialActivityCounterLocalService = socialActivityCounterLocalService;
 	}

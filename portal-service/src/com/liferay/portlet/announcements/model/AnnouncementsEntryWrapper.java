@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsEntry}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.announcements.model;
  * @see       AnnouncementsEntry
  * @generated
  */
-public class AnnouncementsEntryWrapper implements AnnouncementsEntry {
+public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
+	ModelWrapper<AnnouncementsEntry> {
 	public AnnouncementsEntryWrapper(AnnouncementsEntry announcementsEntry) {
 		_announcementsEntry = announcementsEntry;
 	}
@@ -478,7 +481,14 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry {
 		return _announcementsEntry.getGroupId();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AnnouncementsEntry getWrappedAnnouncementsEntry() {
+		return _announcementsEntry;
+	}
+
+	public AnnouncementsEntry getWrappedModel() {
 		return _announcementsEntry;
 	}
 

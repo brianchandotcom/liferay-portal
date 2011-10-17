@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       LayoutLocalService
  * @generated
  */
-public class LayoutLocalServiceWrapper implements LayoutLocalService {
+public class LayoutLocalServiceWrapper implements LayoutLocalService,
+	ServiceWrapper<LayoutLocalService> {
 	public LayoutLocalServiceWrapper(LayoutLocalService layoutLocalService) {
 		_layoutLocalService = layoutLocalService;
 	}
@@ -1357,12 +1358,26 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService {
 			layoutId, name, languageId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutLocalService getWrappedLayoutLocalService() {
 		return _layoutLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
+		_layoutLocalService = layoutLocalService;
+	}
+
+	public LayoutLocalService getWrappedService() {
+		return _layoutLocalService;
+	}
+
+	public void setWrappedService(LayoutLocalService layoutLocalService) {
 		_layoutLocalService = layoutLocalService;
 	}
 

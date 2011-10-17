@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       OrgLabor
  * @generated
  */
-public class OrgLaborWrapper implements OrgLabor {
+public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	public OrgLaborWrapper(OrgLabor orgLabor) {
 		_orgLabor = orgLabor;
 	}
@@ -439,7 +439,14 @@ public class OrgLaborWrapper implements OrgLabor {
 		return _orgLabor.getType();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public OrgLabor getWrappedOrgLabor() {
+		return _orgLabor;
+	}
+
+	public OrgLabor getWrappedModel() {
 		return _orgLabor;
 	}
 

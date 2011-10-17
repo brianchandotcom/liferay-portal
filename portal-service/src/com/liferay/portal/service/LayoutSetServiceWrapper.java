@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       LayoutSetService
  * @generated
  */
-public class LayoutSetServiceWrapper implements LayoutSetService {
+public class LayoutSetServiceWrapper implements LayoutSetService,
+	ServiceWrapper<LayoutSetService> {
 	public LayoutSetServiceWrapper(LayoutSetService layoutSetService) {
 		_layoutSetService = layoutSetService;
 	}
@@ -59,11 +60,25 @@ public class LayoutSetServiceWrapper implements LayoutSetService {
 			virtualHost);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutSetService getWrappedLayoutSetService() {
 		return _layoutSetService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutSetService(LayoutSetService layoutSetService) {
+		_layoutSetService = layoutSetService;
+	}
+
+	public LayoutSetService getWrappedService() {
+		return _layoutSetService;
+	}
+
+	public void setWrappedService(LayoutSetService layoutSetService) {
 		_layoutSetService = layoutSetService;
 	}
 

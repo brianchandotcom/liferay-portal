@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetEntry}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.asset.model;
  * @see       AssetEntry
  * @generated
  */
-public class AssetEntryWrapper implements AssetEntry {
+public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	public AssetEntryWrapper(AssetEntry assetEntry) {
 		_assetEntry = assetEntry;
 	}
@@ -769,7 +771,14 @@ public class AssetEntryWrapper implements AssetEntry {
 		_assetEntry.updateSocialInformationEquity(value);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetEntry getWrappedAssetEntry() {
+		return _assetEntry;
+	}
+
+	public AssetEntry getWrappedModel() {
 		return _assetEntry;
 	}
 

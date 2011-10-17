@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class RepositoryEntryLocalServiceWrapper
-	implements RepositoryEntryLocalService {
+	implements RepositoryEntryLocalService,
+		ServiceWrapper<RepositoryEntryLocalService> {
 	public RepositoryEntryLocalServiceWrapper(
 		RepositoryEntryLocalService repositoryEntryLocalService) {
 		_repositoryEntryLocalService = repositoryEntryLocalService;
@@ -271,11 +272,26 @@ public class RepositoryEntryLocalServiceWrapper
 		return _repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public RepositoryEntryLocalService getWrappedRepositoryEntryLocalService() {
 		return _repositoryEntryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+		_repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	public RepositoryEntryLocalService getWrappedService() {
+		return _repositoryEntryLocalService;
+	}
+
+	public void setWrappedService(
 		RepositoryEntryLocalService repositoryEntryLocalService) {
 		_repositoryEntryLocalService = repositoryEntryLocalService;
 	}

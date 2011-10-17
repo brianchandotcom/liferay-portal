@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutSetPrototype
  * @generated
  */
-public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
+public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
+	ModelWrapper<LayoutSetPrototype> {
 	public LayoutSetPrototypeWrapper(LayoutSetPrototype layoutSetPrototype) {
 		_layoutSetPrototype = layoutSetPrototype;
 	}
@@ -396,7 +397,14 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		_layoutSetPrototype.setSettingsProperties(settingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutSetPrototype getWrappedLayoutSetPrototype() {
+		return _layoutSetPrototype;
+	}
+
+	public LayoutSetPrototype getWrappedModel() {
 		return _layoutSetPrototype;
 	}
 

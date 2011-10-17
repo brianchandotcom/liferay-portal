@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       CountryService
  * @generated
  */
-public class CountryServiceWrapper implements CountryService {
+public class CountryServiceWrapper implements CountryService,
+	ServiceWrapper<CountryService> {
 	public CountryServiceWrapper(CountryService countryService) {
 		_countryService = countryService;
 	}
@@ -77,11 +78,25 @@ public class CountryServiceWrapper implements CountryService {
 		return _countryService.getCountryByName(name);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public CountryService getWrappedCountryService() {
 		return _countryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedCountryService(CountryService countryService) {
+		_countryService = countryService;
+	}
+
+	public CountryService getWrappedService() {
+		return _countryService;
+	}
+
+	public void setWrappedService(CountryService countryService) {
 		_countryService = countryService;
 	}
 

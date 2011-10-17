@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       OrgGroupRole
  * @generated
  */
-public class OrgGroupRoleWrapper implements OrgGroupRole {
+public class OrgGroupRoleWrapper implements OrgGroupRole,
+	ModelWrapper<OrgGroupRole> {
 	public OrgGroupRoleWrapper(OrgGroupRole orgGroupRole) {
 		_orgGroupRole = orgGroupRole;
 	}
@@ -187,7 +188,14 @@ public class OrgGroupRoleWrapper implements OrgGroupRole {
 		return _orgGroupRole.containsGroup(groups);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public OrgGroupRole getWrappedOrgGroupRole() {
+		return _orgGroupRole;
+	}
+
+	public OrgGroupRole getWrappedModel() {
 		return _orgGroupRole;
 	}
 

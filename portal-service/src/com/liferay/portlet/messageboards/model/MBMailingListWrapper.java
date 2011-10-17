@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBMailingList}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBMailingList
  * @generated
  */
-public class MBMailingListWrapper implements MBMailingList {
+public class MBMailingListWrapper implements MBMailingList,
+	ModelWrapper<MBMailingList> {
 	public MBMailingListWrapper(MBMailingList mbMailingList) {
 		_mbMailingList = mbMailingList;
 	}
@@ -661,7 +664,14 @@ public class MBMailingListWrapper implements MBMailingList {
 		_mbMailingList.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBMailingList getWrappedMBMailingList() {
+		return _mbMailingList;
+	}
+
+	public MBMailingList getWrappedModel() {
 		return _mbMailingList;
 	}
 

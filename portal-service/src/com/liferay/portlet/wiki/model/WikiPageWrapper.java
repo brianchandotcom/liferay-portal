@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiPage}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.wiki.model;
  * @see       WikiPage
  * @generated
  */
-public class WikiPageWrapper implements WikiPage {
+public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	public WikiPageWrapper(WikiPage wikiPage) {
 		_wikiPage = wikiPage;
 	}
@@ -680,7 +682,14 @@ public class WikiPageWrapper implements WikiPage {
 		_wikiPage.setAttachmentsDir(attachmentsDir);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public WikiPage getWrappedWikiPage() {
+		return _wikiPage;
+	}
+
+	public WikiPage getWrappedModel() {
 		return _wikiPage;
 	}
 

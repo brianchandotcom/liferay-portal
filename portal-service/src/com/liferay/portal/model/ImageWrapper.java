@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Image
  * @generated
  */
-public class ImageWrapper implements Image {
+public class ImageWrapper implements Image, ModelWrapper<Image> {
 	public ImageWrapper(Image image) {
 		_image = image;
 	}
@@ -261,7 +261,14 @@ public class ImageWrapper implements Image {
 		_image.setTextObj(textObj);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Image getWrappedImage() {
+		return _image;
+	}
+
+	public Image getWrappedModel() {
 		return _image;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMContent}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see       DDMContent
  * @generated
  */
-public class DDMContentWrapper implements DDMContent {
+public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	public DDMContentWrapper(DDMContent ddmContent) {
 		_ddmContent = ddmContent;
 	}
@@ -454,7 +456,14 @@ public class DDMContentWrapper implements DDMContent {
 		_ddmContent.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDMContent getWrappedDDMContent() {
+		return _ddmContent;
+	}
+
+	public DDMContent getWrappedModel() {
 		return _ddmContent;
 	}
 

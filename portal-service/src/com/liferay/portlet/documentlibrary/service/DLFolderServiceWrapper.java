@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFolderService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFolderService
  * @generated
  */
-public class DLFolderServiceWrapper implements DLFolderService {
+public class DLFolderServiceWrapper implements DLFolderService,
+	ServiceWrapper<DLFolderService> {
 	public DLFolderServiceWrapper(DLFolderService dlFolderService) {
 		_dlFolderService = dlFolderService;
 	}
@@ -258,11 +261,25 @@ public class DLFolderServiceWrapper implements DLFolderService {
 		return _dlFolderService.verifyInheritableLock(folderId, lockUuid);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFolderService getWrappedDLFolderService() {
 		return _dlFolderService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFolderService(DLFolderService dlFolderService) {
+		_dlFolderService = dlFolderService;
+	}
+
+	public DLFolderService getWrappedService() {
+		return _dlFolderService;
+	}
+
+	public void setWrappedService(DLFolderService dlFolderService) {
 		_dlFolderService = dlFolderService;
 	}
 

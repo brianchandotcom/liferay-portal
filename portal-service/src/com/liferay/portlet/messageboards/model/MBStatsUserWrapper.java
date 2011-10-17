@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBStatsUser}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBStatsUser
  * @generated
  */
-public class MBStatsUserWrapper implements MBStatsUser {
+public class MBStatsUserWrapper implements MBStatsUser,
+	ModelWrapper<MBStatsUser> {
 	public MBStatsUserWrapper(MBStatsUser mbStatsUser) {
 		_mbStatsUser = mbStatsUser;
 	}
@@ -258,7 +261,14 @@ public class MBStatsUserWrapper implements MBStatsUser {
 		_mbStatsUser.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBStatsUser getWrappedMBStatsUser() {
+		return _mbStatsUser;
+	}
+
+	public MBStatsUser getWrappedModel() {
 		return _mbStatsUser;
 	}
 

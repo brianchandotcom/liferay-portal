@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLAppHelperLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLAppHelperLocalService
  * @generated
  */
-public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
+public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
+	ServiceWrapper<DLAppHelperLocalService> {
 	public DLAppHelperLocalServiceWrapper(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 		_dlAppHelperLocalService = dlAppHelperLocalService;
@@ -154,11 +157,26 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 			latestFileVersion, status, workflowContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLAppHelperLocalService getWrappedDLAppHelperLocalService() {
 		return _dlAppHelperLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLAppHelperLocalService(
+		DLAppHelperLocalService dlAppHelperLocalService) {
+		_dlAppHelperLocalService = dlAppHelperLocalService;
+	}
+
+	public DLAppHelperLocalService getWrappedService() {
+		return _dlAppHelperLocalService;
+	}
+
+	public void setWrappedService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 		_dlAppHelperLocalService = dlAppHelperLocalService;
 	}

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Lock
  * @generated
  */
-public class LockWrapper implements Lock {
+public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	public LockWrapper(Lock lock) {
 		_lock = lock;
 	}
@@ -366,7 +366,14 @@ public class LockWrapper implements Lock {
 		return _lock.isNeverExpires();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Lock getWrappedLock() {
+		return _lock;
+	}
+
+	public Lock getWrappedModel() {
 		return _lock;
 	}
 

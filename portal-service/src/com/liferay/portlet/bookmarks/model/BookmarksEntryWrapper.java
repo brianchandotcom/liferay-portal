@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BookmarksEntry}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.bookmarks.model;
  * @see       BookmarksEntry
  * @generated
  */
-public class BookmarksEntryWrapper implements BookmarksEntry {
+public class BookmarksEntryWrapper implements BookmarksEntry,
+	ModelWrapper<BookmarksEntry> {
 	public BookmarksEntryWrapper(BookmarksEntry bookmarksEntry) {
 		_bookmarksEntry = bookmarksEntry;
 	}
@@ -422,7 +425,14 @@ public class BookmarksEntryWrapper implements BookmarksEntry {
 		return _bookmarksEntry.getFolder();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public BookmarksEntry getWrappedBookmarksEntry() {
+		return _bookmarksEntry;
+	}
+
+	public BookmarksEntry getWrappedModel() {
 		return _bookmarksEntry;
 	}
 

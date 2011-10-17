@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       UserGroup
  * @generated
  */
-public class UserGroupWrapper implements UserGroup {
+public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	public UserGroupWrapper(UserGroup userGroup) {
 		_userGroup = userGroup;
 	}
@@ -310,7 +310,14 @@ public class UserGroupWrapper implements UserGroup {
 		return _userGroup.hasPublicLayouts();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserGroup getWrappedUserGroup() {
+		return _userGroup;
+	}
+
+	public UserGroup getWrappedModel() {
 		return _userGroup;
 	}
 

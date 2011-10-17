@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Address
  * @generated
  */
-public class AddressWrapper implements Address {
+public class AddressWrapper implements Address, ModelWrapper<Address> {
 	public AddressWrapper(Address address) {
 		_address = address;
 	}
@@ -510,7 +510,14 @@ public class AddressWrapper implements Address {
 		return _address.getType();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Address getWrappedAddress() {
+		return _address;
+	}
+
+	public Address getWrappedModel() {
 		return _address;
 	}
 

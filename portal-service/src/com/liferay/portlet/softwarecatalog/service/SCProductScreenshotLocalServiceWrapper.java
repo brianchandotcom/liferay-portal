@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductScreenshotLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.softwarecatalog.service;
  * @generated
  */
 public class SCProductScreenshotLocalServiceWrapper
-	implements SCProductScreenshotLocalService {
+	implements SCProductScreenshotLocalService,
+		ServiceWrapper<SCProductScreenshotLocalService> {
 	public SCProductScreenshotLocalServiceWrapper(
 		SCProductScreenshotLocalService scProductScreenshotLocalService) {
 		_scProductScreenshotLocalService = scProductScreenshotLocalService;
@@ -291,11 +294,26 @@ public class SCProductScreenshotLocalServiceWrapper
 		return _scProductScreenshotLocalService.getProductScreenshots(productEntryId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SCProductScreenshotLocalService getWrappedSCProductScreenshotLocalService() {
 		return _scProductScreenshotLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSCProductScreenshotLocalService(
+		SCProductScreenshotLocalService scProductScreenshotLocalService) {
+		_scProductScreenshotLocalService = scProductScreenshotLocalService;
+	}
+
+	public SCProductScreenshotLocalService getWrappedService() {
+		return _scProductScreenshotLocalService;
+	}
+
+	public void setWrappedService(
 		SCProductScreenshotLocalService scProductScreenshotLocalService) {
 		_scProductScreenshotLocalService = scProductScreenshotLocalService;
 	}

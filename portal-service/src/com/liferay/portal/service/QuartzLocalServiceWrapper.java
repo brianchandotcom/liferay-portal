@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       QuartzLocalService
  * @generated
  */
-public class QuartzLocalServiceWrapper implements QuartzLocalService {
+public class QuartzLocalServiceWrapper implements QuartzLocalService,
+	ServiceWrapper<QuartzLocalService> {
 	public QuartzLocalServiceWrapper(QuartzLocalService quartzLocalService) {
 		_quartzLocalService = quartzLocalService;
 	}
@@ -51,12 +52,26 @@ public class QuartzLocalServiceWrapper implements QuartzLocalService {
 		_quartzLocalService.checkQuartzTables();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public QuartzLocalService getWrappedQuartzLocalService() {
 		return _quartzLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedQuartzLocalService(
 		QuartzLocalService quartzLocalService) {
+		_quartzLocalService = quartzLocalService;
+	}
+
+	public QuartzLocalService getWrappedService() {
+		return _quartzLocalService;
+	}
+
+	public void setWrappedService(QuartzLocalService quartzLocalService) {
 		_quartzLocalService = quartzLocalService;
 	}
 

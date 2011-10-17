@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMTemplateLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.service;
  * @see       DDMTemplateLocalService
  * @generated
  */
-public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
+public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
+	ServiceWrapper<DDMTemplateLocalService> {
 	public DDMTemplateLocalServiceWrapper(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
@@ -384,11 +387,26 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService {
 			descriptionMap, type, mode, language, script, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDMTemplateLocalService getWrappedDDMTemplateLocalService() {
 		return _ddmTemplateLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	public DDMTemplateLocalService getWrappedService() {
+		return _ddmTemplateLocalService;
+	}
+
+	public void setWrappedService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}

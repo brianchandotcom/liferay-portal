@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoRow}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.expando.model;
  * @see       ExpandoRow
  * @generated
  */
-public class ExpandoRowWrapper implements ExpandoRow {
+public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	public ExpandoRowWrapper(ExpandoRow expandoRow) {
 		_expandoRow = expandoRow;
 	}
@@ -200,7 +202,14 @@ public class ExpandoRowWrapper implements ExpandoRow {
 		_expandoRow.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ExpandoRow getWrappedExpandoRow() {
+		return _expandoRow;
+	}
+
+	public ExpandoRow getWrappedModel() {
 		return _expandoRow;
 	}
 

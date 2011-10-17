@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class CMISRepositoryLocalServiceWrapper
-	implements CMISRepositoryLocalService {
+	implements CMISRepositoryLocalService,
+		ServiceWrapper<CMISRepositoryLocalService> {
 	public CMISRepositoryLocalServiceWrapper(
 		CMISRepositoryLocalService cmisRepositoryLocalService) {
 		_cmisRepositoryLocalService = cmisRepositoryLocalService;
@@ -75,11 +76,26 @@ public class CMISRepositoryLocalServiceWrapper
 		return _cmisRepositoryLocalService.toFolder(repositoryId, object);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public CMISRepositoryLocalService getWrappedCMISRepositoryLocalService() {
 		return _cmisRepositoryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedCMISRepositoryLocalService(
+		CMISRepositoryLocalService cmisRepositoryLocalService) {
+		_cmisRepositoryLocalService = cmisRepositoryLocalService;
+	}
+
+	public CMISRepositoryLocalService getWrappedService() {
+		return _cmisRepositoryLocalService;
+	}
+
+	public void setWrappedService(
 		CMISRepositoryLocalService cmisRepositoryLocalService) {
 		_cmisRepositoryLocalService = cmisRepositoryLocalService;
 	}

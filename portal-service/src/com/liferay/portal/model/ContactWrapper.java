@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Contact
  * @generated
  */
-public class ContactWrapper implements Contact {
+public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	public ContactWrapper(Contact contact) {
 		_contact = contact;
 	}
@@ -700,7 +700,14 @@ public class ContactWrapper implements Contact {
 		return _contact.getFullName();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Contact getWrappedContact() {
+		return _contact;
+	}
+
+	public Contact getWrappedModel() {
 		return _contact;
 	}
 

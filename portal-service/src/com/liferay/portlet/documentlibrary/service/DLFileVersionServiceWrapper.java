@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileVersionService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFileVersionService
  * @generated
  */
-public class DLFileVersionServiceWrapper implements DLFileVersionService {
+public class DLFileVersionServiceWrapper implements DLFileVersionService,
+	ServiceWrapper<DLFileVersionService> {
 	public DLFileVersionServiceWrapper(
 		DLFileVersionService dlFileVersionService) {
 		_dlFileVersionService = dlFileVersionService;
@@ -43,12 +46,26 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService {
 		return _dlFileVersionService.getLatestFileVersion(fileEntryId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFileVersionService getWrappedDLFileVersionService() {
 		return _dlFileVersionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFileVersionService(
 		DLFileVersionService dlFileVersionService) {
+		_dlFileVersionService = dlFileVersionService;
+	}
+
+	public DLFileVersionService getWrappedService() {
+		return _dlFileVersionService;
+	}
+
+	public void setWrappedService(DLFileVersionService dlFileVersionService) {
 		_dlFileVersionService = dlFileVersionService;
 	}
 

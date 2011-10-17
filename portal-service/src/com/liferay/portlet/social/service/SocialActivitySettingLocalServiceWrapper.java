@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivitySettingLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialActivitySettingLocalServiceWrapper
-	implements SocialActivitySettingLocalService {
+	implements SocialActivitySettingLocalService,
+		ServiceWrapper<SocialActivitySettingLocalService> {
 	public SocialActivitySettingLocalServiceWrapper(
 		SocialActivitySettingLocalService socialActivitySettingLocalService) {
 		_socialActivitySettingLocalService = socialActivitySettingLocalService;
@@ -292,11 +295,26 @@ public class SocialActivitySettingLocalServiceWrapper
 			className, activityType, activityCounterDefinitions);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialActivitySettingLocalService getWrappedSocialActivitySettingLocalService() {
 		return _socialActivitySettingLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialActivitySettingLocalService(
+		SocialActivitySettingLocalService socialActivitySettingLocalService) {
+		_socialActivitySettingLocalService = socialActivitySettingLocalService;
+	}
+
+	public SocialActivitySettingLocalService getWrappedService() {
+		return _socialActivitySettingLocalService;
+	}
+
+	public void setWrappedService(
 		SocialActivitySettingLocalService socialActivitySettingLocalService) {
 		_socialActivitySettingLocalService = socialActivitySettingLocalService;
 	}

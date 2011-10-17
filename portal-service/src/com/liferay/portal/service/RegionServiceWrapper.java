@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       RegionService
  * @generated
  */
-public class RegionServiceWrapper implements RegionService {
+public class RegionServiceWrapper implements RegionService,
+	ServiceWrapper<RegionService> {
 	public RegionServiceWrapper(RegionService regionService) {
 		_regionService = regionService;
 	}
@@ -64,11 +65,25 @@ public class RegionServiceWrapper implements RegionService {
 		return _regionService.getRegion(regionId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public RegionService getWrappedRegionService() {
 		return _regionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedRegionService(RegionService regionService) {
+		_regionService = regionService;
+	}
+
+	public RegionService getWrappedService() {
+		return _regionService;
+	}
+
+	public void setWrappedService(RegionService regionService) {
 		_regionService = regionService;
 	}
 

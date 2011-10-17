@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRActionService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.mobiledevicerules.service;
  * @see       MDRActionService
  * @generated
  */
-public class MDRActionServiceWrapper implements MDRActionService {
+public class MDRActionServiceWrapper implements MDRActionService,
+	ServiceWrapper<MDRActionService> {
 	public MDRActionServiceWrapper(MDRActionService mdrActionService) {
 		_mdrActionService = mdrActionService;
 	}
@@ -105,11 +108,25 @@ public class MDRActionServiceWrapper implements MDRActionService {
 			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MDRActionService getWrappedMDRActionService() {
 		return _mdrActionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMDRActionService(MDRActionService mdrActionService) {
+		_mdrActionService = mdrActionService;
+	}
+
+	public MDRActionService getWrappedService() {
+		return _mdrActionService;
+	}
+
+	public void setWrappedService(MDRActionService mdrActionService) {
 		_mdrActionService = mdrActionService;
 	}
 

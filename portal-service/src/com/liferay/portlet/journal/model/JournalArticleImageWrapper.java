@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalArticleImage}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see       JournalArticleImage
  * @generated
  */
-public class JournalArticleImageWrapper implements JournalArticleImage {
+public class JournalArticleImageWrapper implements JournalArticleImage,
+	ModelWrapper<JournalArticleImage> {
 	public JournalArticleImageWrapper(JournalArticleImage journalArticleImage) {
 		_journalArticleImage = journalArticleImage;
 	}
@@ -281,7 +284,14 @@ public class JournalArticleImageWrapper implements JournalArticleImage {
 		_journalArticleImage.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public JournalArticleImage getWrappedJournalArticleImage() {
+		return _journalArticleImage;
+	}
+
+	public JournalArticleImage getWrappedModel() {
 		return _journalArticleImage;
 	}
 

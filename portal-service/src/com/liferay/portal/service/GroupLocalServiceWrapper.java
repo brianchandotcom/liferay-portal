@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       GroupLocalService
  * @generated
  */
-public class GroupLocalServiceWrapper implements GroupLocalService {
+public class GroupLocalServiceWrapper implements GroupLocalService,
+	ServiceWrapper<GroupLocalService> {
 	public GroupLocalServiceWrapper(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -1335,11 +1336,25 @@ public class GroupLocalServiceWrapper implements GroupLocalService {
 		return _groupLocalService.updateSite(groupId, site);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public GroupLocalService getWrappedGroupLocalService() {
 		return _groupLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	public GroupLocalService getWrappedService() {
+		return _groupLocalService;
+	}
+
+	public void setWrappedService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 

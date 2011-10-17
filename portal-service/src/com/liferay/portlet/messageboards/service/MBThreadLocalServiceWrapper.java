@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBThreadLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBThreadLocalService
  * @generated
  */
-public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
+public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
+	ServiceWrapper<MBThreadLocalService> {
 	public MBThreadLocalServiceWrapper(
 		MBThreadLocalService mbThreadLocalService) {
 		_mbThreadLocalService = mbThreadLocalService;
@@ -418,12 +421,26 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService {
 		return _mbThreadLocalService.updateThread(threadId, viewCount);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBThreadLocalService getWrappedMBThreadLocalService() {
 		return _mbThreadLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBThreadLocalService(
 		MBThreadLocalService mbThreadLocalService) {
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	public MBThreadLocalService getWrappedService() {
+		return _mbThreadLocalService;
+	}
+
+	public void setWrappedService(MBThreadLocalService mbThreadLocalService) {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 

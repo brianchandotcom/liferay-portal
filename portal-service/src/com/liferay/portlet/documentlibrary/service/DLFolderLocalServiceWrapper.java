@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFolderLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFolderLocalService
  * @generated
  */
-public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
+public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
+	ServiceWrapper<DLFolderLocalService> {
 	public DLFolderLocalServiceWrapper(
 		DLFolderLocalService dlFolderLocalService) {
 		_dlFolderLocalService = dlFolderLocalService;
@@ -495,12 +498,26 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 		_dlFolderLocalService.updateLastPostDate(folderId, lastPostDate);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFolderLocalService getWrappedDLFolderLocalService() {
 		return _dlFolderLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFolderLocalService(
 		DLFolderLocalService dlFolderLocalService) {
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
+	public DLFolderLocalService getWrappedService() {
+		return _dlFolderLocalService;
+	}
+
+	public void setWrappedService(DLFolderLocalService dlFolderLocalService) {
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 

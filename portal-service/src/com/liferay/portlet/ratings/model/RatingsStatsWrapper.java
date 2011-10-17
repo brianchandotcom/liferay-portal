@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link RatingsStats}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.ratings.model;
  * @see       RatingsStats
  * @generated
  */
-public class RatingsStatsWrapper implements RatingsStats {
+public class RatingsStatsWrapper implements RatingsStats,
+	ModelWrapper<RatingsStats> {
 	public RatingsStatsWrapper(RatingsStats ratingsStats) {
 		_ratingsStats = ratingsStats;
 	}
@@ -245,7 +248,14 @@ public class RatingsStatsWrapper implements RatingsStats {
 		_ratingsStats.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public RatingsStats getWrappedRatingsStats() {
+		return _ratingsStats;
+	}
+
+	public RatingsStats getWrappedModel() {
 		return _ratingsStats;
 	}
 

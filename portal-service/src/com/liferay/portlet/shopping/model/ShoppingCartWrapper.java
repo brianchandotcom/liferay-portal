@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingCart}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.model;
  * @see       ShoppingCart
  * @generated
  */
-public class ShoppingCartWrapper implements ShoppingCart {
+public class ShoppingCartWrapper implements ShoppingCart,
+	ModelWrapper<ShoppingCart> {
 	public ShoppingCartWrapper(ShoppingCart shoppingCart) {
 		_shoppingCart = shoppingCart;
 	}
@@ -374,7 +377,14 @@ public class ShoppingCartWrapper implements ShoppingCart {
 		return _shoppingCart.getItemsSize();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ShoppingCart getWrappedShoppingCart() {
+		return _shoppingCart;
+	}
+
+	public ShoppingCart getWrappedModel() {
 		return _shoppingCart;
 	}
 

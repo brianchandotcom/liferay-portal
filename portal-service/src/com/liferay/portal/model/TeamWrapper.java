@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Team
  * @generated
  */
-public class TeamWrapper implements Team {
+public class TeamWrapper implements Team, ModelWrapper<Team> {
 	public TeamWrapper(Team team) {
 		_team = team;
 	}
@@ -315,7 +315,14 @@ public class TeamWrapper implements Team {
 		return _team.getRole();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Team getWrappedTeam() {
+		return _team;
+	}
+
+	public Team getWrappedModel() {
 		return _team;
 	}
 

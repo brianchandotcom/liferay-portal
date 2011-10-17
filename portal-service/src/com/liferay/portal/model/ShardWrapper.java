@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Shard
  * @generated
  */
-public class ShardWrapper implements Shard {
+public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	public ShardWrapper(Shard shard) {
 		_shard = shard;
 	}
@@ -208,7 +208,14 @@ public class ShardWrapper implements Shard {
 		_shard.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Shard getWrappedShard() {
+		return _shard;
+	}
+
+	public Shard getWrappedModel() {
 		return _shard;
 	}
 

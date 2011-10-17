@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityLimit}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialActivityLimit
  * @generated
  */
-public class SocialActivityLimitWrapper implements SocialActivityLimit {
+public class SocialActivityLimitWrapper implements SocialActivityLimit,
+	ModelWrapper<SocialActivityLimit> {
 	public SocialActivityLimitWrapper(SocialActivityLimit socialActivityLimit) {
 		_socialActivityLimit = socialActivityLimit;
 	}
@@ -327,7 +330,14 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit {
 		_socialActivityLimit.setCount(limitPeriod, count);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialActivityLimit getWrappedSocialActivityLimit() {
+		return _socialActivityLimit;
+	}
+
+	public SocialActivityLimit getWrappedModel() {
 		return _socialActivityLimit;
 	}
 

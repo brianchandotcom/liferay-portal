@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ListTypeService
  * @generated
  */
-public class ListTypeServiceWrapper implements ListTypeService {
+public class ListTypeServiceWrapper implements ListTypeService,
+	ServiceWrapper<ListTypeService> {
 	public ListTypeServiceWrapper(ListTypeService listTypeService) {
 		_listTypeService = listTypeService;
 	}
@@ -52,11 +53,25 @@ public class ListTypeServiceWrapper implements ListTypeService {
 		_listTypeService.validate(listTypeId, classNameId, type);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ListTypeService getWrappedListTypeService() {
 		return _listTypeService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedListTypeService(ListTypeService listTypeService) {
+		_listTypeService = listTypeService;
+	}
+
+	public ListTypeService getWrappedService() {
+		return _listTypeService;
+	}
+
+	public void setWrappedService(ListTypeService listTypeService) {
 		_listTypeService = listTypeService;
 	}
 

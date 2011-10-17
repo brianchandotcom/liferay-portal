@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link PollsVote}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.polls.model;
  * @see       PollsVote
  * @generated
  */
-public class PollsVoteWrapper implements PollsVote {
+public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	public PollsVoteWrapper(PollsVote pollsVote) {
 		_pollsVote = pollsVote;
 	}
@@ -315,7 +317,14 @@ public class PollsVoteWrapper implements PollsVote {
 		return _pollsVote.getChoice();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PollsVote getWrappedPollsVote() {
+		return _pollsVote;
+	}
+
+	public PollsVote getWrappedModel() {
 		return _pollsVote;
 	}
 

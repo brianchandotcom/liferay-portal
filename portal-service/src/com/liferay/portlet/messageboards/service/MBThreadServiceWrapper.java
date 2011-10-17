@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBThreadService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBThreadService
  * @generated
  */
-public class MBThreadServiceWrapper implements MBThreadService {
+public class MBThreadServiceWrapper implements MBThreadService,
+	ServiceWrapper<MBThreadService> {
 	public MBThreadServiceWrapper(MBThreadService mbThreadService) {
 		_mbThreadService = mbThreadService;
 	}
@@ -118,11 +121,25 @@ public class MBThreadServiceWrapper implements MBThreadService {
 		_mbThreadService.unlockThread(threadId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBThreadService getWrappedMBThreadService() {
 		return _mbThreadService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBThreadService(MBThreadService mbThreadService) {
+		_mbThreadService = mbThreadService;
+	}
+
+	public MBThreadService getWrappedService() {
+		return _mbThreadService;
+	}
+
+	public void setWrappedService(MBThreadService mbThreadService) {
 		_mbThreadService = mbThreadService;
 	}
 

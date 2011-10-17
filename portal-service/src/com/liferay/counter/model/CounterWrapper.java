@@ -14,6 +14,8 @@
 
 package com.liferay.counter.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link Counter}.
@@ -23,7 +25,7 @@ package com.liferay.counter.model;
  * @see       Counter
  * @generated
  */
-public class CounterWrapper implements Counter {
+public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	public CounterWrapper(Counter counter) {
 		_counter = counter;
 	}
@@ -163,7 +165,14 @@ public class CounterWrapper implements Counter {
 		_counter.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Counter getWrappedCounter() {
+		return _counter;
+	}
+
+	public Counter getWrappedModel() {
 		return _counter;
 	}
 

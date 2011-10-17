@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       UserTracker
  * @generated
  */
-public class UserTrackerWrapper implements UserTracker {
+public class UserTrackerWrapper implements UserTracker,
+	ModelWrapper<UserTracker> {
 	public UserTrackerWrapper(UserTracker userTracker) {
 		_userTracker = userTracker;
 	}
@@ -311,7 +312,14 @@ public class UserTrackerWrapper implements UserTracker {
 		return _userTracker.getHits();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserTracker getWrappedUserTracker() {
+		return _userTracker;
+	}
+
+	public UserTracker getWrappedModel() {
 		return _userTracker;
 	}
 

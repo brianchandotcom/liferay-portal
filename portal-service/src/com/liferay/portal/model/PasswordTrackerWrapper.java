@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       PasswordTracker
  * @generated
  */
-public class PasswordTrackerWrapper implements PasswordTracker {
+public class PasswordTrackerWrapper implements PasswordTracker,
+	ModelWrapper<PasswordTracker> {
 	public PasswordTrackerWrapper(PasswordTracker passwordTracker) {
 		_passwordTracker = passwordTracker;
 	}
@@ -220,7 +221,14 @@ public class PasswordTrackerWrapper implements PasswordTracker {
 		_passwordTracker.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PasswordTracker getWrappedPasswordTracker() {
+		return _passwordTracker;
+	}
+
+	public PasswordTracker getWrappedModel() {
 		return _passwordTracker;
 	}
 

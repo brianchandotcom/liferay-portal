@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityHistory}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialEquityHistory
  * @generated
  */
-public class SocialEquityHistoryWrapper implements SocialEquityHistory {
+public class SocialEquityHistoryWrapper implements SocialEquityHistory,
+	ModelWrapper<SocialEquityHistory> {
 	public SocialEquityHistoryWrapper(SocialEquityHistory socialEquityHistory) {
 		_socialEquityHistory = socialEquityHistory;
 	}
@@ -256,7 +259,14 @@ public class SocialEquityHistoryWrapper implements SocialEquityHistory {
 		_socialEquityHistory.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialEquityHistory getWrappedSocialEquityHistory() {
+		return _socialEquityHistory;
+	}
+
+	public SocialEquityHistory getWrappedModel() {
 		return _socialEquityHistory;
 	}
 

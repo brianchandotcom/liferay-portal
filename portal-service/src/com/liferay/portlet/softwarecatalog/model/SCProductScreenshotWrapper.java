@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductScreenshot}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.model;
  * @see       SCProductScreenshot
  * @generated
  */
-public class SCProductScreenshotWrapper implements SCProductScreenshot {
+public class SCProductScreenshotWrapper implements SCProductScreenshot,
+	ModelWrapper<SCProductScreenshot> {
 	public SCProductScreenshotWrapper(SCProductScreenshot scProductScreenshot) {
 		_scProductScreenshot = scProductScreenshot;
 	}
@@ -254,7 +257,14 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot {
 		_scProductScreenshot.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SCProductScreenshot getWrappedSCProductScreenshot() {
+		return _scProductScreenshot;
+	}
+
+	public SCProductScreenshot getWrappedModel() {
 		return _scProductScreenshot;
 	}
 

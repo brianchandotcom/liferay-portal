@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoValue}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.expando.model;
  * @see       ExpandoValue
  * @generated
  */
-public class ExpandoValueWrapper implements ExpandoValue {
+public class ExpandoValueWrapper implements ExpandoValue,
+	ModelWrapper<ExpandoValue> {
 	public ExpandoValueWrapper(ExpandoValue expandoValue) {
 		_expandoValue = expandoValue;
 	}
@@ -490,7 +493,14 @@ public class ExpandoValueWrapper implements ExpandoValue {
 		_expandoValue.setStringArray(data);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ExpandoValue getWrappedExpandoValue() {
+		return _expandoValue;
+	}
+
+	public ExpandoValue getWrappedModel() {
 		return _expandoValue;
 	}
 

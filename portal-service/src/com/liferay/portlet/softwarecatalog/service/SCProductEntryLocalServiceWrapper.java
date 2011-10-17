@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductEntryLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.softwarecatalog.service;
  * @generated
  */
 public class SCProductEntryLocalServiceWrapper
-	implements SCProductEntryLocalService {
+	implements SCProductEntryLocalService,
+		ServiceWrapper<SCProductEntryLocalService> {
 	public SCProductEntryLocalServiceWrapper(
 		SCProductEntryLocalService scProductEntryLocalService) {
 		_scProductEntryLocalService = scProductEntryLocalService;
@@ -408,11 +411,26 @@ public class SCProductEntryLocalServiceWrapper
 			fullImages);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SCProductEntryLocalService getWrappedSCProductEntryLocalService() {
 		return _scProductEntryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSCProductEntryLocalService(
+		SCProductEntryLocalService scProductEntryLocalService) {
+		_scProductEntryLocalService = scProductEntryLocalService;
+	}
+
+	public SCProductEntryLocalService getWrappedService() {
+		return _scProductEntryLocalService;
+	}
+
+	public void setWrappedService(
 		SCProductEntryLocalService scProductEntryLocalService) {
 		_scProductEntryLocalService = scProductEntryLocalService;
 	}

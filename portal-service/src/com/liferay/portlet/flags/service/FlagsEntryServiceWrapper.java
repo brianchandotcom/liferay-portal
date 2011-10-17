@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.flags.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link FlagsEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.flags.service;
  * @see       FlagsEntryService
  * @generated
  */
-public class FlagsEntryServiceWrapper implements FlagsEntryService {
+public class FlagsEntryServiceWrapper implements FlagsEntryService,
+	ServiceWrapper<FlagsEntryService> {
 	public FlagsEntryServiceWrapper(FlagsEntryService flagsEntryService) {
 		_flagsEntryService = flagsEntryService;
 	}
@@ -37,11 +40,25 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService {
 			reportedUserId, contentTitle, contentURL, reason, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public FlagsEntryService getWrappedFlagsEntryService() {
 		return _flagsEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedFlagsEntryService(FlagsEntryService flagsEntryService) {
+		_flagsEntryService = flagsEntryService;
+	}
+
+	public FlagsEntryService getWrappedService() {
+		return _flagsEntryService;
+	}
+
+	public void setWrappedService(FlagsEntryService flagsEntryService) {
 		_flagsEntryService = flagsEntryService;
 	}
 

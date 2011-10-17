@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class UserNotificationEventLocalServiceWrapper
-	implements UserNotificationEventLocalService {
+	implements UserNotificationEventLocalService,
+		ServiceWrapper<UserNotificationEventLocalService> {
 	public UserNotificationEventLocalServiceWrapper(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
 		_userNotificationEventLocalService = userNotificationEventLocalService;
@@ -322,11 +323,26 @@ public class UserNotificationEventLocalServiceWrapper
 			archive);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public UserNotificationEventLocalService getWrappedUserNotificationEventLocalService() {
 		return _userNotificationEventLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
+	public UserNotificationEventLocalService getWrappedService() {
+		return _userNotificationEventLocalService;
+	}
+
+	public void setWrappedService(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}

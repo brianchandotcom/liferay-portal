@@ -14,6 +14,8 @@
 
 package com.liferay.counter.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link CounterLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.counter.service;
  * @see       CounterLocalService
  * @generated
  */
-public class CounterLocalServiceWrapper implements CounterLocalService {
+public class CounterLocalServiceWrapper implements CounterLocalService,
+	ServiceWrapper<CounterLocalService> {
 	public CounterLocalServiceWrapper(CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;
 	}
@@ -277,12 +280,26 @@ public class CounterLocalServiceWrapper implements CounterLocalService {
 		_counterLocalService.reset(name, size);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public CounterLocalService getWrappedCounterLocalService() {
 		return _counterLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedCounterLocalService(
 		CounterLocalService counterLocalService) {
+		_counterLocalService = counterLocalService;
+	}
+
+	public CounterLocalService getWrappedService() {
+		return _counterLocalService;
+	}
+
+	public void setWrappedService(CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;
 	}
 

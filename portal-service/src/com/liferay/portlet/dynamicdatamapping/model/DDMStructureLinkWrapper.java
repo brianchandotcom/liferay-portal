@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMStructureLink}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see       DDMStructureLink
  * @generated
  */
-public class DDMStructureLinkWrapper implements DDMStructureLink {
+public class DDMStructureLinkWrapper implements DDMStructureLink,
+	ModelWrapper<DDMStructureLink> {
 	public DDMStructureLinkWrapper(DDMStructureLink ddmStructureLink) {
 		_ddmStructureLink = ddmStructureLink;
 	}
@@ -215,7 +218,14 @@ public class DDMStructureLinkWrapper implements DDMStructureLink {
 		return _ddmStructureLink.getStructure();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDMStructureLink getWrappedDDMStructureLink() {
+		return _ddmStructureLink;
+	}
+
+	public DDMStructureLink getWrappedModel() {
 		return _ddmStructureLink;
 	}
 

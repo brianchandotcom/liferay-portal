@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class ResourcePermissionLocalServiceWrapper
-	implements ResourcePermissionLocalService {
+	implements ResourcePermissionLocalService,
+		ServiceWrapper<ResourcePermissionLocalService> {
 	public ResourcePermissionLocalServiceWrapper(
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -898,11 +899,26 @@ public class ResourcePermissionLocalServiceWrapper
 			scope, primKey, roleIdsToActionIds);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ResourcePermissionLocalService getWrappedResourcePermissionLocalService() {
 		return _resourcePermissionLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	public ResourcePermissionLocalService getWrappedService() {
+		return _resourcePermissionLocalService;
+	}
+
+	public void setWrappedService(
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}

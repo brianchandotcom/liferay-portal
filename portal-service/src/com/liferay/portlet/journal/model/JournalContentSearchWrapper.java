@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalContentSearch}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see       JournalContentSearch
  * @generated
  */
-public class JournalContentSearchWrapper implements JournalContentSearch {
+public class JournalContentSearchWrapper implements JournalContentSearch,
+	ModelWrapper<JournalContentSearch> {
 	public JournalContentSearchWrapper(
 		JournalContentSearch journalContentSearch) {
 		_journalContentSearch = journalContentSearch;
@@ -264,7 +267,14 @@ public class JournalContentSearchWrapper implements JournalContentSearch {
 		_journalContentSearch.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public JournalContentSearch getWrappedJournalContentSearch() {
+		return _journalContentSearch;
+	}
+
+	public JournalContentSearch getWrappedModel() {
 		return _journalContentSearch;
 	}
 

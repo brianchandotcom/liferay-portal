@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryMetadataLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @generated
  */
 public class DLFileEntryMetadataLocalServiceWrapper
-	implements DLFileEntryMetadataLocalService {
+	implements DLFileEntryMetadataLocalService,
+		ServiceWrapper<DLFileEntryMetadataLocalService> {
 	public DLFileEntryMetadataLocalServiceWrapper(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
@@ -299,11 +302,26 @@ public class DLFileEntryMetadataLocalServiceWrapper
 			fileEntryId, fileVersionId, fieldsMap, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFileEntryMetadataLocalService getWrappedDLFileEntryMetadataLocalService() {
 		return _dlFileEntryMetadataLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFileEntryMetadataLocalService(
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+	}
+
+	public DLFileEntryMetadataLocalService getWrappedService() {
+		return _dlFileEntryMetadataLocalService;
+	}
+
+	public void setWrappedService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalStructureService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.service;
  * @see       JournalStructureService
  * @generated
  */
-public class JournalStructureServiceWrapper implements JournalStructureService {
+public class JournalStructureServiceWrapper implements JournalStructureService,
+	ServiceWrapper<JournalStructureService> {
 	public JournalStructureServiceWrapper(
 		JournalStructureService journalStructureService) {
 		_journalStructureService = journalStructureService;
@@ -117,11 +120,26 @@ public class JournalStructureServiceWrapper implements JournalStructureService {
 			parentStructureId, nameMap, descriptionMap, xsd, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public JournalStructureService getWrappedJournalStructureService() {
 		return _journalStructureService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedJournalStructureService(
+		JournalStructureService journalStructureService) {
+		_journalStructureService = journalStructureService;
+	}
+
+	public JournalStructureService getWrappedService() {
+		return _journalStructureService;
+	}
+
+	public void setWrappedService(
 		JournalStructureService journalStructureService) {
 		_journalStructureService = journalStructureService;
 	}

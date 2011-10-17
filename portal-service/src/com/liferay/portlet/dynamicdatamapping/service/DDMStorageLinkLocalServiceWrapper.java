@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMStorageLinkLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.dynamicdatamapping.service;
  * @generated
  */
 public class DDMStorageLinkLocalServiceWrapper
-	implements DDMStorageLinkLocalService {
+	implements DDMStorageLinkLocalService,
+		ServiceWrapper<DDMStorageLinkLocalService> {
 	public DDMStorageLinkLocalServiceWrapper(
 		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
@@ -307,11 +310,26 @@ public class DDMStorageLinkLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDMStorageLinkLocalService getWrappedDDMStorageLinkLocalService() {
 		return _ddmStorageLinkLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDMStorageLinkLocalService(
+		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
+		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
+	}
+
+	public DDMStorageLinkLocalService getWrappedService() {
+		return _ddmStorageLinkLocalService;
+	}
+
+	public void setWrappedService(
 		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 	}

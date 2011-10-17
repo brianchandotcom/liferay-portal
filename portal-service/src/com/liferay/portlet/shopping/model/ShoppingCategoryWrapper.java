@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingCategory}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.model;
  * @see       ShoppingCategory
  * @generated
  */
-public class ShoppingCategoryWrapper implements ShoppingCategory {
+public class ShoppingCategoryWrapper implements ShoppingCategory,
+	ModelWrapper<ShoppingCategory> {
 	public ShoppingCategoryWrapper(ShoppingCategory shoppingCategory) {
 		_shoppingCategory = shoppingCategory;
 	}
@@ -332,7 +335,14 @@ public class ShoppingCategoryWrapper implements ShoppingCategory {
 		return _shoppingCategory.isRoot();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ShoppingCategory getWrappedShoppingCategory() {
+		return _shoppingCategory;
+	}
+
+	public ShoppingCategory getWrappedModel() {
 		return _shoppingCategory;
 	}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       RepositoryService
  * @generated
  */
-public class RepositoryServiceWrapper implements RepositoryService {
+public class RepositoryServiceWrapper implements RepositoryService,
+	ServiceWrapper<RepositoryService> {
 	public RepositoryServiceWrapper(RepositoryService repositoryService) {
 		_repositoryService = repositoryService;
 	}
@@ -119,11 +120,25 @@ public class RepositoryServiceWrapper implements RepositoryService {
 		_repositoryService.updateRepository(repositoryId, name, description);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public RepositoryService getWrappedRepositoryService() {
 		return _repositoryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedRepositoryService(RepositoryService repositoryService) {
+		_repositoryService = repositoryService;
+	}
+
+	public RepositoryService getWrappedService() {
+		return _repositoryService;
+	}
+
+	public void setWrappedService(RepositoryService repositoryService) {
 		_repositoryService = repositoryService;
 	}
 

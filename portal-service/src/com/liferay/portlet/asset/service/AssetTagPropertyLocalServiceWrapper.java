@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetTagPropertyLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.asset.service;
  * @generated
  */
 public class AssetTagPropertyLocalServiceWrapper
-	implements AssetTagPropertyLocalService {
+	implements AssetTagPropertyLocalService,
+		ServiceWrapper<AssetTagPropertyLocalService> {
 	public AssetTagPropertyLocalServiceWrapper(
 		AssetTagPropertyLocalService assetTagPropertyLocalService) {
 		_assetTagPropertyLocalService = assetTagPropertyLocalService;
@@ -317,11 +320,26 @@ public class AssetTagPropertyLocalServiceWrapper
 			key, value);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetTagPropertyLocalService getWrappedAssetTagPropertyLocalService() {
 		return _assetTagPropertyLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetTagPropertyLocalService(
+		AssetTagPropertyLocalService assetTagPropertyLocalService) {
+		_assetTagPropertyLocalService = assetTagPropertyLocalService;
+	}
+
+	public AssetTagPropertyLocalService getWrappedService() {
+		return _assetTagPropertyLocalService;
+	}
+
+	public void setWrappedService(
 		AssetTagPropertyLocalService assetTagPropertyLocalService) {
 		_assetTagPropertyLocalService = assetTagPropertyLocalService;
 	}

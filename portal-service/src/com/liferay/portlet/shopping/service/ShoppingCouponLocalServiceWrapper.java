@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingCouponLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.shopping.service;
  * @generated
  */
 public class ShoppingCouponLocalServiceWrapper
-	implements ShoppingCouponLocalService {
+	implements ShoppingCouponLocalService,
+		ServiceWrapper<ShoppingCouponLocalService> {
 	public ShoppingCouponLocalServiceWrapper(
 		ShoppingCouponLocalService shoppingCouponLocalService) {
 		_shoppingCouponLocalService = shoppingCouponLocalService;
@@ -333,11 +336,26 @@ public class ShoppingCouponLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ShoppingCouponLocalService getWrappedShoppingCouponLocalService() {
 		return _shoppingCouponLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedShoppingCouponLocalService(
+		ShoppingCouponLocalService shoppingCouponLocalService) {
+		_shoppingCouponLocalService = shoppingCouponLocalService;
+	}
+
+	public ShoppingCouponLocalService getWrappedService() {
+		return _shoppingCouponLocalService;
+	}
+
+	public void setWrappedService(
 		ShoppingCouponLocalService shoppingCouponLocalService) {
 		_shoppingCouponLocalService = shoppingCouponLocalService;
 	}

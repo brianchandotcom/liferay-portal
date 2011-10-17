@@ -12,175 +12,253 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Web Form Test Page</td>
 	<td>Web Form Test Page</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Form Test Page</td>
 	<td>Web Form Test Page</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>click</td>
 	<td>//strong/a</td>
 	<td>Options</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
-</tr><tr>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//a[@id='_86_rjus']/span</td>
 	<td>Archive/Restore Setup</td>
-</tr><tr>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_86_rjus']/span</td>
+	<td>Archive/Restore Setup</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>//span[@class='taglib-text']</td>
+	<td>//a[@id='_86_rjus']/span</td>
 	<td>Archive/Restore Setup</td>
-</tr><tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>archiveSetup1Present</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>gotoIf</td>
-	<td>!${archiveSetup1Present}</td>
+	<td>${archiveSetup1Present}</td>
 	<td>ArchiveSetup1NotPresent</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
-</tr><tr>
-	<td>label</td>
-	<td>ArchiveSetup1NotPresent</td>
-	<td></td>
-</tr><tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>archiveSetup2Present</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>gotoIf</td>
-	<td>!${archiveSetup2Present}</td>
+	<td>${archiveSetup2Present}</td>
 	<td>ArchiveSetup2NotPresent</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
-</tr><tr>
-	<td>label</td>
-	<td>ArchiveSetup2NotPresent</td>
-	<td></td>
-</tr><tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>archiveSetup3Present</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>gotoIf</td>
-	<td>!${archiveSetup3Present}</td>
+	<td>${archiveSetup3Present}</td>
 	<td>ArchiveSetup3NotPresent</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
-</tr><tr>
-	<td>label</td>
-	<td>ArchiveSetup3NotPresent</td>
-	<td></td>
-</tr><tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>archiveSetup4Present</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>gotoIf</td>
-	<td>!${archiveSetup4Present}</td>
+	<td>${archiveSetup4Present}</td>
 	<td>ArchiveSetup4NotPresent</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//a[@id='_86_ctvk']</td>
 	<td>Delete</td>
-</tr><tr>
+</tr>
+<tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>archiveSetup5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${archiveSetup5Present}</td>
+	<td>ArchiveSetup5NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='_86_ctvk']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ArchiveSetup1NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ArchiveSetup2NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ArchiveSetup3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>ArchiveSetup4NotPresent</td>
 	<td></td>
-</tr><tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
-	<td>archiveSetup5Present</td>
-</tr><tr>
-	<td>gotoIf</td>
-	<td>!${archiveSetup5Present}</td>
-	<td>ArchiveSetup5NotPresent</td>
-</tr><tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr><tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Delete</td>
-</tr><tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Delete</td>
-</tr><tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td>label</td>
 	<td>ArchiveSetup5NotPresent</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

@@ -62,6 +62,9 @@ public class ArchiveTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
 
@@ -94,7 +97,6 @@ public class ArchiveTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("test archive"),
-			selenium.getText(
-				"//form[@id='_86_fm']/div[1]/div[1]/table/tbody/tr[3]/td[1]"));
+			selenium.getText("//tr[3]/td[1]"));
 	}
 }

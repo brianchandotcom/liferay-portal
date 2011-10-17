@@ -29,14 +29,11 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 				selenium.selectFrame("relative=top");
-				selenium.saveScreenShotAndSource();
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(80000);
 
 				boolean SignedIn1 = selenium.isElementPresent("link=Sign out");
@@ -53,7 +50,6 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -70,12 +66,11 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -90,13 +85,10 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.testing.trunk"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
-				selenium.saveScreenShotAndSource();
 
 				boolean staySignedInChecked = selenium.isChecked(
 						"PersistentCookie");
@@ -109,17 +101,14 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
 			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("liferay.qa.server.trunk"),
 					selenium.getText("//td[3]/div/span"));
 				selenium.clickAt("//td[3]/div/span",
@@ -127,7 +116,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -142,7 +131,6 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText("//h1/span[1]",
 						"[MB Category Name]"));
 				assertTrue(selenium.isPartialText("//h1/span[1]",
@@ -152,7 +140,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 						"MB Message Body"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -168,7 +156,6 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[7]/div/table/tbody/tr/td[1]/div/span",
 					RuntimeVariables.replace("Reply"));
 				Thread.sleep(5000);
@@ -177,7 +164,6 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.type("//body",
 					RuntimeVariables.replace("MB Message Email Reply"));
 				selenium.selectFrame("relative=top");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Send"),
 					selenium.getText("//div[3]/div/div/div/div[1]/b"));
 				selenium.clickAt("//div[3]/div/div/div/div[1]/b",
@@ -200,7 +186,6 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

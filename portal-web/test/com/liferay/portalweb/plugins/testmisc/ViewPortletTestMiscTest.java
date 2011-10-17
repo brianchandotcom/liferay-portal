@@ -44,7 +44,7 @@ public class ViewPortletTestMiscTest extends BaseTestCase {
 			RuntimeVariables.replace("Test Misc Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Portlet Request"),
-			selenium.getText("//div/h3[1]"));
+			selenium.getText("//div/div/h3[1]"));
 		assertEquals(RuntimeVariables.replace("Attribute Sharing"),
 			selenium.getText("//p[1]/a[1]"));
 		assertEquals(RuntimeVariables.replace("Remote User"),

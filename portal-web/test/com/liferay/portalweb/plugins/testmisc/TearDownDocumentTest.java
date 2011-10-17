@@ -99,7 +99,10 @@ public class TearDownDocumentTest extends BaseTestCase {
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
-						"There are no documents in this folder."),
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace(
+						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 100:

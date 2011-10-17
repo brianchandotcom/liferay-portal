@@ -29,14 +29,11 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 			switch (label) {
 			case 1:
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 				selenium.selectFrame("relative=top");
-				selenium.saveScreenShotAndSource();
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(80000);
 
 				boolean signedIn1 = selenium.isElementPresent("link=Sign out");
@@ -53,7 +50,6 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -70,12 +66,11 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -90,13 +85,10 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.server.trunk"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
-				selenium.saveScreenShotAndSource();
 
 				boolean staySignedInChecked = selenium.isChecked(
 						"PersistentCookie");
@@ -109,48 +101,40 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
 			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(10000);
 				selenium.openWindow("http://groups.google.com/",
 					RuntimeVariables.replace("Google Groups"));
 				selenium.waitForPopUp("Google Groups",
 					RuntimeVariables.replace(""));
 				selenium.selectWindow("Google Groups");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(10000);
 				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
 					selenium.getText("//a[1]/font/b"));
 				selenium.clickAt("//a[1]/font/b",
 					RuntimeVariables.replace("liferay-mailinglist"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("//span[1]/a"));
 				selenium.clickAt("//span[1]/a",
 					RuntimeVariables.replace(
 						"[MB Category Name] MB Message Subject"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText(
 						"//table[@id='top']/tbody/tr[2]/td[1]/span/span/i",
 						"liferay.qa.server"));
-				assertEquals(RuntimeVariables.replace(
-						"MB Message Body\n--\nLiferay Message Boards\nhttp://localhost:8080/web/site-name/message-boards-test-page/-/message_boards/view_message/10508\n\nhttp://localhost"),
-					selenium.getText(
-						"//div[1]/table/tbody/tr/td[2]/div[1]/div[2]/div"));
+				assertTrue(selenium.isPartialText(
+						"//div[1]/table/tbody/tr/td[2]/div[1]/div[2]/div",
+						"MB Message Body"));
 				assertEquals(RuntimeVariables.replace("Trunk Liferay QA"),
 					selenium.getText(
 						"//div[2]/table/tbody/tr/td[2]/div[1]/div[1]/table/tbody/tr[2]/td[1]/span/span"));
@@ -173,7 +157,6 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

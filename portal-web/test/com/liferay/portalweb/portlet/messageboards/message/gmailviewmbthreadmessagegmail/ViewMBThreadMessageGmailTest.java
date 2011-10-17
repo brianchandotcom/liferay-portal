@@ -23,14 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 	public void testViewMBThreadMessageGmail() throws Exception {
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.open("/web/site-name");
 		Thread.sleep(60000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -45,17 +43,14 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Message Subject"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -67,7 +62,6 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Re: [MB Category Name] MB Message Subject"),
 			selenium.getText("xpath=(//div[@class='subject']/a/strong)[2]"));

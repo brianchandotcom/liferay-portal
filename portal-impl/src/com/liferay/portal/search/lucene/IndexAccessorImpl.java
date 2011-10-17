@@ -456,7 +456,9 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 			public void run() {
 				try {
-					_doCommit();
+					if (_batchCount > 0) {
+						_doCommit();
+					}
 				}
 				catch (IOException ioe) {
 					_log.error("Could not run scheduled commit", ioe);
@@ -640,7 +642,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	private static Log _log = LogFactoryUtil.getLog(IndexAccessorImpl.class);
 
-	private int _batchCount;
+	private volatile int _batchCount;
 	private Lock _commitLock = new ReentrantLock();
 	private long _companyId;
 	private CountDownLatch _countDownLatch = new CountDownLatch(1);

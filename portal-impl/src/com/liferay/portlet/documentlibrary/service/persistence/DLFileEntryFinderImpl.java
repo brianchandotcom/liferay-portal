@@ -36,12 +36,16 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class DLFileEntryFinderImpl
 	extends BasePersistenceImpl<DLFileEntry> implements DLFileEntryFinder {
 
 	public static String COUNT_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".countByExtraSettings";
+
+	public static String COUNT_BY_G_F =
+		DLFileEntryFinder.class.getName() + ".countByG_F";
 
 	public static String COUNT_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_F_S";
@@ -234,7 +238,14 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_F_S);
+			String sql = null;
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(COUNT_BY_G_F);
+			}
+			else {
+				sql = CustomSQLUtil.get(COUNT_BY_G_F_S);
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -244,11 +255,6 @@ public class DLFileEntryFinderImpl
 
 			sql = StringUtil.replace(
 				sql, "[$FOLDER_ID$]", getFolderIds(folderIds));
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "(DLFileVersion.status = ?) AND", "");
-			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 

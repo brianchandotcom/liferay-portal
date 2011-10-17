@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase;
+package com.liferay.portalweb.portal.dbupgrade.transfersampledatalatest.wiki.usecaselarcp;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageWikiTest extends BaseTestCase {
-	public void testAddPageWiki() throws Exception {
-		selenium.open("/web/guest/home/");
+public class PermissionsPortletGuestViewOffTest extends BaseTestCase {
+	public void testPermissionsPortletGuestViewOff() throws Exception {
+		selenium.open("/web/wiki-use-case-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -30,7 +30,7 @@ public class AddPageWikiTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Wiki Test Page")) {
 					break;
 				}
 			}
@@ -40,20 +40,12 @@ public class AddPageWikiTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
+		selenium.clickAt("link=Wiki Test Page",
+			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Wiki Use Case Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -72,16 +64,10 @@ public class AddPageWikiTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Manage Pages"),
+		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add Page"),
-			selenium.getText("//div/span/button[1]"));
-		selenium.clickAt("//div/span/button[1]",
-			RuntimeVariables.replace("Add Page"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,7 +75,7 @@ public class AddPageWikiTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
+				if (selenium.isVisible("link=Permissions")) {
 					break;
 				}
 			}
@@ -99,13 +85,35 @@ public class AddPageWikiTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_156_name_en_US']",
-			RuntimeVariables.replace("Wiki Test Page"));
-		selenium.clickAt("//input[@value='Add Page']",
-			RuntimeVariables.replace("Add Page"));
+		selenium.clickAt("link=Permissions",
+			RuntimeVariables.replace("Permissions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
+			RuntimeVariables.replace("Guest View"));
+		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 	}
 }

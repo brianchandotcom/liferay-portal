@@ -18,6 +18,7 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
 String redirect = ParamUtil.getString(request, "redirect");
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT)) {
@@ -174,6 +175,7 @@ request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 	<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 
 	<c:if test="<%= (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT)) %>">
 		<portlet:param name="backURL" value="<%= backURL %>" />
@@ -186,6 +188,7 @@ request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 	<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 
 	<c:if test="<%= (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT)) %>">
 		<portlet:param name="backURL" value="<%= backURL %>" />

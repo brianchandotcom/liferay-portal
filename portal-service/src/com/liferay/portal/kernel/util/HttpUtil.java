@@ -241,6 +241,12 @@ public class HttpUtil {
 		return getHttp().setParameter(url, name, value);
 	}
 
+	public static String updateRedirect(
+		String redirect, String oldPath, String newPath) {
+
+		return getHttp().updateRedirect(redirect, oldPath, newPath);
+	}
+
 	public static byte[] URLtoByteArray(Http.Options options)
 		throws IOException {
 

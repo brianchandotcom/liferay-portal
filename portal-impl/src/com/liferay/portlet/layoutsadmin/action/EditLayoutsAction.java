@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -139,6 +140,9 @@ public class EditLayoutsAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		String closeRedirect = ParamUtil.getString(
+			actionRequest, "closeRedirect");
+
 		try {
 			Layout layout = null;
 			String oldFriendlyURL = StringPool.BLANK;
@@ -149,9 +153,19 @@ public class EditLayoutsAction extends PortletAction {
 
 				layout = (Layout)returnValue[0];
 				oldFriendlyURL = (String)returnValue[1];
+
+				closeRedirect = updateCloseRedirect(
+					closeRedirect, null, layout, oldFriendlyURL);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				SitesUtil.deleteLayout(actionRequest, actionResponse);
+				Object[] returnValue = SitesUtil.deleteLayout(
+					actionRequest, actionResponse);
+
+				Group group = (Group)returnValue[0];
+				oldFriendlyURL = (String)returnValue[1];
+
+				closeRedirect = updateCloseRedirect(
+					closeRedirect, group, null, oldFriendlyURL);
 			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
@@ -212,20 +226,11 @@ public class EditLayoutsAction extends PortletAction {
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			if ((layout != null) && Validator.isNotNull(oldFriendlyURL)) {
-				if (layout.getPlid() == themeDisplay.getPlid()) {
-					Group group = layout.getGroup();
-
-					String oldPath = group.getFriendlyURL() + oldFriendlyURL;
-					String newPath =
-						group.getFriendlyURL() + layout.getFriendlyURL();
-
-					redirect = StringUtil.replace(redirect, oldPath, newPath);
-
-					redirect = StringUtil.replace(
-						redirect, HttpUtil.encodeURL(oldPath),
-						HttpUtil.encodeURL(newPath));
-				}
+			if (Validator.isNotNull(closeRedirect)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doCloseRedirect",
+					closeRedirect);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -995,6 +1000,32 @@ public class EditLayoutsAction extends PortletAction {
 				groupId, privateLayout, layoutId, themeId, colorSchemeId, css,
 				wapTheme);
 		}
+	}
+
+	protected String updateCloseRedirect(
+		String closeRedirect, Group group, Layout layout,
+		String oldLayoutFriendlyURL) {
+
+		if (Validator.isNull(oldLayoutFriendlyURL)) {
+			return closeRedirect;
+		}
+
+		if (layout != null) {
+			String oldPath = oldLayoutFriendlyURL;
+			String newPath = layout.getFriendlyURL();
+
+			return HttpUtil.updateRedirect(
+				closeRedirect, oldPath, newPath);
+		}
+		else if (group != null) {
+			String oldPath = group.getFriendlyURL() + oldLayoutFriendlyURL;
+			String newPath =  group.getFriendlyURL();
+
+			return HttpUtil.updateRedirect(
+				closeRedirect, oldPath, newPath);
+		}
+
+		return closeRedirect;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

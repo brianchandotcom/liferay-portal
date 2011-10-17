@@ -19,6 +19,7 @@
 <%
 String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
 String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -114,6 +115,7 @@ else if (layoutSetPrototype != null) {
 <aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />

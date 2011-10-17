@@ -1017,31 +1017,63 @@ else {
 </c:if>
 
 <%
-String doRefreshPortletId = null;
+if (themeDisplay.isStatePopUp()) {
+	String doRefreshPortletId = null;
 
-if (themeDisplay.isStatePopUp() && ((doRefreshPortletId = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh")) != null)) {
-	if (Validator.isNull(doRefreshPortletId) && (portletResourcePortlet != null)) {
-		doRefreshPortletId = portletResourcePortlet.getPortletId();
-	}
+	if((doRefreshPortletId = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh")) != null) {
+		if (Validator.isNull(doRefreshPortletId) && (portletResourcePortlet != null)) {
+			doRefreshPortletId = portletResourcePortlet.getPortletId();
+		}
 %>
 
-	<aui:script position="inline" use="aui-base">
-		if (window.parent) {
-			var data = null;
+		<aui:script position="inline" use="aui-base">
+			if (window.parent) {
+				var data = null;
 
-			var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
+				var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
 
-			<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
-				data = {
-					portletAjaxable: false
-				};
-			</c:if>
+				<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
+					data = {
+						portletAjaxable: false
+					};
+				</c:if>
 
-			Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
-		}
-	</aui:script>
+				Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
+			}
+		</aui:script>
 
 <%
+	}
+
+	String doCloseRedirect = null;
+
+	if((doCloseRedirect = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doCloseRedirect")) != null) {
+%>
+
+		<aui:script use="aui-base,aui-loading-mask">
+			var dialog = Liferay.Util.getWindow();
+
+			dialog.on(
+				'visibleChange',
+				function(event) {
+					if (!event.newVal && event.src !== 'hideLink') {
+						var topWindow = Liferay.Util.getTop();
+						var topA = topWindow.AUI();
+
+						new topA.LoadingMask(
+							{
+								target: topA.getBody()
+							}
+						).show();
+
+						topWindow.location.href = '<%= doCloseRedirect %>';
+					}
+				}
+			);
+		</aui:script>
+
+<%
+	}
 }
 
 themeDisplay.setScopeGroupId(previousScopeGroupId);

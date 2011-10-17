@@ -38,6 +38,10 @@
 
 	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
 
+	var SRC_HIDE_LINK = {
+		src: 'hideLink'
+	};
+
 	var Window = {
 		ALIGN_CENTER: {
 			points: ['tc', 'tc']
@@ -664,18 +668,26 @@
 		Util,
 		'afterIframeLoaded',
 		function(event) {
-			var iframePlugin = event.currentTarget;
-
 			var iframeBody = A.one(event.doc.body);
 
 			iframeBody.addClass('aui-dialog-iframe-popup');
 
 			var closeButton = iframeBody.one('.aui-button-input-cancel');
+			var hideLink = iframeBody.one('.lfr-hide-dialog');
+
+			var dialog = event.dialog;
 
 			if (closeButton) {
-				var dialog = event.dialog;
-
 				closeButton.on('click', dialog.close, dialog);
+			}
+
+			if (hideLink) {
+				hideLink.on(
+					'click',
+					function(){
+						dialog.set('visible', false, SRC_HIDE_LINK);
+					}
+				);
 			}
 
 			var rolesSearchContainer = iframeBody.one('#rolesSearchContainerSearchContainer');

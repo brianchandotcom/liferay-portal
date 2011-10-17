@@ -14,14 +14,12 @@
 
 package com.liferay.portal.deploy.auto;
 
-import com.liferay.portal.adaptor.osgi.OSGiAdaptor;
-import com.liferay.portal.kernel.adaptor.Adaptor;
-import com.liferay.portal.kernel.adaptor.AdaptorUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.osgi.service.OSGiServiceUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,13 +70,11 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 	}
 
 	protected void doDeploy(File file, String context) throws Exception {
-		Adaptor adaptor = AdaptorUtil.getAdaptor();
+		Framework framework = OSGiServiceUtil.getFramework();
 
-		if ((adaptor == null) || !(adaptor instanceof OSGiAdaptor)) {
+		if (framework == null) {
 			return;
 		}
-
-		OSGiAdaptor osgiAdaptor = (OSGiAdaptor)adaptor;
 
 		String fileName = file.getName();
 
@@ -112,7 +108,7 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 				Constants.BUNDLE_SYMBOLICNAME);
 
 			if (Validator.isNotNull(bundleSymbolicName)) {
-				installBundle(osgiAdaptor, file, manifest);
+				installBundle(framework, file, manifest);
 			}
 		}
 		finally {
@@ -121,10 +117,8 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 	}
 
 	protected void installBundle(
-			OSGiAdaptor osgiAdaptor, File file, Manifest manifest)
+			Framework framework, File file, Manifest manifest)
 		throws Exception {
-
-		Framework framework = osgiAdaptor.getFramework();
 
 		BundleContext bundleContext = framework.getBundleContext();
 
@@ -140,6 +134,8 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 		else {
 			bundle = bundleContext.installBundle(uri.toString(), inputStream);
 		}
+
+		bundle.start();
 	}
 
 }

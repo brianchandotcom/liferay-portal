@@ -16,7 +16,6 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.cache.ehcache.ClearEhcacheThreadUtil;
-import com.liferay.portal.kernel.adaptor.AdaptorUtil;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.osgi.service.OSGiServiceUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.InitUtil;
@@ -94,6 +94,15 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortletContextBagPool.clear();
 		WebAppPool.clear();
 
+		try {
+			OSGiServiceUtil.init();
+
+			OSGiServiceUtil.start();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
 
 		try {
@@ -143,9 +152,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		clearFilteredPropertyDescriptorsCache(autowireCapableBeanFactory);
 
 		try {
-			AdaptorUtil.init(applicationContext);
-
-			AdaptorUtil.start();
+			OSGiServiceUtil.registerContext(applicationContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -157,7 +164,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
 
 		try {
-			AdaptorUtil.stop();
+			OSGiServiceUtil.stop();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

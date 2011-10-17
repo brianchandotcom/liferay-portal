@@ -83,14 +83,14 @@ if (folder != null) {
 		sb.append("<img align=\"left\" border=\"0\" src=\"");
 		sb.append(themeDisplay.getPathThemeImages());
 
-		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(repositoryId, curFolder.getFolderId(), false);
+		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(curFolder.getRepositoryId(), curFolder.getFolderId(), false);
 
 		int foldersCount = subfolderIds.size();
 
 		subfolderIds.clear();
 		subfolderIds.add(curFolder.getFolderId());
 
-		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(repositoryId, subfolderIds, WorkflowConstants.STATUS_APPROVED);
+		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), subfolderIds, WorkflowConstants.STATUS_APPROVED);
 
 		if ((foldersCount + fileEntriesCount) > 0) {
 			sb.append("/common/folder_full_document.png\">");

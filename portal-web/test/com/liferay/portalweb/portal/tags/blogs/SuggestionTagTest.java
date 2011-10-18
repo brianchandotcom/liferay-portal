@@ -22,72 +22,122 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SuggestionTagTest extends BaseTestCase {
 	public void testSuggestionTag() throws Exception {
-		selenium.open("/web/guest/home/");
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
 
-			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Blogs Tags Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Blogs Tags Test Page",
+					RuntimeVariables.replace("Blogs Tags Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Tags Blog Entry3 Title"),
+					selenium.getText(
+						"xPath=(//div[@class='entry-title']/h2/a)[1]"));
+				selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
+					RuntimeVariables.replace("Tags Blog Entry3 Title"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Edit"),
+					selenium.getText("//span/a/span"));
+				selenium.click(RuntimeVariables.replace("//span/a/span"));
+				selenium.waitForPageToLoad("30000");
 
-		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//td[@id='cke_contents__33_editor']/iframe")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isElementPresent("link=Tags3 Blogs3 Test3 Entry3")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				boolean tagsVisible = selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
 
-		selenium.clickAt("link=Tags3 Blogs3 Test3 Entry3",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.clickAt("suggest", RuntimeVariables.replace(""));
+				if (tagsVisible) {
+					label = 2;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//label[1]/input")) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.clickAt("//div[3]/div/div/span",
+					RuntimeVariables.replace("Categorization"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//input[@class='lfr-tag-selector-input aui-field-input-text']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+
+			case 2:
+				selenium.clickAt("//button[@id='suggest']",
+					RuntimeVariables.replace("Suggestion"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent("//label[1]/input")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isElementPresent("//label[1]/input"));
+				selenium.clickAt("//button[@id='closethick']",
+					RuntimeVariables.replace("Close"));
+				selenium.clickAt("//input[@value='Cancel']",
+					RuntimeVariables.replace("Cancel"));
+				selenium.waitForPageToLoad("30000");
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertTrue(selenium.isElementPresent("//label[1]/input"));
-		selenium.clickAt("closethick", RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Cancel']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
 	}
 }

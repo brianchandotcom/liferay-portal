@@ -22,85 +22,159 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 	public void testSelectTagThroughAutoSuggestion() throws Exception {
-		selenium.open("/web/guest/home/");
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
 
-			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Blogs Tags Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Blogs Tags Test Page",
+					RuntimeVariables.replace("Blogs Tags Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Tags Blog Entry3 Title"),
+					selenium.getText(
+						"xPath=(//div[@class='entry-title']/h2/a)[1]"));
+				selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
+					RuntimeVariables.replace("Tags Blog Entry3 Title"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Edit"),
+					selenium.getText("//span/a/span"));
+				selenium.click(RuntimeVariables.replace("//span/a/span"));
+				selenium.waitForPageToLoad("30000");
 
-		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//td[@id='cke_contents__33_editor']/iframe")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isElementPresent("link=Tags3 Blogs3 Test3 Entry3")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				boolean tagsVisible = selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
 
-		selenium.clickAt("link=Tags3 Blogs3 Test3 Entry3",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
-		selenium.type("//li[2]/span/span/input", RuntimeVariables.replace(""));
-		selenium.typeKeys("//li[2]/span/span/input",
-			RuntimeVariables.replace("selenium3*"));
-		Thread.sleep(5000);
-		selenium.clickAt("//div[7]/div/div/ul/li[1]",
-			RuntimeVariables.replace(""));
+				if (tagsVisible) {
+					label = 2;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("selenium3 liferay3")
-										.equals(selenium.getText(
-								"//span/div/div/ul/li[2]/span/span[1]"))) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.clickAt("//div[3]/div/div/span",
+					RuntimeVariables.replace("Categorization"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//input[@class='lfr-tag-selector-input aui-field-input-text']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+
+			case 2:
+				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+					RuntimeVariables.replace(""));
+				selenium.typeKeys("//input[@class='lfr-tag-selector-input aui-field-input-text focus']",
+					RuntimeVariables.replace("selenium3*"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("selenium3 liferay3")
+												.equals(selenium.getText(
+										"//li[contains(@class,'aui-autocomplete-list-item')]"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
+					selenium.getText(
+						"//li[contains(@class,'aui-autocomplete-list-item')]"));
+				selenium.clickAt("//li[contains(@class,'aui-autocomplete-list-item')]",
+					RuntimeVariables.replace("selenium3 liferay3"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("selenium3 liferay3")
+												.equals(selenium.getText(
+										"xPath=(//span[@class='aui-textboxlistentry-text'])[2]"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
+					selenium.getText(
+						"xPath=(//span[@class='aui-textboxlistentry-text'])[2]"));
+				selenium.clickAt("//input[@value='Publish']",
+					RuntimeVariables.replace("Publish"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+					selenium.getText(
+						"xPath=(//span[@class='taglib-asset-tags-summary']/a)[1]"));
+				assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
+					selenium.getText(
+						"xPath=(//span[@class='taglib-asset-tags-summary']/a)[2]"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
-			selenium.getText("//span/div/div/ul/li[2]/span/span[1]"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isTextPresent("selenium3 liferay3"));
 	}
 }

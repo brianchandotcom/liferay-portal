@@ -30,7 +30,7 @@ public class SearchRemovedTagTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
+				if (selenium.isVisible("link=Blogs Tags Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,13 @@ public class SearchRemovedTagTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_33_keywords",
+		selenium.type("//input[@id='_33_keywords']",
 			RuntimeVariables.replace("selenium3 liferay3"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Tags3 Blogs3 Test3 Entry3"));
+		assertFalse(selenium.isTextPresent("Tags Blog Entry3 Title"));
 	}
 }

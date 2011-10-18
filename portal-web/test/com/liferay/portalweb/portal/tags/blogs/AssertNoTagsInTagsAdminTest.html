@@ -16,29 +16,23 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tags</td>
-	<td></td>
+	<td>Tags</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>No tags were found.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-info']</td>
+	<td>There are no tags.</td>
 </tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>No tags were found.</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

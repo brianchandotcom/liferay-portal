@@ -30,7 +30,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
+				if (selenium.isVisible("link=Blogs Tags Test Page")) {
 					break;
 				}
 			}
@@ -41,27 +41,12 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Tags1 Blogs1 Test1 Entry1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Tags1 Blogs1 Test1 Entry1",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Tags Blog Entry1 Title"),
+			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[3]"));
+		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[3]",
+			RuntimeVariables.replace("Tags Blog Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 
@@ -71,7 +56,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
+				if (selenium.isVisible("link=Blogs Tags Test Page")) {
 					break;
 				}
 			}
@@ -82,27 +67,12 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Tags2 Blogs2 Test2 Entry2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Tags2 Blogs2 Test2 Entry2",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Tags Blog Entry2 Title"),
+			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[2]"));
+		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
+			RuntimeVariables.replace("Tags Blog Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 
@@ -112,7 +82,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
+				if (selenium.isVisible("link=Blogs Tags Test Page")) {
 					break;
 				}
 			}
@@ -123,27 +93,12 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Tags3 Blogs3 Test3 Entry3")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Tags3 Blogs3 Test3 Entry3",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Tags Blog Entry3 Title"),
+			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[1]"));
+		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
+			RuntimeVariables.replace("Tags Blog Entry3 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 	}

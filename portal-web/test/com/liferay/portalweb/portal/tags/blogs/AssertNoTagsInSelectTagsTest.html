@@ -14,29 +14,74 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[3]</td>
+	<td>Tags Blog Entry1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Tags1 Blogs1 Test1 Entry1</td>
-	<td></td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[3]</td>
+	<td>Tags Blog Entry1 Title</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>tagsVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${tagsVisible}</td>
+	<td>TagsVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[3]/div/div/span</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TagsVisible</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>select</td>
-	<td></td>
+	<td>//button[@id='select']</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -46,34 +91,33 @@
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//label[1]/input</td>
-	<td></td>
+	<td>Tag1</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//label[2]/input</td>
-	<td></td>
+	<td>Tag2</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//label[3]/input</td>
-	<td></td>
+	<td>Tag3</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//label[4]/input</td>
-	<td></td>
+	<td>Tag4</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>closethick</td>
-	<td></td>
+	<td>//button[@id='closethick']</td>
+	<td>Close</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Cancel']</td>
-	<td></td>
+	<td>Cancel</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

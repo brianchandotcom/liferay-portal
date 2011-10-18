@@ -40,9 +40,10 @@ public class DeleteTagTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -51,7 +52,7 @@ public class DeleteTagTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=selenium2 liferay2")) {
+				if (selenium.isVisible("xPath=(//span[@class='tag-item']/a)[2]")) {
 					break;
 				}
 			}
@@ -61,7 +62,10 @@ public class DeleteTagTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=selenium2 liferay2", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+			selenium.getText("xPath=(//span[@class='tag-item']/a)[2]"));
+		selenium.clickAt("xPath=(//span[@class='tag-item']/a)[2]",
+			RuntimeVariables.replace("selenium2 liferay2"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -69,7 +73,9 @@ public class DeleteTagTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@value='Delete']")) {
+				if (RuntimeVariables.replace("selenium2 liferay2")
+										.equals(selenium.getText(
+								"//div/h1/span"))) {
 					break;
 				}
 			}
@@ -79,8 +85,10 @@ public class DeleteTagTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+			selenium.getText("//div/h1/span"));
 		selenium.clickAt("//input[@value='Delete']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
 
@@ -90,7 +98,7 @@ public class DeleteTagTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isTextPresent("link=selenium2 liferay2")) {
+				if (!selenium.isTextPresent("selenium2 liferay2")) {
 					break;
 				}
 			}
@@ -100,6 +108,6 @@ public class DeleteTagTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isTextPresent("link=selenium2 liferay2"));
+		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 	}
 }

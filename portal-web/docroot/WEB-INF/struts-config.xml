@@ -1497,6 +1497,8 @@
 
 		<action path="/portlet_configuration/update_title" type="com.liferay.portlet.portletconfiguration.action.UpdateTitleAction" />
 
+		<action path="/portlet_configuration/edit_display_counters" forward="portlet.users_stats.edit_display_counters" />
+
 		<!-- Portlet CSS -->
 
 		<action path="/portlet_css/view" forward="portlet.portlet_css.view" />

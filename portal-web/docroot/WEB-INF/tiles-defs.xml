@@ -1566,6 +1566,12 @@
 		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
 	</definition>
 
+	<!-- Users statistics -->
+
+	<definition name="portlet.users_stats.edit_display_counters" extends="portlet">
+		<put name="portlet_content" value="/portlet/users_stats/edit_display_counter.jsp" />
+	</definition>
+
 	<!-- Wiki -->
 
 	<definition name="portlet.wiki" extends="portlet" />

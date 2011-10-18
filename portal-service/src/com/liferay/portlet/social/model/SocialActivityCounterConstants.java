@@ -32,6 +32,8 @@ public class SocialActivityCounterConstants {
 
 	public static final String NAME_USER_ACTIVITY = "user.activity";
 
+	public static final int END_PERIOD_UNDEFINED = -1;
+
 	public static final int TYPE_ACTOR = 1;
 
 	public static final int TYPE_ALL = 0;

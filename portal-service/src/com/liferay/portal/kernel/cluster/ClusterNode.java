@@ -24,10 +24,20 @@ import java.net.InetAddress;
 /**
  * @author Tina Tian
  */
-public class ClusterNode implements Serializable {
+public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 	public ClusterNode(String clusterNodeId) {
 		_clusterNodeId = clusterNodeId;
+	}
+
+	public int compareTo(ClusterNode clusterNode) {
+		InetAddress inetAddress = clusterNode.getInetAddress();
+
+		String ipAddress = inetAddress.getHostAddress();
+
+		String curIpAddress = _inetAddress.getHostAddress();
+
+		return curIpAddress.compareTo(ipAddress);
 	}
 
 	@Override

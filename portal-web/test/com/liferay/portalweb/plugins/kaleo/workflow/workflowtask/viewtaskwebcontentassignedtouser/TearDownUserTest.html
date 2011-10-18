@@ -29,79 +29,19 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span/a/span</td>
-	<td>View All Users</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//span/a/span</td>
-	<td>View All Users</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>usersPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>basicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>« Basic</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>basicNotVisible</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>usersn</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isTextPresent('No users were found'))</td>
-	<td>UsersExists</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${UsersExists}</td>
-	<td>UsersDoNotExists</td>
+	<td>!${usersPresent}</td>
+	<td>UsersNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
-	<td>Check All</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -115,43 +55,33 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>UsersDoNotExists</td>
+	<td>UsersNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span/a/span</td>
-	<td>View All Users</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>//span/a/span</td>
-	<td>View All Users</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>advancedVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${advancedVisible}</td>
+	<td>AdvancedNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td>Advanced »</td>
+	<td>Advanced</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AdvancedNotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -165,188 +95,38 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>xPath=(//input[@value='Search'])[2]</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>user1Deleted</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>users2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${user1Deleted}</td>
-	<td>User1NotDeleted</td>
+	<td>!${users2Present}</td>
+	<td>Users2NotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Entry Check Box</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>user2Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user2Deleted}</td>
-	<td>User2NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Entry Check Box</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>user3Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user3Deleted}</td>
-	<td>User3NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Entry Check Box</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>user4Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user4Deleted}</td>
-	<td>User4NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Entry Check Box</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>user5Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user5Deleted}</td>
-	<td>User5NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Entry Check Box</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User1NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User2NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User3NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User4NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User5NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span/a/span</td>
-	<td>View All Users</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span/a/span</td>
-	<td>View All Users</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Users2NotPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>

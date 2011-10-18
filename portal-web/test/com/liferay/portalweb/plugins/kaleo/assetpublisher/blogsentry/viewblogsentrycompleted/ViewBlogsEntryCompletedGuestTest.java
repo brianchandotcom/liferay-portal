@@ -50,9 +50,11 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 			selenium.getText("//h3/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='asset-summary']"));
-		assertTrue(selenium.isPartialText("//div[2]/a", "Read More"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
+				"Read More"));
 		assertFalse(selenium.isTextPresent("There are no results."));
-		selenium.clickAt("//div[2]/a", RuntimeVariables.replace("Read More"));
+		selenium.clickAt("//div[@class='asset-more']/a",
+			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[1]/h1/span"));

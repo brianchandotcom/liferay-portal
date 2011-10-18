@@ -63,7 +63,7 @@ public class AddAPWebContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Web Content"),
+		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");

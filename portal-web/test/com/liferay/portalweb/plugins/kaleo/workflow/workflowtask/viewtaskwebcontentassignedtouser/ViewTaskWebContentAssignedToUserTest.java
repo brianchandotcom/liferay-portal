@@ -80,7 +80,7 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Portal Content Reviewer role."),
+				"Task initially assigned to the Site Owner role."),
 			selenium.getText("//div[@class='task-activity task-type-1']/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[@class='task-activity task-type-1']/div[3]"));

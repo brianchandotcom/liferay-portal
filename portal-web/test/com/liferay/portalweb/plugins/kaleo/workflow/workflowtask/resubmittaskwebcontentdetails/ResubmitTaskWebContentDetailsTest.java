@@ -124,7 +124,7 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("No"),
 			selenium.getText("xPath=(//td[contains(.,'No')])[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Portal Content Reviewer role."),
+				"Task initially assigned to the Site Owner role."),
 			selenium.getText(
 				"xPath=(//div[@class='task-activity task-type-1'])[4]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),

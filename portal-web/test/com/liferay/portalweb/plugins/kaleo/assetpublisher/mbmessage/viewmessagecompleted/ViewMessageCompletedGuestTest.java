@@ -56,7 +56,7 @@ public class ViewMessageCompletedGuestTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
 			selenium.getText("//div[1]/h1/span"));
-		assertEquals(RuntimeVariables.replace("Message Boards Message Body"),
-			selenium.getText("//div/div/div/div[2]/div[1]"));
+		assertTrue(selenium.isPartialText("//div/div/div/div[2]/div[1]",
+				"Message Boards Message Body"));
 	}
 }

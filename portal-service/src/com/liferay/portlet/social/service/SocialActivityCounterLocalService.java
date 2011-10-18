@@ -231,4 +231,85 @@ public interface SocialActivityCounterLocalService
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
+		long companyId, long groupId, long classNameId, long classPK,
+		int ownerType, java.lang.String counterName, int currentValue,
+		int totalValue)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void addActivityCounters(
+		com.liferay.portlet.social.model.SocialActivity activity)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteActivityCounters(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteActivityCounters(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.social.model.SocialActivityCounter fetchLastCounter(
+		long groupId, long classNameId, long classPK, int ownerType,
+		java.lang.String counterName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.social.model.SocialActivityCounter findLastCounter(
+		long groupId, long classNameId, long classPK, int ownerType,
+		java.lang.String counterName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityCounterException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getCounterDistribution(
+		long groupId, java.lang.String counterName, int offset,
+		boolean includeCurrentPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getCounterDistribution(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getCounters(
+		long groupId, java.lang.String counterName, int offset,
+		boolean includeCurrentPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getCounters(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getTagsByCounter(
+		long groupId, java.lang.String counterName, int offset,
+		boolean includeCurrentPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getTagsByCounter(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.Long, java.util.List<com.liferay.portlet.social.model.SocialActivityCounter>> getTopUsersByCounters(
+		long groupId, java.lang.String[] orderBy,
+		java.lang.String[] counterNames, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTopUsersByCountersCount(long groupId,
+		java.lang.String[] orderBy)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void incrementUserAchievementsCounter(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

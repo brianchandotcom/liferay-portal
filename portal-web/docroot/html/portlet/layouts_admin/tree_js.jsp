@@ -193,7 +193,8 @@ if (!selectableTree) {
 				A.io.request(
 					sessionClickURL,
 					{
-						data: data
+						data: data,
+						sync: true
 					}
 				);
 			}

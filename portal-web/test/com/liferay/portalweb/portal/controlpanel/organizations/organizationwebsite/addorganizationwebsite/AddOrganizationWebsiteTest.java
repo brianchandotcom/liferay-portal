@@ -62,7 +62,8 @@ public class AddOrganizationWebsiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[3]/div/div[2]/ul/li[1]/a")) {
+				if (selenium.isVisible(
+							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a")) {
 					break;
 				}
 			}
@@ -72,8 +73,11 @@ public class AddOrganizationWebsiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[3]/div/div[2]/ul/li[1]/a",
-			RuntimeVariables.replace("Edit"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

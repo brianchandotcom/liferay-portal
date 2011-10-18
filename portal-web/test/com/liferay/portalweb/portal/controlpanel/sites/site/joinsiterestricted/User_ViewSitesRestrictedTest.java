@@ -48,6 +48,6 @@ public class User_ViewSitesRestrictedTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Restricted Community"),
-			selenium.getText("//div[1]/table/tbody/tr[3]/td[1]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[1]"));
 	}
 }

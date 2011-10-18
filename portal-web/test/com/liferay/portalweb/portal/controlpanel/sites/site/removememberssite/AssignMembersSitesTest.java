@@ -56,8 +56,8 @@ public class AssignMembersSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -133,13 +133,12 @@ public class AssignMembersSitesTest extends BaseTestCase {
 				selenium.clickAt("//input[@name='_174_rowIds']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace("Update Associations"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
 
 			case 100:
 				label = -1;

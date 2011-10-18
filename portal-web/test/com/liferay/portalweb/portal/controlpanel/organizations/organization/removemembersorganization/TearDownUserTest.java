@@ -53,7 +53,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean usersPresent = selenium.isElementPresent(
-						"//form/div[2]/div/div/div/div/div[2]");
+						"xPath=(//input[@name='_125_allRowIds'])[2]");
 
 				if (!usersPresent) {
 					label = 2;
@@ -61,9 +61,14 @@ public class TearDownUserTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[@id='usersAdminUsersPanel']/div[2]/div/div/table/tbody/tr/th/input",
+				assertFalse(selenium.isChecked(
+						"xPath=(//input[@name='_125_allRowIds'])[2]"));
+				selenium.clickAt("xPath=(//input[@name='_125_allRowIds'])[2]",
 					RuntimeVariables.replace("Select All"));
-				selenium.click("//input[@value='Deactivate']");
+				assertTrue(selenium.isChecked(
+						"xPath=(//input[@name='_125_allRowIds'])[2]"));
+				selenium.clickAt("//input[@value='Deactivate']",
+					RuntimeVariables.replace("Deactivate"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
 
@@ -129,17 +134,20 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean users2Present = selenium.isElementPresent(
-						"//input[@name='_125_rowIds']");
+				boolean usersNotDeleted = selenium.isElementPresent(
+						"//input[@name='_125_allRowIds']");
 
-				if (!users2Present) {
-					label = 4;
+				if (!usersNotDeleted) {
+					label = 5;
 
 					continue;
 				}
 
+				assertFalse(selenium.isChecked(
+						"//input[@name='_125_allRowIds']"));
 				selenium.clickAt("//input[@name='_125_allRowIds']",
 					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
@@ -147,9 +155,22 @@ public class TearDownUserTest extends BaseTestCase {
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 
 			case 4:
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
+			case 5:
+				assertEquals(RuntimeVariables.replace("No users were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
+				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+
+				if (!basicVisible) {
+					label = 6;
+
+					continue;
+				}
+
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("Basic"));
+
+			case 6:
 			case 100:
 				label = -1;
 			}

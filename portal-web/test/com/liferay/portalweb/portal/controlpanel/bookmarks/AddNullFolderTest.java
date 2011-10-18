@@ -53,7 +53,7 @@ public class AddNullFolderTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[2]/div/div[2]/div/div[2]/ul/li[2]/a")) {
+							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a")) {
 					break;
 				}
 			}
@@ -63,8 +63,11 @@ public class AddNullFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[2]/div/div[2]/div/div[2]/ul/li[2]/a",
-			RuntimeVariables.replace("Add Folder"));
+		assertEquals(RuntimeVariables.replace("Add Folder"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

@@ -86,7 +86,7 @@ public class AddSitesPrivateTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Private"),
 			selenium.getText("//tr[4]/td[2]"));
-		assertEquals(RuntimeVariables.replace("1"),
+		assertEquals(RuntimeVariables.replace("1 User"),
 			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText("//tr[4]/td[4]"));

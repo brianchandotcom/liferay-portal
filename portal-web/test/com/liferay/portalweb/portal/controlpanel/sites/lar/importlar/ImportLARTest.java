@@ -50,7 +50,9 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -96,7 +98,7 @@ public class ImportLARTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_156_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\sites\\lar\\importlar\\dependencies\\Public_Pages-201108252423.lar"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\sites\\lar\\importlar\\dependencies\\Sites_Public_Pages.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']"));
 		selenium.clickAt("//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']",

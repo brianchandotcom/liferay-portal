@@ -90,9 +90,7 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("1 Comment")
-										.equals(selenium.getText(
-								"//span[@class='comments']"))) {
+				if (selenium.isVisible("//span[@class='comments']")) {
 					break;
 				}
 			}

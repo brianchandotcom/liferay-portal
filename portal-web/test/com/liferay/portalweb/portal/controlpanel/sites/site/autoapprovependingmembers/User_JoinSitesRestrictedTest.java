@@ -72,12 +72,12 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Test Restricted Community\nThis is an restricted test community!"),
-			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[1]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[4]/td[1]"));
 		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[2]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Request Membership"),
-			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[3]/span/a/span"));
-		selenium.clickAt("//div[2]/div/table/tbody/tr[4]/td[3]/span/a/span",
+			selenium.getText("//tr[4]/td[4]/span/a/span"));
+		selenium.clickAt("//tr[4]/td[4]/span/a/span",
 			RuntimeVariables.replace("Request Membership"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//textarea[@id='_29_comments']",
@@ -94,10 +94,10 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Test Restricted Community\nThis is an restricted test community!"),
-			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[1]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[4]/td[1]"));
 		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[2]"));
+			selenium.getText("//div[1]/div/table/tbody/tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Membership Requested"),
-			selenium.getText("//div[2]/div/table/tbody/tr[4]/td[3]/span/span"));
+			selenium.getText("//td[4]/span/span"));
 	}
 }

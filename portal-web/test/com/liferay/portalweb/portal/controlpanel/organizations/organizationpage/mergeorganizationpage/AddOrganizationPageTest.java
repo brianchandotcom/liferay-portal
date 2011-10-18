@@ -141,8 +141,7 @@ public class AddOrganizationPageTest extends BaseTestCase {
 				}
 
 				selenium.select("//select[@id='_125_publicLayoutSetPrototypeId']",
-					RuntimeVariables.replace(
-						"label=Site with Blog, Wiki and Forum"));
+					RuntimeVariables.replace("label=Community Site"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

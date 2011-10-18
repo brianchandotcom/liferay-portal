@@ -50,7 +50,23 @@ public class AddUserGroupTest extends BaseTestCase {
 			selenium.getText("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//input[@id='_127_name']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_127_name']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@id='_127_name']",
 			RuntimeVariables.replace("Selenium"));
 		selenium.type("//textarea[@id='_127_description']",

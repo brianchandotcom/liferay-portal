@@ -49,7 +49,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Users and Organizations",
-					RuntimeVariables.replace("Users and Organizations"));
+					RuntimeVariables.replace("User Groups"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
@@ -99,7 +99,7 @@ public class TearDownTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_125_allRowIds']",
+				selenium.clickAt("//input[@name='_127_allRowIds']",
 					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Deactivate']"));

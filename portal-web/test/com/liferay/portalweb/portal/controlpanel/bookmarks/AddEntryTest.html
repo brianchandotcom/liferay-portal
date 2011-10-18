@@ -40,12 +40,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[3]/div/div[2]/ul/li[5]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
 	<td>Add Bookmark</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[3]/div/div[2]/ul/li[5]/a</td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
+	<td>Add Bookmark</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
 	<td>Add Bookmark</td>
 </tr>
 <tr>

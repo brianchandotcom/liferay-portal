@@ -29,8 +29,8 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//form/div[2]/div/div/div/div/div[2]'))</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>usersPresent</td>
 </tr>
 <tr>
@@ -39,12 +39,22 @@
 	<td>UsersNotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='usersAdminUsersPanel']/div[2]/div/div/table/tbody/tr/th/input</td>
+	<td>assertNotChecked</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
@@ -110,16 +120,26 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>users2Present</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>usersNotDeleted</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${users2Present}</td>
-	<td>Users2NotPresent</td>
+	<td>!${usersNotDeleted}</td>
+	<td>UsersDeleted</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
@@ -139,10 +159,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>UsersDeleted</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No users were found.</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
-	<td>« Basic</td>
+	<td>Basic</td>
 </tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

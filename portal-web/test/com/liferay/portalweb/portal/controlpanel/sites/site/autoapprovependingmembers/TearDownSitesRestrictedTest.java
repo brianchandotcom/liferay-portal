@@ -57,7 +57,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean communityInactiveNot1Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot1Present) {
 					label = 2;
@@ -66,8 +66,8 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -99,7 +99,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 2:
 
 				boolean communityInactiveNot2Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot2Present) {
 					label = 3;
@@ -108,8 +108,8 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -141,7 +141,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 3:
 
 				boolean communityInactiveNot3Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot3Present) {
 					label = 4;
@@ -150,8 +150,8 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -183,7 +183,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 4:
 
 				boolean communityInactiveNot4Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot4Present) {
 					label = 5;
@@ -192,8 +192,8 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -225,7 +225,7 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 			case 5:
 
 				boolean communityInactiveNot5Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!communityInactiveNot5Present) {
 					label = 6;
@@ -234,8 +234,8 @@ public class TearDownSitesRestrictedTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {

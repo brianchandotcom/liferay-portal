@@ -52,8 +52,8 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -100,13 +100,11 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 				"Staging"));
 		selenium.clickAt("//a[@id='_165_stagingLink']",
 			RuntimeVariables.replace("Staging"));
-		selenium.select("//select[@id='_165_stagingType']",
-			RuntimeVariables.replace("label=None"));
+		selenium.clickAt("//input[@id='_165_none']",
+			RuntimeVariables.replace("None"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to deactivate staging for Community Name[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -139,8 +137,8 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -187,7 +185,6 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 				"Staging"));
 		selenium.clickAt("//a[@id='_165_stagingLink']",
 			RuntimeVariables.replace("Staging"));
-		assertEquals("None",
-			selenium.getSelectedLabel("//select[@id='_165_stagingType']"));
+		assertTrue(selenium.isChecked("//input[@id='_165_none']"));
 	}
 }

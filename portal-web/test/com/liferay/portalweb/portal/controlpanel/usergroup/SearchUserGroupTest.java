@@ -73,8 +73,8 @@ public class SearchUserGroupTest extends BaseTestCase {
 		selenium.type("//input[@id='_127_name']",
 			RuntimeVariables.replace("Selenium1"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
+			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("This is a selenium user group."));
+		assertFalse(selenium.isTextPresent("//td[3]/a"));
 	}
 }

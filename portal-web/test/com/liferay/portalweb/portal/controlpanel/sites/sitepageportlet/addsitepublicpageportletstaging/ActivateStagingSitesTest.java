@@ -56,8 +56,8 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -104,8 +104,8 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 						"//a[@id='_165_stagingLink']", "Staging"));
 				selenium.clickAt("//a[@id='_165_stagingLink']",
 					RuntimeVariables.replace("Staging"));
-				selenium.select("//select[@id='_165_stagingType']",
-					RuntimeVariables.replace("label=Local Live"));
+				selenium.clickAt("//input[@id='_165_local']",
+					RuntimeVariables.replace("Local Live"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_165_branchingPublicCheckbox']"));
 				selenium.clickAt("//input[@id='_165_branchingPublicCheckbox']",
@@ -233,8 +233,6 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to activate local staging for Community Name[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

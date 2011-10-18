@@ -39,8 +39,13 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -94,24 +99,29 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_174_rowIds']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[4]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_174_rowIds']</td>
-	<td></td>
+	<td>//td[4]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_174_rowIds']</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Remove Membership</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Update Associations']</td>
-	<td>Update Associations</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Remove Membership</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Remove Membership</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -122,6 +132,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No user was found that is a direct member of this site.</td>
 </tr>
 
 </tbody></table>

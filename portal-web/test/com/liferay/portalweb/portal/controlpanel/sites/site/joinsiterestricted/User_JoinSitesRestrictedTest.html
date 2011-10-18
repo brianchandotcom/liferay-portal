@@ -44,23 +44,33 @@
 	<td>Available Sites</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//input[@id='_29_name']</td>
+	<td>Test Restricted Community</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[1]</td>
+	<td>//div[1]/div/table/tbody/tr[4]/td[1]</td>
 	<td>Test Restricted Community<br />This is an restricted test community!</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[2]</td>
+	<td>//div[1]/div/table/tbody/tr[4]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[3]/span/a/span</td>
+	<td>//tr[4]/td[4]/span/a/span</td>
 	<td>Request Membership</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[3]/span/a/span</td>
+	<td>//tr[4]/td[4]/span/a/span</td>
 	<td>Request Membership</td>
 </tr>
 <tr>
@@ -85,19 +95,20 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[1]</td>
+	<td>//div[1]/div/table/tbody/tr[4]/td[1]</td>
 	<td>Test Restricted Community<br />This is an restricted test community!</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[2]</td>
+	<td>//div[1]/div/table/tbody/tr[4]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/table/tbody/tr[4]/td[3]/span/span</td>
+	<td>//td[4]/span/span</td>
 	<td>Membership Requested</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

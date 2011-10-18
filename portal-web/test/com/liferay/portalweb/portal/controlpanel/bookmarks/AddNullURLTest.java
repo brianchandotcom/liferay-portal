@@ -55,7 +55,8 @@ public class AddNullURLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[3]/div/div[2]/ul/li[5]/a")) {
+				if (selenium.isVisible(
+							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a")) {
 					break;
 				}
 			}
@@ -65,8 +66,11 @@ public class AddNullURLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[3]/div/div[2]/ul/li[5]/a",
-			RuntimeVariables.replace("Add Bookmark"));
+		assertEquals(RuntimeVariables.replace("Add Bookmark"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Null Entry Test"));

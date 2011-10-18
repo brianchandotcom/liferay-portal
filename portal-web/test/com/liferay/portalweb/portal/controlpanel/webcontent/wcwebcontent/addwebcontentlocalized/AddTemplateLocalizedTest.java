@@ -83,7 +83,7 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Test Localized Structure"));
 		selenium.type("//input[@id='_15_xsl']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\webcontent\\wcwebcontent\\addwebcontentlocalized\\dependencies\\LocalizedTemplate.htm"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\webcontent\\wcwebcontent\\addwebcontentlocalized\\dependencies\\LocalizedTemplate.html"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -107,8 +107,8 @@ public class AddWebContentLocalizedTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add Translation"),
-			selenium.getText("//span[2]/ul/li/strong/a/span"));
-		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			selenium.getText("//span[2]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//span[2]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add Translation"));
 
 		for (int second = 0;; second++) {

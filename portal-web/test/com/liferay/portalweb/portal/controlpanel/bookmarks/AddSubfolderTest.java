@@ -55,7 +55,7 @@ public class AddSubfolderTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a")) {
+							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a")) {
 					break;
 				}
 			}
@@ -67,9 +67,9 @@ public class AddSubfolderTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Test Subfolder"));

@@ -64,7 +64,7 @@ public class AddOrganizationPhoneNumberInvalidTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a")) {
+							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a")) {
 					break;
 				}
 			}
@@ -76,9 +76,9 @@ public class AddOrganizationPhoneNumberInvalidTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

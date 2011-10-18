@@ -98,7 +98,7 @@ public class ImportLARTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_156_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\sites\\lar\\importlar\\dependencies\\Public_Pages-201110122232.lar"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\sites\\lar\\importlar\\dependencies\\Sites_Public_Pages.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']"));
 		selenium.clickAt("//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']",

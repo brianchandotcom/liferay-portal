@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -78,7 +79,9 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		}
 	}
 
-	public void configure(ClassLoader classLoader) throws PortalException {
+	public void configure(ClassLoader classLoader)
+		throws PortalException, SystemException {
+
 		File[] classPathFiles = null;
 
 		if (classLoader != null) {
@@ -92,6 +95,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 					servicePropertiesURL.getPath(), StringPool.UTF8);
 			}
 			catch (UnsupportedEncodingException uee) {
+				throw new SystemException(uee);
 			}
 
 			File classPathFile = null;

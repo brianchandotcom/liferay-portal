@@ -61,15 +61,36 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setGroupId(groupId);
 		layoutSet.setCompanyId(group.getCompanyId());
 		layoutSet.setPrivateLayout(privateLayout);
-		layoutSet.setThemeId(
-			ThemeImpl.getDefaultRegularThemeId(group.getCompanyId()));
-		layoutSet.setColorSchemeId(
-			ColorSchemeImpl.getDefaultRegularColorSchemeId());
-		layoutSet.setWapThemeId(
-			ThemeImpl.getDefaultWapThemeId(group.getCompanyId()));
-		layoutSet.setWapColorSchemeId(
-			ColorSchemeImpl.getDefaultWapColorSchemeId());
-		layoutSet.setCss(StringPool.BLANK);
+
+		if (group.isStagingGroup()) {
+			LayoutSet liveLayoutSet = null;
+
+			if (privateLayout) {
+				liveLayoutSet = group.getLiveGroup().getPrivateLayoutSet();
+			}
+			else {
+				liveLayoutSet = group.getLiveGroup().getPublicLayoutSet();
+			}
+
+			layoutSet.setLogo(liveLayoutSet.getLogo());
+			layoutSet.setLogoId(liveLayoutSet.getLogoId());
+			layoutSet.setThemeId(liveLayoutSet.getThemeId());
+			layoutSet.setColorSchemeId(liveLayoutSet.getColorSchemeId());
+			layoutSet.setWapThemeId(liveLayoutSet.getWapThemeId());
+			layoutSet.setWapColorSchemeId(liveLayoutSet.getWapColorSchemeId());
+			layoutSet.setCss(liveLayoutSet.getCss());
+		}
+		else {
+			layoutSet.setThemeId(
+				ThemeImpl.getDefaultRegularThemeId(group.getCompanyId()));
+			layoutSet.setColorSchemeId(
+				ColorSchemeImpl.getDefaultRegularColorSchemeId());
+			layoutSet.setWapThemeId(
+				ThemeImpl.getDefaultWapThemeId(group.getCompanyId()));
+			layoutSet.setWapColorSchemeId(
+				ColorSchemeImpl.getDefaultWapColorSchemeId());
+			layoutSet.setCss(StringPool.BLANK);
+		}
 
 		layoutSetPersistence.update(layoutSet, false);
 

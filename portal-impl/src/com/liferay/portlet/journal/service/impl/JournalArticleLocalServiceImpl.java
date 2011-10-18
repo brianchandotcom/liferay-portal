@@ -214,8 +214,8 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			groupId, articleId, version, false, content, structureId, images,
-			user.getCompanyId(), userId);
+			user.getCompanyId(), userId, groupId, articleId, version, false,
+			content, structureId, images);
 
 		article.setResourcePrimKey(resourcePrimKey);
 		article.setGroupId(groupId);
@@ -1971,9 +1971,9 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			groupId, articleId, article.getVersion(), incrementVersion,
-			content, structureId, images, user.getCompanyId(),
-			user.getUserId());
+			user.getCompanyId(), user.getUserId(), groupId, articleId,
+			article.getVersion(), incrementVersion, content, structureId,
+			images);
 
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setTitleMap(titleMap, locale);
@@ -2625,9 +2625,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void format(
-			long groupId, String articleId, double version,
-			boolean incrementVersion, Element root, Map<String, byte[]> images,
-			long userId, long companyId)
+			long companyId, long userId, long groupId, String articleId,
+			double version, boolean incrementVersion, Element root, Map<String,
+			byte[]> images)
 		throws PortalException, SystemException {
 
 		for (Element el : root.elements()) {
@@ -2641,8 +2641,8 @@ public class JournalArticleLocalServiceImpl
 					groupId, articleId, version, incrementVersion, el,
 					elInstanceId, elName, images);
 			}
-			else if ((elType.equals("text_area")) || (elType.equals("text")) ||
-				(elType.equals("text_box"))) {
+			else if (elType.equals("text_area") || elType.equals("text") ||
+					 elType.equals("text_box")) {
 
 				Element dynamicContent = el.element("dynamic-content");
 
@@ -2658,15 +2658,16 @@ public class JournalArticleLocalServiceImpl
 				}
 			}
 
-			format(groupId, articleId, version, incrementVersion, el, images,
-				userId, companyId);
+			format(
+				companyId, userId, groupId, articleId, version,
+				incrementVersion, el, images);
 		}
 	}
 
 	protected String format(
-			long groupId, String articleId, double version,
-			boolean incrementVersion, String content, String structureId,
-			Map<String, byte[]> images, long companyId, long userId)
+			long companyId, long userId, long groupId, String articleId,
+			double version, boolean incrementVersion, String content,
+			String structureId, Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		Document doc = null;
@@ -2677,16 +2678,16 @@ public class JournalArticleLocalServiceImpl
 			Element root = doc.getRootElement();
 
 			if (Validator.isNotNull(structureId)) {
-				format(groupId, articleId, version, incrementVersion, root,
-					images, userId, companyId);
+				format(
+					companyId, userId, groupId, articleId, version,
+					incrementVersion, root, images);
 			}
 			else {
 				Element staticContent = root.element("static-content");
 
 				String sanitizedContent = SanitizerUtil.sanitize(
-						companyId, groupId, userId,
-						JournalArticle.class.getName(),	0,
-						ContentTypes.TEXT_HTML, staticContent.getText());
+					companyId, groupId, userId, JournalArticle.class.getName(),
+					0, ContentTypes.TEXT_HTML, staticContent.getText());
 
 				staticContent.setText(sanitizedContent);
 			}

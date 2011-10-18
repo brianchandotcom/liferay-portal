@@ -800,6 +800,13 @@ public class SeleneseToJavaBuilder {
 				sb.append(param3);
 				sb.append(");");
 			}
+			else if (param1.equals("storeVisible")) {
+				sb.append("boolean ");
+				sb.append(param3);
+				sb.append(" = selenium.isVisible(\"");
+				sb.append(param2);
+				sb.append("\");");
+			}
 			else if (param1.equals("verifyElementNotPresent") ||
 					 param1.equals("verifyElementPresent")) {
 

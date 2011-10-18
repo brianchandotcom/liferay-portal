@@ -18,4 +18,25 @@ package com.liferay.portlet.social.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface SocialActivityCounterFinder {
+	public int countU_ByG_N(long groupId, java.lang.String[] orderBy)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_By_G_C_C_N_S_E(
+		long groupId, java.util.List<java.lang.Long> userIds,
+		java.lang.String[] selectedCounters, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_ByG_N_S_E_1(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_ByG_N_S_E_2(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> findU_ByG_N(long groupId,
+		java.lang.String[] orderBy, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -35,6 +36,7 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.InputStream;
 
@@ -43,6 +45,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -83,6 +87,17 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				setForward(actionRequest, "portlet.layouts_admin.error");
+			}
+			else if (e instanceof FileSizeException) {
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(actionResponse);
+
+				response.setStatus(
+						ServletResponseConstants.SC_FILE_SIZE_EXCEPTION);
+
+				SessionErrors.add(actionRequest, e.getClass().getName());
+
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw e;

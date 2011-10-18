@@ -619,6 +619,7 @@ create table DLFileVersion (
 	createDate DATE null,
 	repositoryId LONG,
 	fileEntryId LONG,
+	folderId LONG,
 	extension VARCHAR(75) null,
 	mimeType VARCHAR(75) null,
 	title VARCHAR(255) null,

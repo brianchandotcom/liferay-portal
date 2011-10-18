@@ -221,6 +221,7 @@ create unique index IX_FDB4A946 on DLFileShortcut (uuid_, groupId);
 create index IX_C68DC967 on DLFileVersion (fileEntryId);
 create index IX_D47BB14D on DLFileVersion (fileEntryId, status);
 create unique index IX_E2815081 on DLFileVersion (fileEntryId, version);
+create index IX_DFD809D3 on DLFileVersion (groupId, folderId, status);
 
 create index IX_A74DB14C on DLFolder (companyId);
 create index IX_F2EA1ACE on DLFolder (groupId);

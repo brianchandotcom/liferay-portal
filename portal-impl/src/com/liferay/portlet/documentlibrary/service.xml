@@ -386,6 +386,7 @@
 
 		<column name="repositoryId" type="long" />
 		<column name="fileEntryId" type="long" />
+		<column name="folderId" type="long" />
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
 		<column name="title" type="String" />
@@ -418,6 +419,11 @@
 		</finder>
 		<finder name="F_S" return-type="Collection">
 			<finder-column name="fileEntryId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_F_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
 			<finder-column name="status" />
 		</finder>
 	</entity>

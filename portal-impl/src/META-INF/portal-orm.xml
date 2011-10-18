@@ -1865,6 +1865,7 @@
 			</basic>
 			<basic name="repositoryId" />
 			<basic name="fileEntryId" />
+			<basic name="folderId" />
 			<basic name="extension" />
 			<basic name="mimeType" />
 			<basic name="title" />

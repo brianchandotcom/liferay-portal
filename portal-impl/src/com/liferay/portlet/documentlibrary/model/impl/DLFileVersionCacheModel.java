@@ -32,7 +32,7 @@ import java.util.Date;
 public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{fileVersionId=");
 		sb.append(fileVersionId);
@@ -50,6 +50,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		sb.append(repositoryId);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
+		sb.append(", folderId=");
+		sb.append(folderId);
 		sb.append(", extension=");
 		sb.append(extension);
 		sb.append(", mimeType=");
@@ -105,6 +107,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 
 		dlFileVersionImpl.setRepositoryId(repositoryId);
 		dlFileVersionImpl.setFileEntryId(fileEntryId);
+		dlFileVersionImpl.setFolderId(folderId);
 
 		if (extension == null) {
 			dlFileVersionImpl.setExtension(StringPool.BLANK);
@@ -188,6 +191,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 	public long createDate;
 	public long repositoryId;
 	public long fileEntryId;
+	public long folderId;
 	public String extension;
 	public String mimeType;
 	public String title;

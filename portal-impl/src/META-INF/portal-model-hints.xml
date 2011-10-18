@@ -1398,6 +1398,7 @@
 		<field name="createDate" type="Date" />
 		<field name="repositoryId" type="long" />
 		<field name="fileEntryId" type="long" />
+		<field name="folderId" type="long" />
 		<field name="extension" type="String" />
 		<field name="mimeType" type="String" />
 		<field name="title" type="String">

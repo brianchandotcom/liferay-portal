@@ -25,7 +25,7 @@ String callback = ParamUtil.getString(request, "callback");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/portlet_configuration/search");
+portletURL.setParameter("struts_action", "/asset_browser/view");
 portletURL.setParameter("typeSelection", typeSelection);
 %>
 

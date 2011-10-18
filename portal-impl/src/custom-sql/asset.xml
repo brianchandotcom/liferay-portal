@@ -303,6 +303,27 @@
 				AssetTag.name ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N_S_E">
+		<![CDATA[
+			SELECT
+    			t.tagId, t.name, SUM(sas.currentValue) popularity
+			FROM
+    			AssetTag t
+        			INNER JOIN AssetEntries_AssetTags aeat ON (t.tagId = aeat.tagId)
+            			INNER JOIN AssetEntry ae ON (ae.entryId = aeat.entryId)
+                			INNER JOIN SocialActivityCounter sas ON (sas.classNameId = ae.classNameId) AND (sas.classPK = ae.classPK)
+			WHERE
+				(sas.groupid = ?) AND
+    			(sas.name = ?) AND
+				(sas.startPeriod >= ?) AND
+				(
+					(sas.endPeriod <= ?) OR
+					(sas.endPeriod = -1)
+				)
+			GROUP BY
+				t.tagId, t.name
+   		]]>
+	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyFinder.countByG_K">
 		<![CDATA[
 			SELECT

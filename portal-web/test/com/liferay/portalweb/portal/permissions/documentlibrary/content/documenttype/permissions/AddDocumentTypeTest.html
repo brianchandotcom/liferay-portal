@@ -79,54 +79,29 @@
 	<td>Document Type Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a/span</td>
-	<td>Select</td>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@class='aui-diagram-builder-field-label'])[5]</td>
+	<td>Test Box</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//a/span</td>
-	<td>Select</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=up</td>
-	<td>up</td>
+	<td>dragAndDropToObject</td>
+	<td>xPath=(//div[@class='aui-diagram-builder-field-label'])[5]</td>
+	<td>xPath=(//div[@class='aui-diagram-builder-field-label'])[5]</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Default Image's Metadata Set</td>
-	<td>Default Image's Metadata Set</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=Default Image's Metadata Set</td>
-	<td>Default Image's Metadata Set</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=up</td>
-	<td>up</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//table/tr/td</td>
-	<td>Default Image's Metadata Set</td>
+	<td>//div[contains(@class,'aui-form-builder-text-field-content')]/label</td>
+	<td>Text Box</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table/tr/td</td>
-	<td>Default Image's Metadata Set</td>
+	<td>//div[contains(@class,'aui-form-builder-text-field-content')]/label</td>
+	<td>Text Box</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

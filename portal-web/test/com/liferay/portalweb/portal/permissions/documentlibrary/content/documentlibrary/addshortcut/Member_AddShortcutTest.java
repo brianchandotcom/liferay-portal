@@ -47,33 +47,12 @@ public class Member_AddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertTrue(selenium.isVisible("link=Add"));
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace("Shortcut"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+			selenium.getText("//span[@class='add-button']/span/a/span"));
+		selenium.clickAt("//span[@class='add-button']/span/a/span",
+			RuntimeVariables.replace("Shortcut"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("xPath=(//input[@value='Select'])[1]",
 			RuntimeVariables.replace("Select Site"));
@@ -117,6 +96,8 @@ public class Member_AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText("//span[@id='_20_toGroupName']"));
 		selenium.clickAt("xPath=(//input[@value='Select'])[2]",
 			RuntimeVariables.replace("Select Site"));
 		Thread.sleep(5000);
@@ -160,6 +141,8 @@ public class Member_AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
+			selenium.getText("//span[@id='_20_toFileEntryTitle']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.permissions.documentlibrary.content.documen
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.adddocument.AddDocumentTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.adddocumenttype.AddDocumentTypeTests;
+import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.addfolder.AddFolderTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.addshortcut.AddShortcutTests;
 import com.liferay.portalweb.portal.permissions.documentlibrary.content.documentlibrary.view.ViewTests;
 
@@ -33,6 +34,7 @@ public class DocumentLibraryTests extends BaseTests {
 
 		testSuite.addTest(AddDocumentTests.suite());
 		testSuite.addTest(AddDocumentTypeTests.suite());
+		testSuite.addTest(AddFolderTests.suite());
 		testSuite.addTest(AddShortcutTests.suite());
 		testSuite.addTest(ViewTests.suite());
 

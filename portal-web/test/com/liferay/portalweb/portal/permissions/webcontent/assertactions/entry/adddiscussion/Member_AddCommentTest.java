@@ -45,7 +45,7 @@ public class Member_AddCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Be the first.",
-			RuntimeVariables.replace("Add Comment"));
+			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

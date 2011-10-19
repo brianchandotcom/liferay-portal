@@ -125,10 +125,6 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("Document Type Name"));
-		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//a/span"));
-		selenium.clickAt("//a/span", RuntimeVariables.replace("Select"));
-		selenium.selectFrame("relative=up");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -136,7 +132,8 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Default Image's Metadata Set")) {
+				if (selenium.isVisible(
+							"xPath=(//div[@class='aui-diagram-builder-field-label'])[5]")) {
 					break;
 				}
 			}
@@ -146,9 +143,8 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Default Image's Metadata Set",
-			RuntimeVariables.replace("Default Image's Metadata Set"));
-		selenium.selectFrame("relative=up");
+		selenium.dragAndDropToObject("xPath=(//div[@class='aui-diagram-builder-field-label'])[5]",
+			"xPath=(//div[@class='aui-diagram-builder-field-label'])[5]");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -156,9 +152,8 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Default Image's Metadata Set")
-										.equals(selenium.getText(
-								"//table/tr/td"))) {
+				if (selenium.isVisible(
+							"//div[contains(@class,'aui-form-builder-text-field-content')]/label")) {
 					break;
 				}
 			}
@@ -168,30 +163,12 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Default Image's Metadata Set"),
-			selenium.getText("//table/tr/td"));
+		assertEquals(RuntimeVariables.replace("Text Box"),
+			selenium.getText(
+				"//div[contains(@class,'aui-form-builder-text-field-content')]/label"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

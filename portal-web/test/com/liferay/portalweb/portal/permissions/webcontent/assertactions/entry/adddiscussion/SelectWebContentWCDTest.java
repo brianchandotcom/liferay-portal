@@ -46,6 +46,7 @@ public class SelectWebContentWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//span[@class='portlet-configuration']/a",
 			RuntimeVariables.replace("Select Web Content"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

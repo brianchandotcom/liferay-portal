@@ -85,8 +85,12 @@ public class EnableCommentsWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertFalse(selenium.isChecked(
+				"//input[@id='_86_enableCommentsCheckbox']"));
 		selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
 			RuntimeVariables.replace("Enable Comments"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_enableCommentsCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

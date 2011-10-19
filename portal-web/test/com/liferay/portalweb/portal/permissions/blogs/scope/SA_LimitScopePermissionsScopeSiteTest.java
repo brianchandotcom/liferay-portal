@@ -88,16 +88,45 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Scope Site"),
-			selenium.getText("//tr[3]/td/a"));
-		selenium.clickAt("//tr[3]/td/a", RuntimeVariables.replace("Scope Site"));
+		selenium.clickAt("link=Scope Site",
+			RuntimeVariables.replace("Scope Site"));
 		selenium.selectWindow("null");
 		Thread.sleep(5000);
+		selenium.selectWindow("null");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Scope Sitex")
+										.equals(selenium.getText(
+								"//span[@class='permission-scope']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Scope Sitex"),
+			selenium.getText("//span[@class='permission-scope']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("//tr[3]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Add Entry"),
+			selenium.getText("//tr[3]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Scope Site"),
+			selenium.getText("//tr[3]/td[4]"));
 	}
 }

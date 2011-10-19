@@ -61,9 +61,9 @@ public class SA_DefineBARoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",
 			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[2]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -71,10 +71,12 @@ public class SA_DefineBARoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("index=28"));
+		selenium.typeKeys("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("bbb"));
+		selenium.keyPress("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
+		selenium.clickAt("//input[@name='_128_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

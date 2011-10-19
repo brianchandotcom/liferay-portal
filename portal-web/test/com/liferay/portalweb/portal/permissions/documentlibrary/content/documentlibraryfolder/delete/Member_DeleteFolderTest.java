@@ -93,7 +93,7 @@ public class Member_DeleteFolderTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

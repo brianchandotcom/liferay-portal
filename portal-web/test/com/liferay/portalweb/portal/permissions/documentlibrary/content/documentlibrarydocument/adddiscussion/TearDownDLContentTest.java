@@ -91,12 +91,6 @@ public class TearDownDLContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace(
-						"There are no documents in this folder."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 2:
 			case 100:

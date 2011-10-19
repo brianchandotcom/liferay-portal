@@ -104,8 +104,10 @@ public class SA_DefineAARoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("index=26"));
+		selenium.typeKeys("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("aaaaa"));
+		selenium.keyPress("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Announcements"),
 			selenium.getText("//form/h3"));

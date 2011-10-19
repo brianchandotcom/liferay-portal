@@ -61,15 +61,15 @@ public class DefineWCARoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",
 			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[2]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
 			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[3]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[3]",
 			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[4]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[4]",
 			RuntimeVariables.replace("Select All"));
-		selenium.clickAt("//form/div[5]/div/table/tbody/tr/th/input",
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[5]",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -80,7 +80,7 @@ public class DefineWCARoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
+		selenium.clickAt("//input[@name='_128_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -91,7 +91,7 @@ public class DefineWCARoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Web Content List"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
+		selenium.clickAt("//input[@name='_128_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -102,7 +102,7 @@ public class DefineWCARoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Web Content Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//form/div[1]/div/table/tbody/tr/th/input",
+		selenium.clickAt("//input[@name='_128_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

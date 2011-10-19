@@ -90,7 +90,7 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@value='Save']")) {
+				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
 					break;
 				}
 			}
@@ -108,6 +108,23 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		assertFalse(selenium.isChecked("//tr[6]/td[4]/input"));
 	}

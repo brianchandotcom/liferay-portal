@@ -164,7 +164,7 @@ public class SA_AssignScopeMemberToScopeSiteTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.click("//input[@name='_174_allRowIds']");
-				selenium.clickAt("//input[@value='Update Associations']",
+				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(

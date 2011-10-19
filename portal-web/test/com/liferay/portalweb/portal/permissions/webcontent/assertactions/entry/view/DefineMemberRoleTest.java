@@ -67,9 +67,13 @@ public class DefineMemberRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("index=99"));
+		selenium.typeKeys("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("wwwwwwwww"));
+		selenium.keyPress("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//h3"));
 		selenium.check("//input[@value='15ACCESS_IN_CONTROL_PANEL']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

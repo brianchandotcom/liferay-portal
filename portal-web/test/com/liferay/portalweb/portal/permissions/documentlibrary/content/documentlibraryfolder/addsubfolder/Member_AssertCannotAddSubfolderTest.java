@@ -66,7 +66,7 @@ public class Member_AssertCannotAddSubfolderTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isVisible("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));

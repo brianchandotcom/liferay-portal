@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//form/div[1]/div/table/tbody/tr/th/input</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[1]</td>
 	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//form/div[2]/div/table/tbody/tr/th/input</td>
+	<td>xPath=(//input[@name='_128_allRowIds'])[2]</td>
 	<td>Select All</td>
 </tr>
 <tr>
@@ -79,13 +79,18 @@
 	<td>The role permissions were updated.</td>
 </tr>
 <tr>
-	<td>selectAndWait</td>
+	<td>typeKeys</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>index=28</td>
+	<td>bbb</td>
+</tr>
+<tr>
+	<td>keyPressAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>\13</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//form/div[1]/div/table/tbody/tr/th/input</td>
+	<td>//input[@name='_128_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
@@ -98,7 +103,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

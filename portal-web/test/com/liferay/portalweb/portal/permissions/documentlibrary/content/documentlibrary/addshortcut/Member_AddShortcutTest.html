@@ -31,31 +31,16 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents in this folder.</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>link=Add</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=Add</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td>Shortcut</td>
+	<td>There are no documents or media files in this folder.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//span[@class='add-button']/span/a/span</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='add-button']/span/a/span</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
@@ -90,6 +75,11 @@
 </tr>
 <tr>
 	<td>waitForText</td>
+	<td>//span[@id='_20_toGroupName']</td>
+	<td>Global</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//span[@id='_20_toGroupName']</td>
 	<td>Global</td>
 </tr>
@@ -129,6 +119,11 @@
 	<td>TestDocument.txt</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@id='_20_toFileEntryTitle']</td>
+	<td>TestDocument.txt</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -143,7 +138,6 @@
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>TestDocument.txt</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

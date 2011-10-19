@@ -46,11 +46,35 @@ public class Member_AssertPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//form/div/div/span/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible(
-				"//div[@id='_20_fileEntryToolbar']/span/button"));
+		assertTrue(selenium.isTextPresent("Permissions"));
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button"));
 		selenium.clickAt("//div[@id='_20_fileEntryToolbar']/span/button",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");

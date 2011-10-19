@@ -55,7 +55,7 @@ public class BA_AddCommentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//fieldset[@class='aui-fieldset add-comment ']/div/a")) {
+							"//fieldset[contains(@class,'add-comment')]/div/a")) {
 					break;
 				}
 			}
@@ -66,9 +66,8 @@ public class BA_AddCommentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
-		selenium.clickAt("//fieldset[@class='aui-fieldset add-comment ']/div/a",
+			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {

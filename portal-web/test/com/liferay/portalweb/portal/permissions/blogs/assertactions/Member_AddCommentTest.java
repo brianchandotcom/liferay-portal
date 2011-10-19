@@ -46,11 +46,28 @@ public class Member_AddCommentTest extends BaseTestCase {
 		selenium.clickAt("link=Permissions Blogs Test Entry",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//fieldset[contains(@class,'add-comment')]/div/span/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/span/a"));
-		selenium.click(
-			"//fieldset[@class='aui-fieldset add-comment ']/div/span/a");
+				"//fieldset[contains(@class,'add-comment')]/div/span/a"));
+		selenium.click("//fieldset[contains(@class,'add-comment')]/div/span/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

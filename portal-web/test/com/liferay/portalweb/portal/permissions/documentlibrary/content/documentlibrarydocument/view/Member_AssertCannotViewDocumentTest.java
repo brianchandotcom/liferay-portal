@@ -50,7 +50,7 @@ public class Member_AssertCannotViewDocumentTest extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isTextPresent("TestDocument.txt"));
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

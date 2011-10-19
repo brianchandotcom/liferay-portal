@@ -49,17 +49,15 @@ public class SA_AllowViewEntryPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.check("//input[@name='16_ACTION_VIEW']");
 		selenium.check("//tr[5]/td[8]/input");
-		selenium.check("//tr[6]/td[8]/input");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		assertTrue(selenium.isChecked("//tr[5]/td[8]/input"));
-		assertTrue(selenium.isChecked("//tr[6]/td[8]/input"));
+		assertFalse(selenium.isChecked("//tr[6]/td[8]/input"));
 	}
 }

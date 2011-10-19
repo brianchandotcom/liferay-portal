@@ -57,7 +57,7 @@ public class TearDownSiteTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean site1Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!site1Present) {
 					label = 2;
@@ -66,8 +66,8 @@ public class TearDownSiteTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -102,7 +102,7 @@ public class TearDownSiteTest extends BaseTestCase {
 			case 2:
 
 				boolean site2Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!site2Present) {
 					label = 3;
@@ -111,8 +111,8 @@ public class TearDownSiteTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -147,7 +147,7 @@ public class TearDownSiteTest extends BaseTestCase {
 			case 3:
 
 				boolean site3Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!site3Present) {
 					label = 4;
@@ -156,8 +156,8 @@ public class TearDownSiteTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -192,7 +192,7 @@ public class TearDownSiteTest extends BaseTestCase {
 			case 4:
 
 				boolean site4Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!site4Present) {
 					label = 5;
@@ -201,8 +201,8 @@ public class TearDownSiteTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -237,7 +237,7 @@ public class TearDownSiteTest extends BaseTestCase {
 			case 5:
 
 				boolean site5Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//td[7]/span/ul/li/strong/a/span");
 
 				if (!site5Present) {
 					label = 6;
@@ -246,8 +246,8 @@ public class TearDownSiteTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {

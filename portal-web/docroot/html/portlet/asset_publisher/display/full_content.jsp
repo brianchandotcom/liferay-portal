@@ -128,7 +128,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= socialBookmarksDisplayStyle %>"
 					target="_blank"
-					title="<%= assetEntry.getTitle() %>"
+					title="<%= assetEntry.getTitle(locale) %>"
 					url="<%= viewFullContentURL.toString() %>"
 				/>
 			</c:if>
@@ -157,7 +157,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= socialBookmarksDisplayStyle %>"
 					target="_blank"
-					title="<%= assetEntry.getTitle() %>"
+					title="<%= assetEntry.getTitle(locale) %>"
 					url="<%= viewFullContentURL.toString() %>"
 				/>
 			</c:if>

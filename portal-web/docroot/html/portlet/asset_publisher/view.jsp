@@ -110,32 +110,34 @@ if (!paginationType.equals("none")) {
 }
 %>
 
-<c:if test='<%= (assetCategoryId > 0) && selectionStyle.equals("dynamic") %>'>
-	<h1 class="asset-categorization-title">
-		<%= LanguageUtil.format(pageContext, "content-with-x-x", new String[] {assetVocabularyTitle, assetCategoryTitle}) %>
-	</h1>
+<c:if test='<%= showContentMessages  %>'>
+	<c:if test='<%= (assetCategoryId > 0) && selectionStyle.equals("dynamic") %>'>
+		<h1 class="asset-categorization-title">
+			<%= LanguageUtil.format(pageContext, "content-with-x-x", new String[] {assetVocabularyTitle, assetCategoryTitle}) %>
+		</h1>
 
-	<%
-	AssetUtil.addPortletBreadcrumbEntries(assetCategoryId, request, portletURL);
-	%>
+		<%
+		AssetUtil.addPortletBreadcrumbEntries(assetCategoryId, request, portletURL);
+		%>
 
-</c:if>
+	</c:if>
 
-<c:if test='<%= Validator.isNotNull(assetTagName) && selectionStyle.equals("dynamic") %>'>
-	<h1 class="asset-categorization-title">
-		<%= LanguageUtil.format(pageContext, "content-with-tag-x", HtmlUtil.escape(assetTagName)) %>
-	</h1>
+	<c:if test='<%= Validator.isNotNull(assetTagName) && selectionStyle.equals("dynamic") %>'>
+		<h1 class="asset-categorization-title">
+			<%= LanguageUtil.format(pageContext, "content-with-tag-x", HtmlUtil.escape(assetTagName)) %>
+		</h1>
 
-	<%
-	AssetUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
-	%>
+		<%
+		AssetUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
+		%>
 
-</c:if>
+	</c:if>
 
-<c:if test='<%= portletName.equals(PortletKeys.RELATED_ASSETS) && (assetEntryQuery.getLinkedAssetEntryId() > 0) %>'>
-	<h1 class="related-assets-title">
-		<%= LanguageUtil.format(pageContext, "content-related-to-x", AssetEntryServiceUtil.getEntry(assetEntryQuery.getLinkedAssetEntryId()).getTitle(locale)) %>
-	</h1>
+	<c:if test='<%= portletName.equals(PortletKeys.RELATED_ASSETS) && (assetEntryQuery.getLinkedAssetEntryId() > 0) %>'>
+		<h1 class="related-assets-title">
+			<%= LanguageUtil.format(pageContext, "content-related-to-x", AssetEntryServiceUtil.getEntry(assetEntryQuery.getLinkedAssetEntryId()).getTitle(locale)) %>
+		</h1>
+	</c:if>
 </c:if>
 
 <c:choose>

@@ -72,6 +72,13 @@
 		<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= excludeZeroViewCount %>" />
 	</c:if>
 
+	<%
+	String helpMessage1 = "<em>" + LanguageUtil.format(pageContext, "content-related-to-x", StringPool.DOUBLE_PERIOD) + "</em>";
+	String helpMessage2 = "<em>" + LanguageUtil.format(pageContext, "content-with-tag-x", StringPool.DOUBLE_PERIOD) + "</em>";
+	%>
+
+	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[]{helpMessage1, helpMessage2})%>' name="preferences--showContentMessages--" type="checkbox" value="<%= showContentMessages %>" />
+
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
 
 	<aui:input label="set-as-the-default-asset-publisher-for-this-page" helpMessage="set-as-the-default-asset-publisher-for-this-page-help" name="defaultAssetPublisher" type="checkbox" value="<%= defaultAssetPublisher %>" />

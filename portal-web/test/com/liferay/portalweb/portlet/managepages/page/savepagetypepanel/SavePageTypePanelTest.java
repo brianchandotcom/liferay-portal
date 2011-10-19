@@ -138,10 +138,8 @@ public class SavePageTypePanelTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace(
-									"Portlet Panel Embedded Web Content URL Link to Page")
-												.equals(selenium.getText(
-										"//select[@id='_88_type']"))) {
+						if (selenium.isPartialText("//select[@id='_88_type']",
+									"Panel")) {
 							break;
 						}
 					}
@@ -157,7 +155,7 @@ public class SavePageTypePanelTest extends BaseTestCase {
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
+						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 

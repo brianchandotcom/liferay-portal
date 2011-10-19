@@ -166,7 +166,7 @@ public class CopyPagePageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//div/span/button[4]")) {
+						if (selenium.isVisible("//div/span/button[5]")) {
 							break;
 						}
 					}
@@ -176,7 +176,7 @@ public class CopyPagePageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div/span/button[4]",
+				selenium.clickAt("//div/span/button[5]",
 					RuntimeVariables.replace("Copy Portlets from Page"));
 
 				for (int second = 0;; second++) {
@@ -205,7 +205,7 @@ public class CopyPagePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Copy"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
+						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 

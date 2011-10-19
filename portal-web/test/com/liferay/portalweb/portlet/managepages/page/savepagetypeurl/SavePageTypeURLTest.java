@@ -138,10 +138,8 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace(
-									"Portlet Panel Embedded Web Content URL Link to Page")
-												.equals(selenium.getText(
-										"//select[@id='_88_type']"))) {
+						if (selenium.isPartialText("//select[@id='_88_type']",
+									"URL")) {
 							break;
 						}
 					}
@@ -160,8 +158,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[5]/span[1]/span/span/input")) {
+						if (selenium.isVisible("//div[4]/span/span/span/input")) {
 							break;
 						}
 					}
@@ -171,13 +168,13 @@ public class SavePageTypeURLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//div[5]/span[1]/span/span/input",
+				selenium.type("//div[4]/span/span/span/input",
 					RuntimeVariables.replace("http://www.liferay.com"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
+						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 

@@ -51,6 +51,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(""),
 					selenium.getText("//img[@alt='Select Web Content']"));
+				Thread.sleep(5000);
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 

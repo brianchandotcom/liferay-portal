@@ -126,6 +126,10 @@ public class Validator_IW {
 		return Validator.isLUHN(number);
 	}
 
+	public boolean isMailExchange(java.lang.String mailExchangeName) {
+		return Validator.isMailExchange(mailExchangeName);
+	}
+
 	public boolean isName(java.lang.String name) {
 		return Validator.isName(name);
 	}

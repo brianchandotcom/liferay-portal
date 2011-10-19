@@ -302,13 +302,7 @@ public class LDAPAuth implements Authenticator {
 					String resultCode = ldapAuthResult.getResponseControl();
 
 					if (resultCode.equals(
-							LDAPAuth.RESULT_PASSWORD_EXP_WARNING)) {
-
-						UserLocalServiceUtil.updatePasswordReset(
-							user.getUserId(), true);
-					}
-					else if (resultCode.equals(
-								LDAPAuth.RESULT_PASSWORD_RESET)) {
+							LDAPAuth.RESULT_PASSWORD_RESET)) {
 
 						UserLocalServiceUtil.updatePasswordReset(
 							user.getUserId(), true);

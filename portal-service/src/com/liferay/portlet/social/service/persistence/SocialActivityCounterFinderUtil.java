@@ -21,6 +21,44 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class SocialActivityCounterFinderUtil {
+	public static int countU_ByG_N(long groupId, java.lang.String[] orderBy)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countU_ByG_N(groupId, orderBy);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_By_G_C_C_N_S_E(
+		long groupId, java.util.List<java.lang.Long> userIds,
+		java.lang.String[] selectedCounters, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findAC_By_G_C_C_N_S_E(groupId, userIds, selectedCounters,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_ByG_N_S_E_1(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findAC_ByG_N_S_E_1(groupId, counterName, startPeriod,
+			endPeriod);
+	}
+
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_ByG_N_S_E_2(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findAC_ByG_N_S_E_2(groupId, counterName, startPeriod,
+			endPeriod);
+	}
+
+	public static java.util.List<java.lang.Long> findU_ByG_N(long groupId,
+		java.lang.String[] orderBy, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findU_ByG_N(groupId, orderBy, start, end);
+	}
+
 	public static SocialActivityCounterFinder getFinder() {
 		if (_finder == null) {
 			_finder = (SocialActivityCounterFinder)PortalBeanLocatorUtil.locate(SocialActivityCounterFinder.class.getName());

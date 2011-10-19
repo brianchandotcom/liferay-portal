@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
  * @see ${entity.name}
  * @generated
  */
-public class ${entity.name}CacheModel implements CacheModel<${entity.name}> {
+public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Serializable {
 
 	@Override
 	public String toString() {

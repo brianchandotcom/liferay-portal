@@ -32,14 +32,14 @@ public class AssetTagPropertyServiceImpl
 	extends AssetTagPropertyServiceBaseImpl {
 
 	/**
-	 * Adds the asset tag property.
+	 * Adds an asset tag property.
 	 *
 	 * @param  tagId the primary key of the tag
 	 * @param  key the key to be associated to the value
-	 * @param  value the value which will be referred by the key
+	 * @param  value the value to which the key will refer
 	 * @return the created asset tag property
-	 * @throws PortalException if the user with the primary key could not be  
-	 *         found or if the key or value are invalid
+	 * @throws PortalException if the user did not have permission to update
+	 *         the asset tag, or if the key or value were invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public AssetTagProperty addTagProperty(long tagId, String key, String value)
@@ -53,11 +53,12 @@ public class AssetTagPropertyServiceImpl
 	}
 
 	/**
-	 * Deletes the asset tag property instance.
+	 * Deletes the asset tag property with the specified ID.
 	 *
 	 * @param  tagPropertyId the primary key of the asset tag property instance
-	 * @throws PortalException if the asset tag property with the primary key 
-	 *         could not be found
+	 * @throws PortalException if an asset tag property with the primary key
+	 *         could not be found or if the user did not have permission to
+	 *         update the asset tag property
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteTagProperty(long tagPropertyId)
@@ -74,10 +75,10 @@ public class AssetTagPropertyServiceImpl
 	}
 
 	/**
-	 * Returns all the asset tag property with the specified tag
+	 * Returns all the asset tag property instances with the specified tag ID.
 	 *
 	 * @param  tagId the primary key of the tag
-	 * @return Returns all the asset tag property matching condition
+	 * @return the matching asset tag properties
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<AssetTagProperty> getTagProperties(long tagId)
@@ -87,11 +88,11 @@ public class AssetTagPropertyServiceImpl
 	}
 
 	/**
-	 * Returns asset tag property values with the specified group and key
+	 * Returns asset tag properties with the specified group and key.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  key the key that refers to some value
-	 * @return Returns all the asset tag property matching conditions
+	 * @return the matching asset tag properties
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<AssetTagProperty> getTagPropertyValues(
@@ -106,11 +107,12 @@ public class AssetTagPropertyServiceImpl
 	 * Updates the asset tag property.
 	 *
 	 * @param  tagPropertyId the primary key of the asset tag property
-	 * @param  key the key to be associated to the value
-	 * @param  value the value which will be referred by the key
+	 * @param  key the new key to be associated to the value
+	 * @param  value the new value to which the key will refer
 	 * @return the updated asset tag property
-	 * @throws PortalException if the asset tag property with the primary key   
-	 *         could not be found or if the key or value are invalid
+	 * @throws PortalException if an asset tag property with the primary key
+	 *         could not be found, if the user did not have permission to
+	 *         update the asset tag, or if the key or value were invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public AssetTagProperty updateTagProperty(

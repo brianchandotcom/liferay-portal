@@ -28,6 +28,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -194,23 +195,19 @@ public class FileSystemStore extends BaseStore {
 			String versionLabel)
 		throws PortalException, SystemException {
 
+		if (Validator.isNull(versionLabel)) {
+			versionLabel = getHeadVersionLabel(
+				companyId, repositoryId, fileName);
+		}
+
+		File fileNameVersionFile = getFileNameVersionFile(
+			companyId, repositoryId, fileName, versionLabel);
+
 		try {
-			if (Validator.isNull(versionLabel)) {
-				versionLabel = getHeadVersionLabel(
-					companyId, repositoryId, fileName);
-			}
-
-			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, versionLabel);
-
-			if (!fileNameVersionFile.exists()) {
-				throw new NoSuchFileException(fileNameVersionFile.getPath());
-			}
-
 			return new FileInputStream(fileNameVersionFile);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (FileNotFoundException fnfe) {
+			throw new NoSuchFileException(fileNameVersionFile.getPath(), fnfe);
 		}
 	}
 

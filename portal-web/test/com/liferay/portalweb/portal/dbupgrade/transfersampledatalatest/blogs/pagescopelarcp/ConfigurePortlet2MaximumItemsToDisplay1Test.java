@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.dbupgrade.transfersampledatalatest.blogs.pagescopelarportlet;
+package com.liferay.portalweb.portal.dbupgrade.transfersampledatalatest.blogs.pagescopelarcp;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
-	public void testConfigurePortlet1BlogsScopeDefault()
+public class ConfigurePortlet2MaximumItemsToDisplay1Test extends BaseTestCase {
+	public void testConfigurePortlet2MaximumItemsToDisplay1()
 		throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
 
@@ -31,7 +31,7 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Blogs Test Page1")) {
+				if (selenium.isVisible("link=Blogs Test Page2")) {
 					break;
 				}
 			}
@@ -41,8 +41,8 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Blogs Test Page1",
-			RuntimeVariables.replace("Blogs Test Page1"));
+		selenium.clickAt("link=Blogs Test Page2",
+			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -51,7 +51,7 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Blogs")
+				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
 										.equals(selenium.getText(
 								"//span[@class='portlet-title-text']"))) {
 					break;
@@ -63,7 +63,7 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Blogs"),
+		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -97,7 +97,7 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Scope")) {
+				if (selenium.isVisible("link=Display Settings")) {
 					break;
 				}
 			}
@@ -107,61 +107,35 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
+		selenium.clickAt("link=Display Settings",
+			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Scope"),
-			selenium.getText("//label[@for='scopeType']"));
-		selenium.select("//select[@id='_86_scopeType']",
-			RuntimeVariables.replace("Default"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//select[@id='_86_pageDelta']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.select("//select[@id='_86_pageDelta']",
+			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Default",
-			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
-		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Blogs Test Page1",
-			RuntimeVariables.replace("Blogs Test Page1"));
-		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText("//span[@class='portlet-title-text']"));
+		assertEquals("1",
+			selenium.getSelectedLabel("//select[@id='_86_pageDelta']"));
 	}
 }

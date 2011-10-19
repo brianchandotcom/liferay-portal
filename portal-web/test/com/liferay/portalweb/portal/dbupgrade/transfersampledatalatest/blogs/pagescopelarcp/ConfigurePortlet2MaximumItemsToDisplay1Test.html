@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ConfigurePortlet1BlogsScopeDefaultTest</title>
+<title>ConfigurePortlet2MaximumItemsToDisplay1Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ConfigurePortlet1BlogsScopeDefaultTest</td></tr>
+<tr><td rowspan="1" colspan="3">ConfigurePortlet2MaximumItemsToDisplay1Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -15,23 +15,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Blogs Test Page1</td>
-	<td>Blogs Test Page1</td>
+	<td>link=Blogs Test Page2</td>
+	<td>Blogs Test Page2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Test Page1</td>
-	<td>Blogs Test Page1</td>
+	<td>link=Blogs Test Page2</td>
+	<td>Blogs Test Page2</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//span[@class='portlet-title-text']</td>
-	<td>Blogs</td>
+	<td>Blogs (Blogs Test Page2)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
-	<td>Blogs</td>
+	<td>Blogs (Blogs Test Page2)</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -60,28 +60,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Scope</td>
-	<td>Scope</td>
+	<td>link=Display Settings</td>
+	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Scope</td>
-	<td>Scope</td>
+	<td>link=Display Settings</td>
+	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//label[@for='scopeType']</td>
-	<td>Scope</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='scopeType']</td>
-	<td>Scope</td>
+	<td>//select[@id='_86_pageDelta']</td>
+	<td>Maximum Items to Display</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_86_scopeType']</td>
-	<td>Default</td>
+	<td>//select[@id='_86_pageDelta']</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -95,33 +90,8 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_scopeType']</td>
-	<td>Default</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/blogs-page-scope-community/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page1</td>
-	<td>Blogs Test Page1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Blogs Test Page1</td>
-	<td>Blogs Test Page1</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//span[@class='portlet-title-text']</td>
-	<td>Blogs</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='portlet-title-text']</td>
-	<td>Blogs</td>
+	<td>//select[@id='_86_pageDelta']</td>
+	<td>1</td>
 </tr>
 
 </tbody></table>

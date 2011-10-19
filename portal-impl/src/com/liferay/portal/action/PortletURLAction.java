@@ -168,7 +168,7 @@ public class PortletURLAction extends Action {
 				String key = entry.getKey();
 				String value = entry.getValue();
 
-				if (Validator.isNotNull(key) && Validator.isNotNull(value) {
+				if (Validator.isNotNull(key) && Validator.isNotNull(value)) {
 					portletURL.setParameter(key, value);
 				}
 			}

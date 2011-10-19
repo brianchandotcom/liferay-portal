@@ -22,37 +22,25 @@ import java.util.Date;
 public class LicenseInfo {
 
 	public LicenseInfo(
-		String accountEntryName, String owner, String description,
-		String productEntryName, String productId, String productVersion,
-		String licenseEntryName, String licenseEntryType, String licenseVersion,
-		Date startDate, Date expirationDate, int maxServers,
-		int maxHttpSessions, long maxConcurrentUsers, long maxUsers,
-		String hostName, String[] ipAddresses, String[] macAddresses,
-		String[] serverIds) {
+		String owner, String description, String productEntryName,
+		String productId, String productVersion, String licenseEntryType,
+		String licenseVersion, Date startDate, Date expirationDate,
+		long maxUsers, String hostName, String[] ipAddresses,
+		String[] macAddresses) {
 
-		_accountEntryName = accountEntryName;
 		_description = description;
 		_expirationDate = expirationDate;
 		_hostName = hostName;
 		_ipAddresses = ipAddresses;
-		_licenseEntryName = licenseEntryName;
 		_licenseEntryType = licenseEntryType;
 		_licenseVersion = licenseVersion;
 		_macAddresses = macAddresses;
-		_maxConcurrentUsers = maxConcurrentUsers;
-		_maxHttpSessions = maxHttpSessions;
-		_maxServers = maxServers;
 		_maxUsers = maxUsers;
 		_owner = owner;
 		_productEntryName = productEntryName;
 		_productId = productId;
 		_productVersion = productVersion;
-		_serverIds = serverIds;
 		_startDate = startDate;
-	}
-
-	public String getAccountEntryName() {
-		return _accountEntryName;
 	}
 
 	public String getDescription() {
@@ -71,10 +59,6 @@ public class LicenseInfo {
 		return _ipAddresses;
 	}
 
-	public String getLicenseEntryName() {
-		return _licenseEntryName;
-	}
-
 	public String getLicenseEntryType() {
 		return _licenseEntryType;
 	}
@@ -85,18 +69,6 @@ public class LicenseInfo {
 
 	public String[] getMacAddresses() {
 		return _macAddresses;
-	}
-
-	public long getMaxConcurrentUsers() {
-		return _maxConcurrentUsers;
-	}
-
-	public int getMaxHttpSessions() {
-		return _maxHttpSessions;
-	}
-
-	public int getMaxServers() {
-		return _maxServers;
 	}
 
 	public long getMaxUsers() {
@@ -119,32 +91,22 @@ public class LicenseInfo {
 		return _productVersion;
 	}
 
-	public String[] getServerIds() {
-		return _serverIds;
-	}
-
 	public Date getStartDate() {
 		return _startDate;
 	}
 
-	private String _accountEntryName;
 	private String _description;
 	private Date _expirationDate;
 	private String _hostName;
 	private String[] _ipAddresses;
-	private String _licenseEntryName;
 	private String _licenseEntryType;
 	private String _licenseVersion;
 	private String[] _macAddresses;
-	private long _maxConcurrentUsers;
-	private int _maxHttpSessions;
-	private int _maxServers;
 	private long _maxUsers;
 	private String _owner;
 	private String _productEntryName;
 	private String _productId;
 	private String _productVersion;
-	private String[] _serverIds;
 	private Date _startDate;
 
 }

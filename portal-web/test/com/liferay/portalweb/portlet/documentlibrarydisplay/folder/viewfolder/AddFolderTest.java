@@ -54,7 +54,7 @@ public class AddFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
+				if (selenium.isElementPresent(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}

@@ -55,8 +55,29 @@ public class AddFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
+				if (RuntimeVariables.replace("DL Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (RuntimeVariables.replace(
-							"There are no documents in this folder.")
+							"There are no documents or media files in this folder.")
 										.equals(selenium.getText(
 								"//div[@class='portlet-msg-info']"))) {
 					break;
@@ -69,8 +90,8 @@ public class AddFolderDocumentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -79,7 +100,7 @@ public class AddFolderDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
+				if (selenium.isElementPresent(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
 					break;
 				}
@@ -93,8 +114,8 @@ public class AddFolderDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(

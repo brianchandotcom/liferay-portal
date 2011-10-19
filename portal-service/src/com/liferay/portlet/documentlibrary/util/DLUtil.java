@@ -124,7 +124,7 @@ public class DLUtil {
 			LiferayPortletResponse liferayPortletResponse, boolean showGlobally)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL =
@@ -234,9 +234,10 @@ public class DLUtil {
 		if (strutsAction.equals("/journal/select_document_library") ||
 			strutsAction.equals("/document_library/select_file_entry") ||
 			strutsAction.equals("/document_library/select_folder") ||
-			strutsAction.equals("/document_library_display/select_folder")) {
+			strutsAction.equals("/document_library_display/select_folder") ||
+			strutsAction.equals("/image_gallery_display/select_folder")) {
 
-			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -249,9 +250,16 @@ public class DLUtil {
 			data.put("folder-id", _getDefaultFolderId(request));
 			data.put("refresh-folders", Boolean.TRUE.toString());
 
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("documents-home"),
-				portletURL.toString(), data);
+			if (strutsAction.equals("/image_gallery_display/select_folder")) {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, themeDisplay.translate("images-home"),
+					portletURL.toString(), data);
+			}
+			else {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, themeDisplay.translate("documents-home"),
+					portletURL.toString(), data);
+			}
 		}
 		else {
 			portletURL.setParameter("struts_action", "/document_library/view");

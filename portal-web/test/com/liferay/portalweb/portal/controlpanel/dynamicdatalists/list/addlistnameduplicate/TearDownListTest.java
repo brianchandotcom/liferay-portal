@@ -53,7 +53,7 @@ public class TearDownListTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean actionsVisible1 = selenium.isElementPresent(
-						"//td/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!actionsVisible1) {
 					label = 2;
@@ -61,6 +61,8 @@ public class TearDownListTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -89,12 +91,9 @@ public class TearDownListTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean actionsVisible2 = selenium.isElementPresent(
-						"//td/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!actionsVisible2) {
 					label = 3;
@@ -102,6 +101,8 @@ public class TearDownListTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -130,12 +131,9 @@ public class TearDownListTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean actionsVisible3 = selenium.isElementPresent(
-						"//td/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!actionsVisible3) {
 					label = 4;
@@ -143,6 +141,8 @@ public class TearDownListTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -171,12 +171,9 @@ public class TearDownListTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean actionsVisible4 = selenium.isElementPresent(
-						"//td/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!actionsVisible4) {
 					label = 5;
@@ -184,6 +181,8 @@ public class TearDownListTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -212,12 +211,9 @@ public class TearDownListTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean actionsVisible5 = selenium.isElementPresent(
-						"//td/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!actionsVisible5) {
 					label = 6;
@@ -225,6 +221,8 @@ public class TearDownListTest extends BaseTestCase {
 					continue;
 				}
 
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
@@ -253,9 +251,6 @@ public class TearDownListTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 			case 3:

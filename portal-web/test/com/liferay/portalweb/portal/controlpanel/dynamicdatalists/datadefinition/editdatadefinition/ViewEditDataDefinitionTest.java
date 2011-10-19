@@ -65,6 +65,8 @@ public class ViewEditDataDefinitionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Manage Data Definitions"),
+			selenium.getText("//a[@id='_167_manageDDMStructuresLink']"));
 		selenium.clickAt("//a[@id='_167_manageDDMStructuresLink']",
 			RuntimeVariables.replace("Manage Data Definitions"));
 
@@ -136,6 +138,10 @@ public class ViewEditDataDefinitionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Data Definition Edited"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals("Data Definition Edited",
+			selenium.getValue("//input[@id='_166_name_en_US']"));
+		assertEquals("Data Definition Description Edited",
+			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.selectFrame("relative=top");
 	}
 }

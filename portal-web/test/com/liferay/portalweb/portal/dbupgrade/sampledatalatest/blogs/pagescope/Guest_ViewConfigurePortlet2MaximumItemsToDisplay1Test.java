@@ -27,7 +27,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,14 +42,12 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,7 +64,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
@@ -88,10 +85,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -108,7 +104,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -128,10 +123,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -148,7 +142,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
@@ -167,10 +160,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -187,7 +179,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -207,10 +198,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -227,7 +217,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
@@ -246,10 +235,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -266,7 +254,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -286,10 +273,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -306,7 +292,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
@@ -326,7 +311,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -341,14 +326,12 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page3",
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -365,12 +348,11 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -387,7 +369,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
@@ -407,10 +388,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -427,7 +407,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -447,10 +426,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -467,7 +445,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
@@ -486,10 +463,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -506,7 +482,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -526,10 +501,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -546,7 +520,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
@@ -565,10 +538,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -585,7 +557,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -605,10 +576,9 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -625,7 +595,6 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),

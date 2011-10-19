@@ -26,7 +26,7 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,28 +41,23 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Blogs Page Scope Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -78,20 +73,18 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Export"),
 			selenium.getText("//button[3]"));
 		selenium.clickAt("//button[3]", RuntimeVariables.replace("Export"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -106,35 +99,27 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_156_exportFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Community.lar"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_156_PERMISSIONSCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_156_PERMISSIONSCheckbox']",
 			RuntimeVariables.replace("Permissions"));
 		assertTrue(selenium.isChecked("//input[@id='_156_PERMISSIONSCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_156_CATEGORIESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_156_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_156_CATEGORIESCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//div[@id='_156_exportMoreDiv']/a",
 				"More Options"));
 		selenium.clickAt("//div[@id='_156_exportMoreDiv']/a",
 			RuntimeVariables.replace("More Options"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_156_PORTLET_DATA_33Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_156_PORTLET_DATA_33Checkbox']",
 			RuntimeVariables.replace("Blogs"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_156_PORTLET_DATA_33Checkbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Export']",
 			RuntimeVariables.replace("Export"));
 		selenium.downloadFile("Blogs_Page_Scope.Community.lar");

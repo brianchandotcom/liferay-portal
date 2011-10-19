@@ -603,6 +603,25 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the string is a valid mail exchange name.
+	 *
+	 * @param  mailExchangeName the string to check
+	 * @return <code>true</code> if the string is a valid mail exchange name;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isMailExchange(String mailExchangeName) {
+		if (isNull(mailExchangeName)) {
+			return false;
+		}
+
+		if (!mailExchangeName.contains(StringPool.PERIOD)) {
+			return false;
+		}
+
+		return isDomain(mailExchangeName);
+	}
+
+	/**
 	 * Returns <code>true</code> if the string is a name, meaning it contains
 	 * nothing but English letters and spaces.
 	 *

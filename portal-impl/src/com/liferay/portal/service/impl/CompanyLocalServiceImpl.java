@@ -1262,10 +1262,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 
-		if (Validator.isNull(mx)) {
-			throw new CompanyMxException();
-		}
-		else if (!Validator.isDomain(mx)) {
+		if (!Validator.isMailExchange(mx)) {
 			throw new CompanyMxException();
 		}
 	}

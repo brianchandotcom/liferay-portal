@@ -34,6 +34,9 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +71,9 @@ public class AssetTagFinderImpl
 
 	public static String FIND_BY_G_N_P =
 		AssetTagFinder.class.getName() + ".findByG_N_P";
+
+	public static String FIND_BY_G_N_S_E =
+			AssetTagFinder.class.getName() + ".findByG_N_S_E";
 
 	public int countByG_C_N(long groupId, long classNameId, String name)
 		throws SystemException {
@@ -211,6 +217,53 @@ public class AssetTagFinderImpl
 
 		return doFindByG_N_P(
 			groupId, name, tagProperties, start, end, obc, false);
+	}
+
+	public List<AssetTag> findByG_N_S_E(
+			long groupId, String name, int startPeriod, int endPeriod)
+		throws SystemException {
+
+		List<AssetTag> list = new ArrayList<AssetTag>();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_N_S_E);
+			SQLQuery q = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(name);
+			qPos.add(startPeriod);
+			qPos.add(endPeriod);
+
+			Iterator<Object[]> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				AssetTag assetTag = new AssetTagImpl();
+
+				assetTag.setTagId(
+					GetterUtil.getLong((Serializable)array[0]));
+				assetTag.setName(GetterUtil.getString((Serializable)array[1]));
+				assetTag.setAssetCount(
+					GetterUtil.getInteger((Serializable)array[2]));
+
+				list.add(assetTag);
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return list;
 	}
 
 	protected String getJoin(String[] tagProperties) {

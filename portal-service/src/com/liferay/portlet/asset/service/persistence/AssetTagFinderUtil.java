@@ -110,6 +110,14 @@ public class AssetTagFinderUtil {
 				   .findByG_N_P(groupId, name, tagProperties, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByG_N_S_E(
+		long groupId, java.lang.String counterName, int startPeriod,
+		int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_N_S_E(groupId, counterName, startPeriod, endPeriod);
+	}
+
 	public static AssetTagFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AssetTagFinder)PortalBeanLocatorUtil.locate(AssetTagFinder.class.getName());

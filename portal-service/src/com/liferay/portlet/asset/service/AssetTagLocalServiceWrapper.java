@@ -391,6 +391,22 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long groupId, java.lang.String socialActivityCounterName, int offset,
+		boolean includeCurrentPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getTags(groupId,
+			socialActivityCounterName, offset, includeCurrentPeriod);
+	}
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long groupId, java.lang.String socialActivityCounterName,
+		int startPeriod, int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getTags(groupId,
+			socialActivityCounterName, startPeriod, endPeriod);
+	}
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTags(className, classPK);

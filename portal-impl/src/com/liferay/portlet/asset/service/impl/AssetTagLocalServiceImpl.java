@@ -38,6 +38,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -335,6 +336,31 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		return assetTagFinder.findByG_C_N(
 			groupId, classNameId, name, start, end, null);
+	}
+
+	public List<AssetTag> getTags(
+			long groupId, String socialActivityCounterName, int offset,
+			boolean includeCurrentPeriod)
+		throws SystemException {
+
+		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(-offset);
+		int endPeriod = -1;
+
+		if (!includeCurrentPeriod) {
+			endPeriod = SocialCounterPeriodUtil.getStartPeriod() - 1;
+		}
+
+		return getTags(
+			groupId, socialActivityCounterName, startPeriod, endPeriod);
+	}
+
+	public List<AssetTag> getTags(
+			long groupId, String socialActivityCounterName, int startPeriod,
+			int endPeriod)
+		throws SystemException {
+
+		return assetTagFinder.findByG_N_S_E(
+			groupId, socialActivityCounterName, startPeriod, endPeriod);
 	}
 
 	@ThreadLocalCachable

@@ -181,9 +181,6 @@
 				COUNT(DISTINCT fileShortcutId) AS COUNT_VALUE
 			FROM
 				DLFileShortcut
-			INNER JOIN
-				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = 0) AND

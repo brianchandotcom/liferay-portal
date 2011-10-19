@@ -242,7 +242,7 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		//socialActivityCounterLocalService.addActivityStats(activity);
+		socialActivityCounterLocalService.addActivityCounters(activity);
 	}
 
 	/**
@@ -335,7 +335,7 @@ public class SocialActivityLocalServiceImpl
 		socialActivityPersistence.removeByC_C(
 			assetEntry.getClassNameId(), assetEntry.getClassPK());
 
-		//socialActivityCounterLocalService.deleteActivityCounters(assetEntry);
+		socialActivityCounterLocalService.deleteActivityCounters(assetEntry);
 	}
 
 	/**
@@ -398,8 +398,8 @@ public class SocialActivityLocalServiceImpl
 			socialActivityPersistence.remove(activity);
 		}
 
-		//socialActivityCounterLocalService.deleteActivityCounters(
-		//	PortalUtil.getClassNameId(User.class.getName()), userId);
+		socialActivityCounterLocalService.deleteActivityCounters(
+			PortalUtil.getClassNameId(User.class.getName()), userId);
 	}
 
 	/**

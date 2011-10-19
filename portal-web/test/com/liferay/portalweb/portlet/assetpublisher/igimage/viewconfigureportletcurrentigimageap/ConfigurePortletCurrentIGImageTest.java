@@ -43,6 +43,7 @@ public class ConfigurePortletCurrentIGImageTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -86,7 +87,7 @@ public class ConfigurePortletCurrentIGImageTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Filter..."));
+			RuntimeVariables.replace("label=Select More Than One..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -106,7 +107,7 @@ public class ConfigurePortletCurrentIGImageTest extends BaseTestCase {
 		}
 
 		selenium.addSelection("//select[@id='_86_availableClassNameIds']",
-			RuntimeVariables.replace("label=Image Gallery Image"));
+			RuntimeVariables.replace("label=Document Library Document"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -136,7 +137,7 @@ public class ConfigurePortletCurrentIGImageTest extends BaseTestCase {
 			try {
 				if (selenium.isPartialText(
 							"//select[@id='_86_currentClassNameIds']",
-							"Image Gallery Image")) {
+							"Document Library Document")) {
 					break;
 				}
 			}
@@ -147,7 +148,8 @@ public class ConfigurePortletCurrentIGImageTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_currentClassNameIds']", "Image Gallery Image"));
+				"//select[@id='_86_currentClassNameIds']",
+				"Document Library Document"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -155,6 +157,7 @@ public class ConfigurePortletCurrentIGImageTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_currentClassNameIds']", "Image Gallery Image"));
+				"//select[@id='_86_currentClassNameIds']",
+				"Document Library Document"));
 	}
 }

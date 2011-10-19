@@ -43,10 +43,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add New"),
-			selenium.getText("//div/span/ul/li/strong/a/span"));
-		selenium.clickAt("//div/span/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add New"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
@@ -94,32 +91,15 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 
 		selenium.clickAt("link=Documents Home",
 			RuntimeVariables.replace("Documents Home"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/a/span[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/ul/li/strong/a/span",
+			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
+		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -128,7 +108,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='_20_bqvz']")) {
+				if (selenium.isVisible("link=Basic Document")) {
 					break;
 				}
 			}
@@ -139,8 +119,8 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Basic Document"),
-			selenium.getText("//a[@id='_20_bqvz']"));
-		selenium.click(RuntimeVariables.replace("//a[@id='_20_bqvz']"));
+			selenium.getText("link=Basic Document"));
+		selenium.click(RuntimeVariables.replace("link=Basic Document"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

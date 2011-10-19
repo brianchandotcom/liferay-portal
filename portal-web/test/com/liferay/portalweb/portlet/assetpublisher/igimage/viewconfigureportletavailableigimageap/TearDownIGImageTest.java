@@ -50,7 +50,7 @@ public class TearDownIGImageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean igImage1Present = selenium.isElementPresent(
-						"//div[2]/a/img");
+						"//span[2]/span/ul/li/strong/a");
 
 				if (!igImage1Present) {
 					label = 2;
@@ -58,8 +58,9 @@ public class TearDownIGImageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[2]/a/img",
-					RuntimeVariables.replace("IG Image"));
+				assertEquals(RuntimeVariables.replace(""),
+					selenium.getText("//span[2]/span/ul/li/strong/a"));
+				selenium.click("//span[2]/span/ul/li/strong/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -67,7 +68,8 @@ public class TearDownIGImageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//img[@alt='Delete']")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 							break;
 						}
 					}
@@ -77,7 +79,11 @@ public class TearDownIGImageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -85,7 +91,7 @@ public class TearDownIGImageTest extends BaseTestCase {
 			case 2:
 
 				boolean igImage2Present = selenium.isElementPresent(
-						"//div[2]/a/img");
+						"//span[2]/span/ul/li/strong/a");
 
 				if (!igImage2Present) {
 					label = 3;
@@ -93,8 +99,9 @@ public class TearDownIGImageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[2]/a/img",
-					RuntimeVariables.replace("IG Image"));
+				assertEquals(RuntimeVariables.replace(""),
+					selenium.getText("//span[2]/span/ul/li/strong/a"));
+				selenium.click("//span[2]/span/ul/li/strong/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -102,7 +109,8 @@ public class TearDownIGImageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//img[@alt='Delete']")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 							break;
 						}
 					}
@@ -112,7 +120,11 @@ public class TearDownIGImageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -120,7 +132,7 @@ public class TearDownIGImageTest extends BaseTestCase {
 			case 3:
 
 				boolean igImage3Present = selenium.isElementPresent(
-						"//div[2]/a/img");
+						"//span[2]/span/ul/li/strong/a");
 
 				if (!igImage3Present) {
 					label = 4;
@@ -128,8 +140,9 @@ public class TearDownIGImageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[2]/a/img",
-					RuntimeVariables.replace("IG Image"));
+				assertEquals(RuntimeVariables.replace(""),
+					selenium.getText("//span[2]/span/ul/li/strong/a"));
+				selenium.click("//span[2]/span/ul/li/strong/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -137,7 +150,8 @@ public class TearDownIGImageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//img[@alt='Delete']")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 							break;
 						}
 					}
@@ -147,7 +161,11 @@ public class TearDownIGImageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -155,7 +173,7 @@ public class TearDownIGImageTest extends BaseTestCase {
 			case 4:
 
 				boolean igImage4Present = selenium.isElementPresent(
-						"//div[2]/a/img");
+						"//span[2]/span/ul/li/strong/a");
 
 				if (!igImage4Present) {
 					label = 5;
@@ -163,8 +181,9 @@ public class TearDownIGImageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[2]/a/img",
-					RuntimeVariables.replace("IG Image"));
+				assertEquals(RuntimeVariables.replace(""),
+					selenium.getText("//span[2]/span/ul/li/strong/a"));
+				selenium.click("//span[2]/span/ul/li/strong/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -172,7 +191,8 @@ public class TearDownIGImageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//img[@alt='Delete']")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 							break;
 						}
 					}
@@ -182,7 +202,11 @@ public class TearDownIGImageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -190,7 +214,7 @@ public class TearDownIGImageTest extends BaseTestCase {
 			case 5:
 
 				boolean igImage5Present = selenium.isElementPresent(
-						"//div[2]/a/img");
+						"//span[2]/span/ul/li/strong/a");
 
 				if (!igImage5Present) {
 					label = 6;
@@ -198,8 +222,9 @@ public class TearDownIGImageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[2]/a/img",
-					RuntimeVariables.replace("IG Image"));
+				assertEquals(RuntimeVariables.replace(""),
+					selenium.getText("//span[2]/span/ul/li/strong/a"));
+				selenium.click("//span[2]/span/ul/li/strong/a");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -207,7 +232,8 @@ public class TearDownIGImageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//img[@alt='Delete']")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
 							break;
 						}
 					}
@@ -217,7 +243,11 @@ public class TearDownIGImageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

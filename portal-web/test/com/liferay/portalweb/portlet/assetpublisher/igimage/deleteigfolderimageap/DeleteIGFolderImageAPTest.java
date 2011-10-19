@@ -45,6 +45,7 @@ public class DeleteIGFolderImageAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
+		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent(
 				"//img[@class='asset-small-image']"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -88,10 +89,10 @@ public class DeleteIGFolderImageAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Image Gallery Image"),
+		assertEquals(RuntimeVariables.replace("Document Library Document"),
 			selenium.getText("//td[1]/a"));
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='IG Folder Image Name']"));
+		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
+			selenium.getText("//td[2]/a"));
 		selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()

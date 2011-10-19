@@ -44,6 +44,7 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -77,7 +78,7 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/span/ul/li/strong/a")) {
+				if (selenium.isVisible("//span[2]/ul/li/strong/a/span")) {
 					break;
 				}
 			}
@@ -87,7 +88,9 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[2]/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Select Existing"),
+			selenium.getText("//span[2]/ul/li/strong/a/span"));
+		selenium.clickAt("//span[2]/ul/li/strong/a/span",
 			RuntimeVariables.replace("Select Existing"));
 
 		for (int second = 0;; second++) {
@@ -97,7 +100,7 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a")) {
 					break;
 				}
 			}
@@ -107,11 +110,11 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Image Gallery Image"),
+		assertEquals(RuntimeVariables.replace("Document Library Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//td[1]/a"));
@@ -121,7 +124,7 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Image Gallery Image"),
+		assertEquals(RuntimeVariables.replace("Document Library Document"),
 			selenium.getText("//td[1]/a"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='IG Folder Image Name']"));

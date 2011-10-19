@@ -44,6 +44,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -97,7 +98,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//fieldset[2]/div/div/div/div/div/div[2]/div/span/span/button[2]")) {
+							"//div[5]/div[2]/fieldset[2]/div/div/div/div/div/div/div/div[2]/div/span/span/button[2]")) {
 					break;
 				}
 			}
@@ -107,7 +108,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//fieldset[2]/div/div/div/div/div/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[5]/div[2]/fieldset[2]/div/div/div/div/div/div/div/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Left Arrow"));
 
 		for (int second = 0;; second++) {

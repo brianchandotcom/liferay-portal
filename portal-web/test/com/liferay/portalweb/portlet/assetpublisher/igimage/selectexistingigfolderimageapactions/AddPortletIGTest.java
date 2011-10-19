@@ -55,7 +55,7 @@ public class AddPortletIGTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//div[@title='Image Gallery']/p/a")) {
+							"//div[@title='Documents and Media']/p/a")) {
 					break;
 				}
 			}
@@ -65,7 +65,27 @@ public class AddPortletIGTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Image Gallery']/p/a",
+		selenium.clickAt("//div[@title='Documents and Media']/p/a",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//div[@title='Documents and Media Display']/p/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//div[@title='Documents and Media Display']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -85,5 +105,23 @@ public class AddPortletIGTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isVisible("//section"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[2]/div/section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//div[2]/div/section"));
 	}
 }

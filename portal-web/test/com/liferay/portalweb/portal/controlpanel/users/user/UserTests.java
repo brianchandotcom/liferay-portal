@@ -18,8 +18,8 @@ import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserannouncement.AddUserAnnouncementTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.addusercomment.AddUserCommentTests;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationscommunity.AddUserDefaultUserAssociationsCommunityTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationsrole.AddUserDefaultUserAssociationsRoleTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationssite.AddUserDefaultUserAssociationsSiteTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationsusergroup.AddUserDefaultUserAssociationsUserGroupTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduserdisplaysettings.AddUserDisplaySettingsTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduseremailaddressampersand.AddUserEmailAddressAmpersandTests;
@@ -105,7 +105,7 @@ public class UserTests extends BaseTests {
 		testSuite.addTest(AddUserTests.suite());
 		testSuite.addTest(AddUserAnnouncementTests.suite());
 		testSuite.addTest(AddUserCommentTests.suite());
-		testSuite.addTest(AddUserDefaultUserAssociationsCommunityTests.suite());
+		testSuite.addTest(AddUserDefaultUserAssociationsSiteTests.suite());
 		testSuite.addTest(AddUserDefaultUserAssociationsRoleTests.suite());
 		testSuite.addTest(AddUserDefaultUserAssociationsUserGroupTests.suite());
 		testSuite.addTest(AddUserDisplaySettingsTests.suite());

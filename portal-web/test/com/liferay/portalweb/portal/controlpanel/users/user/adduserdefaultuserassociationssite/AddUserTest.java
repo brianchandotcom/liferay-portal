@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationscommunity;
+package com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationssite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

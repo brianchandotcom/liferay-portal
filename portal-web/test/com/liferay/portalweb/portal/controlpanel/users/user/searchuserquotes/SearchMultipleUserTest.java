@@ -46,31 +46,10 @@ public class SearchMultipleUserTest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
-			RuntimeVariables.replace("View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("All Users"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace("Search All Users"),
+			selenium.getText("//a[@id='_125_allUsersLink']"));
+		selenium.clickAt("//a[@id='_125_allUsersLink']",
+			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("john joe"));

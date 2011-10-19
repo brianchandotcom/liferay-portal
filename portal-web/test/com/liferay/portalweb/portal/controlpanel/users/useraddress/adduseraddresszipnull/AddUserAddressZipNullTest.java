@@ -93,6 +93,8 @@ public class AddUserAddressZipNullTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_125_addressStreet1_0']",
 			RuntimeVariables.replace("12345 Test Street"));
+		selenium.select("//select[@id='_125_addressCountryId0']",
+			RuntimeVariables.replace("label=United States"));
 		selenium.type("//input[@id='_125_addressZip0']",
 			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_125_addressCity0']",

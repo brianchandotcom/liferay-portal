@@ -51,30 +51,10 @@ public class DeleteUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//span/a/span"));
+				selenium.clickAt("//span/a/span",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean AdvancedPresent = selenium.isVisible(
@@ -130,10 +110,10 @@ public class DeleteUserTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"xPath=(//input[@value='Search'])[2]"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("xPath=(//input[@name='_125_allRowIds'])[2]",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_allRowIds']",
+					RuntimeVariables.replace("Select All Users"));
 				selenium.click(RuntimeVariables.replace(
-						"xPath=(//input[@value='Delete'])[2]"));
+						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
@@ -159,30 +139,13 @@ public class DeleteUserTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertFalse(selenium.isElementPresent("link=selen01"));
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//span/a/span"));
+				selenium.clickAt("//span/a/span",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@name='_125_status']",
 					RuntimeVariables.replace("label=Any Status"));

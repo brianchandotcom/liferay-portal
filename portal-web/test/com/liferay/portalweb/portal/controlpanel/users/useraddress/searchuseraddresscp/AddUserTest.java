@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserCPTest extends BaseTestCase {
-	public void testAddUserCP() throws Exception {
+public class AddUserTest extends BaseTestCase {
+	public void testAddUser() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -35,7 +35,7 @@ public class AddUserCPTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -202,6 +202,7 @@ public class AddUserCPTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
@@ -314,6 +315,7 @@ public class AddUserCPTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {

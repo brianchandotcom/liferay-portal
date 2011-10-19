@@ -116,7 +116,7 @@ public class PortletURLImpl
 
 				String value = request.getParameter(autopropagatedParameter);
 
-				if (value != null) {
+				if (Validator.isNotNull(value)) {
 					setParameter(autopropagatedParameter, value);
 				}
 			}
@@ -146,7 +146,7 @@ public class PortletURLImpl
 	}
 
 	public void addProperty(String key, String value) {
-		if (key == null) {
+		if (Validator.isNull(key)) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -185,7 +185,7 @@ public class PortletURLImpl
 	}
 
 	public String getNamespace() {
-		if (_namespace == null) {
+		if (Validator.isNull(_namespace)) {
 			_namespace = PortalUtil.getPortletNamespace(_portletId);
 		}
 
@@ -293,7 +293,7 @@ public class PortletURLImpl
 			_reservedParameters.put("p_p_mode", _portletMode.toString());
 		}
 
-		if (_resourceID != null) {
+		if (Validator.isNotNull(_resourceID)) {
 			_reservedParameters.put("p_p_resource_id", _resourceID);
 		}
 
@@ -364,7 +364,7 @@ public class PortletURLImpl
 	}
 
 	public void removePublicRenderParameter(String name) {
-		if (name == null) {
+		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException();
 		}
 
@@ -393,7 +393,7 @@ public class PortletURLImpl
 	}
 
 	public void setCacheability(String cacheability) {
-		if (cacheability == null) {
+		if (Validator.isNull(cacheability)) {
 			throw new IllegalArgumentException("Cacheability is null");
 		}
 
@@ -484,7 +484,7 @@ public class PortletURLImpl
 	}
 
 	public void setParameter(String name, String value, boolean append) {
-		if ((name == null) || (value == null)) {
+		if (Validator.isNull(name) || Validator.isNull(value)) {
 			throw new IllegalArgumentException();
 		}
 
@@ -496,12 +496,12 @@ public class PortletURLImpl
 	}
 
 	public void setParameter(String name, String[] values, boolean append) {
-		if ((name == null) || (values == null)) {
+		if (Validator.isNull(name) || (values == null)) {
 			throw new IllegalArgumentException();
 		}
 
 		for (String value : values) {
-			if (value == null) {
+			if (Validator.isNull(value)) {
 				throw new IllegalArgumentException();
 			}
 		}
@@ -538,7 +538,7 @@ public class PortletURLImpl
 					String key = entry.getKey();
 					String[] value = entry.getValue();
 
-					if (key == null) {
+					if (Validator.isNull(key)) {
 						throw new IllegalArgumentException();
 					}
 					else if (value == null) {
@@ -592,7 +592,7 @@ public class PortletURLImpl
 	}
 
 	public void setProperty(String key, String value) {
-		if (key == null) {
+		if (Validator.isNull(key)) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -644,7 +644,7 @@ public class PortletURLImpl
 
 	@Override
 	public String toString() {
-		if (_toString != null) {
+		if (Validator.isNotNull(_toString)) {
 			return _toString;
 		}
 
@@ -766,7 +766,7 @@ public class PortletURLImpl
 		}
 
 		try {
-			if (_layoutFriendlyURL == null) {
+			if (Validator.isNull(_layoutFriendlyURL)) {
 				Layout layout = getLayout();
 
 				if (layout != null) {
@@ -869,7 +869,7 @@ public class PortletURLImpl
 
 		String outerPortletId = PortalUtil.getOuterPortletId(_request);
 
-		if (outerPortletId != null) {
+		if (Validator.isNotNull(outerPortletId)) {
 			sb.append("p_o_p_id");
 			sb.append(StringPool.EQUAL);
 			sb.append(processValue(key, outerPortletId));
@@ -1108,7 +1108,7 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 
-		if (_resourceID != null) {
+		if (Validator.isNotNull(_resourceID)) {
 			sb.append("wsrp-resourceID");
 			sb.append(StringPool.EQUAL);
 			sb.append(HttpUtil.encodeURL(_resourceID));
@@ -1330,7 +1330,7 @@ public class PortletURLImpl
 
 				String newURL = shortenURL(redirect, --count);
 
-				if (newURL != null) {
+				if (Validator.isNotNull(newURL)) {
 					newURL = HttpUtil.encodeURL(newURL);
 
 					sb.append(qName);

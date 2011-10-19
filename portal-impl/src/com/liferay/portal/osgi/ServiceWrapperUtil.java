@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.adaptor.osgi;
+package com.liferay.portal.osgi;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;

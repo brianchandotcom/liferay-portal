@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.adaptor.osgi;
+package com.liferay.portal.osgi;
 
-import com.liferay.portal.kernel.adaptor.Adaptor;
-import com.liferay.portal.kernel.adaptor.AdaptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.service.OSGiServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -152,22 +151,12 @@ public class OSGiServlet extends HttpServlet {
 	}
 
 	protected BundleContext getBundleContext() {
-		if (_bundleContext != null) {
-			return _bundleContext;
-		}
+		if (_bundleContext == null) {
+			Framework framework = OSGiServiceUtil.getFramework();
 
-		try {
-			Adaptor adaptor = AdaptorUtil.getAdaptor();
-
-			if ((adaptor != null) && (adaptor instanceof OSGiAdaptor)) {
-				OSGiAdaptor osgiAdaptor = (OSGiAdaptor)adaptor;
-
-				Framework framework = osgiAdaptor.getFramework();
-
+			if (framework != null) {
 				_bundleContext = framework.getBundleContext();
 			}
-		}
- 		catch (Exception e) {
 		}
 
 		return _bundleContext;

@@ -12,29 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.adaptor;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.portal.osgi;
 
 /**
  * @author Raymond Augé
  */
-public class AdaptorException extends PortalException {
+public class OSGiConstants {
 
-	public AdaptorException() {
-		super();
-	}
+	public static final String PORTAL_SERVICE = "portal.service";
 
-	public AdaptorException(String msg) {
-		super(msg);
-	}
+	public static final String PORTAL_SERVICE_BEAN_NAME =
+		"portal.service.bean.name";
 
-	public AdaptorException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+	public static final String PORTAL_SERVICE_CORE = "portal.service.core";
 
-	public AdaptorException(Throwable cause) {
-		super(cause);
-	}
+	public static final String PORTAL_SERVICE_PREVIOUS =
+		"portal.service.previous";
+
+	public static final String PORTAL_SERVICE_TYPE = "portal.service.type";
+
+	public static final String PORTAL_SERVICE_WRAPPER =
+		"portal.service.wrapper";
 
 }

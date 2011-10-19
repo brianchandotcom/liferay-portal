@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.adaptor.osgi;
+package com.liferay.portal.osgi;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

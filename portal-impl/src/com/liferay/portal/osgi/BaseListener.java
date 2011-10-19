@@ -12,26 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.adaptor.osgi;
+package com.liferay.portal.osgi;
 
 /**
  * @author Raymond Augé
  */
-public class OSGiConstants {
+public class BaseListener {
 
-	public static final String PORTAL_SERVICE = "portal.service";
+	protected String getLogMessage(String state, Object object) {
+		return getLogMessage(state, String.valueOf(object));
+	}
 
-	public static final String PORTAL_SERVICE_BEAN_NAME =
-		"portal.service.bean.name";
+	protected String getLogMessage(String state, String message) {
+		return String.format(_LOG_MESSAGE_FORMAT, state, message);
+	}
 
-	public static final String PORTAL_SERVICE_CORE = "portal.service.core";
-
-	public static final String PORTAL_SERVICE_PREVIOUS =
-		"portal.service.previous";
-
-	public static final String PORTAL_SERVICE_TYPE = "portal.service.type";
-
-	public static final String PORTAL_SERVICE_WRAPPER =
-		"portal.service.wrapper";
+	private static final String _LOG_MESSAGE_FORMAT = "%1$18s %2$s";
 
 }

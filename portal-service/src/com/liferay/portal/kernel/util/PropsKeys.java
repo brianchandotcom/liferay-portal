@@ -24,9 +24,9 @@ public interface PropsKeys {
 	public static final String ADMIN_DEFAULT_ROLE_NAMES = "admin.default.role.names";
 
 	public static final String ADMIN_DEFAULT_USER_GROUP_NAMES = "admin.default.user.group.names";
-	
+
 	public static final String ADMIN_EMAIL_FROM_ADDRESS = "admin.email.from.address";
-	
+
 	public static final String ADMIN_EMAIL_FROM_NAME = "admin.email.from.name";
 
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_BODY = "admin.email.password.reset.body";
@@ -1468,6 +1468,8 @@ public interface PropsKeys {
 	public static final String OSGI_FRAMEWORK_BEGINNING_START_LEVEL = "osgi.framework.beginning.start.level";
 
 	public static final String OSGI_FRAMEWORK_STORAGE = "osgi.framework.storage";
+
+	public static final String OSGI_REGISTER_LIFERAY_SERVICES = "osgi.register.liferay.services";
 
 	public static final String OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES = "osgi.system.bundle.export.packages";
 

@@ -96,7 +96,6 @@
 	}
 
 	.asset-ratings {
-		float: left;
 	}
 
 	.asset-small-image {

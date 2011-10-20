@@ -299,12 +299,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.getCompanyFoldersCount(companyId);
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchByPrimaryKey(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderLocalService.fetchByPrimaryKey(folderId);
-	}
-
 	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -306,12 +306,6 @@ public class DLFolderLocalServiceUtil {
 		return getService().getCompanyFoldersCount(companyId);
 	}
 
-	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByPrimaryKey(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchByPrimaryKey(folderId);
-	}
-
 	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -19,6 +19,8 @@
 <%
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
+long structureId = ParamUtil.getLong(request, "structureId");
+
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 TemplateSearch searchContainer = (TemplateSearch)request.getAttribute("liferay-ui:search:searchContainer");
@@ -98,7 +100,7 @@ boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, 
 
 <aui:script>
 	function <portlet:namespace />addTemplate() {
-		var url = '<portlet:renderURL><portlet:param name="struts_action" value="/journal/edit_template" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="structureId" value="<%= displayTerms.getStructureId() %>" /></portlet:renderURL>';
+		var url = '<portlet:renderURL><portlet:param name="struts_action" value="/journal/edit_template" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="structureId" value="<%= (structureId > 0)? String.valueOf(structureId): displayTerms.getStructureId() %>" /></portlet:renderURL>';
 
 		if (toggle_id_journal_template_searchcurClickValue == 'basic') {
 			url += '&<portlet:namespace /><%= displayTerms.NAME %>=' + document.<portlet:namespace />fm.<portlet:namespace /><%= displayTerms.KEYWORDS %>.value;

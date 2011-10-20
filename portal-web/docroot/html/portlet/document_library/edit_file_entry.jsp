@@ -52,12 +52,6 @@ if (fileEntry != null) {
 	folder = fileEntry.getFolder();
 }
 
-DLFolder dlFolder = DLFolderLocalServiceUtil.fetchFolder(folderId);
-
-if (dlFolder == null) {
-	folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-}
-
 FileVersion fileVersion = null;
 
 long fileVersionId = 0;
@@ -222,17 +216,6 @@ else if (dlFileEntryType != null) {
 			</c:if>
 		</aui:field-wrapper>
 
-		<c:if test="<%= dlFolder == null %>">
-
-			<%
-			folderId = 0;
-			%>
-
-			<aui:script>
-				document.<portlet:namespace />fm.<portlet:namespace />folderId.value = 0;
-			</aui:script>
-		</c:if>
-
 		<%
 		String folderName = StringPool.BLANK;
 
@@ -247,6 +230,7 @@ else if (dlFileEntryType != null) {
 		else {
 			folderName = LanguageUtil.get(pageContext, "documents-home");
 		}
+
 		%>
 
 		<portlet:renderURL var="viewFolderURL">

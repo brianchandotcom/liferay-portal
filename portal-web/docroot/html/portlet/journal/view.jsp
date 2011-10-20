@@ -197,9 +197,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 				// Description
 
-				if (Validator.isNotNull(structure.getDescription(locale))) {
-					row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowURL);
-				}
+				row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowURL);
 
 				// Action
 

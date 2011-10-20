@@ -499,6 +499,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-datatable', 'json']
+		requires: ['aui-arraysort', 'aui-datatable', 'json']
 	}
 );

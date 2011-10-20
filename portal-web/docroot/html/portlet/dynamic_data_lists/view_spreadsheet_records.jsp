@@ -64,23 +64,10 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		var a = recA.getValue(field);
 		var b = recB.getValue(field);
 
-		var sorted;
+		var sorted = A.ArraySort.compareIgnoreWhiteSpace(a, b, desc);
 
-		if (a === '' && b === '') {
-			sorted = 0;
-		}
-		else if (a === '') {
-			sorted = 1;
-		}
-		else if (b === '') {
-			sorted = -1;
-		}
-		else {
-			sorted = A.ArraySort.compare(a, b, desc);
-
-			if (sorted === 0) {
-				sorted = A.ArraySort.compare(recA.get('id'), recB.get('id'), desc);
-			}
+		if (sorted === 0) {
+			sorted = A.ArraySort.compare(recA.get('id'), recB.get('id'), desc);
 		}
 
 		return sorted;

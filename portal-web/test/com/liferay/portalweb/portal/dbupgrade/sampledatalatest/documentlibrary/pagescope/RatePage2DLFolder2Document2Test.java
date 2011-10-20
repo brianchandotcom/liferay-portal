@@ -67,8 +67,9 @@ public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -91,8 +92,9 @@ public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
-			selenium.getText("xPath=(//span[@class='document-title'])[1]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[1]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
 
 		for (int second = 0;; second++) {
@@ -115,7 +117,9 @@ public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.click("//div[contains(@class,'liferay-rating-vote')]/div/a[4]");
+		Thread.sleep(5000);
+		selenium.clickAt("//div[contains(@class,'liferay-rating-vote')]/div/a[4]",
+			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

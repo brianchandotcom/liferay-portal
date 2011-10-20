@@ -65,8 +65,9 @@ public class ViewPage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -77,7 +78,7 @@ public class ViewPage1DLFolder1Document1Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder1 Document1 Title.doc")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -90,8 +91,9 @@ public class ViewPage1DLFolder1Document1Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/document.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Document1 Title.doc"));
 
 		for (int second = 0;; second++) {

@@ -96,6 +96,23 @@ public class ImportExportPortletLARPage2DLPageScopeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_86_importFileName']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.uploadFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("DL_Page_Scope.Page2.Portlet.lar"));
 		assertFalse(selenium.isChecked(

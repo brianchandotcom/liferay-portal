@@ -35,22 +35,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder2 Name</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@id='_20_breadcrumb']/ul/li[2]/span/a</td>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>DL Folder2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='_20_breadcrumb']/ul/li[2]/span/a</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>DL Folder2 Name</td>
 </tr>
 <tr>
@@ -66,17 +66,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Document</td>
+	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Document</td>
+	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Document</td>
+	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -99,15 +99,21 @@
 	<td>Publish</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder2 Document2 Title.xls</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

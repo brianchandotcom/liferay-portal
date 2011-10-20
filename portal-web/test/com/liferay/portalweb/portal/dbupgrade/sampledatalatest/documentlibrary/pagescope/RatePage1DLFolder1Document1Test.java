@@ -65,8 +65,9 @@ public class RatePage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -89,8 +90,9 @@ public class RatePage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Document1 Title.doc"));
 
 		for (int second = 0;; second++) {
@@ -113,7 +115,9 @@ public class RatePage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.click("//div[contains(@class,'liferay-rating-vote')]/div/a[4]");
+		Thread.sleep(5000);
+		selenium.clickAt("//div[contains(@class,'liferay-rating-vote')]/div/a[4]",
+			RuntimeVariables.replace("Rate this 4 stars out of 5."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

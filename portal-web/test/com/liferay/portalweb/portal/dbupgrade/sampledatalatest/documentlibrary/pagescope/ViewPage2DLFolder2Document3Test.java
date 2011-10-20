@@ -67,8 +67,9 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -79,7 +80,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder2 Document3 Title.txt")
 										.equals(selenium.getText(
-								"xPath=(//span[@class='document-title'])[2]"))) {
+								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"))) {
 					break;
 				}
 			}
@@ -92,8 +93,9 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/default.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[2]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DL Folder2 Document3 Title.txt"));
 
 		for (int second = 0;; second++) {
@@ -183,8 +185,9 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -195,7 +198,7 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder2 Document3 Title.txt")
 										.equals(selenium.getText(
-								"xPath=(//span[@class='document-title'])[2]"))) {
+								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"))) {
 					break;
 				}
 			}
@@ -208,8 +211,9 @@ public class ViewPage2DLFolder2Document3Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/default.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document3 Title.txt"),
-			selenium.getText("xPath=(//span[@class='document-title'])[2]"));
-		selenium.clickAt("xPath=(//span[@class='document-title'])[2]",
+			selenium.getText(
+				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DL Folder2 Document3 Title.txt"));
 
 		for (int second = 0;; second++) {

@@ -39,6 +39,7 @@ public class PageScopeLARCPTests extends BaseTests {
 			ConfigurePage2PortletDLScopeLayoutCurrentPageTest.class);
 		testSuite.addTestSuite(
 			ConfigurePage3PortletDLScopeLayoutPage2Test.class);
+		testSuite.addTestSuite(ConfigurePage2PortletEntriesPerPage5Test.class);
 		testSuite.addTestSuite(ImportExportCPLARDefaultDLPageScopeTest.class);
 		testSuite.addTestSuite(ImportExportCPLARPage2DLPageScopeTest.class);
 

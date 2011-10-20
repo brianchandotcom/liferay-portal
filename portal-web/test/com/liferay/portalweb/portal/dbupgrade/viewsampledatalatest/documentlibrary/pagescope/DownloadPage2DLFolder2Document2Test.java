@@ -79,7 +79,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder2 Document2 Title.xls")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -90,7 +90,9 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow"));
 
@@ -180,7 +182,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document"),
+		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
@@ -193,6 +195,23 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -243,8 +262,9 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace(
 				"Temp_DL_Folder2_Document2_Title.xls"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("Temp_DL_Folder2_Document2_Title.xls"));
 
 		for (int second = 0;; second++) {

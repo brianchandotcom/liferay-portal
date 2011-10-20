@@ -65,8 +65,9 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
@@ -75,8 +76,9 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//span[@id='_20_breadcrumb']/ul/li[2]/span/a")) {
+				if (RuntimeVariables.replace("DL Folder1 Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -87,7 +89,7 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
@@ -110,7 +112,7 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document"),
+		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.click(RuntimeVariables.replace(
@@ -126,10 +128,28 @@ public class AddPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

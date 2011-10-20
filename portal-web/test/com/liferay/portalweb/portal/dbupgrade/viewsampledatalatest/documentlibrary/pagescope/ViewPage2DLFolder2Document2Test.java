@@ -67,8 +67,9 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -79,7 +80,7 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder2 Document2 Title.xls")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -92,8 +93,9 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/spreadsheet.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
 
 		for (int second = 0;; second++) {
@@ -184,8 +186,9 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
 
 		for (int second = 0;; second++) {
@@ -196,7 +199,7 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder2 Document2 Title.xls")
 										.equals(selenium.getText(
-								"//span[@class='document-title']"))) {
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
 				}
 			}
@@ -209,8 +212,9 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//img[@src='/html/themes/classic/images/file_system/large/spreadsheet.png']"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
-			selenium.getText("//span[@class='document-title']"));
-		selenium.clickAt("//span[@class='document-title']",
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
 
 		for (int second = 0;; second++) {

@@ -65,7 +65,7 @@ public class Guest_ViewPage1Folder1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DL Folder1 Name"));
 	}

@@ -76,6 +76,8 @@ public class TearDownEventTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
+
 				for (int second = 0;; second++) {
 					if (second >= 90) {
 						fail("timeout");

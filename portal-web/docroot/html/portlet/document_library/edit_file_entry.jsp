@@ -52,7 +52,7 @@ if (fileEntry != null) {
 	folder = fileEntry.getFolder();
 }
 
-DLFolder dlFolder = DLFolderLocalServiceUtil.fetchFolder(folderId);
+DLFolder dlFolder = DLFolderLocalServiceUtil.fetchByPrimaryKey(folderId);
 
 if (dlFolder == null) {
 	folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -222,12 +222,8 @@ else if (dlFileEntryType != null) {
 			</c:if>
 		</aui:field-wrapper>
 
-		<c:if test="<%= dlFolder == null %>">
-
-			<%
-			folderId = 0;
-			%>
-
+		<c:if test="<%= DLFolderLocalServiceUtil.fetchByPrimaryKey(folderId) == null %>">
+			<% folderId = 0; %>
 			<aui:script>
 				document.<portlet:namespace />fm.<portlet:namespace />folderId.value = 0;
 			</aui:script>

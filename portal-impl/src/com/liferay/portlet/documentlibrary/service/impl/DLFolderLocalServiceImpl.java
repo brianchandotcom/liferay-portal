@@ -152,7 +152,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		deleteFolder(dlFolder);
 	}
 
-	public DLFolder fetchFolder(long folderId) throws SystemException {
+	public DLFolder fetchByPrimaryKey(long folderId) throws SystemException {
 		return dlFolderPersistence.fetchByPrimaryKey(folderId);
 	}
 

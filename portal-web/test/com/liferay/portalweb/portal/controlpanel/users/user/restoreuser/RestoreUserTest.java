@@ -129,7 +129,7 @@ public class RestoreUserTest extends BaseTestCase {
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("\u00ab Basic"));
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("selenium"));
+					RuntimeVariables.replace("selenium01"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");

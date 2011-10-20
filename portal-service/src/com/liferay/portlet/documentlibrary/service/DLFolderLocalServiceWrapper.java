@@ -288,12 +288,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService.deleteFolder(folderId);
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderLocalService.fetchFolder(folderId);
-	}
-
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -303,6 +297,12 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	public int getCompanyFoldersCount(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getCompanyFoldersCount(companyId);
+	}
+
+	public com.liferay.portlet.documentlibrary.model.DLFolder fetchByPrimaryKey(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.fetchByPrimaryKey(folderId);
 	}
 
 	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(

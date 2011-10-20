@@ -55,10 +55,9 @@ public class AddDLFolderImageTitleNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"There are no documents in this folder.")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
-								"//div[@class='portlet-msg-info']"))) {
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -68,6 +67,8 @@ public class AddDLFolderImageTitleNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",

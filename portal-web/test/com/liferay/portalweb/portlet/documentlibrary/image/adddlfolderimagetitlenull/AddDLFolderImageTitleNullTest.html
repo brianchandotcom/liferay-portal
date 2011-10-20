@@ -35,8 +35,13 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents in this folder.</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -133,6 +138,7 @@
 	<td>//div[2]/div[2]/div/div[2]/div[2]/div</td>
 	<td>Content Type image/jpeg</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

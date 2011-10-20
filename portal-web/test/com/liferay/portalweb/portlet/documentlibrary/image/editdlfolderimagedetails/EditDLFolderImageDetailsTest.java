@@ -74,8 +74,8 @@ public class EditDLFolderImageDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder Image Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//button[1]"));
-		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
+			selenium.getText("//button[2]"));
+		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Folder Image Title Edit"));
@@ -104,7 +104,25 @@ public class EditDLFolderImageDetailsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder Image Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isElementPresent(
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img"));
 		assertEquals(RuntimeVariables.replace(
 				"DL Folder Image Description Edit"),

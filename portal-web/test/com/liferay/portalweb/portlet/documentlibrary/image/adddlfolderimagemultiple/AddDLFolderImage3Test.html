@@ -35,17 +35,22 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
-	<td>DL Folder Image1 Title</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -119,7 +124,7 @@
 	<td>DL Folder Image3 Title</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
 	<td>Liferay Image 3</td>
 </tr>
@@ -136,13 +141,14 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='download-document']</td>
-	<td>Download (21.9k)</td>
+	<td>Download (14.0k)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[2]/div[2]/div/div[2]/div[2]/div</td>
-	<td>Content Type image/png</td>
+	<td>Content Type image/jpeg</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

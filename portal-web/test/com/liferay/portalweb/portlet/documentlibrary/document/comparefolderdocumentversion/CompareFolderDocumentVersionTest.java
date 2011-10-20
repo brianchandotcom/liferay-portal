@@ -43,11 +43,11 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +55,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -67,17 +67,17 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Document Title"));
+			RuntimeVariables.replace("DL Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//button[1]"));
-		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
+			selenium.getText("//button[2]"));
+		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
@@ -106,8 +106,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText(
-				"//div[@id='documentLibraryVersionHistoryPanel']/div[2]/div/div/table/tbody/tr[3]/td[2]"));
+			selenium.getText("//tr[3]/td[2]"));
 		assertFalse(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[1]"));
 		selenium.clickAt("xPath=(//input[@name='_20_rowIds'])[1]",
 			RuntimeVariables.replace("1.1 Check Box"));
@@ -120,7 +119,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//section/div/div/div",
-				"There are no differences between DML Folder Document Title 1.0 and DML Folder Document Title 1.1."));
+				"There are no differences between DL Folder Document Title 1.0 and DL Folder Document Title 1.1."));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -142,11 +141,11 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -154,7 +153,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -166,17 +165,17 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Document Title"));
+			RuntimeVariables.replace("DL Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//button[1]"));
-		selenium.clickAt("//button[1]", RuntimeVariables.replace("Edit"));
+			selenium.getText("//button[2]"));
+		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
@@ -205,8 +204,7 @@ public class CompareFolderDocumentVersionTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("1.2"),
-			selenium.getText(
-				"//div[@id='documentLibraryVersionHistoryPanel']/div[2]/div/div/table/tbody/tr[3]/td[2]"));
+			selenium.getText("//tr[3]/td[2]"));
 		assertFalse(selenium.isChecked("xPath=(//input[@name='_20_rowIds'])[1]"));
 		selenium.clickAt("xPath=(//input[@name='_20_rowIds'])[1]",
 			RuntimeVariables.replace("1.2 Check Box"));

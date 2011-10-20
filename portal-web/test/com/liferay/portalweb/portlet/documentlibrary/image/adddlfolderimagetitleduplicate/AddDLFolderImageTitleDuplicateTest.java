@@ -55,9 +55,9 @@ public class AddDLFolderImageTitleDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DL Folder Image Title")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
-								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -67,9 +67,11 @@ public class AddDLFolderImageTitleDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

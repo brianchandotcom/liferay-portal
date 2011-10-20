@@ -51,8 +51,8 @@ public class PermissionsDLDocumentGuestViewOffTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//button[4]"));
-		selenium.clickAt("//button[4]", RuntimeVariables.replace("Permissions"));
+			selenium.getText("//button[5]"));
+		selenium.clickAt("//button[5]", RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

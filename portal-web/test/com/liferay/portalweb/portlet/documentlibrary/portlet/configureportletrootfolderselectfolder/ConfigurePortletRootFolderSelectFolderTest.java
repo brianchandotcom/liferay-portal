@@ -111,7 +111,26 @@ public class ConfigurePortletRootFolderSelectFolderTest extends BaseTestCase {
 
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DL Folder Name")
+										.equals(selenium.getText(
+								"//a[@id='_86_rootFolderName']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//a[@id='_86_rootFolderName']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

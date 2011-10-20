@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddDLSubfolderTest</title>
+<title>AddDLFolder1SubfolderTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddDLSubfolderTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddDLFolder1SubfolderTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -34,18 +34,23 @@
 	<td>DL Folder1 Name</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
-	<td>Add</td>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -66,12 +71,12 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_20_name']</td>
-	<td>DL Subfolder Name</td>
+	<td>DL Folder1 Subfolder Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='_20_description']</td>
-	<td>DL Subfolder Description</td>
+	<td>DL Folder1 Subfolder Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -81,7 +86,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DL Subfolder Name</td>
+	<td>DL Folder1 Subfolder Name</td>
 </tr>
 
 </tbody></table>

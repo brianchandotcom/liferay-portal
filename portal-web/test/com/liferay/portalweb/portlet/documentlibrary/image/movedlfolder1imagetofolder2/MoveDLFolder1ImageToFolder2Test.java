@@ -68,14 +68,14 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		}
 
 		assertFalse(selenium.isChecked(
-				"//form/div[1]/div/div/span[1]/span/span/input[2]"));
-		selenium.clickAt("//form/div[1]/div/div/span[1]/span/span/input[2]",
+				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
+		selenium.clickAt("//input[@id='_20_rowIdsFileEntryCheckbox']",
 			RuntimeVariables.replace("Document Checkbox"));
 		assertTrue(selenium.isChecked(
-				"//form/div[1]/div/div/span[1]/span/span/input[2]"));
+				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[2]/ul/li/strong/a/span"));
-		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -103,7 +103,7 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DL Folder1 Image Title"),
 			selenium.getText("//span[@class='file-title']"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
@@ -116,7 +116,7 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//li[@class='first']/span/a")) {
+				if (selenium.isVisible("//tr[4]/td[1]/a")) {
 					break;
 				}
 			}
@@ -126,11 +126,6 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Documents Home"),
-			selenium.getText("//li[@class='first']/span/a"));
-		selenium.clickAt("//li[@class='first']/span/a",
-			RuntimeVariables.replace("Documents Home"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",

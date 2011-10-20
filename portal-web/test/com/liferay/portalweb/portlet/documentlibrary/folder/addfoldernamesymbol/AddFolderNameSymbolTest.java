@@ -72,7 +72,7 @@ public class AddFolderNameSymbolTest extends BaseTestCase {
 			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("DML Folder Name@"));
+			RuntimeVariables.replace("DL Folder Name@"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

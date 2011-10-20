@@ -89,14 +89,14 @@ public class DeleteDLSubfolderImageActionsTest extends BaseTestCase {
 		}
 
 		assertFalse(selenium.isChecked(
-				"//form/div[1]/div/div/span[1]/span/span/input[2]"));
-		selenium.clickAt("//form/div[1]/div/div/span[1]/span/span/input[2]",
+				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
+		selenium.clickAt("//input[@id='_20_rowIdsFileEntryCheckbox']",
 			RuntimeVariables.replace("Document Checkbox"));
 		assertTrue(selenium.isChecked(
-				"//form/div[1]/div/div/span[1]/span/span/input[2]"));
+				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[2]/ul/li/strong/a/span"));
-		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -182,7 +182,7 @@ public class DeleteDLSubfolderImageActionsTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"There are no documents in this folder.")
+							"There are no documents or media files in this folder.")
 										.equals(selenium.getText(
 								"//div[@class='portlet-msg-info']"))) {
 					break;
@@ -195,7 +195,7 @@ public class DeleteDLSubfolderImageActionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

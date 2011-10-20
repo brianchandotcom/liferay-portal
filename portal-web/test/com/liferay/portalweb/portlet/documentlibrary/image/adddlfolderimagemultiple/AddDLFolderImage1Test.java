@@ -55,10 +55,9 @@ public class AddDLFolderImage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"There are no documents in this folder.")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
-								"//div[@class='portlet-msg-info']"))) {
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -68,9 +67,11 @@ public class AddDLFolderImage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -136,7 +137,7 @@ public class AddDLFolderImage1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DL Folder Image1 Title"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image1 Description"),
 			selenium.getText("//span[@class='document-description']"));

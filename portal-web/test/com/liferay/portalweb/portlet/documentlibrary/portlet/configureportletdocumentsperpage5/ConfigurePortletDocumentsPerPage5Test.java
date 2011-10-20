@@ -96,6 +96,8 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("5",
+			selenium.getSelectedLabel("//select[@id='_86_entriesPerPage']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -117,11 +119,11 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -129,7 +131,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -141,7 +143,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 
 		for (int second = 0;; second++) {
@@ -150,7 +152,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document1 Title")
+				if (RuntimeVariables.replace("DL Folder Document1 Title")
 										.equals(selenium.getText(
 								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"))) {
 					break;
@@ -162,22 +164,22 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document1 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document2 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document3 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document3 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document4 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document4 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document5 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document5 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
-		assertFalse(selenium.isTextPresent("DML Folder Document6 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document6 Title"));
 		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-next-link'])[2]",
 			RuntimeVariables.replace("Next"));
@@ -188,7 +190,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document6 Title")
+				if (RuntimeVariables.replace("DL Folder Document6 Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -200,14 +202,14 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document6 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document6 Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		assertFalse(selenium.isTextPresent("DML Folder Document1 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document2 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document3 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document4 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document5 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document1 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document2 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document3 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document4 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document5 Title"));
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-prev-link'])[2]",
 			RuntimeVariables.replace("Previous"));
 
@@ -217,7 +219,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document1 Title")
+				if (RuntimeVariables.replace("DL Folder Document1 Title")
 										.equals(selenium.getText(
 								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"))) {
 					break;
@@ -229,22 +231,22 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document1 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document2 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document3 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document3 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document4 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document4 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document5 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document5 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
-		assertFalse(selenium.isTextPresent("DML Folder Document6 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document6 Title"));
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-last-link'])[2]",
 			RuntimeVariables.replace("Last"));
 
@@ -254,7 +256,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document6 Title")
+				if (RuntimeVariables.replace("DL Folder Document6 Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -266,14 +268,14 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document6 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document6 Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		assertFalse(selenium.isTextPresent("DML Folder Document1 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document2 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document3 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document4 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document5 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document1 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document2 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document3 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document4 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document5 Title"));
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-first-link'])[2]",
 			RuntimeVariables.replace("First"));
 
@@ -283,7 +285,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document1 Title")
+				if (RuntimeVariables.replace("DL Folder Document1 Title")
 										.equals(selenium.getText(
 								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"))) {
 					break;
@@ -295,22 +297,22 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document1 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document2 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document3 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document3 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document4 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document4 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document5 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document5 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
-		assertFalse(selenium.isTextPresent("DML Folder Document6 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document6 Title"));
 		selenium.clickAt("//a[@page='2']", RuntimeVariables.replace("2"));
 
 		for (int second = 0;; second++) {
@@ -319,7 +321,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document6 Title")
+				if (RuntimeVariables.replace("DL Folder Document6 Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -331,14 +333,14 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document6 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document6 Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		assertFalse(selenium.isTextPresent("DML Folder Document1 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document2 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document3 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document4 Title"));
-		assertFalse(selenium.isTextPresent("DML Folder Document5 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document1 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document2 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document3 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document4 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document5 Title"));
 		selenium.clickAt("xPath=(//a[@page='1'])[2]",
 			RuntimeVariables.replace("1"));
 
@@ -348,7 +350,7 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document1 Title")
+				if (RuntimeVariables.replace("DL Folder Document1 Title")
 										.equals(selenium.getText(
 								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"))) {
 					break;
@@ -360,21 +362,21 @@ public class ConfigurePortletDocumentsPerPage5Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document1 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document2 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document3 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document3 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document4 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document4 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document5 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document5 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
-		assertFalse(selenium.isTextPresent("DML Folder Document6 Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document6 Title"));
 	}
 }

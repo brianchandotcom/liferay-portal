@@ -97,7 +97,7 @@ public class ConfigurePortletRootFolderRemoveFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (!RuntimeVariables.replace("DML Folder Name")
+				if (!RuntimeVariables.replace("DL Folder Name")
 										 .equals(selenium.getText(
 								"//a[@id='_86_rootFolderName']"))) {
 					break;
@@ -138,7 +138,7 @@ public class ConfigurePortletRootFolderRemoveFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isElementPresent(

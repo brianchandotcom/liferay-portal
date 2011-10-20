@@ -106,3 +106,5 @@ public void jspInit() {
 private Set<String> _allMimeTypes;
 private String _defaultMimeTypes;
 %>
+
+<%@ include file="/html/portlet/document_library/util.jsp" %>

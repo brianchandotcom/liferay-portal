@@ -71,17 +71,17 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	public static void deleteFiles(FileEntry fileEntry) {
 		deleteFiles(
-			fileEntry.getCompanyId(), fileEntry.getGroupId(),
+			fileEntry.getCompanyId(), fileEntry.getRepositoryId(),
 			fileEntry.getFileEntryId(), -1);
 	}
 
 	public static void deleteFiles(FileVersion fileVersion) {
 		deleteFiles(
-			fileVersion.getCompanyId(), fileVersion.getGroupId(),
+			fileVersion.getCompanyId(), fileVersion.getRepositoryId(),
 			fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 	}
 
-	public static void deleteFiles(
+	protected static void deleteFiles(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
 		try {
@@ -168,6 +168,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return doGetPreviewAsStream(fileVersion, 0, type);
 	}
 
+	protected int doGetPreviewFileCount(FileVersion fileVersion)
+		throws Exception {
+
+		try {
+			String[] fileNames = DLStoreUtil.getFileNames(
+				fileVersion.getCompanyId(), REPOSITORY_ID,
+				getPathSegment(fileVersion, true));
+
+			return fileNames.length;
+		}
+		catch (Exception e) {
+		}
+
+		return 0;
+	}
+
 	protected long doGetPreviewFileSize(
 			FileVersion fileVersion, int index, String type)
 		throws Exception {
@@ -198,22 +214,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return DLStoreUtil.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getThumbnailFilePath(fileVersion, type));
-	}
-
-	protected int getPreviewFileCount(FileVersion fileVersion)
-		throws Exception {
-
-		try {
-			String[] fileNames = DLStoreUtil.getFileNames(
-				fileVersion.getCompanyId(), REPOSITORY_ID,
-				getPathSegment(fileVersion, true));
-
-			return fileNames.length;
-		}
-		catch (Exception e) {
-		}
-
-		return 0;
 	}
 
 	protected String getPreviewFilePath(

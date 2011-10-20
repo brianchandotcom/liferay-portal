@@ -306,7 +306,10 @@ public class WebServerServlet extends HttpServlet {
 	protected Image getDefaultImage(HttpServletRequest request, long imageId) {
 		String path = GetterUtil.getString(request.getPathInfo());
 
-		if (path.startsWith("/company_logo")) {
+		if (path.startsWith("/company_logo") ||
+			path.startsWith("/layout_set_logo") ||
+			path.startsWith("/logo")) {
+
 			return ImageLocalServiceUtil.getDefaultCompanyLogo();
 		}
 		else if (path.startsWith("/organization_logo")) {
@@ -375,6 +378,13 @@ public class WebServerServlet extends HttpServlet {
 				image = ImageServiceUtil.getImage(imageId);
 
 				image = getUserPortraitImageResized(image, imageId);
+			}
+			else if (path.startsWith("/company_logo") ||
+					 path.startsWith("/layout_set_logo") ||
+					 path.startsWith("/logo") ||
+					 path.startsWith("/organization_logo")) {
+
+				image = ImageServiceUtil.getImage(imageId);
 			}
 		}
 		else {

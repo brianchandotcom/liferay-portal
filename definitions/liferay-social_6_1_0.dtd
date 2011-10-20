@@ -1,10 +1,10 @@
 <!--
-<!DOCTYPE social PUBLIC
+<!DOCTYPE liferay-social PUBLIC
 	"-//Liferay//DTD Social 6.1.0//EN"
 	"http://www.liferay.com/dtd/liferay-social_6_1_0.dtd">
 -->
 
-<!ELEMENT social (activity*)>
+<!ELEMENT liferay-social (activity*)>
 
 <!ELEMENT activity (model-name, activity-key, language-key?, log-activity?,
 processor-class?, contribution-value?, contribution-limit?,

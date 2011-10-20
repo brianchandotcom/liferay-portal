@@ -974,6 +974,18 @@ public class SourceFormatter {
 				}
 			}
 
+			String trimmedLine = StringUtil.trim(line);
+
+			if (trimmedLine.contains(StringPool.TAB) &&
+				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				!trimmedLine.startsWith(StringPool.STAR)) {
+
+				if (!fileName.endsWith("ConverterUtil.java")) {
+					_sourceFormatterHelper.printError(
+						fileName, "tab: " + fileName + " " + lineCount);
+				}
+			}
+
 			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
 				_sourceFormatterHelper.printError(
 					fileName, "{:" + fileName + " " + lineCount);

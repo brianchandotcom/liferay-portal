@@ -206,6 +206,12 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 
 			displayRecordSetId.set('innerHTML', recordSetName + ' (<%= LanguageUtil.get(pageContext, "modified") %>)');
 			displayRecordSetId.addClass('modified');
+
+			var dialog = Liferay.Util.getWindow();
+
+			if (dialog) {			
+				dialog.set('title', recordSetName + ' - <%= LanguageUtil.get(pageContext, "configuration") %>');
+			}
 		},
 		['aui-base']
 	);

@@ -65,6 +65,17 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class AssetTagPropertyServiceSoap {
+	/**
+	* Adds an asset tag property.
+	*
+	* @param tagId the primary key of the tag
+	* @param key the key to be associated to the value
+	* @param value the value to which the key will refer
+	* @return the created asset tag property
+	* @throws PortalException if the user did not have permission to update
+	the asset tag, or if the key or value were invalid
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTagPropertySoap addTagProperty(
 		long tagId, java.lang.String key, java.lang.String value)
 		throws RemoteException {
@@ -81,6 +92,15 @@ public class AssetTagPropertyServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the asset tag property with the specified ID.
+	*
+	* @param tagPropertyId the primary key of the asset tag property instance
+	* @throws PortalException if an asset tag property with the primary key
+	could not be found or if the user did not have permission to
+	update the asset tag property
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteTagProperty(long tagPropertyId)
 		throws RemoteException {
 		try {
@@ -93,6 +113,13 @@ public class AssetTagPropertyServiceSoap {
 		}
 	}
 
+	/**
+	* Returns all the asset tag property instances with the specified tag ID.
+	*
+	* @param tagId the primary key of the tag
+	* @return the matching asset tag properties
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTagPropertySoap[] getTagProperties(
 		long tagId) throws RemoteException {
 		try {
@@ -108,6 +135,14 @@ public class AssetTagPropertyServiceSoap {
 		}
 	}
 
+	/**
+	* Returns asset tag properties with the specified group and key.
+	*
+	* @param companyId the primary key of the company
+	* @param key the key that refers to some value
+	* @return the matching asset tag properties
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTagPropertySoap[] getTagPropertyValues(
 		long companyId, java.lang.String key) throws RemoteException {
 		try {
@@ -123,6 +158,18 @@ public class AssetTagPropertyServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the asset tag property.
+	*
+	* @param tagPropertyId the primary key of the asset tag property
+	* @param key the new key to be associated to the value
+	* @param value the new value to which the key will refer
+	* @return the updated asset tag property
+	* @throws PortalException if an asset tag property with the primary key
+	could not be found, if the user did not have permission to
+	update the asset tag, or if the key or value were invalid
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTagPropertySoap updateTagProperty(
 		long tagPropertyId, java.lang.String key, java.lang.String value)
 		throws RemoteException {

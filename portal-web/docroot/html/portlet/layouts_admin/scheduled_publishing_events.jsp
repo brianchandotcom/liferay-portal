@@ -42,7 +42,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(schedulerResponse, schedulerResponse.getJobName(), i);
 
-	// Description
+	// Title
 
 	row.addText(schedulerResponse.getDescription());
 

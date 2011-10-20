@@ -52,16 +52,15 @@ import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.FileModel;
@@ -1649,23 +1648,19 @@ public class DLFileEntryLocalServiceImpl
 			long groupId, long folderId, long fileEntryId, String title)
 		throws PortalException, SystemException {
 
-		try {
-			dlFolderLocalService.getFolder(groupId, folderId, title);
+		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
+			groupId, folderId, title);
 
+		if (dlFolder != null) {
 			throw new DuplicateFolderNameException(title);
 		}
-		catch (NoSuchFolderException nsfe) {
-		}
 
-		try {
-			DLFileEntry dlFileEntry =
-				dlFileEntryPersistence.findByG_F_T(groupId, folderId, title);
+		DLFileEntry dlFileEntry =
+			dlFileEntryPersistence.fetchByG_F_T(groupId, folderId, title);
 
-			if (dlFileEntry.getFileEntryId() != fileEntryId) {
-				throw new DuplicateFileException(title);
-			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId)) {
+			throw new DuplicateFileException(title);
 		}
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.wiki.wikipage;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portlet.wiki.wikipage.addchildpage1childpageduplicatechildpage2.AddChildPage1ChildPageDuplicateChildPage2Tests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpage.AddFrontPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpage.AddFrontPageChildPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagemultiple.AddFrontPageChildPageMultipleTests;
@@ -104,6 +105,8 @@ public class WikiPageTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(
+			AddChildPage1ChildPageDuplicateChildPage2Tests.suite());
 		testSuite.addTest(AddFrontPageTests.suite());
 		testSuite.addTest(AddFrontPageChildPageTests.suite());
 		testSuite.addTest(AddFrontPageChildPageMultipleTests.suite());

@@ -1062,6 +1062,8 @@ public class ServicePreAction extends Action {
 				siteMapSettingsURL.setParameter(
 					"struts_action", "/layouts_admin/edit_layouts");
 
+				siteMapSettingsURL.setParameter("closeRedirect", currentURL);
+
 				if (layout.isPrivateLayout()) {
 					siteMapSettingsURL.setParameter("tabs1", "private-pages");
 				}

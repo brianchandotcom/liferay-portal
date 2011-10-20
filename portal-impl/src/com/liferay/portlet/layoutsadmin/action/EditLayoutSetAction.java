@@ -18,6 +18,7 @@ import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -74,6 +75,16 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 		try {
 			if (cmd.equals(Constants.UPDATE)) {
 				updateLayoutSet(actionRequest, actionResponse);
+			}
+
+			String closeRedirect = ParamUtil.getString(
+				actionRequest, "closeRedirect");
+
+			if (Validator.isNotNull(closeRedirect)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doCloseRedirect",
+					closeRedirect);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

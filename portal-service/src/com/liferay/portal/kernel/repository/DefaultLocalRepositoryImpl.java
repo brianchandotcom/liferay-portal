@@ -178,7 +178,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders, int start,	int end,
+			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
 

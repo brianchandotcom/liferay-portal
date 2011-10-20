@@ -469,7 +469,7 @@ public class Entity {
 	}
 
 	public boolean hasPrimitivePK() {
-		return 	hasPrimitivePK(true);
+		return hasPrimitivePK(true);
 	}
 
 	public boolean hasPrimitivePK(boolean includeWrappers) {

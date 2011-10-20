@@ -69,7 +69,7 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	public void deleteStatsUser(long statsUserId)
-		throws PortalException,	SystemException {
+		throws PortalException, SystemException {
 
 		MBStatsUser statsUser = mbStatsUserPersistence.findByPrimaryKey(
 			statsUserId);

@@ -1179,7 +1179,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	public List<Folder> getFolders(
 			long repositoryId, long parentFolderId, boolean includeMountFolders,
-			int start, int end,	OrderByComparator obc)
+			int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		Repository repository = getRepository(repositoryId);

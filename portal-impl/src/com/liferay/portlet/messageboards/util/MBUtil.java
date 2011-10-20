@@ -114,7 +114,7 @@ public class MBUtil {
 		if (strutsAction.equals("/message_boards/select_category") ||
 			strutsAction.equals("/message_boards_admin/select_category")) {
 
-			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

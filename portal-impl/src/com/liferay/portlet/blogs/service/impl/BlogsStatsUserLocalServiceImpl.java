@@ -42,7 +42,7 @@ public class BlogsStatsUserLocalServiceImpl
 	}
 
 	public void deleteStatsUser(long statsUserId)
-		throws PortalException,	SystemException {
+		throws PortalException, SystemException {
 
 		BlogsStatsUser statsUsers = blogsStatsUserPersistence.findByPrimaryKey(
 			statsUserId);

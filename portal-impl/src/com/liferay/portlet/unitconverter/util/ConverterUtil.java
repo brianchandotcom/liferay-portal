@@ -25,8 +25,9 @@ public class ConverterUtil {
 
 	public static int TEMPERATURE_FAHRENHEIHT = 2;
 
-	public static Conversion getConversion(int type, int fromId,
-										   int toId, double fromValue) {
+	public static Conversion getConversion(
+		int type, int fromId, int toId, double fromValue) {
+
 		double toValue = 0;
 
 		if (type == 0) {
@@ -60,8 +61,9 @@ public class ConverterUtil {
 		return (fromValue / _MASS[fromId]) * _MASS[toId];
 	}
 
-	public static double convertTemperature(int fromId, int toId,
-											double fromValue) {
+	public static double convertTemperature(
+		int fromId, int toId, double fromValue) {
+
 		return _fromTemperature(toId, _toTemperature(fromId, fromValue));
 	}
 

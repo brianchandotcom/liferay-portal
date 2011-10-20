@@ -37,7 +37,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 public class LayoutRevisionAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME =	LayoutRevision.class.getName();
+	public static final String CLASS_NAME = LayoutRevision.class.getName();
 
 	public static final String TYPE = "layout_revision";
 

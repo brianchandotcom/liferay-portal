@@ -274,7 +274,7 @@ public class OrganizationLocalServiceImpl
 
 		Group group = organization.getGroup();
 
-		LayoutSet publicLayoutSet =	layoutSetLocalService.getLayoutSet(
+		LayoutSet publicLayoutSet = layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
 
 		if (publicLayoutSet.isLogo()) {
@@ -754,7 +754,7 @@ public class OrganizationLocalServiceImpl
 
 			return search(
 				user.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,	null,
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
 				null, null, organizationParams, start, end);
 		}
 		else {

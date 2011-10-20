@@ -68,7 +68,7 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 
 	@Override
 	public boolean isPublishToLiveByDefault() {
-		return 	_PUBLISH_TO_LIVE_BY_DEFAULT;
+		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
 
 	@Override

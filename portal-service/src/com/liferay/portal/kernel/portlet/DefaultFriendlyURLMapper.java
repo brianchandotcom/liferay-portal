@@ -140,7 +140,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		friendlyURLPath = friendlyURLPath.substring(getMapping().length() + 1);
 
-		if (friendlyURLPath.endsWith(StringPool.SLASH))	{
+		if (friendlyURLPath.endsWith(StringPool.SLASH)) {
 			friendlyURLPath = friendlyURLPath.substring(
 				0, friendlyURLPath.length() - 1);
 		}

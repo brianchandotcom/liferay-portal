@@ -44,7 +44,7 @@
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>
 			<div class="entry-info">
-				<span class="entry-title"><a href="<%= viewEntryURL %>"><%= entry.getTitle() %></a></span>
+				<span class="entry-title"><a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></a></span>
 
 				<span class="entry-author"><liferay-ui:message key="written-by" /> <a href="<%= viewAllEntriesURL %>"><%= HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), entry.getUserName())) %></a>,</span>
 
@@ -83,7 +83,7 @@
 						<a href="<%= viewAllEntriesURL %>">
 							&quot;<%= StringUtil.shorten(StringUtil.trim(HtmlUtil.stripHtml(entry.getContent())), 100, StringPool.BLANK) %> ...&quot;
 
-							<span class="nobreak"><liferay-ui:message arguments='<%= new Object[] {"aui-helper-hidden-accessible", entry.getTitle()} %>' key="read-more-x-about-x" /> &raquo;</span>
+							<span class="nobreak"><liferay-ui:message arguments='<%= new Object[] {"aui-helper-hidden-accessible",  HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" /> &raquo;</span>
 						</a>
 					</span>
 				</c:when>
@@ -96,7 +96,7 @@
 		<div class="comments">
 			<c:choose>
 				<c:when test='<%= displayStyle.startsWith("abstract") %>'>
-					<a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"aui-helper-hidden-accessible", entry.getTitle()} %>' key="read-more-x-about-x" /> &raquo;</a>
+					<a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"aui-helper-hidden-accessible",  HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" /> &raquo;</a>
 				</c:when>
 				<c:when test='<%= !displayStyle.startsWith("quote") %>'>
 

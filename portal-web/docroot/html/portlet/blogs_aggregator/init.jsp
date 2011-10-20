@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%><%@
+page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
 page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>

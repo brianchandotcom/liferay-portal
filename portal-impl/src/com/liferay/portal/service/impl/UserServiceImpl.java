@@ -1579,7 +1579,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			(!company.isStrangers() && !anonymousUser)) {
 
 			if (!PortalPermissionUtil.contains(
-					getPermissionChecker(), ActionKeys.ADD_USER) ||
+					getPermissionChecker(), ActionKeys.ADD_USER) &&
 				!OrganizationPermissionUtil.contains(
 					getPermissionChecker(), organizationIds,
 					ActionKeys.ASSIGN_MEMBERS)) {

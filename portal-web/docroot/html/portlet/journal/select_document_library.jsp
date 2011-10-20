@@ -144,6 +144,8 @@ if (folder != null) {
 	for (int i = 0; i < results.size(); i++) {
 		FileEntry fileEntry = (FileEntry)results.get(i);
 
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
 		DLFileShortcut fileShortcut = null;
 	%>
 

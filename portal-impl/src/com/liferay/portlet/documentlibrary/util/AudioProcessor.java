@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -72,12 +71,10 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		return _instance.doGetPreviewFileSize(fileVersion);
 	}
 
-	public static boolean hasAudio(FileEntry fileEntry, String version) {
+	public static boolean hasAudio(FileVersion fileVersion) {
 		boolean hasAudio = false;
 
 		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
 			hasAudio = _instance._hasAudio(fileVersion);
 
 			if (!hasAudio) {
@@ -89,21 +86,6 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		}
 
 		return hasAudio;
-	}
-
-	public static boolean isSupportedAudio(
-		FileEntry fileEntry, String version) {
-
-		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
-			return _instance._isSupportedAudio(fileVersion);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
 	}
 
 	public static boolean isSupportedAudio(String mimeType) {
@@ -240,14 +222,16 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	}
 
 	private boolean _hasAudio(FileVersion fileVersion) throws Exception {
+		if (!_isSupportedAudio(fileVersion)) {
+			return false;
+		}
+
 		boolean previewExists = DLStoreUtil.hasFile(
 			fileVersion.getCompanyId(), REPOSITORY_ID,
 			getPreviewFilePath(fileVersion));
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
-			if (previewExists) {
-				return true;
-			}
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && previewExists) {
+			return true;
 		}
 
 		return false;

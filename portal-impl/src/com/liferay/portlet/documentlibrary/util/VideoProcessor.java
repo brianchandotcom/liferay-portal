@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -90,12 +89,10 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		return _videoMimeTypes;
 	}
 
-	public static boolean hasVideo(FileEntry fileEntry, String version) {
+	public static boolean hasVideo(FileVersion fileVersion) {
 		boolean hasVideo = false;
 
 		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
 			hasVideo = _instance._hasVideo(fileVersion);
 
 			if (!hasVideo) {
@@ -107,21 +104,6 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		}
 
 		return hasVideo;
-	}
-
-	public static boolean isSupportedVideo(
-		FileEntry fileEntry, String version) {
-
-		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
-			return _instance._isSupportedVideo(fileVersion);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
 	}
 
 	public static boolean isSupportedVideo(String mimeType) {
@@ -344,6 +326,10 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	private boolean _hasVideo(FileVersion fileVersion) throws Exception {
+		if (!_isSupportedVideo(fileVersion)) {
+			return false;
+		}
+
 		boolean previewExists = DLStoreUtil.hasFile(
 			fileVersion.getCompanyId(), REPOSITORY_ID,
 			getPreviewFilePath(fileVersion));

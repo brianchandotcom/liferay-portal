@@ -106,10 +106,10 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/tunnel-web/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
-boolean hasAudio = AudioProcessor.hasAudio(fileEntry, fileVersion.getVersion());
-boolean hasImages = ImageProcessor.hasImages(fileEntry, fileVersion.getVersion());
-boolean hasPDFImages = PDFProcessor.hasImages(fileEntry, fileVersion.getVersion());
-boolean hasVideo = VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion());
+boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
+boolean hasImages = ImageProcessor.hasImages(fileVersion);
+boolean hasPDFImages = PDFProcessor.hasImages(fileVersion);
+boolean hasVideo = VideoProcessor.hasVideo(fileVersion);
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
@@ -219,7 +219,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 
 						if (Validator.isNotNull(thumbnailQueryString)) {
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileEntry.getVersion() + thumbnailQueryString;
+							thumbnailSrc = _getPreviewURL(fileEntry, title, fileVersion.getVersion(), themeDisplay, thumbnailQueryString);
 						}
 
 						if (layoutAssetEntry != null) {
@@ -284,36 +284,38 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<div>
 
 						<%
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry, fileVersion.getVersion());
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
+						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileVersion.getMimeType());
+						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileVersion.getMimeType());
 
 						int previewFileCount = 0;
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
 
-						if (hasImages) {
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&imagePreview=1") + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
+						String previewQueryString = null;
 
-							previewFileCount = 1;
+						if (hasAudio) {
+							previewQueryString = "&audioPreview=1";
 						}
-						else if (supportedAudio) {
-							if (hasAudio) {
+						else if (hasImages) {
+							previewQueryString = "&imagePreview=1";
+						}
+						else if (hasPDFImages) {
+							previewFileCount = PDFProcessor.getPreviewFileCount(fileVersion);
+
+							previewQueryString = "&previewFileIndex=";
+						}
+						else if (hasVideo) {
+							previewQueryString = "&videoPreview=1";
+
+							videoThumbnailURL = _getPreviewURL(fileEntry, title, fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1");
+						}
+
+						if (Validator.isNotNull(previewQueryString)) {
+							previewFileURL = _getPreviewURL(fileEntry, title, fileVersion.getVersion(), themeDisplay, previewQueryString);
+
+							if (!hasPDFImages) {
 								previewFileCount = 1;
 							}
-
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&audioPreview=1");
-						}
-						else if (supportedVideo) {
-							if (hasVideo) {
-								previewFileCount = 1;
-							}
-
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoPreview=1");
-							videoThumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1");
-						}
-						else {
-							previewFileCount = PDFProcessor.getPreviewFileCount(fileEntry, fileVersion.getVersion());
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&previewFileIndex=";
 						}
 
 						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(supportedAudio));
@@ -372,7 +374,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&imagePreview=1&t=") + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId()) %>" style="max-height: 480px; max-width: 700px;" />
+												<img src="<%= previewFileURL %>" style="max-height: 480px; max-width: 700px;" />
 											</div>
 										</div>
 									</c:when>

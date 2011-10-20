@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -99,12 +98,10 @@ public class ImageProcessor extends DLPreviewableProcessor {
 			fileVersion, fileVersion.getExtension());
 	}
 
-	public static boolean hasImages(FileEntry fileEntry, String version) {
+	public static boolean hasImages(FileVersion fileVersion) {
 		boolean hasImages = false;
 
 		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
 			hasImages = _instance._hasImages(fileVersion);
 
 			if (!hasImages) {
@@ -124,24 +121,13 @@ public class ImageProcessor extends DLPreviewableProcessor {
 
 	public static void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
-			long custom1ImageId, long custom2ImageId, InputStream is,
-			String type)
+			long custom1ImageId, long custom2ImageId,
+			InputStream is, String type)
 		throws Exception {
 
 		_instance._storeThumbnail(
 			companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
 			custom2ImageId, is, type);
-	}
-
-	public void trigger(FileEntry fileEntry) {
-		try {
-			FileVersion fileVersion = fileEntry.getLatestFileVersion();
-
-			trigger(fileVersion);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	public void trigger(FileVersion fileVersion) {

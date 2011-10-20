@@ -50,7 +50,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.commons.data.AllowableActions;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.Action;
@@ -107,7 +106,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			return getContentStream();
 		}
 
-		for (Document document : _document.getAllVersions()) {
+		for (Document document : getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
 				ContentStream contentStream = document.getContentStream();
 
@@ -143,8 +142,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	public FileVersion getFileVersion()
 		throws PortalException, SystemException {
 
-		return CMISRepositoryLocalServiceUtil.toFileVersion(
-			getRepositoryId(), _document);
+		return getLatestFileVersion();
 	}
 
 	public FileVersion getFileVersion(String version)
@@ -154,7 +152,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			return getFileVersion();
 		}
 
-		for (Document document : _document.getAllVersions()) {
+		for (Document document : getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
 				return CMISRepositoryLocalServiceUtil.toFileVersion(
 					getRepositoryId(), document);
@@ -169,7 +167,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException {
 
-		List<Document> documents = _document.getAllVersions();
+		List<Document> documents = getAllVersions();
 
 		List<FileVersion> fileVersions = new ArrayList<FileVersion>(
 			documents.size());
@@ -234,23 +232,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		throws PortalException, SystemException {
 
 		if (_latestFileVersion == null) {
-			_document.refresh();
-
-			Document latestDocumentVersion = _document;
-
-			CMISRepository cmisRepository = getCmisRepository();
-
-			String versionSeriesCheckedOutId =
-				_document.getVersionSeriesCheckedOutId();
-
-			if (Validator.isNotNull(versionSeriesCheckedOutId)) {
-				Session session = cmisRepository.getSession();
-
-				latestDocumentVersion = (Document)session.getObject(
-					versionSeriesCheckedOutId);
-
-				latestDocumentVersion.refresh();
-			}
+			Document latestDocumentVersion = getAllVersions().get(0);
 
 			_latestFileVersion = CMISRepositoryLocalServiceUtil.toFileVersion(
 				getRepositoryId(), latestDocumentVersion);
@@ -291,7 +273,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			return getMimeType();
 		}
 
-		for (Document document : _document.getAllVersions()) {
+		for (Document document : getAllVersions()) {
 			if (version.equals(document.getVersionLabel())) {
 				return document.getContentStreamMimeType();
 			}
@@ -472,6 +454,16 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return this;
 	}
 
+	protected List<Document> getAllVersions() {
+		if (_allVersions == null) {
+			_document.refresh();
+
+			_allVersions = _document.getAllVersions();
+		}
+
+		return _allVersions;
+	}
+
 	@Override
 	protected CMISRepository getCmisRepository() {
 		return _cmisRepository;
@@ -481,6 +473,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	private CMISRepository _cmisRepository;
 	private Document _document;
+	private List<Document> _allVersions;
 	private long _fileEntryId;
 	private FileVersion _latestFileVersion;
 	private String _uuid;

@@ -48,10 +48,7 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				selenium.clickAt("link=Asset Publisher Test Page",
 					RuntimeVariables.replace("Asset Publisher Test Page"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Add New"),
-					selenium.getText("//div/span/ul/li/strong/a/span"));
-				selenium.clickAt("//div/span/ul/li/strong/a/span",
-					RuntimeVariables.replace("Add New"));
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Add New"),
 					selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",

@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
+import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -45,8 +45,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -88,16 +86,11 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
-			else if (e instanceof FileSizeException) {
-				HttpServletResponse response =
-					PortalUtil.getHttpServletResponse(actionResponse);
-
-				response.setStatus(
-						ServletResponseConstants.SC_FILE_SIZE_EXCEPTION);
+			else if (e instanceof FileSizeException ||
+					 e instanceof ImageTypeException ||
+					 e instanceof UploadException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
-
-				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw e;
@@ -138,7 +131,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 		}
 
 		return mapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.edit_pages"));
+			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
 	}
 
 	protected void updateLayoutSet(

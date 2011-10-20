@@ -47,7 +47,7 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 		if (!question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE)) {
 			String cmd = ParamUtil.getString(request, Constants.CMD);
 
-			if (cmd.equals(Constants.ADD)) {
+			if (cmd.equals(Constants.VOTE)) {
 				long choiceId = ParamUtil.getLong(request, "choiceId");
 
 				try {
@@ -149,7 +149,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || sho
 			<c:if test="<%= showEditPollIcon %>">
 				<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" refererPlid="<%= plid %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="editPollURL">
 					<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
-					<liferay-portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+					<liferay-portlet:param name="redirect" value="<%= HtmlUtil.escapeURL(redirectURL.toString()) %>" />
 					<liferay-portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
 					<liferay-portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 				</liferay-portlet:renderURL>
@@ -178,7 +178,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || sho
 			<c:if test="<%= showAddPollIcon %>">
 			   	<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" refererPlid="<%= plid %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="addPollURL">
 					<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
-					<liferay-portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+					<liferay-portlet:param name="redirect" value="<%= HtmlUtil.escapeURL(redirectURL.toString()) %>" />
 					<liferay-portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
 				</liferay-portlet:renderURL>
 

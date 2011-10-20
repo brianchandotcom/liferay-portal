@@ -351,7 +351,7 @@ public class EditEntryAction extends PortletAction {
 		String[] trackbacks = StringUtil.split(
 			ParamUtil.getString(actionRequest, "trackbacks"));
 
-		boolean	smallImage = false;
+		boolean smallImage = false;
 		String smallImageURL = null;
 		String smallImageFileName = null;
 		InputStream smallImageInputStream = null;

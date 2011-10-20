@@ -88,8 +88,7 @@ public class UpgradePermission extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"select " + pkColumnName + ", companyId " +	" from " +
-					tableName);
+				"select " + pkColumnName + ", companyId from " + tableName);
 
 			rs = ps.executeQuery();
 

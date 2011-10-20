@@ -93,7 +93,7 @@ public abstract class BaseTemplateParser implements TemplateParser {
 
 		boolean load = false;
 
-		try	{
+		try {
 			TemplateContext templateContext = getTemplateContext();
 
 			Document document = SAXReaderUtil.read(_xml);

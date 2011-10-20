@@ -375,7 +375,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			boolean inUseSSL, String inUserName, String inPassword,
 			int inReadInterval, String outEmailAddress, boolean outCustom,
 			String outServerName, int outServerPort, boolean outUseSSL,
-			String outUserName,	String outPassword, boolean allowAnonymous,
+			String outUserName, String outPassword, boolean allowAnonymous,
 			boolean mailingListActive, boolean mergeWithParentCategory,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {

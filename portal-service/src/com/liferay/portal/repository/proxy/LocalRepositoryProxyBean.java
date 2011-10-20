@@ -241,7 +241,7 @@ public class LocalRepositoryProxyBean
 	}
 
 	public List<Folder> getMountFolders(
-			long parentFolderId, int start,	int end, OrderByComparator obc)
+			long parentFolderId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<Folder> folderList = _localRepository.getMountFolders(

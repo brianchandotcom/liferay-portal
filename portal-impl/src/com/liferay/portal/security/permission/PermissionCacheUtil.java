@@ -175,7 +175,7 @@ public class PermissionCacheUtil {
 
 	public static ResourceBlockIdsBag putResourceBlockIdsBag(
 		long companyId, long groupId, long userId, String name,
-		boolean checkGuest,	ResourceBlockIdsBag resourceBlockIdsBag) {
+		boolean checkGuest, ResourceBlockIdsBag resourceBlockIdsBag) {
 
 		if (resourceBlockIdsBag == null) {
 			return null;

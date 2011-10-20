@@ -69,7 +69,7 @@ public class EntriesChecker extends RowChecker {
 		long entryId = GetterUtil.getLong(primaryKey);
 
 		try {
-			fileEntry =	DLAppServiceUtil.getFileEntry(entryId);
+			fileEntry = DLAppServiceUtil.getFileEntry(entryId);
 		}
 		catch (Exception e1) {
 			if (e1 instanceof NoSuchFileEntryException ||

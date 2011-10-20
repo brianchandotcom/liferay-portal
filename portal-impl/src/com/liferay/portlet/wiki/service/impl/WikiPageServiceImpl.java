@@ -99,7 +99,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	public void addPageAttachment(
-			long nodeId, String title, String fileName,	File file)
+			long nodeId, String title, String fileName, File file)
 		throws PortalException, SystemException {
 
 		WikiNodePermission.check(

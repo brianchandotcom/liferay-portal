@@ -23,7 +23,7 @@ import jcifs.dcerpc.ndr.NdrBuffer;
 public class NetrServerAuthenticate3 extends DcerpcMessage {
 
 	public NetrServerAuthenticate3(
-		String primaryName, String accountName,	int secureChannelType,
+		String primaryName, String accountName, int secureChannelType,
 		String computerName, byte[] clientCredential, byte[] serverCredential,
 		int negotiateFlags) {
 

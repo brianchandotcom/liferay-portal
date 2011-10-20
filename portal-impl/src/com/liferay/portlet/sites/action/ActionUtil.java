@@ -112,13 +112,13 @@ public class ActionUtil
 
 		LayoutServiceUtil.updateLookAndFeel(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(),	sourceLayout.getThemeId(),
+			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
 			sourceLayout.getColorSchemeId(), sourceLayout.getCss(), false);
 
 		LayoutServiceUtil.updateLookAndFeel(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(),	sourceLayout.getWapThemeId(),
-			sourceLayout.getWapColorSchemeId(),	sourceLayout.getCss(), true);
+			targetLayout.getLayoutId(), sourceLayout.getWapThemeId(),
+			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
 	}
 
 	public static void copyPortletPermissions(

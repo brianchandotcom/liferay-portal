@@ -413,7 +413,7 @@ public class EditMessageAction extends PortletAction {
 
 			if (subscribe &&
 				MBMessagePermission.contains(
-					permissionChecker, message,	ActionKeys.SUBSCRIBE)) {
+					permissionChecker, message, ActionKeys.SUBSCRIBE)) {
 
 				MBMessageServiceUtil.subscribeMessage(message.getMessageId());
 			}

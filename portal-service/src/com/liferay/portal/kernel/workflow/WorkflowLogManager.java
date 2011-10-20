@@ -38,7 +38,7 @@ public interface WorkflowLogManager {
 
 	public List<WorkflowLog> getWorkflowLogsByWorkflowInstance(
 			long companyId, long workflowInstanceId, List<Integer> logTypes,
-			int start,	int end, OrderByComparator orderByComparator)
+			int start, int end, OrderByComparator orderByComparator)
 		throws WorkflowException;
 
 	public List<WorkflowLog> getWorkflowLogsByWorkflowTask(

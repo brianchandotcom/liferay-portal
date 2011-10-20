@@ -1522,7 +1522,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	public List<Group> search(
 			long companyId, long[] classNameIds, String name,
-			String description,	LinkedHashMap<String, Object> params, int start,
+			String description, LinkedHashMap<String, Object> params, int start,
 			int end)
 		throws SystemException {
 

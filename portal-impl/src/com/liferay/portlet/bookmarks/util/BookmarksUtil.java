@@ -91,7 +91,7 @@ public class BookmarksUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (strutsAction.equals("/bookmarks/select_folder")) {
-			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

@@ -198,7 +198,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			boolean inUseSSL, String inUserName, String inPassword,
 			int inReadInterval, String outEmailAddress, boolean outCustom,
 			String outServerName, int outServerPort, boolean outUseSSL,
-			String outUserName,	String outPassword, boolean mailingListActive,
+			String outUserName, String outPassword, boolean mailingListActive,
 			boolean allowAnonymousEmail, boolean mergeWithParentCategory,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -211,7 +211,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		return mbCategoryLocalService.updateCategory(
 			categoryId, parentCategoryId, name, description, displayStyle,
 			emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
-			inUserName,	inPassword, inReadInterval, outEmailAddress, outCustom,
+			inUserName, inPassword, inReadInterval, outEmailAddress, outCustom,
 			outServerName, outServerPort, outUseSSL, outUserName, outPassword,
 			mailingListActive, allowAnonymousEmail, mergeWithParentCategory,
 			serviceContext);

@@ -112,7 +112,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
-			Map<Locale, String> robotsMap, String type,	boolean hidden,
+			Map<Locale, String> robotsMap, String type, boolean hidden,
 			String friendlyURL, boolean locked, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

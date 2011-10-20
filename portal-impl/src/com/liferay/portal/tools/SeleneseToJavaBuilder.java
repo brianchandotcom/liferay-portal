@@ -137,7 +137,7 @@ public class SeleneseToJavaBuilder {
 			y = step.indexOf("\n", x);
 			y = step.lastIndexOf("</td>", y);
 
-			params[i] =	step.substring(x, y);
+			params[i] = step.substring(x, y);
 		}
 
 		return params;

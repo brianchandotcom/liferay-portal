@@ -77,7 +77,7 @@ public class JobStateSerializeUtil {
 		Map<String, Date> triggerDates = (Map<String, Date>)jobStateMap.get(
 			_TRIGGER_DATES_FIELD);
 
-		JobState jobState =	null;
+		JobState jobState = null;
 
 		if (triggerDates != null) {
 			jobState = new JobState(

@@ -142,7 +142,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		resourceLocalService.addResources(
-			node.getCompanyId(), node.getGroupId(),	node.getUserId(),
+			node.getCompanyId(), node.getGroupId(), node.getUserId(),
 			WikiNode.class.getName(), node.getNodeId(), false,
 			addGroupPermissions, addGuestPermissions);
 	}
@@ -161,7 +161,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		resourceLocalService.addModelResources(
-			node.getCompanyId(), node.getGroupId(),	node.getUserId(),
+			node.getCompanyId(), node.getGroupId(), node.getUserId(),
 			WikiNode.class.getName(), node.getNodeId(), groupPermissions,
 			guestPermissions);
 	}

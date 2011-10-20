@@ -221,7 +221,7 @@ public class BaseLDAPToPortalConverter implements LDAPToPortalConverter {
 			String name = (String)key;
 
 			String value = LDAPUtil.getAttributeValue(
-				attributes,	expandoMappings, name);
+				attributes, expandoMappings, name);
 
 			if (Validator.isNotNull(value)) {
 				expandoAttributes.put(name, value);

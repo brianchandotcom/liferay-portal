@@ -167,7 +167,7 @@ public class DLFileEntryTypeFinderImpl
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
 		return findByC_G_N_D_S(
-			companyId, groupId,	names, descriptions, andOperator, start, end,
+			companyId, groupId, names, descriptions, andOperator, start, end,
 			orderByComparator);
 	}
 

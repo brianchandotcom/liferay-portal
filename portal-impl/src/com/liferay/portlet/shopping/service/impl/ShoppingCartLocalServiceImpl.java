@@ -59,7 +59,7 @@ public class ShoppingCartLocalServiceImpl
 
 	@Override
 	public void deleteShoppingCart(long cartId)
-		throws PortalException,	SystemException {
+		throws PortalException, SystemException {
 
 		ShoppingCart cart = shoppingCartPersistence.findByPrimaryKey(
 			cartId);

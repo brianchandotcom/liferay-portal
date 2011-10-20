@@ -35,7 +35,7 @@ public interface Indexer {
 
 	public String[] getClassNames();
 
-	public Document getDocument(Object obj)	throws SearchException;
+	public Document getDocument(Object obj) throws SearchException;
 
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)

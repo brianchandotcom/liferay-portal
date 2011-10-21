@@ -25,7 +25,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,10 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
@@ -56,7 +55,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			"xPath=(//div[@class='aui-rating-label-element'])[2]");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -71,7 +70,6 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
 			selenium.getText("//div[@class='yui3-widget-bd']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -79,7 +77,6 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
@@ -91,7 +88,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			"xPath=(//div[@class='aui-rating-label-element'])[2]");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -106,13 +103,12 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
 			selenium.getText("//div[@class='yui3-widget-bd']"));
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -127,14 +123,28 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Blogs")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -142,11 +152,10 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -161,14 +170,28 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Blogs")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -176,7 +199,6 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
@@ -188,7 +210,7 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			"xPath=(//div[@class='aui-rating-label-element'])[2]");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -203,7 +225,6 @@ public class ViewRatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
 			selenium.getText("//div[@class='yui3-widget-bd']"));
 	}

@@ -25,7 +25,7 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,13 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,7 +63,6 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -79,7 +77,7 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 			RuntimeVariables.replace("Rate this 4 stars out of 5."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -96,14 +94,13 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText(
 				"//div[@class='taglib-ratings stars']/div[2]/div/div", "1 Vote"));
 		selenium.mouseOver(
 			"//div[@class='taglib-ratings stars']/div[2]/div/div");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -118,7 +115,6 @@ public class RatePage1BlogsEntry1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("4 Stars"),
 			selenium.getText("//div[@class='yui3-widget-bd']"));
 	}

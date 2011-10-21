@@ -25,7 +25,7 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 		selenium.open("/web/blogs-page-scope-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,12 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,19 +62,55 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("0 Comments")
+										.equals(selenium.getText(
+								"//span[@class='comments']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']/a"));
 		selenium.clickAt("//span[@class='comments']/a",
 			RuntimeVariables.replace("0 Comments"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Blogs Entry2 Title")
+										.equals(selenium.getText(
+								"//h1[@class='header-title']/span"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -87,7 +121,7 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -102,10 +136,8 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("Blogs Entry2 Comment1 Body"));
-		selenium.saveScreenShotAndSource();
 		selenium.keyPress("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("\\48"));
 		selenium.keyPress("//textarea[@name='_33_postReplyBody0']",
@@ -114,7 +146,7 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -132,7 +164,6 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

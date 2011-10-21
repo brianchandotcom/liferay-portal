@@ -24,6 +24,11 @@
 	<td>Blogs Test Page1</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td>Blogs</td>
@@ -47,6 +52,11 @@
 	<td>clickAtAndWait</td>
 	<td>//span[@class='comments']/a</td>
 	<td>2 Comments</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Blogs Entry1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -87,6 +97,11 @@
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Blogs</td>
+	<td>Blogs</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -133,7 +148,6 @@
 	<td>//form/div/div/div[1]/div[3]/div/div[1]</td>
 	<td>Blogs Entry1 Comment1 Body</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

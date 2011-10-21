@@ -40,6 +40,8 @@ public class PageScopeLARCPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ConfigurePortlet3BlogsScopeLayoutPage2Test.class);
 		testSuite.addTestSuite(
+			ConfigurePortlet2MaximumItemsToDisplay1Test.class);
+		testSuite.addTestSuite(
 			ImportExportCPLARDefaultBlogsPageScopeTest.class);
 		testSuite.addTestSuite(ImportExportCPLARPage2BlogsPageScopeTest.class);
 

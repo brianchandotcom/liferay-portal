@@ -83,26 +83,22 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//tr[1]/th[7]"));
 		assertEquals(RuntimeVariables.replace("456.0"),
 			selenium.getText("//tr[3]/td[7]"));
-		assertEquals(RuntimeVariables.replace("Password"),
-			selenium.getText("//tr[1]/th[8]"));
-		assertEquals(RuntimeVariables.replace("password"),
-			selenium.getText("//tr[3]/td[8]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
-			selenium.getText("//tr[1]/th[9]"));
+			selenium.getText("//tr[1]/th[8]"));
 		assertEquals(RuntimeVariables.replace("option 2"),
-			selenium.getText("//tr[3]/td[9]"));
+			selenium.getText("//tr[3]/td[8]"));
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//tr[1]/th[10]"));
+			selenium.getText("//tr[1]/th[9]"));
 		assertEquals(RuntimeVariables.replace("option 3"),
-			selenium.getText("//tr[3]/td[10]"));
+			selenium.getText("//tr[3]/td[9]"));
 		assertEquals(RuntimeVariables.replace("Text"),
-			selenium.getText("//tr[1]/th[11]"));
+			selenium.getText("//tr[1]/th[10]"));
 		assertEquals(RuntimeVariables.replace("Text Field"),
+			selenium.getText("//tr[3]/td[10]"));
+		assertEquals(RuntimeVariables.replace("Text Box"),
+			selenium.getText("//tr[1]/th[11]"));
+		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText("//tr[3]/td[11]"));
-		assertEquals(RuntimeVariables.replace("Text Box"),
-			selenium.getText("//tr[1]/th[12]"));
-		assertEquals(RuntimeVariables.replace("Text Box"),
-			selenium.getText("//tr[3]/td[12]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -146,15 +142,13 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
 		assertEquals(RuntimeVariables.replace("Number 456.0"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[7]"));
-		assertEquals(RuntimeVariables.replace("Password password"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));
 		assertEquals(RuntimeVariables.replace("Radio option 2"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[9]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));
 		assertEquals(RuntimeVariables.replace("Select option 3"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[10]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Text Text Field"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Text Box Text Box"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[12]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
 	}
 }

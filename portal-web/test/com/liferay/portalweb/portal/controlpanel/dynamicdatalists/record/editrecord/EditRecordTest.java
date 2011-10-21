@@ -160,24 +160,19 @@ public class EditRecordTest extends BaseTestCase {
 				"//div[@class='aui-fieldset-content ']/div[7]/span/span/label"));
 		selenium.type("//div[@class='aui-fieldset-content ']/div[7]/span/span/span/input",
 			RuntimeVariables.replace("111213"));
-		assertEquals(RuntimeVariables.replace("Password"),
-			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[8]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[8]/span/span/span/input",
-			RuntimeVariables.replace("passwordedited"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[9]/div/label"));
+				"//div[@class='aui-fieldset-content ']/div[8]/div/label"));
 		assertEquals(RuntimeVariables.replace("option 1"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[9]/div/span[1]/span"));
+				"//div[@class='aui-fieldset-content ']/div[8]/div/span[1]/span"));
 		assertEquals(RuntimeVariables.replace("option 2"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[9]/div/span[2]/span"));
+				"//div[@class='aui-fieldset-content ']/div[8]/div/span[2]/span"));
 		assertEquals(RuntimeVariables.replace("option 3"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[9]/div/span[3]/span"));
-		selenium.clickAt("//div[@class='aui-fieldset-content ']/div[9]/div/span[2]/span/span/input",
+				"//div[@class='aui-fieldset-content ']/div[8]/div/span[3]/span"));
+		selenium.clickAt("//div[@class='aui-fieldset-content ']/div[8]/div/span[2]/span/span/input",
 			RuntimeVariables.replace("option 3"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
@@ -195,13 +190,13 @@ public class EditRecordTest extends BaseTestCase {
 			RuntimeVariables.replace("label=option 1"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[10]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[10]/span/span/span/input",
+				"//div[@class='aui-fieldset-content ']/div[9]/span/span/label"));
+		selenium.type("//div[@class='aui-fieldset-content ']/div[9]/span/span/span/input",
 			RuntimeVariables.replace("Text Field Edited"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[11]/span/span/label"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[11]/span/span/span/textarea",
+				"//div[@class='aui-fieldset-content ']/div[10]/span/span/label"));
+		selenium.type("//div[@class='aui-fieldset-content ']/div[10]/span/span/span/textarea",
 			RuntimeVariables.replace("Text\nBox\nEdited"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

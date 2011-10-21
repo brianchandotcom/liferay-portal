@@ -974,16 +974,14 @@ public class SourceFormatter {
 				}
 			}
 
-			String trimmedLine = StringUtil.trim(line);
+			String trimmedLine = StringUtil.trimLeading(line);
 
 			if (trimmedLine.contains(StringPool.TAB) &&
 				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
 
-				if (!fileName.endsWith("ConverterUtil.java")) {
-					_sourceFormatterHelper.printError(
-						fileName, "tab: " + fileName + " " + lineCount);
-				}
+				_sourceFormatterHelper.printError(
+					fileName, "tab: " + fileName + " " + lineCount);
 			}
 
 			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
@@ -1262,6 +1260,16 @@ public class SourceFormatter {
 
 				_sourceFormatterHelper.printError(
 					fileName, "aui:button " + fileName + " " + lineCount);
+			}
+
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (trimmedLine.contains(StringPool.TAB) &&
+				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				!trimmedLine.startsWith(StringPool.STAR)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "tab: " + fileName + " " + lineCount);
 			}
 
 			int x = line.indexOf("<%@ include file");

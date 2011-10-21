@@ -100,7 +100,7 @@ if (article == null && Validator.isNull(defaultLanguageId)) {
 }
 else {
 	if (Validator.isNull(defaultLanguageId)) {
-		defaultLanguageId =	article.getDefaultLocale();
+		defaultLanguageId = article.getDefaultLocale();
 	}
 }
 
@@ -350,7 +350,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	}
 
 	function <portlet:namespace />selectStructure(structureId, structureName, dialog) {
-		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && 	document.<portlet:namespace />fm1.<portlet:namespace />structureId.value != structureId) {
+		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && document.<portlet:namespace />fm1.<portlet:namespace />structureId.value != structureId) {
 			document.<portlet:namespace />fm1.<portlet:namespace />structureId.value = structureId;
 			document.<portlet:namespace />fm1.<portlet:namespace />templateId.value = "";
 

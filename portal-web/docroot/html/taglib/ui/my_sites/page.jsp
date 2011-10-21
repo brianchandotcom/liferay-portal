@@ -148,7 +148,7 @@ List<Group> mySites = user.getMySites(max);
 
 						boolean lastSite = false;
 
-						if (mySites.size()	== (mySites.indexOf(mySite) + 1)) {
+						if (mySites.size() == (mySites.indexOf(mySite) + 1)) {
 							lastSite = true;
 						}
 

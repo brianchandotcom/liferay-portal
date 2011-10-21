@@ -205,17 +205,17 @@
 
 	#set ($community_name = $site_name)
 
-	#if	($page_group.getName() == "Guest")
+	#if ($page_group.getName() == "Guest")
 		#set ($css_class = $css_class + " guest-site")
 	#end
 
-	#if	($is_signed_in)
+	#if ($is_signed_in)
 		#set ($css_class = $css_class + " signed-in")
 	#else
 		#set ($css_class = $css_class + " signed-out")
 	#end
 
-	#if	($layout.isPublicLayout())
+	#if ($layout.isPublicLayout())
 		#set ($css_class = $css_class + " public-page")
 	#else
 		#set ($css_class = $css_class + " private-page")

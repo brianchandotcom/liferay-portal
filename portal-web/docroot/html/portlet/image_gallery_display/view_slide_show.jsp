@@ -88,7 +88,7 @@ int defaultSpeed = 3000;
 	var <portlet:namespace />imgArray = new Array();
 
 	<%
-	for	(int i = 0; i < fileEntries.size(); i++) {
+	for (int i = 0; i < fileEntries.size(); i++) {
 		FileEntry fileEntry = (FileEntry)fileEntries.get(i);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();

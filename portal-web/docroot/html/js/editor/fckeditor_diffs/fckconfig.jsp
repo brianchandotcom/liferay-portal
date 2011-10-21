@@ -48,7 +48,7 @@ FCKConfig.AutoDetectLanguage = false;
 
 FCKConfig.DefaultLanguage = '<%= HtmlUtil.escape(languageId) %>' ;
 
-FCKConfig.IncludeLatinEntities	= false ;
+FCKConfig.IncludeLatinEntities = false ;
 
 FCKConfig.ToolbarSets["liferay"] = [
 	['Style', 'FontSize', '-', 'TextColor', 'BGColor'],

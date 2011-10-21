@@ -26,9 +26,9 @@ long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(request, layoutSet
 LayoutRevision currentLayoutRevision = null;
 
 if (layoutRevisionId <= 0) {
-	LayoutBranch layoutBranch =	LayoutBranchLocalServiceUtil.getMasterLayoutBranch(layoutSetBranchId, plid);
+	LayoutBranch layoutBranch = LayoutBranchLocalServiceUtil.getMasterLayoutBranch(layoutSetBranchId, plid);
 
-	currentLayoutRevision =	LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, layoutBranch.getLayoutBranchId(), plid);
+	currentLayoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, layoutBranch.getLayoutBranchId(), plid);
 
 	layoutRevisionId = currentLayoutRevision.getLayoutRevisionId();
 }

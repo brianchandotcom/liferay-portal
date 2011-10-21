@@ -21,7 +21,7 @@
 <%
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 String editorImpl = ParamUtil.getString(request, "editorImpl");
-String initMethod =	ParamUtil.getString(request, "initMethod");
+String initMethod = ParamUtil.getString(request, "initMethod");
 String name = ParamUtil.getString(request, "name");
 String onChangeMethod = ParamUtil.getString(request, "onChangeMethod");
 boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");

@@ -72,6 +72,7 @@ public class AddPropertiesTest extends BaseTestCase {
 					selenium.getText("//h1[@class='header-title']/span"));
 				selenium.clickAt("//input[@id='editTagButton']",
 					RuntimeVariables.replace("Edit"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

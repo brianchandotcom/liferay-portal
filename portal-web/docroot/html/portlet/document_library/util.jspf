@@ -27,11 +27,11 @@ private static final String _getFileEntryImage(FileEntry fileEntry, ThemeDisplay
 	return sb.toString();
 }
 
-private static final String _getPreviewURL(FileEntry fileEntry, String title, String version, ThemeDisplay themeDisplay, String queryString) {
-	return _getPreviewURL(fileEntry, title, version, themeDisplay, queryString, true);
+private static final String _getPreviewURL(FileEntry fileEntry, String version, ThemeDisplay themeDisplay, String queryString) {
+	return _getPreviewURL(fileEntry, version, themeDisplay, queryString, true);
 }
 
-private static final String _getPreviewURL(FileEntry fileEntry, String title, String version, ThemeDisplay themeDisplay, String queryString, boolean appendToken) {
+private static final String _getPreviewURL(FileEntry fileEntry, String version, ThemeDisplay themeDisplay, String queryString, boolean appendToken) {
 	StringBundler sb = new StringBundler(13);
 
 	sb.append(themeDisplay.getPortalURL());
@@ -41,7 +41,7 @@ private static final String _getPreviewURL(FileEntry fileEntry, String title, St
 	sb.append(StringPool.SLASH);
 	sb.append(fileEntry.getFolderId());
 	sb.append(StringPool.SLASH);
-	sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(title)));
+	sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
 	sb.append("?version=");
 	sb.append(version);
 

@@ -37,7 +37,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -122,7 +122,7 @@ public class EditFileEntryTypeAction extends PortletAction {
 					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, fileEntryType);
 
 				DDMStructure ddmStructure =
-					DDMStructureServiceUtil.fetchStructure(
+					DDMStructureLocalServiceUtil.fetchStructure(
 						fileEntryType.getGroupId(), "auto_" + fileEntryTypeId);
 
 				renderRequest.setAttribute(

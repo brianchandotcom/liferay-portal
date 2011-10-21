@@ -107,7 +107,7 @@ public class JavaFieldsParser {
 				break;
 			}
 
-			replaceFrom.add(javaSnippet);
+			replaceFrom.add("${".concat(javaSnippet).concat("}"));
 			replaceWith.add(fieldValue);
 
 			x = s.indexOf("${", y);

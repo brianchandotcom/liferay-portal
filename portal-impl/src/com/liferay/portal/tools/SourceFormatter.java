@@ -980,10 +980,8 @@ public class SourceFormatter {
 				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
 
-				if (!fileName.endsWith("ConverterUtil.java")) {
-					_sourceFormatterHelper.printError(
-						fileName, "tab: " + fileName + " " + lineCount);
-				}
+				_sourceFormatterHelper.printError(
+					fileName, "tab: " + fileName + " " + lineCount);
 			}
 
 			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {

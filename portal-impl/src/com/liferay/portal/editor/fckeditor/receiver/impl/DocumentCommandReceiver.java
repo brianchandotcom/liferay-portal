@@ -191,7 +191,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
 
 			if (imageMimeTypes.contains(fileEntry.getMimeType())) {
-				sb.append("&t=");
+				sb.append("?t=");
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
 

@@ -577,9 +577,9 @@
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />
 		</finder>
-        <finder name="L_P_N" return-type="LayoutBranch" unique="true">
+		<finder name="L_P_N" return-type="LayoutBranch" unique="true">
 			<finder-column name="layoutSetBranchId" />
-            <finder-column name="plid" />
+			<finder-column name="plid" />
 			<finder-column name="name" />
 		</finder>
 		<finder name="L_P_M" return-type="LayoutBranch">
@@ -663,7 +663,7 @@
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="layoutRevisionId" />
+			<order-column name="modifiedDate" />
 		</order>
 
 		<!-- Finder methods -->
@@ -2560,7 +2560,7 @@
 		<exception>InvalidRepository</exception>
 		<exception>LARFile</exception>
 		<exception>LARType</exception>
-        <exception>LayoutBranchName</exception>
+		<exception>LayoutBranchName</exception>
 		<exception>LayoutSetBranchName</exception>
 		<exception>LayoutFriendlyURL</exception>
 		<exception>LayoutHidden</exception>

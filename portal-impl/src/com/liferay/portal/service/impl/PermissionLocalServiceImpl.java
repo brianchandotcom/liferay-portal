@@ -37,6 +37,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PermissionLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.OrgGroupPermissionPK;
@@ -47,17 +48,36 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
 /**
+ * The implementation of the permission local service.
+ *
  * @author Charles May
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
 public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
+	/**
+	 * Adds a permission to perform the action on the resource.
+	 *
+	 * <p>
+	 * This method will retrieve the permission of the company, action, and
+	 * resource with the primary keys. The method creates the permission if it
+	 * fails to retrieve it.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  actionId the action's ID
+	 * @param  resourceId the primary key of the resource
+	 * @return the permission of the company, action, and resource with the
+	 *         primary keys
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Permission addPermission(
 			long companyId, String actionId, long resourceId)
 		throws SystemException {
@@ -81,6 +101,21 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return permission;
 	}
 
+	/**
+	 * Adds permissions to perform the actions on the resource.
+	 *
+	 * <p>
+	 * This method will retrieve the permissions of the company, actions, and
+	 * resource with the primary keys. The method creates any permissions it
+	 * fails to retrieve.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @return the permissions to perform the actions on the resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> addPermissions(
 			long companyId, List<String> actionIds, long resourceId)
 		throws SystemException {
@@ -134,6 +169,24 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return permissions;
 	}
 
+	/**
+	 * Adds permissions to perform either the portlet resource actions or model
+	 * resource actions on the resource.
+	 *
+	 * <p>
+	 * This method will retrieve the permissions of the company, actions, and
+	 * resource with the primary keys. The method creates any permissions it
+	 * fails to retrieve.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  resourceId the primary key of the resource
+	 * @param  portletActions whether to retrieve the action primary keys from
+	 *         the portlet or the model resource
+	 * @return the permissions to perform the actions on the resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> addPermissions(
 			long companyId, String name, long resourceId,
 			boolean portletActions)
@@ -151,6 +204,16 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return addPermissions(companyId, actionIds, resourceId);
 	}
 
+	/**
+	 * Adds user permissions to perform the actions on the resource.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addUserPermissions(
 			long userId, String[] actionIds, long resourceId)
 		throws PortalException, SystemException {
@@ -168,6 +231,15 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Checks to see if the actions are permitted on the named resource.
+	 *
+	 * @param  name the resource name
+	 * @param  actionIds the primary keys of the actions
+	 * @throws PortalException if the resource company or name could not be
+	 *         found or were invalid
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void checkPermissions(String name, List<String> actionIds)
 		throws PortalException, SystemException {
 
@@ -190,6 +262,12 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Returns the IDs of all the actions belonging to the permissions.
+	 *
+	 * @param  permissions the permissions
+	 * @return the IDs of all the actions belonging to the permissions
+	 */
 	public List<String> getActions(List<Permission> permissions) {
 		List<String> actionIds = new ArrayList<String>();
 
@@ -204,12 +282,33 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return actionIds;
 	}
 
+	/**
+	 * Returns all the group's permissions on the resource.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  resourceId the primary key of the resource
+	 * @return the group's permissions on the resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getGroupPermissions(long groupId, long resourceId)
 		throws SystemException {
 
 		return permissionFinder.findByG_R(groupId, resourceId);
 	}
 
+	/**
+	 * Returns all the group's permissions on the named resource with the scope
+	 * and primKey.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @return the group's permissions on the named resource with the scope and
+	 *         primKey
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getGroupPermissions(
 			long groupId, long companyId, String name, int scope,
 			String primKey)
@@ -219,6 +318,12 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			groupId, companyId, name, scope, primKey);
 	}
 
+	/**
+	 * Returns the primary key of the latest permission created.
+	 *
+	 * @return the primary key of the latest permission created
+	 * @throws SystemException if a system exception occurred
+	 */
 	public long getLatestPermissionId() throws SystemException {
 		List<Permission> permissions = permissionPersistence.findAll(
 			0, 1, new PermissionComparator());
@@ -233,6 +338,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Returns all the permissions of the organization's group with respect to
+	 * the resource.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @param  groupId the primary key of the group
+	 * @param  resourceId the primary key of the resource
+	 * @return the permissions of the organization's group with respect to the
+	 *         resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getOrgGroupPermissions(
 			long organizationId, long groupId, long resourceId)
 		throws SystemException {
@@ -241,6 +357,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			organizationId, groupId, resourceId);
 	}
 
+	/**
+	 * Returns all the permissions to perform the actions on the resource,
+	 * creating new permissions for any permissions not found.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @return the permissions to perform the actions on the resource
+	 * @throws SystemException if a system exception occurred
+	 * @see    #addPermission(long, String, long)
+	 */
 	public List<Permission> getPermissions(
 			long companyId, String[] actionIds, long resourceId)
 		throws SystemException {
@@ -257,30 +384,72 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return permissions;
 	}
 
+	/**
+	 * Returns all the role's permissions.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @return the role's permissions
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getRolePermissions(long roleId)
 		throws SystemException {
 
 		return rolePersistence.getPermissions(roleId);
 	}
 
+	/**
+	 * Returns all the role's permissions on the resource.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  resourceId the primary key of the resource
+	 * @return the role's permissions on the resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getRolePermissions(long roleId, long resourceId)
 		throws SystemException {
 
 		return permissionFinder.findByR_R(roleId, resourceId);
 	}
 
+	/**
+	 * Returns all the user's permissions.
+	 *
+	 * @param  userId the primary key of the user
+	 * @return the user's permissions
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getUserPermissions(long userId)
 		throws SystemException {
 
 		return userPersistence.getPermissions(userId);
 	}
 
+	/**
+	 * Returns all the user's permissions on the resource.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  resourceId the primary key of the resource
+	 * @return the user's permissions on the resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getUserPermissions(long userId, long resourceId)
 		throws SystemException {
 
 		return permissionFinder.findByU_R(userId, resourceId);
 	}
 
+	/**
+	 * Returns all the user's permissions on the named resource with the scope
+	 * and primKey.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @return the user permissions of the resource name, scope, and primKey
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Permission> getUserPermissions(
 			long userId, long companyId, String name, int scope, String primKey)
 		throws SystemException {
@@ -289,6 +458,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			userId, companyId, name, scope, primKey);
 	}
 
+	/**
+	 * Returns <code>true</code> if the group has permission to perform the
+	 * action on the resource.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  actionId the action's ID
+	 * @param  resourceId the primary key of the resource
+	 * @return <code>true</code> if the group has permission to perform the
+	 *         action on the resource; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasGroupPermission(
 			long groupId, String actionId, long resourceId)
 		throws SystemException {
@@ -307,6 +487,20 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			groupId, permission.getPermissionId());
 	}
 
+	/**
+	 * Returns <code>true</code> if the role has permission to perform the
+	 * action on the named resource with the scope.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  actionId the action's ID
+	 * @return <code>true</code> if the role has permission to perform the
+	 *         action on the named resource with the scope; <code>false</code>
+	 *         otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasRolePermission(
 			long roleId, long companyId, String name, int scope,
 			String actionId)
@@ -325,6 +519,21 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Returns <code>true</code> if the role has permission to perform the
+	 * action on the named resource with the scope and primKey.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @param  actionId the action's ID
+	 * @return <code>true</code> if the role has permission to perform the
+	 *         action on the named resource with the scope and primKey;
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasRolePermission(
 			long roleId, long companyId, String name, int scope, String primKey,
 			String actionId)
@@ -351,6 +560,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 			roleId, permission.getPermissionId());
 	}
 
+	/**
+	 * Returns <code>true</code> if the user has permission to perform the
+	 * action on the resource.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  actionId the action's ID
+	 * @param  resourceId the primary key of the resource
+	 * @return <code>true</code> if the user has permission to perform the
+	 *         action on the resource; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasUserPermission(
 			long userId, String actionId, long resourceId)
 		throws SystemException {
@@ -371,7 +591,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 	/**
 	 * Returns <code>true</code> if the user has permission to perform the
-	 * action on the resource.
+	 * action on the resources.
 	 *
 	 * <p>
 	 * This method does not support resources managed by the resource block
@@ -384,12 +604,12 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 	 *         returned by {@link
 	 *         com.liferay.portal.security.permission.AdvancedPermissionChecker#getResources(
 	 *         long, long, String, String, String)}
-	 * @param  actionId the actionID
+	 * @param  actionId the action's ID
 	 * @param  permissionCheckerBag the permission checker bag
 	 * @return <code>true</code> if the user has permission to perform the
-	 *         action on the resource; <code>false</code> otherwise
-	 * @throws PortalException if a resource action with the resource name and
-	 *         action ID could not be found
+	 *         action on the resources; <code>false</code> otherwise
+	 * @throws PortalException if a resource action based on any one of the
+	 *         resources and the action ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasUserPermissions(
@@ -504,6 +724,20 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return false;
 	}
 
+	/**
+	 * Sets the container wide permissions of either the role or the default
+	 * user of each company to perform the actions on the named resource.
+	 *
+	 * @param  name the resource name
+	 * @param  roleName the role name. Supported role names include {@link
+	 *         com.liferay.portal.model.RoleConstants#ORGANIZATION_USER},
+	 *         {@link com.liferay.portal.model.RoleConstants#OWNER}, and {@link
+	 *         com.liferay.portal.model.RoleConstants#SITE_MEMBER}.
+	 * @param  actionId the action's ID
+	 * @throws PortalException if a matching role could not be found or if a
+	 *         default user for the company could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setContainerResourcePermissions(
 			String name, String roleName, String actionId)
 		throws PortalException, SystemException {
@@ -516,6 +750,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Sets the group's permissions to perform the actions on the resource,
+	 * replacing the group's existing permissions on the resource.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setGroupPermissions(
 			long groupId, String[] actionIds, long resourceId)
 		throws PortalException, SystemException {
@@ -537,6 +782,22 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Sets the entity's group permissions to perform the actions on the
+	 * resource, replacing the entity's existing group permissions on the
+	 * resource. Only {@link com.liferay.portal.model.Organization} and {@link
+	 * com.liferay.portal.model.UserGroup} class entities are supported.
+	 *
+	 * @param  className the class name of an organization or user group
+	 * @param  classPK the primary key of the class
+	 * @param  groupId the primary key of the group
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws PortalException if an entity with the class name and primary key
+	 *         could not be found or if the entity's associated group could not
+	 *         be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setGroupPermissions(
 			String className, String classPK, long groupId,
 			String[] actionIds, long resourceId)
@@ -567,6 +828,20 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		setGroupPermissions(associatedGroupId, actionIds, resourceId);
 	}
 
+	/**
+	 * Sets the organization's group permissions to perform the actions on the
+	 * resource, replacing the organization's existing group permissions on the
+	 * resource.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @param  groupId the primary key of the group in which to scope the
+	 *         permissions
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws PortalException if an organization with the primary key could
+	 *         not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setOrgGroupPermissions(
 			long organizationId, long groupId, String[] actionIds,
 			long resourceId)
@@ -603,6 +878,20 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Sets the role's permissions to perform the action on the named resource,
+	 * replacing the role's existing permissions on the resource.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @param  actionId the action's ID
+	 * @throws PortalException if the scope was {@link
+	 *         com.liferay.portal.model.ResourceConstants#SCOPE_INDIVIDUAL}
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setRolePermission(
 			long roleId, long companyId, String name, int scope, String primKey,
 			String actionId)
@@ -656,19 +945,43 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		SearchEngineUtil.updatePermissionFields(resourceId);
 	}
 
+	/**
+	 * Sets the role's permissions to perform the actions on the named
+	 * resource, replacing the role's existing permission for each of these
+	 * actions on the resource.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @param  actionIds the primary keys of the actions
+	 * @throws PortalException if the scope was {@link
+	 *         com.liferay.portal.model.ResourceConstants#SCOPE_INDIVIDUAL}
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setRolePermissions(
 			long roleId, long companyId, String name, int scope, String primKey,
 			String[] actionIds)
 		throws PortalException, SystemException {
 
-		for (int i = 0; i < actionIds.length; i++) {
-			String actionId = actionIds[i];
-
+		for (String actionId : actionIds) {
 			setRolePermission(
 				roleId, companyId, name, scope, primKey, actionId);
 		}
 	}
 
+	/**
+	 * Sets the role's permissions to perform the actions on the resource,
+	 * replacing the role's existing permissions on the resource.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws PortalException if a role with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setRolePermissions(
 			long roleId, String[] actionIds, long resourceId)
 		throws PortalException, SystemException {
@@ -690,6 +1003,97 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		SearchEngineUtil.updatePermissionFields(resourceId);
 	}
 
+	/**
+	 * Sets the permissions of each role to perform respective actions on the
+	 * resource, replacing the existing permissions of each role on the
+	 * resource.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  roleIdsToActionIds the map of roles to their new actions on the
+	 *         resource
+	 * @param  resourceId the primary key of the resource
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setRolesPermissions(
+			long companyId, Map<Long, String[]> roleIdsToActionIds,
+			long resourceId)
+		throws SystemException {
+
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		try {
+			for (Map.Entry<Long, String[]> entry :
+					roleIdsToActionIds.entrySet()) {
+
+				long roleId = entry.getKey();
+				String[] actionIds = entry.getValue();
+
+				List<Permission> permissions = permissionFinder.findByR_R(
+					roleId, resourceId);
+
+				rolePersistence.removePermissions(roleId, permissions);
+
+				permissions = getPermissions(companyId, actionIds, resourceId);
+
+				rolePersistence.addPermissions(roleId, permissions);
+			}
+		}
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(resourceId);
+		}
+	}
+
+	/**
+	 * Sets the permissions of each role to perform respective actions on the
+	 * named resource, replacing the existing permissions of each role on the
+	 * resource.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  roleIdsToActionIds the map of roles to their new actions on the
+	 *         resource
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void setRolesPermissions(
+			long companyId, Map<Long, String[]> roleIdsToActionIds, String name,
+			int scope, String primKey)
+		throws SystemException {
+
+		Resource resource = resourceLocalService.fetchResource(
+			companyId, name, scope, String.valueOf(primKey));
+
+		if (resource == null) {
+			resource = resourceLocalService.addResource(
+				companyId, name, scope, String.valueOf(primKey));
+		}
+
+		if (resource == null) {
+			return;
+		}
+
+		setRolesPermissions(
+			companyId, roleIdsToActionIds, resource.getResourceId());
+	}
+
+	/**
+	 * Sets the user's permissions to perform the actions on the resource,
+	 * replacing the user's existing permissions on the resource.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setUserPermissions(
 			long userId, String[] actionIds, long resourceId)
 		throws PortalException, SystemException {
@@ -709,6 +1113,13 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes the permission from the role.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  permissionId the primary key of the permission
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetRolePermission(long roleId, long permissionId)
 		throws SystemException {
 
@@ -722,6 +1133,18 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes the role's permissions to perform the action on the named
+	 * resource with the scope and primKey.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  primKey the resource primKey
+	 * @param  actionId the action's ID
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetRolePermission(
 			long roleId, long companyId, String name, int scope, String primKey,
 			String actionId)
@@ -746,6 +1169,17 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes the role's permissions to perform the action on the named
+	 * resource.
+	 *
+	 * @param  roleId the primary key of the role
+	 * @param  companyId the primary key of the company
+	 * @param  name the resource name
+	 * @param  scope the resource scope
+	 * @param  actionId the action's ID
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetRolePermissions(
 			long roleId, long companyId, String name, int scope,
 			String actionId)
@@ -764,6 +1198,14 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 	}
 
+	/**
+	 * Removes the user's permissions to perform the actions on the resource.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  actionIds the primary keys of the actions
+	 * @param  resourceId the primary key of the resource
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsetUserPermissions(
 			long userId, String[] actionIds, long resourceId)
 		throws SystemException {

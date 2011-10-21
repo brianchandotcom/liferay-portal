@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PluginSettingService
  * @generated
  */
-public class PluginSettingServiceWrapper implements PluginSettingService {
+public class PluginSettingServiceWrapper implements PluginSettingService,
+	ServiceWrapper<PluginSettingService> {
 	public PluginSettingServiceWrapper(
 		PluginSettingService pluginSettingService) {
 		_pluginSettingService = pluginSettingService;
@@ -38,12 +39,26 @@ public class PluginSettingServiceWrapper implements PluginSettingService {
 			pluginType, roles, active);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PluginSettingService getWrappedPluginSettingService() {
 		return _pluginSettingService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPluginSettingService(
 		PluginSettingService pluginSettingService) {
+		_pluginSettingService = pluginSettingService;
+	}
+
+	public PluginSettingService getWrappedService() {
+		return _pluginSettingService;
+	}
+
+	public void setWrappedService(PluginSettingService pluginSettingService) {
 		_pluginSettingService = pluginSettingService;
 	}
 

@@ -25,19 +25,14 @@ public class Gmail_SignInTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 			RuntimeVariables.replace("Remember Me"));
 		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

@@ -370,22 +370,60 @@ public class StripFilter extends BasePortalFilter {
 			CharBuffer charBuffer, Writer writer, char[] openTag)
 		throws IOException {
 
-		int endPos = 0;
+		int endPos = openTag.length + 1;
 
-		for (int i = openTag.length; i < charBuffer.length(); i++) {
-			char c = charBuffer.charAt(i);
+		char c = charBuffer.charAt(openTag.length);
 
-			if (c == CharPool.GREATER_THAN) {
-				endPos = i + 1;
+		if (c == CharPool.SPACE) {
+			int startPos = openTag.length + 1;
 
-				break;
+			for (int i = startPos; i < charBuffer.length(); i++) {
+				c = charBuffer.charAt(i);
+
+				if (c == CharPool.GREATER_THAN) {
+
+					// Open script tag complete
+
+					endPos = i + 1;
+
+					int length = i - startPos;
+
+					if ((length < _MARKER_TYPE_JAVASCRIPT.length()) ||
+						(KMPSearch.search(
+							charBuffer, startPos, length,
+							_MARKER_TYPE_JAVASCRIPT,
+							_MARKER_TYPE_JAVASCRIPT_NEXTS) == -1)) {
+
+						// Open script tag has attribute other than
+						// type="text/javascript". Skip stripping.
+
+						return;
+					}
+
+					// Open script tag has no attribute or has attribute
+					// type="text/javascript". Start stripping.
+
+					break;
+				}
+				else if (c == CharPool.LESS_THAN) {
+
+					// Illegal open script tag. Found a '<' before seeing a '>'.
+
+					return;
+				}
 			}
-			else if (c == CharPool.LESS_THAN) {
+
+			if (endPos == charBuffer.length()) {
+
+				// Illegal open script tag. Unable to find a '>'.
+
 				return;
 			}
 		}
+		else if (c != CharPool.GREATER_THAN) {
 
-		if (endPos <= 0) {
+			// Illegal open script tag. Not followed by a '>' or a ' '.
+
 			return;
 		}
 
@@ -622,6 +660,12 @@ public class StripFilter extends BasePortalFilter {
 
 	private static final char[] _MARKER_TEXTAREA_OPEN =
 		"textarea ".toCharArray();
+
+	private static final String _MARKER_TYPE_JAVASCRIPT =
+		"type=\"text/javascript\"";
+
+	private static final int[] _MARKER_TYPE_JAVASCRIPT_NEXTS =
+		KMPSearch.generateNexts(_MARKER_TYPE_JAVASCRIPT);
 
 	private static final String _STRIP = "strip";
 

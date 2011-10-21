@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLSync;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see DLSync
  * @generated
  */
-public class DLSyncCacheModel implements CacheModel<DLSync> {
+public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

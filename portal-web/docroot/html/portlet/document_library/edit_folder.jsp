@@ -75,23 +75,23 @@ if (workflowEnabled) {
 
 	<aui:fieldset>
 		<c:if test="<%= !rootFolder %>">
+
+			<%
+			String parentFolderName = LanguageUtil.get(pageContext, "documents-home");
+
+			try {
+				if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
+
+					parentFolderName = parentFolder.getName();
+				}
+			}
+			catch (NoSuchFolderException nscce) {
+			}
+			%>
+
 			<c:if test="<%= folder != null %>">
 				<aui:field-wrapper label="parent-folder">
-
-					<%
-					String parentFolderName = LanguageUtil.get(pageContext, "documents-home");
-
-					try {
-						if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-							parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
-
-							parentFolderName = parentFolder.getName();
-						}
-					}
-					catch (NoSuchFolderException nscce) {
-					}
-					%>
-
 					<portlet:renderURL var="viewFolderURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
@@ -130,7 +130,7 @@ if (workflowEnabled) {
 				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
 			}
 
-			List<DLFileEntryType> folderDLFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(scopeGroupId, folderId, false);
+			List<DLFileEntryType> folderDLFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(new long[] {scopeGroupId}, folderId, false);
 
 			String headerNames = null;
 

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Layout
  * @generated
  */
-public class LayoutWrapper implements Layout {
+public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public LayoutWrapper(Layout layout) {
 		_layout = layout;
 	}
@@ -277,6 +277,14 @@ public class LayoutWrapper implements Layout {
 		return _layout.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _layout.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _layout.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this layout.
 	*
@@ -315,6 +323,10 @@ public class LayoutWrapper implements Layout {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layout.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_layout.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -391,6 +403,14 @@ public class LayoutWrapper implements Layout {
 		return _layout.getTitle(languageId, useDefault);
 	}
 
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _layout.getTitleCurrentLanguageId();
+	}
+
+	public java.lang.String getTitleCurrentValue() {
+		return _layout.getTitleCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized titles of this layout.
 	*
@@ -429,6 +449,10 @@ public class LayoutWrapper implements Layout {
 	public void setTitle(java.lang.String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layout.setTitle(title, locale, defaultLocale);
+	}
+
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_layout.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -506,6 +530,14 @@ public class LayoutWrapper implements Layout {
 		return _layout.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _layout.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _layout.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this layout.
 	*
@@ -545,6 +577,10 @@ public class LayoutWrapper implements Layout {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_layout.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_layout.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -622,6 +658,14 @@ public class LayoutWrapper implements Layout {
 		return _layout.getKeywords(languageId, useDefault);
 	}
 
+	public java.lang.String getKeywordsCurrentLanguageId() {
+		return _layout.getKeywordsCurrentLanguageId();
+	}
+
+	public java.lang.String getKeywordsCurrentValue() {
+		return _layout.getKeywordsCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized keywordses of this layout.
 	*
@@ -660,6 +704,10 @@ public class LayoutWrapper implements Layout {
 	public void setKeywords(java.lang.String keywords, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layout.setKeywords(keywords, locale, defaultLocale);
+	}
+
+	public void setKeywordsCurrentLanguageId(java.lang.String languageId) {
+		_layout.setKeywordsCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -737,6 +785,14 @@ public class LayoutWrapper implements Layout {
 		return _layout.getRobots(languageId, useDefault);
 	}
 
+	public java.lang.String getRobotsCurrentLanguageId() {
+		return _layout.getRobotsCurrentLanguageId();
+	}
+
+	public java.lang.String getRobotsCurrentValue() {
+		return _layout.getRobotsCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized robotses of this layout.
 	*
@@ -775,6 +831,10 @@ public class LayoutWrapper implements Layout {
 	public void setRobots(java.lang.String robots, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layout.setRobots(robots, locale, defaultLocale);
+	}
+
+	public void setRobotsCurrentLanguageId(java.lang.String languageId) {
+		_layout.setRobotsCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1117,10 +1177,6 @@ public class LayoutWrapper implements Layout {
 		return _layout.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layout.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layout.getPrimaryKeyObj();
 	}
@@ -1398,12 +1454,23 @@ public class LayoutWrapper implements Layout {
 		return _layout.isTypeURL();
 	}
 
+	public void setLayoutSet(com.liferay.portal.model.LayoutSet layoutSet) {
+		_layout.setLayoutSet(layoutSet);
+	}
+
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_layout.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Layout getWrappedLayout() {
+		return _layout;
+	}
+
+	public Layout getWrappedModel() {
 		return _layout;
 	}
 

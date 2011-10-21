@@ -25,13 +25,13 @@ public class AddPortletDLD2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
 				if (selenium.isVisible(
-							"link=Document Library Display Test Page")) {
+							"link=Documents and Media Display Test Page")) {
 					break;
 				}
 			}
@@ -41,21 +41,22 @@ public class AddPortletDLD2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Display Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
+				if (selenium.isElementPresent(
+							"//div[@title='Documents and Media Display']/p/a")) {
 					break;
 				}
 			}
@@ -65,34 +66,11 @@ public class AddPortletDLD2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("d"));
-		selenium.saveScreenShotAndSource();
+		selenium.clickAt("//div[@title='Documents and Media Display']/p/a",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@title='Document Library Display']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//div[@title='Document Library Display']/p/a",
-			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -107,16 +85,15 @@ public class AddPortletDLD2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//section"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/section")) {
+				if (selenium.isVisible("//div[2]/div/section")) {
 					break;
 				}
 			}
@@ -126,7 +103,6 @@ public class AddPortletDLD2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isVisible("//div[2]/section"));
+		assertTrue(selenium.isVisible("//div[2]/div/section"));
 	}
 }

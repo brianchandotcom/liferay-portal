@@ -27,10 +27,10 @@ public class DeactivateStagingTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddSitesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
 		testSuite.addTestSuite(DeactivateStagingTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

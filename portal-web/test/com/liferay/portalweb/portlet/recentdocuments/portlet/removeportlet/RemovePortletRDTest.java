@@ -25,12 +25,13 @@ public class RemovePortletRDTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("link=Recent Documents Test Page")) {
+				if (selenium.isVisible(
+							"link=Recently Downloaded Documents Test Page")) {
 					break;
 				}
 			}
@@ -40,18 +41,15 @@ public class RemovePortletRDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Recent Documents Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Recently Downloaded Documents Test Page",
+			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,7 +64,6 @@ public class RemovePortletRDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//section"));
 	}
 }

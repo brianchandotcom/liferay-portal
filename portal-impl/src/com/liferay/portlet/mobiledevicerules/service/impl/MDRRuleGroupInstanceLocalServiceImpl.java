@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 
@@ -37,9 +38,12 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			int priority, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userPersistence.findByPrimaryKey(
+			serviceContext.getUserId());
 		long classNameId = PortalUtil.getClassNameId(className);
 		Date now = new Date();
+
+		validate(ruleGroupId);
 
 		long ruleGroupInstanceId = counterLocalService.increment();
 
@@ -94,6 +98,33 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
 			deleteRuleGroupInstance(ruleGroupInstance);
 		}
+	}
+
+	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId)
+		throws SystemException {
+
+		return mdrRuleGroupInstancePersistence.fetchByPrimaryKey(
+			ruleGroupInstanceId);
+	}
+
+	public MDRRuleGroupInstance fetchRuleGroupInstance(
+			String className, long classPK, long ruleGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mdrRuleGroupInstancePersistence.fetchByC_C_R(
+			classNameId, classPK, ruleGroupId);
+	}
+
+	public MDRRuleGroupInstance getRuleGroupInstance(
+			String className, long classPK, long ruleGroupId)
+		throws NoSuchRuleGroupInstanceException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mdrRuleGroupInstancePersistence.findByC_C_R(
+			classNameId, classPK, ruleGroupId);
 	}
 
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId)
@@ -157,6 +188,12 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		mdrRuleGroupInstancePersistence.update(ruleGroupInstance, false);
 
 		return ruleGroupInstance;
+	}
+
+	protected void validate(long ruleGroupId)
+		throws PortalException, SystemException {
+
+		mdrRuleGroupLocalService.getMDRRuleGroup(ruleGroupId);
 	}
 
 }

@@ -4,6 +4,8 @@
 	<import file="../../build-test-db-upgrade.xml" />
 
 	<target name="test-${test.ant.script.command}-5.2.5-tomcat-db2-firefox">
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -43,6 +45,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-5.2.5-tomcat-mysql-firefox">
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
 		<antcall target="prepare-db-mysql-common">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="sql.version" value="5.2.5" />
@@ -71,6 +75,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-5.2.5-tomcat-oracle-firefox">
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -110,6 +116,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-5.2.5-tomcat-postgresql-firefox">
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -149,6 +157,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-5.2.5-tomcat-sql-server-firefox">
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -188,6 +198,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-5.2.5-tomcat-sybase-firefox">
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />

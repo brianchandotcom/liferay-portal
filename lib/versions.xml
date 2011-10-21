@@ -93,6 +93,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/cobertura.jar</file-name>
+		<version>1.9.4.1</version>
+		<project-name>Cobertura</project-name>
+		<project-url>http://cobertura.sourceforge.net</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 1.1</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/deployment.jar</file-name>
 		<version>1.1</version>
 		<project-name>J2EE Application Deployment Library</project-name>
@@ -1137,6 +1148,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>portal/bnd.jar</file-name>
+		<version>1.44.0</version>
+		<project-name>Bnd</project-name>
+		<project-url>http://www.aqute.biz/Bnd</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>portal/bobo-browse.jar</file-name>
 		<version>2.5.0 RC1</version>
 		<project-name>Bob Browse</project-name>
@@ -1634,6 +1656,17 @@
 		<version>1.4.0</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/equinox.jar</file-name>
+		<version>3.7.0.v20110613</version>
+		<project-name>Eclipse OSGi Platform</project-name>
+		<project-url>http://www.eclipse.org/equinox/</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
@@ -2491,18 +2524,6 @@
 			<license>
 				<license-name>Apache License 1.1</license-name>
 				<copyright-notice>Copyright (c) 2000-2002 The Apache Software Foundation. All rights reserved.</copyright-notice>
-			</license>
-		</licenses>
-	</library>
-
-	<library>
-		<file-name>portal/osgi.core.jar</file-name>
-		<version>4.2</version>
-		<project-name>OSGi Service Platform</project-name>
-		<project-url>http://www.osgi.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
 			</license>
 		</licenses>
 	</library>

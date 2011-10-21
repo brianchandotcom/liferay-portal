@@ -33,9 +33,9 @@ public class UpdateDueDateWebContentAssignedToMyRolesActionsTests
 		testSuite.addTestSuite(
 			UpdateDueDateWebContentAssignedToMyRolesActionsTest.class);
 		testSuite.addTestSuite(
-			ViewWebContentAssignedToMyRolesUpdateDueDateTest.class);
+			ViewWebContentAssignedToMyRolesDueDateTest.class);
 		testSuite.addTestSuite(
-			ViewWebContentAssignedToMyRolesUpdateDueDateDetailsTest.class);
+			ViewWebContentAssignedToMyRolesDueDateDetailsTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 

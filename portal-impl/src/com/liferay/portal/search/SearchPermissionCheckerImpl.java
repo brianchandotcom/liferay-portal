@@ -38,13 +38,12 @@ import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.AdvancedPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PermissionLocalServiceUtil;
@@ -52,11 +51,13 @@ import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.UniqueList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Allen Chiang
@@ -69,7 +70,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	public void addPermissionFields(long companyId, Document document) {
 		try {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+
 			String className = document.get(Field.ENTRY_CLASS_NAME);
+
+			if (Validator.isNull(className)) {
+				return;
+			}
 
 			String classPK = document.get(Field.ROOT_ENTRY_CLASS_PK);
 
@@ -77,17 +83,23 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				classPK = document.get(Field.ENTRY_CLASS_PK);
 			}
 
-			if (Validator.isNotNull(className) &&
-				Validator.isNotNull(classPK)) {
+			if (Validator.isNull(classPK)) {
+				return;
+			}
 
-				if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-					doAddPermissionFields_5(
-						companyId, groupId, className, classPK, document);
-				}
-				else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-					doAddPermissionFields_6(
-						companyId, groupId, className, classPK, document);
-				}
+			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+
+			if (!indexer.isFilterSearch()) {
+				return;
+			}
+
+			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
+				doAddPermissionFields_5(
+					companyId, groupId, className, classPK, document);
+			}
+			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+				doAddPermissionFields_6(
+					companyId, groupId, className, classPK, document);
 			}
 		}
 		catch (NoSuchResourceException nsre) {
@@ -102,16 +114,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		Query query, SearchContext searchContext) {
 
 		try {
-			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
-				return doGetPermissionQuery_5(
-					companyId, groupIds, userId, className, query,
-					searchContext);
-			}
-			else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-				return doGetPermissionQuery_6(
-					companyId, groupIds, userId, className, query,
-					searchContext);
-			}
+			query = doGetPermissionQuery(
+				companyId, groupIds, userId, className, query, searchContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -254,26 +258,59 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			groupRoleIds.toArray(new String[groupRoleIds.size()]));
 	}
 
-	protected Query doGetPermissionQuery_5(
+	protected Query doGetPermissionQuery(
 			long companyId, long[] groupIds, long userId, String className,
 			Query query, SearchContext searchContext)
 		throws Exception {
 
-		PermissionCheckerBag bag = getUserBag(userId);
+		if ((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 5) &&
+			(PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6)) {
 
-		List<Group> groups = new ArrayList<Group>();
-		List<Role> roles = bag.getRoles();
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+			return query;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		AdvancedPermissionChecker advancedPermissionChecker = null;
+
+		if ((permissionChecker != null) &&
+			(permissionChecker instanceof AdvancedPermissionChecker)) {
+
+			advancedPermissionChecker =
+				(AdvancedPermissionChecker)permissionChecker;
+		}
+
+		if (advancedPermissionChecker == null) {
+			return query;
+		}
+
+		PermissionCheckerBag permissionCheckerBag = getPermissionCheckerBag(
+			advancedPermissionChecker, userId);
+
+		if (permissionCheckerBag == null) {
+			return query;
+		}
+
+		List<Group> groups = new UniqueList<Group>();
+		List<Role> roles = new UniqueList<Role>();
+		List<UserGroupRole> userGroupRoles =
+			new UniqueList<UserGroupRole>();
+		Map<Long, List<Role>> groupIdsToRoles =
+			new HashMap<Long, List<Role>>();
+
+		roles.addAll(permissionCheckerBag.getRoles());
 
 		if ((groupIds == null) || (groupIds.length == 0)) {
-			groups.addAll(
-				GroupLocalServiceUtil.getUserGroups(userId, true));
-			groups.addAll(bag.getGroups());
+			groups.addAll(GroupLocalServiceUtil.getUserGroups(userId, true));
+			groups.addAll(permissionCheckerBag.getGroups());
 
-			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-				userId);
+			userGroupRoles =
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles(userId);
 		}
 		else {
+			groups.addAll(permissionCheckerBag.getGroups());
+
 			for (long groupId : groupIds) {
 				if (GroupLocalServiceUtil.hasUserGroup(userId, groupId)) {
 					Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -291,12 +328,47 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 		}
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-		if (defaultUserId != userId) {
+		if (advancedPermissionChecker.isSignedIn()) {
 			roles.add(
-				RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST));
+				RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.GUEST));
 		}
+
+		for (Group group : groups) {
+			PermissionCheckerBag userBag = advancedPermissionChecker.getUserBag(
+				userId, group.getGroupId());
+
+			List<Role> groupRoles = userBag.getRoles();
+
+			groupIdsToRoles.put(group.getGroupId(), groupRoles);
+
+			roles.addAll(groupRoles);
+		}
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) {
+			return doGetPermissionQuery_5(
+				companyId, groupIds, userId, className, query, searchContext,
+				advancedPermissionChecker, groups, roles, userGroupRoles,
+				groupIdsToRoles);
+		}
+		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			return doGetPermissionQuery_6(
+				companyId, groupIds, userId, className, query, searchContext,
+				advancedPermissionChecker, groups, roles, userGroupRoles,
+				groupIdsToRoles);
+		}
+
+		return query;
+	}
+
+	protected Query doGetPermissionQuery_5(
+			long companyId, long[] groupIds, long userId, String className,
+			Query query, SearchContext searchContext,
+			AdvancedPermissionChecker advancedPermissionChecker,
+			List<Group> groups, List<Role> roles,
+			List<UserGroupRole> userGroupRoles,
+			Map<Long, List<Role>> groupIdsToRoles)
+		throws Exception {
 
 		long companyResourceId = 0;
 
@@ -324,22 +396,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		catch (NoSuchResourceException nsre) {
 		}
 
-		long[] groupResourceIds = new long[groups.size()];
-
-		try {
-			for (int i = 0; i < groups.size() ; i++ ) {
-				Group group = groups.get(i);
-
-				Resource groupResource = ResourceLocalServiceUtil.getResource(
-					companyId, className, ResourceConstants.SCOPE_GROUP,
-					String.valueOf(group.getGroupId()));
-
-				groupResourceIds[i] = groupResource.getResourceId();
-			}
-		}
-		catch (NoSuchResourceException nsre) {
-		}
-
 		BooleanQuery permissionQuery = BooleanQueryFactoryUtil.create(
 			searchContext);
 
@@ -347,39 +403,74 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			permissionQuery.addTerm(Field.USER_ID, userId);
 		}
 
+		BooleanQuery groupsQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+		BooleanQuery rolesQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+
 		for (Role role : roles) {
-			if (role.getName().equals(RoleConstants.ADMINISTRATOR)) {
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
 				return query;
 			}
 
-			long roleId = role.getRoleId();
-
-			if (hasPermission(roleId, companyResourceId)) {
+			if (hasPermission(role.getRoleId(), companyResourceId)) {
 				return query;
 			}
 
-			if (hasPermission(roleId, groupTemplateResourceId)) {
+			if (hasPermission(role.getRoleId(), groupTemplateResourceId)) {
 				return query;
 			}
 
-			for (long groupResourceId : groupResourceIds) {
-				if (hasPermission(roleId, groupResourceId)) {
-					return query;
+			for (Group group : groups) {
+				try {
+					Resource groupResource =
+						ResourceLocalServiceUtil.getResource(
+							companyId, className, ResourceConstants.SCOPE_GROUP,
+							String.valueOf(group.getGroupId()));
+
+					if (hasPermission(
+							role.getRoleId(), groupResource.getResourceId())) {
+
+						groupsQuery.addTerm(Field.GROUP_ID, group.getGroupId());
+					}
+				}
+				catch (NoSuchResourceException nsre) {
+				}
+
+				if ((role.getType() != RoleConstants.TYPE_REGULAR) &&
+					hasPermission(role.getRoleId(), groupTemplateResourceId)) {
+
+					List<Role> groupRoles = groupIdsToRoles.get(
+						group.getGroupId());
+
+					if (groupRoles.contains(role)) {
+						groupsQuery.addTerm(Field.GROUP_ID, group.getGroupId());
+					}
 				}
 			}
 
-			permissionQuery.addTerm(Field.ROLE_ID, role.getRoleId());
+			rolesQuery.addTerm(Field.ROLE_ID, role.getRoleId());
 		}
 
 		for (Group group : groups) {
-			addRequiredMemberRole(group, permissionQuery);
+			addRequiredMemberRole(group, rolesQuery);
 		}
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			permissionQuery.addTerm(
+			rolesQuery.addTerm(
 				Field.GROUP_ROLE_ID,
 				userGroupRole.getGroupId() + StringPool.DASH +
 					userGroupRole.getRoleId());
+		}
+
+		if (!groupsQuery.clauses().isEmpty()) {
+			permissionQuery.add(groupsQuery, BooleanClauseOccur.SHOULD);
+		}
+
+		if (!rolesQuery.clauses().isEmpty()) {
+			permissionQuery.add(rolesQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
@@ -392,52 +483,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	protected Query doGetPermissionQuery_6(
 			long companyId, long[] groupIds, long userId, String className,
-			Query query, SearchContext searchContext)
+			Query query, SearchContext searchContext,
+			AdvancedPermissionChecker advancedPermissionChecker,
+			List<Group> groups, List<Role> roles,
+			List<UserGroupRole> userGroupRoles,
+			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
-
-		PermissionCheckerBag bag = getUserBag(userId);
-
-		if (bag == null) {
-			return query;
-		}
-
-		List<Group> groups = new ArrayList<Group>();
-		List<Role> roles = bag.getRoles();
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
-
-		if ((groupIds == null) || (groupIds.length == 0)) {
-			groups.addAll(GroupLocalServiceUtil.getUserGroups(userId, true));
-			groups.addAll(bag.getGroups());
-
-			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-				userId);
-		}
-		else {
-			groups.addAll(bag.getGroups());
-
-			for (long groupId : groupIds) {
-				if (GroupLocalServiceUtil.hasUserGroup(userId, groupId)) {
-					Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-					groups.add(group);
-				}
-
-				userGroupRoles.addAll(
-					UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-						userId, groupId));
-				userGroupRoles.addAll(
-					UserGroupRoleLocalServiceUtil.
-						getUserGroupRolesByUserUserGroupAndGroup(
-						userId, groupId));
-			}
-		}
-
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-		if (defaultUserId != userId) {
-			roles.add(
-				RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST));
-		}
 
 		BooleanQuery permissionQuery = BooleanQueryFactoryUtil.create(
 			searchContext);
@@ -446,25 +497,32 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			permissionQuery.addTerm(Field.USER_ID, userId);
 		}
 
+		BooleanQuery groupsQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+		BooleanQuery rolesQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+
 		for (Role role : roles) {
-			if (role.getName().equals(RoleConstants.ADMINISTRATOR)) {
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
 				return query;
 			}
-
-			long roleId = role.getRoleId();
 
 			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
 					companyId, className, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId), roleId, ActionKeys.VIEW)) {
+					String.valueOf(companyId), role.getRoleId(),
+					ActionKeys.VIEW)) {
 
 				return query;
 			}
 
-			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			if ((role.getType() == RoleConstants.TYPE_REGULAR) &&
+				ResourcePermissionLocalServiceUtil.hasResourcePermission(
 					companyId, className,
 					ResourceConstants.SCOPE_GROUP_TEMPLATE,
 					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-					roleId, ActionKeys.VIEW)) {
+					role.getRoleId(), ActionKeys.VIEW)) {
 
 				return query;
 			}
@@ -472,25 +530,48 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			for (Group group : groups) {
 				if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
 						companyId, className, ResourceConstants.SCOPE_GROUP,
-						String.valueOf(group.getGroupId()), roleId,
+						String.valueOf(group.getGroupId()), role.getRoleId(),
 						ActionKeys.VIEW)) {
 
-					return query;
+					groupsQuery.addTerm(Field.GROUP_ID, group.getGroupId());
+				}
+
+				if ((role.getType() != RoleConstants.TYPE_REGULAR) &&
+					ResourcePermissionLocalServiceUtil.hasResourcePermission(
+						companyId, className,
+						ResourceConstants.SCOPE_GROUP_TEMPLATE,
+						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+						role.getRoleId(), ActionKeys.VIEW)) {
+
+					List<Role> groupRoles = groupIdsToRoles.get(
+						group.getGroupId());
+
+					if (groupRoles.contains(role)) {
+						groupsQuery.addTerm(Field.GROUP_ID, group.getGroupId());
+					}
 				}
 			}
 
-			permissionQuery.addTerm(Field.ROLE_ID, roleId);
+			rolesQuery.addTerm(Field.ROLE_ID, role.getRoleId());
 		}
 
 		for (Group group : groups) {
-			addRequiredMemberRole(group, permissionQuery);
+			addRequiredMemberRole(group, rolesQuery);
 		}
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			permissionQuery.addTerm(
+			rolesQuery.addTerm(
 				Field.GROUP_ROLE_ID,
 				userGroupRole.getGroupId() + StringPool.DASH +
 					userGroupRole.getRoleId());
+		}
+
+		if (!groupsQuery.clauses().isEmpty()) {
+			permissionQuery.add(groupsQuery, BooleanClauseOccur.SHOULD);
+		}
+
+		if (!rolesQuery.clauses().isEmpty()) {
+			permissionQuery.add(rolesQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
@@ -525,25 +606,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 	}
 
-	protected PermissionCheckerBag getUserBag(long userId) throws Exception {
-		User user = UserLocalServiceUtil.getUser(userId);
+	protected PermissionCheckerBag getPermissionCheckerBag(
+			AdvancedPermissionChecker advancedPermissionChecker, long userId)
+		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user, true);
-
-		if (permissionChecker instanceof AdvancedPermissionChecker) {
-			AdvancedPermissionChecker advancedPermissionChecker =
-				(AdvancedPermissionChecker)permissionChecker;
-
-			if (user.isDefaultUser()) {
-				return advancedPermissionChecker.getGuestUserBag();
-			}
-			else {
-				return advancedPermissionChecker.getUserBag(userId, 0);
-			}
+		if (!advancedPermissionChecker.isSignedIn()) {
+			return advancedPermissionChecker.getGuestUserBag();
 		}
 		else {
-			return null;
+			return advancedPermissionChecker.getUserBag(userId, 0);
 		}
 	}
 

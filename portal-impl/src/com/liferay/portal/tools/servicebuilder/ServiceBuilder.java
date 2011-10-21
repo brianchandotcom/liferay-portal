@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -46,9 +47,11 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.util.xml.XMLFormatter;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.Annotation;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
@@ -1245,6 +1248,16 @@ public class ServiceBuilder {
 		return sb.toString();
 	}
 
+	public String getVariableName(JavaField field) {
+		String fieldName = field.getName();
+
+		if ((fieldName.length() > 0) && (fieldName.charAt(0) == '_')) {
+			fieldName = fieldName.substring(1);
+		}
+
+		return fieldName;
+	}
+
 	public boolean hasEntityByGenericsName(String genericsName) {
 		if (Validator.isNull(genericsName)) {
 			return false;
@@ -1395,12 +1408,10 @@ public class ServiceBuilder {
 
 		String key = sb.toString();
 
-		if (tempMap.containsKey(key)) {
+		if (tempMap.put(key, key) != null) {
 			return true;
 		}
 		else {
-			tempMap.put(key, key);
-
 			return false;
 		}
 	}
@@ -1452,12 +1463,16 @@ public class ServiceBuilder {
 	}
 
 	public boolean isSoapMethod(JavaMethod method) {
-		String returnTypeGenericsName = getTypeGenericsName(
-			method.getReturns());
-		String returnValueName = method.getReturns().getValue();
+		Type returnType = method.getReturns();
+
+		String returnTypeGenericsName = getTypeGenericsName(returnType);
+		String returnValueName = returnType.getValue();
 
 		if (returnTypeGenericsName.contains(
 				"com.liferay.portal.kernel.repository.") ||
+			returnTypeGenericsName.contains(
+				"com.liferay.portal.kernel.search.") ||
+			returnTypeGenericsName.contains("com.liferay.portal.model.Theme") ||
 			returnTypeGenericsName.equals("java.util.List<java.lang.Object>") ||
 			returnValueName.equals("com.liferay.portal.model.Lock") ||
 			returnValueName.equals(
@@ -2072,9 +2087,13 @@ public class ServiceBuilder {
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
+		JavaClass javaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put("cacheFields", _getCacheFields(javaClass));
 
 		// Content
 
@@ -2167,9 +2186,13 @@ public class ServiceBuilder {
 	}
 
 	private void _createModelImpl(Entity entity) throws Exception {
+		JavaClass javaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put("cacheFields", _getCacheFields(javaClass));
 
 		// Content
 
@@ -3500,13 +3523,10 @@ public class ServiceBuilder {
 			if (Validator.isNotNull(createTableSQL)) {
 				_createSQLTables(sqlFile, createTableSQL, entity, true);
 
-				File updateSQLFile = new File(
-					_sqlDir + "/update-6.0.6-6.1.0.sql");
-
-				if (updateSQLFile.exists()) {
-					_createSQLTables(
-						updateSQLFile, createTableSQL, entity, false);
-				}
+				_updateSQLFile(
+					"update-6.0.6-6.1.0.sql", createTableSQL, entity);
+				_updateSQLFile(
+					"update-6.0.12-6.1.0.sql", createTableSQL, entity);
 			}
 		}
 
@@ -3702,6 +3722,32 @@ public class ServiceBuilder {
 		}
 
 		return xml;
+	}
+
+	private JavaField[] _getCacheFields(JavaClass javaClass) {
+		if (javaClass == null) {
+			return new JavaField[0];
+		}
+
+		List<JavaField> javaFields = new ArrayList<JavaField>();
+
+		for (JavaField javaField : javaClass.getFields()) {
+			Annotation[] annotations = javaField.getAnnotations();
+
+			for (Annotation annotation : annotations) {
+				Type type = annotation.getType();
+
+				String className = type.getFullyQualifiedName();
+
+				if (className.equals(CacheField.class.getName())) {
+					javaFields.add(javaField);
+
+					break;
+				}
+			}
+		}
+
+		return javaFields.toArray(new JavaField[javaFields.size()]);
 	}
 
 	private String _getContent(String fileName) throws Exception {
@@ -4642,10 +4688,8 @@ public class ServiceBuilder {
 
 				EntityColumn col = Entity.getColumn(finderColName, columnList);
 
-				if (!col.isFetchFinderPath() &&
-					!finderReturn.equals("Collection")) {
-
-					col.setFetchFinderPath(true);
+				if (!col.isFinderPath()) {
+					col.setFinderPath(true);
 				}
 
 				col = (EntityColumn)col.clone();
@@ -4745,6 +4789,17 @@ public class ServiceBuilder {
 		StringUtil.readLines(classLoader.getResourceAsStream(fileName), lines);
 
 		return lines;
+	}
+
+	private void _updateSQLFile(
+			String sqlFileName, String createTableSQL, Entity entity)
+		throws IOException {
+
+		File updateSQLFile = new File(_sqlDir + "/" + sqlFileName);
+
+		if (updateSQLFile.exists()) {
+			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
+		}
 	}
 
 	private static final int _SESSION_TYPE_LOCAL = 1;

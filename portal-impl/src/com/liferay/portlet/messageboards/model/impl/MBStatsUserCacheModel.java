@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see MBStatsUser
  * @generated
  */
-public class MBStatsUserCacheModel implements CacheModel<MBStatsUser> {
+public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

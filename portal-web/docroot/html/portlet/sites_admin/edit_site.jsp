@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
+String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
+String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -73,13 +75,7 @@ String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
 
 if (group != null) {
 	mainSections = PropsValues.SITES_FORM_UPDATE_MAIN;
-
-	if (windowState.equals(LiferayWindowState.POP_UP) && ArrayUtil.contains(mainSections, "site_url")) {
-		mainSections = ArrayUtil.remove(mainSections, "site_url");
-	}
-
 	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
-
 	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
 }
 
@@ -119,6 +115,7 @@ else if (layoutSetPrototype != null) {
 <aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />

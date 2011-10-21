@@ -50,6 +50,13 @@ public class IconMinimizeTag extends IconTag {
 
 		setImage("../portlet/".concat(image));
 		setMessage(image);
+
+		String onClick =
+			"Liferay.Portlet.minimize('#p_p_id_".concat(
+				portletDisplay.getId()).concat("_', this); return false;");
+
+		setOnClick(onClick);
+
 		setToolTip(false);
 		setUrl(portletDisplay.getURLMin());
 

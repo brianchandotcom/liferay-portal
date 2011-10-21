@@ -16,12 +16,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Web Content Display Page</td>
-	<td></td>
+	<td>Web Content Display Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Page</td>
-	<td></td>
+	<td>Web Content Display Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -46,22 +46,27 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Scope</td>
-	<td></td>
+	<td>Scope</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Scope</td>
-	<td></td>
+	<td>Scope</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_86_scopeLayoutUuid</td>
+	<td>//select[@id='_86_scopeType']</td>
+	<td>label=Select Layout</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_86_scopeLayoutUuid']</td>
 	<td>label=Current Page (Web Content Display Page)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,9 +75,15 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_86_scopeLayoutUuid</td>
+	<td>//select[@id='_86_scopeType']</td>
+	<td>Select Layout</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_scopeLayoutUuid']</td>
 	<td>Current Page (Web Content Display Page)</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

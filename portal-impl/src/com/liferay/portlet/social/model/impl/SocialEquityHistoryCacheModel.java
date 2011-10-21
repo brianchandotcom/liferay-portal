@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.social.model.SocialEquityHistory;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see SocialEquityHistory
  * @generated
  */
-public class SocialEquityHistoryCacheModel implements CacheModel<SocialEquityHistory> {
+public class SocialEquityHistoryCacheModel implements CacheModel<SocialEquityHistory>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       GroupService
  * @generated
  */
-public class GroupServiceWrapper implements GroupService {
+public class GroupServiceWrapper implements GroupService,
+	ServiceWrapper<GroupService> {
 	public GroupServiceWrapper(GroupService groupService) {
 		_groupService = groupService;
 	}
@@ -512,11 +513,25 @@ public class GroupServiceWrapper implements GroupService {
 			friendlyURL, active, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public GroupService getWrappedGroupService() {
 		return _groupService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedGroupService(GroupService groupService) {
+		_groupService = groupService;
+	}
+
+	public GroupService getWrappedService() {
+		return _groupService;
+	}
+
+	public void setWrappedService(GroupService groupService) {
 		_groupService = groupService;
 	}
 

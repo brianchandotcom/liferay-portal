@@ -29,27 +29,21 @@ boolean showThumbnail = false;
 if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 	showThumbnail = true;
 }
-
-String src = null;
-
-if (showThumbnail) {
-	src = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileVersion.getVersion();
-}
 %>
 
 <c:if test="<%= fileVersion.isApproved() %>">
 	<div class="asset-resource-info">
 		<c:choose>
-			<c:when test="<%= showThumbnail && PDFProcessor.hasImages(fileEntry, fileVersion.getVersion()) %>">
+			<c:when test="<%= showThumbnail && PDFProcessor.hasImages(fileVersion) %>">
 				<div>
-					<img src="<%= src %>&documentThumbnail=1" />
+					<img src="<%= _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&documentThumbnail=1") %>" />
 
 					<%= fileVersion.getTitle() %>
 				</div>
 			</c:when>
-			<c:when test="<%= showThumbnail && VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion()) %>">
+			<c:when test="<%= showThumbnail && VideoProcessor.hasVideo(fileVersion) %>">
 				<div>
-					<img src="<%= src %>&videoThumbnail=1" />
+					<img src="<%= _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1") %>" />
 
 					<%= fileVersion.getTitle() %>
 				</div>

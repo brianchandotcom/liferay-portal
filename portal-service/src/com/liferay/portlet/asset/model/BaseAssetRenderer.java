@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -149,6 +152,32 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
+	}
+
+	protected String getURLViewInContext(
+		LiferayPortletRequest liferayPortletRequest, String noSuchEntryRedirect,
+		String path, String primaryKeyParameterName,
+		long primaryKeyParameterValue) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append(path);
+		sb.append("?p_l_id=");
+		sb.append(themeDisplay.getPlid());
+		sb.append("&noSuchEntryRedirect=");
+		sb.append(HttpUtil.encodeURL(noSuchEntryRedirect));
+		sb.append(StringPool.AMPERSAND);
+		sb.append(primaryKeyParameterName);
+		sb.append(StringPool.EQUAL);
+		sb.append(primaryKeyParameterValue);
+
+		return sb.toString();
 	}
 
 	private static final String[] _EMPTY_ARRAY = new String[0];

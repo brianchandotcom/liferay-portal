@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Resource
  * @generated
  */
-public class ResourceWrapper implements Resource {
+public class ResourceWrapper implements Resource, ModelWrapper<Resource> {
 	public ResourceWrapper(Resource resource) {
 		_resource = resource;
 	}
@@ -128,10 +128,6 @@ public class ResourceWrapper implements Resource {
 		return _resource.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_resource.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _resource.getPrimaryKeyObj();
 	}
@@ -215,7 +211,14 @@ public class ResourceWrapper implements Resource {
 		_resource.setScope(scope);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Resource getWrappedResource() {
+		return _resource;
+	}
+
+	public Resource getWrappedModel() {
 		return _resource;
 	}
 

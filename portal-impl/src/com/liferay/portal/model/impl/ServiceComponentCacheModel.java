@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ServiceComponent;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ServiceComponent in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.ServiceComponent;
  * @see ServiceComponent
  * @generated
  */
-public class ServiceComponentCacheModel implements CacheModel<ServiceComponent> {
+public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

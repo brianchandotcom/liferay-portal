@@ -50,12 +50,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[3]/div/div[2]/ul/li[1]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[3]/div/div[2]/ul/li[1]/a</td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -89,8 +94,18 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td>Your request failed to complete.</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//label/div</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td>Your request failed to complete.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid URL.</td>
 </tr>
 

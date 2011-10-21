@@ -25,6 +25,10 @@ if (portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
 	editable = true;
 }
 
+if (!DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD)) {
+	editable = false;
+}
+
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 
@@ -49,6 +53,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		</div>
 	</c:if>
 </div>
+
+<%@ include file="/html/portlet/dynamic_data_lists/custom_spreadsheet_editors.jspf" %>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var structure = <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>;
@@ -135,20 +141,22 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	spreadSheet.get('boundingBox').unselectable();
 
-	var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
+	<c:if test="<%= editable %>">
+		var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
 
-	A.one('#<portlet:namespace />addRecords').on(
-		'click',
-		function(event) {
-			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
+		A.one('#<portlet:namespace />addRecords').on(
+			'click',
+			function(event) {
+				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-			var recordset = spreadSheet.get('recordset');
+				var recordset = spreadSheet.get('recordset');
 
-			spreadSheet.addEmptyRows(numberOfRecords);
+				spreadSheet.addEmptyRows(numberOfRecords);
 
-			spreadSheet.updateMinDisplayRows(recordset.getLength());
-		}
-	);
+				spreadSheet.updateMinDisplayRows(recordset.getLength());
+			}
+		);
+	</c:if>
 
 	window.<portlet:namespace />spreadSheet = spreadSheet;
 </aui:script>

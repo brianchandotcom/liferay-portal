@@ -25,7 +25,7 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,11 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_8_startDateMonth",
 			RuntimeVariables.replace("label=January"));
 		selenium.select("_8_startDateDay", RuntimeVariables.replace("label=1"));
@@ -55,11 +52,9 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			RuntimeVariables.replace("label=2010"));
 		selenium.type("_8_title",
 			RuntimeVariables.replace("Daily Repeating Event"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
 			RuntimeVariables.replace(""));
 		selenium.type("_8_dailyInterval", RuntimeVariables.replace("1"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace(""));
 		selenium.select("_8_endDateMonth",
@@ -68,13 +63,12 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 		selenium.select("_8_endDateYear", RuntimeVariables.replace("label=2011"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -89,17 +83,13 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Daily Repeating Event",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Daily Repeating Event"),
 			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace("1/1/10"),
@@ -109,7 +99,7 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -124,19 +114,16 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//td[6]/span/ul/li/strong/a",
 			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -152,29 +139,25 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals("January", selenium.getSelectedLabel("_8_startDateMonth"));
 		assertEquals("1", selenium.getSelectedLabel("_8_startDateDay"));
 		assertEquals("2010", selenium.getSelectedLabel("_8_startDateYear"));
 		assertEquals("Daily Repeating Event", selenium.getValue("_8_title"));
 		assertTrue(selenium.isChecked(
 				"//input[@name='_8_recurrenceType' and @value='3']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("1", selenium.getValue("_8_dailyInterval"));
 		assertTrue(selenium.isChecked(
 				"//input[@name='_8_endDateType' and @value='2']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("January", selenium.getSelectedLabel("_8_endDateMonth"));
 		assertEquals("1", selenium.getSelectedLabel("_8_endDateDay"));
 		assertEquals("2011", selenium.getSelectedLabel("_8_endDateYear"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -189,17 +172,14 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select", RuntimeVariables.replace("label=2010"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -215,19 +195,16 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(4, 31, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Daily Repeating Event"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select", RuntimeVariables.replace("label=2010"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -243,21 +220,17 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(5, 1, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Daily Repeating Event"));
 		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select", RuntimeVariables.replace("label=2011"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -273,11 +246,9 @@ public class AddEventRepeatingDailyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(4, 31, 2011);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("link=Daily Repeating Event"));
 	}
 }

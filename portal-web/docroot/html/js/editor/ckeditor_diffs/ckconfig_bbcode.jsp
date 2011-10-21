@@ -14,10 +14,10 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
-<%@ page import="com.liferay.portlet.messageboards.util.BBCodeUtil" %>
 
 <%
 String cssPath = ParamUtil.getString(request, "cssPath");
@@ -86,12 +86,12 @@ CKEDITOR.config.imagesPath = '<%= HtmlUtil.escape(imagesPath) %>/message_boards/
 
 CKEDITOR.config.language = '<%= HtmlUtil.escape(languageId) %>';
 
-CKEDITOR.config.newThreadURL = '<%= BBCodeUtil.NEW_THREAD_URL %>';
+CKEDITOR.config.newThreadURL = '<%= BBCodeTranslatorUtil.NEW_THREAD_URL %>';
 
-CKEDITOR.config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeUtil.EMOTICONS_DESCRIPTIONS, "','") %>'];
+CKEDITOR.config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonDescriptions(), "','") %>'];
 
-CKEDITOR.config.smiley_images = ['<%= StringUtil.merge(BBCodeUtil.EMOTICONS_FILES, "','") %>'];
+CKEDITOR.config.smiley_images = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonFiles(), "','") %>'];
 
 CKEDITOR.config.smiley_path = '<%= HtmlUtil.escape(emoticonsPath) %>' + '/';
 
-CKEDITOR.config.smiley_symbols = ['<%= StringUtil.merge(BBCodeUtil.EMOTICONS_SYMBOLS, "','") %>'];
+CKEDITOR.config.smiley_symbols = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonSymbols(), "','") %>'];

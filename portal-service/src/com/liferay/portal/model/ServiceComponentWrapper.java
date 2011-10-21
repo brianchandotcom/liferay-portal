@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       ServiceComponent
  * @generated
  */
-public class ServiceComponentWrapper implements ServiceComponent {
+public class ServiceComponentWrapper implements ServiceComponent,
+	ModelWrapper<ServiceComponent> {
 	public ServiceComponentWrapper(ServiceComponent serviceComponent) {
 		_serviceComponent = serviceComponent;
 	}
@@ -164,10 +165,6 @@ public class ServiceComponentWrapper implements ServiceComponent {
 		return _serviceComponent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_serviceComponent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _serviceComponent.getPrimaryKeyObj();
 	}
@@ -234,7 +231,14 @@ public class ServiceComponentWrapper implements ServiceComponent {
 		return _serviceComponent.getIndexesSQL();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ServiceComponent getWrappedServiceComponent() {
+		return _serviceComponent;
+	}
+
+	public ServiceComponent getWrappedModel() {
 		return _serviceComponent;
 	}
 

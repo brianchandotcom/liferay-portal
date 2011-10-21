@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutSetBranch
  * @generated
  */
-public class LayoutSetBranchWrapper implements LayoutSetBranch {
+public class LayoutSetBranchWrapper implements LayoutSetBranch,
+	ModelWrapper<LayoutSetBranch> {
 	public LayoutSetBranchWrapper(LayoutSetBranch layoutSetBranch) {
 		_layoutSetBranch = layoutSetBranch;
 	}
@@ -310,10 +311,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 		return _layoutSetBranch.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layoutSetBranch.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layoutSetBranch.getPrimaryKeyObj();
 	}
@@ -368,7 +365,14 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch {
 		_layoutSetBranch.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutSetBranch getWrappedLayoutSetBranch() {
+		return _layoutSetBranch;
+	}
+
+	public LayoutSetBranch getWrappedModel() {
 		return _layoutSetBranch;
 	}
 

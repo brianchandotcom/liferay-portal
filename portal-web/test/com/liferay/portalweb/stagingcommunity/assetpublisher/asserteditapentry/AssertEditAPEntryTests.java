@@ -27,7 +27,8 @@ public class AssertEditAPEntryTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddCommunitiesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(AddSitePublicPageTest.class);
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddPageBlogsTest.class);
@@ -38,7 +39,7 @@ public class AssertEditAPEntryTests extends BaseTests {
 		testSuite.addTestSuite(AssertCannotEditAPEntryTest.class);
 		testSuite.addTestSuite(DeactivateStagingTest.class);
 		testSuite.addTestSuite(AssertEditAPEntryTest.class);
-		testSuite.addTestSuite(TearDownCommunityTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

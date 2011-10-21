@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see WorkflowDefinitionLink
  * @generated
  */
-public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefinitionLink> {
+public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefinitionLink>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);

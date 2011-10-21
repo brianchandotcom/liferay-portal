@@ -139,6 +139,7 @@ if (Validator.isNotNull(structureId)) {
 					<aui:option label="maximized" selected='<%= pageUrl.equals("maximized") %>' />
 					<aui:option label="normal" selected='<%= pageUrl.equals("normal") %>' />
 					<aui:option label="pop-up" selected='<%= pageUrl.equals("popUp") %>' value="popUp" />
+					<aui:option label="view-in-context" selected='<%= pageUrl.equals("viewInContext") %>' value="viewInContext" />
 				</aui:select>
 
 				<aui:select label="display-per-page" name="preferences--pageDelta--">

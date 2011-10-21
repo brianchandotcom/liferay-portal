@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLSync}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLSync
  * @generated
  */
-public class DLSyncWrapper implements DLSync {
+public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	public DLSyncWrapper(DLSync dlSync) {
 		_dlSync = dlSync;
 	}
@@ -236,10 +238,6 @@ public class DLSyncWrapper implements DLSync {
 		return _dlSync.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlSync.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlSync.getPrimaryKeyObj();
 	}
@@ -294,7 +292,14 @@ public class DLSyncWrapper implements DLSync {
 		_dlSync.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLSync getWrappedDLSync() {
+		return _dlSync;
+	}
+
+	public DLSync getWrappedModel() {
 		return _dlSync;
 	}
 

@@ -30,7 +30,7 @@ public class User_SignInTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,13 +45,10 @@ public class User_SignInTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test01@selenium.com"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 
 				boolean rememberMeCheckboxChecked = selenium.isChecked(
 						"_58_rememberMeCheckbox");
@@ -69,7 +66,6 @@ public class User_SignInTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean iAgreeVisible = selenium.isElementPresent(
 						"//span/input");
@@ -83,12 +79,11 @@ public class User_SignInTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='I Agree']",
 					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -103,17 +98,13 @@ public class User_SignInTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='password1']",
 					RuntimeVariables.replace("asdf"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='password2']",
 					RuntimeVariables.replace("asdf"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean passwordReminderVisible = selenium.isElementPresent(
 						"reminderQueryAnswer");
@@ -129,11 +120,9 @@ public class User_SignInTest extends BaseTestCase {
 					selenium.getText("//form/div[1]"));
 				selenium.type("reminderQueryAnswer",
 					RuntimeVariables.replace("test"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 			case 100:

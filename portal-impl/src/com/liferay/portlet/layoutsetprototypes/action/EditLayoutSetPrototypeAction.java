@@ -155,7 +155,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			layoutSetPrototype =
 				LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
 					layoutSetPrototypeId, nameMap, description, active,
-					allowModifications,	allowLayoutAddition, serviceContext);
+					allowModifications, allowLayoutAddition, serviceContext);
 		}
 
 		// Custom JSPs

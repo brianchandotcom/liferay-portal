@@ -217,6 +217,7 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="lang.dir=${lang.dir}" />
 			<arg value="lang.file=${lang.file}" />
 			<arg value="lang.plugin=false" />
+			<arg value="lang.translate=true" />
 		</java>
 
 		<copy file="${lang.dir}/${lang.file}.properties" tofile="${lang.dir}/${lang.file}_en.properties" />
@@ -806,6 +807,12 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
+	<target name="build-wsdd-portlet-social">
+		<antcall target="build-wsdd">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/social/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-wsdd-portlet-softwarecatalog">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/softwarecatalog/service.xml" />
@@ -841,6 +848,7 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-wsdd-portlet-polls" />
 		<antcall target="build-wsdd-portlet-ratings" />
 		<antcall target="build-wsdd-portlet-shopping" />
+		<antcall target="build-wsdd-portlet-social" />
 		<antcall target="build-wsdd-portlet-softwarecatalog" />
 		<antcall target="build-wsdd-portlet-wiki" />
 	</target>

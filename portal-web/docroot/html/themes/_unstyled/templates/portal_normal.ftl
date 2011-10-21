@@ -22,9 +22,9 @@ ${theme.include(body_top_include)}
 	<a href="#main-content" id="skip-to-content"><@liferay.language key="skip-to-content" /></a>
 
 	<header id="banner" role="banner">
-		<hgroup id="heading">
+		<div id="heading">
 			<h1 class="company-title">
-				<a class="logo" href="${company_url}" title="<@liferay.language key="go-to" /> ${company_name}">
+				<a class="${logo_css_class}" href="${company_url}" title="<@liferay.language key="go-to" /> ${company_name}">
 					<span>${company_name}</span>
 				</a>
 			</h1>
@@ -38,7 +38,7 @@ ${theme.include(body_top_include)}
 			<h3 class="page-title">
 				<span>${the_title}</span>
 			</h3>
-		</hgroup>
+		</div>
 
 		<#if !is_signed_in>
 			<a href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>

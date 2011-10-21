@@ -42,8 +42,9 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
 	<entity name="DDLRecordVersion" local-service="false" remote-service="false">
 

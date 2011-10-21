@@ -25,7 +25,7 @@ public class BA_SignInTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,20 @@ public class BA_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Login as bruno"),
 			selenium.getText("//a[@class='express_login']"));
 		selenium.clickAt("//a[@class='express_login']",
 			RuntimeVariables.replace("Login as bruno"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='password1']",
+			RuntimeVariables.replace("password"));
+		selenium.type("//input[@id='password2']",
+			RuntimeVariables.replace("password"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Bruno Admin"),
-			selenium.getText("//a[@class='user-fullname']"));
+			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Bruno Admin."),
 			selenium.getText("//section[@id='portlet_58']/div/div/div"));

@@ -72,52 +72,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <c:choose>
 	<c:when test='<%= topLink.equals("message-boards-home") %>'>
-		<c:if test="<%= category == null %>">
-			<div class="category-subscriptions">
-				<div class="category-subscription-types">
-					<liferay-ui:icon
-						image="rss"
-						label="<%= true %>"
-						method="get"
-						target="_blank"
-						url="<%= rssURL.toString() %>"
-					/>
-
-					<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
-						<c:choose>
-							<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), MBCategory.class.getName(), scopeGroupId) %>">
-								<portlet:actionURL var="unsubscribeURL">
-									<portlet:param name="struts_action" value="/message_boards/edit_category" />
-									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="mbCategoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-								</portlet:actionURL>
-
-								<liferay-ui:icon
-									image="unsubscribe"
-									label="<%= true %>"
-									url="<%= unsubscribeURL %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<portlet:actionURL var="subscribeURL">
-									<portlet:param name="struts_action" value="/message_boards/edit_category" />
-									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="mbCategoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-								</portlet:actionURL>
-
-								<liferay-ui:icon
-									image="subscribe"
-									label="<%= true %>"
-									url="<%= subscribeURL %>"
-								/>
-							</c:otherwise>
-						</c:choose>
-					</c:if>
-				</div>
-			</div>
-		</c:if>
+		<%@ include file="/html/portlet/message_boards/category_subscriptions.jspf" %>
 
 		<%
 		boolean showAddCategoryButton = MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);

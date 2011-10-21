@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
+long newFolderId = ParamUtil.getLong(request, "newFolderId");
+
 List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 
 List<Folder> validMoveFolders = new ArrayList<Folder>();
@@ -67,19 +69,6 @@ if (!fileEntries.isEmpty()) {
 		}
 	}
 }
-
-long folderId = 0;
-
-if (!fileEntries.isEmpty()) {
-	fileEntry = fileEntries.get(0);
-
-	folderId = fileEntry.getFolderId();
-}
-else if (!folders.isEmpty()) {
-	Folder folder = folders.get(0);
-
-	folderId = folder.getParentFolderId();
-}
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -93,7 +82,7 @@ else if (!folders.isEmpty()) {
 <aui:form action="<%= moveFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="newFolderId" type="hidden" value="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" />
+	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -184,7 +173,7 @@ else if (!folders.isEmpty()) {
 				%>
 
 					<li class="move-file">
-						<span class=file-title>
+						<span class="file-title" title="<%= validMoveFileEntry.getTitle() %>">
 							<%= validMoveFileEntry.getTitle() %>
 						</span>
 					</li>
@@ -211,7 +200,7 @@ else if (!folders.isEmpty()) {
 				%>
 
 					<li class="move-file move-error">
-						<span class="file-title">
+						<span class="file-title" title="<%= invalidMoveFileEntry.getTitle() %>">
 							<%= invalidMoveFileEntry.getTitle() %>
 						</span>
 
@@ -242,12 +231,11 @@ else if (!folders.isEmpty()) {
 		<%
 		String folderName = StringPool.BLANK;
 
-		if (folderId > 0) {
-			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
+		if (newFolderId > 0) {
+			Folder folder = DLAppLocalServiceUtil.getFolder(newFolderId);
 
 			folder = folder.toEscapedModel();
 
-			folderId = folder.getFolderId();
 			folderName = folder.getName();
 		}
 		else {
@@ -257,7 +245,7 @@ else if (!folders.isEmpty()) {
 
 		<portlet:renderURL var="viewFolderURL">
 			<portlet:param name="struts_action" value="/document_library/view" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
 		</portlet:renderURL>
 
 		<aui:field-wrapper label="new-folder">
@@ -265,7 +253,7 @@ else if (!folders.isEmpty()) {
 
 			<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectFolderURL">
 				<portlet:param name="struts_action" value="/document_library/select_folder" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
 			</portlet:renderURL>
 
 			<%

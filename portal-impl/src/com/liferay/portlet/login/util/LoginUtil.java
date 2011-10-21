@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.login.util;
 
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,19 +26,16 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -49,7 +45,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.util.Encryptor;
 
 import java.util.ArrayList;
@@ -178,44 +174,12 @@ public class LoginUtil {
 		return userId;
 	}
 
-	public static String getCreateAccountHREF(
-		HttpServletRequest request, ThemeDisplay themeDisplay)
-			throws Exception {
-
-		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
-			PortletURL createAccountURL = new PortletURLImpl(
-				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
-
-			createAccountURL.setWindowState(WindowState.MAXIMIZED);
-			createAccountURL.setPortletMode(PortletMode.VIEW);
-
-			createAccountURL.setParameter("saveLastPath", "0");
-			createAccountURL.setParameter(
-				"struts_action", "/login/create_account");
-
-			return createAccountURL.toString();
-		}
-
-		try {
-			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				themeDisplay.getScopeGroupId(), false,
-				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
-
-			return PortalUtil.getLayoutURL(layout, themeDisplay);
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		return StringPool.BLANK;
-	}
-
 	public static String getEmailFromAddress(
 			PortletPreferences preferences, long companyId)
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.LOGIN_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsValues.LOGIN_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
@@ -251,7 +215,7 @@ public class LoginUtil {
 			HttpServletRequest request, long plid)
 		throws PortletModeException, WindowStateException {
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);

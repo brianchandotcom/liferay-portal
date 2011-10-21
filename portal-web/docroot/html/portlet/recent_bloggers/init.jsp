@@ -16,11 +16,11 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.blogs.model.BlogsEntry" %>
-<%@ page import="com.liferay.portlet.blogs.model.BlogsStatsUser" %>
-<%@ page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.blogs.util.comparator.StatsUserLastPostDateComparator" %>
+<%@ page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
+page import="com.liferay.portlet.blogs.model.BlogsStatsUser" %><%@
+page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
+page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
+page import="com.liferay.portlet.blogs.util.comparator.StatsUserLastPostDateComparator" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

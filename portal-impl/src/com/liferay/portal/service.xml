@@ -577,6 +577,11 @@
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />
 		</finder>
+        <finder name="L_P_N" return-type="LayoutBranch" unique="true">
+			<finder-column name="layoutSetBranchId" />
+            <finder-column name="plid" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="L_P_M" return-type="LayoutBranch">
 			<finder-column name="layoutSetBranchId" />
 			<finder-column name="plid" />
@@ -1488,6 +1493,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLAppHelper" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileVersion" />
@@ -1696,7 +1702,7 @@
 			<finder-column name="primKey" />
 			<finder-column name="ownerId" />
 		</finder>
-		<finder name="C_N_S_P_R" return-type="Collection" unique="true">
+		<finder name="C_N_S_P_R" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="scope" />
@@ -1718,7 +1724,7 @@
 			<finder-column name="roleId" arrayable-operator="OR" />
 			<finder-column name="actionIds" />
 		</finder>
-		<finder name="C_N_S_P_R_O_A" return-type="ResourcePermission" unique="true">
+		<finder name="C_N_S_P_R_O_A" return-type="ResourcePermission">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="scope" />
@@ -1915,6 +1921,8 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialEquityLog" />
 	</entity>
 	<entity name="Team" local-service="true" remote-service="true">
@@ -2552,6 +2560,7 @@
 		<exception>InvalidRepository</exception>
 		<exception>LARFile</exception>
 		<exception>LARType</exception>
+        <exception>LayoutBranchName</exception>
 		<exception>LayoutSetBranchName</exception>
 		<exception>LayoutFriendlyURL</exception>
 		<exception>LayoutHidden</exception>

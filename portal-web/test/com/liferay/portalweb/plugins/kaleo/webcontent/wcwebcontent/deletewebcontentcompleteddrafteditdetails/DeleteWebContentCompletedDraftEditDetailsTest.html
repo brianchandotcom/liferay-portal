@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content</td>
-	<td></td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -66,42 +66,57 @@
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Submit for Publication']</td>
-	<td></td>
+	<td>Submit for Publication</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//input[@value='Submit for Publication' and @disabled='']</td>
-	<td></td>
+	<td>Submit for Publication</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//input[@value='Expire Version']</td>
-	<td></td>
+	<td>//button[2]</td>
+	<td>Expire this Version</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//button[2]</td>
+	<td>Expire this Version</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[3]/a</td>
+	<td>Web Content Name Edited</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//input[@value='Expire Version' and @disabled='']</td>
-	<td></td>
+	<td>//button[2]</td>
+	<td>Delete this Version</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>//input[@value='Discard Draft' and @disabled='']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Discard Draft']</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//button[2]</td>
+	<td>Delete this Version</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to discard this draft?</td>
+	<td>Are you sure you want to delete this article version?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content</td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -128,6 +143,7 @@
 	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

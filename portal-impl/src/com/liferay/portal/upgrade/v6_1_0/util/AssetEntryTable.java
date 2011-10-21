@@ -35,6 +35,7 @@ public class AssetEntryTable {
 		{"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT},
 		{"classUuid", Types.VARCHAR},
+		{"classTypeId", Types.BIGINT},
 		{"visible", Types.BOOLEAN},
 		{"startDate", Types.TIMESTAMP},
 		{"endDate", Types.TIMESTAMP},
@@ -52,7 +53,7 @@ public class AssetEntryTable {
 		{"viewCount", Types.INTEGER}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description STRING null,summary STRING null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description STRING null,summary STRING null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 
@@ -60,7 +61,10 @@ public class AssetEntryTable {
 		"create unique index IX_1E9D371D on AssetEntry (classNameId, classPK)",
 		"create index IX_FC1F9C7B on AssetEntry (classUuid)",
 		"create index IX_7306C60 on AssetEntry (companyId)",
-		"create index IX_1EBA6821 on AssetEntry (groupId, classUuid)"
+		"create index IX_75D42FF9 on AssetEntry (expirationDate)",
+		"create index IX_1EBA6821 on AssetEntry (groupId, classUuid)",
+		"create index IX_2E4E3885 on AssetEntry (publishDate)",
+		"create index IX_9029E15A on AssetEntry (visible)"
 	};
 
 }

@@ -132,7 +132,7 @@ public class MBCategoryFinderImpl
 
 			int count = 0;
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long l = itr.next();

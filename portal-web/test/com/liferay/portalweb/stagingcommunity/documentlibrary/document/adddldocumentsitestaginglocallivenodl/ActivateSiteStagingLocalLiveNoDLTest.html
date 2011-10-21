@@ -40,17 +40,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]</td>
+	<td>//td[1]/a</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//select[@id='_165_stagingType']</td>
-	<td>Staging Type</td>
+	<td>//input[@id='_165_local']</td>
+	<td>Local Live</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//select[@id='_165_stagingType']</td>
+	<td>clickAt</td>
+	<td>//input[@id='_165_local']</td>
 	<td>Local Live</td>
 </tr>
 <tr>
@@ -129,11 +129,6 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to activate local staging for Site Name?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
 	<td>Site Name</td>
@@ -148,6 +143,7 @@
 	<td>//h1[@class='header-title']/span</td>
 	<td>Site Name (Staging)</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

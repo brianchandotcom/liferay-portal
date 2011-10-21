@@ -25,17 +25,12 @@ import java.net.URL;
  */
 public class BaseServiceSoapTestCase extends BaseTestCase {
 
-	protected URL getURL(String serviceName) throws MalformedURLException {
-		return getURL(serviceName, true);
-	}
-
-	protected URL getURL(String serviceName, boolean authenticated)
+	protected URL getURL(long userId, boolean authenticated, String serviceName)
 		throws MalformedURLException {
 
 		String url = TestPropsValues.PORTAL_URL;
 
 		if (authenticated) {
-			long userId = TestPropsValues.USER_ID;
 			String password = TestPropsValues.USER_PASSWORD;
 
 			int pos = url.indexOf("://");
@@ -52,6 +47,12 @@ public class BaseServiceSoapTestCase extends BaseTestCase {
 		}
 
 		return new URL(url);
+	}
+
+	protected URL getURL(long userId, String serviceName)
+		throws MalformedURLException {
+
+		return getURL(userId, true, serviceName);
 	}
 
 }

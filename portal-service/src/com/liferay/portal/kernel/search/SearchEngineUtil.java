@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.util.Collection;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class SearchEngineUtil {
 	 *             com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}.
 	 */
 	public static final int ALL_POS = -1;
+
+	public static final String GENERIC_ENGINE_ID = "GENERIC_ENGINE";
 
 	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
 
@@ -181,6 +184,10 @@ public class SearchEngineUtil {
 		}
 
 		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
+
+		if (searchEngine == null) {
+			return;
+		}
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
@@ -434,7 +441,7 @@ public class SearchEngineUtil {
 	}
 
 	public static void updatePermissionFields(long resourceId) {
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || !PermissionThreadLocal.isFlushEnabled()) {
 			return;
 		}
 
@@ -442,7 +449,7 @@ public class SearchEngineUtil {
 	}
 
 	public static void updatePermissionFields(String name, String primKey) {
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || !PermissionThreadLocal.isFlushEnabled()) {
 			return;
 		}
 

@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see DLFileShortcut
  * @generated
  */
-public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut> {
+public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);

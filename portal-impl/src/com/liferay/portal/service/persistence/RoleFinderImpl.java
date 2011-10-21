@@ -146,7 +146,7 @@ public class RoleFinderImpl
 			qPos.add(groupId);
 			qPos.add(userId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -221,7 +221,7 @@ public class RoleFinderImpl
 			qPos.add(descriptions, 2);
 			qPos.add(types);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -545,7 +545,7 @@ public class RoleFinderImpl
 			Map<String, List<String>> roleMap =
 				new HashMap<String, List<String>>();
 
-			Iterator<Object[]> itr = q.list().iterator();
+			Iterator<Object[]> itr = q.iterate();
 
 			while (itr.hasNext()) {
 				Object[] array = itr.next();

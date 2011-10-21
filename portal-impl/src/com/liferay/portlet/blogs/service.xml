@@ -43,6 +43,7 @@
 
 		<order by="desc">
 			<order-column name="displayDate" />
+			<order-column name="createDate" />
 		</order>
 
 		<!-- Finder methods -->

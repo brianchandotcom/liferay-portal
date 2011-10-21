@@ -52,7 +52,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTests extends BaseTests {
 		testSuite.addTestSuite(GmailServer_TearDownEmailTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownServerTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

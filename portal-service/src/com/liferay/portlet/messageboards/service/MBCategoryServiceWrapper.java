@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBCategoryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBCategoryService
  * @generated
  */
-public class MBCategoryServiceWrapper implements MBCategoryService {
+public class MBCategoryServiceWrapper implements MBCategoryService,
+	ServiceWrapper<MBCategoryService> {
 	public MBCategoryServiceWrapper(MBCategoryService mbCategoryService) {
 		_mbCategoryService = mbCategoryService;
 	}
@@ -153,11 +156,25 @@ public class MBCategoryServiceWrapper implements MBCategoryService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBCategoryService getWrappedMBCategoryService() {
 		return _mbCategoryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBCategoryService(MBCategoryService mbCategoryService) {
+		_mbCategoryService = mbCategoryService;
+	}
+
+	public MBCategoryService getWrappedService() {
+		return _mbCategoryService;
+	}
+
+	public void setWrappedService(MBCategoryService mbCategoryService) {
 		_mbCategoryService = mbCategoryService;
 	}
 

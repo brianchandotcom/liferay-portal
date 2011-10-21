@@ -21,9 +21,17 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class CounterFinderUtil {
+	public static void afterPropertiesSet() {
+		getFinder().afterPropertiesSet();
+	}
+
 	public static java.util.List<java.lang.String> getNames()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().getNames();
+	}
+
+	public static java.lang.String getRegistryName() {
+		return getFinder().getRegistryName();
 	}
 
 	public static long increment()
@@ -39,6 +47,10 @@ public class CounterFinderUtil {
 	public static long increment(java.lang.String name, int size)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().increment(name, size);
+	}
+
+	public static void invalidate() {
+		getFinder().invalidate();
 	}
 
 	public static void rename(java.lang.String oldName, java.lang.String newName)

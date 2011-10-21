@@ -32,12 +32,13 @@ public class TearDownPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent("//div[4]/div/ul/li[1]/a")) {
+						if (selenium.isElementPresent(
+									"//li[contains(@class,'manage-page')]/a")) {
 							break;
 						}
 					}
@@ -47,19 +48,18 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[4]/div/ul/li[1]/a",
+				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
 						if (RuntimeVariables.replace("Public Pages")
 												.equals(selenium.getText(
-										"//div/div[3]/a"))) {
+										"//a[@class='layout-tree']"))) {
 							break;
 						}
 					}
@@ -68,8 +68,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean welcomePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");
@@ -86,7 +84,7 @@ public class TearDownPageTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -102,8 +100,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page1Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -118,7 +114,7 @@ public class TearDownPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Page Name"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -135,10 +131,10 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -153,19 +149,17 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -181,8 +175,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page2Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -197,7 +189,7 @@ public class TearDownPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Page Name"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -214,10 +206,10 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -232,19 +224,17 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -260,8 +250,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page3Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -276,7 +264,7 @@ public class TearDownPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Page Name"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -293,10 +281,10 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -311,19 +299,17 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -339,8 +325,6 @@ public class TearDownPageTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean page4Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -355,7 +339,7 @@ public class TearDownPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Page Name"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -372,10 +356,10 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -390,19 +374,17 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -419,8 +401,6 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean page5Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
 
@@ -434,7 +414,7 @@ public class TearDownPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Page Name"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -451,10 +431,10 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -469,14 +449,12 @@ public class TearDownPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 			case 4:

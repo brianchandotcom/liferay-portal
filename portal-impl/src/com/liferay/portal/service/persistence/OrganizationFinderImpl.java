@@ -279,7 +279,7 @@ public class OrganizationFinderImpl
 			qPos.add(cities, 2);
 			qPos.add(zips, 2);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -670,7 +670,7 @@ public class OrganizationFinderImpl
 
 		qPos.add(organizationId);
 
-		Iterator<Long> itr = q.list().iterator();
+		Iterator<Long> itr = q.iterate();
 
 		if (itr.hasNext()) {
 			Long count = itr.next();
@@ -826,7 +826,7 @@ public class OrganizationFinderImpl
 
 			int count = 0;
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			while (itr.hasNext()) {
 				Long l = itr.next();

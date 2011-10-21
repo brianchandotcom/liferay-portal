@@ -38,19 +38,19 @@ public class ImportExportThreadLocal {
 	}
 
 	public static boolean isLayoutExportInProcess() {
-		return _layoutExportInProcess.get().booleanValue();
+		return _layoutExportInProcess.get();
 	}
 
 	public static boolean isLayoutImportInProcess() {
-		return _layoutImportInProcess.get().booleanValue();
+		return _layoutImportInProcess.get();
 	}
 
 	public static boolean isPortletExportInProcess() {
-		return _portletExportInProcess.get().booleanValue();
+		return _portletExportInProcess.get();
 	}
 
 	public static boolean isPortletImportInProcess() {
-		return _portletImportInProcess.get().booleanValue();
+		return _portletImportInProcess.get();
 	}
 
 	public static void setLayoutExportInProcess(boolean inProcess) {

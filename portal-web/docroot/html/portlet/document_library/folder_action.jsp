@@ -40,14 +40,18 @@ long folderId = 0;
 long repositoryId = 0;
 
 if (row != null) {
-	folder = (Folder)row.getObject();
+	Object result = row.getObject();
 
-	folderId = folder.getFolderId();
+	if (result instanceof Folder) {
+		folder = (Folder)result;
 
-	repositoryId = folder.getRepositoryId();
+		folderId = folder.getFolderId();
+
+		repositoryId = folder.getRepositoryId();
+	}
 }
 else {
-	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		folder = (Folder)request.getAttribute("view.jsp-folder");
 
 		folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -92,15 +96,21 @@ else {
 	showPermissionsURL = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 
+boolean showWhenSingleIcon = false;
+
+if (row == null || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+	showWhenSingleIcon = true;
+}
+
 boolean view = false;
 
-if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY))) {
+if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu align='<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) ? "right" : "auto" %>' direction='<%= (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? null : "down" %>' extended="<%= (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? true : false %>" icon="<%= (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? null : StringPool.BLANK %>" message='<%= (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? "actions" : StringPool.BLANK %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+	<liferay-ui:icon-menu align='<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) ? "right" : "auto" %>' direction='<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? null : "down" %>' extended="<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? true : false %>" icon="<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? null : StringPool.BLANK %>" message='<%= (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) ? "actions" : StringPool.BLANK %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
 		<c:choose>
 			<c:when test="<%= folder != null %>">
 				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) && !folder.isMountPoint() %>">
@@ -288,16 +298,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 			</c:otherwise>
 		</c:choose>
 
-		<c:if test="<%= portletDisplay.isWebDAVEnabled() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
-			<liferay-ui:icon
-				cssClass='<%= randomNamespace + "-webdav-action" %>'
-				image="desktop"
-				message="access-from-desktop"
-				url="javascript:;"
-			/>
-		</c:if>
-
-		<c:if test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) %>">
+		<c:if test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 			<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 				<portlet:renderURL var="editFileEntryURL">
 					<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
@@ -314,13 +315,13 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				<liferay-ui:icon
 					cssClass="aui-helper-hidden upload-multiple-documents"
 					image="../document_library/add_multiple_documents"
-					message='<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
+					message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
 					url="<%= editFileEntryURL %>"
 				/>
 			</c:if>
 
 			<%
-			int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(scopeGroupId);
+			int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(DLUtil.getGroupIds(themeDisplay));
 			%>
 
 			<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
@@ -333,17 +334,17 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
+				String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + LanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
 				%>
 
 				<liferay-ui:icon
 					image="../document_library/add_document"
-					message='<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
+					message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
 					url="<%= fileEntryTypesCount > 0 ? taglibEditURL : editFileEntryURL %>"
 				/>
 			</c:if>
 
-			<c:if test="<%= portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
+			<c:if test="<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
 				<liferay-ui:icon
 					cssClass='<%= randomNamespace + "-slide-show" %>'
 					image="../image_gallery_display/slide_show"
@@ -365,15 +366,15 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 					url="<%= editFileShortcutURL %>"
 				/>
 			</c:if>
+		</c:if>
 
-			<c:if test="<%= portletDisplay.isWebDAVEnabled() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
-				<liferay-ui:icon
-					cssClass='<%= randomNamespace + "-webdav-action" %>'
-					image="desktop"
-					message="access-from-desktop"
-					url="javascript:;"
-				/>
-			</c:if>
+		<c:if test="<%= portletDisplay.isWebDAVEnabled() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
+			<liferay-ui:icon
+				cssClass='<%= randomNamespace + "-webdav-action" %>'
+				image="desktop"
+				message="access-from-desktop"
+				url="javascript:;"
+			/>
 		</c:if>
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>
@@ -482,7 +483,7 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 						centered: true,
 						destroyOnClose: true,
 						modal: true,
-						title: '<liferay-ui:message key="access-from-desktop" />',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "access-from-desktop") %>',
 						width: 500
 					}
 				).render();

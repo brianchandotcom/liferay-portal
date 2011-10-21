@@ -36,7 +36,6 @@ import com.liferay.portal.util.OpenIdUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.PwdGenerator;
 
 import java.util.Calendar;
@@ -266,7 +265,7 @@ public class OpenIdAction extends PortletAction {
 							"attributes to create an account");
 				}
 
-				String createAccountURL = LoginUtil.getCreateAccountHREF(
+				String createAccountURL = PortalUtil.getCreateAccountURL(
 					request, themeDisplay);
 
 				createAccountURL = HttpUtil.setParameter(

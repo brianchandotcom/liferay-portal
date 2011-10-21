@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -97,6 +96,13 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalStructure"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalStructure"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long PARENTSTRUCTUREID_COLUMN_BITMASK = 2L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -141,14 +147,6 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return JournalStructure.class;
-	}
-
-	public String getModelClassName() {
-		return JournalStructure.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalStructure"));
 
@@ -169,6 +167,14 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return JournalStructure.class;
+	}
+
+	public String getModelClassName() {
+		return JournalStructure.class.getName();
 	}
 
 	@JSON
@@ -208,6 +214,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -290,6 +298,8 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setStructureId(String structureId) {
+		_columnBitmask |= STRUCTUREID_COLUMN_BITMASK;
+
 		if (_originalStructureId == null) {
 			_originalStructureId = _structureId;
 		}
@@ -312,7 +322,17 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public void setParentStructureId(String parentStructureId) {
+		_columnBitmask |= PARENTSTRUCTUREID_COLUMN_BITMASK;
+
+		if (_originalParentStructureId == null) {
+			_originalParentStructureId = _parentStructureId;
+		}
+
 		_parentStructureId = parentStructureId;
+	}
+
+	public String getOriginalParentStructureId() {
+		return GetterUtil.getString(_originalParentStructureId);
 	}
 
 	@JSON
@@ -338,26 +358,23 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public String getName(String languageId) {
-		String value = LocalizationUtil.getLocalization(getName(), languageId);
-
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+		return LocalizationUtil.getLocalization(getName(), languageId);
 	}
 
 	public String getName(String languageId, boolean useDefault) {
-		String value = LocalizationUtil.getLocalization(getName(), languageId,
-				useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
+	}
 
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
+	}
+
+	@JSON
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
+
+		return getName(locale);
 	}
 
 	public Map<Locale, String> getNameMap() {
@@ -384,6 +401,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 			setName(LocalizationUtil.removeLocalization(getName(), "Name",
 					languageId));
 		}
+	}
+
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
 	}
 
 	public void setNameMap(Map<Locale, String> nameMap) {
@@ -427,27 +448,23 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	}
 
 	public String getDescription(String languageId) {
-		String value = LocalizationUtil.getLocalization(getDescription(),
-				languageId);
-
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+		return LocalizationUtil.getLocalization(getDescription(), languageId);
 	}
 
 	public String getDescription(String languageId, boolean useDefault) {
-		String value = LocalizationUtil.getLocalization(getDescription(),
-				languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
+	}
 
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+	public String getDescriptionCurrentLanguageId() {
+		return _descriptionCurrentLanguageId;
+	}
+
+	@JSON
+	public String getDescriptionCurrentValue() {
+		Locale locale = getLocale(_descriptionCurrentLanguageId);
+
+		return getDescription(locale);
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
@@ -476,6 +493,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
+	}
+
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		_descriptionCurrentLanguageId = languageId;
 	}
 
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
@@ -511,20 +532,19 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		_xsd = xsd;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public JournalStructure toEscapedModel() {
-		if (isEscapedModel()) {
-			return (JournalStructure)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (JournalStructure)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (JournalStructure)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -618,6 +638,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 		journalStructureModelImpl._setOriginalGroupId = false;
 
 		journalStructureModelImpl._originalStructureId = journalStructureModelImpl._structureId;
+
+		journalStructureModelImpl._originalParentStructureId = journalStructureModelImpl._parentStructureId;
+
+		journalStructureModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -828,9 +852,13 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	private String _structureId;
 	private String _originalStructureId;
 	private String _parentStructureId;
+	private String _originalParentStructureId;
 	private String _name;
+	private String _nameCurrentLanguageId;
 	private String _description;
+	private String _descriptionCurrentLanguageId;
 	private String _xsd;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalStructure _escapedModelProxy;
 }

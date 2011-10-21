@@ -18,6 +18,8 @@ import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.CounterHolder;
 import com.liferay.counter.model.CounterRegister;
 import com.liferay.counter.model.impl.CounterImpl;
+import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.LockMode;
@@ -50,7 +52,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Edward Han
  */
 public class CounterFinderImpl
-	extends BasePersistenceImpl<Dummy> implements CounterFinder {
+	extends BasePersistenceImpl<Dummy>
+	implements CacheRegistryItem, CounterFinder {
+
+	public void afterPropertiesSet() {
+		CacheRegistryUtil.register(this);
+	}
 
 	public List<String> getNames() throws SystemException {
 		Connection connection = null;
@@ -80,6 +87,10 @@ public class CounterFinderImpl
 		}
 	}
 
+	public String getRegistryName() {
+		return CounterFinderImpl.class.getName();
+	}
+
 	public long increment() throws SystemException {
 		return increment(_NAME);
 	}
@@ -96,6 +107,10 @@ public class CounterFinderImpl
 		CounterRegister counterRegister = getCounterRegister(name);
 
 		return _competeIncrement(counterRegister, size);
+	}
+
+	public void invalidate() {
+		_counterRegisterMap.clear();
 	}
 
 	public void rename(String oldName, String newName) throws SystemException {

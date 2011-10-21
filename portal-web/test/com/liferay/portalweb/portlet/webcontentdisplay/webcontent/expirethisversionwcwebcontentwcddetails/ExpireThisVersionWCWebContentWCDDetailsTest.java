@@ -24,7 +24,7 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 	public void testExpireThisVersionWCWebContentWCDDetails()
 		throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -39,31 +39,27 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content Edit"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.clickAt("//img[@title='Edit Web Content']",
 			RuntimeVariables.replace("Edit Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Version: 1.1"),
 			selenium.getText("//span[@class='workflow-version']"));
 		assertEquals(RuntimeVariables.replace("View History"),
 			selenium.getText("//button[2]"));
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("View History"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//tr[4]/td[9]/span/ul/li/strong"));
 		selenium.clickAt("//tr[4]/td[9]/span/ul/li/strong",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -79,14 +75,12 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
 			RuntimeVariables.replace("Expire"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WCD Web Content Title"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("WCD Web Content Title Edit"),
@@ -98,7 +92,7 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -113,11 +107,9 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}

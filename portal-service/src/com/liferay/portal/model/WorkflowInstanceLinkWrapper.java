@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       WorkflowInstanceLink
  * @generated
  */
-public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
+public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
+	ModelWrapper<WorkflowInstanceLink> {
 	public WorkflowInstanceLinkWrapper(
 		WorkflowInstanceLink workflowInstanceLink) {
 		_workflowInstanceLink = workflowInstanceLink;
@@ -284,10 +285,6 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
 		return _workflowInstanceLink.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_workflowInstanceLink.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _workflowInstanceLink.getPrimaryKeyObj();
 	}
@@ -342,7 +339,14 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink {
 		_workflowInstanceLink.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public WorkflowInstanceLink getWrappedWorkflowInstanceLink() {
+		return _workflowInstanceLink;
+	}
+
+	public WorkflowInstanceLink getWrappedModel() {
 		return _workflowInstanceLink;
 	}
 

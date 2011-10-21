@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PortalService
  * @generated
  */
-public class PortalServiceWrapper implements PortalService {
+public class PortalServiceWrapper implements PortalService,
+	ServiceWrapper<PortalService> {
 	public PortalServiceWrapper(PortalService portalService) {
 		_portalService = portalService;
 	}
@@ -85,11 +86,25 @@ public class PortalServiceWrapper implements PortalService {
 		return _portalService.testHasClassName();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PortalService getWrappedPortalService() {
 		return _portalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPortalService(PortalService portalService) {
+		_portalService = portalService;
+	}
+
+	public PortalService getWrappedService() {
+		return _portalService;
+	}
+
+	public void setWrappedService(PortalService portalService) {
 		_portalService = portalService;
 	}
 

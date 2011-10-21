@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetCategoryProperty}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.model;
  * @see       AssetCategoryProperty
  * @generated
  */
-public class AssetCategoryPropertyWrapper implements AssetCategoryProperty {
+public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
+	ModelWrapper<AssetCategoryProperty> {
 	public AssetCategoryPropertyWrapper(
 		AssetCategoryProperty assetCategoryProperty) {
 		_assetCategoryProperty = assetCategoryProperty;
@@ -257,10 +260,6 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty {
 		return _assetCategoryProperty.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_assetCategoryProperty.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _assetCategoryProperty.getPrimaryKeyObj();
 	}
@@ -315,7 +314,14 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty {
 		_assetCategoryProperty.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AssetCategoryProperty getWrappedAssetCategoryProperty() {
+		return _assetCategoryProperty;
+	}
+
+	public AssetCategoryProperty getWrappedModel() {
 		return _assetCategoryProperty;
 	}
 

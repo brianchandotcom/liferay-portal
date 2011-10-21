@@ -172,7 +172,7 @@ public class SitesUtil {
 			targetGroup.getGroupId(), sourceGroup.getTypeSettings());
 	}
 
-	public static void deleteLayout(
+	public static Object[] deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -181,10 +181,10 @@ public class SitesUtil {
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
 
-		deleteLayout(request, response);
+		return deleteLayout(request, response);
 	}
 
-	public static void deleteLayout(
+	public static Object[] deleteLayout(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -215,6 +215,7 @@ public class SitesUtil {
 		}
 
 		Group group = layout.getGroup();
+		String oldFriendlyURL = layout.getFriendlyURL();
 
 		if (group.isStagingGroup() &&
 			!GroupPermissionUtil.contains(
@@ -269,6 +270,8 @@ public class SitesUtil {
 
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);
+
+		return new Object[] {group, oldFriendlyURL};
 	}
 
 	public static void deleteLayout(

@@ -21,6 +21,7 @@ from
 group
 having
 in
+index
 inner
 is
 join

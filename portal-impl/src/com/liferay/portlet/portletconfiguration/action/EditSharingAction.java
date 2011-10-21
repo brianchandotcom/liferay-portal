@@ -80,7 +80,7 @@ public class EditSharingAction extends EditConfigurationAction {
 		else if (tabs2.equals("friends")) {
 			updateFriends(actionRequest, preferences);
 		}
-		else if (tabs2.equals("google-gadget")) {
+		else if (tabs2.equals("opensocial-gadget")) {
 			updateGoogleGadget(actionRequest, preferences);
 		}
 		else if (tabs2.equals("netvibes")) {
@@ -93,6 +93,13 @@ public class EditSharingAction extends EditConfigurationAction {
 			SessionMessages.add(
 				actionRequest,
 				portletConfig.getPortletName() + ".doConfigure");
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			SessionMessages.add(
+				actionRequest, portletConfig.getPortletName() + ".doRefresh",
+				portletResource);
 
 			String redirect = PortalUtil.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -97,6 +96,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.mobiledevicerules.model.MDRAction"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.mobiledevicerules.model.MDRAction"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long RULEGROUPINSTANCEID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -142,14 +147,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return MDRAction.class;
-	}
-
-	public String getModelClassName() {
-		return MDRAction.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.mobiledevicerules.model.MDRAction"));
 
@@ -170,6 +167,14 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return MDRAction.class;
+	}
+
+	public String getModelClassName() {
+		return MDRAction.class.getName();
 	}
 
 	@JSON
@@ -209,6 +214,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -312,7 +319,19 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
+		_columnBitmask |= RULEGROUPINSTANCEID_COLUMN_BITMASK;
+
+		if (!_setOriginalRuleGroupInstanceId) {
+			_setOriginalRuleGroupInstanceId = true;
+
+			_originalRuleGroupInstanceId = _ruleGroupInstanceId;
+		}
+
 		_ruleGroupInstanceId = ruleGroupInstanceId;
+	}
+
+	public long getOriginalRuleGroupInstanceId() {
+		return _originalRuleGroupInstanceId;
 	}
 
 	@JSON
@@ -338,26 +357,23 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public String getName(String languageId) {
-		String value = LocalizationUtil.getLocalization(getName(), languageId);
-
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+		return LocalizationUtil.getLocalization(getName(), languageId);
 	}
 
 	public String getName(String languageId, boolean useDefault) {
-		String value = LocalizationUtil.getLocalization(getName(), languageId,
-				useDefault);
+		return LocalizationUtil.getLocalization(getName(), languageId,
+			useDefault);
+	}
 
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
+	}
+
+	@JSON
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
+
+		return getName(locale);
 	}
 
 	public Map<Locale, String> getNameMap() {
@@ -384,6 +400,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 			setName(LocalizationUtil.removeLocalization(getName(), "Name",
 					languageId));
 		}
+	}
+
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
 	}
 
 	public void setNameMap(Map<Locale, String> nameMap) {
@@ -427,27 +447,23 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	public String getDescription(String languageId) {
-		String value = LocalizationUtil.getLocalization(getDescription(),
-				languageId);
-
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+		return LocalizationUtil.getLocalization(getDescription(), languageId);
 	}
 
 	public String getDescription(String languageId, boolean useDefault) {
-		String value = LocalizationUtil.getLocalization(getDescription(),
-				languageId, useDefault);
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
+	}
 
-		if (isEscapedModel()) {
-			return HtmlUtil.escape(value);
-		}
-		else {
-			return value;
-		}
+	public String getDescriptionCurrentLanguageId() {
+		return _descriptionCurrentLanguageId;
+	}
+
+	@JSON
+	public String getDescriptionCurrentValue() {
+		Locale locale = getLocale(_descriptionCurrentLanguageId);
+
+		return getDescription(locale);
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
@@ -476,6 +492,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 			setDescription(LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
+	}
+
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		_descriptionCurrentLanguageId = languageId;
 	}
 
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
@@ -525,20 +545,19 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_typeSettings = typeSettings;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public MDRAction toEscapedModel() {
-		if (isEscapedModel()) {
-			return (MDRAction)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MDRAction)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MDRAction)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -634,6 +653,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		mdrActionModelImpl._originalGroupId = mdrActionModelImpl._groupId;
 
 		mdrActionModelImpl._setOriginalGroupId = false;
+
+		mdrActionModelImpl._originalRuleGroupInstanceId = mdrActionModelImpl._ruleGroupInstanceId;
+
+		mdrActionModelImpl._setOriginalRuleGroupInstanceId = false;
+
+		mdrActionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -854,10 +879,15 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private long _classNameId;
 	private long _classPK;
 	private long _ruleGroupInstanceId;
+	private long _originalRuleGroupInstanceId;
+	private boolean _setOriginalRuleGroupInstanceId;
 	private String _name;
+	private String _nameCurrentLanguageId;
 	private String _description;
+	private String _descriptionCurrentLanguageId;
 	private String _type;
 	private String _typeSettings;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MDRAction _escapedModelProxy;
 }

@@ -26,12 +26,12 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -41,15 +41,15 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,12 +65,15 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -85,20 +88,18 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Select']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=folder");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Test1 Folder1")) {
+				if (selenium.isVisible("//td[1]/a")) {
 					break;
 				}
 			}
@@ -108,30 +109,30 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Test1 Folder1", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("DML Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Subfolder1"),
-			selenium.getText("_86_rootFolderName"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("DML Subfolder Name"),
+			selenium.getText("//a[@id='_86_rootFolderName']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Document Library Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -141,16 +142,13 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Subfolder1"),
-			selenium.getText("//div[@class='lfr-asset-name']/h4"));
-		assertEquals(RuntimeVariables.replace("This is test1 subfolder1."),
-			selenium.getText("//div[@class='lfr-asset-description']"));
-		assertTrue(selenium.isTextPresent("Documents Home"));
-		assertFalse(selenium.isElementPresent("link=Documents Home"));
+		assertFalse(selenium.isElementPresent(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		assertEquals(RuntimeVariables.replace("Documents Home"),
+			selenium.getText(
+				"//div[@class='document-library-breadcrumb']/ul/li/span/a"));
 	}
 }

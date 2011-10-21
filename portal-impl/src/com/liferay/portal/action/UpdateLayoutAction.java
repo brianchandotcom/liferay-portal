@@ -405,7 +405,7 @@ public class UpdateLayoutAction extends JSONAction {
 			for (String footerPortalCss : portlet.getFooterPortalCss()) {
 				if (!HttpUtil.hasProtocol(footerPortalCss)) {
 					footerPortalCss =
-						portletApp.getContextPath() + footerPortalCss;
+						PortalUtil.getPathContext() + footerPortalCss;
 
 					footerPortalCss = PortalUtil.getStaticResourceURL(
 						request, footerPortalCss, rootPortlet.getTimestamp());
@@ -419,7 +419,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 				if (!HttpUtil.hasProtocol(footerPortalJavaScript)) {
 					footerPortalJavaScript =
-						portletApp.getContextPath() + footerPortalJavaScript;
+						PortalUtil.getPathContext() + footerPortalJavaScript;
 
 					footerPortalJavaScript = PortalUtil.getStaticResourceURL(
 						request, footerPortalJavaScript,
@@ -459,7 +459,7 @@ public class UpdateLayoutAction extends JSONAction {
 			for (String headerPortalCss : portlet.getHeaderPortalCss()) {
 				if (!HttpUtil.hasProtocol(headerPortalCss)) {
 					headerPortalCss =
-						portletApp.getContextPath() + headerPortalCss;
+						PortalUtil.getPathContext() + headerPortalCss;
 
 					headerPortalCss = PortalUtil.getStaticResourceURL(
 						request, headerPortalCss, rootPortlet.getTimestamp());
@@ -473,7 +473,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 				if (!HttpUtil.hasProtocol(headerPortalJavaScript)) {
 					headerPortalJavaScript =
-						portletApp.getContextPath() + headerPortalJavaScript;
+						PortalUtil.getPathContext() + headerPortalJavaScript;
 
 					headerPortalJavaScript = PortalUtil.getStaticResourceURL(
 						request, headerPortalJavaScript,

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClusterGroup;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ClusterGroup in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.ClusterGroup;
  * @see ClusterGroup
  * @generated
  */
-public class ClusterGroupCacheModel implements CacheModel<ClusterGroup> {
+public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/software_catalog/init.jsp" %>
 
 <%
-ResultRow row =	(ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 SCProductVersion productVersion = (SCProductVersion)row.getObject();
 %>

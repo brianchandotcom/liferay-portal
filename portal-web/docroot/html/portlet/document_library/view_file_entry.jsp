@@ -62,7 +62,7 @@ Lock lock = fileEntry.getLock();
 String[] conversions = new String[0];
 
 if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED)) {
-	conversions = (String[]) DocumentConversionUtil.getConversions(extension);
+	conversions = (String[])DocumentConversionUtil.getConversions(extension);
 }
 
 long assetClassPK = 0;
@@ -106,13 +106,10 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/tunnel-web/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
-Image smallImage = ImageLocalServiceUtil.getImage(fileVersion.getSmallImageId());
-Image largeImage = ImageLocalServiceUtil.getImage(fileVersion.getLargeImageId());
-
-boolean hasAudio = AudioProcessor.hasAudio(fileEntry, fileVersion.getVersion());
+boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
 boolean hasImages = ImageProcessor.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessor.hasImages(fileEntry, fileVersion.getVersion());
-boolean hasVideo = VideoProcessor.hasVideo(fileEntry, fileVersion.getVersion());
+boolean hasPDFImages = PDFProcessor.hasImages(fileVersion);
+boolean hasVideo = VideoProcessor.hasVideo(fileVersion);
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
@@ -136,9 +133,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 <c:if test="<%= folder != null %>">
 
 	<%
-	String versionText = LanguageUtil.format(pageContext, "version-x", fileVersion.getVersion());
+	String versionText = null;
 
-	if (Validator.isNull(fileEntry.getVersion())) {
+	if (Validator.isNotNull(fileVersion.getVersion())) {
+		versionText = LanguageUtil.format(pageContext, "version-x", fileVersion.getVersion());
+	}
+	else {
 		versionText = LanguageUtil.get(pageContext, "not-approved");
 	}
 	%>
@@ -206,26 +206,28 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<%
 						String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(extension) + ".png";
 
+						String thumbnailQueryString = null;
+
 						if (hasImages) {
-							long smallImageId = 0;
-
-							if (smallImage != null) {
-								smallImageId = smallImage.getImageId();
-							}
-
-							thumbnailSrc = themeDisplay.getPathImage() + "/image_gallery?img_id=" + smallImageId +"&fileEntryId=" + fileEntry.getFileEntryId() + "&dlSmallImage=1&t=" + WebServerServletTokenUtil.getToken(smallImageId);
+							thumbnailQueryString = "&imageThumbnail=1";
 						}
 						else if (hasPDFImages) {
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&documentThumbnail=1";
+							thumbnailQueryString = "&documentThumbnail=1";
 						}
-						else if (hasVideo){
-							thumbnailSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&videoThumbnail=1";
+						else if (hasVideo) {
+							thumbnailQueryString = "&videoThumbnail=1";
 						}
 
-						AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), assetClassPK);
+						if (Validator.isNotNull(thumbnailQueryString)) {
+							thumbnailSrc = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, thumbnailQueryString);
+						}
 
-						if (incrementAssetEntry != null) {
-							layoutAssetEntry = incrementAssetEntry;
+						if (layoutAssetEntry != null) {
+							AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), assetClassPK);
+
+							if (incrementAssetEntry != null) {
+								layoutAssetEntry = incrementAssetEntry;
+							}
 						}
 						%>
 
@@ -282,36 +284,38 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<div>
 
 						<%
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileEntry, fileVersion.getVersion());
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileEntry, fileVersion.getVersion());
+						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileVersion.getMimeType());
+						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileVersion.getMimeType());
 
 						int previewFileCount = 0;
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
 
-						if (hasImages) {
-							previewFileURL = themeDisplay.getPathImage() + "/image_gallery?img_id=" + largeImage.getImageId() + "&t=" + WebServerServletTokenUtil.getToken(largeImage.getImageId());
+						String previewQueryString = null;
 
-							previewFileCount = 1;
+						if (hasAudio) {
+							previewQueryString = "&audioPreview=1";
 						}
-						else if (supportedAudio) {
-							if (hasAudio) {
+						else if (hasImages) {
+							previewQueryString = "&imagePreview=1";
+						}
+						else if (hasPDFImages) {
+							previewFileCount = PDFProcessor.getPreviewFileCount(fileVersion);
+
+							previewQueryString = "&previewFileIndex=";
+						}
+						else if (hasVideo) {
+							previewQueryString = "&videoPreview=1";
+
+							videoThumbnailURL = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1");
+						}
+
+						if (Validator.isNotNull(previewQueryString)) {
+							previewFileURL = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, previewQueryString);
+
+							if (!hasPDFImages) {
 								previewFileCount = 1;
 							}
-
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&audioPreview=1");
-						}
-						else if (supportedVideo) {
-							if (hasVideo) {
-								previewFileCount = 1;
-							}
-
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoPreview=1");
-							videoThumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HtmlUtil.escapeURL(HttpUtil.encodeURL(title)) + HtmlUtil.escapeURL("?version=") + fileVersion.getVersion() + HtmlUtil.escapeURL("&videoThumbnail=1");
-						}
-						else {
-							previewFileCount = PDFProcessor.getPreviewFileCount(fileEntry, fileVersion.getVersion());
-							previewFileURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(title) + "?version=" + fileVersion.getVersion() + "&previewFileIndex=";
 						}
 
 						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(supportedAudio));
@@ -370,7 +374,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= themeDisplay.getPathImage() %>/image_gallery?img_id=<%= largeImage.getImageId() %>&t=<%= WebServerServletTokenUtil.getToken(largeImage.getImageId()) %>" style="max-height: 480px; max-width: 700px;" />
+												<img src="<%= previewFileURL %>" style="max-height: 480px; max-width: 700px;" />
 											</div>
 										</div>
 									</c:when>
@@ -442,7 +446,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<liferay-ui:icon
 								image="download"
 								label="<%= true %>"
-								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileVersion.getSize(), locale) + "k)" %>'
 								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>'
 							/>
 						</c:if>
@@ -809,6 +813,19 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			activeState: false,
 			boundingBox: buttonRow,
 			children: [
+
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+
+					{
+						handler: function(event) {
+							location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>';
+						},
+						icon: 'download',
+						label: '<liferay-ui:message key="download" />'
+					},
+
+				</c:if>
+
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
 					{
 
@@ -880,6 +897,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</c:if>
 
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+
 					{
 
 						<liferay-security:permissionsURL
@@ -895,7 +913,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						icon: 'permissions',
 						label: '<liferay-ui:message key="permissions" />'
 					}
+
 				</c:if>
+
 			]
 		}
 	).render();

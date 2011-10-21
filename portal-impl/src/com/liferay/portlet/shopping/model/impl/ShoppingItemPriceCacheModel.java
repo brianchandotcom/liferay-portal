@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ShoppingItemPrice in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.shopping.model.ShoppingItemPrice;
  * @see ShoppingItemPrice
  * @generated
  */
-public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice> {
+public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);

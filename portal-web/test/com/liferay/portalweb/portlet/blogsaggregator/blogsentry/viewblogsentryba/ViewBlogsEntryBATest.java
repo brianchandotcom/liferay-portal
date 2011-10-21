@@ -25,7 +25,7 @@ public class ViewBlogsEntryBATest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewBlogsEntryBATest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Aggregator Test Page",
 			RuntimeVariables.replace("Blogs Aggregator Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//span[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
@@ -55,7 +53,6 @@ public class ViewBlogsEntryBATest extends BaseTestCase {
 		selenium.clickAt("//div[@class='comments']/a",
 			RuntimeVariables.replace("Read More About Blogs Entry Title \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

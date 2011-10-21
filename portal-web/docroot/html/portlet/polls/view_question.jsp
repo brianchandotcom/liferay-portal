@@ -44,7 +44,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 		<portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 	</portlet:renderURL>
 
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.VOTE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= viewQuestionRenderURL %>" />
 	<aui:input name="questionId" type="hidden" value="<%= question.getQuestionId() %>" />
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMStructureLinkService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.service;
  * @see       DDMStructureLinkService
  * @generated
  */
-public class DDMStructureLinkServiceWrapper implements DDMStructureLinkService {
+public class DDMStructureLinkServiceWrapper implements DDMStructureLinkService,
+	ServiceWrapper<DDMStructureLinkService> {
 	public DDMStructureLinkServiceWrapper(
 		DDMStructureLinkService ddmStructureLinkService) {
 		_ddmStructureLinkService = ddmStructureLinkService;
@@ -59,11 +62,26 @@ public class DDMStructureLinkServiceWrapper implements DDMStructureLinkService {
 			classNameId, classPK, structureId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDMStructureLinkService getWrappedDDMStructureLinkService() {
 		return _ddmStructureLinkService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDMStructureLinkService(
+		DDMStructureLinkService ddmStructureLinkService) {
+		_ddmStructureLinkService = ddmStructureLinkService;
+	}
+
+	public DDMStructureLinkService getWrappedService() {
+		return _ddmStructureLinkService;
+	}
+
+	public void setWrappedService(
 		DDMStructureLinkService ddmStructureLinkService) {
 		_ddmStructureLinkService = ddmStructureLinkService;
 	}

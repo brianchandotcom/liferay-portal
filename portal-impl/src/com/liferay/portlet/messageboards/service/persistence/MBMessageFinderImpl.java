@@ -81,7 +81,7 @@ public class MBMessageFinderImpl
 			qPos.add(createDate_TS);
 			qPos.add(threadId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -242,7 +242,7 @@ public class MBMessageFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -314,7 +314,7 @@ public class MBMessageFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

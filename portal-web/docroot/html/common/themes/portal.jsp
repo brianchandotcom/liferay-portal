@@ -16,6 +16,8 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
+<%@ page import="com.liferay.portal.setup.SetupWizardUtil" %>
+
 <%
 StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);
 %>
@@ -28,7 +30,7 @@ StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);
 		%>
 
 	</c:when>
-	<c:when test="<%= themeDisplay.isStatePopUp() || themeDisplay.isWidget() %>">
+	<c:when test="<%= themeDisplay.isStatePopUp() || themeDisplay.isWidget() || !SetupWizardUtil.isSetupFinished(request) %>">
 		<liferay-theme:include page="portal_pop_up.jsp" />
 	</c:when>
 	<c:otherwise>

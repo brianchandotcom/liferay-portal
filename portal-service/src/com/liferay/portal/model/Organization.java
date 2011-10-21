@@ -53,6 +53,8 @@ public interface Organization extends OrganizationModel, PersistedModel {
 
 	public com.liferay.portal.model.Group getGroup();
 
+	public long getGroupId();
+
 	public long getLogoId();
 
 	public com.liferay.portal.model.Organization getParentOrganization()

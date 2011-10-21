@@ -62,15 +62,15 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	}
 
 	public List<DLFileEntryType> getFileEntryTypes(
-			long groupId, int start, int end)
+			long[] groupIds, int start, int end)
 		throws SystemException {
 
 		return dlFileEntryTypePersistence.filterFindByGroupId(
-			groupId, start, end);
+			groupIds, start, end);
 	}
 
-	public int getFileEntryTypesCount(long groupId) throws SystemException {
-		return dlFileEntryTypePersistence.filterCountByGroupId(groupId);
+	public int getFileEntryTypesCount(long[] groupIds) throws SystemException {
+		return dlFileEntryTypePersistence.filterCountByGroupId(groupIds);
 	}
 
 	public void updateFileEntryType(
@@ -82,7 +82,7 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			getPermissionChecker(), fileEntryTypeId, ActionKeys.UPDATE);
 
 		dlFileEntryTypeLocalService.updateFileEntryType(
-			fileEntryTypeId, name, description, ddmStructureIds,
+			getUserId(), fileEntryTypeId, name, description, ddmStructureIds,
 			serviceContext);
 	}
 

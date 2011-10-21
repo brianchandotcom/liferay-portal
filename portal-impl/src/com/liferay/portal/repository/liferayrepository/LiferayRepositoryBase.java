@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -56,6 +57,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	public LiferayRepositoryBase(
 		RepositoryService repositoryService,
+		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -64,6 +66,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLFolderService dlFolderService, long repositoryId) {
 
 		this.repositoryService = repositoryService;
+		this.dlAppHelperLocalService = dlAppHelperLocalService;
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
 		this.dlFileEntryService = dlFileEntryService;
 		this.dlFileVersionLocalService = dlFileVersionLocalService;
@@ -76,6 +79,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	public LiferayRepositoryBase(
 		RepositoryService repositoryService,
+		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileVersionLocalService dlFileVersionLocalService,
@@ -85,6 +89,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		long fileVersionId) {
 
 		this.repositoryService = repositoryService;
+		this.dlAppHelperLocalService = dlAppHelperLocalService;
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
 		this.dlFileEntryService = dlFileEntryService;
 		this.dlFileVersionLocalService = dlFileVersionLocalService;
@@ -145,19 +150,24 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 			Set<String> fieldNames = ddmStructure.getFieldNames();
 
-			Fields fields = new Fields();
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + ddmStructure.getStructureId());
 
-			for (String name : fieldNames) {
-				Field field = new Field();
+			if (fields == null) {
+				fields = new Fields();
 
-				field.setName(name);
+				for (String name : fieldNames) {
+					Field field = new Field();
 
-				String value = ParamUtil.getString(
-					serviceContext, namespace + name);
+					field.setName(name);
 
-				field.setValue(value);
+					String value = ParamUtil.getString(
+						serviceContext, namespace + name);
 
-				fields.put(field);
+					field.setValue(value);
+
+					fields.put(field);
+				}
 			}
 
 			fieldsMap.put(ddmStructure.getStructureKey(), fields);
@@ -290,6 +300,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		return toFolderIds;
 	}
 
+	protected DLAppHelperLocalService dlAppHelperLocalService;
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 	protected DLFileEntryService dlFileEntryService;
 	protected DLFileVersionLocalService dlFileVersionLocalService;

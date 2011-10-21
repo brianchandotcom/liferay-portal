@@ -76,15 +76,12 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBStatsUser"),
 			true);
-
-	public Class<?> getModelClass() {
-		return MBStatsUser.class;
-	}
-
-	public String getModelClassName() {
-		return MBStatsUser.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBStatsUser"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long MESSAGECOUNT_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBStatsUser"));
 
@@ -105,6 +102,14 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return MBStatsUser.class;
+	}
+
+	public String getModelClassName() {
+		return MBStatsUser.class.getName();
 	}
 
 	public long getStatsUserId() {
@@ -128,6 +133,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -146,6 +153,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -172,7 +181,19 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setMessageCount(int messageCount) {
+		_columnBitmask |= MESSAGECOUNT_COLUMN_BITMASK;
+
+		if (!_setOriginalMessageCount) {
+			_setOriginalMessageCount = true;
+
+			_originalMessageCount = _messageCount;
+		}
+
 		_messageCount = messageCount;
+	}
+
+	public int getOriginalMessageCount() {
+		return _originalMessageCount;
 	}
 
 	public Date getLastPostDate() {
@@ -183,20 +204,19 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		_lastPostDate = lastPostDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public MBStatsUser toEscapedModel() {
-		if (isEscapedModel()) {
-			return (MBStatsUser)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBStatsUser)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MBStatsUser)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -292,6 +312,12 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		mbStatsUserModelImpl._originalUserId = mbStatsUserModelImpl._userId;
 
 		mbStatsUserModelImpl._setOriginalUserId = false;
+
+		mbStatsUserModelImpl._originalMessageCount = mbStatsUserModelImpl._messageCount;
+
+		mbStatsUserModelImpl._setOriginalMessageCount = false;
+
+		mbStatsUserModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -384,7 +410,10 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private int _messageCount;
+	private int _originalMessageCount;
+	private boolean _setOriginalMessageCount;
 	private Date _lastPostDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MBStatsUser _escapedModelProxy;
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.security.ntlm;
 import com.liferay.portal.security.ntlm.msrpc.NetlogonAuthenticator;
 import com.liferay.portal.security.ntlm.msrpc.NetrServerAuthenticate3;
 import com.liferay.portal.security.ntlm.msrpc.NetrServerReqChallenge;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -39,6 +40,20 @@ import jcifs.util.MD4;
  * @author Michael C. Han
  */
 public class NetlogonConnection {
+
+	public NetlogonConnection() {
+		if (_negotiateFlags == 0) {
+			String negotiateFlags = PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS;
+
+			if (negotiateFlags.startsWith("0x")) {
+				_negotiateFlags = Integer.valueOf(
+					negotiateFlags.substring(2), 16);
+			}
+			else {
+				_negotiateFlags = 0x600FFFFF;
+			}
+		}
+	}
 
 	public NetlogonAuthenticator computeNetlogonAuthenticator() {
 		int timestamp = (int)System.currentTimeMillis();
@@ -98,7 +113,7 @@ public class NetlogonConnection {
 			new NetrServerAuthenticate3(
 				domainControllerName, ntlmServiceAccount.getAccountName(), 2,
 				ntlmServiceAccount.getComputerName(), clientCredential,
-				new byte[8], 0x600FFFFF);
+				new byte[8], _negotiateFlags);
 
 		dcerpcHandle.sendrecv(netrServerAuthenticate3);
 
@@ -177,6 +192,8 @@ public class NetlogonConnection {
 
 		return hmact64.digest();
 	}
+
+	private static int _negotiateFlags;
 
 	private byte[] _clientCredential;
 	private DcerpcHandle _dcerpcHandle;

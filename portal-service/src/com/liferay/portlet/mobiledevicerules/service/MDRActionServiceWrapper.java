@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRActionService}.
@@ -23,16 +25,108 @@ package com.liferay.portlet.mobiledevicerules.service;
  * @see       MDRActionService
  * @generated
  */
-public class MDRActionServiceWrapper implements MDRActionService {
+public class MDRActionServiceWrapper implements MDRActionService,
+	ServiceWrapper<MDRActionService> {
 	public MDRActionServiceWrapper(MDRActionService mdrActionService) {
 		_mdrActionService = mdrActionService;
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
+		long ruleGroupInstanceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionService.addAction(ruleGroupInstanceId, nameMap,
+			descriptionMap, type, typeSettings, serviceContext);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
+		long ruleGroupInstanceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionService.addAction(ruleGroupInstanceId, nameMap,
+			descriptionMap, type, typeSettingsProperties, serviceContext);
+	}
+
+	public void deleteAction(long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mdrActionService.deleteAction(actionId);
+	}
+
+	public void deleteAction(
+		com.liferay.portlet.mobiledevicerules.model.MDRAction action)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mdrActionService.deleteAction(action);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionService.fetchAction(actionId);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction getAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionService.getAction(actionId);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(
+		long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionService.updateAction(actionId, nameMap,
+			descriptionMap, type, typeSettings, serviceContext);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(
+		long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionService.updateAction(actionId, nameMap,
+			descriptionMap, type, typeSettingsProperties, serviceContext);
+	}
+
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MDRActionService getWrappedMDRActionService() {
 		return _mdrActionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMDRActionService(MDRActionService mdrActionService) {
+		_mdrActionService = mdrActionService;
+	}
+
+	public MDRActionService getWrappedService() {
+		return _mdrActionService;
+	}
+
+	public void setWrappedService(MDRActionService mdrActionService) {
 		_mdrActionService = mdrActionService;
 	}
 

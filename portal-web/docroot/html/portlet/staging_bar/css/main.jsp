@@ -39,6 +39,9 @@
 		.aui-tab, .aui-tab-content {
 			background: none;
 			border-width: 0;
+			height: 28px;
+			min-width: 60px;
+			text-align: center;
 		}
 
 		.aui-tab-active .aui-tab-content {
@@ -61,13 +64,17 @@
 			background: none;
 			border-width: 0;
 
-			.aui-tab-label a {
-				color: #DDD;
-				text-shadow: none;
-				text-decoration: underline;
+			.aui-tab-label {
+				padding: 7px 10px;
 
-				&:hover {
-					text-decoration: none;
+				a {
+					color: #BBB;
+					text-shadow: none;
+					text-decoration: underline;
+
+					&:hover {
+						text-decoration: none;
+					}
 				}
 			}
 		}
@@ -227,7 +234,7 @@
 				.layout-title {
 					font-size: 1.2em;
 
-					label {
+					.layout-title-label {
 						float: left;
 					}
 
@@ -257,6 +264,11 @@
 						}
 					}
 				}
+			}
+
+			.last-publication-user {
+				background: url(<%= themeImagesPath %>/common/time.png) no-repeat 0 50%;
+				padding-left: 20px;
 			}
 
 			.last-publication-variation-details {

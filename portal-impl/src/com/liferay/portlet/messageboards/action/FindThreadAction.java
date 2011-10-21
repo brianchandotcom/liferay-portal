@@ -15,63 +15,51 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindThreadAction extends Action {
+public class FindThreadAction extends FindMessageAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+	protected long getGroupId(long primaryKey) throws Exception {
+		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
+
+		return thread.getGroupId();
+	}
+
+	@Override
+	protected String getPrimaryKeyParameterName() {
+		return "threadId";
+	}
+
+	@Override
+	protected String getStrutsAction(
+		HttpServletRequest request, String portletId) {
+
+		return "/message_boards/view_message";
+	}
+
+	@Override
+	protected PortletURL processPortletURL(
+			HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
 
-		try {
-			long plid = ParamUtil.getLong(request, "p_l_id");
-			long threadId = ParamUtil.getLong(request, "threadId");
+		long threadId = ParamUtil.getLong(
+			request, getPrimaryKeyParameterName());
 
-			MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+		MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
 
-			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.MESSAGE_BOARDS, plid,
-				PortletRequest.RENDER_PHASE);
+		portletURL.setParameter(
+			"messageId", String.valueOf(thread.getRootMessageId()));
 
-			portletURL.setWindowState(WindowState.NORMAL);
-			portletURL.setPortletMode(PortletMode.VIEW);
-
-			portletURL.setParameter(
-				"struts_action", "/message_boards/view_message");
-			portletURL.setParameter(
-				"messageId", String.valueOf(thread.getRootMessageId()));
-
-			response.sendRedirect(portletURL.toString());
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
+		return portletURL;
 	}
 
 }

@@ -71,7 +71,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= socialBookmarksDisplayStyle %>"
 					target="_blank"
-					title="<%= entry.getTitle() %>"
+					title="<%= HtmlUtil.escape(entry.getTitle()) %>"
 					url="<%= bookmarkURL.toString() %>"
 				/>
 			</c:if>
@@ -244,7 +244,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<liferay-ui:social-bookmarks
 							displayStyle="<%= socialBookmarksDisplayStyle %>"
 							target="_blank"
-							title="<%= entry.getTitle() %>"
+							title="<%= HtmlUtil.escape(entry.getTitle()) %>"
 							url="<%= bookmarkURL.toString() %>"
 						/>
 					</c:if>

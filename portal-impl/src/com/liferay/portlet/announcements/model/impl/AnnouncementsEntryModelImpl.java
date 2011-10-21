@@ -95,6 +95,14 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.announcements.model.AnnouncementsEntry"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.announcements.model.AnnouncementsEntry"),
+			true);
+	public static long ALERT_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long CLASSPK_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -143,14 +151,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AnnouncementsEntry.class;
-	}
-
-	public String getModelClassName() {
-		return AnnouncementsEntry.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.announcements.model.AnnouncementsEntry"));
 
@@ -173,6 +173,14 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return AnnouncementsEntry.class;
+	}
+
+	public String getModelClassName() {
+		return AnnouncementsEntry.class.getName();
+	}
+
 	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
@@ -184,7 +192,15 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -211,6 +227,14 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -220,6 +244,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -268,7 +296,19 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -277,7 +317,19 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -373,23 +425,34 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	}
 
 	public void setAlert(boolean alert) {
+		_columnBitmask |= ALERT_COLUMN_BITMASK;
+
+		if (!_setOriginalAlert) {
+			_setOriginalAlert = true;
+
+			_originalAlert = _alert;
+		}
+
 		_alert = alert;
+	}
+
+	public boolean getOriginalAlert() {
+		return _originalAlert;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
 	public AnnouncementsEntry toEscapedModel() {
-		if (isEscapedModel()) {
-			return (AnnouncementsEntry)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AnnouncementsEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (AnnouncementsEntry)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -493,6 +556,27 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public void resetOriginalValues() {
+		AnnouncementsEntryModelImpl announcementsEntryModelImpl = this;
+
+		announcementsEntryModelImpl._originalUuid = announcementsEntryModelImpl._uuid;
+
+		announcementsEntryModelImpl._originalUserId = announcementsEntryModelImpl._userId;
+
+		announcementsEntryModelImpl._setOriginalUserId = false;
+
+		announcementsEntryModelImpl._originalClassNameId = announcementsEntryModelImpl._classNameId;
+
+		announcementsEntryModelImpl._setOriginalClassNameId = false;
+
+		announcementsEntryModelImpl._originalClassPK = announcementsEntryModelImpl._classPK;
+
+		announcementsEntryModelImpl._setOriginalClassPK = false;
+
+		announcementsEntryModelImpl._originalAlert = announcementsEntryModelImpl._alert;
+
+		announcementsEntryModelImpl._setOriginalAlert = false;
+
+		announcementsEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -729,15 +813,22 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 			AnnouncementsEntry.class
 		};
 	private String _uuid;
+	private String _originalUuid;
 	private long _entryId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _title;
 	private String _content;
 	private String _url;
@@ -746,6 +837,9 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private Date _expirationDate;
 	private int _priority;
 	private boolean _alert;
+	private boolean _originalAlert;
+	private boolean _setOriginalAlert;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AnnouncementsEntry _escapedModelProxy;
 }

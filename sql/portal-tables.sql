@@ -503,6 +503,7 @@ create table DDMTemplate (
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,
+	mode_ VARCHAR(75) null,
 	language VARCHAR(75) null,
 	script TEXT null
 );
@@ -511,7 +512,6 @@ create table DLContent (
 	contentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
-	portletId VARCHAR(75) null,
 	repositoryId LONG,
 	path_ VARCHAR(255) null,
 	version VARCHAR(75) null,
@@ -559,6 +559,7 @@ create table DLFileEntryMetadata (
 );
 
 create table DLFileEntryType (
+	uuid_ VARCHAR(75) null,
 	fileEntryTypeId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -617,6 +618,7 @@ create table DLFileVersion (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	repositoryId LONG,
+	folderId LONG,
 	fileEntryId LONG,
 	extension VARCHAR(75) null,
 	mimeType VARCHAR(75) null,
@@ -627,10 +629,6 @@ create table DLFileVersion (
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
 	size_ LONG,
-	smallImageId LONG,
-	largeImageId LONG,
-	custom1ImageId LONG,
-	custom2ImageId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -725,7 +723,7 @@ create table Group_ (
 	classPK LONG,
 	parentGroupId LONG,
 	liveGroupId LONG,
-	name VARCHAR(75) null,
+	name VARCHAR(150) null,
 	description STRING null,
 	type_ INTEGER,
 	typeSettings STRING null,
@@ -1864,6 +1862,53 @@ create table SocialActivity (
 	type_ INTEGER,
 	extraData STRING null,
 	receiverUserId LONG
+);
+
+create table SocialActivityAchievement (
+	activityAchievementId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	name VARCHAR(75) null,
+	firstInGroup BOOLEAN
+);
+
+create table SocialActivityCounter (
+	activityCounterId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	classPK LONG,
+	name VARCHAR(75) null,
+	ownerType INTEGER,
+	currentValue INTEGER,
+	totalValue INTEGER,
+	graceValue INTEGER,
+	startPeriod INTEGER,
+	endPeriod INTEGER
+);
+
+create table SocialActivityLimit (
+	activityLimitId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	classNameId LONG,
+	classPK LONG,
+	activityType INTEGER,
+	activityCounterName VARCHAR(75) null,
+	value VARCHAR(75) null
+);
+
+create table SocialActivitySetting (
+	activitySettingId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	classNameId LONG,
+	activityType INTEGER,
+	name VARCHAR(75) null,
+	value VARCHAR(1024) null
 );
 
 create table SocialEquityAssetEntry (

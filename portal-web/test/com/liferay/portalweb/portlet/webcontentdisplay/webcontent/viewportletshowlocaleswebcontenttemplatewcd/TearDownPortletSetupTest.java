@@ -30,7 +30,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,11 +46,9 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content Display Test Page",
 					RuntimeVariables.replace("Web Content Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(""),
 					selenium.getText("//img[@alt='Select Web Content']"));
 				assertEquals(RuntimeVariables.replace("Options"),
@@ -59,7 +57,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -75,7 +73,6 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -83,7 +80,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -98,10 +95,8 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_showAvailableLocalesCheckbox']"));
 
@@ -185,7 +180,6 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

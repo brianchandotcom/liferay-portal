@@ -778,6 +778,12 @@ if (portlet.isActive() && portlet.isReady() && access && supportsMimeType) {
 	}
 }
 
+// Make sure the Tiles context is reset for the next portlet
+
+if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
+	request.removeAttribute(ComponentConstants.COMPONENT_CONTEXT);
+}
+
 if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.getId().equals(PortletKeys.CONTROL_PANEL_MENU)) {
 	PortalUtil.setPageTitle(portletDisplay.getTitle(), request);
 }
@@ -834,6 +840,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	}
 
 	cssClasses = "portlet-boundary portlet-boundary" + HtmlUtil.escapeAttribute(PortalUtil.getPortletNamespace(rootPortletId)) + StringPool.SPACE + cssClasses + StringPool.SPACE + portlet.getCssClassWrapper() + StringPool.SPACE + customCSSClassName;
+
+	if (portletResourcePortlet != null) {
+		cssClasses += StringPool.SPACE + portletResourcePortlet.getCssClassWrapper();
+	}
 	%>
 
 	<div id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" class="<%= cssClasses %>" <%= freeformStyles %>>
@@ -1013,6 +1023,65 @@ else {
 </c:if>
 
 <%
+if (themeDisplay.isStatePopUp()) {
+	String doRefreshPortletId = null;
+
+	if ((doRefreshPortletId = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefresh")) != null) {
+		if (Validator.isNull(doRefreshPortletId) && (portletResourcePortlet != null)) {
+			doRefreshPortletId = portletResourcePortlet.getPortletId();
+		}
+%>
+
+		<aui:script position="inline" use="aui-base">
+			if (window.parent) {
+				var data = null;
+
+				var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
+
+				<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
+					data = {
+						portletAjaxable: false
+					};
+				</c:if>
+
+				Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
+			}
+		</aui:script>
+
+<%
+	}
+
+	String doCloseRedirect = null;
+
+	if ((doCloseRedirect = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doCloseRedirect")) != null) {
+%>
+
+		<aui:script use="aui-base,aui-loading-mask">
+			var dialog = Liferay.Util.getWindow();
+
+			dialog.on(
+				'visibleChange',
+				function(event) {
+					if (!event.newVal && event.src !== 'hideLink') {
+						var topWindow = Liferay.Util.getTop();
+						var topA = topWindow.AUI();
+
+						new topA.LoadingMask(
+							{
+								target: topA.getBody()
+							}
+						).show();
+
+						topWindow.location.href = '<%= doCloseRedirect %>';
+					}
+				}
+			);
+		</aui:script>
+
+<%
+	}
+}
+
 themeDisplay.setScopeGroupId(previousScopeGroupId);
 themeDisplay.setParentGroupId(previousParentGroupId);
 

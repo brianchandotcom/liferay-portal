@@ -67,24 +67,32 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 * Never modify or reference this class directly. Always use {@link PortalPreferencesUtil} to access the portal preferences persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = PortalPreferencesImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
-		".List";
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	public static final FinderPath FINDER_PATH_FETCH_BY_O_O = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortalPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByO_O",
-			new String[] { Long.class.getName(), Integer.class.getName() });
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			PortalPreferencesModelImpl.OWNERID_COLUMN_BITMASK |
+			PortalPreferencesModelImpl.OWNERTYPE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_O = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByO_O",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O",
 			new String[] { Long.class.getName(), Integer.class.getName() });
-	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			PortalPreferencesImpl.class, FINDER_CLASS_NAME_LIST, "findAll",
-			new String[0]);
+			PortalPreferencesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortalPreferencesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 
 	/**
 	 * Caches the portal preferences in the entity cache if it is enabled.
@@ -118,6 +126,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 						portalPreferences.getPrimaryKey()) == null) {
 				cacheResult(portalPreferences);
 			}
+			else {
+				portalPreferences.resetOriginalValues();
+			}
 		}
 	}
 
@@ -135,8 +146,10 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		}
 
 		EntityCacheUtil.clearCache(PortalPreferencesImpl.class.getName());
+
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
@@ -151,7 +164,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		EntityCacheUtil.removeResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesImpl.class, portalPreferences.getPrimaryKey());
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O,
 			new Object[] {
@@ -262,7 +276,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
 
@@ -304,32 +319,40 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+
+		if (isNew || !PortalPreferencesModelImpl.COLUMN_BITMASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
 
 		EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesImpl.class, portalPreferences.getPrimaryKey(),
 			portalPreferences);
 
-		if (!isNew &&
-				((portalPreferences.getOwnerId() != portalPreferencesModelImpl.getOriginalOwnerId()) ||
-				(portalPreferences.getOwnerType() != portalPreferencesModelImpl.getOriginalOwnerType()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O,
-				new Object[] {
-					Long.valueOf(
-						portalPreferencesModelImpl.getOriginalOwnerId()),
-					Integer.valueOf(
-						portalPreferencesModelImpl.getOriginalOwnerType())
-				});
-		}
-
-		if (isNew ||
-				((portalPreferences.getOwnerId() != portalPreferencesModelImpl.getOriginalOwnerId()) ||
-				(portalPreferences.getOwnerType() != portalPreferencesModelImpl.getOriginalOwnerType()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O,
 				new Object[] {
 					Long.valueOf(portalPreferences.getOwnerId()),
 					Integer.valueOf(portalPreferences.getOwnerType())
 				}, portalPreferences);
+		}
+		else {
+			if ((portalPreferencesModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_O_O.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(portalPreferencesModelImpl.getOriginalOwnerId()),
+						Integer.valueOf(portalPreferencesModelImpl.getOriginalOwnerType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O,
+					new Object[] {
+						Long.valueOf(portalPreferences.getOwnerId()),
+						Integer.valueOf(portalPreferences.getOwnerType())
+					}, portalPreferences);
+			}
 		}
 
 		return portalPreferences;
@@ -636,9 +659,20 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 */
 	public List<PortalPreferences> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
 		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
-		List<PortalPreferences> list = (List<PortalPreferences>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderArgs = FINDER_ARGS_EMPTY;
+		}
+		else {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderArgs = new Object[] { start, end, orderByComparator };
+		}
+
+		List<PortalPreferences> list = (List<PortalPreferences>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -683,14 +717,12 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -850,7 +882,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	public void destroy() {
 		EntityCacheUtil.removeCache(PortalPreferencesImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@BeanReference(type = AccountPersistence.class)

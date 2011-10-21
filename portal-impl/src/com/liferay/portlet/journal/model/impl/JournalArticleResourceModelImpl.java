@@ -70,15 +70,12 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalArticleResource"),
 			true);
-
-	public Class<?> getModelClass() {
-		return JournalArticleResource.class;
-	}
-
-	public String getModelClassName() {
-		return JournalArticleResource.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalArticleResource"),
+			true);
+	public static long ARTICLEID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalArticleResource"));
 
@@ -99,6 +96,14 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return JournalArticleResource.class;
+	}
+
+	public String getModelClassName() {
+		return JournalArticleResource.class.getName();
 	}
 
 	public String getUuid() {
@@ -135,6 +140,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -158,6 +165,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	public void setArticleId(String articleId) {
+		_columnBitmask |= ARTICLEID_COLUMN_BITMASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -169,20 +178,19 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		return GetterUtil.getString(_originalArticleId);
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public JournalArticleResource toEscapedModel() {
-		if (isEscapedModel()) {
-			return (JournalArticleResource)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (JournalArticleResource)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (JournalArticleResource)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -269,6 +277,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		journalArticleResourceModelImpl._setOriginalGroupId = false;
 
 		journalArticleResourceModelImpl._originalArticleId = journalArticleResourceModelImpl._articleId;
+
+		journalArticleResourceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -357,5 +367,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	private String _articleId;
 	private String _originalArticleId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalArticleResource _escapedModelProxy;
 }

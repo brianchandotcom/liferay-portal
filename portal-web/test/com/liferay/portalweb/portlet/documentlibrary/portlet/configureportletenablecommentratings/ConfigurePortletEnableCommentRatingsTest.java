@@ -31,13 +31,13 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Document Library Test Page")) {
+						if (selenium.isVisible(
+									"link=Documents and Media Test Page")) {
 							break;
 						}
 					}
@@ -47,15 +47,16 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Documents and Media Test Page",
+					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//strong/a"));
+				selenium.clickAt("//strong/a",
+					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -71,18 +72,20 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+					RuntimeVariables.replace("Configuration"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
 						if (selenium.isVisible(
-									"_86_enableCommentRatingsCheckbox")) {
+									"//input[@id='_86_enableCommentRatingsCheckbox']")) {
 							break;
 						}
 					}
@@ -91,8 +94,6 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
-
-				selenium.saveScreenShotAndSource();
 
 				boolean commentRatingsEnabled = selenium.isChecked(
 						"_86_enableCommentRatingsCheckbox");
@@ -103,27 +104,32 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_86_enableCommentRatingsCheckbox",
-					RuntimeVariables.replace(""));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
+					RuntimeVariables.replace("Enable Comment Ratings"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
-					selenium.getText("//div[@id='p_p_id_86_']/div/div"));
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"link=Document Library Test Page")) {
+						if (selenium.isVisible(
+									"link=Documents and Media Test Page")) {
 							break;
 						}
 					}
@@ -133,25 +139,24 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Document Library Test Page",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("link=Documents and Media Test Page",
+					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("DML Folder Name"),
+					selenium.getText(
+						"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+					RuntimeVariables.replace("DML Folder Name"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isTextPresent("0 Votes")) {
+						if (RuntimeVariables.replace("DML Folder Name")
+												.equals(selenium.getText(
+										"//li[@class='folder selected']/a"))) {
 							break;
 						}
 					}
@@ -161,8 +166,35 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				assertTrue(selenium.isTextPresent("0 Votes"));
+				assertEquals(RuntimeVariables.replace("DML Folder Name"),
+					selenium.getText("//li[@class='folder selected']/a"));
+				assertEquals(RuntimeVariables.replace(
+						"DML Folder Document Title"),
+					selenium.getText(
+						"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+					RuntimeVariables.replace("DML Folder Document Title"));
+				selenium.waitForPageToLoad("30000");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-discussion-message']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
+					selenium.getText("//div[@id='eonk_ratingThumbContent']/div"));
 
 			case 100:
 				label = -1;

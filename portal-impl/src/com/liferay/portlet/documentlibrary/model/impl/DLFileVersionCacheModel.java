@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,10 +31,11 @@ import java.util.Date;
  * @see DLFileVersion
  * @generated
  */
-public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
+public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
+	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{fileVersionId=");
 		sb.append(fileVersionId);
@@ -48,6 +51,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		sb.append(createDate);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
+		sb.append(", folderId=");
+		sb.append(folderId);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
 		sb.append(", extension=");
@@ -68,14 +73,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		sb.append(version);
 		sb.append(", size=");
 		sb.append(size);
-		sb.append(", smallImageId=");
-		sb.append(smallImageId);
-		sb.append(", largeImageId=");
-		sb.append(largeImageId);
-		sb.append(", custom1ImageId=");
-		sb.append(custom1ImageId);
-		sb.append(", custom2ImageId=");
-		sb.append(custom2ImageId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -112,6 +109,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		}
 
 		dlFileVersionImpl.setRepositoryId(repositoryId);
+		dlFileVersionImpl.setFolderId(folderId);
 		dlFileVersionImpl.setFileEntryId(fileEntryId);
 
 		if (extension == null) {
@@ -166,10 +164,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 		}
 
 		dlFileVersionImpl.setSize(size);
-		dlFileVersionImpl.setSmallImageId(smallImageId);
-		dlFileVersionImpl.setLargeImageId(largeImageId);
-		dlFileVersionImpl.setCustom1ImageId(custom1ImageId);
-		dlFileVersionImpl.setCustom2ImageId(custom2ImageId);
 		dlFileVersionImpl.setStatus(status);
 		dlFileVersionImpl.setStatusByUserId(statusByUserId);
 
@@ -199,6 +193,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 	public String userName;
 	public long createDate;
 	public long repositoryId;
+	public long folderId;
 	public long fileEntryId;
 	public String extension;
 	public String mimeType;
@@ -209,10 +204,6 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion> {
 	public long fileEntryTypeId;
 	public String version;
 	public long size;
-	public long smallImageId;
-	public long largeImageId;
-	public long custom1ImageId;
-	public long custom2ImageId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

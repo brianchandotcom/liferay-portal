@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileRank}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileRank
  * @generated
  */
-public class DLFileRankWrapper implements DLFileRank {
+public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	public DLFileRankWrapper(DLFileRank dlFileRank) {
 		_dlFileRank = dlFileRank;
 	}
@@ -202,10 +204,6 @@ public class DLFileRankWrapper implements DLFileRank {
 		return _dlFileRank.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileRank.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileRank.getPrimaryKeyObj();
 	}
@@ -260,7 +258,14 @@ public class DLFileRankWrapper implements DLFileRank {
 		_dlFileRank.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileRank getWrappedDLFileRank() {
+		return _dlFileRank;
+	}
+
+	public DLFileRank getWrappedModel() {
 		return _dlFileRank;
 	}
 

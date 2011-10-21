@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.social.model.SocialEquityUser;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing SocialEquityUser in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.social.model.SocialEquityUser;
  * @see SocialEquityUser
  * @generated
  */
-public class SocialEquityUserCacheModel implements CacheModel<SocialEquityUser> {
+public class SocialEquityUserCacheModel implements CacheModel<SocialEquityUser>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

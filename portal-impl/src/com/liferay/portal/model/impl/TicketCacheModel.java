@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Ticket;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Date;
  * @see Ticket
  * @generated
  */
-public class TicketCacheModel implements CacheModel<Ticket> {
+public class TicketCacheModel implements CacheModel<Ticket>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

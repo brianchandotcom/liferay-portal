@@ -175,6 +175,12 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeURL();
 
+	public void setGroupId(long groupId);
+
+	public void setLayoutSet(com.liferay.portal.model.LayoutSet layoutSet);
+
+	public void setPrivateLayout(boolean privateLayout);
+
 	public void setTypeSettings(java.lang.String typeSettings);
 
 	public void setTypeSettingsProperties(

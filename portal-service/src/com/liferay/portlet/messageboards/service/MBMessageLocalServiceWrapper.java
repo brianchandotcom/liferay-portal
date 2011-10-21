@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBMessageLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBMessageLocalService
  * @generated
  */
-public class MBMessageLocalServiceWrapper implements MBMessageLocalService {
+public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
+	ServiceWrapper<MBMessageLocalService> {
 	public MBMessageLocalServiceWrapper(
 		MBMessageLocalService mbMessageLocalService) {
 		_mbMessageLocalService = mbMessageLocalService;
@@ -690,12 +693,26 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService {
 		_mbMessageLocalService.updateUserName(userId, userName);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBMessageLocalService getWrappedMBMessageLocalService() {
 		return _mbMessageLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBMessageLocalService(
 		MBMessageLocalService mbMessageLocalService) {
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	public MBMessageLocalService getWrappedService() {
+		return _mbMessageLocalService;
+	}
+
+	public void setWrappedService(MBMessageLocalService mbMessageLocalService) {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 

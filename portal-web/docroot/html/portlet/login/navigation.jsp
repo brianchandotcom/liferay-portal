@@ -93,13 +93,16 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 					<portlet:param name="struts_action" value="/login/login_redirect" />
 				</portlet:renderURL>
 
-				<portlet:renderURL var="facebookConnectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/login/facebook_connect" />
-					<portlet:param name="redirect" value="<%= HtmlUtil.escapeURL(loginRedirectURL.toString()) %>" />
-				</portlet:renderURL>
-
 				<%
-				String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + facebookConnectURL.toString() + "','facebook', 'align=center,directories=no,height=700,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
+				String facebookAuthRedirectURL = FacebookConnectUtil.getRedirectURL(themeDisplay.getCompanyId());
+				facebookAuthRedirectURL = HttpUtil.addParameter(facebookAuthRedirectURL, "redirect", HttpUtil.encodeURL(loginRedirectURL.toString()));
+
+				String facebookAuthURL = FacebookConnectUtil.getAuthURL(themeDisplay.getCompanyId());
+				facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "client_id", FacebookConnectUtil.getAppId(themeDisplay.getCompanyId()));
+				facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "redirect_uri", facebookAuthRedirectURL);
+				facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "scope", "email");
+
+				String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + facebookAuthURL.toString() + "','facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
 				%>
 
 				<liferay-ui:icon
@@ -125,7 +128,7 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 				<liferay-ui:icon
 					image="add_user"
 					message="create-account"
-					url="<%= LoginUtil.getCreateAccountHREF(request, themeDisplay) %>"
+					url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
 				/>
 			</c:if>
 

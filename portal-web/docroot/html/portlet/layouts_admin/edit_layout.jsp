@@ -34,6 +34,8 @@ boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLa
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portletURL");
 PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
 
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
@@ -43,16 +45,12 @@ String layoutSetBranchName = StringPool.BLANK;
 boolean incomplete = false;
 
 if (layoutRevision != null) {
-	LayoutSet layoutSet = selLayout.getLayoutSet();
+	long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
 
-	long recentLayoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, layoutSet.getLayoutSetId());
-
-	incomplete = StagingUtil.isIncomplete(selLayout, recentLayoutSetBranchId);
+	incomplete = StagingUtil.isIncomplete(selLayout, layoutSetBranchId);
 
 	if (incomplete) {
-		layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(recentLayoutSetBranchId, selLayout.getPlid(), false);
-
-		LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(recentLayoutSetBranchId);
+		LayoutSetBranch layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
 
 		layoutSetBranchName = layoutSetBranch.getName();
 	}
@@ -82,6 +80,7 @@ String[][] categorySections = {mainSections};
 <aui:form action="<%= editLayoutURL %>" cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>' />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
@@ -158,13 +157,14 @@ String[][] categorySections = {mainSections};
 							var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
 							var popup = null;
+							var exportPopup = null;
 
 							var layoutToolbar = new A.Toolbar(
 								{
 									activeState: false,
 									boundingBox: buttonRow,
 									children: [
-										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT) %>">
+										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) %>">
 											{
 												handler: function(event) {
 													if (!popup) {
@@ -185,34 +185,92 @@ String[][] categorySections = {mainSections};
 
 													Liferay.Util.focusFormField(content.one('input:text'));
 												},
-												icon: 'circle-plus',
+												icon: 'add',
 												label: '<liferay-ui:message key="add-child-page" />'
 											},
 										</c:if>
-										{
-											handler: function(event) {
-												Liferay.Util.openWindow(
-													{
-														cache: false,
-														dialog: {
-															width: 700
-														},
-														id: '<portlet:namespace /><%= selPlid %>_permissions',
-														title: '<liferay-ui:message key="permissions" />',
-														uri: '<%= permissionURL %>'
+
+										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
+											{
+												handler: function(event) {
+													Liferay.Util.openWindow(
+														{
+															cache: false,
+															dialog: {
+																width: 700
+															},
+															id: '<portlet:namespace /><%= selPlid %>_permissions',
+															title: '<liferay-ui:message key="permissions" />',
+															uri: '<%= permissionURL %>'
+														}
+													);
+												},
+												icon: 'permissions',
+												label: '<liferay-ui:message key="permissions" />'
+											},
+										</c:if>
+
+										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
+											{
+												handler: function(event) {
+													<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
+												},
+												icon: 'delete',
+												label: '<liferay-ui:message key="delete" />'
+											},
+										</c:if>
+
+										<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+											{
+												type: 'ToolbarSpacer'
+											},
+											{
+												handler: function(event) {
+													if (!exportPopup) {
+														exportPopup = new A.Dialog(
+															{
+																centered: true,
+																constrain: true,
+																cssClass: 'lfr-export-dialog',
+																modal: true,
+																title: '<liferay-ui:message key="export" />',
+																width: 600
+															}
+														).render();
+
+														<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+															<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+															<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+															<portlet:param name="redirect" value="<%= currentURL %>" />
+															<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+															<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+															<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+															<portlet:param name="layoutIds" value="<%= String.valueOf(layoutId) %>" />
+															<portlet:param name="rootNodeName" value="<%= selLayout.getName(locale) %>" />
+														</portlet:renderURL>
+
+														exportPopup.plug(
+															A.Plugin.IO,
+															{
+																after: {
+																	success: function() {
+																		exportPopup.centered();
+																	}
+																},
+																autoLoad: false,
+																uri: '<%= exportPagesURL.toString() %>'
+															}
+														);
 													}
-												);
-											},
-											icon: 'key',
-											label: '<liferay-ui:message key="permissions" />'
-										},
-										{
-											handler: function(event) {
-												<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
-											},
-											icon: 'circle-minus',
-											label: '<liferay-ui:message key="delete" />'
-										}
+
+													exportPopup.show();
+
+													exportPopup.io.start();
+												},
+												icon: 'export',
+												label: '<liferay-ui:message key="export" />'
+											}
+										</c:if>
 									]
 								}
 							).render();
@@ -227,7 +285,7 @@ String[][] categorySections = {mainSections};
 				categoryNames="<%= _CATEGORY_NAMES %>"
 				categorySections="<%= categorySections %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= !SitesUtil.isLayoutLocked(selLayout) %>"
+				showButtons="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) && !SitesUtil.isLayoutLocked(selLayout) %>"
 			/>
 		</c:otherwise>
 	</c:choose>

@@ -70,7 +70,12 @@ for (int j = 0; j < folderColumns.length; j++) {
 					buffer.append("/common/drive.png\">");
 				}
 				else {
-					buffer.append("/common/folder.png\">");
+					if ((curFoldersCount + curFileEntriesCount) > 0) {
+						buffer.append("/common/folder_full_document.png\">");
+					}
+					else {
+						buffer.append("/common/folder_empty.png\">");
+					}
 				}
 
 				buffer.append("<strong>");

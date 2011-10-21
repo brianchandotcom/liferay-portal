@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -78,7 +77,6 @@ import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
-import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.ExtRegistry;
@@ -96,6 +94,7 @@ import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.social.messaging.CheckEquityLogMessageListener;
+import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.DynamicServletRequest;
 import com.liferay.util.servlet.EncryptedServletRequest;
@@ -259,6 +258,17 @@ public class MainServlet extends ActionServlet {
 		}
 
 		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize social");
+		}
+
+		try {
+			initSocial(pluginPackage);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize themes");
 		}
 
@@ -349,10 +359,6 @@ public class MainServlet extends ActionServlet {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize message resources");
-		}
-
-		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize plugins");
 		}
 
@@ -361,6 +367,10 @@ public class MainServlet extends ActionServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+
+		if (PropsValues.SETUP_WIZARD_ENABLED) {
+			servletContext.setAttribute(WebKeys.SETUP_WIZARD_FINISHED, false);
 		}
 
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
@@ -487,14 +497,6 @@ public class MainServlet extends ActionServlet {
 		if (processServicePre(request, response, userId)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Processing service pre events has errors");
-			}
-
-			return;
-		}
-
-		if (processSetupWizardRequest(request, response)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Processed setup request");
 			}
 
 			return;
@@ -981,6 +983,21 @@ public class MainServlet extends ActionServlet {
 		ServletContextPool.put(contextPath, servletContext);
 	}
 
+	protected void initSocial(PluginPackage pluginPackage) throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		ServletContext servletContext = getServletContext();
+
+		String[] xmls = new String[] {
+			HttpUtil.URLtoString(
+				servletContext.getResource("/WEB-INF/liferay-social.xml")),
+			HttpUtil.URLtoString(
+				servletContext.getResource("/WEB-INF/liferay-social-ext.xml"))
+		};
+
+		SocialConfigurationUtil.read(classLoader, xmls);
+	}
+
 	protected void initSocialEquityLogScheduler() throws Exception {
 		SchedulerEntry socialEquityLogSchedulerEntry = new SchedulerEntryImpl();
 
@@ -1258,39 +1275,6 @@ public class MainServlet extends ActionServlet {
 		}
 
 		response.sendRedirect(redirect);
-	}
-
-	protected boolean processSetupWizardRequest(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		if (!PropsValues.SETUP_WIZARD_ENABLED) {
-			return false;
-		}
-
-		ServletContext servletContext = getServletContext();
-
-		Boolean startupFinished = (Boolean)servletContext.getAttribute(
-			WebKeys.STARTUP_FINISHED);
-
-		if ((startupFinished == null) || !startupFinished.booleanValue()) {
-			return false;
-		}
-
-		String cmd = ParamUtil.getString(request, Constants.CMD);
-
-		if (cmd.equals(Constants.UPDATE)) {
-			SetupWizardUtil.processProperties(request);
-
-			servletContext.setAttribute(WebKeys.SETUP_WIZARD_FINISHED, true);
-		}
-
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/html/portal/setup_wizard.jsp");
-
-		requestDispatcher.include(request, response);
-
-		return true;
 	}
 
 	protected boolean processShutdownRequest(

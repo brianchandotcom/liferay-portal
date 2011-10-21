@@ -22,15 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewTagsTest extends BaseTestCase {
 	public void testViewTags() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/tags-message-board-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Message Boards Page")) {
 					break;
 				}
 			}
@@ -40,39 +40,24 @@ public class ViewTagsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Message Boards Page",
+			RuntimeVariables.replace("Message Boards Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Tags Message Board Community"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
 				if (RuntimeVariables.replace("selenium")
 										.equals(selenium.getText(
-								"//div[@class='tags lfr-component']/ul/li[1]"))) {
+								"//li[1]/div/span/a"))) {
 					break;
 				}
 			}
@@ -82,14 +67,13 @@ public class ViewTagsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("selenium"),
-			selenium.getText("//div[@class='tags lfr-component']/ul/li[1]"));
+			selenium.getText("//li[1]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium1"),
-			selenium.getText("//div[@class='tags lfr-component']/ul/li[2]"));
+			selenium.getText("//li[2]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium2"),
-			selenium.getText("//div[@class='tags lfr-component']/ul/li[3]"));
+			selenium.getText("//li[3]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium3"),
-			selenium.getText("//div[@class='tags lfr-component']/ul/li[4]"));
+			selenium.getText("//li[4]/div/span/a"));
 	}
 }

@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see AnnouncementsFlag
  * @generated
  */
-public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag> {
+public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

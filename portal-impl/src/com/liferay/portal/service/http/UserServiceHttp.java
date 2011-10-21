@@ -1470,7 +1470,8 @@ public class UserServiceHttp {
 	}
 
 	public static void updateOrganizations(HttpPrincipal httpPrincipal,
-		long userId, long[] organizationIds)
+		long userId, long[] organizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1478,7 +1479,7 @@ public class UserServiceHttp {
 					"updateOrganizations", _updateOrganizationsParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					organizationIds);
+					organizationIds, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1981,7 +1982,8 @@ public class UserServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateOrganizationsParameterTypes38 = new Class[] {
-			long.class, long[].class
+			long.class, long[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePasswordParameterTypes39 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,

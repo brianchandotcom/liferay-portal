@@ -16,21 +16,21 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.sanitizer.Sanitizer" %>
-<%@ page import="com.liferay.portal.kernel.sanitizer.SanitizerUtil" %>
-<%@ page import="com.liferay.portlet.journal.action.EditArticleAction" %>
-<%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
-<%@ page import="com.liferay.portlet.journal.search.ArticleSearch" %>
-<%@ page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %>
-<%@ page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.journal.service.JournalArticleServiceUtil" %>
-<%@ page import="com.liferay.portlet.journal.util.JournalUtil" %>
-<%@ page import="com.liferay.portlet.rss.util.RSSUtil" %>
+<%@ page import="com.liferay.portal.kernel.sanitizer.Sanitizer" %><%@
+page import="com.liferay.portal.kernel.sanitizer.SanitizerUtil" %><%@
+page import="com.liferay.portlet.journal.action.EditArticleAction" %><%@
+page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
+page import="com.liferay.portlet.journal.search.ArticleSearch" %><%@
+page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %><%@
+page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil" %><%@
+page import="com.liferay.portlet.journal.service.JournalArticleServiceUtil" %><%@
+page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
+page import="com.liferay.portlet.rss.util.RSSUtil" %>
 
-<%@ page import="com.sun.syndication.feed.synd.SyndContent" %>
-<%@ page import="com.sun.syndication.feed.synd.SyndEntry" %>
-<%@ page import="com.sun.syndication.feed.synd.SyndFeed" %>
-<%@ page import="com.sun.syndication.feed.synd.SyndImage" %>
+<%@ page import="com.sun.syndication.feed.synd.SyndContent" %><%@
+page import="com.sun.syndication.feed.synd.SyndEntry" %><%@
+page import="com.sun.syndication.feed.synd.SyndFeed" %><%@
+page import="com.sun.syndication.feed.synd.SyndImage" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

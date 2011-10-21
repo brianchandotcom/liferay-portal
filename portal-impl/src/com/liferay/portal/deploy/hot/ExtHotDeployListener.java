@@ -48,23 +48,29 @@ import javax.servlet.ServletContext;
  */
 public class ExtHotDeployListener extends BaseHotDeployListener {
 
-	public void invokeDeploy(HotDeployEvent event) throws HotDeployException {
+	public void invokeDeploy(HotDeployEvent hotDeployEvent)
+		throws HotDeployException {
+
 		try {
-			doInvokeDeploy(event);
+			doInvokeDeploy(hotDeployEvent);
 		}
 		catch (Throwable t) {
 			throwHotDeployException(
-				event, "Error registering extension environment for ", t);
+				hotDeployEvent, "Error registering extension environment for ",
+				t);
 		}
 	}
 
-	public void invokeUndeploy(HotDeployEvent event) throws HotDeployException {
+	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws HotDeployException {
+
 		try {
-			doInvokeUndeploy(event);
+			doInvokeUndeploy(hotDeployEvent);
 		}
 		catch (Throwable t) {
 			throwHotDeployException(
-				event, "Error unregistering extension environment for ", t);
+				hotDeployEvent,
+				"Error unregistering extension environment for ", t);
 		}
 	}
 
@@ -118,8 +124,10 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		ExtRegistry.registerExt(servletContext);
 	}
 
-	protected void doInvokeDeploy(HotDeployEvent event) throws Exception {
-		ServletContext servletContext = event.getServletContext();
+	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
+		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 
@@ -135,10 +143,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Registering extension environment for " + servletContextName);
-		}
+		logRegistration(servletContextName);
 
 		if (ExtRegistry.isRegistered(servletContextName)) {
 			if (_log.isInfoEnabled()) {
@@ -184,7 +189,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		installExt(servletContext, event.getContextClassLoader());
+		installExt(servletContext, hotDeployEvent.getContextClassLoader());
 
 		FileAvailabilityUtil.reset();
 
@@ -196,8 +201,10 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	protected void doInvokeUndeploy(HotDeployEvent event) throws Exception {
-		ServletContext servletContext = event.getServletContext();
+	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
+		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 
@@ -217,6 +224,13 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			_log.info(
 				"Extension environment for " +
 					servletContextName + " will not be undeployed");
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Registering extension environment for " + servletContextName);
 		}
 	}
 

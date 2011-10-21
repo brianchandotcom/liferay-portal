@@ -289,6 +289,10 @@ public class CMISFolder extends CMISModel implements Folder {
 		return false;
 	}
 
+	public boolean isSupportsMultipleUpload() {
+		return false;
+	}
+
 	public boolean isMountPoint() {
 		return false;
 	}

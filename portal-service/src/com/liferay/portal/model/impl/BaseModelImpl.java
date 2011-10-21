@@ -14,10 +14,14 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.util.Locale;
 
 /**
  * The base implementation for all model classes. This class should never need
@@ -47,11 +51,7 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	}
 
 	public boolean isEscapedModel() {
-		return _escapedModel;
-	}
-
-	public void setEscapedModel(boolean escapedModel) {
-		_escapedModel = escapedModel;
+		return _ESCAPED_MODEL;
 	}
 
 	public ExpandoBridge getExpandoBridge() {
@@ -76,8 +76,27 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	protected Locale getLocale(String languageId) {
+		Locale locale = null;
+
+		if (languageId != null) {
+			locale = LocaleUtil.fromLanguageId(languageId);
+		}
+
+		if (locale == null) {
+			locale = LocaleThreadLocal.getThemeDisplayLocale();
+		}
+
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
+		}
+
+		return locale;
+	}
+
+	private static final boolean _ESCAPED_MODEL = false;
+
 	private boolean _new;
 	private boolean _cachedModel;
-	private boolean _escapedModel;
 
 }

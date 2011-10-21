@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ColorScheme;
@@ -37,6 +39,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
 import java.io.Serializable;
 
@@ -179,6 +182,10 @@ public class ThemeDisplay implements Serializable {
 
 	public Locale getLocale() {
 		return _locale;
+	}
+
+	public MDRRuleGroupInstance getMDRRuleGroupInstance() {
+		return _mdrRuleGroupInstance;
 	}
 
 	public Group getParentGroup() {
@@ -835,6 +842,8 @@ public class ThemeDisplay implements Serializable {
 
 	public void setLocale(Locale locale) {
 		_locale = locale;
+
+		LocaleThreadLocal.setThemeDisplayLocale(locale);
 	}
 
 	public void setLookAndFeel(
@@ -870,6 +879,12 @@ public class ThemeDisplay implements Serializable {
 
 	public void setLookAndFeel(Theme theme, ColorScheme colorScheme) {
 		setLookAndFeel(getPathContext(), theme, colorScheme);
+	}
+
+	public void setMDRRuleGroupInstance(
+		MDRRuleGroupInstance mdrRuleGroupInstance) {
+
+		_mdrRuleGroupInstance = mdrRuleGroupInstance;
 	}
 
 	public void setParentGroupId(long parentGroupId) {
@@ -1141,6 +1156,8 @@ public class ThemeDisplay implements Serializable {
 
 	public void setTimeZone(TimeZone timeZone) {
 		_timeZone = timeZone;
+
+		TimeZoneThreadLocal.setThemeDisplayTimeZone(timeZone);
 	}
 
 	public void setUnfilteredLayouts(List<Layout> unfilteredLayouts) {
@@ -1273,6 +1290,7 @@ public class ThemeDisplay implements Serializable {
 	private boolean _lifecycleRender;
 	private boolean _lifecycleResource;
 	private Locale _locale;
+	private MDRRuleGroupInstance _mdrRuleGroupInstance;
 	private Group _parentGroup;
 	private long _parentGroupId;
 	private String _pathApplet = StringPool.BLANK;

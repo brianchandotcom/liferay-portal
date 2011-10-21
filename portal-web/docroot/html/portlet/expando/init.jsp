@@ -16,22 +16,22 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
-<%@ page import="com.liferay.portlet.expando.ColumnNameException" %>
-<%@ page import="com.liferay.portlet.expando.ColumnTypeException" %>
-<%@ page import="com.liferay.portlet.expando.DuplicateColumnNameException" %>
-<%@ page import="com.liferay.portlet.expando.NoSuchColumnException" %>
-<%@ page import="com.liferay.portlet.expando.ValueDataException" %>
-<%@ page import="com.liferay.portlet.expando.model.CustomAttributesDisplay" %>
-<%@ page import="com.liferay.portlet.expando.model.ExpandoBridge" %>
-<%@ page import="com.liferay.portlet.expando.model.ExpandoColumn" %>
-<%@ page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %>
-<%@ page import="com.liferay.portlet.expando.model.ExpandoValue" %>
-<%@ page import="com.liferay.portlet.expando.model.impl.ExpandoValueImpl" %>
-<%@ page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %>
-<%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
-<%@ page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %>
+<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
+page import="com.liferay.portlet.expando.ColumnNameException" %><%@
+page import="com.liferay.portlet.expando.ColumnTypeException" %><%@
+page import="com.liferay.portlet.expando.DuplicateColumnNameException" %><%@
+page import="com.liferay.portlet.expando.NoSuchColumnException" %><%@
+page import="com.liferay.portlet.expando.ValueDataException" %><%@
+page import="com.liferay.portlet.expando.model.CustomAttributesDisplay" %><%@
+page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
+page import="com.liferay.portlet.expando.model.ExpandoColumn" %><%@
+page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %><%@
+page import="com.liferay.portlet.expando.model.ExpandoValue" %><%@
+page import="com.liferay.portlet.expando.model.impl.ExpandoValueImpl" %><%@
+page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %><%@
+page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %><%@
+page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %><%@
+page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);

@@ -53,7 +53,7 @@ public class LayoutSetBranchLocalServiceImpl
 
 		// Layout branch
 
-		User user = userLocalService.getUserById(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
 		validate(groupId, privateLayout, name, master);
@@ -299,6 +299,10 @@ public class LayoutSetBranchLocalServiceImpl
 
 		LayoutSetBranch layoutSetBranch =
 			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
+
+		validate(
+			layoutSetBranch.getGroupId(), layoutSetBranch.getPrivateLayout(),
+			name, layoutSetBranch.isMaster());
 
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);

@@ -25,7 +25,7 @@ public class SearchTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,13 @@ public class SearchTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_99_tagsAdminSearchInput']",
 			RuntimeVariables.replace("blue"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("link=blue"));
 		assertTrue(selenium.isVisible("link=blue car"));
@@ -59,10 +55,8 @@ public class SearchTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent("link=green tree"));
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_99_tagsAdminSearchInput']",
 			RuntimeVariables.replace("green"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertFalse(selenium.isElementPresent("link=blue"));
 		assertFalse(selenium.isElementPresent("link=blue car"));

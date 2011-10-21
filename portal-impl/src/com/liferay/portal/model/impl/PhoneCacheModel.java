@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Phone;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Date;
  * @see Phone
  * @generated
  */
-public class PhoneCacheModel implements CacheModel<Phone> {
+public class PhoneCacheModel implements CacheModel<Phone>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);

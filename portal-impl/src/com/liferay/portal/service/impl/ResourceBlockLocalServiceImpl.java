@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
@@ -52,6 +54,9 @@ import java.util.SortedMap;
  */
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ResourceBlockLocalServiceImpl.class);
 
 	public void addCompanyScopePermission(
 			long companyId, String name, long roleId, String actionId)
@@ -651,6 +656,38 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	public void setIndividualScopePermissions(
+			long companyId, long groupId, String name, long primKey,
+			Map<Long, String[]> roleIdsToActionIds)
+		throws PortalException, SystemException {
+
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		try {
+			PermissionedModel permissionedModel = getPermissionedModel(
+				name, primKey);
+
+			for (Map.Entry<Long, String[]> entry :
+					roleIdsToActionIds.entrySet()) {
+
+				long roleId = entry.getKey();
+				String[] actionIds = entry.getValue();
+
+				updateIndividualScopePermissions(
+					companyId, groupId, name, permissionedModel, roleId,
+					getActionIds(name, ListUtil.fromArray(actionIds)),
+					ResourceBlockConstants.OPERATOR_SET);
+			}
+		}
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+		}
+	}
+
+	public void setIndividualScopePermissions(
 			long companyId, long groupId, String name,
 			PermissionedModel permissionedModel, long roleId,
 			List<String> actionIds)
@@ -853,8 +890,5 @@ public class ResourceBlockLocalServiceImpl
 
 		updateResourceBlock(resourceBlock);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		ResourceBlockLocalServiceImpl.class);
 
 }

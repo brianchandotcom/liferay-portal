@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.RepositoryEntry;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing RepositoryEntry in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.RepositoryEntry;
  * @see RepositoryEntry
  * @generated
  */
-public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry> {
+public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

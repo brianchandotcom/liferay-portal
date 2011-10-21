@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.wiki.model.WikiPage;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see WikiPage
  * @generated
  */
-public class WikiPageCacheModel implements CacheModel<WikiPage> {
+public class WikiPageCacheModel implements CacheModel<WikiPage>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(47);

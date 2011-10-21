@@ -73,15 +73,10 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingItemField"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ShoppingItemField.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingItemField.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingItemField"),
+			true);
+	public static long ITEMID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingItemField"));
 
@@ -104,6 +99,14 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingItemField.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingItemField.class.getName();
+	}
+
 	public long getItemFieldId() {
 		return _itemFieldId;
 	}
@@ -117,7 +120,19 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 	}
 
 	public void setItemId(long itemId) {
+		_columnBitmask |= ITEMID_COLUMN_BITMASK;
+
+		if (!_setOriginalItemId) {
+			_setOriginalItemId = true;
+
+			_originalItemId = _itemId;
+		}
+
 		_itemId = itemId;
+	}
+
+	public long getOriginalItemId() {
+		return _originalItemId;
 	}
 
 	public String getName() {
@@ -159,20 +174,19 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 		_description = description;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ShoppingItemField toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ShoppingItemField)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingItemField)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ShoppingItemField)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -264,6 +278,13 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	@Override
 	public void resetOriginalValues() {
+		ShoppingItemFieldModelImpl shoppingItemFieldModelImpl = this;
+
+		shoppingItemFieldModelImpl._originalItemId = shoppingItemFieldModelImpl._itemId;
+
+		shoppingItemFieldModelImpl._setOriginalItemId = false;
+
+		shoppingItemFieldModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -359,9 +380,12 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 		};
 	private long _itemFieldId;
 	private long _itemId;
+	private long _originalItemId;
+	private boolean _setOriginalItemId;
 	private String _name;
 	private String _values;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingItemField _escapedModelProxy;
 }

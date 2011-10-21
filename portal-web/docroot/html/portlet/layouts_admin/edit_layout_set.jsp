@@ -33,6 +33,8 @@ String rootNodeName = (String)request.getAttribute("edit_pages.jsp-rootNodeName"
 
 PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
 
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 int pagesCount = 0;
 
 if (selGroup.isLayoutSetPrototype()) {
@@ -64,7 +66,7 @@ String[][] categorySections = {mainSections};
 		<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
 
 		<aui:button-row cssClass="edit-toolbar" id='<%= liferayPortletResponse.getNamespace() + "layoutSetToolbar" %>'>
-			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_LAYOUTS) %>">
+			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 				<c:if test="<%= SessionErrors.contains(liferayPortletRequest, LayoutImportException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARFileException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARTypeException.class.getName()) %>">
 					<liferay-util:html-top>
 						<div class="aui-helper-hidden" id="<portlet:namespace />importPage">
@@ -152,7 +154,7 @@ String[][] categorySections = {mainSections};
 
 								Liferay.Util.focusFormField(content.one('input:text'));
 							},
-							icon: 'circle-plus',
+							icon: 'add',
 							label: '<liferay-ui:message key="add-page" />'
 						},
 					</c:if>
@@ -173,7 +175,7 @@ String[][] categorySections = {mainSections};
 						},
 					</c:if>
 
-					<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_LAYOUTS) %>">
+					<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 						{
 							type: 'ToolbarSpacer'
 						},
@@ -219,7 +221,7 @@ String[][] categorySections = {mainSections};
 
 								exportPopup.io.start();
 							},
-							icon: 'arrowthick-1-b',
+							icon: 'export',
 							label: '<liferay-ui:message key="export" />'
 						},
 						{
@@ -292,6 +294,7 @@ String[][] categorySections = {mainSections};
 <aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayoutset();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
@@ -304,7 +307,7 @@ String[][] categorySections = {mainSections};
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		jspPath="/html/portlet/layouts_admin/layout_set/"
-		showButtons="<%= !SitesUtil.isLayoutSetLocked(selLayoutSet) %>"
+		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.UPDATE) && !SitesUtil.isLayoutSetLocked(selLayoutSet) %>"
 	/>
 </aui:form>
 

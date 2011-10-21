@@ -178,7 +178,7 @@ AUI().add(
 									},
 									checked: checked,
 									id: treeId,
-									label: Liferay.Util.escapeHTML(item.name),
+									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
 									leaf: !item.hasChildren,
 									type: type
 								};
@@ -218,10 +218,20 @@ AUI().add(
 
 						var vocabularyIds = instance.get('vocabularyIds');
 
+						var serviceParameterTypesGetVocabularies = [
+ 						 	'[J'
+ 						];
+
+						var serviceParameterTypesGetGroupVocabularies = [
+ 						 	'[J',
+ 						 	'java.lang.String'
+ 						];
+
 						if (vocabularyIds.length > 0) {
 							Liferay.Service.Asset.AssetVocabulary.getVocabularies(
 								{
-									vocabularyIds: vocabularyIds
+									vocabularyIds: vocabularyIds,
+									serviceParameterTypes: A.JSON.stringify(serviceParameterTypesGetVocabularies)
 								},
 								callback
 							);
@@ -236,7 +246,8 @@ AUI().add(
 							Liferay.Service.Asset.AssetVocabulary.getGroupsVocabularies(
 								{
 									groupIds: groupIds,
-									className: className
+									className: className,
+									serviceParameterTypes: A.JSON.stringify(serviceParameterTypesGetGroupVocabularies)
 								},
 								callback
 							);
@@ -415,11 +426,11 @@ AUI().add(
 						var instance = this;
 
 						var popup = instance._popup;
-						var vocabularyName = item.name;
+						var vocabularyTitle = Liferay.Util.escapeHTML(item.titleCurrentValue);
 						var vocabularyId = item.vocabularyId;
 
 						if (item.groupId == themeDisplay.getCompanyGroupId()) {
-							vocabularyName += ' (' + Liferay.Language.get('global') + ')';
+							vocabularyTitle += ' (' + Liferay.Language.get('global') + ')';
 						}
 
 						var treeId = 'vocabulary' + vocabularyId;
@@ -427,7 +438,7 @@ AUI().add(
 						var vocabularyRootNode = {
 							alwaysShowHitArea: true,
 							id: treeId,
-							label: Liferay.Util.escapeHTML(vocabularyName),
+							label: vocabularyTitle,
 							leaf: false,
 							type: 'io'
 						};

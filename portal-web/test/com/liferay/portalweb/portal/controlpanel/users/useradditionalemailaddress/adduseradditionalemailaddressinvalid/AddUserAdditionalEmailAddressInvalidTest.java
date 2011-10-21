@@ -26,7 +26,7 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,28 +41,24 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("selen01"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
+		assertEquals(RuntimeVariables.replace("selen01"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("selen01"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -78,7 +74,6 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_125_additionalEmailAddressesLink']",
 				"Additional Email Addresses"));
@@ -86,7 +81,7 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("Additional Email Addresses"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -102,12 +97,16 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_emailAddressAddress0']",
 			RuntimeVariables.replace("!!!!!!!!!!!!!!!!!!!!"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		assertTrue(selenium.isTextPresent("Please enter a valid email address."));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xpath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Please enter a valid email address."),
+			selenium.getText("xpath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

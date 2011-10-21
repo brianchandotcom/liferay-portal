@@ -181,6 +181,22 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library file entry type with the UUID in the group.
+	*
+	* @param uuid the UUID of document library file entry type
+	* @param groupId the group id of the document library file entry type
+	* @return the document library file entry type
+	* @throws PortalException if a document library file entry type with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the document library file entry types.
 	*
 	* <p>
@@ -284,10 +300,10 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().deleteFileEntryTypes(folderId);
 	}
 
-	public static long getDefaultFileEntryType(long groupId, long folderId)
+	public static long getDefaultFileEntryTypeId(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDefaultFileEntryType(groupId, folderId);
+		return getService().getDefaultFileEntryTypeId(folderId);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
@@ -297,10 +313,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getFileEntryType(fileEntryTypeId);
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileEntryTypes(groupId);
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileEntryType(groupId, name);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
@@ -310,42 +327,43 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, java.lang.String name, java.lang.String description)
+		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileEntryTypes(groupId, name, description);
+		return getService().getFileEntryTypes(groupIds);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
-		long groupId, long folderId, boolean inherited)
+		long[] groupIds, long folderId, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFolderFileEntryTypes(groupId, folderId, inherited);
+		return getService()
+				   .getFolderFileEntryTypes(groupIds, folderId, inherited);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, keywords, start, end,
+				   .search(companyId, groupIds, keywords, start, end,
 			orderByComparator);
 	}
 
-	public static int searchCount(long companyId, long groupId,
+	public static int searchCount(long companyId, long[] groupIds,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().searchCount(companyId, groupId, keywords);
+		return getService().searchCount(companyId, groupIds, keywords);
 	}
 
-	public static void updateFileEntryType(long fileEntryTypeId,
+	public static void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
-			.updateFileEntryType(fileEntryTypeId, name, description,
+			.updateFileEntryType(userId, fileEntryTypeId, name, description,
 			ddmStructureIds, serviceContext);
 	}
 

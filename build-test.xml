@@ -236,7 +236,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -289,6 +289,11 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-calendar" />
 			<param name="test.ant.script.suite" value="ControlPanelCalendarTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="control-panel-dynamic-data-lists" />
+			<param name="test.ant.script.suite" value="ControlPanelDynamicDataListsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -517,122 +522,122 @@
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-address" />
 			<param name="test.ant.script.suite" value="Address" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-announcements" />
 			<param name="test.ant.script.suite" value="Announcements" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-announcements-delivery" />
 			<param name="test.ant.script.suite" value="AnnouncementsDelivery" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-bookmarks" />
 			<param name="test.ant.script.suite" value="Bookmarks" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-calendar" />
 			<param name="test.ant.script.suite" value="Calendar" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-community" />
 			<param name="test.ant.script.suite" value="Community" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-document-library" />
 			<param name="test.ant.script.suite" value="DocumentLibrary" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-expando" />
 			<param name="test.ant.script.plugin.portlets" value="web-form-portlet" />
 			<param name="test.ant.script.suite" value="Expando" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-groups" />
 			<param name="test.ant.script.suite" value="Groups" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-message-boards" />
 			<param name="test.ant.script.suite" value="MessageBoards" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-organizations" />
 			<param name="test.ant.script.suite" value="Organizations" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-portlet-permissions" />
 			<param name="test.ant.script.suite" value="PortletPermissions" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-shopping" />
 			<param name="test.ant.script.suite" value="Shopping" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-social" />
 			<param name="test.ant.script.plugin.portlets" value="social-networking-portlet" />
 			<param name="test.ant.script.suite" value="Social" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-staging-community" />
 			<param name="test.ant.script.suite" value="StagingCommunity" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-staging-organization" />
 			<param name="test.ant.script.suite" value="StagingOrganization" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-tags" />
 			<param name="test.ant.script.suite" value="Tags" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-web-content" />
 			<param name="test.ant.script.suite" value="WebContent" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-wiki" />
 			<param name="test.ant.script.suite" value="Wiki" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
 		<antcall target="build-test-ant-script-db-upgrade-smoke">
 			<param name="test.ant.script.command" value="db-upgrade-smoke" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,latest" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12,latest" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -2441,7 +2446,8 @@ file.
 
 		<replace file="${sql.file}">
 			<replacefilter token="drop database lportal;" value="drop database ${db.db2.schema};"/>
-			<replacefilter token="create database lportal;" value="create database ${db.db2.schema};"/>
+			<replacefilter token="create database lportal;" value="create database ${db.db2.schema} pagesize 8192;"/>
+			<replacefilter token="create database lportal pagesize 8192;" value="create database ${db.db2.schema} pagesize 8192;"/>
 			<replacefilter token="connect to lportal;" value="connect to ${db.db2.schema} USER ${db.db2.username} USING ${db.db2.password};"/>
 		</replace>
 
@@ -2795,6 +2801,8 @@ file.
 			</else>
 		</if>
 
+		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
+
 		<ant dir="portal-web" target="test-class" inheritAll="false">
 			<property name="class" value="${test.class}" />
 		</ant>
@@ -2928,9 +2936,41 @@ executable ZIP file.
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
 				dir="${simple.server.deploy.dir}"
-				excludes="*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
+				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
 			/>
 		</delete>
+
+		<if>
+			<and>
+				<contains string="${simple.server.dir}" substring="glassfish" />
+				<or>
+					<isset property="hook.plugins.includes" />
+					<isset property="layouttpl.plugins.includes" />
+					<isset property="portlet.plugins.includes" />
+					<isset property="theme.plugins.includes" />
+					<isset property="web.plugins.includes" />
+				</or>
+			</and>
+			<then>
+				<parallel>
+					<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
+						<arg line="${simple.server.start.executable.arg.line}" />
+					</exec>
+
+					<sequential>
+						<waitfor>
+							<http url="http://localhost:8080/web/guest" />
+						</waitfor>
+
+						<sleep seconds="60" />
+
+						<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
+							<arg line="${simple.server.stop.executable.arg.line}" />
+						</exec>
+					</sequential>
+				</parallel>
+			</then>
+		</if>
 
 		<if>
 			<isset property="hook.plugins.includes" />
@@ -3028,7 +3068,7 @@ executable ZIP file.
 
 				<if>
 					<or>
-						<equals arg1="${simple.server.start.executable.arg.line}" arg2="start-domain -v" />
+						<contains string="${simple.server.dir}" substring="glassfish" />
 						<isset property="hook.plugins.includes" />
 						<isset property="portlet.plugins.includes" />
 						<isset property="theme.plugins.includes" />
@@ -3096,15 +3136,15 @@ executable ZIP file.
 	<target name="test">
 		<antcall target="prepare-mysql" />
 
-		<antcall target="rebuild-database" inheritAll="false" />
+		<antcall target="rebuild-database" inheritAll="false">
+			<param name="test.database.minimal" value="true" />
+		</antcall>
 
 		<antcall target="revert-test-properties" />
 
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="ServiceTestSuite" />
 		</ant>
-
-		<antcall target="rebuild-database" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-class" inheritAll="false">
 			<property name="class" value="PersistenceTestSuite" />

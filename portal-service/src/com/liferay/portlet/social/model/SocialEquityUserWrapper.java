@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityUser}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialEquityUser
  * @generated
  */
-public class SocialEquityUserWrapper implements SocialEquityUser {
+public class SocialEquityUserWrapper implements SocialEquityUser,
+	ModelWrapper<SocialEquityUser> {
 	public SocialEquityUserWrapper(SocialEquityUser socialEquityUser) {
 		_socialEquityUser = socialEquityUser;
 	}
@@ -276,10 +279,6 @@ public class SocialEquityUserWrapper implements SocialEquityUser {
 		return _socialEquityUser.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquityUser.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquityUser.getPrimaryKeyObj();
 	}
@@ -342,7 +341,14 @@ public class SocialEquityUserWrapper implements SocialEquityUser {
 		return _socialEquityUser.getParticipationEquity();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialEquityUser getWrappedSocialEquityUser() {
+		return _socialEquityUser;
+	}
+
+	public SocialEquityUser getWrappedModel() {
 		return _socialEquityUser;
 	}
 

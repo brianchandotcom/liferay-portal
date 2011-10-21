@@ -16,8 +16,12 @@
 
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
+<portlet:renderURL var="portletURL">
+	<portlet:param name="struts_action" value="/asset_publisher/view" />
+</portlet:renderURL>
+
 <liferay-ui:header
-	backURL="javascript:history.go(-1);"
+	backURL="<%= portletURL.toString() %>"
 	title="error"
 />
 

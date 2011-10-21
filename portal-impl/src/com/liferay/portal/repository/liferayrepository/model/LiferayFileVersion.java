@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -65,25 +64,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	public InputStream getContentStream(boolean incrementCounter)
 		throws PortalException, SystemException {
 
-		String name = PrincipalThreadLocal.getName();
-
-		long userId = GetterUtil.getLong(name);
-
-		return DLFileEntryLocalServiceUtil.getFileAsStream(
-			userId, _dlFileVersion.getFileEntryId(),
-			_dlFileVersion.getVersion(), incrementCounter);
+		return _dlFileVersion.getContentStream(incrementCounter);
 	}
 
 	public Date getCreateDate() {
 		return _dlFileVersion.getCreateDate();
-	}
-
-	public long getCustom1ImageId() {
-		return _dlFileVersion.getCustom1ImageId();
-	}
-
-	public long getCustom2ImageId() {
-		return _dlFileVersion.getCustom2ImageId();
 	}
 
 	public String getDescription() {
@@ -106,12 +91,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	public File getFile(boolean incrementCounter)
 		throws PortalException, SystemException {
 
-		String name = PrincipalThreadLocal.getName();
-
-		long userId = GetterUtil.getLong(name);
-
 		return DLFileEntryLocalServiceUtil.getFile(
-			userId, _dlFileVersion.getFileEntryId(),
+			PrincipalThreadLocal.getUserId(), _dlFileVersion.getFileEntryId(),
 			_dlFileVersion.getVersion(), incrementCounter);
 	}
 
@@ -133,14 +114,6 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	public String getIcon() {
 		return _dlFileVersion.getIcon();
-	}
-
-	public String getImageType() {
-		return _dlFileVersion.getImageType();
-	}
-
-	public long getLargeImageId() {
-		return _dlFileVersion.getLargeImageId();
 	}
 
 	public String getMimeType() {
@@ -179,10 +152,6 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	public long getSize() {
 		return _dlFileVersion.getSize();
-	}
-
-	public long getSmallImageId() {
-		return _dlFileVersion.getSmallImageId();
 	}
 
 	public int getStatus() {

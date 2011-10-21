@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -33,10 +31,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -58,6 +56,16 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_userIds = new long[THREAD_COUNT];
+
+		for (int i = 0 ; i < THREAD_COUNT; i++) {
+			User user = addUser(
+				"DLAppServiceTest" + (i + 1), false,
+				new long[] {TestPropsValues.getGroupId()});
+
+			_userIds[i] = user.getUserId();
+		}
+
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -68,14 +76,16 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 		try {
 			DLAppServiceUtil.deleteFolder(
-				_groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
 		}
 		catch (NoSuchFolderException nsfe) {
 		}
 
 		_folder = DLAppServiceUtil.addFolder(
-			_groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			name, description, serviceContext);
+			TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
+			serviceContext);
 	}
 
 	@Override
@@ -92,19 +102,17 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 	}
 
 	public void testAddFileEntriesConcurrently() throws Exception {
-		int threadCount = 25;
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[THREAD_COUNT];
 
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[threadCount];
-
-		_fileEntryIds = new long[threadCount];
+		_fileEntryIds = new long[THREAD_COUNT];
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < doAsUserThreads.length; j++) {
 				if (i == 0) {
-					doAsUserThreads[j] = new AddFileEntryThread(_userId, j);
+					doAsUserThreads[j] = new AddFileEntryThread(_userIds[j], j);
 				}
 				else {
-					doAsUserThreads[j] = new GetFileEntryThread(_userId, j);
+					doAsUserThreads[j] = new GetFileEntryThread(_userIds[j], j);
 				}
 			}
 
@@ -124,7 +132,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 				}
 			}
 
-			String message = "Only " + successCount + " out of " + threadCount;
+			String message = "Only " + successCount + " out of " + THREAD_COUNT;
 
 			if (i == 0) {
 				message += " threads added file entries successfully";
@@ -133,7 +141,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 				message += " threads retrieved file entries successfully";
 			}
 
-			assertTrue(message, successCount == threadCount);
+			assertTrue(message, successCount == THREAD_COUNT);
 		}
 	}
 
@@ -174,8 +182,9 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			byte[] bytes = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
-				description, changeLog, bytes, serviceContext);
+				TestPropsValues.getGroupId(), folderId, name,
+				ContentTypes.TEXT_PLAIN, name, description, changeLog, bytes,
+				serviceContext);
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
@@ -200,8 +209,9 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			File file = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
-				description, changeLog, file, serviceContext);
+				TestPropsValues.getGroupId(), folderId, name,
+				ContentTypes.TEXT_PLAIN, name, description, changeLog, file,
+				serviceContext);
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
@@ -232,8 +242,9 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			InputStream is = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				_groupId, folderId, name, ContentTypes.TEXT_PLAIN, name,
-				description, changeLog, is, 0, serviceContext);
+				TestPropsValues.getGroupId(), folderId, name,
+				ContentTypes.TEXT_PLAIN, name, description, changeLog, is, 0,
+				serviceContext);
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
@@ -270,14 +281,12 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		testSearchFile(false);
 	}
 
-	protected void addFileEntry(boolean rootFolder)
-		throws PortalException, SystemException {
-
+	protected void addFileEntry(boolean rootFolder) throws Exception {
 		_fileEntry = addFileEntry(rootFolder, "Title.txt");
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder, String fileName)
-		throws PortalException, SystemException {
+		throws Exception {
 
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
@@ -296,8 +305,9 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		serviceContext.setAddGuestPermissions(true);
 
 		return DLAppServiceUtil.addFileEntry(
-			_groupId, folderId, fileName, ContentTypes.TEXT_PLAIN, fileName,
-			description, changeLog, bytes, serviceContext);
+			TestPropsValues.getGroupId(), folderId, fileName,
+			ContentTypes.TEXT_PLAIN, fileName, description, changeLog, bytes,
+			serviceContext);
 	}
 
 	protected void search(boolean rootFolder, String keywords)
@@ -367,9 +377,7 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 	private FileEntry _fileEntry;
 	private long[] _fileEntryIds;
 	private Folder _folder;
-	private long _groupId = PortalUtil.getScopeGroupId(
-		TestPropsValues.LAYOUT_PLID);
-	private long _userId = TestPropsValues.USER_ID;
+	private long[] _userIds;
 
 	private class AddFileEntryThread extends DoAsUserThread {
 

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRActionLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -34,14 +34,16 @@ import java.util.Map;
 public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	public MDRAction addAction(
-			long groupId, String className, long classPK,
 			long ruleGroupInstanceId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long classNameId = PortalUtil.getClassNameId(className);
+		User user = userPersistence.findByPrimaryKey(
+			serviceContext.getUserId());
+		MDRRuleGroupInstance ruleGroupInstance =
+			mdrRuleGroupInstancePersistence.findByPrimaryKey(
+				ruleGroupInstanceId);
 		Date now = new Date();
 
 		long actionId = counterLocalService.increment();
@@ -49,15 +51,15 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		MDRAction action = mdrActionLocalService.createMDRAction(actionId);
 
 		action.setUuid(serviceContext.getUuid());
-		action.setGroupId(groupId);
+		action.setGroupId(ruleGroupInstance.getGroupId());
 		action.setCompanyId(serviceContext.getCompanyId());
 		action.setCreateDate(serviceContext.getCreateDate(now));
 		action.setModifiedDate(serviceContext.getModifiedDate(now));
 		action.setUserId(serviceContext.getUserId());
 		action.setUserName(user.getFullName());
+		action.setClassNameId(ruleGroupInstance.getClassNameId());
+		action.setClassPK(ruleGroupInstance.getClassPK());
 		action.setRuleGroupInstanceId(ruleGroupInstanceId);
-		action.setClassNameId(classNameId);
-		action.setClassPK(classPK);
 		action.setNameMap(nameMap);
 		action.setDescriptionMap(descriptionMap);
 		action.setType(type);
@@ -67,7 +69,6 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	public MDRAction addAction(
-			long groupId, String className, long classPK,
 			long ruleGroupInstanceId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			UnicodeProperties typeSettingsProperties,
@@ -75,9 +76,8 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return addAction(
-			groupId, className, classPK, ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettingsProperties.toString(),
-			serviceContext);
+			ruleGroupInstanceId, nameMap, descriptionMap, type,
+			typeSettingsProperties.toString(), serviceContext);
 	}
 
 	public void deleteAction(long actionId) throws SystemException {

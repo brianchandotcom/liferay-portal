@@ -16,47 +16,62 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>User</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_screenName</td>
+	<td>//input[@id='_125_screenName']</td>
 	<td>usersn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_emailAddress</td>
+	<td>//input[@id='_125_emailAddress']</td>
 	<td>useremail@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_firstName</td>
+	<td>//input[@id='_125_firstName']</td>
 	<td>userfn</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_lastName</td>
+	<td>//input[@id='_125_lastName']</td>
 	<td>userln</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -64,35 +79,41 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_passwordLink']</td>
+	<td>Password</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>passwordLink</td>
-	<td></td>
+	<td>//a[@id='_125_passwordLink']</td>
+	<td>Password</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_password1</td>
+	<td>//input[@id='_125_password1']</td>
 	<td>New Password</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_password1</td>
-	<td>test</td>
+	<td>//input[@id='_125_password1']</td>
+	<td>password</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_password2</td>
-	<td>test</td>
+	<td>//input[@id='_125_password2']</td>
+	<td>password</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

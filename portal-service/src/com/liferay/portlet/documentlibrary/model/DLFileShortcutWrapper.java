@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileShortcut}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileShortcut
  * @generated
  */
-public class DLFileShortcutWrapper implements DLFileShortcut {
+public class DLFileShortcutWrapper implements DLFileShortcut,
+	ModelWrapper<DLFileShortcut> {
 	public DLFileShortcutWrapper(DLFileShortcut dlFileShortcut) {
 		_dlFileShortcut = dlFileShortcut;
 	}
@@ -427,10 +430,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 		return _dlFileShortcut.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileShortcut.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileShortcut.getPrimaryKeyObj();
 	}
@@ -493,7 +492,14 @@ public class DLFileShortcutWrapper implements DLFileShortcut {
 		return _dlFileShortcut.getToTitle();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileShortcut getWrappedDLFileShortcut() {
+		return _dlFileShortcut;
+	}
+
+	public DLFileShortcut getWrappedModel() {
 		return _dlFileShortcut;
 	}
 

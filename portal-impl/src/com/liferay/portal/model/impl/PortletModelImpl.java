@@ -76,6 +76,11 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Portlet"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Portlet"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long PORTLETID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -111,14 +116,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Portlet.class;
-	}
-
-	public String getModelClassName() {
-		return Portlet.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Portlet"));
 
@@ -141,6 +138,14 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Portlet.class;
+	}
+
+	public String getModelClassName() {
+		return Portlet.class.getName();
+	}
+
 	@JSON
 	public long getId() {
 		return _id;
@@ -156,6 +161,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCompanyId) {
 			_setOriginalCompanyId = true;
 
@@ -180,6 +187,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	}
 
 	public void setPortletId(String portletId) {
+		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -218,20 +227,19 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		_active = active;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public Portlet toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Portlet)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Portlet)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Portlet)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -317,6 +325,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletModelImpl._setOriginalCompanyId = false;
 
 		portletModelImpl._originalPortletId = portletModelImpl._portletId;
+
+		portletModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -413,5 +423,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	private String _roles;
 	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Portlet _escapedModelProxy;
 }

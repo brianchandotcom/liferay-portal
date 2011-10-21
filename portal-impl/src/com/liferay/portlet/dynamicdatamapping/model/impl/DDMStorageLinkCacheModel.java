@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing DDMStorageLink in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
  * @see DDMStorageLink
  * @generated
  */
-public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink> {
+public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

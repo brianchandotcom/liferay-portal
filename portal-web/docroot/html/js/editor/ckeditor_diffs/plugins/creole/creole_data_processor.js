@@ -13,6 +13,8 @@
 
 	var STR_BLANK = '';
 
+	var STR_LIST_ITEM_ESCAPE_CHARACTERS = '\\\\';
+
 	var STR_EQUALS = '=';
 
 	var STR_PIPE = '|';
@@ -116,12 +118,30 @@
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
 
-						allowNewLine = (parentTagName == TAG_PARAGRAPH);
+						allowNewLine = (parentTagName == TAG_PARAGRAPH) || (parentTagName == TAG_LIST_ITEM);
 					}
 				}
 			}
 
 			return allowNewLine;
+		},
+
+		_appendNewLines: function(total) {
+			var instance = this;
+
+			var count = 0;
+
+			var endResult = instance._endResult;
+
+			var newLinesAtEnd = REGEX_LASTCHAR_NEWLINE.exec(endResult.slice(-2).join(STR_BLANK));
+
+			if (newLinesAtEnd) {
+				count = newLinesAtEnd[1].length;
+			}
+
+			while (count++ < total) {
+				endResult.push(NEW_LINE);
+			}
 		},
 
 		_convert: function(data) {
@@ -190,9 +210,7 @@
 				listTagsIn.push(NEW_LINE);
 			}
 			else {
-				if (instance._allowNewLine(element)) {
-					listTagsIn.push(NEW_LINE);
-				}
+				instance._handleNewLine(element, listTagsIn, listTagsOut);
 			}
 		},
 
@@ -225,8 +243,27 @@
 			else if (tagName == TAG_UNORDERED_LIST || tagName == TAG_ORDERED_LIST) {
 				instance._listsStack.pop();
 
-				if (!instance._isLastItemNewLine()) {
-					instance._endResult.push(NEW_LINE);
+				var nextSibling = element.nextSibling;
+
+				if (nextSibling) {
+					while(nextSibling && instance._isIgnorable(nextSibling)) {
+						nextSibling = nextSibling.nextSibling;
+					}
+
+					if (nextSibling) {
+						var siblingTagName = nextSibling.tagName;
+
+						if (siblingTagName) {
+							siblingTagName = siblingTagName.toLowerCase();
+
+							if (siblingTagName != TAG_UNORDERED_LIST && siblingTagName != TAG_ORDERED_LIST) {
+								instance._appendNewLines(2);
+							}
+						}
+					}
+					else if (!instance._isLastItemNewLine()) {
+						instance._endResult.push(NEW_LINE);
+					}
 				}
 			}
 			else if (tagName == TAG_PRE) {
@@ -384,6 +421,20 @@
 			listTagsIn.push(instance._listsStack.join(STR_BLANK));
 		},
 
+		_handleNewLine: function(element, listTagsIn, listTagsOut) {
+			var instance = this;
+
+			if (instance._allowNewLine(element)) {
+				var listCharacter = NEW_LINE;
+
+				if (instance._isParentNode(element, TAG_LIST_ITEM) && element.nextSibling) {
+					listCharacter = STR_LIST_ITEM_ESCAPE_CHARACTERS;
+				}
+
+				listTagsIn.push(listCharacter);
+			}
+		},
+
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
@@ -394,16 +445,7 @@
 			var instance = this;
 
 			if (instance._isDataAvailable()) {
-				var newLinesAtEnd = REGEX_LASTCHAR_NEWLINE.exec(instance._endResult.slice(-2).join(STR_BLANK));
-				var count = 0;
-
-				if (newLinesAtEnd) {
-					 count = newLinesAtEnd[1].length;
-				}
-
-				while (count++ < 2) {
-					listTagsIn.push(NEW_LINE);
-				}
+				instance._appendNewLines(2);
 			}
 
 			listTagsOut.push(NEW_LINE);
@@ -500,7 +542,7 @@
 			var nodeType = node.nodeType;
 
 			return (node.isElementContentWhitespace || nodeType == 8) ||
-					((nodeType == 3) && instance._isWhitespace(node));
+				((nodeType == 3) && instance._isWhitespace(node));
 		},
 
 		_isLastItemNewLine: function(node) {

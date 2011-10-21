@@ -25,7 +25,7 @@ public class ViewActivityBlogsEntryTest extends BaseTestCase {
 		selenium.open("/group/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewActivityBlogsEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new blog entry, Blogs Entry Title, in Liferay."),
 			selenium.getText("//td[2]/div[1]"));

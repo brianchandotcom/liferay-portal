@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBStatsUserLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBStatsUserLocalService
  * @generated
  */
-public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService {
+public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
+	ServiceWrapper<MBStatsUserLocalService> {
 	public MBStatsUserLocalServiceWrapper(
 		MBStatsUserLocalService mbStatsUserLocalService) {
 		_mbStatsUserLocalService = mbStatsUserLocalService;
@@ -317,11 +320,26 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService {
 			lastPostDate);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBStatsUserLocalService getWrappedMBStatsUserLocalService() {
 		return _mbStatsUserLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBStatsUserLocalService(
+		MBStatsUserLocalService mbStatsUserLocalService) {
+		_mbStatsUserLocalService = mbStatsUserLocalService;
+	}
+
+	public MBStatsUserLocalService getWrappedService() {
+		return _mbStatsUserLocalService;
+	}
+
+	public void setWrappedService(
 		MBStatsUserLocalService mbStatsUserLocalService) {
 		_mbStatsUserLocalService = mbStatsUserLocalService;
 	}

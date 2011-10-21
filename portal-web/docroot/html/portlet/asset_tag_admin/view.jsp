@@ -18,7 +18,7 @@
 
 <aui:form name="fm">
 
-<div class="tags-admin-container">
+<div class="tags-admin-container lfr-app-column-view">
 	<div class="lfr-header-row">
 		<div class="lfr-header-row-content">
 			<div class="toolbar">

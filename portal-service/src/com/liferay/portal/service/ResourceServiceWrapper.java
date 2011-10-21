@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ResourceService
  * @generated
  */
-public class ResourceServiceWrapper implements ResourceService {
+public class ResourceServiceWrapper implements ResourceService,
+	ServiceWrapper<ResourceService> {
 	public ResourceServiceWrapper(ResourceService resourceService) {
 		_resourceService = resourceService;
 	}
@@ -35,11 +36,25 @@ public class ResourceServiceWrapper implements ResourceService {
 		return _resourceService.getResource(companyId, name, scope, primKey);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ResourceService getWrappedResourceService() {
 		return _resourceService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedResourceService(ResourceService resourceService) {
+		_resourceService = resourceService;
+	}
+
+	public ResourceService getWrappedService() {
+		return _resourceService;
+	}
+
+	public void setWrappedService(ResourceService resourceService) {
 		_resourceService = resourceService;
 	}
 

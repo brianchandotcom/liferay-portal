@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  */
 public class StoreProxyImpl implements Store {
 
@@ -188,6 +189,15 @@ public class StoreProxyImpl implements Store {
 		Store store = StoreFactory.getInstance();
 
 		return store.getFileSize(companyId, repositoryId, fileName);
+	}
+
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		Store store = StoreFactory.getInstance();
+
+		return store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)

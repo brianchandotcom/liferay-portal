@@ -30,7 +30,7 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean UsersPresent = selenium.isElementPresent(
 						"//a[@id='_125_allUsersLink']");
@@ -64,19 +61,16 @@ public class TearDownUserTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("View All Users"),
+				assertEquals(RuntimeVariables.replace("Search All Users"),
 					selenium.getText("//a[@id='_125_allUsersLink']"));
 				selenium.clickAt("//a[@id='_125_allUsersLink']",
-					RuntimeVariables.replace("View All Users"));
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("usersn"));
-				selenium.saveScreenShotAndSource();
+					RuntimeVariables.replace("userfn"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean UsersExists = selenium.isPartialText("//div[5]",
 						"No users were found");
@@ -94,21 +88,21 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace(
+						"\u00ab Back to Users and Organizations Home"),
+					selenium.getText("//a[@id='_125_TabsBack']"));
 				selenium.clickAt("//a[@id='_125_TabsBack']",
 					RuntimeVariables.replace(
 						"\u00ab Back to Users and Organizations Home"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("View All Users"),
+				assertEquals(RuntimeVariables.replace("Search All Users"),
 					selenium.getText("//span/a/span"));
 				selenium.clickAt("//span/a/span",
-					RuntimeVariables.replace("View All Users"));
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean AdvanceViewVisible = selenium.isElementPresent(
 						"link=Advanced \u00bb");
@@ -127,7 +121,7 @@ public class TearDownUserTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -142,13 +136,11 @@ public class TearDownUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_status']",
 					RuntimeVariables.replace("Inactive"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean userDeleted = selenium.isElementPresent(
 						"//input[@name='_125_rowIds']");
@@ -166,7 +158,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

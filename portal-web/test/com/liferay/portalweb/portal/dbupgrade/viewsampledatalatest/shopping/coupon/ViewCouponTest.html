@@ -16,42 +16,47 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
+	<td>link=Sites</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Shopping Coupon Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Shopping Coupon Community</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>Open</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Shopping Coupon Page</td>
-	<td></td>
+	<td>link=Shopping Coupon Community</td>
+	<td>Shopping Coupon Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Coupons</td>
-	<td></td>
+	<td>Coupons</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,27 +65,27 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_34_name</td>
+	<td>//input[@id='_34_name']</td>
 	<td>Coupon Test</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_34_description</td>
+	<td>//textarea[@id='_34_description']</td>
 	<td>This is a coupon test.</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_34_minOrder</td>
+	<td>//input[@id='_34_minOrder']</td>
 	<td>0.00</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_34_discount</td>
+	<td>//input[@id='_34_discount']</td>
 	<td>0.50</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_34_discountType</td>
+	<td>//select[@id='_34_discountType']</td>
 	<td>Percentage</td>
 </tr>
 

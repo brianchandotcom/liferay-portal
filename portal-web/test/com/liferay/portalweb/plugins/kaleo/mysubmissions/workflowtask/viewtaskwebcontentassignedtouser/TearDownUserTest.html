@@ -29,229 +29,59 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basic1Visible</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>usersPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${basic1Visible}</td>
-	<td>Basic1NotVisible</td>
+	<td>!${usersPresent}</td>
+	<td>UsersNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>« Basic</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>Select All</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Basic1NotVisible</td>
+	<td>clickAndWait</td>
+	<td>//input[@value='Deactivate']</td>
+	<td>Deactivate</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to deactivate the selected users?</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>usersn</td>
+	<td>label</td>
+	<td>UsersNotPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user1Deactivated</td>
+	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>advancedVisible</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${user1Deactivated}</td>
-	<td>User1NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User1NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user2Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user2Deactivated}</td>
-	<td>User2NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User2NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user3Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user3Deactivated}</td>
-	<td>User3NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User3NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user4Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user4Deactivated}</td>
-	<td>User4NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User4NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_125_rowIds'))</td>
-	<td>user5Deactivated</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user5Deactivated}</td>
-	<td>User5NotDeactivated</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Deactivate']</td>
-	<td>Deactivate</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User5NotDeactivated</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>!${advancedVisible}</td>
+	<td>AdvancedNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
-	<td>Advanced »</td>
+	<td>Advanced</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AdvancedNotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -265,27 +95,27 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user1Deleted</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>users2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${user1Deleted}</td>
-	<td>User1NotDeleted</td>
+	<td>!${users2Present}</td>
+	<td>Users2NotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -295,170 +125,14 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>User1NotDeleted</td>
+	<td>Users2NotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user2Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user2Deleted}</td>
-	<td>User2NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User2NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user3Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user3Deleted}</td>
-	<td>User3NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User3NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user4Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user4Deleted}</td>
-	<td>User4NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User4NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td>user5Deleted</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${user5Deleted}</td>
-	<td>User5NotDeleted</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_rowIds'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>xPath=(//input[@value='Delete'])[2]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to permanently delete the selected users?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>User5NotDeleted</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>basicNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
 	<td>« Basic</td>
 </tr>
-<tr>
-	<td>label</td>
-	<td>basicNotVisible</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

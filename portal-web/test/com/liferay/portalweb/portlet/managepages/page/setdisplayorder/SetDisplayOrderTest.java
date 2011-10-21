@@ -30,7 +30,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,7 +45,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.mouseOver("link=Manage Pages Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]"));
@@ -57,12 +56,13 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent("//div[4]/div/ul/li[1]/a")) {
+						if (selenium.isElementPresent(
+									"//li[contains(@class,'manage-page')]/a")) {
 							break;
 						}
 					}
@@ -72,12 +72,11 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[4]/div/ul/li[1]/a",
+				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -94,7 +93,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
@@ -113,7 +111,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -130,7 +128,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
@@ -139,7 +136,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -156,7 +153,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals("Manage Pages Test Page",
 					selenium.getValue(
 						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
@@ -176,7 +172,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -193,7 +189,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
@@ -204,7 +199,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.mouseDown("//li[2]/ul/li[1]/div/div[3]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -220,14 +215,13 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.mouseMoveAt("//li[2]/ul/li[3]/div/div[3]/a",
 					RuntimeVariables.replace("0,15"));
 				selenium.mouseMoveAt("//li[2]/ul/li[3]/div/div[3]/a",
 					RuntimeVariables.replace("0,15"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -243,11 +237,10 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.mouseUp("//li[2]/ul/li[3]/div/div[3]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -264,7 +257,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Child Test Page3"),
@@ -274,7 +266,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -289,7 +281,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.mouseOver("link=Manage Pages Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
 					selenium.getText("//li[2]/ul/li[1]"));

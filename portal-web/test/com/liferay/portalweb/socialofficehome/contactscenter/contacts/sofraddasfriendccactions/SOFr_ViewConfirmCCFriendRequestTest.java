@@ -25,7 +25,7 @@ public class SOFr_ViewConfirmCCFriendRequestTest extends BaseTestCase {
 		selenium.open("/user/socialofficefriendsn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class SOFr_ViewConfirmCCFriendRequestTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
 		assertEquals(RuntimeVariables.replace("Manage 1 friends."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));

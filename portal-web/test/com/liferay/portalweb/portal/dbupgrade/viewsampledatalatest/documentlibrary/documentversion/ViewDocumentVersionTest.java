@@ -25,7 +25,7 @@ public class ViewDocumentVersionTest extends BaseTestCase {
 		selenium.open("/web/document-library-document-version-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewDocumentVersionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
 		Thread.sleep(3000);
@@ -53,7 +51,6 @@ public class ViewDocumentVersionTest extends BaseTestCase {
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test2 Document2.txt"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("1.1"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("1.0"),

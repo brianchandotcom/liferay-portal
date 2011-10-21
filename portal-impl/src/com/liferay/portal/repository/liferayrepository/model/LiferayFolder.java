@@ -181,11 +181,30 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	public boolean isSupportsLocking() {
-		return true;
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public boolean isSupportsMetadata() {
-		return true;
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public boolean isSupportsMultipleUpload() {
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public boolean isMountPoint() {
@@ -206,7 +225,12 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	public boolean isSupportsSocial() {
-		return true;
+		if (isMountPoint()) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public void setCompanyId(long companyId) {

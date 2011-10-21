@@ -18,6 +18,7 @@ import com.liferay.counter.service.CounterLocalServiceTest;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceTest;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceTest;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceTest;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceTest;
 import com.liferay.portlet.messageboards.service.MBMessageServiceTest;
 import com.liferay.portlet.social.service.SocialRelationLocalServiceTest;
 
@@ -41,6 +42,7 @@ public class ServiceTestSuite extends TestSuite {
 		testSuite.addTestSuite(BookmarksEntryServiceTest.class);
 
 		testSuite.addTestSuite(DLAppServiceTest.class);
+		testSuite.addTestSuite(DLContentLocalServiceTest.class);
 
 		testSuite.addTestSuite(MBMessageServiceTest.class);
 

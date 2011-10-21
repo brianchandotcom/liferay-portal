@@ -55,6 +55,7 @@ import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 
 /**
  * @author Alexander Chow
+ * @author Edward Han
  */
 public class CMISStore extends BaseStore {
 
@@ -247,6 +248,25 @@ public class CMISStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		return document.getContentStreamLength();
+	}
+
+	@Override
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
+
+		Folder folder = getRepositoryFolder(companyId, repositoryId);
+
+		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
+
+		for (String subdirName : dirNames) {
+			Folder subfolder = getFolder(folder, subdirName);
+
+			if (subfolder == null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public String getHeadVersionLabel(

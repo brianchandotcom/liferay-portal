@@ -137,7 +137,7 @@ public class SeleneseToJavaBuilder {
 			y = step.indexOf("\n", x);
 			y = step.lastIndexOf("</td>", y);
 
-			params[i] =	step.substring(x, y);
+			params[i] = step.substring(x, y);
 		}
 
 		return params;
@@ -286,10 +286,11 @@ public class SeleneseToJavaBuilder {
 			String param3 = fixParam(params[2]);
 
 			if (param1.equals("addSelection") || param1.equals("clickAt") ||
-				param1.equals("keyPress") || param1.equals("mouseMoveAt") ||
-				param1.equals("openWindow") || param1.equals("select") ||
-				param1.equals("type") || param1.equals("typeKeys") ||
-				param1.equals("uploadFile") || param1.equals("waitForPopUp")) {
+				param1.equals("doubleClickAt") || param1.equals("keyPress") ||
+				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
+				param1.equals("select") || param1.equals("type") ||
+				param1.equals("typeKeys") || param1.equals("uploadFile") ||
+				param1.equals("waitForPopUp")) {
 
 				sb.append("selenium.");
 				sb.append(param1);
@@ -800,6 +801,13 @@ public class SeleneseToJavaBuilder {
 				sb.append(param3);
 				sb.append(");");
 			}
+			else if (param1.equals("storeVisible")) {
+				sb.append("boolean ");
+				sb.append(param3);
+				sb.append(" = selenium.isVisible(\"");
+				sb.append(param2);
+				sb.append("\");");
+			}
 			else if (param1.equals("verifyElementNotPresent") ||
 					 param1.equals("verifyElementPresent")) {
 
@@ -852,7 +860,7 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("waitForVisible")) {
 
 				sb.append("for (int second = 0;; second++) {");
-				sb.append("if (second >= 60) {");
+				sb.append("if (second >= 90) {");
 				sb.append("fail(\"timeout\");");
 				sb.append("}");
 
@@ -984,64 +992,6 @@ public class SeleneseToJavaBuilder {
 			else {
 				System.out.println(
 					testFileName + " has an unknown command " + param1);
-			}
-
-			Boolean takeScreenShot = takeScreenShots.get(x);
-
-			if (takeScreenShot == null) {
-				takeScreenShot = Boolean.TRUE;
-			}
-
-			if (takeScreenShot) {
-				if (param1.equals("assertChecked") ||
-					param1.equals("assertConfirmation") ||
-					param1.equals("assertNotChecked") ||
-					param1.equals("clickAndWait") ||
-					param1.equals("clickAtAndWait") ||
-					param1.equals("keyPressAndWait") ||
-					param1.equals("selectAndWait") ||
-					param1.equals("selectWindow") ||
-					param1.equals("waitForElementNotPresent") ||
-					param1.equals("waitForNotPartialText") ||
-					param1.equals("waitForNotSelectedLabel") ||
-					param1.equals("waitForNotTable") ||
-					param1.equals("waitForNotText") ||
-					param1.equals("waitForNotValue") ||
-					param1.equals("waitForNotVisible") ||
-					param1.equals("waitForPartialText") ||
-					param1.equals("waitForSelectedLabel") ||
-					param1.equals("waitForTable") ||
-					param1.equals("waitForText") ||
-					param1.equals("waitForTextNotPresent") ||
-					param1.equals("waitForTextPresent") ||
-					param1.equals("waitForValue") ||
-					param1.equals("waitForVisible")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (param1.equals("selectFrame") &&
-						 param2.equals("relative=top")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (param1.equals("type") && !param2.equals("//body")) {
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (
-					param1.equals("typeKeys") && !param2.equals("//body")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
-				else if (param1.equals("waitForElementPresent") &&
-						!param2.equals("_15_editor") &&
-						!param2.equals(
-							"_15_structure_el_TextAreaField_content") &&
-						!param2.equals("_33_editor") &&
-						!param2.equals("cke_contents_CKEditor1") &&
-						!param2.equals("FCKeditor1___Frame")) {
-
-					sb.append("selenium.saveScreenShotAndSource();");
-				}
 			}
 		}
 

@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       UserGroupGroupRole
  * @generated
  */
-public class UserGroupGroupRoleWrapper implements UserGroupGroupRole {
+public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
+	ModelWrapper<UserGroupGroupRole> {
 	public UserGroupGroupRoleWrapper(UserGroupGroupRole userGroupGroupRole) {
 		_userGroupGroupRole = userGroupGroupRole;
 	}
@@ -129,10 +130,6 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole {
 		return _userGroupGroupRole.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userGroupGroupRole.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userGroupGroupRole.getPrimaryKeyObj();
 	}
@@ -187,7 +184,14 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole {
 		_userGroupGroupRole.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserGroupGroupRole getWrappedUserGroupGroupRole() {
+		return _userGroupGroupRole;
+	}
+
+	public UserGroupGroupRole getWrappedModel() {
 		return _userGroupGroupRole;
 	}
 

@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing SCLicense in entity cache.
  *
@@ -27,7 +29,7 @@ import com.liferay.portlet.softwarecatalog.model.SCLicense;
  * @see SCLicense
  * @generated
  */
-public class SCLicenseCacheModel implements CacheModel<SCLicense> {
+public class SCLicenseCacheModel implements CacheModel<SCLicense>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       AddressService
  * @generated
  */
-public class AddressServiceWrapper implements AddressService {
+public class AddressServiceWrapper implements AddressService,
+	ServiceWrapper<AddressService> {
 	public AddressServiceWrapper(AddressService addressService) {
 		_addressService = addressService;
 	}
@@ -69,11 +70,25 @@ public class AddressServiceWrapper implements AddressService {
 			street3, city, zip, regionId, countryId, typeId, mailing, primary);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AddressService getWrappedAddressService() {
 		return _addressService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAddressService(AddressService addressService) {
+		_addressService = addressService;
+	}
+
+	public AddressService getWrappedService() {
+		return _addressService;
+	}
+
+	public void setWrappedService(AddressService addressService) {
 		_addressService = addressService;
 	}
 

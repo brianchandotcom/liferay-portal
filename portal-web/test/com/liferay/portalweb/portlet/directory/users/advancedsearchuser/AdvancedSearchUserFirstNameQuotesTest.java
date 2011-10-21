@@ -31,7 +31,7 @@ public class AdvancedSearchUserFirstNameQuotesTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,14 +46,11 @@ public class AdvancedSearchUserFirstNameQuotesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users", RuntimeVariables.replace("Users"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -70,7 +67,7 @@ public class AdvancedSearchUserFirstNameQuotesTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -86,32 +83,25 @@ public class AdvancedSearchUserFirstNameQuotesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_firstName']",
 					RuntimeVariables.replace("\"userfn\""));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_11_firstName']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("link=userfn"));
 				selenium.type("//input[@id='_11_firstName']",
 					RuntimeVariables.replace("\"userfn1\""));
-				selenium.saveScreenShotAndSource();
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("All"));
 				selenium.type("//input[@id='_11_firstName']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("\u00ab Basic"));
 				assertFalse(selenium.isTextPresent("userfn"));

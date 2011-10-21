@@ -26,7 +26,6 @@
 	.tags-admin-container .results-header {
 		background: #F0F5F7;
 		font-weight: bold;
-		margin: 2px 0;
 		padding: 5px 10px;
 		position: relative;
 	}
@@ -103,10 +102,6 @@
 	}
 
 	.tags-admin-content {
-		li.tag-item-container {
-			padding: 1px 0;
-		}
-
 		li.tag-item-container, li.tag-item {
 			font-weight: bold;
 			list-style: none;
@@ -116,20 +111,16 @@
 	.tag-item-container {
 		&:hover, &:focus {
 			.tag-item-actions-trigger {
-				clip: auto;
+				clip: rect(auto auto auto auto);
 			}
 		}
 	}
 
 	.tag-item-actions-trigger:focus {
-		clip: auto;
+		clip: rect(auto auto auto auto);
 	}
 
 	.tags-admin-list {
-		li {
-			border: 1px solid transparent;
-		}
-
 		.selected {
 			a:hover {
 				color: #FFB683;

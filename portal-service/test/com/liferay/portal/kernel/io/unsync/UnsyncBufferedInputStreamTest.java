@@ -115,7 +115,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 
 		byteArrayInputStream = new ByteArrayInputStream(_BUFFER);
 
-		unsyncBufferedInputStream =	new UnsyncBufferedInputStream(
+		unsyncBufferedInputStream = new UnsyncBufferedInputStream(
 			byteArrayInputStream, size);
 
 		unsyncBufferedInputStream.mark(_SIZE);

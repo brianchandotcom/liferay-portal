@@ -38,6 +38,10 @@
 
 	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
 
+	var SRC_HIDE_LINK = {
+		src: 'hideLink'
+	};
+
 	var Window = {
 		ALIGN_CENTER: {
 			points: ['tc', 'tc']
@@ -664,18 +668,26 @@
 		Util,
 		'afterIframeLoaded',
 		function(event) {
-			var iframePlugin = event.currentTarget;
-
-			var iframeBody = iframePlugin.node.get('contentWindow.document.body');
+			var iframeBody = A.one(event.doc.body);
 
 			iframeBody.addClass('aui-dialog-iframe-popup');
 
 			var closeButton = iframeBody.one('.aui-button-input-cancel');
+			var hideLink = iframeBody.one('.lfr-hide-dialog');
+
+			var dialog = event.dialog;
 
 			if (closeButton) {
-				var dialog = iframePlugin.get('host');
-
 				closeButton.on('click', dialog.close, dialog);
+			}
+
+			if (hideLink) {
+				hideLink.on(
+					'click',
+					function(){
+						dialog.set('visible', false, SRC_HIDE_LINK);
+					}
+				);
 			}
 
 			var rolesSearchContainer = iframeBody.one('#rolesSearchContainerSearchContainer');
@@ -711,7 +723,7 @@
 	Liferay.provide(
 		Util,
 		'checkAll',
-		function(form, name, allBox) {
+		function(form, name, allBox, selectClassName) {
 			var selector;
 
 			if (isArray(name)) {
@@ -724,6 +736,10 @@
 			form = A.one(form);
 
 			form.all(selector).set('checked', A.one(allBox).get('checked'));
+
+			if (selectClassName) {
+				form.all(selectClassName).toggleClass('selected', A.one(allBox).get('checked'));
+			}
 		},
 		['aui-base']
 	);
@@ -736,7 +752,7 @@
 			var totalOn = 0;
 			var inputs = A.one(form).all('input[type=checkbox]');
 
-			allBox = A.one(allBox);
+			allBox = A.one(allBox) || A.one(form).one('input[name=' + allBox + ']');
 
 			if (!isArray(name)) {
 				name = [name];
@@ -1075,6 +1091,7 @@
 			ddmURL.setParameter('scopeStorageType', config.storageType);
 			ddmURL.setParameter('scopeStructureName', config.structureName);
 			ddmURL.setParameter('scopeStructureType', config.structureType);
+			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 
 			if (config.showManageTemplates) {

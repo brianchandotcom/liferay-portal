@@ -22,8 +22,29 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class VerifyFunctionalityTest extends BaseTestCase {
 	public void testVerifyFunctionality() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Sample PHP Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.click(RuntimeVariables.replace("link=Sample PHP Test Page"));
+		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -38,19 +59,15 @@ public class VerifyFunctionalityTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Quercus"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"link=exact:http://quercus.caucho.com"));
 		selenium.click(RuntimeVariables.replace("link=PHP Info"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent("PHP Variables"));
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("link=Configuration"));
 	}
 }

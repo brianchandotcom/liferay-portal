@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryMetadata}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileEntryMetadata
  * @generated
  */
-public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
+public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
+	ModelWrapper<DLFileEntryMetadata> {
 	public DLFileEntryMetadataWrapper(DLFileEntryMetadata dlFileEntryMetadata) {
 		_dlFileEntryMetadata = dlFileEntryMetadata;
 	}
@@ -200,10 +203,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 		return _dlFileEntryMetadata.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileEntryMetadata.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileEntryMetadata.getPrimaryKeyObj();
 	}
@@ -276,7 +275,14 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata {
 		return _dlFileEntryMetadata.getFileVersion();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileEntryMetadata getWrappedDLFileEntryMetadata() {
+		return _dlFileEntryMetadata;
+	}
+
+	public DLFileEntryMetadata getWrappedModel() {
 		return _dlFileEntryMetadata;
 	}
 

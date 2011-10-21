@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       UserIdMapper
  * @generated
  */
-public class UserIdMapperWrapper implements UserIdMapper {
+public class UserIdMapperWrapper implements UserIdMapper,
+	ModelWrapper<UserIdMapper> {
 	public UserIdMapperWrapper(UserIdMapper userIdMapper) {
 		_userIdMapper = userIdMapper;
 	}
@@ -184,10 +185,6 @@ public class UserIdMapperWrapper implements UserIdMapper {
 		return _userIdMapper.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userIdMapper.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userIdMapper.getPrimaryKeyObj();
 	}
@@ -241,7 +238,14 @@ public class UserIdMapperWrapper implements UserIdMapper {
 		_userIdMapper.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserIdMapper getWrappedUserIdMapper() {
+		return _userIdMapper;
+	}
+
+	public UserIdMapper getWrappedModel() {
 		return _userIdMapper;
 	}
 

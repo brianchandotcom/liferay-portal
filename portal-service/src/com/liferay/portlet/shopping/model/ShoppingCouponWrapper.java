@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingCoupon}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.model;
  * @see       ShoppingCoupon
  * @generated
  */
-public class ShoppingCouponWrapper implements ShoppingCoupon {
+public class ShoppingCouponWrapper implements ShoppingCoupon,
+	ModelWrapper<ShoppingCoupon> {
 	public ShoppingCouponWrapper(ShoppingCoupon shoppingCoupon) {
 		_shoppingCoupon = shoppingCoupon;
 	}
@@ -427,10 +430,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 		return _shoppingCoupon.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingCoupon.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingCoupon.getPrimaryKeyObj();
 	}
@@ -497,7 +496,14 @@ public class ShoppingCouponWrapper implements ShoppingCoupon {
 		return _shoppingCoupon.hasValidStartDate();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ShoppingCoupon getWrappedShoppingCoupon() {
+		return _shoppingCoupon;
+	}
+
+	public ShoppingCoupon getWrappedModel() {
 		return _shoppingCoupon;
 	}
 

@@ -1,0 +1,152 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String themeImagesPath = PortalUtil.getCDNHost(request.isSecure()) + theme.getStaticResourcePath() + theme.getImagesPath();
+%>
+
+body {
+	background: #EEF0F2 !important;
+	color: #363636;
+	margin: 0 auto;
+	padding: 0 !important;
+}
+
+#wrapper {
+	margin: auto;
+	max-width: 700px;
+	min-width: 0;
+}
+
+#banner {
+	min-height: 100px;
+}
+
+#banner:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+#banner .company-title {
+	float: left;
+	width: 50%;
+}
+
+#banner .site-title {
+	clip: rect(auto auto auto auto);
+	float: right;
+	font-size: 1.8em;
+	margin: 0.5em 0;
+	position: relative;
+	text-align: right;
+	text-shadow: 1px 1px #FFF;
+	width: 50%;
+}
+
+#footer {
+	clear: both;
+	padding-top: 2em;
+}
+
+.connection-messages {
+	margin-top: 10px;
+}
+
+.properties-text {
+	min-height: 200px;
+	width: 100%;
+}
+
+.aui-form .aui-fieldset {
+	margin-bottom: 1em;
+}
+
+.aui-fieldset .aui-field-content {
+	margin-top: 0;
+}
+
+.aui-legend {
+	border-bottom: 1px solid #333;
+	line-height: 2;
+	overflow: hidden;
+	padding: 0;
+	position: static;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.aui-fieldset-content {
+	padding: 1em 10px 0;
+}
+
+.aui-fieldset-legend {
+	color: #363636;
+	padding: 0;
+	position: static;
+	width: 100%;
+}
+
+.aui-field-element {
+	display: block;
+}
+
+.aui-field-input-text {
+	width: 100%;
+}
+
+.aui-field-hint {
+	float: none;
+	font-style: italic;
+}
+
+.aui-suffix {
+	color: #777;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.change-language {
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.database-options {
+	display: block;
+	margin-bottom: 1em;
+}
+
+.lfr-inline-code {
+	background: #FF9;
+	color: #555;
+	font-family: monospace;
+	font-size: 1.2em;
+	font-style: normal;
+	font-weight: bold;
+	padding: 3px;
+}
+
+.portlet-msg-alert .lfr-inline-code {
+	background-color: #EEB;
+	color: #333;
+}
+
+.ie6 #wrapper {
+	width: 600px;
+}

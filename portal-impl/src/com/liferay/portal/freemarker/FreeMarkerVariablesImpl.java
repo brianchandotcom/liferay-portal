@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil_IW;
 import com.liferay.portal.kernel.util.UnicodeFormatter_IW;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.permission.AccountPermissionUtil;
@@ -230,7 +230,7 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		freeMarkerContext.put(
 			"saxReaderUtil",
-			utilLocator.findUtil(SAXReaderUtil.class.getName()));
+			utilLocator.findUtil(SAXReader.class.getName()));
 
 		// Service locator
 

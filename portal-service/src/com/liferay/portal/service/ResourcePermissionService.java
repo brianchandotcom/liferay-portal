@@ -42,26 +42,174 @@ public interface ResourcePermissionService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourcePermissionServiceUtil} to access the resource permission remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourcePermissionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* Grants the role permission at the scope to perform the action on
+	* resources of the type. Existing actions are retained.
+	*
+	* <p>
+	* This method cannot be used to grant individual scope permissions, but is
+	* only intended for adding permissions at the company, group, and
+	* group-template scopes. For example, this method could be used to grant a
+	* company scope permission to edit message board posts.
+	* </p>
+	*
+	* <p>
+	* If a company scope permission is granted to resources that the role
+	* already had group scope permissions to, the group scope permissions are
+	* deleted. Likewise, if a group scope permission is granted to resources
+	* that the role already had company scope permissions to, the company
+	* scope permissions are deleted. Be aware that this latter behavior can
+	* result in an overall reduction in permissions for the role.
+	* </p>
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope. This method only supports company, group, and
+	group-template scope.
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	* @throws PortalException if the user did not have permission to add
+	resource permissions, or if scope was set to individual scope or
+	if a role with the primary key or a resource action with the
+	name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public void addResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		long roleId, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void setIndividualResourcePermissions(long groupId, long companyId,
-		java.lang.String name, java.lang.String primKey, long roleId,
-		java.lang.String[] actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
+	/**
+	* Revokes permission at the scope from the role to perform the action on
+	* resources of the type. For example, this method could be used to revoke
+	* a group scope permission to edit blog posts.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	* @throws PortalException if the user did not have permission to remove
+	resource permissions, or if a role with the primary key or a
+	resource action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public void removeResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		long roleId, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Revokes all permissions at the scope from the role to perform the action
+	* on resources of the type. For example, this method could be used to
+	* revoke all individual scope permissions to edit blog posts from site
+	* members.
+	*
+	* @param groupId the primary key of the group
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	* @throws PortalException if the user did not have permission to remove
+	resource permissions, or if a role with the primary key or a
+	resource action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public void removeResourcePermissions(long groupId, long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates the role's permissions at the scope, setting the actions that
+	* can be performed on resources of the type. Existing actions are
+	* replaced.
+	*
+	* <p>
+	* This method can be used to set permissions at any scope, but it is
+	* generally only used at the individual scope. For example, it could be
+	* used to set the guest permissions on a blog post.
+	* </p>
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionIds the action IDs of the actions
+	* @throws PortalException if the user did not have permission to set
+	resource permissions, or if a role with the primary key or a
+	resource action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setIndividualResourcePermissions(long groupId, long companyId,
+		java.lang.String name, java.lang.String primKey, long roleId,
+		java.lang.String[] actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates the role's permissions at the scope, setting the actions that
+	* can be performed on resources of the type. Existing actions are
+	* replaced.
+	*
+	* <p>
+	* This method can be used to set permissions at any scope, but it is
+	* generally only used at the individual scope. For example, it could be
+	* used to set the guest permissions on a blog post.
+	* </p>
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param primKey the primary key
+	* @param roleIdsToActionIds a map of role IDs to action IDs of the
+	actions
+	* @throws PortalException if the user did not have permission to set
+	resource permissions, or if a role with the primary key or a
+	resource action with the name and action ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setIndividualResourcePermissions(long groupId, long companyId,
+		java.lang.String name, java.lang.String primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

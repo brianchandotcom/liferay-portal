@@ -25,6 +25,11 @@ boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId();
+
+if (Validator.isNull(id)) {
+	id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+}
+
 int start = searchContainer.getStart();
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
@@ -72,11 +77,7 @@ int sortColumnIndex = -1;
 		</div>
 	</c:if>
 
-	<div class="results-grid"
-		<c:if test="<%= Validator.isNotNull(id) %>">
-			id="<%= id %>SearchContainer"
-		</c:if>
-	>
+	<div class="results-grid" id="<%= id %>SearchContainer">
 		<table class="taglib-search-iterator">
 
 		<c:if test="<%= headerNames != null %>">
@@ -202,14 +203,14 @@ int sortColumnIndex = -1;
 		for (int i = 0; i < resultRows.size(); i++) {
 			ResultRow row = (ResultRow)resultRows.get(i);
 
-			String rowClassName = "portlet-section-alternate results-row alt";
-			String rowClassHoverName = "portlet-section-alternate-hover results-row alt hover";
+			String rowClassName = _ROW_CLASS_NAME_ALTERNATE + " results-row alt";
+			String rowClassHoverName = _ROW_CLASS_NAME_ALTERNATE_HOVER + " results-row alt " + _CLASS_NAME_HOVER;
 
 			primaryKeys.add(row.getPrimaryKey());
 
 			if (MathUtil.isEven(i)) {
-				rowClassName = "portlet-section-body results-row";
-				rowClassHoverName = "portlet-section-body-hover results-row hover";
+				rowClassName = _ROW_CLASS_NAME_BODY + " results-row";
+				rowClassHoverName = _ROW_CLASS_NAME_BODY_HOVER + " results-row " + _CLASS_NAME_HOVER;
 			}
 
 			if (Validator.isNotNull(row.getClassName())) {
@@ -256,11 +257,7 @@ int sortColumnIndex = -1;
 			}
 		%>
 
-			<tr class="<%= rowClassName %>"
-				<c:if test="<%= searchContainer.isHover() %>">
-					onmouseover="this.className = '<%= rowClassHoverName %>';" onmouseout="this.className = '<%= rowClassName %>';"
-				</c:if>
-			>
+			<tr class="<%= rowClassName %>">
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {
@@ -331,8 +328,26 @@ int sortColumnIndex = -1;
 	<aui:script use="liferay-search-container">
 		new Liferay.SearchContainer(
 			{
-				id: '<%= id %>'
+				classNameHover: '<%= _CLASS_NAME_HOVER %>',
+				hover: <%= searchContainer.isHover() %>,
+				id: '<%= id %>',
+				rowClassNameAlternate: '<%= _ROW_CLASS_NAME_ALTERNATE %>',
+				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
+				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
+				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>'
 			}
 		).render();
 	</aui:script>
 </c:if>
+
+<%!
+private static final String _CLASS_NAME_HOVER = "hover";
+
+private static final String _ROW_CLASS_NAME_ALTERNATE = "portlet-section-alternate";
+
+private static final String _ROW_CLASS_NAME_ALTERNATE_HOVER = "portlet-section-alternate-hover";
+
+private static final String _ROW_CLASS_NAME_BODY = "portlet-section-body";
+
+private static final String _ROW_CLASS_NAME_BODY_HOVER = "portlet-section-body-hover";
+%>

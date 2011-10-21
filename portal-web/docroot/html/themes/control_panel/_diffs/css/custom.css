@@ -67,6 +67,16 @@ body.portal-popup:after, body.portal-popup:before {
 	clear: both;
 }
 
+.aui-column-content {
+	zoom: 1;
+}
+
+.aui-column-content:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
 #content-wrapper, .lfr-ctrl-panel {
 	min-height: 100%;
 }
@@ -81,6 +91,10 @@ body.portal-popup:after, body.portal-popup:before {
 
 #breadcrumbs .first {
 	padding-left: 3px;
+}
+
+#breadcrumbs .last {
+	margin-top: 0;
 }
 
 #breadcrumbs .breadcrumbs {
@@ -138,11 +152,11 @@ body.portal-popup:after, body.portal-popup:before {
 	position: relative;
 }
 
-#main-content .aui-tree-node-selected {
+.lfr-ctrl-panel .aui-tree-node-selected {
 	background: transparent;
 }
 
-#main-content .aui-tree-node-selected a {
+.lfr-ctrl-panel .aui-tree-node-selected a {
 	color: #333;
 }
 
@@ -453,7 +467,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel-content ul li a:hover {
-	background-color: #ebf0f5;
+	background-color: #EBF0F5;
 	text-decoration: underline;
 }
 
@@ -555,7 +569,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 #controlPanelMenuAddContentPanelContainer a:focus {
-	background-color: #5487af;
+	background-color: #5487AF;
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer #panel-manage-my li a:focus, .search-panel-active #controlPanelMenuAddContentPanelContainer #panel-manage-my li.selected-portlet a {
@@ -766,7 +780,7 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 }
 
 #controlPanelMenuAddContentPanelContainer a:focus {
-	@include box-shadow(0 0 6px #3e9ae1);
+	@include box-shadow(0 0 6px #3E9AE1);
 }
 
 .search-panel-active #controlPanelMenuAddContentPanelContainer .lfr-panel.lfr-extended {
@@ -783,8 +797,8 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 }
 
 .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
-	@include filter-gradient(#d2dbe4, #bdc8d6);
-	@include background-image(linear-gradient(#d2dbe4, #bdc8d6));
+	@include filter-gradient(#D2DBE4, #BDC8D6);
+	@include background-image(linear-gradient(#D2DBE4, #BDC8D6));
 }
 
 .panel-page-menu .lfr-panel.lfr-collapsed .lfr-panel-titlebar, .panels-minimized .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-titlebar {
@@ -792,6 +806,6 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 }
 
 .panel-page-menu .lfr-panel-content ul li.selected-portlet a {
-	@include filter-gradient(#427ead, #154b75);
-	@include background-image(linear-gradient(#427ead, #154b75));
+	@include filter-gradient(#427EAD, #154B75);
+	@include background-image(linear-gradient(#427EAD, #154B75));
 }

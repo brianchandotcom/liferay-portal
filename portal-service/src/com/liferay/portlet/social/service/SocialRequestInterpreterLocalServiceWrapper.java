@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialRequestInterpreterLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialRequestInterpreterLocalServiceWrapper
-	implements SocialRequestInterpreterLocalService {
+	implements SocialRequestInterpreterLocalService,
+		ServiceWrapper<SocialRequestInterpreterLocalService> {
 	public SocialRequestInterpreterLocalServiceWrapper(
 		SocialRequestInterpreterLocalService socialRequestInterpreterLocalService) {
 		_socialRequestInterpreterLocalService = socialRequestInterpreterLocalService;
@@ -136,11 +139,26 @@ public class SocialRequestInterpreterLocalServiceWrapper
 			themeDisplay);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialRequestInterpreterLocalService getWrappedSocialRequestInterpreterLocalService() {
 		return _socialRequestInterpreterLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialRequestInterpreterLocalService(
+		SocialRequestInterpreterLocalService socialRequestInterpreterLocalService) {
+		_socialRequestInterpreterLocalService = socialRequestInterpreterLocalService;
+	}
+
+	public SocialRequestInterpreterLocalService getWrappedService() {
+		return _socialRequestInterpreterLocalService;
+	}
+
+	public void setWrappedService(
 		SocialRequestInterpreterLocalService socialRequestInterpreterLocalService) {
 		_socialRequestInterpreterLocalService = socialRequestInterpreterLocalService;
 	}

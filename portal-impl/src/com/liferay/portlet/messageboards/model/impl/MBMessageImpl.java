@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -30,7 +31,6 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.BBCodeUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -72,7 +72,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		String body = null;
 
 		if (translate) {
-			body = BBCodeUtil.getHTML(this);
+			body = BBCodeTranslatorUtil.getHTML(getBody());
 		}
 		else {
 			body = getBody();

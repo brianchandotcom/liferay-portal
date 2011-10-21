@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.EmailAddress;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see EmailAddress
  * @generated
  */
-public class EmailAddressCacheModel implements CacheModel<EmailAddress> {
+public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);

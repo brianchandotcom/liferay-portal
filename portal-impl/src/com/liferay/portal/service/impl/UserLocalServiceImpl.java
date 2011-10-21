@@ -735,7 +735,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Organizations
 
-		updateOrganizations(userId, organizationIds);
+		boolean indexingEnabled = serviceContext.isIndexingEnabled();
+
+		serviceContext.setIndexingEnabled(false);
+
+		try {
+			updateOrganizations(userId, organizationIds, serviceContext);
+		}
+		finally {
+			serviceContext.setIndexingEnabled(indexingEnabled);
+		}
 
 		// Roles
 
@@ -794,6 +803,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			companyId, workflowUserId, User.class.getName(), userId, user,
 			serviceContext);
+
+		String passwordUnencrypted =
+			(String) serviceContext.getAttribute("passwordUnencrypted");
+
+		if (Validator.isNotNull(passwordUnencrypted)) {
+			user.setPasswordUnencrypted(passwordUnencrypted);
+		}
 
 		return user;
 	}
@@ -3874,7 +3890,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void updateGroups(long userId, long[] newGroupIds)
+	public void updateGroups(
+			long userId, long[] newGroupIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (newGroupIds == null) {
@@ -3901,9 +3918,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+		if (serviceContext.isIndexingEnabled()) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(new long[] {userId});
+			indexer.reindex(new long[] {userId});
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -4122,7 +4141,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void updateOrganizations(long userId, long[] newOrganizationIds)
+	public void updateOrganizations(
+			long userId, long[] newOrganizationIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (newOrganizationIds == null) {
@@ -4151,9 +4172,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+		if (serviceContext.isIndexingEnabled()) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(new long[] {userId});
+			indexer.reindex(new long[] {userId});
+		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -4707,13 +4730,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		groupPersistence.update(group, false);
 
-		// Groups
+		// Groups and organizations
 
-		updateGroups(userId, groupIds);
+		boolean indexingEnabled = serviceContext.isIndexingEnabled();
 
-		// Organizations
+		serviceContext.setIndexingEnabled(false);
 
-		updateOrganizations(userId, organizationIds);
+		try {
+			updateGroups(userId, groupIds, serviceContext);
+			updateOrganizations(userId, organizationIds, serviceContext);
+		}
+		finally {
+			serviceContext.setIndexingEnabled(indexingEnabled);
+		}
 
 		// Roles
 
@@ -5424,8 +5453,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_EMAIL_ADDRESSES);
 
-		for (int i = 0; i < reservedEmailAddresses.length; i++) {
-			if (emailAddress.equalsIgnoreCase(reservedEmailAddresses[i])) {
+		for (String reservedEmailAddress : reservedEmailAddresses) {
+			if (emailAddress.equalsIgnoreCase(reservedEmailAddress)) {
 				throw new ReservedUserEmailAddressException();
 			}
 		}
@@ -5535,8 +5564,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String[] anonymousNames = PrincipalBean.ANONYMOUS_NAMES;
 
-		for (int i = 0; i < anonymousNames.length; i++) {
-			if (screenName.equalsIgnoreCase(anonymousNames[i])) {
+		for (String anonymousName : anonymousNames) {
+			if (screenName.equalsIgnoreCase(anonymousName)) {
 				throw new UserScreenNameException();
 			}
 		}
@@ -5567,8 +5596,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, PropsKeys.ADMIN_RESERVED_SCREEN_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_SCREEN_NAMES);
 
-		for (int i = 0; i < reservedScreenNames.length; i++) {
-			if (screenName.equalsIgnoreCase(reservedScreenNames[i])) {
+		for (String reservedScreenName : reservedScreenNames) {
+			if (screenName.equalsIgnoreCase(reservedScreenName)) {
 				throw new ReservedUserScreenNameException();
 			}
 		}

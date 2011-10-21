@@ -23,6 +23,12 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConst
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
+long repositoryId = groupId;
+
+if (folder != null) {
+	repositoryId = folder.getRepositoryId();
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/select_document_library");
@@ -54,7 +60,7 @@ if (folder != null) {
 
 	searchContainer.setTotal(total);
 
-	List results = DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd());
+	List results = DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 
@@ -84,14 +90,14 @@ if (folder != null) {
 
 		// Statistics
 
-		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(groupId, curFolder.getFolderId(), false);
+		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(curFolder.getRepositoryId(), curFolder.getFolderId(), false);
 
 		int foldersCount = subfolderIds.size();
 
 		subfolderIds.clear();
 		subfolderIds.add(curFolder.getFolderId());
 
-		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(groupId, subfolderIds, WorkflowConstants.STATUS_APPROVED);
+		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), subfolderIds, WorkflowConstants.STATUS_APPROVED);
 
 		row.addText(String.valueOf(foldersCount), rowURL);
 		row.addText(String.valueOf(fileEntriesCount), rowURL);
@@ -129,7 +135,7 @@ if (folder != null) {
 
 	searchContainer.setTotal(total);
 
-	results = DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd());
+	results = DLAppServiceUtil.getFileEntries(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 
@@ -137,6 +143,10 @@ if (folder != null) {
 
 	for (int i = 0; i < results.size(); i++) {
 		FileEntry fileEntry = (FileEntry)results.get(i);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		DLFileShortcut fileShortcut = null;
 	%>
 
 		<%@ include file="/html/portlet/document_library/document_thumbnail.jspf" %>
@@ -180,26 +190,27 @@ if (folder != null) {
 		sb.append("parent.");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectDocumentLibrary('");
+		sb.append(themeDisplay.getPathContext());
+		sb.append("/documents/");
+		sb.append(groupId);
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getFolderId());
+		sb.append(StringPool.SLASH);
+		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
 
-		if (ImageProcessor.hasImages(fileEntry.getFileVersion())) {
-			sb.append(themeDisplay.getPathImage());
-			sb.append("/image_gallery?uuid=");
-			sb.append(fileEntry.getUuid());
-			sb.append("&groupId=");
-			sb.append(fileEntry.getGroupId());
-			sb.append("&t=");
-			sb.append(WebServerServletTokenUtil.getToken(fileEntry.getLargeImageId()));
-		}
-		else {
-			sb.append(themeDisplay.getPathContext());
-			sb.append("/documents/");
-			sb.append(groupId);
-			sb.append(StringPool.SLASH);
-			sb.append(fileEntry.getFolderId());
-			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+		Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
+
+		if (imageMimeTypes.contains(fileEntry.getMimeType())) {
+			sb.append("?t=");
+			sb.append(WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId()));
 		}
 
+		sb.append("', '");
+		sb.append(fileEntry.getUuid());
+		sb.append("', '");
+		sb.append(fileEntry.getTitle());
+		sb.append("', '");
+		sb.append(fileEntry.getVersion());
 		sb.append("'); Liferay.Util.getWindow().close();");
 
 		row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());

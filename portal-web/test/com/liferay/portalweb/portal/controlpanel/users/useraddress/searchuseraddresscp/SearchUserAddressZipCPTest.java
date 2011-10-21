@@ -25,7 +25,7 @@ public class SearchUserAddressZipCPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,40 +40,32 @@ public class SearchUserAddressZipCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("11111"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("selen01"),
-			selenium.getText(
-				"//div[2]/div[2]/div[2]/div[1]/table/tbody/tr[3]/td[2]/a"));
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("nium01"),
-			selenium.getText(
-				"//div[2]/div[2]/div[2]/div[1]/table/tbody/tr[3]/td[3]/a"));
+			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("selenium01"),
-			selenium.getText(
-				"//div[2]/div[2]/div[2]/div[1]/table/tbody/tr[3]/td[4]/a"));
+			selenium.getText("//td[4]/a"));
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("11112"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isTextPresent("selen01"));
 		assertFalse(selenium.isTextPresent("nium01"));
 		assertFalse(selenium.isTextPresent("selenium01"));
+		assertEquals(RuntimeVariables.replace("No users were found."),
+			selenium.getText("xpath=(//div[@class='portlet-msg-info'])[2]"));
 	}
 }

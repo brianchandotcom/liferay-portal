@@ -49,7 +49,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			String lifecycle, String windowState, String portletMode,
 			String var, String varImpl, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
-			String resourceID, String cacheability, long plid,
+			String resourceID, String cacheability, long plid, long refererPlid,
 			String portletName, Boolean anchor, Boolean encrypt,
 			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
 			Map<String, String[]> params, PageContext pageContext)
@@ -113,6 +113,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			liferayPortletURL.setCacheability(cacheability);
 		}
 
+		if (refererPlid > LayoutConstants.DEFAULT_PLID) {
+			liferayPortletURL.setRefererPlid(refererPlid);
+		}
+
 		if (anchor != null) {
 			liferayPortletURL.setAnchor(anchor.booleanValue());
 		}
@@ -167,109 +171,6 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		}
 	}
 
-	@Override
-	public int doEndTag() throws JspException {
-		try {
-			doTag(
-				getLifecycle(), _windowState, _portletMode, _var, _varImpl,
-				_secure, _copyCurrentRenderParameters, _escapeXml, _name,
-				_resourceID, _cacheability, _plid, _portletName, _anchor,
-				_encrypt, _doAsGroupId, _doAsUserId, _portletConfiguration,
-				getParams(), pageContext);
-
-			return EVAL_PAGE;
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-		finally {
-			clearParams();
-			clearProperties();
-
-			_plid = LayoutConstants.DEFAULT_PLID;
-		}
-	}
-
-	@Override
-	public int doStartTag() {
-		return EVAL_BODY_INCLUDE;
-	}
-
-	public String getLifecycle() {
-		return PortletRequest.ACTION_PHASE;
-	}
-
-	public void setWindowState(String windowState) {
-		_windowState = windowState;
-	}
-
-	public void setPortletMode(String portletMode) {
-		_portletMode = portletMode;
-	}
-
-	public void setVar(String var) {
-		_var = var;
-	}
-
-	public void setVarImpl(String varImpl) {
-		_varImpl = varImpl;
-	}
-
-	public void setSecure(boolean secure) {
-		_secure = Boolean.valueOf(secure);
-	}
-
-	public void setCopyCurrentRenderParameters(
-		boolean copyCurrentRenderParameters) {
-
-		_copyCurrentRenderParameters = Boolean.valueOf(
-			copyCurrentRenderParameters);
-	}
-
-	public void setEscapeXml(boolean escapeXml) {
-		_escapeXml = Boolean.valueOf(escapeXml);
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setId(String resourceID) {
-		_resourceID = resourceID;
-	}
-
-	public void setCacheability(String cacheability) {
-		_cacheability = cacheability;
-	}
-
-	public void setPlid(long plid) {
-		_plid = plid;
-	}
-
-	public void setPortletName(String portletName) {
-		_portletName = portletName;
-	}
-
-	public void setAnchor(boolean anchor) {
-		_anchor = Boolean.valueOf(anchor);
-	}
-
-	public void setEncrypt(boolean encrypt) {
-		_encrypt = Boolean.valueOf(encrypt);
-	}
-
-	public void setDoAsGroupId(long doAsGroupId) {
-		_doAsGroupId = doAsGroupId;
-	}
-
-	public void setDoAsUserId(long doAsUserId) {
-		_doAsUserId = doAsUserId;
-	}
-
-	public void setPortletConfiguration(boolean portletConfiguration) {
-		_portletConfiguration = Boolean.valueOf(portletConfiguration);
-	}
-
 	private static LiferayPortletURL _getLiferayPortletURL(
 		HttpServletRequest request, long plid, String portletName,
 		String lifecycle) {
@@ -306,24 +207,132 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		return liferayPortletConfig.getPortletId();
 	}
 
+	@Override
+	public int doEndTag() throws JspException {
+		try {
+			doTag(
+				getLifecycle(), _windowState, _portletMode, _var, _varImpl,
+				_secure, _copyCurrentRenderParameters, _escapeXml, _name,
+				_resourceID, _cacheability, _plid, _refererPlid, _portletName,
+				_anchor, _encrypt, _doAsGroupId, _doAsUserId,
+				_portletConfiguration, getParams(), pageContext);
+
+			return EVAL_PAGE;
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
+		finally {
+			clearParams();
+			clearProperties();
+
+			_plid = LayoutConstants.DEFAULT_PLID;
+		}
+	}
+
+	@Override
+	public int doStartTag() {
+		return EVAL_BODY_INCLUDE;
+	}
+
+	public String getLifecycle() {
+		return PortletRequest.ACTION_PHASE;
+	}
+
+	public void setAnchor(boolean anchor) {
+		_anchor = Boolean.valueOf(anchor);
+	}
+
+	public void setCacheability(String cacheability) {
+		_cacheability = cacheability;
+	}
+
+	public void setCopyCurrentRenderParameters(
+		boolean copyCurrentRenderParameters) {
+
+		_copyCurrentRenderParameters = Boolean.valueOf(
+			copyCurrentRenderParameters);
+	}
+
+	public void setDoAsGroupId(long doAsGroupId) {
+		_doAsGroupId = doAsGroupId;
+	}
+
+	public void setDoAsUserId(long doAsUserId) {
+		_doAsUserId = doAsUserId;
+	}
+
+	public void setEncrypt(boolean encrypt) {
+		_encrypt = Boolean.valueOf(encrypt);
+	}
+
+	public void setEscapeXml(boolean escapeXml) {
+		_escapeXml = Boolean.valueOf(escapeXml);
+	}
+
+	public void setId(String resourceID) {
+		_resourceID = resourceID;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
+	public void setPortletConfiguration(boolean portletConfiguration) {
+		_portletConfiguration = Boolean.valueOf(portletConfiguration);
+	}
+
+	public void setPortletMode(String portletMode) {
+		_portletMode = portletMode;
+	}
+
+	public void setPortletName(String portletName) {
+		_portletName = portletName;
+	}
+
+	public void setRefererPlid(long refererPlid) {
+		_refererPlid = refererPlid;
+	}
+
+	public void setSecure(boolean secure) {
+		_secure = Boolean.valueOf(secure);
+	}
+
+	public void setVar(String var) {
+		_var = var;
+	}
+
+	public void setVarImpl(String varImpl) {
+		_varImpl = varImpl;
+	}
+
+	public void setWindowState(String windowState) {
+		_windowState = windowState;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ActionURLTag.class);
 
-	private String _windowState;
-	private String _portletMode;
-	private String _var;
-	private String _varImpl;
-	private Boolean _secure;
-	private Boolean _copyCurrentRenderParameters;
-	private Boolean _escapeXml;
-	private String  _name;
-	private String _resourceID;
-	private String _cacheability;
-	private long _plid = LayoutConstants.DEFAULT_PLID;
-	private String _portletName;
 	private Boolean _anchor;
-	private Boolean _encrypt;
+	private String _cacheability;
+	private Boolean _copyCurrentRenderParameters;
 	private long _doAsGroupId;
 	private long _doAsUserId;
+	private Boolean _encrypt;
+	private Boolean _escapeXml;
+	private String  _name;
+	private long _plid = LayoutConstants.DEFAULT_PLID;
 	private Boolean _portletConfiguration;
+	private String _portletMode;
+	private String _portletName;
+	private long _refererPlid = LayoutConstants.DEFAULT_PLID;
+	private String _resourceID;
+	private Boolean _secure;
+	private String _var;
+	private String _varImpl;
+	private String _windowState;
 
 }

@@ -45,13 +45,13 @@ public class PanelTag extends IncludeTag {
 		String parentId = StringPool.BLANK;
 
 		if (baseBodyTagSupport instanceof PanelContainerTag) {
-			PanelContainerTag panelContainerTag	=
+			PanelContainerTag panelContainerTag =
 				(PanelContainerTag)baseBodyTagSupport;
 
 			parentId = panelContainerTag.getId();
 		}
 		else if (baseBodyTagSupport instanceof PanelFloatingContainerTag) {
-			PanelFloatingContainerTag panelFloatingContainerTag	=
+			PanelFloatingContainerTag panelFloatingContainerTag =
 				(PanelFloatingContainerTag)baseBodyTagSupport;
 
 			parentId = panelFloatingContainerTag.getId();

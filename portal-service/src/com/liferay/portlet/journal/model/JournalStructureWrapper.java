@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalStructure}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see       JournalStructure
  * @generated
  */
-public class JournalStructureWrapper implements JournalStructure {
+public class JournalStructureWrapper implements JournalStructure,
+	ModelWrapper<JournalStructure> {
 	public JournalStructureWrapper(JournalStructure journalStructure) {
 		_journalStructure = journalStructure;
 	}
@@ -306,6 +309,14 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _journalStructure.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _journalStructure.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this journal structure.
 	*
@@ -344,6 +355,10 @@ public class JournalStructureWrapper implements JournalStructure {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_journalStructure.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_journalStructure.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -421,6 +436,14 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _journalStructure.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _journalStructure.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this journal structure.
 	*
@@ -460,6 +483,10 @@ public class JournalStructureWrapper implements JournalStructure {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_journalStructure.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_journalStructure.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -522,10 +549,6 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalStructure.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalStructure.getPrimaryKeyObj();
 	}
@@ -584,7 +607,14 @@ public class JournalStructureWrapper implements JournalStructure {
 		return _journalStructure.getMergedXsd();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public JournalStructure getWrappedJournalStructure() {
+		return _journalStructure;
+	}
+
+	public JournalStructure getWrappedModel() {
 		return _journalStructure;
 	}
 

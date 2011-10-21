@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBThread}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBThread
  * @generated
  */
-public class MBThreadWrapper implements MBThread {
+public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	public MBThreadWrapper(MBThread mbThread) {
 		_mbThread = mbThread;
 	}
@@ -474,10 +476,6 @@ public class MBThreadWrapper implements MBThread {
 		return _mbThread.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbThread.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbThread.getPrimaryKeyObj();
 	}
@@ -548,7 +546,14 @@ public class MBThreadWrapper implements MBThread {
 		return _mbThread.isLocked();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBThread getWrappedMBThread() {
+		return _mbThread;
+	}
+
+	public MBThread getWrappedModel() {
 		return _mbThread;
 	}
 

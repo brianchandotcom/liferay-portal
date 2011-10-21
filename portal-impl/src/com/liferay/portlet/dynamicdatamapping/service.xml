@@ -154,6 +154,7 @@
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="String" />
+		<column name="mode" type="String" />
 		<column name="language" type="String" />
 		<column name="script" type="String" />
 
@@ -171,9 +172,10 @@
 		<finder name="Language" return-type="Collection">
 			<finder-column name="language" />
 		</finder>
-		<finder name="S_T" return-type="Collection">
+		<finder name="S_T_M" return-type="Collection">
 			<finder-column name="structureId" />
 			<finder-column name="type" />
+			<finder-column name="mode" />
 		</finder>
 	</entity>
 	<exceptions>

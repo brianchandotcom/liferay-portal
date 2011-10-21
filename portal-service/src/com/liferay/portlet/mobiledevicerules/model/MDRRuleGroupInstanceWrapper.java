@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRuleGroupInstance}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.mobiledevicerules.model;
  * @see       MDRRuleGroupInstance
  * @generated
  */
-public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance {
+public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
+	ModelWrapper<MDRRuleGroupInstance> {
 	public MDRRuleGroupInstanceWrapper(
 		MDRRuleGroupInstance mdrRuleGroupInstance) {
 		_mdrRuleGroupInstance = mdrRuleGroupInstance;
@@ -320,10 +323,6 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance {
 		return _mdrRuleGroupInstance.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mdrRuleGroupInstance.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mdrRuleGroupInstance.getPrimaryKeyObj();
 	}
@@ -378,7 +377,14 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance {
 		_mdrRuleGroupInstance.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MDRRuleGroupInstance getWrappedMDRRuleGroupInstance() {
+		return _mdrRuleGroupInstance;
+	}
+
+	public MDRRuleGroupInstance getWrappedModel() {
 		return _mdrRuleGroupInstance;
 	}
 

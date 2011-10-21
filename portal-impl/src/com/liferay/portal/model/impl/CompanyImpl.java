@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
+import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
@@ -103,12 +104,13 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return new GroupImpl();
 	}
 
+	@Override
 	public Key getKeyObj() {
 		if (_keyObj == null) {
 			String key = getKey();
 
 			if (Validator.isNotNull(key)) {
-				_keyObj = (Key)Base64.stringToObject(key);
+				_keyObj = (Key)Base64.stringToObjectSilent(key);
 			}
 		}
 
@@ -234,12 +236,12 @@ public class CompanyImpl extends CompanyBaseImpl {
 		super.setKey(key);
 	}
 
+	@Override
 	public void setKeyObj(Key keyObj) {
 		_keyObj = keyObj;
-
-		super.setKey(Base64.objectToString(keyObj));
 	}
 
-	private Key _keyObj = null;
+	@CacheField
+	private Key _keyObj;
 
 }

@@ -25,7 +25,7 @@ public class AddFrontPageCreoleOListsTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AddFrontPageCreoleOListsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='wiki-body']/div/a"));
@@ -52,13 +50,12 @@ public class AddFrontPageCreoleOListsTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//span[@id='cke_34_label']",
 			RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -74,22 +71,18 @@ public class AddFrontPageCreoleOListsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
 			RuntimeVariables.replace(
 				"# Item1\n## Subitem1a\n# Item2\n## Subitem2a\n## Subitem2b\n# Item3\n## Subitem3a\n## Subitem3b\n## Subitem3c"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//span[@id='cke_34_label']",
 			RuntimeVariables.replace("Source"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//td[@id='cke_contents__36_editor']/iframe"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

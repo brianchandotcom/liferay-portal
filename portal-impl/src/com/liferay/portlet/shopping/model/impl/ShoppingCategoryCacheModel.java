@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingCategory;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see ShoppingCategory
  * @generated
  */
-public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory> {
+public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);

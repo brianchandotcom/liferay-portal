@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       AccountLocalService
  * @generated
  */
-public class AccountLocalServiceWrapper implements AccountLocalService {
+public class AccountLocalServiceWrapper implements AccountLocalService,
+	ServiceWrapper<AccountLocalService> {
 	public AccountLocalServiceWrapper(AccountLocalService accountLocalService) {
 		_accountLocalService = accountLocalService;
 	}
@@ -248,12 +249,26 @@ public class AccountLocalServiceWrapper implements AccountLocalService {
 		return _accountLocalService.getAccount(companyId, accountId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AccountLocalService getWrappedAccountLocalService() {
 		return _accountLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAccountLocalService(
 		AccountLocalService accountLocalService) {
+		_accountLocalService = accountLocalService;
+	}
+
+	public AccountLocalService getWrappedService() {
+		return _accountLocalService;
+	}
+
+	public void setWrappedService(AccountLocalService accountLocalService) {
 		_accountLocalService = accountLocalService;
 	}
 

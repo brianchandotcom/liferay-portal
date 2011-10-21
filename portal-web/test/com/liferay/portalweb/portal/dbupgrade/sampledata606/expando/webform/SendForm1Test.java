@@ -25,7 +25,7 @@ public class SendForm1Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,38 +40,28 @@ public class SendForm1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Expando Web Form Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@type='text']", RuntimeVariables.replace("Hashi"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@type='checkbox']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Male']", RuntimeVariables.replace(""));
 		selenium.select("//select", RuntimeVariables.replace("label=Poor"));
 		selenium.type("//textarea",
 			RuntimeVariables.replace("This is a comment. Hashi."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Send']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"The form information was sent successfully."));
 	}

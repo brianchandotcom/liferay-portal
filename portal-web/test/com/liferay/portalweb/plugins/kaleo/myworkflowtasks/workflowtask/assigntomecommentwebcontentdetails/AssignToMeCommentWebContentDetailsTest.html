@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,22 +65,27 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[1]/div/div[1]/div/div/span/a</td>
+	<td>//a[@id='_153_taskAssignToMeLink']</td>
 	<td>Assign to Me</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_153_comment</td>
+	<td>//textarea[@name='_153_comment']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_153_comment</td>
+	<td>//textarea[@name='_153_comment']</td>
 	<td>Web Content Comment Assign To Me</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[3]/span/span/button</td>
+	<td>OK</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//div/button[1]</td>
+	<td>//div[3]/span/span/button</td>
 	<td>OK</td>
 </tr>
 <tr>
@@ -101,22 +106,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -148,6 +153,7 @@
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>There are no pending tasks assigned to your roles.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

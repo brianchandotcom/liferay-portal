@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.journal.model.JournalArticleImage;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing JournalArticleImage in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.journal.model.JournalArticleImage;
  * @see JournalArticleImage
  * @generated
  */
-public class JournalArticleImageCacheModel implements CacheModel<JournalArticleImage> {
+public class JournalArticleImageCacheModel implements CacheModel<JournalArticleImage>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);

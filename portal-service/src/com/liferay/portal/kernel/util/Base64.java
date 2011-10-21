@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -182,7 +181,7 @@ public class Base64 {
 			os.writeObject(o);
 			os.flush();
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			_log.error(e, e);
 		}
 
@@ -190,10 +189,41 @@ public class Base64 {
 	}
 
 	public static Object stringToObject(String s) {
-		return stringToObject(s, null);
+		return _stringToObject(s, null, false);
 	}
 
 	public static Object stringToObject(String s, ClassLoader classLoader) {
+		return _stringToObject(s, classLoader, false);
+	}
+
+	public static Object stringToObjectSilent(String s) {
+		return _stringToObject(s, null, true);
+	}
+
+	public static Object stringToObjectSilent(
+		String s, ClassLoader classLoader) {
+
+		return _stringToObject(s, classLoader, true);
+	}
+
+	public static String toURLSafe(String base64) {
+		return StringUtil.replace(
+			base64,
+			new String[] {
+				StringPool.PLUS,
+				StringPool.EQUAL,
+				StringPool.SLASH
+			},
+			new String[] {
+				StringPool.MINUS,
+				StringPool.STAR,
+				StringPool.UNDERLINE
+			});
+	}
+
+	private static Object _stringToObject(
+		String s, ClassLoader classLoader, boolean silent) {
+
 		if (s == null) {
 			return null;
 		}
@@ -216,25 +246,12 @@ public class Base64 {
 			return is.readObject();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (!silent) {
+				_log.error(e, e);
+			}
 		}
 
 		return null;
-	}
-
-	public static String toURLSafe(String base64) {
-		return StringUtil.replace(
-			base64,
-			new String[] {
-				StringPool.PLUS,
-				StringPool.EQUAL,
-				StringPool.SLASH
-			},
-			new String[] {
-				StringPool.MINUS,
-				StringPool.STAR,
-				StringPool.UNDERLINE
-			});
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Base64.class);

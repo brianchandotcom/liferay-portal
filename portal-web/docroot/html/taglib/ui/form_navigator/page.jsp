@@ -53,7 +53,7 @@ if (Validator.isNotNull(historyKey)) {
 			<!-- Begin fragment <%= namespace + sectionId %> -->
 
 			<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "selected" : "aui-helper-hidden-accessible" %>" id="<%= namespace + sectionId %>">
-				<liferay-util:include page="<%= sectionJsp %>" />
+				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
 			</div>
 
 			<!-- End fragment <%= namespace + sectionId %> -->
@@ -151,7 +151,11 @@ if (Validator.isNotNull(historyKey)) {
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<aui:button href="<%= backURL %>" type="cancel" />
+					<%
+					String taglibOnClick = "location.href = location.href.replace(location.hash, '');";
+					%>
+
+					<aui:button href="<%= backURL %>" onClick="<%= taglibOnClick %>" type="cancel" />
 				</aui:button-row>
 			</c:if>
 

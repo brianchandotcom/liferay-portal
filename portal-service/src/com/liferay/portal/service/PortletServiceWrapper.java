@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PortletService
  * @generated
  */
-public class PortletServiceWrapper implements PortletService {
+public class PortletServiceWrapper implements PortletService,
+	ServiceWrapper<PortletService> {
 	public PortletServiceWrapper(PortletService portletService) {
 		_portletService = portletService;
 	}
@@ -39,11 +40,25 @@ public class PortletServiceWrapper implements PortletService {
 		return _portletService.updatePortlet(companyId, portletId, roles, active);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PortletService getWrappedPortletService() {
 		return _portletService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPortletService(PortletService portletService) {
+		_portletService = portletService;
+	}
+
+	public PortletService getWrappedService() {
+		return _portletService;
+	}
+
+	public void setWrappedService(PortletService portletService) {
 		_portletService = portletService;
 	}
 

@@ -30,7 +30,7 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,16 +45,14 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -70,7 +68,6 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -78,7 +75,7 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -93,21 +90,18 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_taxRate']",
 					RuntimeVariables.replace("7.250%"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -122,38 +116,29 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//input[@value='Checkout']",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingStreet']",
 					RuntimeVariables.replace("1234 Sesame Street"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingCity']",
 					RuntimeVariables.replace("Gotham City"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_34_billingStateSel']",
 					RuntimeVariables.replace("California"));
 				selenium.type("//input[@id='_34_billingZip']",
 					RuntimeVariables.replace("90028"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingCountry']",
 					RuntimeVariables.replace("USA"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_34_billingPhone']",
 					RuntimeVariables.replace("626-589-1453"));
-				selenium.saveScreenShotAndSource();
 
 				boolean sameAsBillingChecked = selenium.isChecked(
 						"_34_shipToBillingCheckbox");
@@ -170,21 +155,17 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 			case 2:
 				assertTrue(selenium.isChecked(
 						"//input[@id='_34_shipToBillingCheckbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_34_ccType']",
 					RuntimeVariables.replace("Visa"));
 				selenium.type("//input[@id='_34_ccNumber']",
 					RuntimeVariables.replace("4111111111111111"));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_34_ccExpYear']",
 					RuntimeVariables.replace("2014"));
 				selenium.type("//textarea[@id='_34_comments']",
 					RuntimeVariables.replace("Shopping Category Item Comments"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Continue']",
 					RuntimeVariables.replace("Continue"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("$0.72"),
 					selenium.getText("//table[3]/tbody/tr[2]/td[2]"));
 				assertEquals(RuntimeVariables.replace("$10.71"),

@@ -259,6 +259,35 @@ public class AssetTagServiceSoap {
 		}
 	}
 
+	public static int getTagsCount(long groupId, long classNameId,
+		java.lang.String name) throws RemoteException {
+		try {
+			int returnValue = AssetTagServiceUtil.getTagsCount(groupId,
+					classNameId, name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getTagsCount(long groupId, java.lang.String name)
+		throws RemoteException {
+		try {
+			int returnValue = AssetTagServiceUtil.getTagsCount(groupId, name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getTagsCount(long groupId, java.lang.String name,
 		java.lang.String[] tagProperties) throws RemoteException {
 		try {

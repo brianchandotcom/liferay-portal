@@ -31,6 +31,7 @@ import com.liferay.portal.model.Release;
 import com.liferay.portal.model.ReleaseConstants;
 import com.liferay.portal.service.base.ReleaseLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,10 +91,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			db.runSQLTemplate("portal-data-common.sql", false);
 			db.runSQLTemplate("portal-data-counter.sql", false);
 
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get(PropsKeys.SCHEMA_RUN_MINIMAL)) &&
-				!ShardUtil.isEnabled()) {
-
+			if (!PropsValues.SCHEMA_RUN_MINIMAL && !ShardUtil.isEnabled()) {
 				db.runSQLTemplate("portal-data-sample.vm", false);
 			}
 

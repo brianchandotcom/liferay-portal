@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see DDLRecordVersion
  * @generated
  */
-public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion> {
+public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);

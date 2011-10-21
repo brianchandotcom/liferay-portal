@@ -16,24 +16,24 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.cal.DayAndPosition" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.calendar.EventDurationException" %>
-<%@ page import="com.liferay.portlet.calendar.EventEndDateException" %>
-<%@ page import="com.liferay.portlet.calendar.EventStartDateException" %>
-<%@ page import="com.liferay.portlet.calendar.EventTitleException" %>
-<%@ page import="com.liferay.portlet.calendar.ImportEventsException" %>
-<%@ page import="com.liferay.portlet.calendar.NoSuchEventException" %>
-<%@ page import="com.liferay.portlet.calendar.model.CalEvent" %>
-<%@ page import="com.liferay.portlet.calendar.model.CalEventConstants" %>
-<%@ page import="com.liferay.portlet.calendar.service.CalEventServiceUtil" %>
-<%@ page import="com.liferay.portlet.calendar.service.permission.CalEventPermission" %>
-<%@ page import="com.liferay.portlet.calendar.service.permission.CalendarPermission" %>
-<%@ page import="com.liferay.portlet.calendar.util.CalUtil" %>
-<%@ page import="com.liferay.portlet.calendar.util.comparator.EventTimeComparator" %>
+<%@ page import="com.liferay.portal.kernel.cal.DayAndPosition" %><%@
+page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
+page import="com.liferay.portlet.asset.model.AssetTag" %><%@
+page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
+page import="com.liferay.portlet.calendar.EventDurationException" %><%@
+page import="com.liferay.portlet.calendar.EventEndDateException" %><%@
+page import="com.liferay.portlet.calendar.EventStartDateException" %><%@
+page import="com.liferay.portlet.calendar.EventTitleException" %><%@
+page import="com.liferay.portlet.calendar.ImportEventsException" %><%@
+page import="com.liferay.portlet.calendar.NoSuchEventException" %><%@
+page import="com.liferay.portlet.calendar.model.CalEvent" %><%@
+page import="com.liferay.portlet.calendar.model.CalEventConstants" %><%@
+page import="com.liferay.portlet.calendar.service.CalEventServiceUtil" %><%@
+page import="com.liferay.portlet.calendar.service.permission.CalEventPermission" %><%@
+page import="com.liferay.portlet.calendar.service.permission.CalendarPermission" %><%@
+page import="com.liferay.portlet.calendar.util.CalUtil" %><%@
+page import="com.liferay.portlet.calendar.util.comparator.EventTimeComparator" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Shard
  * @generated
  */
-public class ShardWrapper implements Shard {
+public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	public ShardWrapper(Shard shard) {
 		_shard = shard;
 	}
@@ -155,10 +155,6 @@ public class ShardWrapper implements Shard {
 		return _shard.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shard.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shard.getPrimaryKeyObj();
 	}
@@ -212,7 +208,14 @@ public class ShardWrapper implements Shard {
 		_shard.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Shard getWrappedShard() {
+		return _shard;
+	}
+
+	public Shard getWrappedModel() {
 		return _shard;
 	}
 

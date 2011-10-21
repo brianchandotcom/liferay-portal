@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -23,16 +24,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.net.URL;
+import java.net.URLDecoder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,14 +79,24 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		}
 	}
 
-	public void configure(ClassLoader classLoader) throws PortalException {
+	public void configure(ClassLoader classLoader)
+		throws PortalException, SystemException {
+
 		File[] classPathFiles = null;
 
 		if (classLoader != null) {
 			URL servicePropertiesURL = classLoader.getResource(
 				"service.properties");
 
-			String servicePropertiesPath = servicePropertiesURL.getPath();
+			String servicePropertiesPath = null;
+
+			try {
+				servicePropertiesPath = URLDecoder.decode(
+					servicePropertiesURL.getPath(), StringPool.UTF8);
+			}
+			catch (UnsupportedEncodingException uee) {
+				throw new SystemException(uee);
+			}
 
 			File classPathFile = null;
 

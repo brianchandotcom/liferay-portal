@@ -16,8 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.amazonrankings.model.AmazonRankings" %>
-<%@ page import="com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil" %>
+<%@ page import="com.liferay.portlet.amazonrankings.model.AmazonRankings" %><%@
+page import="com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

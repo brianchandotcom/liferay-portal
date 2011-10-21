@@ -127,14 +127,10 @@ public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathMain() +
-			"/document_library/find_file_entry?p_l_id=" +
-				themeDisplay.getPlid() + "&fileEntryId=" +
-					_fileEntry.getFileEntryId();
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/document_library/find_file_entry", "fileEntryId",
+			_fileEntry.getFileEntryId());
 	}
 
 	public long getUserId() {

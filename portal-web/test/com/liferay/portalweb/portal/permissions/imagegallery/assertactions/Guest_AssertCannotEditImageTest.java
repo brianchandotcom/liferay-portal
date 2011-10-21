@@ -25,7 +25,7 @@ public class Guest_AssertCannotEditImageTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,22 +41,18 @@ public class Guest_AssertCannotEditImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Image Gallery Permissions Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//img[@alt='Second Permissions Image Test - ']",
 			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -71,7 +67,6 @@ public class Guest_AssertCannotEditImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent("//img[@alt='Download (29.9k)']"));
 		assertTrue(selenium.isElementPresent("//img[@alt='View']"));
 		assertFalse(selenium.isElementPresent("//img[@alt='Edit']"));
@@ -80,7 +75,7 @@ public class Guest_AssertCannotEditImageTest extends BaseTestCase {
 		selenium.clickAt("//a[3]", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,7 +90,5 @@ public class Guest_AssertCannotEditImageTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
-
-		selenium.saveScreenShotAndSource();
 	}
 }

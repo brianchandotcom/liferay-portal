@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsEntryService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.announcements.service;
  * @generated
  */
 public class AnnouncementsEntryServiceWrapper
-	implements AnnouncementsEntryService {
+	implements AnnouncementsEntryService,
+		ServiceWrapper<AnnouncementsEntryService> {
 	public AnnouncementsEntryServiceWrapper(
 		AnnouncementsEntryService announcementsEntryService) {
 		_announcementsEntryService = announcementsEntryService;
@@ -68,11 +71,26 @@ public class AnnouncementsEntryServiceWrapper
 			expirationDateMinute, priority);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AnnouncementsEntryService getWrappedAnnouncementsEntryService() {
 		return _announcementsEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAnnouncementsEntryService(
+		AnnouncementsEntryService announcementsEntryService) {
+		_announcementsEntryService = announcementsEntryService;
+	}
+
+	public AnnouncementsEntryService getWrappedService() {
+		return _announcementsEntryService;
+	}
+
+	public void setWrappedService(
 		AnnouncementsEntryService announcementsEntryService) {
 		_announcementsEntryService = announcementsEntryService;
 	}

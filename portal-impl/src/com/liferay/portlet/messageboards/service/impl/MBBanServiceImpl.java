@@ -40,7 +40,7 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 			permissionChecker, serviceContext.getScopeGroupId(),
 			ActionKeys.BAN_USER);
 
-		User banUser = userLocalService.getUser(banUserId);
+		User banUser = userPersistence.findByPrimaryKey(banUserId);
 
 		boolean groupAdmin = false;
 

@@ -235,6 +235,7 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param locale the locale of the language
 	 * @return the localized name of this journal structure
 	 */
+	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
@@ -244,6 +245,7 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this journal structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
@@ -252,6 +254,7 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param languageId the ID of the language
 	 * @return the localized name of this journal structure
 	 */
+	@AutoEscape
 	public String getName(String languageId);
 
 	/**
@@ -261,7 +264,14 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this journal structure
 	 */
+	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getNameCurrentLanguageId();
+
+	@AutoEscape
+	public String getNameCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized names of this journal structure.
@@ -294,6 +304,8 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 */
 	public void setName(String name, Locale locale, Locale defaultLocale);
 
+	public void setNameCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized names of this journal structure from the map of locales and localized names.
 	 *
@@ -322,6 +334,7 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param locale the locale of the language
 	 * @return the localized description of this journal structure
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
@@ -331,6 +344,7 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this journal structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
@@ -339,6 +353,7 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param languageId the ID of the language
 	 * @return the localized description of this journal structure
 	 */
+	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
@@ -348,7 +363,14 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this journal structure
 	 */
+	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDescriptionCurrentLanguageId();
+
+	@AutoEscape
+	public String getDescriptionCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized descriptions of this journal structure.
@@ -381,6 +403,8 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	 */
 	public void setDescription(String description, Locale locale,
 		Locale defaultLocale);
+
+	public void setDescriptionCurrentLanguageId(String languageId);
 
 	/**
 	 * Sets the localized descriptions of this journal structure from the map of locales and localized descriptions.
@@ -422,8 +446,6 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

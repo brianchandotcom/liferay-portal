@@ -2,4 +2,4 @@
 
 <div class="separator"></div>
 
-${field.children}
+${fieldStructure.children}

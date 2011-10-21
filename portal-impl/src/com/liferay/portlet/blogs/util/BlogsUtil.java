@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 
 import java.util.Locale;
@@ -160,7 +161,7 @@ public class BlogsUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
@@ -168,7 +169,7 @@ public class BlogsUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.BLOGS_EMAIL_FROM_NAME);
+			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
 	public static String getUrlTitle(long entryId, String title) {

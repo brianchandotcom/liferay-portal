@@ -30,7 +30,7 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 				selenium.open("/user/joebloggs/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,34 +45,28 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("socialofficefriendfn"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("socialofficefriendfn"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//td[2]/a",
 					RuntimeVariables.replace("socialofficefriendfn"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
 					selenium.getText("//div[2]/h1/span"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -87,14 +81,13 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_125_expertiseLink']", "Expertise"));
 				selenium.clickAt("//a[@id='_125_expertiseLink']",
 					RuntimeVariables.replace("Expertise"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -110,13 +103,11 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_125_projectsEntryTitle0']",
 					RuntimeVariables.replace("Expertise Title"));
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -133,7 +124,6 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_125_projectsEntryStartDateMonth0']",
 					RuntimeVariables.replace("April"));
 				assertTrue(selenium.isElementPresent(
@@ -154,7 +144,7 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -170,17 +160,14 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//textarea[@id='_125_projectsEntryDescription0']",
 					RuntimeVariables.replace("Expertise Description"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -196,7 +183,6 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -207,7 +193,6 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 						"//select[@id='_125_projectsEntryStartDateMonth0']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_125_projectsEntryCurrent0Checkbox']"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Expertise Description"),
 					selenium.getText(
 						"//textarea[@id='_125_projectsEntryDescription0']"));

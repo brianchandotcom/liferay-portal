@@ -20,13 +20,13 @@
 	<a href="#main-content" id="skip-to-content">#language("skip-to-content")</a>
 
 	<header id="banner" role="banner">
-		<hgroup id="heading">
+		<div id="heading">
 			<h1 class="company-title">
-				<a class="logo" href="$control_panel_url" title="#language("go-to") #language("control-panel")">
+				<a class="$logo_css_class" href="$control_panel_url" title="#language("go-to") #language("control-panel")">
 					<span>#language("control-panel")</span>
 				</a>
 			</h1>
-		</hgroup>
+		</div>
 	</header>
 
 	<div id="content">

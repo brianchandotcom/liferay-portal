@@ -28,7 +28,7 @@ if (Validator.isNotNull(onChangeMethod)) {
 }
 %>
 
-<aui:script>
+<aui:script use="resize">
 	window['<%= name %>'] = {
 		destroy: function() {
 			var editorEl = document.getElementById('<%= name %>');
@@ -51,6 +51,14 @@ if (Validator.isNotNull(onChangeMethod)) {
 		initEditor: function() {
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
+
+				new A.Resize(
+					{
+						handles: 'br',
+						node: '#<%= name %>_container',
+						wrap: true
+					}
+				);
 			</c:if>
 		},
 
@@ -62,11 +70,11 @@ if (Validator.isNotNull(onChangeMethod)) {
 	window['<%= name %>'].initEditor();
 </aui:script>
 
-<div class="<%= cssClass %>">
+<div class="<%= cssClass %>" id="<%= name %>_container">
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 	<tr>
 		<td bgcolor="#FFFFFF" height="100%">
-			<textarea style="font-family: monospace; height: 100%; width: 100%;" id="<%= name %>" name="<%= name %>"
+			<textarea style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; width: 100%;" id="<%= name %>" name="<%= name %>"
 
 			<%
 			if (Validator.isNotNull(onChangeMethod)) {

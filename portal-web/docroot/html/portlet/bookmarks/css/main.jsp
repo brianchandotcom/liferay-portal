@@ -25,4 +25,8 @@
 		float: right;
 		margin: 0 0 0.5em 0.5em;
 	}
+
+	.lfr-panel-content {
+		overflow: auto;
+	}
 }

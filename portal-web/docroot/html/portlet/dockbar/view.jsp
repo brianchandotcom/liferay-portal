@@ -40,7 +40,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<a href="javascript:;"><img alt='<liferay-ui:message key="pin-the-dockbar" />' src="<%= HtmlUtil.escape(themeDisplay.getPathThemeImages()) %>/spacer.png" /></a>
 		</li>
 
-		<c:if test="<%= (group != null) && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
+		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
 			<li class="add-content has-submenu" id="<portlet:namespace />addContent">
 				<a class="menu-button" href="javascript:;">
 					<span>
@@ -113,7 +113,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			</li>
 		</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon() || themeDisplay.isShowSiteContentIcon() || themeDisplay.isShowSiteSettingsIcon()) %>">
+		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon() || themeDisplay.isShowSiteContentIcon() || themeDisplay.isShowSiteMapSettingsIcon() || themeDisplay.isShowSiteSettingsIcon()) && (!group.hasStagingGroup() || group.isStagingGroup()) %>">
 			<li class="manage-content has-submenu" id="<portlet:namespace />manageContent">
 				<a class="menu-button" href="javascript:;">
 					<span>
@@ -125,13 +125,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 					<div class="aui-menu-content">
 						<ul>
 							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
-								<li class="first manage-page use-dialog">
+								<li class="first manage-page use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLPageSettings().toString() %>" label="page" title="manage-page" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() && !themeDisplay.isStateMaximized() %>">
-								<li class="page-layout use-dialog">
+								<li class="page-layout use-dialog full-dialog">
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#layout" %>' label="page-layout" title="manage-page" />
 								</li>
 							</c:if>
@@ -143,13 +143,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() %>">
-								<li class="settings use-dialog">
+								<li class="settings use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
-								<li class="sitemap use-dialog">
+								<li class="sitemap use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
 								</li>
 							</c:if>
@@ -183,7 +183,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<span></span>
 		</li>
 
-		<c:if test="<%= !group.isControlPanel() && themeDisplay.isSignedIn() %>">
+		<c:if test="<%= !group.isControlPanel() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
 			<li class="toggle-controls" id="<portlet:namespace />toggleControls">
 				<a href="javascript:;">
 					<liferay-ui:message key="edit-controls" />
@@ -375,7 +375,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
 				<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
-					<liferay-ui:icon-help message="customizable-admin-helpp" />
+					<liferay-ui:icon-help message="customizable-admin-help" />
 				</c:if>
 			</c:otherwise>
 		</c:choose>

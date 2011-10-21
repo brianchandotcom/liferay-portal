@@ -25,7 +25,7 @@ public class TranslateEnglishPortugueseTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,21 +40,17 @@ public class TranslateEnglishPortugueseTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Translator Test Page",
 			RuntimeVariables.replace("Translator Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_26_text']",
 			RuntimeVariables.replace(
 				"My name is Liferay Translator, fluent in over 6 million forms of communication."));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_26_id']",
 			RuntimeVariables.replace("English to Portuguese"));
 		selenium.clickAt("//input[@value='Translate']",
 			RuntimeVariables.replace("Translate"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isTextPresent(
 				"Meu nome \u00e9 tradutor de Liferay, fluente dentro sobre 6 milh\u00e3o formul\u00e1rios de uma comunica\u00e7\u00e3o."));
 	}

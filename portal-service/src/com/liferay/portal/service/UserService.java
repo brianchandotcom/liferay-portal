@@ -863,7 +863,8 @@ public interface UserService {
 	the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateOrganizations(long userId, long[] organizationIds)
+	public void updateOrganizations(long userId, long[] organizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -26,7 +26,7 @@ public class AddWHEntryContentViewableByFriendsTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class AddWHEntryContentViewableByFriendsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -59,7 +57,7 @@ public class AddWHEntryContentViewableByFriendsTest extends BaseTestCase {
 				"//select[@id='_2_WAR_microblogsportlet_socialRelationType']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -74,10 +72,8 @@ public class AddWHEntryContentViewableByFriendsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Whats Happening Content"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_2_WAR_microblogsportlet_socialRelationType']",
 			RuntimeVariables.replace("Friends"));
 		assertEquals(RuntimeVariables.replace("128"),
@@ -86,7 +82,7 @@ public class AddWHEntryContentViewableByFriendsTest extends BaseTestCase {
 			RuntimeVariables.replace("Post"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -101,7 +97,6 @@ public class AddWHEntryContentViewableByFriendsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));

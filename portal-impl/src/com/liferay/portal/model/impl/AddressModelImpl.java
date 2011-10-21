@@ -95,6 +95,15 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Address"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Address"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long MAILING_COLUMN_BITMASK = 8L;
+	public static long PRIMARY_COLUMN_BITMASK = 16L;
+	public static long USERID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -143,14 +152,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Address.class;
-	}
-
-	public String getModelClassName() {
-		return Address.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Address"));
 
@@ -173,6 +174,14 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Address.class;
+	}
+
+	public String getModelClassName() {
+		return Address.class.getName();
+	}
+
 	@JSON
 	public long getAddressId() {
 		return _addressId;
@@ -188,7 +197,19 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -197,6 +218,14 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -206,6 +235,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -254,7 +287,19 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -263,7 +308,19 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -373,7 +430,19 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setMailing(boolean mailing) {
+		_columnBitmask |= MAILING_COLUMN_BITMASK;
+
+		if (!_setOriginalMailing) {
+			_setOriginalMailing = true;
+
+			_originalMailing = _mailing;
+		}
+
 		_mailing = mailing;
+	}
+
+	public boolean getOriginalMailing() {
+		return _originalMailing;
 	}
 
 	@JSON
@@ -386,23 +455,34 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	}
 
 	public void setPrimary(boolean primary) {
+		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
+
+		if (!_setOriginalPrimary) {
+			_setOriginalPrimary = true;
+
+			_originalPrimary = _primary;
+		}
+
 		_primary = primary;
+	}
+
+	public boolean getOriginalPrimary() {
+		return _originalPrimary;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
 	public Address toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Address)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Address)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Address)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -492,6 +572,33 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	@Override
 	public void resetOriginalValues() {
+		AddressModelImpl addressModelImpl = this;
+
+		addressModelImpl._originalCompanyId = addressModelImpl._companyId;
+
+		addressModelImpl._setOriginalCompanyId = false;
+
+		addressModelImpl._originalUserId = addressModelImpl._userId;
+
+		addressModelImpl._setOriginalUserId = false;
+
+		addressModelImpl._originalClassNameId = addressModelImpl._classNameId;
+
+		addressModelImpl._setOriginalClassNameId = false;
+
+		addressModelImpl._originalClassPK = addressModelImpl._classPK;
+
+		addressModelImpl._setOriginalClassPK = false;
+
+		addressModelImpl._originalMailing = addressModelImpl._mailing;
+
+		addressModelImpl._setOriginalMailing = false;
+
+		addressModelImpl._originalPrimary = addressModelImpl._primary;
+
+		addressModelImpl._setOriginalPrimary = false;
+
+		addressModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -723,13 +830,21 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		};
 	private long _addressId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _street1;
 	private String _street2;
 	private String _street3;
@@ -739,7 +854,12 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private long _countryId;
 	private int _typeId;
 	private boolean _mailing;
+	private boolean _originalMailing;
+	private boolean _setOriginalMailing;
 	private boolean _primary;
+	private boolean _originalPrimary;
+	private boolean _setOriginalPrimary;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Address _escapedModelProxy;
 }

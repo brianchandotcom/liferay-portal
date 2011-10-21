@@ -110,7 +110,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			long folderId = GetterUtil.getLong(doc.get("repositoryId"));
+			long folderId = GetterUtil.getLong(doc.get("dataRepositoryId"));
 
 			if (folderId == scopeGroupId) {
 				folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

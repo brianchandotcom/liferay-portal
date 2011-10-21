@@ -84,6 +84,12 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.polls.model.PollsVote"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.polls.model.PollsVote"),
+			true);
+	public static long CHOICEID_COLUMN_BITMASK = 1L;
+	public static long QUESTIONID_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,14 +129,6 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return PollsVote.class;
-	}
-
-	public String getModelClassName() {
-		return PollsVote.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.polls.model.PollsVote"));
 
@@ -151,6 +149,14 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return PollsVote.class;
+	}
+
+	public String getModelClassName() {
+		return PollsVote.class.getName();
 	}
 
 	@JSON
@@ -177,6 +183,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -236,6 +244,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setQuestionId(long questionId) {
+		_columnBitmask |= QUESTIONID_COLUMN_BITMASK;
+
 		if (!_setOriginalQuestionId) {
 			_setOriginalQuestionId = true;
 
@@ -255,7 +265,19 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setChoiceId(long choiceId) {
+		_columnBitmask |= CHOICEID_COLUMN_BITMASK;
+
+		if (!_setOriginalChoiceId) {
+			_setOriginalChoiceId = true;
+
+			_originalChoiceId = _choiceId;
+		}
+
 		_choiceId = choiceId;
+	}
+
+	public long getOriginalChoiceId() {
+		return _originalChoiceId;
 	}
 
 	@JSON
@@ -267,20 +289,19 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		_voteDate = voteDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public PollsVote toEscapedModel() {
-		if (isEscapedModel()) {
-			return (PollsVote)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PollsVote)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (PollsVote)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -372,6 +393,12 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		pollsVoteModelImpl._originalQuestionId = pollsVoteModelImpl._questionId;
 
 		pollsVoteModelImpl._setOriginalQuestionId = false;
+
+		pollsVoteModelImpl._originalChoiceId = pollsVoteModelImpl._choiceId;
+
+		pollsVoteModelImpl._setOriginalChoiceId = false;
+
+		pollsVoteModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -519,7 +546,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private long _originalQuestionId;
 	private boolean _setOriginalQuestionId;
 	private long _choiceId;
+	private long _originalChoiceId;
+	private boolean _setOriginalChoiceId;
 	private Date _voteDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PollsVote _escapedModelProxy;
 }

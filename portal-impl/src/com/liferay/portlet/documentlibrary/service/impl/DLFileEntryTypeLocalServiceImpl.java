@@ -16,22 +16,35 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -46,15 +59,26 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
-
-		verify(ddmStructureIds);
 
 		long fileEntryTypeId = counterLocalService.increment();
+
+		long dynamicStructureId = updateDynamicStructure(
+			userId, fileEntryTypeId, groupId, name, description,
+			serviceContext);
+
+		if (dynamicStructureId > 0) {
+			ddmStructureIds = ArrayUtil.append(
+				ddmStructureIds, dynamicStructureId);
+		}
+
+		Date now = new Date();
+
+		validate(fileEntryTypeId, groupId, name, ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
 
+		dlFileEntryType.setUuid(serviceContext.getUuid());
 		dlFileEntryType.setGroupId(groupId);
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
@@ -89,12 +113,12 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			dlFolder.getGroupId(), dlFolder.getFolderId(), true);
+			new long[] {dlFolder.getGroupId()}, dlFolder.getFolderId(), true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 
-		long defaultFileEntryTypeId = getDefaultFileEntryType(
-			dlFolder.getGroupId(), dlFolder.getFolderId());
+		long defaultFileEntryTypeId = getDefaultFileEntryTypeId(
+			dlFolder.getFolderId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -110,6 +134,17 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException, SystemException {
 
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
+
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+			dlFileEntryType.getGroupId(), "auto_" + fileEntryTypeId);
+
+		if (ddmStructure != null) {
+			ddmStructureLocalService.deleteStructure(
+				ddmStructure.getStructureId());
+		}
+
 		dlFileEntryTypePersistence.remove(fileEntryTypeId);
 	}
 
@@ -123,7 +158,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
-	public long getDefaultFileEntryType(long groupId, long folderId)
+	public long getDefaultFileEntryTypeId(long folderId)
 		throws PortalException, SystemException {
 
 		folderId = getFileEntryTypesPrimaryFolderId(folderId);
@@ -144,10 +179,10 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 	}
 
-	public List<DLFileEntryType> getFileEntryTypes(long groupId)
-		throws SystemException {
+	public DLFileEntryType getFileEntryType(long groupId, String name)
+		throws PortalException, SystemException {
 
-		return dlFileEntryTypePersistence.findByGroupId(groupId);
+		return dlFileEntryTypePersistence.findByG_N(groupId, name);
 	}
 
 	public List<DLFileEntryType> getFileEntryTypes(
@@ -157,16 +192,14 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByGroupId(groupId, start, end);
 	}
 
-	public List<DLFileEntryType> getFileEntryTypes(
-			long groupId, String name, String description)
+	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds)
 		throws SystemException {
 
-		return dlFileEntryTypePersistence.findByG_N_D(
-			groupId, name, description);
+		return dlFileEntryTypePersistence.findByGroupId(groupIds);
 	}
 
 	public List<DLFileEntryType> getFolderFileEntryTypes(
-			long groupId, long folderId, boolean inherited)
+			long[] groupIds, long folderId, boolean inherited)
 		throws PortalException, SystemException {
 
 		if (!inherited) {
@@ -184,7 +217,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		if ((dlFileEntryTypes == null) || dlFileEntryTypes.isEmpty()) {
 			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
-				getFileEntryTypes(groupId));
+				getFileEntryTypes(groupIds));
 
 			dlFileEntryTypes.add(new DLFileEntryTypeImpl());
 		}
@@ -193,28 +226,41 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	public List<DLFileEntryType> search(
-			long companyId, long groupId, String keywords, int start, int end,
-			OrderByComparator orderByComparator)
+			long companyId, long[] groupIds, String keywords, int start,
+			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return dlFileEntryTypeFinder.findByKeywords(
-			companyId, groupId, keywords, start, end, orderByComparator);
+			companyId, groupIds, keywords, start, end, orderByComparator);
 	}
 
-	public int searchCount(long companyId, long groupId, String keywords)
+	public int searchCount(long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
 		return dlFileEntryTypeFinder.countByKeywords(
-			companyId, groupId, keywords);
+			companyId, groupIds, keywords);
 	}
 
 	public void updateFileEntryType(
-			long fileEntryTypeId, String name, String description,
+			long userId, long fileEntryTypeId, String name, String description,
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
+
+		long dynamicStructureId = updateDynamicStructure(
+			userId, fileEntryTypeId, dlFileEntryType.getGroupId(), name,
+			description, serviceContext);
+
+		if (dynamicStructureId > 0) {
+			ddmStructureIds = ArrayUtil.append(
+				ddmStructureIds, dynamicStructureId);
+		}
+
+		validate(
+			fileEntryTypeId, dlFileEntryType.getGroupId(), name,
+			ddmStructureIds);
 
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setName(name);
@@ -353,11 +399,84 @@ public class DLFileEntryTypeLocalServiceImpl
 		return folderId;
 	}
 
-	protected void verify(long[] ddmStructureIds)
+	protected long updateDynamicStructure(
+			long userId, long fileEntryTypeId, long groupId, String name,
+			String description, ServiceContext serviceContext)
+		throws SystemException, PortalException {
+
+		String ddmStructureKey = "auto_" + fileEntryTypeId;
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		Locale locale = ServiceContextUtil.getLocale(serviceContext);
+
+		nameMap.put(locale, name);
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		nameMap.put(defaultLocale, name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(locale, description);
+		descriptionMap.put(defaultLocale, description);
+
+		String xsd = ParamUtil.getString(serviceContext, "xsd");
+
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+			groupId, ddmStructureKey);
+
+		try {
+			if (ddmStructure == null) {
+				ddmStructure = ddmStructureLocalService.addStructure(
+					userId, groupId,
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+					ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
+					serviceContext);
+			}
+			else {
+				ddmStructure = ddmStructureLocalService.updateStructure(
+					ddmStructure.getStructureId(), nameMap, descriptionMap, xsd,
+					serviceContext);
+			}
+
+			return ddmStructure.getStructureId();
+		}
+		catch (StructureXsdException sxe) {
+			if (ddmStructure != null) {
+				ddmStructureLocalService.deleteStructure(
+					ddmStructure.getStructureId());
+			}
+		}
+
+		return 0;
+	}
+
+	protected void validate(
+			long fileEntryTypeId, long groupId, String fileEntryTypeName,
+			long[] ddmStructureIds)
 		throws PortalException, SystemException {
 
+		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_N(
+			groupId, fileEntryTypeName);
+
+		if ((dlFileEntryType != null) &&
+			(dlFileEntryType.getFileEntryTypeId() != fileEntryTypeId)) {
+
+			throw new DuplicateFileEntryTypeException(fileEntryTypeName);
+		}
+
+		if (ddmStructureIds.length == 0) {
+			throw new NoSuchMetadataSetException();
+		}
+
 		for (long ddmStructureId : ddmStructureIds) {
-			ddmStructurePersistence.findByPrimaryKey(ddmStructureId);
+			DDMStructure ddmStructure =
+				ddmStructurePersistence.fetchByPrimaryKey(ddmStructureId);
+
+			if (ddmStructure == null) {
+				throw new NoSuchMetadataSetException();
+			}
 		}
 	}
 

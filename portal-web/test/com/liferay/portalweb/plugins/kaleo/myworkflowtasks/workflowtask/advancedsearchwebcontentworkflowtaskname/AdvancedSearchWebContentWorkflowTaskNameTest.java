@@ -31,7 +31,7 @@ public class AdvancedSearchWebContentWorkflowTaskNameTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,18 +46,15 @@ public class AdvancedSearchWebContentWorkflowTaskNameTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=My Workflow Tasks",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("My Workflow Tasks"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Pending", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Pending",
+					RuntimeVariables.replace("Pending"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -69,17 +66,18 @@ public class AdvancedSearchWebContentWorkflowTaskNameTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Advanced \u00bb",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isVisible("_153_andOperator")) {
+						if (selenium.isVisible(
+									"//select[@id='_153_andOperator']")) {
 							break;
 						}
 					}
@@ -89,17 +87,15 @@ public class AdvancedSearchWebContentWorkflowTaskNameTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.select("_153_andOperator",
+				selenium.select("//select[@id='_153_andOperator']",
 					RuntimeVariables.replace("label=Any"));
-				selenium.type("_153_name", RuntimeVariables.replace("Review"));
-				selenium.saveScreenShotAndSource();
-				selenium.select("_153_type",
+				selenium.type("//input[@id='_153_name']",
+					RuntimeVariables.replace("Review"));
+				selenium.select("//select[@id='_153_type']",
 					RuntimeVariables.replace("label=Blogs Entry"));
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"There are no pending tasks assigned to you with the specified search criteria."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
@@ -112,22 +108,22 @@ public class AdvancedSearchWebContentWorkflowTaskNameTest extends BaseTestCase {
 				assertTrue(selenium.isElementPresent("//td[4]/a"));
 				assertEquals(RuntimeVariables.replace("Never"),
 					selenium.getText("//td[5]/a"));
-				selenium.type("_153_name", RuntimeVariables.replace("Review1"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.type("//input[@id='_153_name']",
+					RuntimeVariables.replace("Review1"));
+				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Name"));
 				assertEquals(RuntimeVariables.replace(
 						"There are no pending tasks assigned to you with the specified search criteria."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
+					selenium.getText(
+						"xPath=(//div[@class='portlet-msg-info'])[1]"));
 				assertEquals(RuntimeVariables.replace(
 						"There are no pending tasks assigned to your roles with the specified search criteria."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-info'])[2]"));
 				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 100:
 				label = -1;

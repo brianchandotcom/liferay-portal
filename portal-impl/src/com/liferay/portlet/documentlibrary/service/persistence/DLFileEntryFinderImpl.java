@@ -36,12 +36,16 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class DLFileEntryFinderImpl
 	extends BasePersistenceImpl<DLFileEntry> implements DLFileEntryFinder {
 
 	public static String COUNT_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".countByExtraSettings";
+
+	public static String COUNT_BY_G_F =
+		DLFileEntryFinder.class.getName() + ".countByG_F";
 
 	public static String COUNT_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_F_S";
@@ -70,7 +74,7 @@ public class DLFileEntryFinderImpl
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -234,7 +238,28 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_F_S);
+			String sql = null;
+
+			String table = "DLFileEntry";
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(COUNT_BY_G_F);
+			}
+			else {
+				sql = CustomSQLUtil.get(COUNT_BY_G_F_S);
+
+				if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
+
+					sql = StringUtil.replace(sql, "[$JOIN$]",
+						CustomSQLUtil.get(
+							DLFolderFinderImpl.JOIN_FV_BY_DL_FILE_ENTRY));
+				}
+				else {
+					table = "DLFileVersion";
+
+					sql = StringUtil.replace(sql, "[$JOIN$]", "");
+				}
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -243,12 +268,7 @@ public class DLFileEntryFinderImpl
 			}
 
 			sql = StringUtil.replace(
-				sql, "[$FOLDER_ID$]", getFolderIds(folderIds));
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "(DLFileVersion.status = ?) AND", "");
-			}
+				sql, "[$FOLDER_ID$]", getFolderIds(folderIds, table));
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -268,7 +288,7 @@ public class DLFileEntryFinderImpl
 				qPos.add(folderId);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -288,7 +308,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
-	protected String getFolderIds(List<Long> folderIds) {
+	protected String getFolderIds(List<Long> folderIds, String table) {
 		if (folderIds.isEmpty()) {
 			return StringPool.BLANK;
 		}
@@ -296,7 +316,8 @@ public class DLFileEntryFinderImpl
 		StringBundler sb = new StringBundler(folderIds.size() * 2 - 1);
 
 		for (int i = 0; i < folderIds.size(); i++) {
-			sb.append("DLFileEntry.folderId = ? ");
+			sb.append(table);
+			sb.append(".folderId = ? ");
 
 			if ((i + 1) != folderIds.size()) {
 				sb.append("OR ");

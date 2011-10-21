@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileVersion}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileVersion
  * @generated
  */
-public class DLFileVersionWrapper implements DLFileVersion {
+public class DLFileVersionWrapper implements DLFileVersion,
+	ModelWrapper<DLFileVersion> {
 	public DLFileVersionWrapper(DLFileVersion dlFileVersion) {
 		_dlFileVersion = dlFileVersion;
 	}
@@ -198,6 +201,24 @@ public class DLFileVersionWrapper implements DLFileVersion {
 	*/
 	public void setRepositoryId(long repositoryId) {
 		_dlFileVersion.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Returns the folder ID of this document library file version.
+	*
+	* @return the folder ID of this document library file version
+	*/
+	public long getFolderId() {
+		return _dlFileVersion.getFolderId();
+	}
+
+	/**
+	* Sets the folder ID of this document library file version.
+	*
+	* @param folderId the folder ID of this document library file version
+	*/
+	public void setFolderId(long folderId) {
+		_dlFileVersion.setFolderId(folderId);
 	}
 
 	/**
@@ -381,78 +402,6 @@ public class DLFileVersionWrapper implements DLFileVersion {
 	}
 
 	/**
-	* Returns the small image ID of this document library file version.
-	*
-	* @return the small image ID of this document library file version
-	*/
-	public long getSmallImageId() {
-		return _dlFileVersion.getSmallImageId();
-	}
-
-	/**
-	* Sets the small image ID of this document library file version.
-	*
-	* @param smallImageId the small image ID of this document library file version
-	*/
-	public void setSmallImageId(long smallImageId) {
-		_dlFileVersion.setSmallImageId(smallImageId);
-	}
-
-	/**
-	* Returns the large image ID of this document library file version.
-	*
-	* @return the large image ID of this document library file version
-	*/
-	public long getLargeImageId() {
-		return _dlFileVersion.getLargeImageId();
-	}
-
-	/**
-	* Sets the large image ID of this document library file version.
-	*
-	* @param largeImageId the large image ID of this document library file version
-	*/
-	public void setLargeImageId(long largeImageId) {
-		_dlFileVersion.setLargeImageId(largeImageId);
-	}
-
-	/**
-	* Returns the custom1 image ID of this document library file version.
-	*
-	* @return the custom1 image ID of this document library file version
-	*/
-	public long getCustom1ImageId() {
-		return _dlFileVersion.getCustom1ImageId();
-	}
-
-	/**
-	* Sets the custom1 image ID of this document library file version.
-	*
-	* @param custom1ImageId the custom1 image ID of this document library file version
-	*/
-	public void setCustom1ImageId(long custom1ImageId) {
-		_dlFileVersion.setCustom1ImageId(custom1ImageId);
-	}
-
-	/**
-	* Returns the custom2 image ID of this document library file version.
-	*
-	* @return the custom2 image ID of this document library file version
-	*/
-	public long getCustom2ImageId() {
-		return _dlFileVersion.getCustom2ImageId();
-	}
-
-	/**
-	* Sets the custom2 image ID of this document library file version.
-	*
-	* @param custom2ImageId the custom2 image ID of this document library file version
-	*/
-	public void setCustom2ImageId(long custom2ImageId) {
-		_dlFileVersion.setCustom2ImageId(custom2ImageId);
-	}
-
-	/**
 	* Returns the status of this document library file version.
 	*
 	* @return the status of this document library file version
@@ -607,10 +556,6 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		return _dlFileVersion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileVersion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileVersion.getPrimaryKeyObj();
 	}
@@ -665,6 +610,12 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		_dlFileVersion.persist();
 	}
 
+	public java.io.InputStream getContentStream(boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.getContentStream(incrementCounter);
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
 		return _dlFileVersion.getExtraSettingsProperties();
 	}
@@ -675,24 +626,12 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		return _dlFileVersion.getFileEntry();
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder() {
 		return _dlFileVersion.getFolder();
-	}
-
-	public long getFolderId()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileVersion.getFolderId();
 	}
 
 	public java.lang.String getIcon() {
 		return _dlFileVersion.getIcon();
-	}
-
-	public java.lang.String getImageType() {
-		return _dlFileVersion.getImageType();
 	}
 
 	public void setExtraSettingsProperties(
@@ -700,7 +639,14 @@ public class DLFileVersionWrapper implements DLFileVersion {
 		_dlFileVersion.setExtraSettingsProperties(extraSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileVersion getWrappedDLFileVersion() {
+		return _dlFileVersion;
+	}
+
+	public DLFileVersion getWrappedModel() {
 		return _dlFileVersion;
 	}
 

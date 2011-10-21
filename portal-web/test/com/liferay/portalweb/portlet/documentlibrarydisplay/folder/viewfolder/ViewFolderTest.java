@@ -25,13 +25,13 @@ public class ViewFolderTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Document Library Display Test Page")) {
+							"link=Documents and Media Display Test Page")) {
 					break;
 				}
 			}
@@ -41,22 +41,18 @@ public class ViewFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Document Library Display Test Page",
+		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace(
-				"Test1 Folder1\nThis is test1 folder1."),
+				"DL Folder Name\nDL Folder Description"),
 			selenium.getText("//td[1]/a[2]"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
+		selenium.clickAt("//td[1]/a[2]",
+			RuntimeVariables.replace("DL Folder Name\nDL Folder Description"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("This is test1 folder1."),
+		assertEquals(RuntimeVariables.replace("DL Folder Description"),
 			selenium.getText("//div[@class='lfr-asset-description']"));
 	}
 }

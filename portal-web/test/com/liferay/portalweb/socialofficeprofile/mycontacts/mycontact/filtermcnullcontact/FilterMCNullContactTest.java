@@ -27,7 +27,7 @@ public class FilterMCNullContactTest extends BaseTestCase {
 			selenium.getText("//h1/span[2]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,24 +42,20 @@ public class FilterMCNullContactTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/a/img"));
 		assertTrue(selenium.isVisible("//li[2]/div/a/img"));
 		assertTrue(selenium.isVisible("//span/input"));
 		assertTrue(selenium.isVisible("//div/a/img"));
 		assertTrue(selenium.isVisible("//li[2]/div/a/img"));
 		selenium.typeKeys("//span/input", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertFalse(selenium.isVisible("//div/a/img"));
 		assertFalse(selenium.isVisible("//li[2]/div/a/img"));
 		selenium.type("//span/input", RuntimeVariables.replace("Coworker"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		selenium.clickAt("//div/a/img",
 			RuntimeVariables.replace("Social Office Coworker"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficecoworkerfn socialofficecoworkermn socialofficecoworkerln"),
 			selenium.getText("//div/h1/span"));
@@ -70,7 +66,6 @@ public class FilterMCNullContactTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//div/a/img"));
 		assertTrue(selenium.isVisible("//li[2]/div/a/img"));
 		selenium.typeKeys("//span/input", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertFalse(selenium.isVisible("//div/a/img"));
 		assertFalse(selenium.isVisible("//li[2]/div/a/img"));

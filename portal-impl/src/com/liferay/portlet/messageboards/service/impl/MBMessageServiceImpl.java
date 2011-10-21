@@ -16,10 +16,10 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -31,7 +31,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -44,7 +44,6 @@ import com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.BBCodeUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.util.RSSUtil;
 
@@ -460,6 +459,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			includePrevAndNext);
 	}
 
+	public int getThreadAnswersCount(
+			long groupId, long categoryId, long threadId)
+		throws SystemException {
+
+		return mbMessagePersistence.filterCountByG_C_T_A(
+			groupId, categoryId, threadId, true);
+	}
+
 	public List<MBMessage> getThreadMessages(
 			long groupId, long categoryId, long threadId, int status, int start,
 			int end)
@@ -476,7 +483,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	public int getThreadMessagesCount(
-		long groupId, long categoryId, long threadId, int status)
+			long groupId, long categoryId, long threadId, int status)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
@@ -689,13 +696,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 				value = StringUtil.shorten(
 					HtmlUtil.extractText(message.getBody()),
-					_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
+					PropsValues.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH,
+					StringPool.BLANK);
 			}
 			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
 			}
 			else {
-				value = BBCodeUtil.getHTML(message);
+				value = BBCodeTranslatorUtil.getHTML(message.getBody());
 
 				value = StringUtil.replace(
 					value,
@@ -742,8 +750,5 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			throw new SystemException(fe);
 		}
 	}
-
-	private static final int _RSS_ABSTRACT_LENGTH = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH));
 
 }

@@ -417,7 +417,7 @@ public abstract class BaseIndexer implements Indexer {
 			String name = DDMIndexerUtil.encodeName(
 				ddmStructure.getStructureId(), fieldName);
 
-			addSearchTerm(searchQuery, searchContext, name, true);
+			addSearchTerm(searchQuery, searchContext, name, false);
 		}
 	}
 
@@ -457,10 +457,10 @@ public abstract class BaseIndexer implements Indexer {
 
 				if (Validator.isNotNull(keywords)) {
 					if (searchContext.isAndSearch()) {
-						searchQuery.addRequiredTerm(fieldName, keywords, true);
+						searchQuery.addRequiredTerm(fieldName, keywords);
 					}
 					else {
-						searchQuery.addTerm(fieldName, keywords, true);
+						searchQuery.addTerm(fieldName, keywords);
 					}
 				}
 			}
@@ -680,8 +680,9 @@ public abstract class BaseIndexer implements Indexer {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					entryClassName);
 
-				if (indexer.hasPermission(
-						permissionChecker, entryClassPK, ActionKeys.VIEW)) {
+				if ((indexer.isFilterSearch() && indexer.hasPermission(
+						permissionChecker, entryClassPK, ActionKeys.VIEW)) ||
+					!indexer.isFilterSearch()) {
 
 					docs.add(document);
 					scores.add(hits.score(i));
@@ -755,12 +756,12 @@ public abstract class BaseIndexer implements Indexer {
 			AssetCategoryLocalServiceUtil.getCategoryNames(
 				className, classPK);
 
-		document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
+		document.addText(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			className, classPK);
 
-		document.addKeyword(Field.ASSET_TAG_NAMES, assetTagNames);
+		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
 
 		document.addKeyword(Field.ENTRY_CLASS_NAME, className);
 		document.addKeyword(Field.ENTRY_CLASS_PK, classPK);

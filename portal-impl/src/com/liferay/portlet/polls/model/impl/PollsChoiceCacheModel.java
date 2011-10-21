@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.polls.model.PollsChoice;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing PollsChoice in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.polls.model.PollsChoice;
  * @see PollsChoice
  * @generated
  */
-public class PollsChoiceCacheModel implements CacheModel<PollsChoice> {
+public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

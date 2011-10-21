@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLContentLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLContentLocalService
  * @generated
  */
-public class DLContentLocalServiceWrapper implements DLContentLocalService {
+public class DLContentLocalServiceWrapper implements DLContentLocalService,
+	ServiceWrapper<DLContentLocalService> {
 	public DLContentLocalServiceWrapper(
 		DLContentLocalService dlContentLocalService) {
 		_dlContentLocalService = dlContentLocalService;
@@ -253,67 +256,82 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLContent addContent(
-		long companyId, java.lang.String portletId, long groupId,
-		long repositoryId, java.lang.String path, java.lang.String version,
-		byte[] bytes)
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.addContent(companyId, portletId, groupId,
-			repositoryId, path, version, bytes);
+		return _dlContentLocalService.addContent(companyId, repositoryId, path,
+			version, bytes);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLContent addContent(
-		long companyId, java.lang.String portletId, long groupId,
-		long repositoryId, java.lang.String path, java.lang.String version,
-		java.io.InputStream inputStream, long size)
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, java.io.InputStream inputStream, long size)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.addContent(companyId, portletId, groupId,
-			repositoryId, path, version, inputStream, size);
+		return _dlContentLocalService.addContent(companyId, repositoryId, path,
+			version, inputStream, size);
 	}
 
-	public void deleteContent(long companyId, java.lang.String portletId,
-		long repositoryId, java.lang.String path, java.lang.String version)
+	public void deleteContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlContentLocalService.deleteContent(companyId, portletId,
-			repositoryId, path, version);
+		_dlContentLocalService.deleteContent(companyId, repositoryId, path,
+			version);
 	}
 
-	public void deleteContents(long companyId, java.lang.String portletId,
-		long repositoryId, java.lang.String path)
+	public void deleteContents(long companyId, long repositoryId,
+		java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_dlContentLocalService.deleteContents(companyId, portletId,
-			repositoryId, path);
+		_dlContentLocalService.deleteContents(companyId, repositoryId, path);
+	}
+
+	public void deleteContentsByDirectory(long companyId, long repositoryId,
+		java.lang.String dirName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlContentLocalService.deleteContentsByDirectory(companyId,
+			repositoryId, dirName);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
-		long companyId, java.lang.String portletId, long repositoryId,
-		java.lang.String path, java.lang.String version)
+		long companyId, long repositoryId, java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchContentException {
-		return _dlContentLocalService.getContent(companyId, portletId,
-			repositoryId, path, version);
+		return _dlContentLocalService.getContent(companyId, repositoryId, path);
 	}
 
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentReferences(
-		long companyId, long repositoryId, java.lang.String path)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getContentReferences(companyId,
-			repositoryId, path);
+	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException {
+		return _dlContentLocalService.getContent(companyId, repositoryId, path,
+			version);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContents(
-		long companyId, java.lang.String portletId, long repositoryId,
-		java.lang.String path)
+		long companyId, long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getContents(companyId, portletId,
-			repositoryId, path);
+		return _dlContentLocalService.getContents(companyId, repositoryId);
 	}
 
-	public boolean hasContent(long companyId, java.lang.String portletId,
-		long repositoryId, java.lang.String path, java.lang.String version)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContents(
+		long companyId, long repositoryId, java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.hasContent(companyId, portletId,
-			repositoryId, path, version);
+		return _dlContentLocalService.getContents(companyId, repositoryId, path);
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContentsByDirectory(
+		long companyId, long repositoryId, java.lang.String dirName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlContentLocalService.getContentsByDirectory(companyId,
+			repositoryId, dirName);
+	}
+
+	public boolean hasContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlContentLocalService.hasContent(companyId, repositoryId, path,
+			version);
 	}
 
 	public void updateDLContent(long companyId, long oldRepositoryId,
@@ -323,12 +341,26 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService {
 			newRepositoryId, oldPath, newPath);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLContentLocalService getWrappedDLContentLocalService() {
 		return _dlContentLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLContentLocalService(
 		DLContentLocalService dlContentLocalService) {
+		_dlContentLocalService = dlContentLocalService;
+	}
+
+	public DLContentLocalService getWrappedService() {
+		return _dlContentLocalService;
+	}
+
+	public void setWrappedService(DLContentLocalService dlContentLocalService) {
 		_dlContentLocalService = dlContentLocalService;
 	}
 

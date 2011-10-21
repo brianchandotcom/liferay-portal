@@ -121,7 +121,26 @@ double version = ParamUtil.getDouble(request, "version");
 				articleURL.setParameter("articleId", article.getArticleId());
 				articleURL.setParameter("version", String.valueOf(article.getVersion()));
 
-				rowHREF = articleURL.toString();
+				if (pageUrl.equals("viewInContext")) {
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(article.getId());
+
+					String viewFullContentURLString = articleURL.toString();
+
+					viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+
+					rowHREF = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
+
+					rowHREF = HttpUtil.setParameter(rowHREF, "redirect", currentURL);
+
+					if (Validator.isNull(rowHREF)) {
+						rowHREF = articleURL.toString();
+					}
+				}
+				else {
+					rowHREF = articleURL.toString();
+				}
 			}
 
 			String target = null;

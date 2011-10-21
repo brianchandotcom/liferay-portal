@@ -56,7 +56,7 @@ public class OrgGroupPermissionFinderImpl
 			qPos.add(organizationId);
 			qPos.add(groupId);
 
-			Iterator<OrgGroupPermission> itr = q.list().iterator();
+			Iterator<OrgGroupPermission> itr = q.iterate();
 
 			while (itr.hasNext()) {
 				OrgGroupPermission orgGroupPermission = itr.next();

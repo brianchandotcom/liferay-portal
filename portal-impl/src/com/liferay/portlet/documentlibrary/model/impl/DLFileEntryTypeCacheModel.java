@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,12 +31,15 @@ import java.util.Date;
  * @see DLFileEntryType
  * @generated
  */
-public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType> {
+public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
+	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{fileEntryTypeId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", fileEntryTypeId=");
 		sb.append(fileEntryTypeId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -59,6 +64,13 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType> {
 
 	public DLFileEntryType toEntityModel() {
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
+
+		if (uuid == null) {
+			dlFileEntryTypeImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			dlFileEntryTypeImpl.setUuid(uuid);
+		}
 
 		dlFileEntryTypeImpl.setFileEntryTypeId(fileEntryTypeId);
 		dlFileEntryTypeImpl.setGroupId(groupId);
@@ -105,6 +117,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType> {
 		return dlFileEntryTypeImpl;
 	}
 
+	public String uuid;
 	public long fileEntryTypeId;
 	public long groupId;
 	public long companyId;

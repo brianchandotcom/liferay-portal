@@ -485,6 +485,23 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders)
+		throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+					folderId, status, mimeTypes, includeMountFolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of immediate subfolders of the parent folder.
 	*
@@ -733,40 +750,6 @@ public class DLAppServiceSoap {
 		try {
 			DLAppServiceUtil.revertFileEntry(fileEntryId, version,
 				serviceContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		long repositoryId,
-		com.liferay.portal.kernel.search.SearchContext searchContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.search.Hits returnValue = DLAppServiceUtil.search(repositoryId,
-					searchContext);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		long repositoryId,
-		com.liferay.portal.kernel.search.SearchContext searchContext,
-		com.liferay.portal.kernel.search.Query query) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.search.Hits returnValue = DLAppServiceUtil.search(repositoryId,
-					searchContext, query);
-
-			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

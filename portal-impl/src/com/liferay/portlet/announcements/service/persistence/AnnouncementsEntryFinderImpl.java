@@ -105,7 +105,7 @@ public class AnnouncementsEntryFinderImpl
 			qPos.add(userId);
 			qPos.add(AnnouncementsFlagConstants.HIDDEN);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -166,7 +166,7 @@ public class AnnouncementsEntryFinderImpl
 			qPos.add(userId);
 			qPos.add(AnnouncementsFlagConstants.HIDDEN);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

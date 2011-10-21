@@ -83,6 +83,13 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.LayoutBranch"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutBranch"),
+			true);
+	public static long LAYOUTSETBRANCHID_COLUMN_BITMASK = 1L;
+	public static long MASTER_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
+	public static long PLID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,14 +130,6 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return LayoutBranch.class;
-	}
-
-	public String getModelClassName() {
-		return LayoutBranch.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.LayoutBranch"));
 
@@ -151,6 +150,14 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return LayoutBranch.class;
+	}
+
+	public String getModelClassName() {
+		return LayoutBranch.class.getName();
 	}
 
 	@JSON
@@ -217,6 +224,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
+		_columnBitmask |= LAYOUTSETBRANCHID_COLUMN_BITMASK;
+
 		if (!_setOriginalLayoutSetBranchId) {
 			_setOriginalLayoutSetBranchId = true;
 
@@ -236,6 +245,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setPlid(long plid) {
+		_columnBitmask |= PLID_COLUMN_BITMASK;
+
 		if (!_setOriginalPlid) {
 			_setOriginalPlid = true;
 
@@ -260,7 +271,17 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -287,6 +308,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	}
 
 	public void setMaster(boolean master) {
+		_columnBitmask |= MASTER_COLUMN_BITMASK;
+
 		if (!_setOriginalMaster) {
 			_setOriginalMaster = true;
 
@@ -300,20 +323,19 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _originalMaster;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public LayoutBranch toEscapedModel() {
-		if (isEscapedModel()) {
-			return (LayoutBranch)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (LayoutBranch)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (LayoutBranch)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -407,9 +429,13 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 		layoutBranchModelImpl._setOriginalPlid = false;
 
+		layoutBranchModelImpl._originalName = layoutBranchModelImpl._name;
+
 		layoutBranchModelImpl._originalMaster = layoutBranchModelImpl._master;
 
 		layoutBranchModelImpl._setOriginalMaster = false;
+
+		layoutBranchModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -556,10 +582,12 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	private long _originalPlid;
 	private boolean _setOriginalPlid;
 	private String _name;
+	private String _originalName;
 	private String _description;
 	private boolean _master;
 	private boolean _originalMaster;
 	private boolean _setOriginalMaster;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private LayoutBranch _escapedModelProxy;
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingOrder}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.model;
  * @see       ShoppingOrder
  * @generated
  */
-public class ShoppingOrderWrapper implements ShoppingOrder {
+public class ShoppingOrderWrapper implements ShoppingOrder,
+	ModelWrapper<ShoppingOrder> {
 	public ShoppingOrderWrapper(ShoppingOrder shoppingOrder) {
 		_shoppingOrder = shoppingOrder;
 	}
@@ -1057,10 +1060,6 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 		return _shoppingOrder.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingOrder.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingOrder.getPrimaryKeyObj();
 	}
@@ -1115,7 +1114,14 @@ public class ShoppingOrderWrapper implements ShoppingOrder {
 		_shoppingOrder.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ShoppingOrder getWrappedShoppingOrder() {
+		return _shoppingOrder;
+	}
+
+	public ShoppingOrder getWrappedModel() {
 		return _shoppingOrder;
 	}
 

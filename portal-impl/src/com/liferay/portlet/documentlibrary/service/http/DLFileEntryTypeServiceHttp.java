@@ -164,14 +164,14 @@ public class DLFileEntryTypeServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		HttpPrincipal httpPrincipal, long groupId, int start, int end)
+		HttpPrincipal httpPrincipal, long[] groupIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
 					"getFileEntryTypes", _getFileEntryTypesParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					start, end);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					groupIds, start, end);
 
 			Object returnObj = null;
 
@@ -196,14 +196,14 @@ public class DLFileEntryTypeServiceHttp {
 	}
 
 	public static int getFileEntryTypesCount(HttpPrincipal httpPrincipal,
-		long groupId)
+		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
 					"getFileEntryTypesCount",
 					_getFileEntryTypesCountParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupIds);
 
 			Object returnObj = null;
 
@@ -275,10 +275,10 @@ public class DLFileEntryTypeServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getFileEntryTypesParameterTypes3 = new Class[] {
-			long.class, int.class, int.class
+			long[].class, int.class, int.class
 		};
 	private static final Class<?>[] _getFileEntryTypesCountParameterTypes4 = new Class[] {
-			long.class
+			long[].class
 		};
 	private static final Class<?>[] _updateFileEntryTypeParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,

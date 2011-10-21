@@ -25,7 +25,7 @@ public class ConvertCurrencyTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,14 +41,12 @@ public class ConvertCurrencyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Currency Converter Test Page",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -63,13 +61,11 @@ public class ConvertCurrencyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_16_number']",
 			RuntimeVariables.replace("2.5"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -84,7 +80,6 @@ public class ConvertCurrencyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@name='_16_from']",
 			RuntimeVariables.replace("KRW"));
 		assertTrue(selenium.isPartialText("//select[@name='_16_to']", "BHD"));
@@ -93,7 +88,6 @@ public class ConvertCurrencyTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Convert']",
 			RuntimeVariables.replace("Convert"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals("2.5", selenium.getValue("//input[@name='_16_number']"));
 		assertTrue(selenium.isTextPresent("KRW"));
 		assertTrue(selenium.isTextPresent("BHD"));

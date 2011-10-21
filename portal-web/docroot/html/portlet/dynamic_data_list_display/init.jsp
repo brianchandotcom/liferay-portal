@@ -16,19 +16,19 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.search.RecordSetDisplayTerms" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.search.RecordSetSearch" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.search.RecordSetSearchTerms" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %>
+<%@ page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
+page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
+page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %><%@
+page import="com.liferay.portlet.dynamicdatalists.search.RecordSetDisplayTerms" %><%@
+page import="com.liferay.portlet.dynamicdatalists.search.RecordSetSearch" %><%@
+page import="com.liferay.portlet.dynamicdatalists.search.RecordSetSearchTerms" %><%@
+page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

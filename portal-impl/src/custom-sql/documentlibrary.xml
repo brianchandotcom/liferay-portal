@@ -1,33 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl.updateDLContent">
-		<![CDATA[
-			UPDATE
-				DLContent
-			SET
-				repositoryId = [$NEW_REPOSITORY_ID$],
-				path_ = '[$NEW_PATH$]'
-			WHERE
-				(companyId = [$COMPANY_ID$]) AND
-				(repositoryId = [$OLD_REPOSITORY_ID$]) AND
-				(path_ = '[$OLD_PATH$]')
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder.findByC_R_P">
-		<![CDATA[
-			SELECT
-				contentId, groupId, companyId, portletId, repositoryId, path_, version, size_
-			FROM
-				DLContent
-			WHERE
-				(companyId = ?) AND
-				(repositoryId = ?) AND
-				(path_ = ?)
-			ORDER BY
-				contentId DESC
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByExtraSettings">
 		<![CDATA[
 			SELECT
@@ -41,17 +14,26 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
 			FROM
 				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
 			WHERE
 				(DLFileEntry.groupId = ?) AND
+				[$FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			[$JOIN$]
+			WHERE
+				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.status = ?) AND
 				[$FOLDER_ID$]
 		]]>
@@ -124,7 +106,7 @@
 				DLFileEntryType
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				[$GROUP_ID$]
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
@@ -139,7 +121,7 @@
 				DLFileEntryType
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				[$GROUP_ID$]
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
@@ -171,17 +153,26 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
 			FROM
 				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
 			WHERE
 				(DLFileEntry.groupId = ?) AND
+				[$FILE_ENTRY_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			[$JOIN$]
+			WHERE
+				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.status = ?) AND
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
@@ -192,9 +183,7 @@
 				COUNT(DISTINCT fileShortcutId) AS COUNT_VALUE
 			FROM
 				DLFileShortcut
-			INNER JOIN
-				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
+			[$JOIN$]
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = 0) AND
@@ -211,6 +200,17 @@
 				(DLFolder.groupId = ?) AND
 				(DLFolder.mountPoint = ?) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFE_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+			FROM
+				DLFileEntry
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFE_ByG_F_S">
@@ -241,6 +241,20 @@
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = 0) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFS_ByDLFileEntry">
+		<![CDATA[
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFV_ByDLFileEntry">
+		<![CDATA[
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileVersion.fileEntryId)
 		]]>
 	</sql>
 </custom-sql>

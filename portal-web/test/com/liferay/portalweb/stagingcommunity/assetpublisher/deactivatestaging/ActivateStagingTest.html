@@ -14,93 +14,78 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div[3]/div/ul/li[5]/a</td>
-	<td>ControlPanel</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Sites</td>
-	<td></td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sites</td>
-	<td></td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
-	<td>Staging</td>
+	<td>//input[@id='_134_name']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Manage Pages</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Manage Pages</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Manage Pages</td>
+	<td>click</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//ul[1]/li[3]/span/span/a</td>
-	<td>Settings</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[1]/li[3]/span/span/a</td>
-	<td>Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//li[7]/span/span/a</td>
+	<td>assertPartialText</td>
+	<td>//a[@id='_165_stagingLink']</td>
 	<td>Staging</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_134_stagingType</td>
-	<td>label=Local Live</td>
+	<td>clickAt</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_165_local']</td>
+	<td>Local Live</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_165_local']</td>
+	<td>Local Live</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_33Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_161Checkbox'))</td>
 	<td>blogsChecked</td>
 </tr>
 <tr>
@@ -110,7 +95,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_33Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_161Checkbox']</td>
 	<td>Blogs</td>
 </tr>
 <tr>
@@ -120,7 +105,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_28Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_28Checkbox'))</td>
 	<td>bookmarksChecked</td>
 </tr>
 <tr>
@@ -130,7 +115,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_28Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_28Checkbox']</td>
 	<td>Bookmarks</td>
 </tr>
 <tr>
@@ -140,7 +125,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_8Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_8Checkbox'))</td>
 	<td>calendarChecked</td>
 </tr>
 <tr>
@@ -150,7 +135,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_8Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_8Checkbox']</td>
 	<td>Calendar</td>
 </tr>
 <tr>
@@ -160,7 +145,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_110Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_20Checkbox'))</td>
 	<td>documentLibraryDisplayChecked</td>
 </tr>
 <tr>
@@ -170,7 +155,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_110Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_20Checkbox']</td>
 	<td>DocumentLibraryDisplay</td>
 </tr>
 <tr>
@@ -180,7 +165,27 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_19Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_166Checkbox'))</td>
+	<td>dynamicDataMappingChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${dynamicDataMappingChecked}</td>
+	<td>DynamicDataMappingChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_165_staged-portlet_166Checkbox']</td>
+	<td>Dynamic Data Mapping</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>DynamicDataMappingChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_162Checkbox'))</td>
 	<td>messageBoardsChecked</td>
 </tr>
 <tr>
@@ -190,7 +195,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_19Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_162Checkbox']</td>
 	<td>Message Boards</td>
 </tr>
 <tr>
@@ -200,7 +205,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_107Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_107Checkbox'))</td>
 	<td>pageCommentsChecked</td>
 </tr>
 <tr>
@@ -210,7 +215,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_107Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_107Checkbox']</td>
 	<td>Page Comments</td>
 </tr>
 <tr>
@@ -220,7 +225,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_108Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_108Checkbox'))</td>
 	<td>pageRatingsChecked</td>
 </tr>
 <tr>
@@ -230,7 +235,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_108Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_108Checkbox']</td>
 	<td>Page Ratings</td>
 </tr>
 <tr>
@@ -240,7 +245,27 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_59Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_25Checkbox'))</td>
+	<td>pollsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${pollsChecked}</td>
+	<td>PollsChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_165_staged-portlet_25Checkbox']</td>
+	<td>Polls</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PollsChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_59Checkbox'))</td>
 	<td>pollsDisplayChecked</td>
 </tr>
 <tr>
@@ -250,7 +275,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_59Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_59Checkbox']</td>
 	<td>Polls Display</td>
 </tr>
 <tr>
@@ -260,7 +285,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_56Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_56Checkbox'))</td>
 	<td>webContentDisplayChecked</td>
 </tr>
 <tr>
@@ -270,7 +295,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_56Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_56Checkbox']</td>
 	<td>Web Content Display</td>
 </tr>
 <tr>
@@ -280,7 +305,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_36Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_36Checkbox'))</td>
 	<td>wikiChecked</td>
 </tr>
 <tr>
@@ -290,7 +315,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_36Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_36Checkbox']</td>
 	<td>Wiki</td>
 </tr>
 <tr>
@@ -300,7 +325,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isChecked('_134_staged-portlet_54Checkbox'))</td>
+	<td>eval(selenium.isChecked('_165_staged-portlet_54Checkbox'))</td>
 	<td>wikiDisplayChecked</td>
 </tr>
 <tr>
@@ -310,7 +335,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_134_staged-portlet_54Checkbox</td>
+	<td>//input[@id='_165_staged-portlet_54Checkbox']</td>
 	<td>Wiki Display Checked</td>
 </tr>
 <tr>
@@ -319,24 +344,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to activate local staging for Staging?</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
-	<td>Your request completed successfully.</td>
+	<td>//td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[4]/span</td>
-	<td>Staging (Staging)</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Site Name (Staging)</td>
 </tr>
 
 </tbody></table>

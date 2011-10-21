@@ -58,6 +58,8 @@ public interface ExpandoBridge {
 
 	public Map<String, Serializable> getAttributes();
 
+	public Map<String, Serializable> getAttributes(boolean secure);
+
 	public Map<String, Serializable> getAttributes(Collection<String> names);
 
 	public Map<String, Serializable> getAttributes(

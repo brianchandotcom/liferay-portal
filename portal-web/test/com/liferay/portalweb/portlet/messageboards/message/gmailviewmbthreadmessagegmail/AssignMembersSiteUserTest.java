@@ -30,7 +30,7 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,22 +45,21 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Sites",
-					RuntimeVariables.replace("Site Memberships"));
+				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
+				assertEquals(RuntimeVariables.replace("Site Name"),
+					selenium.getText("//tr[4]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -76,19 +75,34 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
-					RuntimeVariables.replace("Manage Memberships"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Add Members")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.clickAt("link=Add Members",
 					RuntimeVariables.replace("Add Members"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -104,59 +118,52 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
 					RuntimeVariables.replace("User"));
-
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@name='_174_keywords']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.type("//input[@name='_174_keywords']",
-					RuntimeVariables.replace("usersn"));
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				assertEquals(RuntimeVariables.replace("usersn"),
-					selenium.getText("//tr[3]/td[3]"));
 
-				boolean UserSelectedChecked = selenium.isChecked("_174_rowIds");
+				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
-				if (UserSelectedChecked) {
+				if (!basicVisible) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_174_rowIds']",
-					RuntimeVariables.replace("User Select"));
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
-				selenium.clickAt("//input[@value='Update Associations']",
-					RuntimeVariables.replace("Update Associations"));
+				selenium.type("//input[@id='_174_toggle_id_users_admin_user_searchkeywords']",
+					RuntimeVariables.replace("usersn"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("userfn userln"),
+					selenium.getText("//tr[3]/td[2]"));
+				assertEquals(RuntimeVariables.replace("usersn"),
+					selenium.getText("//tr[3]/td[3]"));
+				assertFalse(selenium.isChecked("//input[@name='_174_rowIds']"));
+				selenium.clickAt("//input[@name='_174_rowIds']",
+					RuntimeVariables.replace("User Selected"));
+				assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.clickAt("link=Site Memberships",
+					RuntimeVariables.replace("Summary"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("userfn userln"),
+					selenium.getText("//tr[4]/td[1]"));
+				assertEquals(RuntimeVariables.replace("usersn"),
+					selenium.getText("//tr[4]/td[2]"));
 
 			case 100:
 				label = -1;

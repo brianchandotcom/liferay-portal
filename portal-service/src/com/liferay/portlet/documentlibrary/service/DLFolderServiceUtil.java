@@ -122,12 +122,40 @@ public class DLFolderServiceUtil {
 			status, includeMountFolders, start, end, obc);
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcuts(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
+			status, mimeTypes, includeMountFolders);
+	}
+
+	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
+			status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, includeMountFolders);
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId)
@@ -155,16 +183,16 @@ public class DLFolderServiceUtil {
 		return getService().getMountFoldersCount(groupId, parentFolderId);
 	}
 
-	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
-		long folderId, boolean recurse)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getSubfolderIds(groupId, folderId, recurse);
-	}
-
 	public static void getSubfolderIds(
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
+	}
+
+	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
+		long folderId, boolean recurse)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSubfolderIds(groupId, folderId, recurse);
 	}
 
 	public static boolean hasFolderLock(long folderId)

@@ -25,7 +25,7 @@ public class AddCouponNameNullTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,36 +40,26 @@ public class AddCouponNameNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Coupon']",
 			RuntimeVariables.replace("Add Coupon"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked("//input[@id='_34_autoCodeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@id='_34_autoCodeCheckbox']",
 			RuntimeVariables.replace("Autogenerate Code"));
 		assertTrue(selenium.isChecked("//input[@id='_34_autoCodeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_name']", RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_description']",
 			RuntimeVariables.replace("Shopping Coupon Description"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_discount']",
 			RuntimeVariables.replace("0.50"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

@@ -25,7 +25,7 @@ public class SRq_ViewRequestsTest extends BaseTestCase {
 		selenium.open("/web/socialrequestsn1/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,10 +40,8 @@ public class SRq_ViewRequestsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialrequestfn2 socialrequestmn2 socialrequestln2 wants to be your friend."),
 			selenium.getText("//td[2]/div"));

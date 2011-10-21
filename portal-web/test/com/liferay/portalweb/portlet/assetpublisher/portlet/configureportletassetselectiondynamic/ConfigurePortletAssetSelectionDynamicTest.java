@@ -26,7 +26,7 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,17 +41,15 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,15 +65,14 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		Thread.sleep(5000);
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,35 +87,15 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_86_selectionStyle']",
-			RuntimeVariables.replace("label=Dynamic"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Source")
-										.equals(selenium.getText(
-								"//div[@class='lfr-panel-title']/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
+			RuntimeVariables.replace("Dynamic"));
+		assertEquals("Dynamic",
+			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -136,19 +113,20 @@ public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Dynamic",
 			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//div[@class='lfr-panel-title']/span"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
 		assertEquals(RuntimeVariables.replace("Filter"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
-		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
+		assertEquals(RuntimeVariables.replace("Custom User Attributes"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[3]/span"));
-		assertEquals(RuntimeVariables.replace("Display Settings"),
+		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[4]/span"));
+		assertEquals(RuntimeVariables.replace("Display Settings"),
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[5]/span"));
 	}
 }

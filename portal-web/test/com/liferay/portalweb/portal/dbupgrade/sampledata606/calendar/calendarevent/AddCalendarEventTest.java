@@ -25,7 +25,7 @@ public class AddCalendarEventTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,34 +40,25 @@ public class AddCalendarEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Calendar Event Community"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Event Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("_8_startDateMonth", RuntimeVariables.replace("May"));
 		selenium.select("_8_startDateDay", RuntimeVariables.replace("label=31"));
 		selenium.select("_8_startDateYear", RuntimeVariables.replace("2010"));
@@ -77,13 +68,10 @@ public class AddCalendarEventTest extends BaseTestCase {
 		selenium.clickAt("_8_allDayCheckbox", RuntimeVariables.replace(""));
 		selenium.type("_8_title",
 			RuntimeVariables.replace("Hashi's birthday bash"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_8_description",
 			RuntimeVariables.replace("This is so much fun!"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//section/div/div/div/div"));
@@ -96,7 +84,6 @@ public class AddCalendarEventTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("5/31/10"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("5/31/10"),
 			selenium.getText("//dd[1]"));
 		assertEquals(RuntimeVariables.replace("This is so much fun!"),

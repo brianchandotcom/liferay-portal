@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -152,21 +153,35 @@ public class PortletAction extends Action {
 
 		String resourceId = resourceRequest.getResourceID();
 
-		if (Validator.isNotNull(resourceId)) {
-			PortletContext portletContext = portletConfig.getPortletContext();
-
-			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher(resourceId);
-
-			if (portletRequestDispatcher != null) {
-				portletRequestDispatcher.forward(
-					resourceRequest, resourceResponse);
-			}
+		if (Validator.isNull(resourceId)) {
+			return;
 		}
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(resourceId);
+
+		if (portletRequestDispatcher == null) {
+			return;
+		}
+
+		portletRequestDispatcher.forward(resourceRequest, resourceResponse);
 	}
 
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		boolean addProcessActionSuccessMessage = GetterUtil.getBoolean(
+			portletConfig.getInitParameter("add-process-action-success-action"),
+			true);
+
+		if (!addProcessActionSuccessMessage) {
+			return;
+		}
 
 		String successMessage = ParamUtil.getString(
 			actionRequest, "successMessage");

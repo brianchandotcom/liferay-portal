@@ -15,6 +15,8 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 
@@ -57,13 +59,16 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		}
 		catch (Exception e) {
 			exception = e;
+
+			_log.error(e, e);
 		}
 
 		return new JSONRPCResponse(jsonRpcRequest, result, exception);
 	}
 
 	private Object _createDefaultParameterValue(
-		String parameterName, Class<?> parameterType) {
+			String parameterName, Class<?> parameterType)
+		throws Exception {
 
 		if (parameterName.equals("serviceContext") &&
 				parameterType.equals(ServiceContext.class)) {
@@ -71,7 +76,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return new ServiceContext();
 		}
 
-		return null;
+		return parameterType.newInstance();
 	}
 
 	private Object _invokeActionMethod() throws Exception {
@@ -79,12 +84,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		Class<?> actionClass = _jsonWebServiceActionConfig.getActionClass();
 
-		Object[] parameters = _prepareParameters();
+		Object[] parameters = _prepareParameters(actionClass);
 
 		return actionMethod.invoke(actionClass, parameters);
 	}
 
-	private Object[] _prepareParameters() {
+	private Object[] _prepareParameters(Class<?> actionClass) throws Exception {
 		String[] parameterNames =
 			_jsonWebServiceActionConfig.getParameterNames();
 
@@ -105,6 +110,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				Class<?> parameterType = parameterTypes[i];
 
 				if (value.equals(Void.TYPE)) {
+					String parameterTypeName =
+						_jsonWebServiceActionParameters.getParameterTypeName(
+							parameterName);
+
+					if (parameterTypeName != null) {
+						ClassLoader classLoader = actionClass.getClassLoader();
+
+						parameterType = classLoader.loadClass(
+							parameterTypeName);
+					}
+
 					parameterValue = _createDefaultParameterValue(
 						parameterName, parameterType);
 				}
@@ -138,6 +154,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		return parameters;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		JSONWebServiceActionImpl.class);
 
 	private JSONWebServiceActionConfig _jsonWebServiceActionConfig;
 	private JSONWebServiceActionParameters _jsonWebServiceActionParameters;

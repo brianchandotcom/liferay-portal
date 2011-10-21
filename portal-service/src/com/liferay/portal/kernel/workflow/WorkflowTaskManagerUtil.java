@@ -199,7 +199,7 @@ public class WorkflowTaskManagerUtil {
 		throws WorkflowException {
 
 		return _workflowTaskManager.search(
-			companyId, userId, keywords, completed,	searchByUserRoles, start,
+			companyId, userId, keywords, completed, searchByUserRoles, start,
 			end, orderByComparator);
 	}
 
@@ -233,7 +233,7 @@ public class WorkflowTaskManagerUtil {
 		throws WorkflowException {
 
 		return _workflowTaskManager.searchCount(
-			companyId, userId, keywords, completed,	searchByUserRoles);
+			companyId, userId, keywords, completed, searchByUserRoles);
 	}
 
 	public static int searchCount(

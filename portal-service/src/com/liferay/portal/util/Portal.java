@@ -458,6 +458,10 @@ public interface Portal {
 			String category, ThemeDisplay themeDisplay)
 		throws SystemException;
 
+	public String getCreateAccountURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws Exception;
+
 	public String getCurrentCompleteURL(HttpServletRequest request);
 
 	public String getCurrentURL(HttpServletRequest request);
@@ -567,11 +571,11 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public String getEmailFromAddress(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException;
 
 	public String getEmailFromName(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException;
 
 	public Map<String, Serializable> getExpandoBridgeAttributes(
@@ -1113,6 +1117,9 @@ public interface Portal {
 	public PortletMode updatePortletMode(
 		String portletId, User user, Layout layout, PortletMode portletMode,
 		HttpServletRequest request);
+
+	public String updateRedirect(
+		String redirect, String oldPath, String newPath);
 
 	public WindowState updateWindowState(
 		String portletId, User user, Layout layout, WindowState windowState,

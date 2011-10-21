@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetTagService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.service;
  * @see       AssetTagService
  * @generated
  */
-public class AssetTagServiceWrapper implements AssetTagService {
+public class AssetTagServiceWrapper implements AssetTagService,
+	ServiceWrapper<AssetTagService> {
 	public AssetTagServiceWrapper(AssetTagService assetTagService) {
 		_assetTagService = assetTagService;
 	}
@@ -113,6 +116,17 @@ public class AssetTagServiceWrapper implements AssetTagService {
 		return _assetTagService.getTags(className, classPK);
 	}
 
+	public int getTagsCount(long groupId, long classNameId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagService.getTagsCount(groupId, classNameId, name);
+	}
+
+	public int getTagsCount(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagService.getTagsCount(groupId, name);
+	}
+
 	public int getTagsCount(long groupId, java.lang.String name,
 		java.lang.String[] tagProperties)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -148,11 +162,25 @@ public class AssetTagServiceWrapper implements AssetTagService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetTagService getWrappedAssetTagService() {
 		return _assetTagService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetTagService(AssetTagService assetTagService) {
+		_assetTagService = assetTagService;
+	}
+
+	public AssetTagService getWrappedService() {
+		return _assetTagService;
+	}
+
+	public void setWrappedService(AssetTagService assetTagService) {
 		_assetTagService = assetTagService;
 	}
 

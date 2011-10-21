@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ClassNameLocalService
  * @generated
  */
-public class ClassNameLocalServiceWrapper implements ClassNameLocalService {
+public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
+	ServiceWrapper<ClassNameLocalService> {
 	public ClassNameLocalServiceWrapper(
 		ClassNameLocalService classNameLocalService) {
 		_classNameLocalService = classNameLocalService;
@@ -267,12 +268,34 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService {
 		return _classNameLocalService.getClassNameId(value);
 	}
 
+	public java.lang.String getRegistryName() {
+		return _classNameLocalService.getRegistryName();
+	}
+
+	public void invalidate() {
+		_classNameLocalService.invalidate();
+	}
+
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ClassNameLocalService getWrappedClassNameLocalService() {
 		return _classNameLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {
+		_classNameLocalService = classNameLocalService;
+	}
+
+	public ClassNameLocalService getWrappedService() {
+		return _classNameLocalService;
+	}
+
+	public void setWrappedService(ClassNameLocalService classNameLocalService) {
 		_classNameLocalService = classNameLocalService;
 	}
 

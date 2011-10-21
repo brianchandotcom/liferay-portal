@@ -31,7 +31,7 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,28 +46,24 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
 				assertFalse(selenium.isElementPresent(
 						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
 				assertEquals(RuntimeVariables.replace(
-						"There are no documents in this folder."),
+						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				assertFalse(selenium.isTextPresent("DL Document Title"));
 				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
 				assertFalse(selenium.isElementPresent(
@@ -75,7 +71,6 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("DL Document Title"),
 					selenium.getText("//a[@class='document-link']"));
 				assertTrue(selenium.isElementPresent(
@@ -84,7 +79,7 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Publish to Live Now"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -100,13 +95,12 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Change Selection']",
 					RuntimeVariables.replace("Change Selection"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -122,7 +116,6 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Note that selecting no pages from the tree reverts to implicit selection of all pages."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
@@ -130,7 +123,7 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -145,7 +138,6 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Document Library Test Page"),
 					selenium.getText("//li/ul/li[1]/div/div[4]"));
@@ -157,7 +149,7 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Select"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -175,7 +167,6 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"There are no selected pages. All pages will therefore be exported."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
@@ -195,7 +186,7 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -211,7 +202,6 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_88_rangeAll']",
 					RuntimeVariables.replace("All"));
 
@@ -226,17 +216,15 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='_88_PORTLET_DATA_20Checkbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_88_PORTLET_DATA_20Checkbox']",
 					RuntimeVariables.replace("Document Library"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_88_PORTLET_DATA_20Checkbox']"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -251,13 +239,11 @@ public class PublishToLiveNowDLDocumentNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

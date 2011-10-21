@@ -151,7 +151,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 							<aui:input name="journalImageDelete" type="hidden" value="" />
 
-							<aui:input name="journalImageDeleteButton" value="Delete" />
+							<aui:button name="journalImageDeleteButton" value="delete" />
 
 							<br /><br />
 

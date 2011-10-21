@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Role;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Role in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.Role;
  * @see Role
  * @generated
  */
-public class RoleCacheModel implements CacheModel<Role> {
+public class RoleCacheModel implements CacheModel<Role>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

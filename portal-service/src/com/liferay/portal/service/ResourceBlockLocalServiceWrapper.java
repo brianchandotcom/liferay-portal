@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class ResourceBlockLocalServiceWrapper
-	implements ResourceBlockLocalService {
+	implements ResourceBlockLocalService,
+		ServiceWrapper<ResourceBlockLocalService> {
 	public ResourceBlockLocalServiceWrapper(
 		ResourceBlockLocalService resourceBlockLocalService) {
 		_resourceBlockLocalService = resourceBlockLocalService;
@@ -633,6 +634,15 @@ public class ResourceBlockLocalServiceWrapper
 	}
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockLocalService.setIndividualScopePermissions(companyId,
+			groupId, name, primKey, roleIdsToActionIds);
+	}
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		long roleId, java.util.List<java.lang.String> actionIds)
@@ -693,11 +703,26 @@ public class ResourceBlockLocalServiceWrapper
 			primKey);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ResourceBlockLocalService getWrappedResourceBlockLocalService() {
 		return _resourceBlockLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	public ResourceBlockLocalService getWrappedService() {
+		return _resourceBlockLocalService;
+	}
+
+	public void setWrappedService(
 		ResourceBlockLocalService resourceBlockLocalService) {
 		_resourceBlockLocalService = resourceBlockLocalService;
 	}

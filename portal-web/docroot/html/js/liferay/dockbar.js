@@ -610,17 +610,34 @@ AUI().add(
 						function(event) {
 							event.preventDefault();
 
+							var fullDialog = event.currentTarget.ancestor('li').hasClass('full-dialog');
+
 							manageContent.hide();
 
-							instance._openWindow(
-								{
-									dialog: {
-										align: Util.Window.ALIGN_CENTER,
-										width: 960
-									}
-								},
-								event.currentTarget
-							);
+							var width = 960;
+
+							if (fullDialog) {
+								width = '90%';
+							}
+
+							var dialog = Liferay.Util.getWindow('manageContentDialog');
+
+							if (!dialog) {
+								instance._openWindow(
+									{
+										dialog: {
+											align: Util.Window.ALIGN_CENTER,
+											modal: fullDialog,
+											width: width
+										},
+										id: 'manageContentDialog'
+									},
+									event.currentTarget
+								);
+							}
+							else {
+								dialog.show();
+							}
 						},
 						'.use-dialog a'
 					);
@@ -632,7 +649,7 @@ AUI().add(
 					if (!manageCustomizationLink.hasClass('disabled')) {
 						instance._controls = dockBar.one('.layout-customizable-controls');
 
-						var columns = A.all('.portlet-column');
+						var columns = A.all('.portlet-column .portlet-dropzone:not(.portlet-dropzone-disabled)');
 
 						BODY.delegate('click', instance._onChangeCustomization, '.layout-customizable-checkbox', instance);
 

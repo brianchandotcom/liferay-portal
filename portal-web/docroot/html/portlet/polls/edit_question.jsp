@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUESTION);
 
 long questionId = BeanParamUtil.getLong(question, request, "questionId");
@@ -56,13 +58,14 @@ if (choiceName > 0) {
 }
 %>
 
-<portlet:actionURL var="editQuestionURL">
+<liferay-portlet:actionURL refererPlid="<%= themeDisplay.getRefererPlid() %>" var="editQuestionURL">
 	<portlet:param name="struts_action" value="/polls/edit_question" />
-</portlet:actionURL>
+</liferay-portlet:actionURL>
 
 <aui:form action="<%= editQuestionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveQuestion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 	<aui:input name="questionId" type="hidden" value="<%= questionId %>" />
 	<aui:input name="choicesCount" type="hidden" value="<%= choicesCount %>" />
 	<aui:input name="choiceName" type="hidden" value="" />

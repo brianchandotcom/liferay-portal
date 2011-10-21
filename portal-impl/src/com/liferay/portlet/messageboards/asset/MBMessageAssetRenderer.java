@@ -107,12 +107,10 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-			"/message_boards/find_message?messageId=" + _message.getMessageId();
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/message_boards/find_message", "messageId",
+			_message.getMessageId());
 	}
 
 	public long getUserId() {

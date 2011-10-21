@@ -42,7 +42,7 @@ PortletURL tabsURL = renderResponse.createRenderURL();
 
 tabsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 tabsURL.setParameter("tabs1", tabs1);
-tabsURL.setParameter("tabs2", tabs2);
+tabsURL.setParameter("tabs2", "current");
 tabsURL.setParameter("redirect", redirect);
 tabsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
@@ -64,16 +64,20 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		<liferay-ui:header
 			backURL="<%= redirect %>"
 			localizeTitle="<%= false %>"
-			title='<%= group.getDescriptiveName() + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
+			title='<%= group.getDescriptiveName() %>'
 		/>
 
-		<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp" />
+		<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
+			<liferay-util:param name="toolbarItem" value='<%= tabs2.equals("available") ? "add-role" : null %>' />
+		</liferay-util:include>
 
-		<liferay-ui:tabs
-			names="summary,users,organizations,user-groups"
-			param="tabs1"
-			url="<%= tabsURL.toString() %>"
-		/>
+		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
+			<liferay-ui:tabs
+				names="summary,users,organizations,user-groups"
+				param="tabs1"
+				url="<%= tabsURL.toString() %>"
+			/>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:header
@@ -83,7 +87,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	</c:otherwise>
 </c:choose>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "submit();" %>'>
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submit();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
@@ -167,24 +171,31 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		window,
 		'<portlet:namespace />submit',
 		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_organizations.value != '') {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_organizations.value;
+			var organizationKeywords = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_organizations;
+
+			if (organizationKeywords && organizationKeywords.value) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = organizationKeywords.value;
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="organizations" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");
 			}
-			if (document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_users.value != '') {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_users.value;
+
+			var userKeywords = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_users;
+
+			if (userKeywords && userKeywords.value) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = userKeywords.value;
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="users" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");
 			}
-			if (document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_user_groups.value != '') {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_user_groups.value;
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="users" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");
+			var userGroupKeywords = document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>_user_groups;
+
+			if (userGroupKeywords && userGroupKeywords.value) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= DisplayTerms.KEYWORDS %>.value = userGroupKeywords.value;
+
+				submitForm(document.<portlet:namespace />fm, "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="user-groups" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>");
 			}
-			else {
-				submitForm(document.<portlet:namespace />fm);
-			}
+
+			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']
 	);

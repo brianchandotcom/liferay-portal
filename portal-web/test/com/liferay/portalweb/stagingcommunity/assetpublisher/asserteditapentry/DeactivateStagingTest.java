@@ -23,21 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeactivateStagingTest extends BaseTestCase {
 	public void testDeactivateStaging() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
-		selenium.clickAt("//div/div[3]/div/ul/li[5]/a",
-			RuntimeVariables.replace("ControlPanel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Sites")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -47,27 +40,28 @@ public class DeactivateStagingTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Sites", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_134_name", RuntimeVariables.replace("Staging"));
-		selenium.saveScreenShotAndSource();
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Site Name"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.click("//strong/a");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -77,22 +71,24 @@ public class DeactivateStagingTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Manage Pages"),
+		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Edit Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",
+				"Staging"));
+		selenium.clickAt("//a[@id='_165_stagingLink']",
+			RuntimeVariables.replace("Staging"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("//ul[1]/li[3]/span/span/a")) {
+				if (selenium.isVisible("//input[@id='_165_none']")) {
 					break;
 				}
 			}
@@ -102,26 +98,18 @@ public class DeactivateStagingTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[1]/li[3]/span/span/a",
-			RuntimeVariables.replace("Settings"));
+		selenium.clickAt("//input[@id='_165_none']",
+			RuntimeVariables.replace("None"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//li[7]/span/span/a",
-			RuntimeVariables.replace("Staging"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.select("_134_stagingType",
-			RuntimeVariables.replace("label=None"));
-		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to deactivate staging for Staging[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
-		assertNotEquals(RuntimeVariables.replace("Staging (Staging)"),
-			selenium.getText("//li[4]/span"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertNotEquals(RuntimeVariables.replace("Site Name (Staging)"),
+			selenium.getText("//h1[@class='header-title']/span"));
 	}
 }

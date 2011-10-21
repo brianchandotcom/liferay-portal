@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingItemField;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ShoppingItemField in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.shopping.model.ShoppingItemField;
  * @see ShoppingItemField
  * @generated
  */
-public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField> {
+public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

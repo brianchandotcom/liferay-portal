@@ -34,6 +34,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.WikiFormatException;
@@ -110,7 +111,7 @@ public class WikiUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.WIKI_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
@@ -118,7 +119,7 @@ public class WikiUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.WIKI_EMAIL_FROM_NAME);
+			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_NAME);
 	}
 
 	public static String getEmailPageAddedBody(PortletPreferences preferences) {

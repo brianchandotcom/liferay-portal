@@ -1270,10 +1270,12 @@ public class UserServiceSoap {
 	the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateOrganizations(long userId, long[] organizationIds)
+	public static void updateOrganizations(long userId, long[] organizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			UserServiceUtil.updateOrganizations(userId, organizationIds);
+			UserServiceUtil.updateOrganizations(userId, organizationIds,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

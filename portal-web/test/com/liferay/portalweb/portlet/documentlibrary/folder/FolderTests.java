@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.documentlibrary.folder;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portlet.documentlibrary.folder.adddlsubfoldernameimagename.AddDLSubfolderNameImageNameTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.addfolder.AddFolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.addfoldermultiple.AddFolderMultipleTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.addfoldernameduplicate.AddFolderNameDuplicateTests;
@@ -28,6 +29,7 @@ import com.liferay.portalweb.portlet.documentlibrary.folder.deletefolder.DeleteF
 import com.liferay.portalweb.portlet.documentlibrary.folder.deletesubfolder.DeleteSubfolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.editfolder.EditFolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.editsubfolder.EditSubfolderTests;
+import com.liferay.portalweb.portlet.documentlibrary.folder.movedlsubfoldertofolder2.MoveDLSubfolderToFolder2Tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,6 +42,7 @@ public class FolderTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AddDLSubfolderNameImageNameTests.suite());
 		testSuite.addTest(AddFolderTests.suite());
 		testSuite.addTest(AddFolderMultipleTests.suite());
 		testSuite.addTest(AddFolderNameDuplicateTests.suite());
@@ -53,6 +56,7 @@ public class FolderTests extends BaseTests {
 		testSuite.addTest(DeleteSubfolderTests.suite());
 		testSuite.addTest(EditFolderTests.suite());
 		testSuite.addTest(EditSubfolderTests.suite());
+		testSuite.addTest(MoveDLSubfolderToFolder2Tests.suite());
 
 		return testSuite;
 	}

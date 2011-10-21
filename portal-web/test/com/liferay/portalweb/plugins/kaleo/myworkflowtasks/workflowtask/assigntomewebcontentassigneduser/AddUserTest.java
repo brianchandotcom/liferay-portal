@@ -25,7 +25,7 @@ public class AddUserTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,40 +40,22 @@ public class AddUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_screenName", RuntimeVariables.replace("usersn"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_emailAddress",
-			RuntimeVariables.replace("useremail@liferay.com"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_firstName", RuntimeVariables.replace("userfn"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_lastName", RuntimeVariables.replace("userln"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("passwordLink", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("_125_password1")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 					break;
 				}
 			}
@@ -83,14 +65,54 @@ public class AddUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_password1", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("_125_password2", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_125_screenName']",
+			RuntimeVariables.replace("usersn"));
+		selenium.type("//input[@id='_125_emailAddress']",
+			RuntimeVariables.replace("useremail@liferay.com"));
+		selenium.type("//input[@id='_125_firstName']",
+			RuntimeVariables.replace("userfn"));
+		selenium.type("//input[@id='_125_lastName']",
+			RuntimeVariables.replace("userln"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
+				"Password"));
+		selenium.clickAt("//a[@id='_125_passwordLink']",
+			RuntimeVariables.replace("Password"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_125_password1']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//input[@id='_125_password1']",
+			RuntimeVariables.replace("password"));
+		selenium.type("//input[@id='_125_password2']",
+			RuntimeVariables.replace("password"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

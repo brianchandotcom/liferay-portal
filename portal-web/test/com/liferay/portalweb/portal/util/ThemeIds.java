@@ -51,7 +51,7 @@ public class ThemeIds {
 				List<String> themeIds = new ArrayList<String>();
 
 				List<Theme> themes = ThemeServiceHttp.getThemes(
-					httpPrincipal, TestPropsValues.COMPANY_ID);
+					httpPrincipal, TestPropsValues.getCompanyId());
 
 				for (Theme theme : themes) {
 					if (!theme.isWapTheme()) {

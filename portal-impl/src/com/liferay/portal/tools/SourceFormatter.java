@@ -974,6 +974,16 @@ public class SourceFormatter {
 				}
 			}
 
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (trimmedLine.contains(StringPool.TAB) &&
+				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				!trimmedLine.startsWith(StringPool.STAR)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "tab: " + fileName + " " + lineCount);
+			}
+
 			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
 				_sourceFormatterHelper.printError(
 					fileName, "{:" + fileName + " " + lineCount);
@@ -1187,6 +1197,33 @@ public class SourceFormatter {
 				}
 			}
 
+			if (fileName.endsWith("init.jsp")) {
+				int x = newContent.indexOf("<%@ page import=");
+
+				int y = newContent.lastIndexOf("<%@ page import=");
+
+				y = newContent.indexOf("%>", y);
+
+				if ((x != -1) && (y != -1) && (y > x)) {
+
+					// Set compressImports to false to decompress imports
+
+					boolean compressImports = true;
+
+					if (compressImports) {
+						String imports = newContent.substring(x, y);
+
+						imports = StringUtil.replace(
+							imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+							new String[] {"%><%@\r\n", "%><%@\n"});
+
+						newContent =
+							newContent.substring(0, x) + imports +
+								newContent.substring(y);
+					}
+				}
+			}
+
 			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {
@@ -1223,6 +1260,16 @@ public class SourceFormatter {
 
 				_sourceFormatterHelper.printError(
 					fileName, "aui:button " + fileName + " " + lineCount);
+			}
+
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (trimmedLine.contains(StringPool.TAB) &&
+				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				!trimmedLine.startsWith(StringPool.STAR)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "tab: " + fileName + " " + lineCount);
 			}
 
 			int x = line.indexOf("<%@ include file");
@@ -1707,29 +1754,35 @@ public class SourceFormatter {
 			return false;
 		}
 
-		if (checkFile && content.contains(importLine)) {
+		int x = importLine.indexOf("page");
+
+		if (x == -1) {
+			return false;
+		}
+
+		if (checkFile && content.contains(importLine.substring(x))) {
 			return true;
 		}
 
-		int x = content.indexOf("<%@ include file=");
-
-		if (x == -1) {
-			return false;
-		}
-
-		x = content.indexOf(StringPool.QUOTE, x);
-
-		if (x == -1) {
-			return false;
-		}
-
-		int y = content.indexOf(StringPool.QUOTE, x + 1);
+		int y = content.indexOf("<%@ include file=");
 
 		if (y == -1) {
 			return false;
 		}
 
-		String includeFileName = content.substring(x + 1, y);
+		y = content.indexOf(StringPool.QUOTE, y);
+
+		if (y == -1) {
+			return false;
+		}
+
+		int z = content.indexOf(StringPool.QUOTE, y + 1);
+
+		if (z == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(y + 1, z);
 
 		String docrootPath = fileName.substring(
 			0, fileName.indexOf("docroot") + 7);
@@ -1849,9 +1902,7 @@ public class SourceFormatter {
 			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
 		if (!fileName.contains("docroot") ||
-			fileName.endsWith("init-ext.jsp") ||
-			fileName.endsWith("html/common/init.jsp") ||
-			fileName.endsWith("html/portal/init.jsp")) {
+			fileName.endsWith("init-ext.jsp")) {
 
 			return content;
 		}
@@ -1864,27 +1915,35 @@ public class SourceFormatter {
 
 		String imports = matcher.group();
 
-		List<String> importLines = new ArrayList<String>();
+		imports = StringUtil.replace(
+			imports, new String[] {"%><%@\r\n", "%><%@\n"},
+			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
+		if (!fileName.endsWith("html/common/init.jsp") &&
+			!fileName.endsWith("html/portal/init.jsp")) {
 
-		String line = null;
+			List<String> importLines = new ArrayList<String>();
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains("import=")) {
-				importLines.add(line);
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports));
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains("import=")) {
+					importLines.add(line);
+				}
 			}
-		}
 
-		List<String> unneededImports = _getJSPDuplicateImports(
-			fileName, content, importLines);
+			List<String> unneededImports = _getJSPDuplicateImports(
+				fileName, content, importLines);
 
-		_addJSPUnusedImports(fileName, importLines, unneededImports);
+			_addJSPUnusedImports(fileName, importLines, unneededImports);
 
-		for (String unneededImport : unneededImports) {
-			imports = StringUtil.replace(
-				imports, unneededImport, StringPool.BLANK);
+			for (String unneededImport : unneededImports) {
+				imports = StringUtil.replace(
+					imports, unneededImport, StringPool.BLANK);
+			}
 		}
 
 		imports = _formatImports(imports, 17);
@@ -1925,7 +1984,7 @@ public class SourceFormatter {
 	private static Map<String, String> _jspContents =
 		new HashMap<String, String>();
 	private static Pattern _jspImportPattern = Pattern.compile(
-		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
+		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();

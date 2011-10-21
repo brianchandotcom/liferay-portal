@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see BlogsStatsUser
  * @generated
  */
-public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser> {
+public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

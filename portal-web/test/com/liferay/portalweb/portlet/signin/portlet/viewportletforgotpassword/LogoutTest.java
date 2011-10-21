@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class LogoutTest extends BaseTestCase {
 	public void testLogout() throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -38,11 +38,10 @@ public class LogoutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -56,7 +55,5 @@ public class LogoutTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
-
-		selenium.saveScreenShotAndSource();
 	}
 }

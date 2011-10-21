@@ -33,12 +33,12 @@ public class Filter implements Serializable {
 		return _emailAddress;
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		_emailAddress = emailAddress;
-	}
-
 	public String getFolder() {
 		return _folder;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		_emailAddress = emailAddress;
 	}
 
 	public void setFolder(String folder) {

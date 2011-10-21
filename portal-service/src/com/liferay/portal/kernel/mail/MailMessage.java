@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.mail;
 
+import com.liferay.mail.model.Attachment;
+
 import java.io.File;
 import java.io.Serializable;
 
@@ -58,14 +60,20 @@ public class MailMessage implements Serializable {
 		_htmlFormat = htmlFormat;
 	}
 
-	public void addAttachment(File attachment) {
-		if (attachment != null) {
+	public void addAttachment(File file) {
+		addAttachment(file, null);
+	}
+
+	public void addAttachment(File file, String fileName) {
+		if (file != null) {
+			Attachment attachment = new Attachment(file, fileName);
+
 			_attachments.add(attachment);
 		}
 	}
 
-	public File[] getAttachments() {
-		return _attachments.toArray(new File[_attachments.size()]);
+	public List<Attachment> getAttachments() {
+		return _attachments;
 	}
 
 	public InternetAddress[] getBCC() {
@@ -191,7 +199,7 @@ public class MailMessage implements Serializable {
 	private InternetAddress[] _replyTo;
 	private String _messageId;
 	private String _inReplyTo;
-	private List<File> _attachments = new ArrayList<File>();
+	private List<Attachment> _attachments = new ArrayList<Attachment>();
 	private SMTPAccount _smtpAccount;
 
 }

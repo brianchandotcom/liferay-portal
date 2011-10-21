@@ -93,10 +93,11 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplates(
-		long structureId, java.lang.String type) throws RemoteException {
+		long structureId, java.lang.String type, java.lang.String mode)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(structureId, type);
+				DDMTemplateServiceUtil.getTemplates(structureId, type, mode);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}

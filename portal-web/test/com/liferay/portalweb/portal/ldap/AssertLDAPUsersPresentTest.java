@@ -25,7 +25,7 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,25 +40,19 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Search All Users",
 			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("jane"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Jane"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Smith"),
@@ -68,11 +62,9 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("No users were found."));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("luke"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Luke"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Skywalker"),
@@ -82,11 +74,9 @@ public class AssertLDAPUsersPresentTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("No users were found."));
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("martin"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Martin"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Luther"),

@@ -20,7 +20,6 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -37,7 +36,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	public DDLRecordImpl() {
 	}
 
-	public Field getField(String fieldName) throws StorageException {
+	public Field getField(String fieldName) throws PortalException {
 		Fields fields = getFields();
 
 		return fields.get(fieldName);
@@ -53,7 +52,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 		return ddmStructure.getFieldDataType(fieldName);
 	}
 
-	public Fields getFields() throws StorageException {
+	public Fields getFields() throws PortalException {
 		return StorageEngineUtil.getFields(getDDMStorageId());
 	}
 
@@ -65,9 +64,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 		return ddmStructure.getFieldType(fieldName);
 	}
 
-	public Serializable getFieldValue(String fieldName)
-		throws StorageException {
-
+	public Serializable getFieldValue(String fieldName) throws PortalException {
 		Field field = getField(fieldName);
 
 		return field.getValue();

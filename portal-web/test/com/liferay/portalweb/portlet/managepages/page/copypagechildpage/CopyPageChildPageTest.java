@@ -30,7 +30,7 @@ public class CopyPageChildPageTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Manage Pages Test Page",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Child Test Page",
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
 				assertFalse(selenium.isElementPresent(
@@ -67,12 +64,13 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Dockbar"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent("//div[4]/div/ul/li[1]/a")) {
+						if (selenium.isElementPresent(
+									"//li[contains(@class,'manage-page')]/a")) {
 							break;
 						}
 					}
@@ -82,12 +80,11 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[4]/div/ul/li[1]/a",
+				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -104,7 +101,6 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
@@ -123,7 +119,7 @@ public class CopyPageChildPageTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -138,7 +134,6 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li[1]/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
@@ -159,7 +154,7 @@ public class CopyPageChildPageTest extends BaseTestCase {
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -174,14 +169,13 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
 					selenium.getText("//li[2]/ul/li/div/div[3]/a"));
 				selenium.clickAt("//li[2]/ul/li/div/div[3]/a",
 					RuntimeVariables.replace("Child Test Page"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -198,7 +192,6 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals("Child Test Page",
 					selenium.getValue(
 						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
@@ -206,12 +199,12 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Portlet"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isVisible("//div/span/button[4]")) {
+						if (selenium.isVisible("//button[5]")) {
 							break;
 						}
 					}
@@ -221,12 +214,13 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div/span/button[4]",
+				assertEquals(RuntimeVariables.replace("Copy Portlets from Page"),
+					selenium.getText("//button[5]"));
+				selenium.clickAt("//button[5]",
 					RuntimeVariables.replace("Copy Portlets from Page"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -242,7 +236,6 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"- Welcome - Manage Pages Test Page - - Child Test Page"),
 					selenium.getText("//select[@id='_88_copyLayoutId']"));
@@ -251,14 +244,13 @@ public class CopyPageChildPageTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Copy']",
 					RuntimeVariables.replace("Copy"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -273,11 +265,9 @@ public class CopyPageChildPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Child Test Page",
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
 				assertEquals(RuntimeVariables.replace("Sign In"),

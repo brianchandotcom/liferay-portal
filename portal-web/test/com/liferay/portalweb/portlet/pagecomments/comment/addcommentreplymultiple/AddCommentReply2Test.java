@@ -25,7 +25,7 @@ public class AddCommentReply2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class AddCommentReply2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Post Reply"),
 			selenium.getText("//div[2]/div[3]/div/div[2]/ul/li[1]/span/a/span"));
 		selenium.clickAt("//div[2]/div[3]/div/div[2]/ul/li[1]/span/a/span",
 			RuntimeVariables.replace("Post Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -67,16 +65,14 @@ public class AddCommentReply2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody2']"));
 		selenium.type("//textarea[@name='_107_postReplyBody2']",
 			RuntimeVariables.replace("PC Comment Reply2"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("xPath=(//input[@value='Reply'])[3]",
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -94,7 +90,6 @@ public class AddCommentReply2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

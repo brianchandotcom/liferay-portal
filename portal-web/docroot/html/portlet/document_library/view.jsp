@@ -39,11 +39,15 @@ if (folder != null) {
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", "icon");
+	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
+}
+
+if (!ArrayUtil.contains(displayViews, displayStyle)) {
+	displayStyle = displayViews[0];
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int entryRowsPerPage = entryEnd - entryStart;
 
@@ -104,6 +108,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+				<aui:input name="newFolderId" type="hidden" />
 				<aui:input name="folderIds" type="hidden" />
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
@@ -145,15 +150,22 @@ if (folder != null) {
 		}
 	}
 
+	function <portlet:namespace />moveEntries(folderId) {
+		document.<portlet:namespace />fm2.<portlet:namespace />newFolderId.value = folderId;
+
+		<portlet:namespace />doFileEntryAction('<%= Constants.MOVE %>', '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>');
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />doFileEntryAction',
 		function(action, url) {
 			document.<portlet:namespace />fm2.method = "post";
 			document.<portlet:namespace />fm2.<portlet:namespace /><%= Constants.CMD %>.value = action;
-			document.<portlet:namespace />fm2.<portlet:namespace />folderIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + Folder.class.getName() %>Checkbox');
-			document.<portlet:namespace />fm2.<portlet:namespace />fileEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + FileEntry.class.getName() %>Checkbox');
-			document.<portlet:namespace />fm2.<portlet:namespace />fileShortcutIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + DLFileShortcut.class.getName() %>Checkbox');
+			document.<portlet:namespace />fm2.<portlet:namespace />redirect.value = location.href;
+			document.<portlet:namespace />fm2.<portlet:namespace />folderIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS %>FolderCheckbox');
+			document.<portlet:namespace />fm2.<portlet:namespace />fileEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS %>FileEntryCheckbox');
+			document.<portlet:namespace />fm2.<portlet:namespace />fileShortcutIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS %>DLFileShortcutCheckbox');
 
 			submitForm(document.<portlet:namespace />fm2, url);
 		},
@@ -170,48 +182,14 @@ if (folder != null) {
 
 			var disabled = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
-			actionsButton.toggleClass('disabled', disabled);
+			if (actionsButton) {
+				actionsButton.toggleClass('disabled', disabled);
+			}
 		},
 		['liferay-util-list-fields']
 	);
 
 	<portlet:namespace />toggleActionsButton();
-</aui:script>
-
-<aui:script use="aui-dialog,aui-dialog-iframe">
-	var markSelected = function(node) {
-		var documentThumbnail = node.ancestor('.document-display-style.selectable');
-
-		documentThumbnail.toggleClass('selected');
-	};
-
-	var documentContainer = A.one('#<portlet:namespace />documentContainer');
-
-	documentContainer.delegate(
-		'change',
-		function(event) {
-			markSelected(event.currentTarget);
-
-			<portlet:namespace />toggleActionsButton();
-
-			Liferay.Util.checkAllBox(documentContainer, ['<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + FileEntry.class.getName() %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + DLFileShortcut.class.getName() %>Checkbox', '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + Folder.class.getName() %>Checkbox'], '#<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox');
-		},
-		'.document-selector'
-	);
-
-	<c:if test='<%= (!displayStyle.equals("list")) %>'>
-		var toggleHoverClass = function(event) {
-			var documentDisplayStyle = event.currentTarget.ancestor('.document-display-style');
-
-			if (documentDisplayStyle) {
-				documentDisplayStyle.toggleClass('hover', (event.type == 'focus'));
-			}
-		};
-
-		documentContainer.delegate('focus', toggleHoverClass, '*');
-
-		documentContainer.delegate('blur', toggleHoverClass, '*');
-	</c:if>
 </aui:script>
 
 <span id="<portlet:namespace />displayStyleButtonsContainer">
@@ -223,8 +201,13 @@ if (folder != null) {
 
 	new Liferay.Portlet.DocumentLibrary(
 		{
+			defaultParams: {
+				p_p_id: <%= portletId %>,
+				p_p_lifecycle: 0
+			},
 			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
+			displayViews: ['<%= StringUtil.merge(displayViews, "','") %>'],
 			entriesTotal: <%= entriesTotal %>,
 			entryEnd: <%= entryEnd %>,
 			entryRowsPerPage: <%= entryRowsPerPage %>,

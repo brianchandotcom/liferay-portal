@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see DLFileRank
  * @generated
  */
-public class DLFileRankCacheModel implements CacheModel<DLFileRank> {
+public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);

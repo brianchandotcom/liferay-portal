@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.polls.model.PollsVote;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see PollsVote
  * @generated
  */
-public class PollsVoteCacheModel implements CacheModel<PollsVote> {
+public class PollsVoteCacheModel implements CacheModel<PollsVote>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

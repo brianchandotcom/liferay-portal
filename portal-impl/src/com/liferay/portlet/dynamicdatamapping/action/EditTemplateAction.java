@@ -27,7 +27,6 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
@@ -169,7 +168,7 @@ public class EditTemplateAction extends PortletAction {
 			actionRequest, "saveCallback");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			(ActionRequestImpl)actionRequest, portletConfig.getPortletName(),
+			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(actionRequest.getWindowState());
@@ -207,6 +206,7 @@ public class EditTemplateAction extends PortletAction {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
+		String mode = ParamUtil.getString(uploadPortletRequest, "mode");
 		String language = ParamUtil.getString(
 			uploadPortletRequest, "language",
 			DDMTemplateConstants.LANG_TYPE_VM);
@@ -230,12 +230,12 @@ public class EditTemplateAction extends PortletAction {
 
 			template = DDMTemplateServiceUtil.addTemplate(
 				groupId, structure.getStructureId(), nameMap, descriptionMap,
-				type, language, script, serviceContext);
+				type, mode, language, script, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(
-				templateId, nameMap, descriptionMap, type, language, script,
-				serviceContext);
+				templateId, nameMap, descriptionMap, type, mode, language,
+				script, serviceContext);
 		}
 
 		String portletResource = ParamUtil.getString(

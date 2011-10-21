@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.VirtualHost;
@@ -68,30 +67,38 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 * Never modify or reference this class directly. Always use {@link VirtualHostUtil} to access the virtual host persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = VirtualHostImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
-		".List";
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	public static final FinderPath FINDER_PATH_FETCH_BY_HOSTNAME = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
-			new String[] { String.class.getName() });
+			new String[] { String.class.getName() },
+			VirtualHostModelImpl.HOSTNAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_HOSTNAME = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByHostname",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHostname",
 			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() },
+			VirtualHostModelImpl.COMPANYID_COLUMN_BITMASK |
+			VirtualHostModelImpl.LAYOUTSETID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_L = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByC_L",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
 			new String[] { Long.class.getName(), Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
-			FINDER_CLASS_NAME_LIST, "findAll", new String[0]);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 
 	/**
 	 * Caches the virtual host in the entity cache if it is enabled.
@@ -126,6 +133,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 						VirtualHostImpl.class, virtualHost.getPrimaryKey()) == null) {
 				cacheResult(virtualHost);
 			}
+			else {
+				virtualHost.resetOriginalValues();
+			}
 		}
 	}
 
@@ -143,8 +153,10 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 
 		EntityCacheUtil.clearCache(VirtualHostImpl.class.getName());
+
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
@@ -159,7 +171,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		EntityCacheUtil.removeResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostImpl.class, virtualHost.getPrimaryKey());
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
 			new Object[] { virtualHost.getHostname() });
@@ -272,7 +285,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
 
@@ -317,43 +331,55 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+
+		if (isNew || !VirtualHostModelImpl.COLUMN_BITMASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
 
 		EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostImpl.class, virtualHost.getPrimaryKey(), virtualHost);
 
-		if (!isNew &&
-				(!Validator.equals(virtualHost.getHostname(),
-					virtualHostModelImpl.getOriginalHostname()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-				new Object[] { virtualHostModelImpl.getOriginalHostname() });
-		}
-
-		if (isNew ||
-				(!Validator.equals(virtualHost.getHostname(),
-					virtualHostModelImpl.getOriginalHostname()))) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME,
 				new Object[] { virtualHost.getHostname() }, virtualHost);
-		}
 
-		if (!isNew &&
-				((virtualHost.getCompanyId() != virtualHostModelImpl.getOriginalCompanyId()) ||
-				(virtualHost.getLayoutSetId() != virtualHostModelImpl.getOriginalLayoutSetId()))) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L,
-				new Object[] {
-					Long.valueOf(virtualHostModelImpl.getOriginalCompanyId()),
-					Long.valueOf(virtualHostModelImpl.getOriginalLayoutSetId())
-				});
-		}
-
-		if (isNew ||
-				((virtualHost.getCompanyId() != virtualHostModelImpl.getOriginalCompanyId()) ||
-				(virtualHost.getLayoutSetId() != virtualHostModelImpl.getOriginalLayoutSetId()))) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L,
 				new Object[] {
 					Long.valueOf(virtualHost.getCompanyId()),
 					Long.valueOf(virtualHost.getLayoutSetId())
 				}, virtualHost);
+		}
+		else {
+			if ((virtualHostModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_HOSTNAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						virtualHostModelImpl.getOriginalHostname()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTNAME, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTNAME,
+					new Object[] { virtualHost.getHostname() }, virtualHost);
+			}
+
+			if ((virtualHostModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_L.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(virtualHostModelImpl.getOriginalCompanyId()),
+						Long.valueOf(virtualHostModelImpl.getOriginalLayoutSetId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_L, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_L,
+					new Object[] {
+						Long.valueOf(virtualHost.getCompanyId()),
+						Long.valueOf(virtualHost.getLayoutSetId())
+					}, virtualHost);
+			}
 		}
 
 		return virtualHost;
@@ -798,9 +824,20 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 */
 	public List<VirtualHost> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
 		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
-		List<VirtualHost> list = (List<VirtualHost>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderArgs = FINDER_ARGS_EMPTY;
+		}
+		else {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderArgs = new Object[] { start, end, orderByComparator };
+		}
+
+		List<VirtualHost> list = (List<VirtualHost>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -845,14 +882,12 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -1090,7 +1125,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	public void destroy() {
 		EntityCacheUtil.removeCache(VirtualHostImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@BeanReference(type = AccountPersistence.class)

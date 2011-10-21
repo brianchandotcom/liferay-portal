@@ -62,7 +62,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 						_log.debug("Entity found for system id " + systemId);
 					}
 
-					return new InputSource(is);
+					InputSource inputSource = new InputSource(is);
+
+					inputSource.setSystemId(kvp.getKey());
+
+					return inputSource;
 				}
 			}
 		}
@@ -448,6 +452,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
+			"-//Liferay//DTD Social 6.1.0//EN",
+			"liferay-social_6_1_0.dtd"
+		),
+
+		new KeyValuePair(
 			"-//Liferay//DTD Theme Loader 4.3.0//EN",
 			"liferay-theme-loader_4_3_0.dtd"
 		),
@@ -513,11 +522,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.2//EN",
-			"web-facesconfig_1_2.xsd"
-		),
-
-		new KeyValuePair(
 			"-//W3C//DTD XMLSCHEMA 200102//EN",
 			"XMLSchema.dtd"
 		)
@@ -536,8 +540,40 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/javaee_5.xsd",
+			"javaee_5.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/javaee_6.xsd",
+			"javaee_6.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/" +
+				"javaee_web_services_client_1_2.xsd",
+			"javaee_web_services_client_1_2.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/" +
+				"javaee_web_services_client_1_3.xsd",
+			"javaee_web_services_client_1_3.xsd"
+		),
+
+		new KeyValuePair(
 			"http://java.sun.com/xml/ns/j2ee/jsp_2_0.xsd",
 			"jsp_2_0.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/jsp_2_1.xsd",
+			"jsp_2_1.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/jsp_2_2.xsd",
+			"jsp_2_2.xsd"
 		),
 
 		new KeyValuePair(
@@ -553,6 +589,36 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd",
 			"web-app_2_4.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd",
+			"web-app_2_5.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd",
+			"web-app_3_0.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/web-common_3_0.xsd",
+			"web-common_3_0.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd",
+			"web-facesconfig_1_2.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd",
+			"web-facesconfig_2_0.xsd"
+		),
+
+		new KeyValuePair(
+			"http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd",
+			"web-facesconfig_2_1.xsd"
 		),
 
 		new KeyValuePair(

@@ -16,22 +16,22 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchOrganizationException" %>
-<%@ page import="com.liferay.portal.NoSuchUserGroupException" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserGroupDisplayTerms" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserGroupSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserGroupSearchTerms" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
+<%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
+page import="com.liferay.portal.NoSuchUserGroupException" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearchTerms" %><%@
+page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
+page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
+page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
+page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
+page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
+page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
 boolean filterManageableOrganizations = false;
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
 %>

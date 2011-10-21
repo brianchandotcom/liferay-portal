@@ -214,8 +214,6 @@ public interface MBBanModel extends BaseModel<MBBan>, GroupedModel {
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

@@ -94,6 +94,23 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</liferay-ui:error>
 </c:if>
 
+<liferay-ui:error exception="<%= LayoutTypeException.class %>">
+
+	<%
+	LayoutTypeException lte = (LayoutTypeException)errorException;
+
+	String type = BeanParamUtil.getString(selLayout, request, "type");
+	%>
+
+	<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
+		<liferay-ui:message arguments="<%= type %>" key="the-first-page-cannot-be-of-type-x" />
+	</c:if>
+
+	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
+		<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
+	</c:if>
+</liferay-ui:error>
+
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= !group.isLayoutPrototype() %>">
@@ -130,7 +147,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			}
 		%>
 
-			<aui:option label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
+			<aui:option disabled="<%= selLayout.isFirstParent() && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
 
 		<%
 		}

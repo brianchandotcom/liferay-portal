@@ -27,7 +27,7 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 		selenium.open("/web/staging-organization-wcd/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -43,21 +43,18 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//li[2]/span/a",
 			RuntimeVariables.replace("Staged Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Dropdown"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -73,7 +70,6 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
@@ -82,7 +78,7 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -97,12 +93,10 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 	}
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link JournalArticleResource}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.journal.model;
  * @see       JournalArticleResource
  * @generated
  */
-public class JournalArticleResourceWrapper implements JournalArticleResource {
+public class JournalArticleResourceWrapper implements JournalArticleResource,
+	ModelWrapper<JournalArticleResource> {
 	public JournalArticleResourceWrapper(
 		JournalArticleResource journalArticleResource) {
 		_journalArticleResource = journalArticleResource;
@@ -147,10 +150,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource {
 		return _journalArticleResource.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_journalArticleResource.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _journalArticleResource.getPrimaryKeyObj();
 	}
@@ -205,7 +204,14 @@ public class JournalArticleResourceWrapper implements JournalArticleResource {
 		_journalArticleResource.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public JournalArticleResource getWrappedJournalArticleResource() {
+		return _journalArticleResource;
+	}
+
+	public JournalArticleResource getWrappedModel() {
 		return _journalArticleResource;
 	}
 

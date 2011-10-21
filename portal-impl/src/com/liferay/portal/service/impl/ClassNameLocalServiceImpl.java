@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.spring.aop.Skip;
@@ -32,7 +34,15 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClassNameLocalServiceImpl extends ClassNameLocalServiceBaseImpl {
+public class ClassNameLocalServiceImpl
+	extends ClassNameLocalServiceBaseImpl implements CacheRegistryItem {
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		CacheRegistryUtil.register(this);
+	}
 
 	public ClassName addClassName(String value) throws SystemException {
 		ClassName className = classNamePersistence.fetchByValue(value);
@@ -108,6 +118,14 @@ public class ClassNameLocalServiceImpl extends ClassNameLocalServiceBaseImpl {
 			throw new RuntimeException(
 				"Unable to get class name from value " + value, e);
 		}
+	}
+
+	public String getRegistryName() {
+		return ClassNameLocalServiceImpl.class.getName();
+	}
+
+	public void invalidate() {
+		_classNames.clear();
 	}
 
 	private static ClassName _nullClassName = new ClassNameImpl();

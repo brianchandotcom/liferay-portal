@@ -25,7 +25,7 @@ import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * @author Connor McKay
@@ -64,9 +64,11 @@ public class ResourceBlockFinderImpl
 
 			ResourceBlockIdsBag resourceBlockIdsBag = new ResourceBlockIdsBag();
 
-			List<Object[]> list = q.list();
+			Iterator<Object[]> itr = q.iterate();
 
-			for (Object[] array : list) {
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
 				Long resourceBlockId = (Long)array[0];
 				Long actionIdsLong = (Long)array[1];
 

@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,8 +59,13 @@
 	<td>There are no pending tasks assigned to your roles.</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[6]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -79,13 +84,13 @@
 	<td>Approve</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/button[1]</td>
+	<td>assertText</td>
+	<td>//div[3]/span/span/button</td>
 	<td>OK</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/button[1]</td>
+	<td>//div[3]/span/span/button</td>
 	<td>OK</td>
 </tr>
 <tr>
@@ -95,7 +100,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
 	<td>There are no pending tasks assigned to you.</td>
 </tr>
 <tr>
@@ -106,7 +111,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Completed</td>
-	<td></td>
+	<td>Completed</td>
 </tr>
 <tr>
 	<td>assertText</td>

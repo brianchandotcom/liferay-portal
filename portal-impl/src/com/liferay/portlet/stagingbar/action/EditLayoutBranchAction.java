@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.stagingbar.action;
 
+import com.liferay.portal.LayoutBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -24,6 +25,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutBranchServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.layoutsadmin.action.EditLayoutsAction;
 
 import javax.portlet.ActionRequest;
@@ -68,13 +70,19 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 			if (SessionErrors.isEmpty(actionRequest)) {
 				SessionMessages.add(
 					actionRequest,
-					portletConfig.getPortletName() + ".doConfigure");
+					portletConfig.getPortletName() + ".doRefresh",
+					PortletKeys.STAGING_BAR);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException ||
+			if (e instanceof LayoutBranchNameException) {
+				SessionErrors.add(actionRequest, e.getClass().getName(), e);
+
+				sendRedirect(actionRequest, actionResponse);
+			}
+			else if (e instanceof PrincipalException ||
 				e instanceof SystemException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
@@ -136,6 +144,8 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 
 		LayoutBranchServiceUtil.deleteLayoutBranch(layoutBranchId);
 
+		SessionMessages.add(actionRequest, "pageVariationDeleted");
+
 		if (layoutBranchId == currentLayoutBranchId) {
 			SessionMessages.add(
 				actionRequest,
@@ -160,10 +170,14 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 		if (layoutBranchId <= 0) {
 			LayoutBranchServiceUtil.addLayoutBranch(
 				layoutRevisionId, name, description, false, serviceContext);
+
+			SessionMessages.add(actionRequest, "pageVariationAdded");
 		}
 		else {
 			LayoutBranchServiceUtil.updateLayoutBranch(
 				layoutBranchId, name, description, serviceContext);
+
+			SessionMessages.add(actionRequest, "pageVariationUpdated");
 		}
 	}
 

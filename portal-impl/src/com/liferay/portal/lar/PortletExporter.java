@@ -117,13 +117,13 @@ public class PortletExporter {
 		throws Exception {
 
 		try {
-			ImportExportThreadLocal.setPortletImportInProcess(true);
+			ImportExportThreadLocal.setPortletExportInProcess(true);
 
 			return doExportPortletInfoAsFile(
 				plid, groupId, portletId, parameterMap, startDate, endDate);
 		}
 		finally {
-			ImportExportThreadLocal.setPortletImportInProcess(false);
+			ImportExportThreadLocal.setPortletExportInProcess(false);
 		}
 	}
 

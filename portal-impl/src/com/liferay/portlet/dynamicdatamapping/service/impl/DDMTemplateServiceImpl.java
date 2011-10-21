@@ -35,8 +35,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	public DDMTemplate addTemplate(
 			long groupId, long structureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type, String language,
-			String script, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMPermission.check(
@@ -45,7 +45,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, structureId, nameMap, descriptionMap, type,
-			language, script, serviceContext);
+			mode, language, script, serviceContext);
 	}
 
 	public void deleteTemplate(long templateId)
@@ -66,23 +66,24 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		return ddmTemplateLocalService.getTemplate(templateId);
 	}
 
-	public List<DDMTemplate> getTemplates(long structureId, String type)
+	public List<DDMTemplate> getTemplates(
+			long structureId, String type, String mode)
 		throws SystemException {
 
-		return ddmTemplatePersistence.findByS_T(structureId, type);
+		return ddmTemplatePersistence.findByS_T_M(structureId, type, mode);
 	}
 
 	public DDMTemplate updateTemplate(
 			long templateId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type, String language,
-			String script, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMTemplatePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		return ddmTemplateLocalService.updateTemplate(
-			templateId, nameMap, descriptionMap, type, language, script,
+			templateId, nameMap, descriptionMap, type, mode, language, script,
 			serviceContext);
 	}
 

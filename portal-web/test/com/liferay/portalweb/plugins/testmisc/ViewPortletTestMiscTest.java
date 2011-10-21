@@ -25,7 +25,7 @@ public class ViewPortletTestMiscTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,13 +40,11 @@ public class ViewPortletTestMiscTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Test Misc Page",
 			RuntimeVariables.replace("Test Misc Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Portlet Request"),
-			selenium.getText("//div/h3[1]"));
+			selenium.getText("//div/div/h3[1]"));
 		assertEquals(RuntimeVariables.replace("Attribute Sharing"),
 			selenium.getText("//p[1]/a[1]"));
 		assertEquals(RuntimeVariables.replace("Remote User"),

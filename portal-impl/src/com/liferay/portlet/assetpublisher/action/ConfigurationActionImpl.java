@@ -101,6 +101,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					SessionMessages.add(
 						actionRequest,
 						portletConfig.getPortletName() + ".doConfigure");
+
+					SessionMessages.add(
+						actionRequest,
+						portletConfig.getPortletName() + ".doRefresh",
+						portletResource);
 				}
 
 				String redirect = PortalUtil.escapeRedirect(

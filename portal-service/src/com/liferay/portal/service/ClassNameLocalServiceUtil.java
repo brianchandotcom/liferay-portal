@@ -279,6 +279,14 @@ public class ClassNameLocalServiceUtil {
 		return getService().getClassNameId(value);
 	}
 
+	public static java.lang.String getRegistryName() {
+		return getService().getRegistryName();
+	}
+
+	public static void invalidate() {
+		getService().invalidate();
+	}
+
 	public static ClassNameLocalService getService() {
 		if (_service == null) {
 			_service = (ClassNameLocalService)PortalBeanLocatorUtil.locate(ClassNameLocalService.class.getName());

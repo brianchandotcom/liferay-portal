@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.CacheModel;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing BrowserTracker in entity cache.
  *
@@ -25,7 +27,8 @@ import com.liferay.portal.model.CacheModel;
  * @see BrowserTracker
  * @generated
  */
-public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker> {
+public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);

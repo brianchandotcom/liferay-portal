@@ -34,6 +34,7 @@ if (group.isStagingGroup()) {
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+long[] layoutIds = ParamUtil.getLongValues(request, "layoutIds");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
@@ -133,6 +134,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+						<portlet:param name="layoutIds" value="<%= StringUtil.merge(layoutIds) %>" />
 					</portlet:actionURL>
 
 					submitForm(form, '<%= exportPagesURL + "&etag=0" %>', false);

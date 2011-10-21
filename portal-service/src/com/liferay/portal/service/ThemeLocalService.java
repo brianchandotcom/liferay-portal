@@ -57,6 +57,14 @@ public interface ThemeLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ColorScheme fetchColorScheme(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Theme fetchTheme(long companyId,
+		java.lang.String themeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
 		boolean wapTheme)

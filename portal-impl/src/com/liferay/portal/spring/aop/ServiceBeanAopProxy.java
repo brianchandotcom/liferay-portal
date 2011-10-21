@@ -17,6 +17,7 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.annotation.Annotation;
@@ -35,6 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
+import org.springframework.aop.SpringProxy;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AdvisorChainFactory;
@@ -102,6 +104,11 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 
 		_advisedSupport = advisedSupport;
 		_advisorChainFactory = _advisedSupport.getAdvisorChainFactory();
+
+		Class<?>[] proxyInterfaces = _advisedSupport.getProxiedInterfaces();
+
+		_mergeSpringMethodInterceptors = !ArrayUtil.contains(
+			proxyInterfaces, SpringProxy.class);
 
 		ArrayList<MethodInterceptor> classLevelMethodInterceptors =
 			new ArrayList<MethodInterceptor>();
@@ -213,6 +220,13 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	private List<MethodInterceptor> _getMethodInterceptors(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
+		List<MethodInterceptor> methodInterceptors =
+			new ArrayList<MethodInterceptor>(_fullMethodInterceptors);
+
+		if (!_mergeSpringMethodInterceptors) {
+			return methodInterceptors;
+		}
+
 		List<Object> list =
 			_advisorChainFactory.getInterceptorsAndDynamicInterceptionAdvice(
 				_advisedSupport, serviceBeanMethodInvocation.getMethod(),
@@ -223,24 +237,24 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		while (itr.hasNext()) {
 			Object obj = itr.next();
 
-			if (!(obj instanceof MethodInterceptor)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Skipping unsupported interceptor type " +
-							obj.getClass());
-				}
-
-				itr.remove();
+			if (obj instanceof MethodInterceptor) {
+				continue;
 			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping unsupported interceptor type " + obj.getClass());
+			}
+
+			itr.remove();
 		}
 
-		List<MethodInterceptor> methodInterceptors =
-			new ArrayList<MethodInterceptor>(_fullMethodInterceptors);
+		if (list.isEmpty()) {
+			return methodInterceptors;
+		}
 
-		if (!list.isEmpty()) {
-			for (Object object : list) {
-				methodInterceptors.add((MethodInterceptor)object);
-			}
+		for (Object object : list) {
+			methodInterceptors.add((MethodInterceptor)object);
 		}
 
 		return methodInterceptors;
@@ -279,6 +293,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	private AdvisorChainFactory _advisorChainFactory;
 	private final List<MethodInterceptor> _classLevelMethodInterceptors;
 	private final List<MethodInterceptor> _fullMethodInterceptors;
+	private boolean _mergeSpringMethodInterceptors;
 
 	private static class MethodInterceptorsBag {
 

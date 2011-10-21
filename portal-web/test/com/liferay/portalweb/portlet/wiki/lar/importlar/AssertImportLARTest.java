@@ -25,7 +25,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Wiki Article#"),
 			selenium.getText("//div[@class='wiki-body']/h2"));
 		assertEquals(RuntimeVariables.replace("this is italics"),
@@ -62,7 +60,6 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Test"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Test Child Article#"),
 			selenium.getText("//div[@class='wiki-body']/h2"));
 		assertEquals(RuntimeVariables.replace("this is italics"),
@@ -78,7 +75,6 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Second Edited Wiki Test",
 			RuntimeVariables.replace("Second Edited Wiki Test"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Yes this is a second test article #"),
 			selenium.getText("//div[@class='wiki-body']/h4"));
@@ -92,7 +88,6 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
 			RuntimeVariables.replace("Link Me 1"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Hi Administrator! Hope you are well! Please link me to another page!"),
 			selenium.getText("xPath=(//div[@class='wiki-body']/p)[1]"));
@@ -105,7 +100,6 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//div[@class='wiki-body']/p/a)[2]",
 			RuntimeVariables.replace("Link Me 2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Hi Administrator!"),
 			selenium.getText("xPath=(//div[@class='wiki-body']/p)[1]"));
 		assertEquals(RuntimeVariables.replace(

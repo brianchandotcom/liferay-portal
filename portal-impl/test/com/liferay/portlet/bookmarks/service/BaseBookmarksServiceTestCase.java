@@ -14,9 +14,7 @@
 
 package com.liferay.portlet.bookmarks.service;
 
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.BaseServiceTestCase;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -33,7 +31,7 @@ public class BaseBookmarksServiceTestCase extends BaseServiceTestCase {
 
 		String name = "Test Entry";
 		String url = "http://www.liferay.com";
-		String comments = "This is a test entry.";
+		String description = "This is a test entry.";
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -41,7 +39,7 @@ public class BaseBookmarksServiceTestCase extends BaseServiceTestCase {
 		serviceContext.setAddGuestPermissions(true);
 
 		return BookmarksEntryServiceUtil.addEntry(
-			folder.getGroupId(), folder.getFolderId(), name, url, comments,
+			folder.getGroupId(), folder.getFolderId(), name, url, description,
 			serviceContext);
 	}
 
@@ -55,14 +53,11 @@ public class BaseBookmarksServiceTestCase extends BaseServiceTestCase {
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			TestPropsValues.LAYOUT_PLID);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(layout.getGroupId());
+		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
 
 		return BookmarksFolderServiceUtil.addFolder(
 			parentFolderId, name, description, serviceContext);

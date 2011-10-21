@@ -94,13 +94,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[3]/td/a</td>
-	<td>Scope Site</td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//tr[3]/td/a</td>
+	<td>link=Scope Site</td>
 	<td>Scope Site</td>
 </tr>
 <tr>
@@ -114,6 +109,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='permission-scope']</td>
+	<td>Scope Sitex</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='permission-scope']</td>
+	<td>Scope Sitex</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -123,7 +133,26 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>Add Entry</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[4]</td>
+	<td>Scope Site</td>
+</tr>
 </tbody></table>
 </body>
 </html>

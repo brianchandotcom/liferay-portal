@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.social.model.SocialEquityAssetEntry;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing SocialEquityAssetEntry in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.social.model.SocialEquityAssetEntry;
  * @see SocialEquityAssetEntry
  * @generated
  */
-public class SocialEquityAssetEntryCacheModel implements CacheModel<SocialEquityAssetEntry> {
+public class SocialEquityAssetEntryCacheModel implements CacheModel<SocialEquityAssetEntry>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

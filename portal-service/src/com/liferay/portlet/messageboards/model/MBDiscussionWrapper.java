@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBDiscussion}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBDiscussion
  * @generated
  */
-public class MBDiscussionWrapper implements MBDiscussion {
+public class MBDiscussionWrapper implements MBDiscussion,
+	ModelWrapper<MBDiscussion> {
 	public MBDiscussionWrapper(MBDiscussion mbDiscussion) {
 		_mbDiscussion = mbDiscussion;
 	}
@@ -155,10 +158,6 @@ public class MBDiscussionWrapper implements MBDiscussion {
 		return _mbDiscussion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbDiscussion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbDiscussion.getPrimaryKeyObj();
 	}
@@ -213,7 +212,14 @@ public class MBDiscussionWrapper implements MBDiscussion {
 		_mbDiscussion.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBDiscussion getWrappedMBDiscussion() {
+		return _mbDiscussion;
+	}
+
+	public MBDiscussion getWrappedModel() {
 		return _mbDiscussion;
 	}
 

@@ -124,7 +124,7 @@ if (organization != null) {
 			<%
 			long logoId = 0;
 
-			LayoutSet publicLayoutSet =	LayoutSetLocalServiceUtil.getLayoutSet(groupId, false);
+			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, false);
 			LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, true);
 
 			if (publicLayoutSet.getLogoId() > 0) {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -213,7 +214,8 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			groupId, articleId, version, false, content, structureId, images);
+			user, groupId, articleId, version, false, content, structureId,
+			images);
 
 		article.setResourcePrimKey(resourcePrimKey);
 		article.setGroupId(groupId);
@@ -584,10 +586,12 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
+		long[] assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
 		String[] assetTagNames = assetTagLocalService.getTagNames(
 			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
 
-		updateAsset(userId, newArticle, null, assetTagNames, null);
+		updateAsset(userId, newArticle, assetCategoryIds, assetTagNames, null);
 
 		return newArticle;
 	}
@@ -1967,7 +1971,7 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			groupId, articleId, article.getVersion(), incrementVersion,
+			user, groupId, articleId, article.getVersion(), incrementVersion,
 			content, structureId, images);
 
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
@@ -2620,72 +2624,82 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void format(
-			long groupId, String articleId, double version,
+			User user, long groupId, String articleId, double version,
 			boolean incrementVersion, Element root, Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
-		for (Element el : root.elements()) {
-			String elInstanceId = el.attributeValue(
+		for (Element element : root.elements()) {
+			String elInstanceId = element.attributeValue(
 				"instance-id", StringPool.BLANK);
-			String elName = el.attributeValue("name", StringPool.BLANK);
-			String elType = el.attributeValue("type", StringPool.BLANK);
+			String elName = element.attributeValue("name", StringPool.BLANK);
+			String elType = element.attributeValue("type", StringPool.BLANK);
 
 			if (elType.equals("image")) {
 				formatImage(
-					groupId, articleId, version, incrementVersion, el,
+					groupId, articleId, version, incrementVersion, element,
 					elInstanceId, elName, images);
 			}
-			/*else if (elType.equals("text_area")) {
-				Element dynamicContent = el.element("dynamic-content");
+			else if (elType.equals("text_area") || elType.equals("text") ||
+					 elType.equals("text_box")) {
 
-				String text = dynamicContent.getText();
+				Element dynamicContentElement = element.element(
+					"dynamic-content");
 
-				// LEP-1594
+				String dynamicContent = dynamicContentElement.getText();
 
-				try {
-					text = ParserUtils.trimTags(
-						text, new String[] {"script"}, false, true);
+				if (Validator.isNotNull(dynamicContent)) {
+					dynamicContent = SanitizerUtil.sanitize(
+						user.getCompanyId(), groupId, user.getUserId(),
+						JournalArticle.class.getName(), 0,
+						ContentTypes.TEXT_HTML, dynamicContent);
+
+					dynamicContentElement.setText(dynamicContent);
 				}
-				catch (ParserException pe) {
-					text = pe.getLocalizedMessage();
-				}
-				catch (UnsupportedEncodingException uee) {
-					text = uee.getLocalizedMessage();
-				}
+			}
 
-				dynamicContent.setText(text);
-			}*/
-
-			format(groupId, articleId, version, incrementVersion, el, images);
+			format(
+				user, groupId, articleId, version, incrementVersion, element,
+				images);
 		}
 	}
 
 	protected String format(
-			long groupId, String articleId, double version,
+			User user, long groupId, String articleId, double version,
 			boolean incrementVersion, String content, String structureId,
 			Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
-		if (Validator.isNotNull(structureId)) {
-			Document doc = null;
+		Document document = null;
 
-			try {
-				doc = SAXReaderUtil.read(content);
+		try {
+			document = SAXReaderUtil.read(content);
 
-				Element root = doc.getRootElement();
+			Element rootElement = document.getRootElement();
 
+			if (Validator.isNotNull(structureId)) {
 				format(
-					groupId, articleId, version, incrementVersion, root,
-					images);
+					user, groupId, articleId, version, incrementVersion,
+					rootElement, images);
+			}
+			else {
+				Element staticContentElement = rootElement.element(
+					"static-content");
 
-				content = DDMXMLUtil.formatXML(doc);
+				String staticContent = SanitizerUtil.sanitize(
+					user.getCompanyId(), groupId, user.getUserId(),
+					JournalArticle.class.getName(), 0, ContentTypes.TEXT_HTML,
+					staticContentElement.getText());
+
+				staticContentElement.setText(staticContent);
 			}
-			catch (DocumentException de) {
-				_log.error(de);
-			}
-			catch (IOException ioe) {
-				_log.error(ioe);
-			}
+
+			content = DDMXMLUtil.formatXML(document);
+		}
+		catch (DocumentException de) {
+			_log.error(de);
+		}
+		catch (IOException ioe) {
+			_log.error(ioe);
 		}
 
 		content = HtmlUtil.replaceMsWordCharacters(content);
@@ -3013,8 +3027,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			article.getTitle(), "[$ARTICLE_URL$]", articleURL,
-			"[$ARTICLE_VERSION$]", article.getVersion());
+			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
+			articleURL, "[$ARTICLE_VERSION$]", article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

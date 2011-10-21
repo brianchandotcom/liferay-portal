@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       OrgGroupPermission
  * @generated
  */
-public class OrgGroupPermissionWrapper implements OrgGroupPermission {
+public class OrgGroupPermissionWrapper implements OrgGroupPermission,
+	ModelWrapper<OrgGroupPermission> {
 	public OrgGroupPermissionWrapper(OrgGroupPermission orgGroupPermission) {
 		_orgGroupPermission = orgGroupPermission;
 	}
@@ -129,10 +130,6 @@ public class OrgGroupPermissionWrapper implements OrgGroupPermission {
 		return _orgGroupPermission.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_orgGroupPermission.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _orgGroupPermission.getPrimaryKeyObj();
 	}
@@ -192,7 +189,14 @@ public class OrgGroupPermissionWrapper implements OrgGroupPermission {
 		return _orgGroupPermission.containsOrganization(organizations);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public OrgGroupPermission getWrappedOrgGroupPermission() {
+		return _orgGroupPermission;
+	}
+
+	public OrgGroupPermission getWrappedModel() {
 		return _orgGroupPermission;
 	}
 

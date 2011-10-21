@@ -16,17 +16,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,8 +59,13 @@
 	<td>Never</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[6]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//td[6]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -79,13 +84,13 @@
 	<td>Assign to Me</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div/button[1]</td>
+	<td>assertText</td>
+	<td>//div[3]/span/span/button</td>
 	<td>OK</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/button[1]</td>
+	<td>//div[3]/span/span/button</td>
 	<td>OK</td>
 </tr>
 <tr>

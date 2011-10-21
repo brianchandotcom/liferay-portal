@@ -25,7 +25,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,14 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[@id='add-page']/a/span",
 			RuntimeVariables.replace(""));
 		selenium.type("new_page",
 			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Save", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,10 +63,8 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

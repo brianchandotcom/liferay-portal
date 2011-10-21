@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       PasswordPolicy
  * @generated
  */
-public class PasswordPolicyWrapper implements PasswordPolicy {
+public class PasswordPolicyWrapper implements PasswordPolicy,
+	ModelWrapper<PasswordPolicy> {
 	public PasswordPolicyWrapper(PasswordPolicy passwordPolicy) {
 		_passwordPolicy = passwordPolicy;
 	}
@@ -751,10 +752,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 		return _passwordPolicy.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_passwordPolicy.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _passwordPolicy.getPrimaryKeyObj();
 	}
@@ -808,7 +805,14 @@ public class PasswordPolicyWrapper implements PasswordPolicy {
 		_passwordPolicy.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PasswordPolicy getWrappedPasswordPolicy() {
+		return _passwordPolicy;
+	}
+
+	public PasswordPolicy getWrappedModel() {
 		return _passwordPolicy;
 	}
 

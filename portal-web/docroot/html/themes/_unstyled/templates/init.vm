@@ -58,6 +58,15 @@
 #set ($company_logo = $theme_display.getCompanyLogo())
 #set ($company_logo_height = $theme_display.getCompanyLogoHeight())
 #set ($company_logo_width = $theme_display.getCompanyLogoWidth())
+
+#set($logo_css_class = "logo")
+
+#if (($company.getLogoId() == 0) && !$layout.layoutSet.isLogo())
+	#set($logo_css_class = "$logo_css_class default-logo")
+#else
+	#set($logo_css_class = "$logo_css_class custom-logo")
+#end
+
 #set ($company_url = $theme_display.getURLHome())
 
 #if (!$request.isRequestedSessionIdFromCookie())
@@ -196,17 +205,17 @@
 
 	#set ($community_name = $site_name)
 
-	#if	($page_group.getName() == "Guest")
+	#if ($page_group.getName() == "Guest")
 		#set ($css_class = $css_class + " guest-site")
 	#end
 
-	#if	($is_signed_in)
+	#if ($is_signed_in)
 		#set ($css_class = $css_class + " signed-in")
 	#else
 		#set ($css_class = $css_class + " signed-out")
 	#end
 
-	#if	($layout.isPublicLayout())
+	#if ($layout.isPublicLayout())
 		#set ($css_class = $css_class + " public-page")
 	#else
 		#set ($css_class = $css_class + " private-page")

@@ -131,6 +131,7 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	 * @param locale the locale of the language
 	 * @return the localized description of this polls choice
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
@@ -140,6 +141,7 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this polls choice. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
@@ -148,6 +150,7 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	 * @param languageId the ID of the language
 	 * @return the localized description of this polls choice
 	 */
+	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
@@ -157,7 +160,14 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this polls choice
 	 */
+	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDescriptionCurrentLanguageId();
+
+	@AutoEscape
+	public String getDescriptionCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized descriptions of this polls choice.
@@ -191,6 +201,8 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	public void setDescription(String description, Locale locale,
 		Locale defaultLocale);
 
+	public void setDescriptionCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized descriptions of this polls choice from the map of locales and localized descriptions.
 	 *
@@ -216,8 +228,6 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

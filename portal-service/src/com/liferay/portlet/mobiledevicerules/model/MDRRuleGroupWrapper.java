@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRuleGroup}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.mobiledevicerules.model;
  * @see       MDRRuleGroup
  * @generated
  */
-public class MDRRuleGroupWrapper implements MDRRuleGroup {
+public class MDRRuleGroupWrapper implements MDRRuleGroup,
+	ModelWrapper<MDRRuleGroup> {
 	public MDRRuleGroupWrapper(MDRRuleGroup mdrRuleGroup) {
 		_mdrRuleGroup = mdrRuleGroup;
 	}
@@ -270,6 +273,14 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 		return _mdrRuleGroup.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _mdrRuleGroup.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _mdrRuleGroup.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this m d r rule group.
 	*
@@ -308,6 +319,10 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_mdrRuleGroup.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_mdrRuleGroup.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -385,6 +400,14 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 		return _mdrRuleGroup.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _mdrRuleGroup.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _mdrRuleGroup.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this m d r rule group.
 	*
@@ -424,6 +447,10 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_mdrRuleGroup.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_mdrRuleGroup.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -466,10 +493,6 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 
 	public boolean isEscapedModel() {
 		return _mdrRuleGroup.isEscapedModel();
-	}
-
-	public void setEscapedModel(boolean escapedModel) {
-		_mdrRuleGroup.setEscapedModel(escapedModel);
 	}
 
 	public java.io.Serializable getPrimaryKeyObj() {
@@ -531,7 +554,14 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup {
 		return _mdrRuleGroup.getRules();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MDRRuleGroup getWrappedMDRRuleGroup() {
+		return _mdrRuleGroup;
+	}
+
+	public MDRRuleGroup getWrappedModel() {
 		return _mdrRuleGroup;
 	}
 

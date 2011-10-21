@@ -25,12 +25,12 @@ public class AssertEditAPEntryTest extends BaseTestCase {
 		selenium.open("/web/staging/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Asset Publisher Test Page")) {
+				if (selenium.isElementPresent("link=Site Name")) {
 					break;
 				}
 			}
@@ -40,30 +40,15 @@ public class AssertEditAPEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Asset Publisher Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[1]/span/a/img")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//div[1]/span/a/img"));
-		assertTrue(selenium.isElementPresent("link=Edit AP Blogs Entry Title"));
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isElementPresent("link=Edit Blogs Entry Title"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//div[@class='asset-summary']"));
 	}
 }

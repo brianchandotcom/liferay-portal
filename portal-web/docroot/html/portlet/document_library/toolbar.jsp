@@ -29,50 +29,57 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 
 <aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
 
-<liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" disabled="<%= true %>" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" disabled="<%= true %>" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	String taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";
+	Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
-	<liferay-ui:icon
-		image="undo"
-		message="cancel-checkout"
-		url="<%= taglibUrl %>"
-	/>
+	<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
+
+		<%
+		String taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CANCEL_CHECKOUT + "')";
+		%>
+
+		<liferay-ui:icon
+			image="undo"
+			message="cancel-checkout"
+			url="<%= taglibUrl %>"
+		/>
+
+		<%
+		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CHECKIN + "')";
+		%>
+
+		<liferay-ui:icon
+			image="unlock"
+			message="checkin"
+			url="<%= taglibUrl %>"
+		/>
+
+		<%
+		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CHECKOUT + "')";
+		%>
+
+		<liferay-ui:icon
+			image="lock"
+			message="checkout"
+			url="<%= taglibUrl %>"
+		/>
+
+		<%
+		taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.MOVE + "')";
+		%>
+
+		<liferay-ui:icon
+			image="submit"
+			message="move"
+			url="<%= taglibUrl %>"
+		/>
+	</c:if>
 
 	<%
-	taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CHECKIN + "')";
-	%>
-
-	<liferay-ui:icon
-		image="unlock"
-		message="checkin"
-		url="<%= taglibUrl %>"
-	/>
-
-	<%
-	taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.CHECKOUT + "')";
-	%>
-
-	<liferay-ui:icon
-		image="lock"
-		message="checkout"
-		url="<%= taglibUrl %>"
-	/>
-
-	<%
-	taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.MOVE + "')";
-	%>
-
-	<liferay-ui:icon
-		image="submit"
-		message="move"
-		url="<%= taglibUrl %>"
-	/>
-
-	<%
-	taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.DELETE + "')";
+	String taglibUrl = "javascript:" + renderResponse.getNamespace() + "editFileEntry('" + Constants.DELETE + "')";
 	%>
 
 	<liferay-ui:icon-delete
@@ -119,7 +126,6 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 		Liferay.Util.openWindow(
 			{
 				dialog: {
-					stack: false,
 					width:820
 				},
 				title: '<liferay-ui:message key="document-types" />',
@@ -132,7 +138,6 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 		Liferay.Util.openDDMPortlet(
 			{
 				dialog: {
-					stack: false,
 					width:820
 				},
 				showManageTemplates: 'false',
@@ -143,24 +148,4 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 			}
 		);
 	}
-</aui:script>
-
-<aui:script use="aui-base">
-	var allRowIds = A.one('#<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox');
-
-	allRowIds.on(
-		'click',
-		function(event) {
-			var documentContainer = A.one('.document-container');
-			var documentDisplayStyle = A.all('.document-display-style.selectable')
-
-			Liferay.Util.checkAll(documentContainer, '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + Folder.class.getName() %>Checkbox', event.currentTarget);
-			Liferay.Util.checkAll(documentContainer, '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + FileEntry.class.getName() %>Checkbox', event.currentTarget);
-			Liferay.Util.checkAll(documentContainer, '<portlet:namespace /><%= RowChecker.ROW_IDS + StringPool.UNDERLINE + DLFileShortcut.class.getName() %>Checkbox', event.currentTarget);
-
-			<portlet:namespace />toggleActionsButton();
-
-			documentDisplayStyle.toggleClass('selected', allRowIds.attr('checked'));
-		}
-	);
 </aui:script>

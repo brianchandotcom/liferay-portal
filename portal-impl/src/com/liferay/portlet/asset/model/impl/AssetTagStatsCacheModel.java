@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.asset.model.AssetTagStats;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing AssetTagStats in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.asset.model.AssetTagStats;
  * @see AssetTagStats
  * @generated
  */
-public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats> {
+public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

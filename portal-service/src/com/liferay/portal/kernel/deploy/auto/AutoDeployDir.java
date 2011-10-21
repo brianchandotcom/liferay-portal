@@ -215,8 +215,9 @@ public class AutoDeployDir {
 			String fileName = file.getName().toLowerCase();
 
 			if ((file.isFile()) &&
-				(fileName.endsWith(".lpkg") || fileName.endsWith(".war") ||
-				 fileName.endsWith(".xml") || fileName.endsWith(".zip"))) {
+				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||
+				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
+				 fileName.endsWith(".zip"))) {
 
 				processFile(file);
 			}

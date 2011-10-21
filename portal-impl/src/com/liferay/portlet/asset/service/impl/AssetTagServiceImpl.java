@@ -187,8 +187,19 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		return filterTags(assetTagLocalService.getTags(className, classPK));
 	}
 
-	public int getTagsCount(
-			long groupId, String name, String[] tagProperties)
+	public int getTagsCount(long groupId, long classNameId, String name)
+		throws SystemException {
+
+		return assetTagFinder.filterCountByG_C_N(groupId, classNameId, name);
+	}
+
+	public int getTagsCount(long groupId, String name)
+		throws SystemException {
+
+		return assetTagFinder.filterCountByG_N(groupId, name);
+	}
+
+	public int getTagsCount(long groupId, String name, String[] tagProperties)
 		throws SystemException {
 
 		return assetTagFinder.filterCountByG_N_P(

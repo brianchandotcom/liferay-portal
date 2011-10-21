@@ -14,109 +14,99 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/div[3]/div/ul/li[5]/a</td>
-	<td>ControlPanel</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Sites</td>
-	<td></td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sites</td>
-	<td></td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
-	<td>Staging</td>
+	<td>//input[@id='_134_name']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//strong/a</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Manage Pages</td>
+	<td>click</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//ul[1]/li[3]/span/span/a</td>
-	<td>Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[1]/li[3]/span/span/a</td>
-	<td>Settings</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//li[7]/span/span/a</td>
+	<td>assertPartialText</td>
+	<td>//a[@id='_165_stagingLink']</td>
 	<td>Staging</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>_134_stagingType</td>
-	<td>label=None</td>
+	<td>clickAt</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td>Staging</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_165_none']</td>
+	<td>None</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_165_none']</td>
+	<td>None</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to deactivate staging for Staging?</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
-	<td>Your request completed successfully.</td>
+	<td>//td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertNotText</td>
-	<td>//li[4]/span</td>
-	<td>Staging (Staging)</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Site Name (Staging)</td>
 </tr>
 
 </tbody></table>

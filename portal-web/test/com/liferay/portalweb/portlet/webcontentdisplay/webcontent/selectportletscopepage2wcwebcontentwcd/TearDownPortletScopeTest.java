@@ -29,28 +29,6 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 
-				for (int second = 0;; second++) {
-					if (second >= 60) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Site Name",
-					RuntimeVariables.replace("Site Name"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-
 				boolean page1Present = selenium.isElementPresent(
 						"link=Web Content Display Test Page1");
 
@@ -63,14 +41,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Test Page1",
 					RuntimeVariables.replace("Web Content Display Test Page1"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -86,7 +63,6 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -94,7 +70,7 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -109,16 +85,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_86_scopeType']",
 					RuntimeVariables.replace("label=Default"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -134,14 +107,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Test Page2",
 					RuntimeVariables.replace("Web Content Display Test Page2"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -157,7 +129,6 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -165,7 +136,7 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -180,16 +151,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_86_scopeType']",
 					RuntimeVariables.replace("label=Default"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -205,14 +173,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Test Page3",
 					RuntimeVariables.replace("Web Content Display Test Page3"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -228,7 +195,6 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -236,7 +202,7 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -251,16 +217,13 @@ public class TearDownPortletScopeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_86_scopeType']",
 					RuntimeVariables.replace("label=Default"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 			case 100:

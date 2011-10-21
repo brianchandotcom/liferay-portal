@@ -26,7 +26,7 @@ public class SearchMessageBoardsTest extends BaseTestCase {
 		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,16 +41,13 @@ public class SearchMessageBoardsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("layout_configuration_content",
 			RuntimeVariables.replace(""));
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("layout_configuration_content",
 			RuntimeVariables.replace("m"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,7 +62,6 @@ public class SearchMessageBoardsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div[@title='Message Boards']"));
 	}
 }

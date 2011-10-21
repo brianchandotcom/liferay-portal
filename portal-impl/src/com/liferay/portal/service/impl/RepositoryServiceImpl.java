@@ -128,7 +128,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 		if (classNameId == getDefaultClassNameId()) {
 			localRepositoryImpl = new LiferayLocalRepository(
-				repositoryService, dlFileEntryLocalService, dlFileEntryService,
+				repositoryService, dlAppHelperLocalService,
+				dlFileEntryLocalService, dlFileEntryService,
 				dlFileVersionLocalService, dlFileVersionService,
 				dlFolderLocalService, dlFolderService, repositoryId);
 		}
@@ -161,8 +162,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		}
 
 		localRepositoryImpl = new LiferayLocalRepository(
-			repositoryService, dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
+			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
+			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, folderId, fileEntryId,
 			fileVersionId);
 
@@ -209,7 +210,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				PortalUtil.getClassNameId(LiferayRepository.class.getName())) {
 
 			repositoryImpl = new LiferayRepository(
-				repositoryService, dlFileEntryLocalService, dlFileEntryService,
+				repositoryService, dlAppHelperLocalService,
+				dlFileEntryLocalService, dlFileEntryService,
 				dlFileVersionLocalService, dlFileVersionService,
 				dlFolderLocalService, dlFolderService, repositoryId);
 		}
@@ -239,8 +241,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		}
 
 		repositoryImpl = new LiferayRepository(
-			repositoryService, dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
+			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
+			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, folderId, fileEntryId,
 			fileVersionId);
 
@@ -516,6 +518,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		long repositoryId, Repository repository,
 		BaseRepository baseRepository) {
 
+		baseRepository.setAssetEntryLocalService(assetEntryLocalService);
 		baseRepository.setCompanyId(repository.getCompanyId());
 		baseRepository.setCompanyLocalService(companyLocalService);
 		baseRepository.setCounterLocalService(counterLocalService);

@@ -4,6 +4,7 @@ Cache
 ClassName
 Contact
 Group
+Index
 Lock
 Organization
 Permission

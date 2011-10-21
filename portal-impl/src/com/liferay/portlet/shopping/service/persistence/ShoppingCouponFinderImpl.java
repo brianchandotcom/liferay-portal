@@ -72,7 +72,7 @@ public class ShoppingCouponFinderImpl
 			qPos.add(discountType);
 			qPos.add(discountType);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

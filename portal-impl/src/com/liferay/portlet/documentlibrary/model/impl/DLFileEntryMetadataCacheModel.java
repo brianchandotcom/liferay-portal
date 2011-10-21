@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing DLFileEntryMetadata in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
  * @see DLFileEntryMetadata
  * @generated
  */
-public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMetadata> {
+public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMetadata>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

@@ -27,9 +27,9 @@ public class ActivateStagingTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddCommunitiesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
-		testSuite.addTestSuite(TearDownCommunityTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.asset.model.AssetLink;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see AssetLink
  * @generated
  */
-public class AssetLinkCacheModel implements CacheModel<AssetLink> {
+public class AssetLinkCacheModel implements CacheModel<AssetLink>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

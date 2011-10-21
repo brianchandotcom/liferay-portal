@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Country;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Country in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.Country;
  * @see Country
  * @generated
  */
-public class CountryCacheModel implements CacheModel<Country> {
+public class CountryCacheModel implements CacheModel<Country>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);

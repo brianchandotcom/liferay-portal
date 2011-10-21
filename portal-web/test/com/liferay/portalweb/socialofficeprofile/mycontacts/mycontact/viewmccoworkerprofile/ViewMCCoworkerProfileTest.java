@@ -29,7 +29,7 @@ public class ViewMCCoworkerProfileTest extends BaseTestCase {
 			selenium.getText("//h1/span[2]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -44,7 +44,6 @@ public class ViewMCCoworkerProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//span/input"));
 		assertTrue(selenium.isVisible("//div/a/img"));
 		selenium.mouseOver("//div/a/img");
@@ -57,7 +56,6 @@ public class ViewMCCoworkerProfileTest extends BaseTestCase {
 		selenium.clickAt("//div/a/img",
 			RuntimeVariables.replace("Social Office Coworker"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//span/input"));
 		assertTrue(selenium.isVisible("//div/a/img"));
 		selenium.mouseOver("//div/a/img");

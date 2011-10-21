@@ -26,7 +26,7 @@ public class ViewConfigurePortletAbstractsIGImageAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class ViewConfigurePortletAbstractsIGImageAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -57,7 +55,6 @@ public class ViewConfigurePortletAbstractsIGImageAPTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Read More About IG Folder Image Name \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isElementPresent(
@@ -67,7 +64,6 @@ public class ViewConfigurePortletAbstractsIGImageAPTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View Album \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='IG Folder Image Name - ']"));
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),

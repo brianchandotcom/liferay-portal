@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MembershipRequest;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see MembershipRequest
  * @generated
  */
-public class MembershipRequestCacheModel implements CacheModel<MembershipRequest> {
+public class MembershipRequestCacheModel implements CacheModel<MembershipRequest>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);

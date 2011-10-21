@@ -4,9 +4,25 @@ AUI().add(
 		var AObject = A.Object;
 		var Lang = A.Lang;
 
+		var formatSelectorNS = A.Node.formatSelectorNS;
+
 		var owns = AObject.owns;
 
 		var History = Liferay.HistoryManager;
+
+		var ATTR_CHECKED = 'checked';
+
+		var CSS_ACTIVE_AREA = 'active-area';
+
+		var CSS_ACTIVE_AREA_PROXY = 'active-area-proxy';
+
+		var CSS_DOCUMENT_DISPLAY_STYLE = '.document-display-style';
+
+		var CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE = '.document-display-style.selectable';
+
+		var CSS_DOCUMENT_DISPLAY_STYLE_SELECTED = '.document-display-style.selected';
+
+		var CSS_RESULT_ROW = '.results-row';
 
 		var CSS_SELECTED = 'selected';
 
@@ -14,7 +30,11 @@ AUI().add(
 
 		var DATA_REFRESH_FOLDERS = 'data-refresh-folders';
 
+		var DISPLAY_STYLE_LIST = 'list';
+
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
+
+		var DOCUMENT_LIBRARY_GROUP = 'document-library';
 
 		var REFRESH_FOLDERS = 'refreshFolders';
 
@@ -24,11 +44,19 @@ AUI().add(
 
 		var STR_ACTIVE = 'active';
 
+		var STR_BLANK = '';
+
+		var STR_CLICK = 'click';
+
 		var STR_DATA = 'data';
+
+		var STR_DRAG_NODE = 'dragNode';
 
 		var STR_ENTRY_END = 'entryEnd';
 
 		var STR_ENTRY_START = 'entryStart';
+
+		var STR_FOCUS = 'focus';
 
 		var STR_FOLDER_CONTAINER = 'folderContainer';
 
@@ -38,9 +66,21 @@ AUI().add(
 
 		var STR_ICON = 'icon';
 
+		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
+
+		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcutCheckbox';
+
+		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolderCheckbox';
+
+		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntryCheckbox';
+
 		var STRUTS_ACTION = 'struts_action';
 
-		var SRC_HISTORY = 0;
+		var SRC_DISPLAY_STYLE_BUTTONS = 0;
+
+		var SRC_ENTRIES_PAGINATOR = 1;
+
+		var SRC_HISTORY = 2;
 
 		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
 
@@ -52,34 +92,36 @@ AUI().add(
 
 		var VIEW_FILE_ENTRY_SEARCH = 'viewFileEntrySearch';
 
-        var VIEW_SORT_BUTTON = 'viewSortButton';
+		var VIEW_SORT_BUTTON = 'viewSortButton';
 
 		var DocumentLibrary = A.Component.create(
 			{
-				NAME: 'documentlibrary',
+				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
+
+				NAME: 'documentlibrary',
 
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
 
-						var namespace = config.namespace;
-
-						var documentLibraryContainer = A.one('#' + namespace + 'documentLibraryContainer');
+						var documentLibraryContainer = instance.byId('documentLibraryContainer');
 
 						instance._documentLibraryContainer = documentLibraryContainer;
 
-						instance._dataRetrieveFailure = namespace + 'dataRetrieveFailure';
-						instance._eventDataRequest = namespace + 'dataRequest';
-						instance._eventDataRetrieveSuccess = namespace + 'dataRetrieveSuccess';
-						instance._eventPageLoaded = namespace + 'pageLoaded';
+						instance._dataRetrieveFailure = instance.ns('dataRetrieveFailure');
+						instance._eventDataRequest = instance.ns('dataRequest');
+						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
+						instance._eventPageLoaded = instance.ns('pageLoaded');
 
-						instance._displayStyleToolbarNode = A.one('#' + namespace + DISPLAY_STYLE_TOOLBAR);
-						instance._entriesContainer = A.one('#' + namespace + 'documentContainer');
+						instance._displayStyleToolbarNode = instance.byId(DISPLAY_STYLE_TOOLBAR);
+						instance._entriesContainer = instance.byId('documentContainer');
 
-						instance._displayStyle = namespace + 'displayStyle';
-						instance._folderId = namespace + 'folderId';
+						instance._selectAllCheckbox = instance.byId('allRowIdsCheckbox');
+
+						instance._displayStyle = instance.ns('displayStyle');
+						instance._folderId = instance.ns('folderId');
 
 						var entryPage = 0;
 
@@ -91,11 +133,11 @@ AUI().add(
 							{
 								circular: false,
 								containers: '.document-entries-paginator',
-								firstPageLinkLabel: '<<',
-								lastPageLinkLabel: '>>',
-								nextPageLinkLabel: '>',
+								firstPageLinkLabel: '&lt;&lt;',
+								lastPageLinkLabel: '&gt;&gt;',
+								nextPageLinkLabel: '&gt;',
 								page: entryPage,
-								prevPageLinkLabel: '<',
+								prevPageLinkLabel: '&lt;',
 								rowsPerPage: config.entryRowsPerPage,
 								rowsPerPageOptions: config.entryRowsPerPageOptions,
 								total: config.entriesTotal
@@ -115,11 +157,11 @@ AUI().add(
 								alwaysVisible: false,
 								circular: false,
 								containers: '.folder-paginator',
-								firstPageLinkLabel: '<<',
-								lastPageLinkLabel: '>>',
-								nextPageLinkLabel: '>',
+								firstPageLinkLabel: '&lt;&lt;',
+								lastPageLinkLabel: '&gt;&gt;',
+								nextPageLinkLabel: '&gt;',
 								page: folderPage,
-								prevPageLinkLabel: '<',
+								prevPageLinkLabel: '&lt;',
 								rowsPerPage: config.folderRowsPerPage,
 								rowsPerPageOptions: config.folderRowsPerPageOptions,
 								total: config.foldersTotal
@@ -128,27 +170,32 @@ AUI().add(
 
 						folderPaginator.on('changeRequest', instance._onFolderPaginatorChangeRequest, instance);
 
-						Liferay.on(instance._eventDataRequest, instance._updatePaginatorValues, instance);
+						Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance);
 						Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance);
 						Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance);
 
 						Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance);
 
+						var folderContainer = instance.byId(STR_FOLDER_CONTAINER);
+
 						instance._listView = new Liferay.ListView(
 							{
-								boundingBox: '#' + namespace + 'listViewContainer',
+								boundingBox: formatSelectorNS(instance.NS, '#listViewContainer'),
+								cssClass: 'folder-display-style lfr-list-view-content',
 								itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
-								contentBox: '#' + namespace + STR_FOLDER_CONTAINER,
-								srcNode: '#' + namespace + STR_FOLDER_CONTAINER
+								contentBox: folderContainer,
+								srcNode: folderContainer
 							}
 						).render();
+
+						instance._listView.after('transitionComplete', instance._initDropTargets, instance);
 
 						instance._listView.after('itemChange', instance._afterListViewItemChange, instance);
 
 						documentLibraryContainer.delegate(
-							'click',
+							STR_CLICK,
 							A.bind(instance._onDocumentLibraryContainerClick, instance),
-							'a[data-folder=true], #' + namespace + 'breadcrumbContainer a'
+							formatSelectorNS(instance.NS, '#documentContainer a[data-folder=true], #breadcrumbContainer a')
 						);
 
 						History.after('stateChange', instance._afterStateChange, instance);
@@ -156,10 +203,19 @@ AUI().add(
 						documentLibraryContainer.plug(A.LoadingMask);
 
 						instance._config = config;
+
+						instance._displayViews = config.displayViews;
+
 						instance._entryPaginator = entryPaginator;
 						instance._folderPaginator = folderPaginator;
 
-						instance._namespace = namespace;
+						instance._initHover();
+
+						instance._initDragDrop();
+
+						instance._initSelectAllCheckbox();
+
+						instance._initToggleSelect();
 
 						instance._restoreState();
 					},
@@ -189,7 +245,6 @@ AUI().add(
 						var requestParams = event.requestParams;
 
 						var config = instance._config;
-						var namespace = instance._namespace;
 
 						var data = {};
 
@@ -199,7 +254,7 @@ AUI().add(
 
 						data[displayStyle] = History.get(displayStyle) || config.displayStyle;
 
-						data[namespace + 'viewFolders'] = true;
+						data[instance.ns('viewFolders')] = true;
 
 						A.mix(data, requestParams, true);
 
@@ -219,7 +274,7 @@ AUI().add(
 					_afterStateChange: function(event) {
 						var instance = this;
 
-						var namespace = instance._namespace;
+						var namespace = instance.NS;
 
 						var requestParams = {};
 
@@ -276,48 +331,46 @@ AUI().add(
 
 						var config = instance._config;
 
-						var namespace = instance._namespace;
-
 						var requestParams = {};
 
-						requestParams[namespace + STRUTS_ACTION] = config.strutsAction;
-						requestParams[namespace + STR_ENTRY_END] = config.entryRowsPerPage || instance._entryPaginator.get('rowsPerPage');
-						requestParams[namespace + STR_ENTRY_START] = 0;
-						requestParams[namespace + STR_FOLDER_END] = config.folderRowsPerPage || instance._folderPaginator.get('rowsPerPage');
-						requestParams[namespace + STR_FOLDER_START] = 0;
-						requestParams[namespace + 'refreshEntries'] = dataRefreshEntries;
-						requestParams[namespace + VIEW_ADD_BUTTON] = true;
-						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;
-						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
-						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
-                        requestParams[namespace + VIEW_SORT_BUTTON] = true;
+						requestParams[instance.ns(STRUTS_ACTION)] = config.strutsAction;
+						requestParams[instance.ns(STR_ENTRY_END)] = config.entryRowsPerPage || instance._entryPaginator.get('rowsPerPage');
+						requestParams[instance.ns(STR_ENTRY_START)] = 0;
+						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get('rowsPerPage');
+						requestParams[instance.ns(STR_FOLDER_START)] = 0;
+						requestParams[instance.ns('refreshEntries')] = dataRefreshEntries;
+						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
+						requestParams[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
+						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
+						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
+						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
 
 						if (dataFolderId) {
 							requestParams[instance._folderId] = dataFolderId;
 						}
 
 						if (dataNavigation) {
-							requestParams[namespace + 'navigation'] = dataNavigation;
+							requestParams[instance.ns('navigation')] = dataNavigation;
 						}
 
 						if (dataRefreshEntries) {
-							requestParams[namespace + VIEW_ENRTIES] = dataRefreshEntries;
+							requestParams[instance.ns(VIEW_ENRTIES)] = dataRefreshEntries;
 						}
 
 						if (dataShowSiblings) {
-							requestParams[namespace + SHOW_SIBLINGS] = dataShowSiblings;
+							requestParams[instance.ns(SHOW_SIBLINGS)] = dataShowSiblings;
 						}
 
 						if (dataShowRootFolder) {
-							requestParams[namespace + 'showRootFolder'] = dataShowRootFolder;
+							requestParams[instance.ns('showRootFolder')] = dataShowRootFolder;
 						}
 
 						if (dataFileEntryTypeId) {
-							requestParams[namespace + 'fileEntryTypeId'] = dataFileEntryTypeId;
+							requestParams[instance.ns('fileEntryTypeId')] = dataFileEntryTypeId;
 						}
 
 						if (dataRefreshFolders) {
-							requestParams[namespace + REFRESH_FOLDERS] = dataRefreshFolders;
+							requestParams[instance.ns(REFRESH_FOLDERS)] = dataRefreshFolders;
 						}
 
 						Liferay.fire(
@@ -326,6 +379,18 @@ AUI().add(
 								requestParams: requestParams
 							}
 						);
+					},
+
+					_getDisplayStyle: function(style) {
+						var instance = this;
+
+						var displayStyle = History.get(instance._displayStyle) || instance._config.displayStyle;
+
+						if (style) {
+							displayStyle = (displayStyle == style);
+						}
+
+						return displayStyle;
 					},
 
 					_getIORequest: function() {
@@ -353,6 +418,27 @@ AUI().add(
 						return ioRequest;
 					},
 
+					_getMoveText: function(selectedItemsCount, targetAvailable) {
+						var moveText = STR_BLANK;
+
+						if (targetAvailable) {
+							moveText = Liferay.Language.get('x-item-is-ready-to-be-moved-to-x');
+
+							if (selectedItemsCount > 1) {
+								moveText = Liferay.Language.get('x-items-are-ready-to-be-moved-to-x');
+							}
+						}
+						else {
+							moveText = Liferay.Language.get('x-item-is-ready-to-be-moved');
+
+							if (selectedItemsCount > 1) {
+								moveText = Liferay.Language.get('x-items-are-ready-to-be-moved');
+							}
+						}
+
+						return moveText;
+					},
+
 					_getResultsStartEnd: function(paginator, page, rowsPerPage) {
 						var instance = this;
 
@@ -368,6 +454,88 @@ AUI().add(
 						var end = start + rowsPerPage;
 
 						return [start, end];
+					},
+
+					_initDragDrop: function() {
+						var instance = this;
+
+						var ddHandler = new A.DD.Delegate(
+							{
+								container: instance._documentLibraryContainer,
+								nodes: CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE,
+								on: {
+									'drag:drophit': A.bind(instance._onDragDropHit, instance),
+									'drag:enter': A.bind(instance._onDragEnter, instance),
+									'drag:exit': A.bind(instance._onDragExit, instance),
+									'drag:start': A.bind(instance._onDragStart, instance)
+								}
+							}
+						);
+
+						var dd = ddHandler.dd;
+
+						dd.set('offsetNode', false);
+
+						dd.removeInvalid('a');
+
+						dd.set('groups', DOCUMENT_LIBRARY_GROUP);
+
+						dd.plug(
+							[
+								{
+									cfg: {
+										moveOnEnd: false
+									},
+									fn: A.Plugin.DDProxy
+								},
+								{
+									cfg: {
+										constrain2node: instance._documentLibraryContainer
+									},
+									fn: A.Plugin.DDConstrained
+								}
+							]
+						);
+
+						instance._initDropTargets();
+
+						instance._ddHandler = ddHandler;
+					},
+
+					_initDropTargets: function() {
+						var instance = this;
+
+						var items = instance._documentLibraryContainer.all('[data-folder="true"]');
+
+						items.plug(
+							A.Plugin.Drop,
+							{
+								groups: DOCUMENT_LIBRARY_GROUP
+							}
+						);
+					},
+
+					_initHover: function() {
+						var instance = this;
+
+						instance._entriesContainer.on([STR_FOCUS, 'blur'], instance._toggleHovered, instance);
+					},
+
+					_initSelectAllCheckbox: function() {
+						var instance = this;
+
+						instance._selectAllCheckbox.on(STR_CLICK, instance._onSelectAllCheckboxChange, instance);
+					},
+
+					_initToggleSelect: function() {
+						var instance = this;
+
+						instance._entriesContainer.delegate(
+							'change',
+							instance._onDocumentSelectorChange,
+							'.document-selector',
+							instance
+						);
 					},
 
 					_onDataRetrieveSuccess: function(event) {
@@ -391,36 +559,187 @@ AUI().add(
 						}
 					},
 
+					_onDataRequest: function(event) {
+						var instance = this;
+
+						var src = event.src;
+
+						if (src === SRC_DISPLAY_STYLE_BUTTONS || src === SRC_ENTRIES_PAGINATOR) {
+							var selectedEntries;
+
+							var entriesSelector = CSS_DOCUMENT_DISPLAY_STYLE_SELECTED + ' :checkbox';
+
+							if (instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
+								entriesSelector = 'td > :checkbox:checked';
+							}
+
+							selectedEntries = instance._entriesContainer.all(entriesSelector);
+
+							if (selectedEntries.size()) {
+								instance._selectedEntries = selectedEntries.val();
+							}
+						}
+
+						instance._processDefaultParams(event);
+
+						instance._updatePaginatorValues(event);
+					},
+
 					_onDocumentLibraryContainerClick: function(event) {
 						var instance = this;
 
 						event.preventDefault();
 
 						var config = instance._config;
-						var namespace = instance._namespace;
 
 						var requestParams = {};
 
-						requestParams[namespace + STRUTS_ACTION] = config.strutsAction;
-						requestParams[namespace + 'action'] = 'browseFolder';
-						requestParams[namespace + STR_ENTRY_END] = instance._entryPaginator.get(ROWS_PER_PAGE);
-						requestParams[namespace + STR_FOLDER_END] = instance._folderPaginator.get(ROWS_PER_PAGE);
+						requestParams[instance.ns(STRUTS_ACTION)] = config.strutsAction;
+						requestParams[instance.ns('action')] = 'browseFolder';
+						requestParams[instance.ns(STR_ENTRY_END)] = instance._entryPaginator.get(ROWS_PER_PAGE);
+						requestParams[instance.ns(STR_FOLDER_END)] = instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-						requestParams[namespace + REFRESH_FOLDERS] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
-						requestParams[namespace + SHOW_SIBLINGS] = true;
-						requestParams[namespace + STR_ENTRY_START] = 0;
-						requestParams[namespace + STR_FOLDER_START] = 0;
-						requestParams[namespace + VIEW_ADD_BUTTON] = true;
-						requestParams[namespace + VIEW_ADD_BREADCRUMB] = true;
-						requestParams[namespace + VIEW_DISPLAY_STYLE_BUTTONS] = true;
-						requestParams[namespace + VIEW_ENRTIES] = true;
-						requestParams[namespace + VIEW_FILE_ENTRY_SEARCH] = true;
-                        requestParams[namespace + VIEW_SORT_BUTTON] = true;
+						requestParams[instance.ns(REFRESH_FOLDERS)] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
+						requestParams[instance.ns(SHOW_SIBLINGS)] = true;
+						requestParams[instance.ns(STR_ENTRY_START)] = 0;
+						requestParams[instance.ns(STR_FOLDER_START)] = 0;
+						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
+						requestParams[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
+						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
+						requestParams[instance.ns(VIEW_ENRTIES)] = true;
+						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
+						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
 
 						Liferay.fire(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams
+							}
+						);
+					},
+
+					_onDocumentSelectorChange: function(event) {
+						var instance = this;
+
+						instance._toggleSelected(event.currentTarget, true);
+
+						window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
+
+						Liferay.Util.checkAllBox(
+							instance._entriesContainer,
+							[
+								instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX),
+								instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
+								instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX)
+							],
+							instance._selectAllCheckbox
+						);
+					},
+
+					_onDragDropHit: function(event) {
+						var instance = this;
+
+						var proxyNode = event.target.get(STR_DRAG_NODE);
+
+						proxyNode.removeClass(CSS_ACTIVE_AREA_PROXY);
+
+						proxyNode.empty();
+
+						var dropTarget = event.drop.get('node');
+
+						var folderId = dropTarget.attr(DATA_FOLDER_ID);
+
+						var folderContainer = dropTarget.ancestor('.document-display-style');
+
+						var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
+
+						if (selectedItems.indexOf(folderContainer) == -1) {
+							window[instance.ns('moveEntries')](folderId);
+						}
+					},
+
+					_onDragEnter: function(event) {
+						var instance = this;
+
+						var dragNode = event.drag.get('node');
+						var dropTarget = event.drop.get('node');
+
+						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget;
+
+						if (!dragNode.compareTo(dropTarget)) {
+							dropTarget.addClass(CSS_ACTIVE_AREA);
+
+							var proxyNode = event.target.get(STR_DRAG_NODE);
+
+							var dd = instance._ddHandler.dd;
+
+							var selectedItemsCount = dd.get(STR_DATA).selectedItemsCount;
+
+							var moveText = instance._getMoveText(selectedItemsCount, true);
+
+							var itemTitle = Lang.trim(dropTarget.one('.entry-title').text());
+
+							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, itemTitle]));
+						}
+					},
+
+					_onDragExit: function(event) {
+						var instance = this;
+
+						var dropTarget = event.drop.get('node');
+
+						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget;
+
+						dropTarget.removeClass(CSS_ACTIVE_AREA);
+
+						var proxyNode = event.target.get(STR_DRAG_NODE);
+
+						var selectedItemsCount = instance._ddHandler.dd.get(STR_DATA).selectedItemsCount;
+
+						var moveText = instance._getMoveText(selectedItemsCount);
+
+						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
+					},
+
+					_onDragStart: function(event) {
+						var instance = this;
+
+						var target = event.target;
+
+						var node = target.get('node');
+
+						if (!node.hasClass(CSS_SELECTED)) {
+							instance._unselectAllEntries();
+
+							instance._toggleSelected(node);
+						}
+
+						var proxyNode = target.get(STR_DRAG_NODE);
+
+						proxyNode.setStyles(
+							{
+								height: STR_BLANK,
+								width: STR_BLANK
+							}
+						);
+
+						var selectedItems = instance._entriesContainer.all(CSS_DOCUMENT_DISPLAY_STYLE_SELECTED);
+
+						var selectedItemsCount = selectedItems.size();
+
+						var moveText = instance._getMoveText(selectedItemsCount);
+
+						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
+
+						proxyNode.addClass(CSS_ACTIVE_AREA_PROXY);
+
+						var dd = instance._ddHandler.dd;
+
+						dd.set(
+							STR_DATA,
+							{
+								selectedItemsCount: selectedItemsCount,
+								selectedItems: selectedItems
 							}
 						);
 					},
@@ -432,21 +751,21 @@ AUI().add(
 
 						var requestParams = instance._getIORequest().get(STR_DATA) || {};
 
-						var namespace = instance._namespace;
-
 						var customParams = {};
 
-						customParams[namespace + STR_ENTRY_START] = startEndParams[0];
-						customParams[namespace + STR_ENTRY_END] = startEndParams[1];
-						customParams[namespace + REFRESH_FOLDERS] = false;
-						customParams[namespace + VIEW_ENRTIES] = true;
+						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
+						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
+						customParams[instance.ns(REFRESH_FOLDERS)] = false;
+						customParams[instance.ns(VIEW_ADD_BUTTON)] = true;
+						customParams[instance.ns(VIEW_ENRTIES)] = true;
 
 						A.mix(requestParams, customParams, true);
 
 						Liferay.fire(
 							instance._eventDataRequest,
 							{
-								requestParams: requestParams
+								requestParams: requestParams,
+								src: SRC_ENTRIES_PAGINATOR
 							}
 						);
 					},
@@ -458,14 +777,12 @@ AUI().add(
 
 						var requestParams = instance._getIORequest().get(STR_DATA) || {};
 
-						var namespace = instance._namespace;
-
 						var customParams = {};
 
-						customParams[namespace + STR_FOLDER_START] = startEndParams[0];
-						customParams[namespace + STR_FOLDER_END] = startEndParams[1];
-						customParams[namespace + REFRESH_FOLDERS] = true;
-						customParams[namespace + VIEW_ENRTIES] = true;
+						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
+						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
+						customParams[instance.ns(REFRESH_FOLDERS)] = true;
+						customParams[instance.ns(VIEW_ENRTIES)] = true;
 
 						A.mix(requestParams, customParams, true);
 
@@ -491,6 +808,27 @@ AUI().add(
 						}
 					},
 
+					_onSelectAllCheckboxChange: function() {
+						var instance = this;
+
+						instance._toggleEntriesSelection();
+					},
+
+					_processDefaultParams: function(event) {
+						var instance = this;
+
+						var requestParams = event.requestParams;
+
+						AObject.each(
+							instance._config.defaultParams,
+							function(item, index, collection) {
+								if (!Lang.isValue(History.get(index))) {
+									requestParams[index] = item;
+								}
+							}
+						);
+					},
+
 					_restoreState: function() {
 						var instance = this;
 
@@ -498,7 +836,7 @@ AUI().add(
 							var initialState = History.get();
 
 							if (!AObject.isEmpty(initialState)) {
-								var namespace = instance._namespace;
+								var namespace = instance.NS;
 
 								var requestParams = {};
 
@@ -524,12 +862,10 @@ AUI().add(
 					_setBreadcrumb: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
-
-						var breadcrumb = content.one('#' + namespace + 'breadcrumb');
+						var breadcrumb = instance.one('#breadcrumb', content);
 
 						if (breadcrumb) {
-							var breadcrumbContainer = A.one('#' + namespace + 'breadcrumbContainer');
+							var breadcrumbContainer = instance.byId('breadcrumbContainer');
 
 							breadcrumbContainer.setContent(breadcrumb);
 						}
@@ -538,34 +874,32 @@ AUI().add(
 					_setButtons: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
-
-						var addButton = content.one('#' + namespace + 'addButton');
+						var addButton = instance.one('#addButton', content);
 
 						if (addButton) {
-							var addButtonContainer = A.one('#' + namespace + 'addButtonContainer');
+							var addButtonContainer = instance.byId('addButtonContainer');
 
 							addButtonContainer.plug(A.Plugin.ParseContent);
 
 							addButtonContainer.setContent(addButton);
 						}
 
-						var displayStyleButtons = content.one('#' + namespace + 'displayStyleButtons');
+						var displayStyleButtons = instance.one('#displayStyleButtons', content);
 
 						if (displayStyleButtons) {
 							instance._displayStyleToolbarNode.empty();
 
-							var displayStyleButtonsContainer = A.one('#' + namespace + 'displayStyleButtonsContainer');
+							var displayStyleButtonsContainer = instance.byId('displayStyleButtonsContainer');
 
 							displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
 
 							displayStyleButtonsContainer.setContent(displayStyleButtons);
 						}
 
-						var sortButton = content.one('#' + namespace + 'sortButton');
+						var sortButton = instance.one('#sortButton', content);
 
 						if (sortButton) {
-							var sortButtonContainer = A.one('#' + namespace + 'sortButtonContainer');
+							var sortButtonContainer = instance.byId('sortButtonContainer');
 
 							sortButtonContainer.setContent(sortButton);
 						}
@@ -574,24 +908,30 @@ AUI().add(
 					_setEntries: function(content) {
 						var instance = this;
 
-						var entries = content.one('#' + instance._namespace + 'entries');
+						var entries = instance.one('#entries', content);
 
 						if (entries) {
-							instance._entriesContainer.plug(A.Plugin.ParseContent);
+							var entriesContainer = instance._entriesContainer;
 
-							instance._entriesContainer.setContent(entries);
+							entriesContainer.empty();
+
+							entriesContainer.plug(A.Plugin.ParseContent);
+
+							entriesContainer.setContent(entries);
+
+							instance._initDropTargets();
+
+							instance._updateSelectedEntriesStatus();
 						}
 					},
 
 					_setFileEntrySearch: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
-
-						var fileEntrySearch = content.one('#' + namespace + 'fileEntrySearch');
+						var fileEntrySearch = instance.one('#fileEntrySearch', content);
 
 						if (fileEntrySearch) {
-							var fileEntrySearchContainer = A.one('#' + namespace + 'fileEntrySearchContainer');
+							var fileEntrySearchContainer = instance.byId('fileEntrySearchContainer');
 
 							if (fileEntrySearchContainer) {
 								fileEntrySearchContainer.plug(A.Plugin.ParseContent);
@@ -604,7 +944,7 @@ AUI().add(
 					_setFolders: function(content) {
 						var instance = this;
 
-						var folders = content.one('#' + instance._namespace + STR_FOLDER_CONTAINER);
+						var folders = instance.one('#folderContainer', content);
 
 						if (folders) {
 							var listViewDataContainer = A.one('.lfr-list-view-data-container');
@@ -614,7 +954,7 @@ AUI().add(
 							var refreshFolders = folders.attr(DATA_REFRESH_FOLDERS);
 
 							if (refreshFolders) {
-								instance._listView.set(STR_DATA, folders);
+								instance._listView.set(STR_DATA, folders.html());
 							}
 						}
 					},
@@ -622,12 +962,10 @@ AUI().add(
 					_setParentFolderTitle: function(content) {
 						var instance = this;
 
-						var namespace = instance._namespace;
-
-						var parentFolderTitle = content.one('#' + namespace + 'parentFolderTitle');
+						var parentFolderTitle = instance.one('#parentFolderTitle', content);
 
 						if (parentFolderTitle) {
-							var parentFolderTitleContainer = A.one('#' + namespace + 'parentFolderTitleContainer');
+							var parentFolderTitleContainer = instance.byId('parentFolderTitleContainer');
 
 							parentFolderTitleContainer.setContent(parentFolderTitle);
 						}
@@ -636,14 +974,14 @@ AUI().add(
 					_setSearchResults: function(content) {
 						var instance = this;
 
-						var searchResults = content.one('#' + instance._namespace + 'searchResults');
+						var searchResults = instance.one('#searchResults', content);
 
 						if (searchResults) {
 							var entriesContainer = instance._entriesContainer;
 
-							instance._entriesContainer.plug(A.Plugin.ParseContent);
+							entriesContainer.plug(A.Plugin.ParseContent);
 
-							instance._entriesContainer.setContent(searchResults);
+							entriesContainer.setContent(searchResults);
 						}
 					},
 
@@ -673,13 +1011,103 @@ AUI().add(
 					_syncDisplayStyleToolbar: function(content) {
 						var instance = this;
 
-						var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
+						var displayViews = instance._displayViews;
 
-						var displayStyle = History.get(instance._displayStyle) || STR_ICON;
+						var length = displayViews.length;
 
-						displayStyleToolbar.item(0).StateInteraction.set(STR_ACTIVE, displayStyle === STR_ICON);
-						displayStyleToolbar.item(1).StateInteraction.set(STR_ACTIVE, displayStyle === 'descriptive');
-						displayStyleToolbar.item(2).StateInteraction.set(STR_ACTIVE, displayStyle === 'list');
+						if (length > 1) {
+							var displayStyleToolbar = instance._displayStyleToolbarNode.getData(DISPLAY_STYLE_TOOLBAR);
+
+							var displayStyle = instance._getDisplayStyle();
+
+							for (var i = 0; i < length; i++) {
+								displayStyleToolbar.item(i).StateInteraction.set(STR_ACTIVE, displayStyle === displayViews[i]);
+							}
+						}
+					},
+
+					_toggleEntriesSelection: function() {
+						var instance = this;
+
+						var documentContainer = A.one('.document-container');
+
+						var selectAllCheckbox = instance._selectAllCheckbox;
+
+						Liferay.Util.checkAll(documentContainer, instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX), selectAllCheckbox, CSS_RESULT_ROW);
+						Liferay.Util.checkAll(documentContainer, instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX), selectAllCheckbox, CSS_RESULT_ROW);
+						Liferay.Util.checkAll(documentContainer, instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX), selectAllCheckbox, CSS_RESULT_ROW);
+
+						window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
+
+						if (!instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
+							var documentDisplayStyle = A.all(CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE);
+
+							documentDisplayStyle.toggleClass(CSS_SELECTED, instance._selectAllCheckbox.attr(ATTR_CHECKED));
+						}
+					},
+
+					_toggleHovered: function(event) {
+						var instance = this;
+
+						if (!instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
+							var documentDisplayStyle = event.target.ancestor(CSS_DOCUMENT_DISPLAY_STYLE);
+
+							if (documentDisplayStyle) {
+								documentDisplayStyle.toggleClass('hover', (event.type == STR_FOCUS));
+							}
+						}
+					},
+
+					_toggleSelected: function(node, preventUpdate) {
+						var instance = this;
+
+						if (instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
+							node.attr(ATTR_CHECKED, !node.attr(ATTR_CHECKED));
+						}
+						else {
+							node = node.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || node;
+
+							if (!preventUpdate) {
+								var selectElement = node.one('.document-selector :checkbox');
+
+								selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
+
+								Liferay.Util.updateCheckboxValue(selectElement);
+							}
+
+							node.toggleClass(CSS_SELECTED);
+						}
+					},
+
+					_unselectAllEntries: function() {
+						var instance = this;
+
+						instance._selectAllCheckbox.attr(CSS_SELECTED, false);
+
+						instance._toggleEntriesSelection();
+					},
+
+					_updateSelectedEntriesStatus: function() {
+						var instance = this;
+
+						var selectedEntries = instance._selectedEntries;
+
+						if (selectedEntries && selectedEntries.length) {
+							var entriesContainer = instance._entriesContainer;
+
+							A.each(
+								selectedEntries,
+								function(item, index, collection) {
+									var entry = entriesContainer.one('input[value="' + item + '"]');
+
+									if (entry) {
+										instance._toggleSelected(entry);
+									}
+								}
+							);
+
+							selectedEntries.length = 0;
+						}
 					},
 
 					_updatePaginatorValues: function(event) {
@@ -687,25 +1115,23 @@ AUI().add(
 
 						var requestParams = event.requestParams;
 
-						var namespace = instance._namespace;
-
 						var entryStartEndParams = instance._getResultsStartEnd(instance._entryPaginator);
 						var folderStartEndParams = instance._getResultsStartEnd(instance._folderPaginator);
 
 						var customParams = {};
 
 						if (requestParams) {
-							if (!owns(requestParams, namespace + STR_ENTRY_START) && !owns(requestParams, namespace + STR_ENTRY_END)) {
-								customParams[namespace + STR_ENTRY_START] = entryStartEndParams[0];
-								customParams[namespace + STR_ENTRY_END] = entryStartEndParams[1];
+							if (!owns(requestParams, instance.ns(STR_ENTRY_START)) && !owns(requestParams, instance.ns(STR_ENTRY_END))) {
+								customParams[instance.ns(STR_ENTRY_START)] = entryStartEndParams[0];
+								customParams[instance.ns(STR_ENTRY_END)] = entryStartEndParams[1];
 							}
 
-							if (!owns(requestParams, namespace + STR_FOLDER_START) && !owns(requestParams, namespace + STR_FOLDER_END)) {
-								customParams[namespace + STR_FOLDER_START] = folderStartEndParams[0];
-								customParams[namespace + STR_FOLDER_END] = folderStartEndParams[1];
+							if (!owns(requestParams, instance.ns(STR_FOLDER_START)) && !owns(requestParams, instance.ns(STR_FOLDER_END))) {
+								customParams[instance.ns(STR_FOLDER_START)] = folderStartEndParams[0];
+								customParams[instance.ns(STR_FOLDER_END)] = folderStartEndParams[1];
 							}
 
-							if (customParams.length > 0) {
+							if (!AObject.isEmpty(customParams)) {
 								A.mix(requestParams, customParams, true);
 							}
 						}
@@ -718,6 +1144,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'liferay-list-view', 'liferay-history-manager']
+		requires: ['aui-paginator', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
 	}
 );

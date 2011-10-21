@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCFrameworkVersion}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.model;
  * @see       SCFrameworkVersion
  * @generated
  */
-public class SCFrameworkVersionWrapper implements SCFrameworkVersion {
+public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
+	ModelWrapper<SCFrameworkVersion> {
 	public SCFrameworkVersionWrapper(SCFrameworkVersion scFrameworkVersion) {
 		_scFrameworkVersion = scFrameworkVersion;
 	}
@@ -301,10 +304,6 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion {
 		return _scFrameworkVersion.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scFrameworkVersion.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scFrameworkVersion.getPrimaryKeyObj();
 	}
@@ -359,7 +358,14 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion {
 		_scFrameworkVersion.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SCFrameworkVersion getWrappedSCFrameworkVersion() {
+		return _scFrameworkVersion;
+	}
+
+	public SCFrameworkVersion getWrappedModel() {
 		return _scFrameworkVersion;
 	}
 

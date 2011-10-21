@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Group;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Group in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.Group;
  * @see Group
  * @generated
  */
-public class GroupCacheModel implements CacheModel<Group> {
+public class GroupCacheModel implements CacheModel<Group>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);

@@ -40,6 +40,12 @@ public class IconPrintTag extends IconTag {
 		setCssClass("portlet-print portlet-print-icon");
 		setImage("../portlet/print");
 		setMessage("print");
+
+		String onClick = "location.href = '".concat(
+			portletDisplay.getURLPrint()).concat("'; return false;");
+
+		setOnClick(onClick);
+
 		setTarget("_blank");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLPrint());

@@ -158,10 +158,9 @@
 			<bean class="com.liferay.portal.image.SpriteProcessorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.json.JSONFactory" class="com.liferay.portal.json.JSONFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.json.JSONFactoryUtil" class="com.liferay.portal.kernel.json.JSONFactoryUtil">
-		<property name="JSONFactory">
-			<bean class="com.liferay.portal.json.JSONFactoryImpl" />
-		</property>
+		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
 		<property name="JSONWebServiceActionsManager">
@@ -184,8 +183,12 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.metadata.RawMetadataProcessor" class="com.liferay.portal.metadata.TikaRawMetadataProcessor">
-		<property name="tika">
-			<bean class="org.apache.tika.Tika" />
+		<property name="parser">
+			<bean class="org.apache.tika.parser.AutoDetectParser">
+				<constructor-arg>
+					<bean class="org.apache.tika.config.TikaConfig" />
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil" class="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil">
@@ -194,6 +197,11 @@
 	<bean id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
 		<property name="OAuthFactory">
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" class="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil">
+		<property name="BBCodeTranslator">
+			<bean class="com.liferay.portal.parsers.bbcode.HtmlBBCodeTranslatorImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
@@ -461,6 +469,11 @@
 			<bean class="com.liferay.portal.service.permission.RolePermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.SubscriptionPermissionUtil" class="com.liferay.portal.service.permission.SubscriptionPermissionUtil">
+		<property name="subscriptionPermission">
+			<bean class="com.liferay.portal.service.permission.SubscriptionPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.service.permission.TeamPermissionUtil" class="com.liferay.portal.service.permission.TeamPermissionUtil">
 		<property name="teamPermission">
 			<bean class="com.liferay.portal.service.permission.TeamPermissionImpl" />
@@ -545,6 +558,21 @@
 			</map>
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory" class="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory">
+		<property name="fieldRenderers">
+			<map>
+				<entry key="date">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DateFieldRenderer" />
+				</entry>
+				<entry key="document-library">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DocumentLibraryFieldRenderer" />
+				</entry>
+				<entry key="string">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.StringFieldRenderer" />
+				</entry>
+			</map>
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageEngine" class="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineImpl">
 		<property name="defaultStorageAdapter">
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />
@@ -609,6 +637,21 @@
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil">
+		<property name="MDRPermission">
+			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil">
+		<property name="MDRRuleGroupPermission">
+			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil">
+		<property name="MDRRuleGroupInstancePermission">
+			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminImpl" />

@@ -212,8 +212,6 @@ public interface AssetLinkModel extends BaseModel<AssetLink> {
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

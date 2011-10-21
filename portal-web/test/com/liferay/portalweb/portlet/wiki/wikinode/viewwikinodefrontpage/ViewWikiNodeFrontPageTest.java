@@ -25,7 +25,7 @@ public class ViewWikiNodeFrontPageTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,22 +40,18 @@ public class ViewWikiNodeFrontPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.clickAt("link=Wiki Node Name",
 			RuntimeVariables.replace("Wiki Node Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Node Front Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.clickAt("link=Main", RuntimeVariables.replace("Main"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 	}

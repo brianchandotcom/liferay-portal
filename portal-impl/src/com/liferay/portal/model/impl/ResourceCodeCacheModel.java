@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceCode;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ResourceCode in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.ResourceCode;
  * @see ResourceCode
  * @generated
  */
-public class ResourceCodeCacheModel implements CacheModel<ResourceCode> {
+public class ResourceCodeCacheModel implements CacheModel<ResourceCode>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

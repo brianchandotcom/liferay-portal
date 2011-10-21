@@ -114,6 +114,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.configuration.ConfigurationImpl">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.convert">
 		<priority value="DEBUG" />
 	</category>

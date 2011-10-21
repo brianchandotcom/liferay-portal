@@ -52,21 +52,21 @@ int imagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositor
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
 
-String categoryName = null;
-String vocabularyName = null;
+String categoryTitle = null;
+String vocabularyTitle = null;
 
 if (categoryId != 0) {
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
 
 	assetCategory = assetCategory.toEscapedModel();
 
-	categoryName = assetCategory.getName();
+	categoryTitle = assetCategory.getTitle(locale);
 
 	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 
 	assetVocabulary = assetVocabulary.toEscapedModel();
 
-	vocabularyName = assetVocabulary.getName();
+	vocabularyTitle = assetVocabulary.getTitle(locale);
 }
 
 boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
@@ -96,9 +96,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
-		<c:if test="<%= Validator.isNotNull(categoryName) %>">
+		<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
 			<h1 class="entry-title">
-				<%= LanguageUtil.format(pageContext, "images-with-x-x", new String[] {vocabularyName, categoryName}) %>
+				<%= LanguageUtil.format(pageContext, "images-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
 			</h1>
 		</c:if>
 
@@ -131,9 +131,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 
 		<%
-		if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+		if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			PortalUtil.addPageKeywords(tagName, request);
-			PortalUtil.addPageKeywords(categoryName, request);
+			PortalUtil.addPageKeywords(categoryTitle, request);
 		}
 		%>
 
@@ -148,51 +148,53 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</c:if>
 
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-				<c:if test="<%= folder != null %>">
-					<div class="lfr-asset-description">
-						<%= HtmlUtil.escape(folder.getDescription()) %>
-					</div>
-
-					<div class="lfr-asset-metadata">
-						<div class="lfr-asset-icon lfr-asset-date">
-							<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
+				<div id="<portlet:namespace />imageGalleryAssetInfo">
+					<c:if test="<%= folder != null %>">
+						<div class="lfr-asset-description">
+							<%= HtmlUtil.escape(folder.getDescription()) %>
 						</div>
 
-						<div class="lfr-asset-icon lfr-asset-subfolders">
-							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+						<div class="lfr-asset-metadata">
+							<div class="lfr-asset-icon lfr-asset-date">
+								<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
+							</div>
+
+							<div class="lfr-asset-icon lfr-asset-subfolders">
+								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+							</div>
+
+							<div class="lfr-asset-icon lfr-asset-items last">
+								<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
+							</div>
 						</div>
 
-						<div class="lfr-asset-icon lfr-asset-items last">
-							<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
-						</div>
-					</div>
+						<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+							<liferay-ui:custom-attribute-list
+								className="<%= DLFolderConstants.getClassName() %>"
+								classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+								editable="<%= false %>"
+								label="<%= true %>"
+							/>
+						</liferay-ui:custom-attributes-available>
+					</c:if>
 
-					<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-						<liferay-ui:custom-attribute-list
-							className="<%= DLFolderConstants.getClassName() %>"
-							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-							editable="<%= false %>"
-							label="<%= true %>"
-						/>
-					</liferay-ui:custom-attributes-available>
-				</c:if>
+					<%
+					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-				<%
-				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mimeTypes, false);
 
-				int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+					searchContainer.setTotal(total);
 
-				searchContainer.setTotal(total);
+					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-				List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					searchContainer.setResults(results);
 
-				searchContainer.setResults(results);
+					List scores = null;
+					%>
 
-				List scores = null;
-				%>
+					<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 
-				<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
-
+				</div>
 			</aui:column>
 
 			<c:if test="<%= showFolderMenu %>">
@@ -222,7 +224,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		if (folder != null) {
 			IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 
-			if (portletName.equals(PortletKeys.IMAGE_GALLERY_DISPLAY)) {
+			if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				PortalUtil.setPageSubtitle(folder.getName(), request);
 				PortalUtil.setPageDescription(folder.getDescription(), request);
 			}

@@ -38,8 +38,9 @@ import java.lang.reflect.Field;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -85,7 +86,7 @@ public class ConvertDatabase extends ConvertProcess {
 
 		List<String> modelNames = ModelHintsUtil.getModels();
 
-		List<Tuple> tableDetails = new ArrayList<Tuple>();
+		Map<String, Tuple> tableDetails = new LinkedHashMap<String, Tuple>();
 
 		Connection connection = dataSource.getConnection();
 
@@ -120,42 +121,46 @@ public class ConvertDatabase extends ConvertProcess {
 
 					String fieldName = field.getName();
 
-					if (fieldName.equals("TABLE_NAME")) {
-						tuple = getTableDetails(implClass, field, fieldName);
-					}
-					else if (fieldName.startsWith("MAPPING_TABLE_") &&
-							 fieldName.endsWith("_NAME")) {
+					if (fieldName.equals("TABLE_NAME") ||
+						(fieldName.startsWith("MAPPING_TABLE_") &&
+						 fieldName.endsWith("_NAME"))) {
 
 						tuple = getTableDetails(implClass, field, fieldName);
 					}
 
 					if (tuple != null) {
-						tableDetails.add(tuple);
+						String table = (String)tuple.getObject(0);
+
+						tableDetails.put(table, tuple);
 					}
 				}
 			}
 
 			for (Tuple tuple : _UNMAPPED_TABLES) {
-				tableDetails.add(tuple);
+				String table = (String)tuple.getObject(0);
+
+				tableDetails.put(table, tuple);
 			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Migrating database tables");
 			}
 
-			for (int i = 0; i < tableDetails.size(); i++) {
+			int i = 0;
+
+			for (Tuple tuple : tableDetails.values()) {
 				if ((i > 0) && (i % (tableDetails.size() / 4) == 0)) {
 					MaintenanceUtil.appendStatus(
-						 (i * 100 / tableDetails.size()) + "%");
+						(i * 100 / tableDetails.size()) + "%");
 				}
-
-				Tuple tuple = tableDetails.get(i);
 
 				String table = (String)tuple.getObject(0);
 				Object[][] columns = (Object[][])tuple.getObject(1);
 				String sqlCreate = (String)tuple.getObject(2);
 
 				migrateTable(db, connection, table, columns, sqlCreate);
+
+				i++;
 			}
 		}
 		finally {
@@ -180,7 +185,7 @@ public class ConvertDatabase extends ConvertProcess {
 			driverClassName, url, userName, password);
 	}
 
-	public Class<?> getImplClass(String implClassName) throws Exception {
+	protected Class<?> getImplClass(String implClassName) throws Exception {
 		try {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
@@ -247,6 +252,8 @@ public class ConvertDatabase extends ConvertProcess {
 		}
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(ConvertDatabase.class);
+
 	private static final Tuple[] _UNMAPPED_TABLES = new Tuple[] {
 		new Tuple(
 			CyrusUser.TABLE_NAME, CyrusUser.TABLE_COLUMNS,
@@ -255,7 +262,5 @@ public class ConvertDatabase extends ConvertProcess {
 			CyrusVirtual.TABLE_NAME, CyrusVirtual.TABLE_COLUMNS,
 			CyrusVirtual.TABLE_SQL_CREATE)
 	};
-
-	private static Log _log = LogFactoryUtil.getLog(ConvertDatabase.class);
 
 }

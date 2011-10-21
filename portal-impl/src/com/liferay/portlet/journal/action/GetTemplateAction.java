@@ -63,7 +63,8 @@ public class GetTemplateAction extends Action {
 
 			String languageId = LanguageUtil.getLanguageId(request);
 
-			boolean transform = ParamUtil.get(request, "transform", true);
+			boolean transform = ParamUtil.getBoolean(
+				request, "transform", true);
 
 			JournalTemplate template =
 				JournalTemplateLocalServiceUtil.getTemplate(

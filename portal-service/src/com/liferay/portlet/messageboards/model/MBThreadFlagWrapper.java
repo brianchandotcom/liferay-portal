@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBThreadFlag}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.model;
  * @see       MBThreadFlag
  * @generated
  */
-public class MBThreadFlagWrapper implements MBThreadFlag {
+public class MBThreadFlagWrapper implements MBThreadFlag,
+	ModelWrapper<MBThreadFlag> {
 	public MBThreadFlagWrapper(MBThreadFlag mbThreadFlag) {
 		_mbThreadFlag = mbThreadFlag;
 	}
@@ -166,10 +169,6 @@ public class MBThreadFlagWrapper implements MBThreadFlag {
 		return _mbThreadFlag.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mbThreadFlag.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mbThreadFlag.getPrimaryKeyObj();
 	}
@@ -224,7 +223,14 @@ public class MBThreadFlagWrapper implements MBThreadFlag {
 		_mbThreadFlag.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MBThreadFlag getWrappedMBThreadFlag() {
+		return _mbThreadFlag;
+	}
+
+	public MBThreadFlag getWrappedModel() {
 		return _mbThreadFlag;
 	}
 

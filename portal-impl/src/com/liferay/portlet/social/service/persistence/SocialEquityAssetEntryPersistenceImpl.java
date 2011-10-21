@@ -71,23 +71,30 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 	 * Never modify or reference this class directly. Always use {@link SocialEquityAssetEntryUtil} to access the social equity asset entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = SocialEquityAssetEntryImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST = FINDER_CLASS_NAME_ENTITY +
-		".List";
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List1";
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
+		".List2";
 	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETENTRYID = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
 			SocialEquityAssetEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByAssetEntryId", new String[] { Long.class.getName() });
+			"fetchByAssetEntryId", new String[] { Long.class.getName() },
+			SocialEquityAssetEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countByAssetEntryId",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
 			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FIND_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
-			SocialEquityAssetEntryImpl.class, FINDER_CLASS_NAME_LIST,
-			"findAll", new String[0]);
+			SocialEquityAssetEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED,
+			SocialEquityAssetEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST, "countAll", new String[0]);
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 
 	/**
 	 * Caches the social equity asset entry in the entity cache if it is enabled.
@@ -121,6 +128,9 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 						socialEquityAssetEntry.getPrimaryKey()) == null) {
 				cacheResult(socialEquityAssetEntry);
 			}
+			else {
+				socialEquityAssetEntry.resetOriginalValues();
+			}
 		}
 	}
 
@@ -138,8 +148,10 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 		}
 
 		EntityCacheUtil.clearCache(SocialEquityAssetEntryImpl.class.getName());
+
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
@@ -155,7 +167,8 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 			SocialEquityAssetEntryImpl.class,
 			socialEquityAssetEntry.getPrimaryKey());
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
 			new Object[] { Long.valueOf(
@@ -266,7 +279,8 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		SocialEquityAssetEntryModelImpl socialEquityAssetEntryModelImpl = (SocialEquityAssetEntryModelImpl)socialEquityAssetEntry;
 
@@ -308,27 +322,39 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+
+		if (isNew || !SocialEquityAssetEntryModelImpl.COLUMN_BITMASK_ENABLED) {
+			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
 
 		EntityCacheUtil.putResult(SocialEquityAssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SocialEquityAssetEntryImpl.class,
 			socialEquityAssetEntry.getPrimaryKey(), socialEquityAssetEntry);
 
-		if (!isNew &&
-				(socialEquityAssetEntry.getAssetEntryId() != socialEquityAssetEntryModelImpl.getOriginalAssetEntryId())) {
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
-				new Object[] {
-					Long.valueOf(
-						socialEquityAssetEntryModelImpl.getOriginalAssetEntryId())
-				});
-		}
-
-		if (isNew ||
-				(socialEquityAssetEntry.getAssetEntryId() != socialEquityAssetEntryModelImpl.getOriginalAssetEntryId())) {
+		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
 				new Object[] {
 					Long.valueOf(socialEquityAssetEntry.getAssetEntryId())
 				}, socialEquityAssetEntry);
+		}
+		else {
+			if ((socialEquityAssetEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_ASSETENTRYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(socialEquityAssetEntryModelImpl.getOriginalAssetEntryId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+					args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+					new Object[] {
+						Long.valueOf(socialEquityAssetEntry.getAssetEntryId())
+					}, socialEquityAssetEntry);
+			}
 		}
 
 		return socialEquityAssetEntry;
@@ -627,9 +653,20 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 	 */
 	public List<SocialEquityAssetEntry> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
 		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
-		List<SocialEquityAssetEntry> list = (List<SocialEquityAssetEntry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderArgs = FINDER_ARGS_EMPTY;
+		}
+		else {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderArgs = new Object[] { start, end, orderByComparator };
+		}
+
+		List<SocialEquityAssetEntry> list = (List<SocialEquityAssetEntry>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -674,14 +711,12 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 			}
 			finally {
 				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL,
-						finderArgs);
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 				else {
 					cacheResult(list);
 
-					FinderCacheUtil.putResult(FINDER_PATH_FIND_ALL, finderArgs,
-						list);
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 
 				closeSession(session);
@@ -834,11 +869,19 @@ public class SocialEquityAssetEntryPersistenceImpl extends BasePersistenceImpl<S
 	public void destroy() {
 		EntityCacheUtil.removeCache(SocialEquityAssetEntryImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
+	@BeanReference(type = SocialActivityAchievementPersistence.class)
+	protected SocialActivityAchievementPersistence socialActivityAchievementPersistence;
+	@BeanReference(type = SocialActivityCounterPersistence.class)
+	protected SocialActivityCounterPersistence socialActivityCounterPersistence;
+	@BeanReference(type = SocialActivityLimitPersistence.class)
+	protected SocialActivityLimitPersistence socialActivityLimitPersistence;
+	@BeanReference(type = SocialActivitySettingPersistence.class)
+	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
 	@BeanReference(type = SocialEquityAssetEntryPersistence.class)
 	protected SocialEquityAssetEntryPersistence socialEquityAssetEntryPersistence;
 	@BeanReference(type = SocialEquityGroupSettingPersistence.class)

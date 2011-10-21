@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PluginSetting;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing PluginSetting in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.PluginSetting;
  * @see PluginSetting
  * @generated
  */
-public class PluginSettingCacheModel implements CacheModel<PluginSetting> {
+public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);

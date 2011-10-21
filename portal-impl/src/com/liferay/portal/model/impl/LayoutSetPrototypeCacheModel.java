@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetPrototype;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing LayoutSetPrototype in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.LayoutSetPrototype;
  * @see LayoutSetPrototype
  * @generated
  */
-public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototype> {
+public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototype>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

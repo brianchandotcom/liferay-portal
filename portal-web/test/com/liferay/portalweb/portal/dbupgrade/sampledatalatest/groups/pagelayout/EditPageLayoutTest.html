@@ -39,6 +39,11 @@
 	<td>Page Layout</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_88_layoutTemplateId2']</td>
 	<td>2 Columns</td>
@@ -47,6 +52,16 @@
 	<td>clickAt</td>
 	<td>//input[@id='_88_layoutTemplateId2']</td>
 	<td>2 Columns</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[@class='selected section-modified']/a[@id='_88_layoutLink']</td>
+	<td>Layout (Modified)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='selected section-modified']/a[@id='_88_layoutLink']</td>
+	<td>Layout (Modified)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -80,12 +95,12 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first yui3-dd-drop']</td>
+	<td>//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first']</td>
 	<td>Column 1</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last yui3-dd-drop']</td>
+	<td>//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last']</td>
 	<td>Column 2</td>
 </tr>
 <tr>
@@ -100,15 +115,14 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@id='column-1' and @class='yui3-aui-w30 portlet-column portlet-column-first yui3-aui-dd-drop']</td>
+	<td>//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@id='column-2' and @class='yui3-aui-w70 portlet-column portlet-column-last yui3-aui-dd-drop']</td>
+	<td>//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last']</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

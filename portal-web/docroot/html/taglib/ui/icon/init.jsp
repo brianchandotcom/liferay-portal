@@ -57,7 +57,7 @@ if (Validator.isNull(src)) {
 	if (auiImage) {
 		src = themeDisplay.getPathThemeImages().concat("/spacer.png");
 	}
-	else {
+	else if (Validator.isNotNull(image)) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(themeDisplay.getPathThemeImages());
@@ -93,6 +93,7 @@ boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:i
 String lang = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:lang"));
 boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:cssClass"));
+String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:onClick"));
 
 if ((iconListIconCount != null) || (iconListSingleIcon != null)) {
 	label = true;

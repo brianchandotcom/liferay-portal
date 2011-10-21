@@ -31,7 +31,6 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
@@ -66,7 +65,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -81,13 +80,10 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.testing.trunk"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
-				selenium.saveScreenShotAndSource();
 
 				boolean staySignedInChecked = selenium.isChecked(
 						"PersistentCookie");
@@ -100,21 +96,18 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
 			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -129,13 +122,12 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@type='checkbox']",
 					RuntimeVariables.replace("All"));
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -151,7 +143,6 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]"));
@@ -193,7 +184,6 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

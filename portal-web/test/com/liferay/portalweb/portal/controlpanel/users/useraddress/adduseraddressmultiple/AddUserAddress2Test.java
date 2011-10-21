@@ -25,7 +25,7 @@ public class AddUserAddress2Test extends BaseTestCase {
 		selenium.open("/web/guest/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,28 +40,22 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("selen01"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -76,14 +70,13 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_125_addressesLink']",
 				"Addresses"));
 		selenium.clickAt("//a[@id='_125_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -98,12 +91,11 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -118,29 +110,23 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_addressStreet1_2']",
 			RuntimeVariables.replace("123 Lets"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_addressTypeId2']",
 			RuntimeVariables.replace("label=Other"));
 		selenium.type("//input[@id='_125_addressStreet2_2']",
 			RuntimeVariables.replace("897 Hope"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_addressZip2']",
 			RuntimeVariables.replace("00000"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_addressStreet3_2']",
 			RuntimeVariables.replace("7896 This"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_125_addressCity2']",
 			RuntimeVariables.replace("Works"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_addressCountryId2']",
 			RuntimeVariables.replace("label=Canada"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -156,16 +142,14 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_125_addressRegionId2']",
 			RuntimeVariables.replace("label=Ontario"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -181,10 +165,8 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -200,10 +182,8 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -218,7 +198,6 @@ public class AddUserAddress2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -151,25 +151,21 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			}
 
 			public String get${column.methodName}(String languageId) {
-				String value = LocalizationUtil.getLocalization(get${column.methodName}(), languageId);
-
-				if (isEscapedModel()) {
-					return HtmlUtil.escape(value);
-				}
-				else {
-					return value;
-				}
+				return LocalizationUtil.getLocalization(get${column.methodName}(), languageId);
 			}
 
 			public String get${column.methodName}(String languageId, boolean useDefault) {
-				String value = LocalizationUtil.getLocalization(get${column.methodName}(), languageId, useDefault);
+				return LocalizationUtil.getLocalization(get${column.methodName}(), languageId, useDefault);
+			}
 
-				if (isEscapedModel()) {
-					return HtmlUtil.escape(value);
-				}
-				else {
-					return value;
-				}
+			public String get${column.methodName}CurrentLanguageId() {
+				return _${column.name}CurrentLanguageId;
+			}
+
+			public String get${column.methodName}CurrentValue() {
+				Locale locale = getLocale(_${column.name}CurrentLanguageId);
+
+				return get${column.methodName}(locale);
 			}
 
 			public Map<Locale, String> get${column.methodName}Map() {
@@ -202,6 +198,10 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 				else {
 					set${column.methodName}(LocalizationUtil.removeLocalization(get${column.methodName}(), "${column.methodName}", languageId));
 				}
+			}
+
+			public void set${column.methodName}CurrentLanguageId(String languageId) {
+				_${column.name}CurrentLanguageId = languageId;
 			}
 
 			public void set${column.methodName}Map(Map<Locale, String> ${column.name}Map) {
@@ -348,12 +348,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 	@Override
 	public ${entity.name} toEscapedModel() {
-		if (isEscapedModel()) {
-			return this;
-		}
-		else {
-			return (${entity.name})Proxy.newProxyInstance(${entity.name}.class.getClassLoader(), new Class[] {${entity.name}.class}, new AutoEscapeBeanHandler(this));
-		}
+		return (${entity.name})Proxy.newProxyInstance(${entity.name}.class.getClassLoader(), new Class[] {${entity.name}.class}, new AutoEscapeBeanHandler(this));
 	}
 
 	@Override
@@ -523,6 +518,10 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 	<#list entity.regularColList as column>
 		private ${column.type} _${column.name};
+
+		<#if column.localized>
+			private String _${column.name}CurrentLanguageId;
+		</#if>
 
 		<#if (column.name == "resourcePrimKey") && entity.isResourcedModel()>
 			private boolean _resourceMain;

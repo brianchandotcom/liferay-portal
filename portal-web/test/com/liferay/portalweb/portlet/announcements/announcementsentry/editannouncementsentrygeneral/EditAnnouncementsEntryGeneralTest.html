@@ -30,18 +30,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p[@class=' entry-content entry-type-general']</td>
-	<td>General Announcements Entry Content</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Edited Announcements Entry Title</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>General Edited Announcements Entry Content</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class=' entry-content entry-type-general']/p</td>
+	<td>Announcements Entry Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -56,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_84_title']</td>
-	<td>Edited Announcements Entry Title</td>
+	<td>Announcements Entry Title Edit</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -64,9 +59,24 @@
 	<td>http://www.alloyui.com</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__84_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__84_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//textarea[@id='_84_content']</td>
-	<td>Edited Announcements Entry Content</td>
+	<td>//body</td>
+	<td>Announcements Entry Content Edit</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -76,12 +86,17 @@
 <tr>
 	<td>assertText</td>
 	<td>//h3[@class='entry-title']/a</td>
-	<td>Edited Announcements Entry Title</td>
+	<td>Announcements Entry Title Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p[@class=' entry-content entry-type-general']</td>
-	<td>General Edited Announcements Entry Content</td>
+	<td>//span[@class='entry-scope']</td>
+	<td>General</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class=' entry-content entry-type-general']/p</td>
+	<td>Announcements Entry Content Edit</td>
 </tr>
 
 </tbody></table>

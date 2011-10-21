@@ -58,6 +58,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Michael Young
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  */
 public class JCRStore extends BaseStore {
 
@@ -71,6 +72,7 @@ public class JCRStore extends BaseStore {
 			session = JCRFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
 			if (repositoryNode.hasNode(dirName)) {
@@ -121,6 +123,7 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
 			if (repositoryNode.hasNode(fileName)) {
@@ -199,7 +202,9 @@ public class JCRStore extends BaseStore {
 			session = JCRFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node dirNode = repositoryNode.getNode(dirName);
 
 			dirNode.remove();
@@ -245,8 +250,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			versionManager.checkout(contentNode.getPath());
@@ -287,8 +295,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			VersionHistory versionHistory = versionManager.getVersionHistory(
@@ -331,7 +342,9 @@ public class JCRStore extends BaseStore {
 			session = JCRFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
 
 			fileNode.remove();
@@ -367,8 +380,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			VersionHistory versionHistory = versionManager.getVersionHistory(
@@ -446,6 +462,7 @@ public class JCRStore extends BaseStore {
 			session = JCRFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
 			NodeIterator itr = repositoryNode.getNodes();
@@ -492,7 +509,9 @@ public class JCRStore extends BaseStore {
 			session = JCRFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node dirNode = repositoryNode.getNode(dirName);
 
 			NodeIterator itr = dirNode.getNodes();
@@ -554,6 +573,37 @@ public class JCRStore extends BaseStore {
 	}
 
 	@Override
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = JCRFactoryUtil.createSession();
+
+			Node rootNode = getRootNode(session, companyId);
+
+			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			repositoryNode.getNode(dirName);
+
+			return true;
+		}
+		catch (PathNotFoundException pnfe) {
+			return false;
+		}
+		catch (RepositoryException re) {
+			throw new SystemException(re);
+		}
+		finally {
+			if (session != null) {
+				session.logout();
+			}
+		}
+	}
+
+	@Override
 	public boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -607,8 +657,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			Node newRepositoryNode = getFolderNode(rootNode, newRepositoryId);
@@ -699,8 +752,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			Node newFileNode = repositoryNode.addNode(
@@ -784,8 +840,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			versionManager.checkout(contentNode.getPath());
@@ -877,8 +936,11 @@ public class JCRStore extends BaseStore {
 			VersionManager versionManager = workspace.getVersionManager();
 
 			Node rootNode = getRootNode(session, companyId);
+
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
 			Node fileNode = repositoryNode.getNode(fileName);
+
 			contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			if (Validator.isNotNull(versionLabel)) {

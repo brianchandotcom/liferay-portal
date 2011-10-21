@@ -243,4 +243,9 @@ public interface ClassNameLocalService extends PersistedModelLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getClassNameId(java.lang.String value);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getRegistryName();
+
+	public void invalidate();
 }

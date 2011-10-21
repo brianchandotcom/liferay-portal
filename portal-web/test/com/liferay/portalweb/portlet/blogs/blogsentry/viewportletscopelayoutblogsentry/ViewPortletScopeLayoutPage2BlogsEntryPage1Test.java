@@ -26,7 +26,7 @@ public class ViewPortletScopeLayoutPage2BlogsEntryPage1Test extends BaseTestCase
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class ViewPortletScopeLayoutPage2BlogsEntryPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs2 Test2 Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -55,7 +53,7 @@ public class ViewPortletScopeLayoutPage2BlogsEntryPage1Test extends BaseTestCase
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options Icon"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -71,11 +69,10 @@ public class ViewPortletScopeLayoutPage2BlogsEntryPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,13 +87,11 @@ public class ViewPortletScopeLayoutPage2BlogsEntryPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -111,7 +106,6 @@ public class ViewPortletScopeLayoutPage2BlogsEntryPage1Test extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals("Blogs2 Test2 Page2",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 	}

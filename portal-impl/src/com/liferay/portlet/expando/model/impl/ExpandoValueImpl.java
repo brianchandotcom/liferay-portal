@@ -337,9 +337,11 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 		validate(ExpandoColumnConstants.STRING_ARRAY);
 
-		for (int i = 0; i < data.length; i++) {
-			data[i] = StringUtil.replace(
-				data[i], StringPool.COMMA, _EXPANDO_COMMA);
+		if (data != null) {
+			for (int i = 0; i < data.length; i++) {
+				data[i] = StringUtil.replace(
+					data[i], StringPool.COMMA, _EXPANDO_COMMA);
+			}
 		}
 
 		setData(StringUtil.merge(data));

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link WikiPageResourceLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.wiki.service;
  * @generated
  */
 public class WikiPageResourceLocalServiceWrapper
-	implements WikiPageResourceLocalService {
+	implements WikiPageResourceLocalService,
+		ServiceWrapper<WikiPageResourceLocalService> {
 	public WikiPageResourceLocalServiceWrapper(
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
@@ -281,11 +284,26 @@ public class WikiPageResourceLocalServiceWrapper
 			title);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WikiPageResourceLocalService getWrappedWikiPageResourceLocalService() {
 		return _wikiPageResourceLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
+	public WikiPageResourceLocalService getWrappedService() {
+		return _wikiPageResourceLocalService;
+	}
+
+	public void setWrappedService(
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}

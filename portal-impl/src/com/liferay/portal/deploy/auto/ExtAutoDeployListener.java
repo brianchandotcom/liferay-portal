@@ -40,7 +40,8 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copying web plugin for " + file.getPath());
+			_log.info(
+				"Copying extension environment plugin for " + file.getPath());
 		}
 
 		_autoDeployer.autoDeploy(file, context);

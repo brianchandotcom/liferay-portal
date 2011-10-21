@@ -14,11 +14,14 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.events.ServicePreAction" %>
 <%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
+<%@ page import="com.liferay.portal.kernel.util.InstancePool" %>
 <%@ page import="com.liferay.portal.model.Layout" %>
 <%@ page import="com.liferay.portal.model.LayoutConstants" %>
 <%@ page import="com.liferay.portal.model.LayoutSet" %>
 <%@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.theme.ThemeDisplay" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.WebKeys" %>
 
@@ -40,7 +43,11 @@ if (layoutSet != null) {
 	if (defaultPlid != LayoutConstants.DEFAULT_PLID) {
 		Layout layout = LayoutLocalServiceUtil.getLayout(defaultPlid);
 
-		redirect = layout.getFriendlyURL();
+		ServicePreAction servicePreAction = (ServicePreAction)InstancePool.get(ServicePreAction.class.getName());
+
+		ThemeDisplay themeDisplay = servicePreAction.initThemeDisplay(request, response);
+
+		redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
 	}
 	else {
 		redirect = PortalUtil.getPathMain();

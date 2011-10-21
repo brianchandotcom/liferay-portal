@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Permission
  * @generated
  */
-public class PermissionWrapper implements Permission {
+public class PermissionWrapper implements Permission, ModelWrapper<Permission> {
 	public PermissionWrapper(Permission permission) {
 		_permission = permission;
 	}
@@ -146,10 +146,6 @@ public class PermissionWrapper implements Permission {
 		return _permission.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_permission.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _permission.getPrimaryKeyObj();
 	}
@@ -227,7 +223,14 @@ public class PermissionWrapper implements Permission {
 		_permission.setScope(scope);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Permission getWrappedPermission() {
+		return _permission;
+	}
+
+	public Permission getWrappedModel() {
 		return _permission;
 	}
 

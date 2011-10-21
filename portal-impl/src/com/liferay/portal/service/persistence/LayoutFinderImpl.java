@@ -127,7 +127,7 @@ public class LayoutFinderImpl
 			List<LayoutReference> layoutReferences =
 				new ArrayList<LayoutReference>();
 
-			Iterator<Object[]> itr = q.list().iterator();
+			Iterator<Object[]> itr = q.iterate();
 
 			while (itr.hasNext()) {
 				Object[] array = itr.next();

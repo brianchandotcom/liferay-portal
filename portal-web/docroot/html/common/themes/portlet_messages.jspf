@@ -73,6 +73,15 @@ else if (group.isStagingGroup()) {
 				<liferay-ui:message key="your-request-completed-successfully" />
 			</c:otherwise>
 		</c:choose>
+
+		<c:if test='<%= SessionMessages.contains(renderRequest, portletConfig.getPortletName() + ".doCloseRedirect") %>'>
+
+			<%
+			String taglibMessage = "class=\"lfr-hide-dialog\" href=\"javascript:;\"";
+			%>
+
+			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x" />
+		</c:if>
 	</div>
 </c:if>
 

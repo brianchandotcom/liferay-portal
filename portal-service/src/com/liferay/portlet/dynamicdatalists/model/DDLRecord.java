@@ -33,20 +33,20 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	 */
 	public com.liferay.portlet.dynamicdatamapping.storage.Field getField(
 		java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StorageException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.io.Serializable getFieldDataType(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields()
-		throws com.liferay.portlet.dynamicdatamapping.StorageException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.io.Serializable getFieldType(java.lang.String fieldName)
 		throws java.lang.Exception;
 
 	public java.io.Serializable getFieldValue(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StorageException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,

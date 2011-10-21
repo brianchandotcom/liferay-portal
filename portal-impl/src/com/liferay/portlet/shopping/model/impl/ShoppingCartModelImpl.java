@@ -81,15 +81,11 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingCart"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ShoppingCart.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingCart.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingCart"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingCart"));
 
@@ -112,6 +108,14 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingCart.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingCart.class.getName();
+	}
+
 	public long getCartId() {
 		return _cartId;
 	}
@@ -125,6 +129,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -151,6 +157,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -247,20 +255,19 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		_insure = insure;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ShoppingCart toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ShoppingCart)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingCart)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ShoppingCart)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -354,6 +361,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		shoppingCartModelImpl._originalUserId = shoppingCartModelImpl._userId;
 
 		shoppingCartModelImpl._setOriginalUserId = false;
+
+		shoppingCartModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -526,5 +535,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	private int _altShipping;
 	private boolean _insure;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingCart _escapedModelProxy;
 }

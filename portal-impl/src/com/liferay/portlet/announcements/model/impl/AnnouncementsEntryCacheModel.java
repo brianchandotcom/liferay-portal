@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see AnnouncementsEntry
  * @generated
  */
-public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEntry> {
+public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEntry>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);

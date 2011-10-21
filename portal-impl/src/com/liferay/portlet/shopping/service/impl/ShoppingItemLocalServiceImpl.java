@@ -30,6 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
 import com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil;
+import com.liferay.portlet.shopping.AmazonException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
 import com.liferay.portlet.shopping.ItemLargeImageSizeException;
@@ -594,6 +595,10 @@ public class ShoppingItemLocalServiceImpl
 	protected void doAddBookItems(
 			long userId, long groupId, long categoryId, String[] isbns)
 		throws IOException, PortalException, SystemException {
+
+		if (!AmazonRankingsUtil.isEnabled()) {
+			throw new AmazonException("Amazon integration is not enabled");
+		}
 
 		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
 

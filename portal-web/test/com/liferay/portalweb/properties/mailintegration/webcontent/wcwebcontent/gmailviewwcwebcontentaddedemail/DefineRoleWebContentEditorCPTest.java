@@ -25,7 +25,7 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,21 +40,16 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_128_keywords']",
 			RuntimeVariables.replace("Web Content Editor"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Editor"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Regular"),
@@ -65,54 +60,42 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("Web Content Editor"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Editor"),
 			selenium.getText("//h1[@class='header-title']"));
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']"));
-		selenium.saveScreenShotAndSource();
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']");
 		assertTrue(selenium.isChecked(
 				"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("wwwwwwwww"));
-		selenium.saveScreenShotAndSource();
 		selenium.keyPress("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isChecked(
 				"//input[@value='15ACCESS_IN_CONTROL_PANEL']"));
-		selenium.saveScreenShotAndSource();
 		selenium.check("//input[@value='15ACCESS_IN_CONTROL_PANEL']");
 		assertTrue(selenium.isChecked(
 				"//input[@value='15ACCESS_IN_CONTROL_PANEL']"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

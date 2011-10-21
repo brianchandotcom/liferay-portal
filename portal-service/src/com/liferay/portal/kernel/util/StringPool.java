@@ -161,6 +161,8 @@ public class StringPool {
 
 	public static final String TAB = "\t";
 
+	public static final String THREE_SPACES = "   ";
+
 	public static final String TILDE = "~";
 
 	public static final String TRUE = "true";

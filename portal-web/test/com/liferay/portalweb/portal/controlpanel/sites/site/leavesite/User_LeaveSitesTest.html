@@ -30,8 +30,18 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//form/span/span[2]/span/input</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/div/table/tbody/tr[3]/td[1]</td>
+	<td>Test Open Community</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[1]/div/table/tbody/tr[3]/td[2]</td>
+	<td>2</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,7 +49,7 @@
 	<td>Leave</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//span/a/span</td>
 	<td>Leave</td>
 </tr>

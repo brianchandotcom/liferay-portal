@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDLRecordLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatalists.service;
  * @see       DDLRecordLocalService
  * @generated
  */
-public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService {
+public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
+	ServiceWrapper<DDLRecordLocalService> {
 	public DDLRecordLocalServiceWrapper(
 		DDLRecordLocalService ddlRecordLocalService) {
 		_ddlRecordLocalService = ddlRecordLocalService;
@@ -301,6 +304,12 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService {
 		_ddlRecordLocalService.deleteRecords(recordSetId);
 	}
 
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchRecord(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordLocalService.fetchRecord(recordId);
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -418,12 +427,26 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService {
 			status, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDLRecordLocalService getWrappedDDLRecordLocalService() {
 		return _ddlRecordLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	public DDLRecordLocalService getWrappedService() {
+		return _ddlRecordLocalService;
+	}
+
+	public void setWrappedService(DDLRecordLocalService ddlRecordLocalService) {
 		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 

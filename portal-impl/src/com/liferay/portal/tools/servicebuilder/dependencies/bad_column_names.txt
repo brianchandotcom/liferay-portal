@@ -48,6 +48,7 @@ join
 key
 log
 long
+mode
 native
 new
 number

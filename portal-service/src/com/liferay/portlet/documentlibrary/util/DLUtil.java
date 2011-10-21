@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,6 +34,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -80,10 +84,10 @@ public class DLUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_shortcut");
+			"struts_action", "/document_library/view_file_entry");
 		portletURL.setParameter(
-			"fileShortcutId",
-			String.valueOf(dlFileShortcut.getFileShortcutId()));
+			"fileEntryId",
+			String.valueOf(dlFileShortcut.getToFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, dlFileShortcut.getToTitle(), portletURL.toString());
@@ -120,7 +124,7 @@ public class DLUtil {
 			LiferayPortletResponse liferayPortletResponse, boolean showGlobally)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL =
@@ -143,11 +147,9 @@ public class DLUtil {
 		data.put("folder-id", _getDefaultFolderId(request));
 		data.put("refresh-folders", Boolean.TRUE.toString());
 
-		if (folder != null) {
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("documents-home"),
-				portletURL.toString(), data);
-		}
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, themeDisplay.translate("documents-home"),
+			portletURL.toString(), data);
 
 		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
 	}
@@ -232,9 +234,10 @@ public class DLUtil {
 		if (strutsAction.equals("/journal/select_document_library") ||
 			strutsAction.equals("/document_library/select_file_entry") ||
 			strutsAction.equals("/document_library/select_folder") ||
-			strutsAction.equals("/document_library_display/select_folder")) {
+			strutsAction.equals("/document_library_display/select_folder") ||
+			strutsAction.equals("/image_gallery_display/select_folder")) {
 
-			ThemeDisplay themeDisplay =	(ThemeDisplay)request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -247,7 +250,12 @@ public class DLUtil {
 			data.put("folder-id", _getDefaultFolderId(request));
 			data.put("refresh-folders", Boolean.TRUE.toString());
 
-			if (folder != null) {
+			if (strutsAction.equals("/image_gallery_display/select_folder")) {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, themeDisplay.translate("images-home"),
+					portletURL.toString(), data);
+			}
+			else {
 				PortalUtil.addPortletBreadcrumbEntry(
 					request, themeDisplay.translate("documents-home"),
 					portletURL.toString(), data);
@@ -333,6 +341,30 @@ public class DLUtil {
 		return _instance._getGenericName(extension);
 	}
 
+	public static long[] getGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			scopeGroup.getCompanyId());
+
+		if (scopeGroup.isLayout()) {
+			return new long[] {
+				scopeGroup.getParentGroupId(), companyGroup.getGroupId()
+			};
+		}
+		else {
+			return new long[] {groupId, companyGroup.getGroupId()};
+		}
+	}
+
+	public static long[] getGroupIds(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getGroupIds(themeDisplay.getScopeGroupId());
+	}
+
 	public static OrderByComparator getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -348,12 +380,12 @@ public class DLUtil {
 			orderByComparator = new RepositoryModelCreateDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator(
+		else if (orderByCol.equals("downloads")) {
+			orderByComparator = new RepositoryModelReadCountComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("readCount")) {
-			orderByComparator = new RepositoryModelReadCountComparator(
+		else if (orderByCol.equals("modifiedDate")) {
+			orderByComparator = new RepositoryModelModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("size")) {

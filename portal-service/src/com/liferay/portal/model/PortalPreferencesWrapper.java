@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       PortalPreferences
  * @generated
  */
-public class PortalPreferencesWrapper implements PortalPreferences {
+public class PortalPreferencesWrapper implements PortalPreferences,
+	ModelWrapper<PortalPreferences> {
 	public PortalPreferencesWrapper(PortalPreferences portalPreferences) {
 		_portalPreferences = portalPreferences;
 	}
@@ -146,10 +147,6 @@ public class PortalPreferencesWrapper implements PortalPreferences {
 		return _portalPreferences.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_portalPreferences.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _portalPreferences.getPrimaryKeyObj();
 	}
@@ -204,7 +201,14 @@ public class PortalPreferencesWrapper implements PortalPreferences {
 		_portalPreferences.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PortalPreferences getWrappedPortalPreferences() {
+		return _portalPreferences;
+	}
+
+	public PortalPreferences getWrappedModel() {
 		return _portalPreferences;
 	}
 

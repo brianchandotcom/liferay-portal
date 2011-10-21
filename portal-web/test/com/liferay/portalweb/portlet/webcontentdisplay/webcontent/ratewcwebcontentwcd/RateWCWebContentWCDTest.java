@@ -25,7 +25,7 @@ public class RateWCWebContentWCDTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class RateWCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Your Rating"),
 			selenium.getText("//div/div[4]/div/div[1]/div/div"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
@@ -55,7 +53,7 @@ public class RateWCWebContentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Rate this 5 stars out of 5."));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -72,7 +70,6 @@ public class RateWCWebContentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText("//div/div[4]/div/div[2]/div/div"));
 	}

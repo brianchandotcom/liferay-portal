@@ -25,7 +25,7 @@ public class AddEventDateEndInvalidTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,20 +40,16 @@ public class AddEventDateEndInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_8_title",
 			RuntimeVariables.replace("Invalid End Date Test Event"));
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,9 +64,7 @@ public class AddEventDateEndInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_8_dailyInterval", RuntimeVariables.replace("1"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("_8_endDateMonth",
 			RuntimeVariables.replace("End Date Month"));
 		selenium.select("_8_endDateMonth",

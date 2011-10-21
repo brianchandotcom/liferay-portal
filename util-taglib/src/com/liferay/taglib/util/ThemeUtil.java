@@ -42,11 +42,16 @@ import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.ObjectWrapper;
 
+import java.io.IOException;
 import java.io.Writer;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
@@ -203,10 +208,33 @@ public class ThemeUtil {
 
 		// FreeMarker JSP tag library support
 
+		final Servlet servlet = (Servlet)pageContext.getPage();
+
+		GenericServlet genericServlet = null;
+
+		if (servlet instanceof GenericServlet) {
+			genericServlet = (GenericServlet) servlet;
+		}
+		else {
+			genericServlet = new GenericServlet() {
+
+				@Override
+				public void service(
+						ServletRequest servletRequest,
+						ServletResponse servletResponse)
+					throws ServletException, IOException {
+
+					servlet.service(servletRequest, servletResponse);
+				}
+
+			};
+
+			genericServlet.init(pageContext.getServletConfig());
+		}
+
 		ServletContextHashModel servletContextHashModel =
 			new ServletContextHashModel(
-				(GenericServlet)pageContext.getPage(),
-				ObjectWrapper.DEFAULT_WRAPPER);
+				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
 
 		freeMarkerContext.put("Application", servletContextHashModel);
 
@@ -224,7 +252,7 @@ public class ThemeUtil {
 			return null;
 		}
 		else {
-			return ((UnsyncStringWriter)writer).toString();
+			return writer.toString();
 		}
 	}
 
@@ -299,24 +327,32 @@ public class ThemeUtil {
 		String resourcePath = theme.getResourcePath(
 			servletContext, portletId, page);
 
-		if (Validator.isNotNull(portletId) &&
-			!VelocityEngineUtil.resourceExists(resourcePath) &&
-			portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
+		boolean checkResourceExists = true;
 
-			String rootPortletId = PortletConstants.getRootPortletId(
-				portletId);
+		if (Validator.isNotNull(portletId)) {
+			if (portletId.contains(PortletConstants.INSTANCE_SEPARATOR) &&
+				(checkResourceExists = !VelocityEngineUtil.resourceExists(
+					resourcePath))) {
 
-			resourcePath = theme.getResourcePath(
-				servletContext, rootPortletId, page);
+				String rootPortletId = PortletConstants.getRootPortletId(
+					portletId);
+
+				resourcePath = theme.getResourcePath(
+					servletContext, rootPortletId, page);
+			}
+
+			if (checkResourceExists &&
+				(checkResourceExists = !VelocityEngineUtil.resourceExists(
+					resourcePath))) {
+
+				resourcePath = theme.getResourcePath(
+					servletContext, null, page);
+			}
 		}
 
-		if (Validator.isNotNull(portletId) &&
+		if (checkResourceExists &&
 			!VelocityEngineUtil.resourceExists(resourcePath)) {
 
-			resourcePath = theme.getResourcePath(servletContext, null, page);
-		}
-
-		if (!VelocityEngineUtil.resourceExists(resourcePath)) {
 			_log.error(resourcePath + " does not exist");
 
 			return null;

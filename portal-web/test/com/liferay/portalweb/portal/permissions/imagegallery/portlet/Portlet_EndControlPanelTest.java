@@ -40,13 +40,11 @@ public class Portlet_EndControlPanelTest extends BaseTestCase {
 				selenium.clickAt("link=Back to Guest",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 				selenium.clickAt("link=Welcome - Liferay",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

@@ -87,6 +87,11 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingCategory"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingCategory"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long PARENTCATEGORYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -128,14 +133,6 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ShoppingCategory.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingCategory.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingCategory"));
 
@@ -158,6 +155,14 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingCategory.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingCategory.class.getName();
+	}
+
 	@JSON
 	public long getCategoryId() {
 		return _categoryId;
@@ -173,7 +178,19 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -240,7 +257,19 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public void setParentCategoryId(long parentCategoryId) {
+		_columnBitmask |= PARENTCATEGORYID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentCategoryId) {
+			_setOriginalParentCategoryId = true;
+
+			_originalParentCategoryId = _parentCategoryId;
+		}
+
 		_parentCategoryId = parentCategoryId;
+	}
+
+	public long getOriginalParentCategoryId() {
+		return _originalParentCategoryId;
 	}
 
 	@JSON
@@ -271,20 +300,19 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_description = description;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ShoppingCategory toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ShoppingCategory)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingCategory)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ShoppingCategory)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -381,6 +409,17 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	@Override
 	public void resetOriginalValues() {
+		ShoppingCategoryModelImpl shoppingCategoryModelImpl = this;
+
+		shoppingCategoryModelImpl._originalGroupId = shoppingCategoryModelImpl._groupId;
+
+		shoppingCategoryModelImpl._setOriginalGroupId = false;
+
+		shoppingCategoryModelImpl._originalParentCategoryId = shoppingCategoryModelImpl._parentCategoryId;
+
+		shoppingCategoryModelImpl._setOriginalParentCategoryId = false;
+
+		shoppingCategoryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -530,6 +569,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		};
 	private long _categoryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
@@ -537,8 +578,11 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentCategoryId;
+	private long _originalParentCategoryId;
+	private boolean _setOriginalParentCategoryId;
 	private String _name;
 	private String _description;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingCategory _escapedModelProxy;
 }

@@ -31,7 +31,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				selenium.open("/web/guest/home");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -47,16 +47,14 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Blogs Portlet Permissions Page",
 					RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -72,7 +70,6 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -80,7 +77,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -95,11 +92,9 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Permissions",
 					RuntimeVariables.replace("Permissions"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean guestViewChecked = selenium.isChecked("16_ACTION_VIEW");
 
@@ -116,10 +111,9 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -135,13 +129,11 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertFalse(selenium.isChecked(
 						"//input[@name='16_ACTION_VIEW']"));
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

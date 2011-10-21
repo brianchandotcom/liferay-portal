@@ -30,7 +30,7 @@ public class AdvancedSearchStructureNameTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,19 +45,15 @@ public class AdvancedSearchStructureNameTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -74,7 +70,7 @@ public class AdvancedSearchStructureNameTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -89,17 +85,13 @@ public class AdvancedSearchStructureNameTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace("web content structure name"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Structure Name"),
 					selenium.getText("//td[3]/a"));
@@ -108,14 +100,11 @@ public class AdvancedSearchStructureNameTest extends BaseTestCase {
 					selenium.getText("//td[4]/a"));
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace("web1 content1 structure1 name1"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Structure Name"));
 				assertFalse(selenium.isTextPresent(
 						"Web Content Structure Description"));

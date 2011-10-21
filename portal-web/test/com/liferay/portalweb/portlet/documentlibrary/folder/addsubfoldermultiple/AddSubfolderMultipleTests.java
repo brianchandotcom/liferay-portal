@@ -33,7 +33,7 @@ public class AddSubfolderMultipleTests extends BaseTests {
 		testSuite.addTestSuite(AddSubfolder1Test.class);
 		testSuite.addTestSuite(AddSubfolder2Test.class);
 		testSuite.addTestSuite(AddSubfolder3Test.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

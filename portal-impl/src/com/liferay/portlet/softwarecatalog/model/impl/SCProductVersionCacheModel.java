@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see SCProductVersion
  * @generated
  */
-public class SCProductVersionCacheModel implements CacheModel<SCProductVersion> {
+public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);

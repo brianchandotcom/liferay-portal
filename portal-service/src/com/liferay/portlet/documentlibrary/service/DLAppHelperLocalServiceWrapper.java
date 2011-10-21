@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLAppHelperLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLAppHelperLocalService
  * @generated
  */
-public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
+public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
+	ServiceWrapper<DLAppHelperLocalService> {
 	public DLAppHelperLocalServiceWrapper(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 		_dlAppHelperLocalService = dlAppHelperLocalService;
@@ -47,13 +50,13 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 		_dlAppHelperLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public void addFileEntry(
+	public void addFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlAppHelperLocalService.addFileEntry(fileEntry, fileVersion,
+		_dlAppHelperLocalService.addFileEntry(userId, fileEntry, fileVersion,
 			serviceContext);
 	}
 
@@ -107,24 +110,32 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.String mimeType,
-		boolean addDraftAssetEntry, boolean visible, int height, int width)
+		long assetClassPk)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
-			fileVersion, assetCategoryIds, assetTagNames, assetLinkEntryIds,
-			mimeType, addDraftAssetEntry, visible, height, width);
+			fileVersion, assetClassPk);
 	}
 
-	public void updateFileEntry(
+	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
+			fileVersion, assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
+	public void updateFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlAppHelperLocalService.updateFileEntry(fileEntry, fileVersion,
-			serviceContext);
+		_dlAppHelperLocalService.updateFileEntry(userId, fileEntry,
+			fileVersion, serviceContext);
 	}
 
 	public void updateFolder(
@@ -146,11 +157,26 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService {
 			latestFileVersion, status, workflowContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLAppHelperLocalService getWrappedDLAppHelperLocalService() {
 		return _dlAppHelperLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLAppHelperLocalService(
+		DLAppHelperLocalService dlAppHelperLocalService) {
+		_dlAppHelperLocalService = dlAppHelperLocalService;
+	}
+
+	public DLAppHelperLocalService getWrappedService() {
+		return _dlAppHelperLocalService;
+	}
+
+	public void setWrappedService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 		_dlAppHelperLocalService = dlAppHelperLocalService;
 	}

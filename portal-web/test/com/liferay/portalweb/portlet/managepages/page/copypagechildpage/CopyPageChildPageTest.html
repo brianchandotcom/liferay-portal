@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
@@ -170,12 +170,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/span/button[4]</td>
+	<td>//button[5]</td>
+	<td>Copy Portlets from Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[5]</td>
 	<td>Copy Portlets from Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/span/button[4]</td>
+	<td>//button[5]</td>
 	<td>Copy Portlets from Page</td>
 </tr>
 <tr>
@@ -233,7 +238,6 @@
 	<td>//section[@id='portlet_47']/header/h1</td>
 	<td>Hello World</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

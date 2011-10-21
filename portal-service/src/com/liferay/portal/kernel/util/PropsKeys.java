@@ -347,6 +347,10 @@ public interface PropsKeys {
 
 	public static final String COMPANY_DEFAULT_HOME_URL = "company.default.home.url";
 
+	public static final String COMPANY_DEFAULT_LOCALE = "company.default.locale";
+
+	public static final String COMPANY_DEFAULT_TIME_ZONE = "company.default.time.zone";
+
 	public static final String COMPANY_DEFAULT_WEB_ID = "company.default.web.id";
 
 	public static final String COMPANY_ENCRYPTION_ALGORITHM = "company.encryption.algorithm";
@@ -495,6 +499,8 @@ public interface PropsKeys {
 
 	public static final String DIRECT_SERVLET_CONTEXT_RELOAD = "direct.servlet.context.reload";
 
+	public static final String DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = "discussion.comments.always.editable.by.owner";
+
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED = "discussion.email.comments.added.enabled";
@@ -506,6 +512,8 @@ public interface PropsKeys {
 	public static final String DISCUSSION_THREAD_VIEW = "discussion.thread.view";
 
 	public static final String DL_COMPARABLE_FILE_EXTENSIONS = "dl.comparable.file.extensions";
+
+	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";
 
 	public static final String DL_DISPLAY_VIEWS = "dl.display.views";
 
@@ -1327,7 +1335,7 @@ public interface PropsKeys {
 
 	public static final String MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT = "minifier.inline.content.cache.skip.javascript";
 
-    public static final String MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX = "mobile.device.rules.rule.group.copy.postfix";
+	public static final String MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX = "mobile.device.rules.rule.group.copy.postfix";
 
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
@@ -1376,6 +1384,8 @@ public interface PropsKeys {
 	public static final String NOTIFICATIONS_MAX_EVENTS = "notifications.max.events";
 
 	public static final String NTLM_AUTH_ENABLED = "ntlm.auth.enabled";
+
+	public static final String NTLM_AUTH_NEGOTIATE_FLAGS = "ntlm.auth.negotiate.flags";
 
 	public static final String NTLM_DOMAIN = "ntlm.auth.domain";
 
@@ -1455,7 +1465,13 @@ public interface PropsKeys {
 
 	public static final String ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED = "organizations.user.group.membership.enabled";
 
+	public static final String OSGI_FRAMEWORK_BEGINNING_START_LEVEL = "osgi.framework.beginning.start.level";
+
 	public static final String OSGI_FRAMEWORK_STORAGE = "osgi.framework.storage";
+
+	public static final String OSGI_REGISTER_LIFERAY_SERVICES = "osgi.register.liferay.services";
+
+	public static final String OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES = "osgi.system.bundle.export.packages";
 
 	public static final String OSGI_SYSTEM_PACKAGES_EXTRA = "osgi.system.packages.extra";
 
@@ -1713,7 +1729,11 @@ public interface PropsKeys {
 
 	public static final String SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE = "session.verify.serializable.attribute";
 
-	public static final String SETUP_DATABASE_DRIVERS_LIST = "setup.database.drivers.list";
+	public static final String SETUP_DATABASE_DRIVER_CLASS_NAME = "setup.database.driverClassName";
+
+	public static final String SETUP_DATABASE_TYPES = "setup.database.types";
+
+	public static final String SETUP_DATABASE_URL = "setup.database.url";
 
 	public static final String SETUP_WIZARD_ENABLED = "setup.wizard.enabled";
 
@@ -1793,6 +1813,8 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 
+	public static final String SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH = "social.activity.counter.period.length";
+
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
 
 	public static final String SOCIAL_BOOKMARK_POST_URL = "social.bookmark.post.url";
@@ -1816,6 +1838,8 @@ public interface PropsKeys {
 	public static final String SPRITE_FILE_NAME = "sprite.file.name";
 
 	public static final String SPRITE_PROPERTIES_FILE_NAME = "sprite.properties.file.name";
+
+	public static final String SPRITE_ROOT_DIR = "sprite.root.dir";
 
 	public static final String SQL_DATA_COM_LIFERAY_PORTAL_MODEL_COUNTRY_COUNTRY_ID = "sql.data.com.liferay.portal.model.Country.country.id";
 
@@ -2022,6 +2046,8 @@ public interface PropsKeys {
 	public static final String WEB_SERVER_PROXY_LEGACY_MODE = "web.server.proxy.legacy.mode";
 
 	public static final String WEBDAV_IGNORE = "webdav.ignore";
+
+	public static final String WEBDAV_NONCE_EXPIRATION = "webdav.nonce.expiration";
 
 	public static final String WIDGET_SERVLET_MAPPING = "widget.servlet.mapping";
 

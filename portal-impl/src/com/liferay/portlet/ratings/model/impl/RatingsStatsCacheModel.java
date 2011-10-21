@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.ratings.model.RatingsStats;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing RatingsStats in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.ratings.model.RatingsStats;
  * @see RatingsStats
  * @generated
  */
-public class RatingsStatsCacheModel implements CacheModel<RatingsStats> {
+public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);

@@ -58,6 +58,9 @@ public class AutoEscapeBeanHandler implements InvocationHandler {
 		if (methodName.endsWith("isEscapedModel")) {
 			return true;
 		}
+		else if (methodName.endsWith("toEscapedModel")) {
+			return proxy;
+		}
 
 		Object result = null;
 

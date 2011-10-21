@@ -62,7 +62,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 				<%
 				long ddmStructureId = selRecordSet.getDDMStructureId();
 
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_LIST);
+				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_LIST, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 
 				for (DDMTemplate template : templates) {
 					boolean selected = false;
@@ -86,7 +86,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 				<%
 				long ddmStructureId = selRecordSet.getDDMStructureId();
 
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_DETAIL);
+				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureId, DDMTemplateConstants.TEMPLATE_TYPE_DETAIL, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 
 				for (DDMTemplate template : templates) {
 					boolean selected = false;
@@ -198,7 +198,6 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 			document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
 			document.<portlet:namespace />fm.<portlet:namespace />detailDDMTemplateId.value = "";
 			document.<portlet:namespace />fm.<portlet:namespace />listDDMTemplateId.value = "";
-			document.<portlet:namespace />fm.<portlet:namespace />editable.value = "";
 
 			A.one('.displaying-record-set-id-holder').show();
 			A.one('.displaying-help-message-holder').hide();

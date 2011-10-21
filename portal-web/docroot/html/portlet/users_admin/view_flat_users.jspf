@@ -122,7 +122,7 @@
 
 	</c:if>
 
-	<c:if test="<%= (usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) && (userGroup == null) && (userOrganization == null) %>">
+	<c:if test="<%= (usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) && (userOrganization == null) %>">
 		<liferay-ui:search-form
 			page="/html/portlet/users_admin/user_search.jsp"
 		/>
@@ -198,7 +198,7 @@
 	%>
 
 	<c:if test="<%= showDeleteButton || showRestoreButton %>">
-		<c:if test="<%= !organizationContextView %>">
+		<c:if test="<%= (usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) && (userOrganization == null) %>">
 			<div class="separator"><!-- --></div>
 		</c:if>
 

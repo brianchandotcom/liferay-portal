@@ -257,6 +257,95 @@
 				(rank != ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.countU_ByG_C_N_S_E">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT classPK) AS COUNT_VALUE
+			FROM
+				SocialActivityCounter
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?) AND
+				(name IN ([$NAME$])) AND
+				(startPeriod + ? >= ?) AND
+				(endPeriod = -1)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_ByG_N_S_E_1">
+		<![CDATA[
+			SELECT
+				name, SUM(currentValue) currentValue, startPeriod, endPeriod
+			FROM
+				SocialActivityCounter
+			WHERE
+				(groupId = ?) AND
+				(name = ?) AND
+				(startPeriod >= ?) AND
+				(
+					(endPeriod <= ?) OR
+					(endPeriod = -1)
+				)
+			GROUP BY
+				name, startPeriod, endPeriod
+			ORDER BY
+				startPeriod
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_ByG_N_S_E_2">
+		<![CDATA[
+			SELECT
+				classNameId, name, SUM(currentValue) currentValue
+			FROM
+				SocialActivityCounter
+			WHERE
+				(groupId = ?) AND
+				(name = ?) AND
+				(startPeriod >= ?) AND
+				(
+					(endPeriod <= ?) OR
+					(endPeriod = -1)
+				)
+			GROUP BY
+				classNameId, name
+			ORDER BY
+				currentValue DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_By_G_C_C_N_S_E">
+		<![CDATA[
+			SELECT
+				{SocialActivityCounter.*}
+			FROM
+				SocialActivityCounter
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?) AND
+				(classPK IN ([$CLASS_PK$])) AND
+				(name IN ([$NAME$])) AND
+				(startPeriod + ? >= ?) AND
+				(endPeriod = -1)
+			ORDER BY
+				classPK
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findU_ByG_C_N_S_E">
+		<![CDATA[
+			SELECT
+				classPK
+			FROM
+				SocialActivityCounter
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?) AND
+				(name IN ([$NAME$])) AND
+				(startPeriod + ? >= ?) AND
+				(endPeriod = -1)
+			GROUP BY
+				classPK
+			ORDER BY
+				SUM(currentValue)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByGroupId">
 		<![CDATA[
 			SELECT

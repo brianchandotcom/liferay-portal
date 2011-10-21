@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.util.ContentUtil;
 
@@ -45,7 +46,7 @@ public class CalUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_ADDRESS);
+			preferences, companyId, PropsValues.CALENDAR_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
@@ -53,7 +54,7 @@ public class CalUtil {
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsKeys.CALENDAR_EMAIL_FROM_NAME);
+			preferences, companyId, PropsValues.CALENDAR_EMAIL_FROM_NAME);
 	}
 
 	public static boolean getEmailEventReminderEnabled(

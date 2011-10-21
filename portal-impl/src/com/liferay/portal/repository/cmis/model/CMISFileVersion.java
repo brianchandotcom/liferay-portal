@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -36,6 +38,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -70,6 +73,15 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	public InputStream getContentStream(boolean incrementCounter) {
 		ContentStream contentStream = _document.getContentStream();
 
+		try {
+			DLAppHelperLocalServiceUtil.getFileAsStream(
+				PrincipalThreadLocal.getUserId(), getFileEntry(),
+				incrementCounter);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
 		return contentStream.getStream();
 	}
 
@@ -77,14 +89,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		Calendar creationDate = _document.getCreationDate();
 
 		return creationDate.getTime();
-	}
-
-	public long getCustom1ImageId() {
-		return 0;
-	}
-
-	public long getCustom2ImageId() {
-		return 0;
 	}
 
 	@Override
@@ -101,8 +105,19 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public FileEntry getFileEntry() throws PortalException, SystemException {
+		Document document = null;
+
+		List<Document> allVersions = _document.getAllVersions();
+
+		if (allVersions.isEmpty()) {
+			document = _document;
+		}
+		else {
+			document = allVersions.get(0);
+		}
+
 		return CMISRepositoryLocalServiceUtil.toFileEntry(
-			getRepositoryId(), _document.getAllVersions().get(0));
+			getRepositoryId(), document);
 	}
 
 	public long getFileEntryId() {
@@ -128,14 +143,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return DLUtil.getFileIcon(getExtension());
 	}
 
-	public String getImageType() {
-		return null;
-	}
-
-	public long getLargeImageId() {
-		return 0;
-	}
-
 	public String getMimeType() {
 		return _document.getContentStreamMimeType();
 	}
@@ -159,10 +166,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return modificationDate.getTime();
 	}
 
-	public String getNameWithExtension() {
-		return _document.getName() + StringPool.PERIOD + getExtension();
-	}
-
 	@Override
 	public long getPrimaryKey() {
 		return _fileVersionId;
@@ -178,10 +181,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 	public long getSize() {
 		return _document.getContentStreamLength();
-	}
-
-	public long getSmallImageId() {
-		return 0;
 	}
 
 	public int getStatus() {

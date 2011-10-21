@@ -25,7 +25,7 @@ public class MB_AddMBCategoryThreadTest extends BaseTestCase {
 		selenium.open("/web/mb-ban-community/message-boards-test-page/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,30 +40,23 @@ public class MB_AddMBCategoryThreadTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Ban Category"),
 			selenium.getText("//b"));
 		selenium.clickAt("//b", RuntimeVariables.replace("MB Ban Category"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Ban Thread"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_19_textArea']",
 			RuntimeVariables.replace("This is to test the mbban table."));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("MB Ban Thread"),
 			selenium.getText("//b"));
 		assertEquals(RuntimeVariables.replace(

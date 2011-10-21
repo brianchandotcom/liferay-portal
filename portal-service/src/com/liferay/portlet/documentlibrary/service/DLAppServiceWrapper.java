@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLAppService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLAppService
  * @generated
  */
-public class DLAppServiceWrapper implements DLAppService {
+public class DLAppServiceWrapper implements DLAppService,
+	ServiceWrapper<DLAppService> {
 	public DLAppServiceWrapper(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
@@ -1108,6 +1111,16 @@ public class DLAppServiceWrapper implements DLAppService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	/**
 	* Returns the number of immediate subfolders, file entries, and file
 	* shortcuts in the parent folder.
@@ -1129,6 +1142,15 @@ public class DLAppServiceWrapper implements DLAppService {
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, int status,
+		java.lang.String[] mimeTypes, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	/**
@@ -2006,11 +2028,25 @@ public class DLAppServiceWrapper implements DLAppService {
 			lockUuid);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLAppService getWrappedDLAppService() {
 		return _dlAppService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	public DLAppService getWrappedService() {
+		return _dlAppService;
+	}
+
+	public void setWrappedService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
 

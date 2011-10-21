@@ -51,6 +51,8 @@ public class SQLTransformer {
 
 		String dbType = db.getType();
 
+		_db = db;
+
 		if (dbType.equals(DB.TYPE_DB2)) {
 			_vendorDB2 = true;
 		}
@@ -149,13 +151,17 @@ public class SQLTransformer {
 		}
 	}
 
+	private String _replaceBoolean(String newSQL) {
+		return StringUtil.replace(
+			newSQL,
+			new String[] {"[$FALSE$]", "[$TRUE$]"},
+			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
+	}
+
 	private String _replaceCastText(String sql) {
 		Matcher matcher = _castTextPattern.matcher(sql);
 
-		if (_vendorDB2) {
-			return matcher.replaceAll("CAST($1 AS VARCHAR(500))");
-		}
-		else if (_vendorDerby) {
+		if (_vendorDB2 || _vendorDerby) {
 			return matcher.replaceAll("CAST($1 AS CHAR(254))");
 		}
 		else if (_vendorPostgreSQL) {
@@ -198,6 +204,10 @@ public class SQLTransformer {
 		return matcher.replaceAll("$1 ($2)");
 	}
 
+	private String _replaceReplace(String newSQL) {
+		return StringUtil.replace(newSQL, "replace(", "str_replace(");
+	}
+
 	private String _replaceUnion(String sql) {
 		Matcher matcher = _unionAllPattern.matcher(sql);
 
@@ -212,6 +222,7 @@ public class SQLTransformer {
 		String newSQL = sql;
 
 		newSQL = _replaceBitwiseCheck(newSQL);
+		newSQL = _replaceBoolean(newSQL);
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 
@@ -228,8 +239,12 @@ public class SQLTransformer {
 		else if (_vendorPostgreSQL) {
 			newSQL = _replaceNegativeComparison(newSQL);
 		}
-		else if (_vendorSQLServer || _vendorSybase) {
+		else if (_vendorSQLServer) {
 			newSQL = _replaceMod(newSQL);
+		}
+		else if (_vendorSybase) {
+			newSQL = _replaceMod(newSQL);
+			newSQL = _replaceReplace(newSQL);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -345,6 +360,7 @@ public class SQLTransformer {
 	private static Pattern _unionAllPattern = Pattern.compile(
 		"SELECT \\* FROM(.*)TEMP_TABLE(.*)", Pattern.CASE_INSENSITIVE);
 
+	private DB _db;
 	private boolean _vendorDB2;
 	private boolean _vendorDerby;
 	private boolean _vendorFirebird;

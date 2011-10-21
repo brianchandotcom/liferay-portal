@@ -34,8 +34,10 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 }
 
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button-row:cssClass"));
+java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button-row:id"));
 
 _updateOptions(_options, "cssClass", cssClass);
+_updateOptions(_options, "id", id);
 %>
 
 <%@ include file="/html/taglib/aui/button_row/init-ext.jspf" %>

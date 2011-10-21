@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Team;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Date;
  * @see Team
  * @generated
  */
-public class TeamCacheModel implements CacheModel<Team> {
+public class TeamCacheModel implements CacheModel<Team>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

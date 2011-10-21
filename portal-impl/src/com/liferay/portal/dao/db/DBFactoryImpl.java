@@ -184,37 +184,43 @@ public class DBFactoryImpl implements DBFactory {
 	}
 
 	public void setDB(Object dialect) {
-		if (_db == null) {
-			_db = getDB(dialect);
+		_db = getDB(dialect);
 
-			if (_db == null) {
-				_log.error(
-					"No DB implementation exists for " +
-						dialect.getClass().getName());
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Using DB implementation " + _db.getClass().getName() +
-							" for " + dialect.getClass().getName());
-				}
+		if (_db == null) {
+			Class<?> clazz = dialect.getClass();
+
+			_log.error(
+				"No DB implementation exists for " + clazz.getName());
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				Class<?> dbClazz = _db.getClass();
+				Class<?> dialectClazz = dialect.getClass();
+
+				_log.debug(
+					"Using DB implementation " + dbClazz.getName() + " for " +
+						dialectClazz.getName());
 			}
 		}
 	}
 
 	public void setDB(String type) {
-		if (_db == null) {
-			_db = getDB(type);
+		if (_db != null) {
+			return;
+		}
 
-			if (_db == null) {
-				_log.error("No DB implementation exists for " + type);
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Using DB implementation " + _db.getClass().getName() +
-							" for " + type);
-				}
+		_db = getDB(type);
+
+		if (_db == null) {
+			_log.error("No DB implementation exists for " + type);
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				Class<?> clazz = _db.getClass();
+
+				_log.debug(
+					"Using DB implementation " + clazz.getName() + " for " +
+						type);
 			}
 		}
 	}

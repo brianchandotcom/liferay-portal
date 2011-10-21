@@ -20,6 +20,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
@@ -51,24 +52,36 @@
 
 		<!-- Other fields -->
 
-		<column name="portletId" type="String" />
 		<column name="repositoryId" type="long" />
 		<column name="path" type="String" />
 		<column name="version" type="String" />
 		<column name="data" type="Blob" />
 		<column name="size" type="long" />
 
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="version" />
+		</order>
+
 		<!-- Finder methods -->
 
-		<finder name="C_P_R_P" return-type="Collection">
+		<finder name="C_R" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="portletId" />
+			<finder-column name="repositoryId" />
+		</finder>
+		<finder name="C_R_P" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="repositoryId" />
 			<finder-column name="path" />
 		</finder>
-		<finder name="C_P_R_P_V" return-type="DLContent" unique="true">
+		<finder name="C_R_LikeP" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="portletId" />
+			<finder-column name="repositoryId" />
+			<finder-column name="path" comparator="LIKE" />
+		</finder>
+		<finder name="C_R_P_V" return-type="DLContent" unique="true">
+			<finder-column name="companyId" />
 			<finder-column name="repositoryId" />
 			<finder-column name="path" />
 			<finder-column name="version" />
@@ -212,7 +225,7 @@
 
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
-	<entity name="DLFileEntryType" human-name="document library file entry type" local-service="true" remote-service="true">
+	<entity name="DLFileEntryType" human-name="document library file entry type" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -243,12 +256,11 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
-		<finder name="G_N_D" return-type="Collection" db-index="false">
+		<finder name="G_N" return-type="DLFileEntryType" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
-			<finder-column name="description" />
 		</finder>
 
 		<!-- References -->
@@ -373,6 +385,7 @@
 		<!-- Other fields -->
 
 		<column name="repositoryId" type="long" />
+		<column name="folderId" type="long" />
 		<column name="fileEntryId" type="long" />
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
@@ -383,10 +396,6 @@
 		<column name="fileEntryTypeId" type="long" />
 		<column name="version" type="String" />
 		<column name="size" type="long" />
-		<column name="smallImageId" type="long" />
-		<column name="largeImageId" type="long" />
-		<column name="custom1ImageId" type="long" />
-		<column name="custom2ImageId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -410,6 +419,11 @@
 		</finder>
 		<finder name="F_S" return-type="Collection">
 			<finder-column name="fileEntryId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_F_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
 			<finder-column name="status" />
 		</finder>
 	</entity>
@@ -536,6 +550,7 @@
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>
 		<exception>DuplicateFile</exception>
+		<exception>DuplicateFileEntryType</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>
 		<exception>FileExtension</exception>
@@ -547,6 +562,7 @@
 		<exception>InvalidFileEntryType</exception>
 		<exception>NoSuchDirectory</exception>
 		<exception>NoSuchFile</exception>
+		<exception>NoSuchMetadataSet</exception>
 		<exception>RepositoryName</exception>
 		<exception>SourceFileName</exception>
 	</exceptions>

@@ -23,6 +23,8 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * <p>
@@ -178,6 +180,31 @@ public class UnicodeProperties extends HashMap<String, String> {
 		return put(key, value);
 	}
 
+	public String toSortedString() {
+		StringBuilder sb = new StringBuilder(_length);
+
+		Set<String> keys = new TreeSet<String>(keySet());
+
+		for (String key : keys) {
+			String value = get(key);
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			if (_safe) {
+				value = _encode(value);
+			}
+
+			sb.append(key);
+			sb.append(StringPool.EQUAL);
+			sb.append(value);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(_length);
@@ -185,16 +212,18 @@ public class UnicodeProperties extends HashMap<String, String> {
 		for (Map.Entry<String, String> entry : entrySet()) {
 			String value = entry.getValue();
 
-			if (Validator.isNotNull(value)) {
-				if (_safe) {
-					value = _encode(value);
-				}
-
-				sb.append(entry.getKey());
-				sb.append(StringPool.EQUAL);
-				sb.append(value);
-				sb.append(StringPool.NEW_LINE);
+			if (Validator.isNull(value)) {
+				continue;
 			}
+
+			if (_safe) {
+				value = _encode(value);
+			}
+
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(value);
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		return sb.toString();

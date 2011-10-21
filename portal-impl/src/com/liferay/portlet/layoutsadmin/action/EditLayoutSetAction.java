@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
+import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -35,6 +37,7 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.InputStream;
 
@@ -74,6 +77,16 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				updateLayoutSet(actionRequest, actionResponse);
 			}
 
+			String closeRedirect = ParamUtil.getString(
+				actionRequest, "closeRedirect");
+
+			if (Validator.isNotNull(closeRedirect)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doCloseRedirect",
+					closeRedirect);
+			}
+
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
@@ -83,6 +96,12 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				setForward(actionRequest, "portlet.layouts_admin.error");
+			}
+			else if (e instanceof FileSizeException ||
+					 e instanceof ImageTypeException ||
+					 e instanceof UploadException) {
+
+				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
 			else {
 				throw e;
@@ -123,7 +142,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 		}
 
 		return mapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.edit_pages"));
+			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
 	}
 
 	protected void updateLayoutSet(

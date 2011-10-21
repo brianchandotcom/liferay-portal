@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserGroup;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing UserGroup in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.UserGroup;
  * @see UserGroup
  * @generated
  */
-public class UserGroupCacheModel implements CacheModel<UserGroup> {
+public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);

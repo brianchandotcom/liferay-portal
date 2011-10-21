@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       LayoutBranchService
  * @generated
  */
-public class LayoutBranchServiceWrapper implements LayoutBranchService {
+public class LayoutBranchServiceWrapper implements LayoutBranchService,
+	ServiceWrapper<LayoutBranchService> {
 	public LayoutBranchServiceWrapper(LayoutBranchService layoutBranchService) {
 		_layoutBranchService = layoutBranchService;
 	}
@@ -54,12 +55,26 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService {
 			description, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutBranchService getWrappedLayoutBranchService() {
 		return _layoutBranchService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutBranchService(
 		LayoutBranchService layoutBranchService) {
+		_layoutBranchService = layoutBranchService;
+	}
+
+	public LayoutBranchService getWrappedService() {
+		return _layoutBranchService;
+	}
+
+	public void setWrappedService(LayoutBranchService layoutBranchService) {
 		_layoutBranchService = layoutBranchService;
 	}
 

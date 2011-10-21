@@ -26,7 +26,7 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,13 +41,12 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Workflow Tasks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Workflow Tasks",
+			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
@@ -60,10 +59,13 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -79,19 +81,18 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Update Due Date"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("_153_dueDateMonth")) {
+				if (selenium.isVisible("//select[@id='_153_dueDateMonth']")) {
 					break;
 				}
 			}
@@ -101,20 +102,23 @@ public class UpdateDueDateWebContentAssignedToMeActionsTest extends BaseTestCase
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.select("_153_dueDateMonth",
+		selenium.select("//select[@id='_153_dueDateMonth']",
 			RuntimeVariables.replace("label=December"));
-		selenium.select("_153_dueDateDay", RuntimeVariables.replace("label=31"));
-		selenium.select("_153_dueDateYear",
+		selenium.select("//select[@id='_153_dueDateDay']",
+			RuntimeVariables.replace("label=31"));
+		selenium.select("//select[@id='_153_dueDateYear']",
 			RuntimeVariables.replace("label=2015"));
-		selenium.select("_153_dueDateHour", RuntimeVariables.replace("label=12"));
-		selenium.select("_153_dueDateMinute",
+		selenium.select("//select[@name='_153_dueDateHour']",
+			RuntimeVariables.replace("label=12"));
+		selenium.select("//select[@name='_153_dueDateMinute']",
 			RuntimeVariables.replace("label=:00"));
-		selenium.select("_153_dueDateAmPm", RuntimeVariables.replace("label=AM"));
-		selenium.clickAt("//div[3]/div/button[1]",
+		selenium.select("//select[@name='_153_dueDateAmPm']",
+			RuntimeVariables.replace("label=AM"));
+		assertEquals(RuntimeVariables.replace("OK"),
+			selenium.getText("//div[3]/span/span/button"));
+		selenium.clickAt("//div[3]/span/span/button",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

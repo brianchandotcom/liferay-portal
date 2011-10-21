@@ -10,18 +10,13 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Site Name</td>
-	<td>Site Name</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Site Name</td>
-	<td>Site Name</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -29,13 +24,18 @@
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -83,7 +83,11 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
-
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_86_emailFromAddress']</td>
+	<td>liferay.qa.server.trunk@gmail.com</td>
+</tr>
 </tbody></table>
 </body>
 </html>

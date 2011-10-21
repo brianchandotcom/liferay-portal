@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -56,14 +56,12 @@ import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
@@ -86,8 +84,7 @@ import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateCompar
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.social.WikiActivityKeys;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.util.SerializableUtil;
 
 import java.io.InputStream;
@@ -232,6 +229,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			messageId, "text/" + format, body);
 
 		validate(subject, body);
+
+		subject = getSubject(subject, body);
+		body = getBody(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -691,11 +691,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Expando
 
 		expandoValueLocalService.deleteValues(
-			MBMessage.class.getName(), message.getMessageId());
-
-		// Social
-
-		socialActivityLocalService.deleteActivities(
 			MBMessage.class.getName(), message.getMessageId());
 
 		// Ratings
@@ -1365,6 +1360,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		validate(subject, body);
 
+		subject = getSubject(subject, body);
+		body = getBody(subject, body);
+
 		message.setModifiedDate(serviceContext.getModifiedDate(now));
 		message.setSubject(subject);
 		message.setBody(body);
@@ -1581,7 +1579,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					// Social
 
 					if (!message.isAnonymous() && !user.isDefaultUser()) {
-						int activityType = MBActivityKeys.ADD_MESSAGE;
 						long receiverUserId = 0;
 						MBMessage socialEquityLogMessage = message;
 						String actionId = ActionKeys.ADD_MESSAGE;
@@ -1591,7 +1588,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								message.getParentMessageId());
 
 						if (parentMessage != null) {
-							activityType = MBActivityKeys.REPLY_MESSAGE;
 							receiverUserId = parentMessage.getUserId();
 
 							if (receiverUserId != userId) {
@@ -1603,7 +1599,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						socialActivityLocalService.addActivity(
 							userId, message.getGroupId(),
 							MBMessage.class.getName(), message.getMessageId(),
-							activityType, StringPool.BLANK, receiverUserId);
+							MBActivityKeys.ADD_MESSAGE, StringPool.BLANK,
+							receiverUserId);
+
+						if ((parentMessage != null) &&
+							(receiverUserId != userId)) {
+
+							socialActivityLocalService.addActivity(
+								userId, parentMessage.getGroupId(),
+								MBMessage.class.getName(),
+								parentMessage.getMessageId(),
+								MBActivityKeys.REPLY_MESSAGE, StringPool.BLANK,
+								0);
+						}
 
 						socialEquityLogLocalService.addEquityLogs(
 							userId, MBMessage.class.getName(),
@@ -1630,21 +1638,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					if (parentMessageId !=
 							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-						GroupedModel groupedModel = null;
-						int activityKey = 0;
+						AssetEntry assetEntry =
+							assetEntryLocalService.fetchEntry(
+								className, classPK);
 
-						if (className.equals(BlogsEntry.class.getName())) {
-							groupedModel =
-								blogsEntryPersistence.findByPrimaryKey(classPK);
-							activityKey = BlogsActivityKeys.ADD_COMMENT;
-						}
-						else if (className.equals(WikiPage.class.getName())) {
-							groupedModel = wikiPageLocalService.getPage(
-								classPK);
-							activityKey = WikiActivityKeys.ADD_COMMENT;
-						}
-
-						if (groupedModel != null) {
+						if (assetEntry != null) {
 							JSONObject extraDataJSONObject =
 								JSONFactoryUtil.createJSONObject();
 
@@ -1652,10 +1650,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								"messageId", message.getMessageId());
 
 							socialActivityLocalService.addActivity(
-								userId, groupedModel.getGroupId(),
-								className, classPK,
-								activityKey, extraDataJSONObject.toString(),
-								groupedModel.getUserId());
+								userId, assetEntry.getGroupId(), className,
+								classPK,
+								SocialActivityConstants.TYPE_ADD_COMMENT,
+								extraDataJSONObject.toString(),
+								assetEntry.getUserId());
 						}
 					}
 				}
@@ -1783,6 +1782,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					socialActivity.getActivityId());
 			}
 		}
+	}
+
+	protected String getBody(String subject, String body) {
+		if (Validator.isNull(body)) {
+			return subject;
+		}
+
+		return body;
+	}
+
+	protected String getSubject(String subject, String body) {
+		if (Validator.isNull(subject)) {
+			return StringUtil.shorten(body);
+		}
+
+		return subject;
 	}
 
 	protected void notifyDiscussionSubscribers(
@@ -2103,12 +2118,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	protected void validate(String subject, String body)
 		throws PortalException {
 
-		if (Validator.isNull(subject)) {
+		if (Validator.isNull(subject) && Validator.isNull(body)) {
 			throw new MessageSubjectException();
-		}
-
-		if (Validator.isNull(body)) {
-			throw new MessageBodyException();
 		}
 	}
 

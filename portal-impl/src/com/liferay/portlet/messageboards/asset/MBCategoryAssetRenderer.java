@@ -106,13 +106,10 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-			"/message_boards/find_category?mbCategoryId=" +
-				_category.getCategoryId();
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/message_boards/find_category", "mbCategoryId",
+			_category.getCategoryId());
 	}
 
 	public long getUserId() {

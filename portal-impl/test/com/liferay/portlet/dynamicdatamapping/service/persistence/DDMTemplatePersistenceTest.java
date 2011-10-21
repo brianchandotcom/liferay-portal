@@ -92,6 +92,8 @@ public class DDMTemplatePersistenceTest extends BasePersistenceTestCase {
 
 		newDDMTemplate.setType(randomString());
 
+		newDDMTemplate.setMode(randomString());
+
 		newDDMTemplate.setLanguage(randomString());
 
 		newDDMTemplate.setScript(randomString());
@@ -121,6 +123,7 @@ public class DDMTemplatePersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingDDMTemplate.getDescription(),
 			newDDMTemplate.getDescription());
 		assertEquals(existingDDMTemplate.getType(), newDDMTemplate.getType());
+		assertEquals(existingDDMTemplate.getMode(), newDDMTemplate.getMode());
 		assertEquals(existingDDMTemplate.getLanguage(),
 			newDDMTemplate.getLanguage());
 		assertEquals(existingDDMTemplate.getScript(), newDDMTemplate.getScript());
@@ -272,6 +275,8 @@ public class DDMTemplatePersistenceTest extends BasePersistenceTestCase {
 		ddmTemplate.setDescription(randomString());
 
 		ddmTemplate.setType(randomString());
+
+		ddmTemplate.setMode(randomString());
 
 		ddmTemplate.setLanguage(randomString());
 

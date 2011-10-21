@@ -25,7 +25,7 @@ public class Member_AddCommentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,23 +40,37 @@ public class Member_AddCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Permissions Blogs Test Entry",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace("Add Comment"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/span/a"));
-		selenium.click(
-			"//fieldset[@class='aui-fieldset add-comment ']/div/span/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//fieldset[contains(@class,'add-comment')]/div/span/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Add Comment"),
+			selenium.getText(
+				"//fieldset[contains(@class,'add-comment')]/div/span/a"));
+		selenium.click("//fieldset[contains(@class,'add-comment')]/div/span/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -71,15 +85,13 @@ public class Member_AddCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("Member Permissions Blogs Test Comment"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,7 +107,6 @@ public class Member_AddCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@id='_33_discussion-status-messages']"));

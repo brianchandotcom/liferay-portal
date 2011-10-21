@@ -92,6 +92,14 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.bookmarks.model.BookmarksEntry"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.bookmarks.model.BookmarksEntry"),
+			true);
+	public static long FOLDERID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long RESOURCEBLOCKID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -137,14 +145,6 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return BookmarksEntry.class;
-	}
-
-	public String getModelClassName() {
-		return BookmarksEntry.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.bookmarks.model.BookmarksEntry"));
 
@@ -165,6 +165,14 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return BookmarksEntry.class;
+	}
+
+	public String getModelClassName() {
+		return BookmarksEntry.class.getName();
 	}
 
 	@JSON
@@ -204,6 +212,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -232,6 +242,14 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -241,6 +259,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -281,7 +303,19 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setResourceBlockId(long resourceBlockId) {
+		_columnBitmask |= RESOURCEBLOCKID_COLUMN_BITMASK;
+
+		if (!_setOriginalResourceBlockId) {
+			_setOriginalResourceBlockId = true;
+
+			_originalResourceBlockId = _resourceBlockId;
+		}
+
 		_resourceBlockId = resourceBlockId;
+	}
+
+	public long getOriginalResourceBlockId() {
+		return _originalResourceBlockId;
 	}
 
 	@JSON
@@ -290,7 +324,19 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	}
 
 	public void setFolderId(long folderId) {
+		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
+
+		if (!_setOriginalFolderId) {
+			_setOriginalFolderId = true;
+
+			_originalFolderId = _folderId;
+		}
+
 		_folderId = folderId;
+	}
+
+	public long getOriginalFolderId() {
+		return _originalFolderId;
 	}
 
 	@JSON
@@ -353,20 +399,19 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_priority = priority;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public BookmarksEntry toEscapedModel() {
-		if (isEscapedModel()) {
-			return (BookmarksEntry)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (BookmarksEntry)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (BookmarksEntry)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -475,6 +520,20 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		bookmarksEntryModelImpl._originalGroupId = bookmarksEntryModelImpl._groupId;
 
 		bookmarksEntryModelImpl._setOriginalGroupId = false;
+
+		bookmarksEntryModelImpl._originalUserId = bookmarksEntryModelImpl._userId;
+
+		bookmarksEntryModelImpl._setOriginalUserId = false;
+
+		bookmarksEntryModelImpl._originalResourceBlockId = bookmarksEntryModelImpl._resourceBlockId;
+
+		bookmarksEntryModelImpl._setOriginalResourceBlockId = false;
+
+		bookmarksEntryModelImpl._originalFolderId = bookmarksEntryModelImpl._folderId;
+
+		bookmarksEntryModelImpl._setOriginalFolderId = false;
+
+		bookmarksEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -683,16 +742,23 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _resourceBlockId;
+	private long _originalResourceBlockId;
+	private boolean _setOriginalResourceBlockId;
 	private long _folderId;
+	private long _originalFolderId;
+	private boolean _setOriginalFolderId;
 	private String _name;
 	private String _url;
 	private String _description;
 	private int _visits;
 	private int _priority;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private BookmarksEntry _escapedModelProxy;
 }

@@ -27,15 +27,18 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/web/guest/home/");
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/site-name");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Site Name")) {
+						if (selenium.isElementPresent(
+									"link=Message Boards Test Page")) {
 							break;
 						}
 					}
@@ -45,15 +48,9 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("link=Site Name",
-					RuntimeVariables.replace("Site Name"));
-				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Message Boards Test Page",
 					RuntimeVariables.replace("Message Boards Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean category1Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -70,7 +67,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -86,7 +83,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -95,7 +91,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean category2Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -112,7 +107,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -128,7 +123,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -137,7 +131,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean category3Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -154,7 +147,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -170,7 +163,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -179,7 +171,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean category4Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -196,7 +187,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -212,7 +203,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -221,7 +211,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 				boolean category5Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -238,7 +227,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -254,7 +243,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
@@ -263,7 +251,6 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 			case 3:

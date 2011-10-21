@@ -27,14 +27,14 @@ public class SearchUserAddressCPTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddUserCPTest.class);
+		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(AddUserAddressCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressCityCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressCountryCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressRegionCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressStreetCPTest.class);
 		testSuite.addTestSuite(SearchUserAddressZipCPTest.class);
-		testSuite.addTestSuite(TearDownUserCPTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

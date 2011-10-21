@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.calendar.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link CalEvent}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.calendar.model;
  * @see       CalEvent
  * @generated
  */
-public class CalEventWrapper implements CalEvent {
+public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	public CalEventWrapper(CalEvent calEvent) {
 		_calEvent = calEvent;
 	}
@@ -535,10 +537,6 @@ public class CalEventWrapper implements CalEvent {
 		return _calEvent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_calEvent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _calEvent.getPrimaryKeyObj();
 	}
@@ -601,7 +599,14 @@ public class CalEventWrapper implements CalEvent {
 		_calEvent.setRecurrenceObj(recurrenceObj);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public CalEvent getWrappedCalEvent() {
+		return _calEvent;
+	}
+
+	public CalEvent getWrappedModel() {
 		return _calEvent;
 	}
 

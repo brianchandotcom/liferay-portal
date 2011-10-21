@@ -321,8 +321,6 @@ public interface SCProductEntryModel extends BaseModel<SCProductEntry>,
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

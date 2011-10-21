@@ -26,7 +26,7 @@ public class ViewConfigurePortletFullContentWikiPageAPTest extends BaseTestCase 
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,23 +41,20 @@ public class ViewConfigurePortletFullContentWikiPageAPTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertTrue(selenium.isPartialText("//div[@class='asset-content']",
-				"Wiki Front Page Body"));
+		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
+			selenium.getText("//div[@class='asset-content']/p"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isPartialText("//h1[@class='header-title']/span",
-				"FrontPage"));
+		assertEquals(RuntimeVariables.replace("FrontPage"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Body"),
 			selenium.getText("//div[@class='wiki-body']"));
 	}

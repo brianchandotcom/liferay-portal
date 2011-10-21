@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRActionLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.mobiledevicerules.service;
  * @see       MDRActionLocalService
  * @generated
  */
-public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
+public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
+	ServiceWrapper<MDRActionLocalService> {
 	public MDRActionLocalServiceWrapper(
 		MDRActionLocalService mdrActionLocalService) {
 		_mdrActionLocalService = mdrActionLocalService;
@@ -263,7 +266,6 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
-		long groupId, java.lang.String className, long classPK,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -271,13 +273,11 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mdrActionLocalService.addAction(groupId, className, classPK,
-			ruleGroupInstanceId, nameMap, descriptionMap, type, typeSettings,
-			serviceContext);
+		return _mdrActionLocalService.addAction(ruleGroupInstanceId, nameMap,
+			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
-		long groupId, java.lang.String className, long classPK,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -286,9 +286,8 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mdrActionLocalService.addAction(groupId, className, classPK,
-			ruleGroupInstanceId, nameMap, descriptionMap, type,
-			typeSettingsProperties, serviceContext);
+		return _mdrActionLocalService.addAction(ruleGroupInstanceId, nameMap,
+			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
 	public void deleteAction(long actionId)
@@ -355,12 +354,26 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService {
 			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MDRActionLocalService getWrappedMDRActionLocalService() {
 		return _mdrActionLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMDRActionLocalService(
 		MDRActionLocalService mdrActionLocalService) {
+		_mdrActionLocalService = mdrActionLocalService;
+	}
+
+	public MDRActionLocalService getWrappedService() {
+		return _mdrActionLocalService;
+	}
+
+	public void setWrappedService(MDRActionLocalService mdrActionLocalService) {
 		_mdrActionLocalService = mdrActionLocalService;
 	}
 

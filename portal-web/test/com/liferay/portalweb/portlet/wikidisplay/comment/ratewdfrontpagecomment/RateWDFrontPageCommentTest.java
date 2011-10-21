@@ -25,7 +25,7 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,16 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
 			RuntimeVariables.replace("+1"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,14 +66,13 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
 			RuntimeVariables.replace("+1"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -92,14 +89,13 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("-1"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -116,14 +112,13 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("-1"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -140,7 +135,6 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 	}

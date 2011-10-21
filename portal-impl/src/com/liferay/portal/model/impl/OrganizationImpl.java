@@ -169,6 +169,12 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		return new GroupImpl();
 	}
 
+	public long getGroupId() {
+		Group group = getGroup();
+
+		return group.getGroupId();
+	}
+
 	public long getLogoId() {
 		long logoId = 0;
 

@@ -43,7 +43,8 @@ public class RatingsStatsFinderImpl
 	public static final FinderPath FINDER_PATH_FIND_BY_C_C = new FinderPath(
 		RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
 		RatingsStatsModelImpl.FINDER_CACHE_ENABLED, RatingsStatsImpl.class,
-		RatingsStatsPersistenceImpl.FINDER_CLASS_NAME_LIST, "findByC_C",
+		RatingsStatsPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		"findByC_C",
 		new String[] {Long.class.getName(), List.class.getName()});
 
 	public List<RatingsStats> findByC_C(long classNameId, List<Long> classPKs)

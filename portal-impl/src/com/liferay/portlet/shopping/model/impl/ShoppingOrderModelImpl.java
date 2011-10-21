@@ -129,6 +129,14 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingOrder"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingOrder"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long NUMBER_COLUMN_BITMASK = 2L;
+	public static long PPPAYMENTSTATUS_COLUMN_BITMASK = 4L;
+	public static long PPTXNID_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -210,14 +218,6 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return ShoppingOrder.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingOrder.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingOrder"));
 
@@ -240,6 +240,14 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingOrder.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingOrder.class.getName();
+	}
+
 	@JSON
 	public long getOrderId() {
 		return _orderId;
@@ -255,7 +263,19 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -273,6 +293,14 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -282,6 +310,10 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -327,6 +359,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setNumber(String number) {
+		_columnBitmask |= NUMBER_COLUMN_BITMASK;
+
 		if (_originalNumber == null) {
 			_originalNumber = _number;
 		}
@@ -820,6 +854,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setPpTxnId(String ppTxnId) {
+		_columnBitmask |= PPTXNID_COLUMN_BITMASK;
+
 		if (_originalPpTxnId == null) {
 			_originalPpTxnId = _ppTxnId;
 		}
@@ -842,7 +878,17 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setPpPaymentStatus(String ppPaymentStatus) {
+		_columnBitmask |= PPPAYMENTSTATUS_COLUMN_BITMASK;
+
+		if (_originalPpPaymentStatus == null) {
+			_originalPpPaymentStatus = _ppPaymentStatus;
+		}
+
 		_ppPaymentStatus = ppPaymentStatus;
+	}
+
+	public String getOriginalPpPaymentStatus() {
+		return GetterUtil.getString(_originalPpPaymentStatus);
 	}
 
 	@JSON
@@ -908,20 +954,19 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		_sendShippingEmail = sendShippingEmail;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ShoppingOrder toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ShoppingOrder)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingOrder)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ShoppingOrder)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -1049,9 +1094,21 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public void resetOriginalValues() {
 		ShoppingOrderModelImpl shoppingOrderModelImpl = this;
 
+		shoppingOrderModelImpl._originalGroupId = shoppingOrderModelImpl._groupId;
+
+		shoppingOrderModelImpl._setOriginalGroupId = false;
+
+		shoppingOrderModelImpl._originalUserId = shoppingOrderModelImpl._userId;
+
+		shoppingOrderModelImpl._setOriginalUserId = false;
+
 		shoppingOrderModelImpl._originalNumber = shoppingOrderModelImpl._number;
 
 		shoppingOrderModelImpl._originalPpTxnId = shoppingOrderModelImpl._ppTxnId;
+
+		shoppingOrderModelImpl._originalPpPaymentStatus = shoppingOrderModelImpl._ppPaymentStatus;
+
+		shoppingOrderModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1711,9 +1768,13 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		};
 	private long _orderId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -1758,11 +1819,13 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	private String _ppTxnId;
 	private String _originalPpTxnId;
 	private String _ppPaymentStatus;
+	private String _originalPpPaymentStatus;
 	private double _ppPaymentGross;
 	private String _ppReceiverEmail;
 	private String _ppPayerEmail;
 	private boolean _sendOrderEmail;
 	private boolean _sendShippingEmail;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingOrder _escapedModelProxy;
 }

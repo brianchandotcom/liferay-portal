@@ -48,9 +48,18 @@ import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryService;
+import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
+import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.service.SocialActivityAchievementLocalService;
+import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalService;
+import com.liferay.portlet.social.service.SocialActivityLimitLocalService;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.portlet.social.service.SocialActivitySettingLocalService;
+import com.liferay.portlet.social.service.SocialActivitySettingService;
 import com.liferay.portlet.social.service.SocialEquityGroupSettingLocalService;
 import com.liferay.portlet.social.service.SocialEquityHistoryLocalService;
 import com.liferay.portlet.social.service.SocialEquityLogLocalService;
@@ -59,8 +68,13 @@ import com.liferay.portlet.social.service.SocialEquityUserLocalService;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.portlet.social.service.SocialRequestInterpreterLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
+import com.liferay.portlet.social.service.persistence.SocialActivityAchievementPersistence;
+import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
+import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
+import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityAssetEntryPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityGroupSettingPersistence;
 import com.liferay.portlet.social.service.persistence.SocialEquityHistoryPersistence;
@@ -395,6 +409,101 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the social activity achievement local service.
+	 *
+	 * @return the social activity achievement local service
+	 */
+	public SocialActivityAchievementLocalService getSocialActivityAchievementLocalService() {
+		return socialActivityAchievementLocalService;
+	}
+
+	/**
+	 * Sets the social activity achievement local service.
+	 *
+	 * @param socialActivityAchievementLocalService the social activity achievement local service
+	 */
+	public void setSocialActivityAchievementLocalService(
+		SocialActivityAchievementLocalService socialActivityAchievementLocalService) {
+		this.socialActivityAchievementLocalService = socialActivityAchievementLocalService;
+	}
+
+	/**
+	 * Returns the social activity achievement persistence.
+	 *
+	 * @return the social activity achievement persistence
+	 */
+	public SocialActivityAchievementPersistence getSocialActivityAchievementPersistence() {
+		return socialActivityAchievementPersistence;
+	}
+
+	/**
+	 * Sets the social activity achievement persistence.
+	 *
+	 * @param socialActivityAchievementPersistence the social activity achievement persistence
+	 */
+	public void setSocialActivityAchievementPersistence(
+		SocialActivityAchievementPersistence socialActivityAchievementPersistence) {
+		this.socialActivityAchievementPersistence = socialActivityAchievementPersistence;
+	}
+
+	/**
+	 * Returns the social activity counter local service.
+	 *
+	 * @return the social activity counter local service
+	 */
+	public SocialActivityCounterLocalService getSocialActivityCounterLocalService() {
+		return socialActivityCounterLocalService;
+	}
+
+	/**
+	 * Sets the social activity counter local service.
+	 *
+	 * @param socialActivityCounterLocalService the social activity counter local service
+	 */
+	public void setSocialActivityCounterLocalService(
+		SocialActivityCounterLocalService socialActivityCounterLocalService) {
+		this.socialActivityCounterLocalService = socialActivityCounterLocalService;
+	}
+
+	/**
+	 * Returns the social activity counter persistence.
+	 *
+	 * @return the social activity counter persistence
+	 */
+	public SocialActivityCounterPersistence getSocialActivityCounterPersistence() {
+		return socialActivityCounterPersistence;
+	}
+
+	/**
+	 * Sets the social activity counter persistence.
+	 *
+	 * @param socialActivityCounterPersistence the social activity counter persistence
+	 */
+	public void setSocialActivityCounterPersistence(
+		SocialActivityCounterPersistence socialActivityCounterPersistence) {
+		this.socialActivityCounterPersistence = socialActivityCounterPersistence;
+	}
+
+	/**
+	 * Returns the social activity counter finder.
+	 *
+	 * @return the social activity counter finder
+	 */
+	public SocialActivityCounterFinder getSocialActivityCounterFinder() {
+		return socialActivityCounterFinder;
+	}
+
+	/**
+	 * Sets the social activity counter finder.
+	 *
+	 * @param socialActivityCounterFinder the social activity counter finder
+	 */
+	public void setSocialActivityCounterFinder(
+		SocialActivityCounterFinder socialActivityCounterFinder) {
+		this.socialActivityCounterFinder = socialActivityCounterFinder;
+	}
+
+	/**
 	 * Returns the social activity interpreter local service.
 	 *
 	 * @return the social activity interpreter local service
@@ -411,6 +520,101 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	public void setSocialActivityInterpreterLocalService(
 		SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
 		this.socialActivityInterpreterLocalService = socialActivityInterpreterLocalService;
+	}
+
+	/**
+	 * Returns the social activity limit local service.
+	 *
+	 * @return the social activity limit local service
+	 */
+	public SocialActivityLimitLocalService getSocialActivityLimitLocalService() {
+		return socialActivityLimitLocalService;
+	}
+
+	/**
+	 * Sets the social activity limit local service.
+	 *
+	 * @param socialActivityLimitLocalService the social activity limit local service
+	 */
+	public void setSocialActivityLimitLocalService(
+		SocialActivityLimitLocalService socialActivityLimitLocalService) {
+		this.socialActivityLimitLocalService = socialActivityLimitLocalService;
+	}
+
+	/**
+	 * Returns the social activity limit persistence.
+	 *
+	 * @return the social activity limit persistence
+	 */
+	public SocialActivityLimitPersistence getSocialActivityLimitPersistence() {
+		return socialActivityLimitPersistence;
+	}
+
+	/**
+	 * Sets the social activity limit persistence.
+	 *
+	 * @param socialActivityLimitPersistence the social activity limit persistence
+	 */
+	public void setSocialActivityLimitPersistence(
+		SocialActivityLimitPersistence socialActivityLimitPersistence) {
+		this.socialActivityLimitPersistence = socialActivityLimitPersistence;
+	}
+
+	/**
+	 * Returns the social activity setting local service.
+	 *
+	 * @return the social activity setting local service
+	 */
+	public SocialActivitySettingLocalService getSocialActivitySettingLocalService() {
+		return socialActivitySettingLocalService;
+	}
+
+	/**
+	 * Sets the social activity setting local service.
+	 *
+	 * @param socialActivitySettingLocalService the social activity setting local service
+	 */
+	public void setSocialActivitySettingLocalService(
+		SocialActivitySettingLocalService socialActivitySettingLocalService) {
+		this.socialActivitySettingLocalService = socialActivitySettingLocalService;
+	}
+
+	/**
+	 * Returns the social activity setting remote service.
+	 *
+	 * @return the social activity setting remote service
+	 */
+	public SocialActivitySettingService getSocialActivitySettingService() {
+		return socialActivitySettingService;
+	}
+
+	/**
+	 * Sets the social activity setting remote service.
+	 *
+	 * @param socialActivitySettingService the social activity setting remote service
+	 */
+	public void setSocialActivitySettingService(
+		SocialActivitySettingService socialActivitySettingService) {
+		this.socialActivitySettingService = socialActivitySettingService;
+	}
+
+	/**
+	 * Returns the social activity setting persistence.
+	 *
+	 * @return the social activity setting persistence
+	 */
+	public SocialActivitySettingPersistence getSocialActivitySettingPersistence() {
+		return socialActivitySettingPersistence;
+	}
+
+	/**
+	 * Sets the social activity setting persistence.
+	 *
+	 * @param socialActivitySettingPersistence the social activity setting persistence
+	 */
+	public void setSocialActivitySettingPersistence(
+		SocialActivitySettingPersistence socialActivitySettingPersistence) {
+		this.socialActivitySettingPersistence = socialActivitySettingPersistence;
 	}
 
 	/**
@@ -1024,6 +1228,80 @@ public abstract class SocialActivityLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	/**
+	 * Returns the asset entry local service.
+	 *
+	 * @return the asset entry local service
+	 */
+	public AssetEntryLocalService getAssetEntryLocalService() {
+		return assetEntryLocalService;
+	}
+
+	/**
+	 * Sets the asset entry local service.
+	 *
+	 * @param assetEntryLocalService the asset entry local service
+	 */
+	public void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+		this.assetEntryLocalService = assetEntryLocalService;
+	}
+
+	/**
+	 * Returns the asset entry remote service.
+	 *
+	 * @return the asset entry remote service
+	 */
+	public AssetEntryService getAssetEntryService() {
+		return assetEntryService;
+	}
+
+	/**
+	 * Sets the asset entry remote service.
+	 *
+	 * @param assetEntryService the asset entry remote service
+	 */
+	public void setAssetEntryService(AssetEntryService assetEntryService) {
+		this.assetEntryService = assetEntryService;
+	}
+
+	/**
+	 * Returns the asset entry persistence.
+	 *
+	 * @return the asset entry persistence
+	 */
+	public AssetEntryPersistence getAssetEntryPersistence() {
+		return assetEntryPersistence;
+	}
+
+	/**
+	 * Sets the asset entry persistence.
+	 *
+	 * @param assetEntryPersistence the asset entry persistence
+	 */
+	public void setAssetEntryPersistence(
+		AssetEntryPersistence assetEntryPersistence) {
+		this.assetEntryPersistence = assetEntryPersistence;
+	}
+
+	/**
+	 * Returns the asset entry finder.
+	 *
+	 * @return the asset entry finder
+	 */
+	public AssetEntryFinder getAssetEntryFinder() {
+		return assetEntryFinder;
+	}
+
+	/**
+	 * Sets the asset entry finder.
+	 *
+	 * @param assetEntryFinder the asset entry finder
+	 */
+	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
+		this.assetEntryFinder = assetEntryFinder;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.portlet.social.model.SocialActivity",
 			socialActivityLocalService);
@@ -1085,8 +1363,28 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialActivityFinder.class)
 	protected SocialActivityFinder socialActivityFinder;
+	@BeanReference(type = SocialActivityAchievementLocalService.class)
+	protected SocialActivityAchievementLocalService socialActivityAchievementLocalService;
+	@BeanReference(type = SocialActivityAchievementPersistence.class)
+	protected SocialActivityAchievementPersistence socialActivityAchievementPersistence;
+	@BeanReference(type = SocialActivityCounterLocalService.class)
+	protected SocialActivityCounterLocalService socialActivityCounterLocalService;
+	@BeanReference(type = SocialActivityCounterPersistence.class)
+	protected SocialActivityCounterPersistence socialActivityCounterPersistence;
+	@BeanReference(type = SocialActivityCounterFinder.class)
+	protected SocialActivityCounterFinder socialActivityCounterFinder;
 	@BeanReference(type = SocialActivityInterpreterLocalService.class)
 	protected SocialActivityInterpreterLocalService socialActivityInterpreterLocalService;
+	@BeanReference(type = SocialActivityLimitLocalService.class)
+	protected SocialActivityLimitLocalService socialActivityLimitLocalService;
+	@BeanReference(type = SocialActivityLimitPersistence.class)
+	protected SocialActivityLimitPersistence socialActivityLimitPersistence;
+	@BeanReference(type = SocialActivitySettingLocalService.class)
+	protected SocialActivitySettingLocalService socialActivitySettingLocalService;
+	@BeanReference(type = SocialActivitySettingService.class)
+	protected SocialActivitySettingService socialActivitySettingService;
+	@BeanReference(type = SocialActivitySettingPersistence.class)
+	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
 	@BeanReference(type = SocialEquityAssetEntryPersistence.class)
 	protected SocialEquityAssetEntryPersistence socialEquityAssetEntryPersistence;
 	@BeanReference(type = SocialEquityGroupSettingLocalService.class)
@@ -1153,6 +1451,14 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = AssetEntryLocalService.class)
+	protected AssetEntryLocalService assetEntryLocalService;
+	@BeanReference(type = AssetEntryService.class)
+	protected AssetEntryService assetEntryService;
+	@BeanReference(type = AssetEntryPersistence.class)
+	protected AssetEntryPersistence assetEntryPersistence;
+	@BeanReference(type = AssetEntryFinder.class)
+	protected AssetEntryFinder assetEntryFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private static Log _log = LogFactoryUtil.getLog(SocialActivityLocalServiceBaseImpl.class);

@@ -36,8 +36,7 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 		PortletRequest portletRequest, String portletName, long plid,
 		String lifecycle) {
 
-		return new PortletURLImpl(
-			(PortletRequestImpl)portletRequest, portletName, plid, lifecycle);
+		return new PortletURLImpl(portletRequest, portletName, plid, lifecycle);
 	}
 
 }

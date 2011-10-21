@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.mobiledevicerules.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,97 @@ package com.liferay.portlet.mobiledevicerules.service.http;
  * @generated
  */
 public class MDRRuleGroupServiceSoap {
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap copyRuleGroup(
+		long ruleGroupId, long groupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
+				MDRRuleGroupServiceUtil.copyRuleGroup(ruleGroupId, groupId,
+					serviceContext);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap copyRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap ruleGroup,
+		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
+				MDRRuleGroupServiceUtil.copyRuleGroup(com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl.toModel(
+						ruleGroup), groupId, serviceContext);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteRuleGroup(long ruleGroupId)
+		throws RemoteException {
+		try {
+			MDRRuleGroupServiceUtil.deleteRuleGroup(ruleGroupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap ruleGroup)
+		throws RemoteException {
+		try {
+			MDRRuleGroupServiceUtil.deleteRuleGroup(com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl.toModel(
+					ruleGroup));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap fetchRuleGroup(
+		long ruleGroupId) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
+				MDRRuleGroupServiceUtil.fetchRuleGroup(ruleGroupId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap getRuleGroup(
+		long ruleGroupId) throws RemoteException {
+		try {
+			com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup returnValue =
+				MDRRuleGroupServiceUtil.getRuleGroup(ruleGroupId);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MDRRuleGroupServiceSoap.class);
 }

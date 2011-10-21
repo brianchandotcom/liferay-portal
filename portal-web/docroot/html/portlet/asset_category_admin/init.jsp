@@ -16,11 +16,11 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategoryProperty" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
-<%@ page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryPropertyServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.permission.AssetPermission" %>
+<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategoryProperty" %><%@
+page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
+page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
+page import="com.liferay.portlet.asset.service.AssetCategoryPropertyServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.permission.AssetPermission" %>

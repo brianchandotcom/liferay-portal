@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ListType;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ListType in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.ListType;
  * @see ListType
  * @generated
  */
-public class ListTypeCacheModel implements CacheModel<ListType> {
+public class ListTypeCacheModel implements CacheModel<ListType>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);

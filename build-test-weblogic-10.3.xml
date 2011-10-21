@@ -40,19 +40,27 @@
 		</if>
 
 		<exec executable="${pscp.executable}">
+			<arg line="-pw ${vm.password} ${java.jdk.zip} ${vm.username}@${vm.host}:/" />
+		</exec>
+
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} ${unzip.executable} -oq ${java.jdk.zip} -d C:\" />
+		</exec>
+
+		<exec executable="${pscp.executable}">
 			<arg line="-pw ${vm.password} ${tstamp.value}\*.jar ${vm.username}@${vm.host}:/oracle/middleware/user_projects/domains/base_domain/lib" />
 		</exec>
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c mkdir C:\Oracle\Middleware\jdk160_14_R27.6.5-32\jre\lib\endorsed" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c mkdir C:\jdk-1.6.0_23\jre\lib\endorsed" />
 		</exec>
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\oracle\middleware\user_projects\domains\base_domain\lib\serializer.jar C:\Oracle\Middleware\jdk160_14_R27.6.5-32\jre\lib\endorsed" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\oracle\middleware\user_projects\domains\base_domain\lib\serializer.jar C:\jdk-1.6.0_23\jre\lib\endorsed" />
 		</exec>
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\oracle\middleware\user_projects\domains\base_domain\lib\xalan.jar C:\Oracle\Middleware\jdk160_14_R27.6.5-32\jre\lib\endorsed" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\oracle\middleware\user_projects\domains\base_domain\lib\xalan.jar C:\jdk-1.6.0_23\jre\lib\endorsed" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />
@@ -65,6 +73,8 @@
 			<replacefilter token="set JAVA_PROPERTIES=%JAVA_PROPERTIES% %EXTRA_JAVA_PROPERTIES%" value="set JAVA_PROPERTIES=-Dfile.encoding=UTF8 %JAVA_PROPERTIES% %EXTRA_JAVA_PROPERTIES%" />
 			<replacefilter token="set MEM_MAX_PERM_SIZE_32BIT=-XX:MaxPermSize=128m" value="set MEM_MAX_PERM_SIZE_32BIT=-XX:MaxPermSize=256m" />
 			<replacefilter token="set WLS_MEM_ARGS_32BIT=-Xms256m -Xmx512m" value="set WLS_MEM_ARGS_32BIT=-Xms256m -Xmx1024m" />
+			<replacefilter token="set SUN_JAVA_HOME=C:\Oracle\Middleware\jdk160_14_R27.6.5-32" value="set SUN_JAVA_HOME=C:\jdk-1.6.0_23" />
+			<replacefilter token="set JAVA_HOME=C:\Oracle\Middleware\jdk160_14_R27.6.5-32" value="set JAVA_HOME=C:\jdk-1.6.0_23" />
 		</replace>
 
 		<exec executable="${pscp.executable}">
@@ -84,11 +94,11 @@
 				</waitfor>
 
 				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\Oracle\Middleware\jdk160_14_R27.6.5-32\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx512m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\liferay-portal-${lp.version}.war" />
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\jdk-1.6.0_23\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx1024m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\liferay-portal-${lp.version}.war" />
 				</exec>
 
 				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\Oracle\Middleware\jdk160_14_R27.6.5-32\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx256m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\tunnel-web.war" />
+					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\jdk-1.6.0_23\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx256m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\tunnel-web.war" />
 				</exec>
 
 				<exec executable="${plink.executable}">

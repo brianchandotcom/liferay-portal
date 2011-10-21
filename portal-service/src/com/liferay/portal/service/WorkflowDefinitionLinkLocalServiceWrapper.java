@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class WorkflowDefinitionLinkLocalServiceWrapper
-	implements WorkflowDefinitionLinkLocalService {
+	implements WorkflowDefinitionLinkLocalService,
+		ServiceWrapper<WorkflowDefinitionLinkLocalService> {
 	public WorkflowDefinitionLinkLocalServiceWrapper(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 		_workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
@@ -355,11 +356,26 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 			companyId, groupId, className, classPK, workflowDefinitions);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public WorkflowDefinitionLinkLocalService getWrappedWorkflowDefinitionLinkLocalService() {
 		return _workflowDefinitionLinkLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+		_workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
+	}
+
+	public WorkflowDefinitionLinkLocalService getWrappedService() {
+		return _workflowDefinitionLinkLocalService;
+	}
+
+	public void setWrappedService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 		_workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
 	}

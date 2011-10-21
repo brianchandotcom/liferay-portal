@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.social.model.SocialEquityActionMapping" %>
-<%@ page import="com.liferay.portlet.social.service.SocialEquityGroupSettingLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.social.service.SocialEquityUserLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.social.util.comparator.SocialEquityUserRankComparator" %>
+<%@ page import="com.liferay.portlet.social.model.SocialEquityActionMapping" %><%@
+page import="com.liferay.portlet.social.service.SocialEquityGroupSettingLocalServiceUtil" %><%@
+page import="com.liferay.portlet.social.service.SocialEquityUserLocalServiceUtil" %><%@
+page import="com.liferay.portlet.social.util.comparator.SocialEquityUserRankComparator" %>

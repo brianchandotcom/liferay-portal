@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see SCProductEntry
  * @generated
  */
-public class SCProductEntryCacheModel implements CacheModel<SCProductEntry> {
+public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(33);

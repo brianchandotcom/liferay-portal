@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
 
 import java.util.List;
 
@@ -67,6 +70,8 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntryType newDLFileEntryType = _persistence.create(pk);
 
+		newDLFileEntryType.setUuid(randomString());
+
 		newDLFileEntryType.setGroupId(nextLong());
 
 		newDLFileEntryType.setCompanyId(nextLong());
@@ -87,6 +92,8 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 
 		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey());
 
+		assertEquals(existingDLFileEntryType.getUuid(),
+			newDLFileEntryType.getUuid());
 		assertEquals(existingDLFileEntryType.getFileEntryTypeId(),
 			newDLFileEntryType.getFileEntryTypeId());
 		assertEquals(existingDLFileEntryType.getGroupId(),
@@ -215,10 +222,36 @@ public class DLFileEntryTypePersistenceTest extends BasePersistenceTestCase {
 		assertEquals(0, result.size());
 	}
 
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		DLFileEntryType newDLFileEntryType = addDLFileEntryType();
+
+		_persistence.clearCache();
+
+		DLFileEntryTypeModelImpl existingDLFileEntryTypeModelImpl = (DLFileEntryTypeModelImpl)_persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey());
+
+		assertTrue(Validator.equals(
+				existingDLFileEntryTypeModelImpl.getUuid(),
+				existingDLFileEntryTypeModelImpl.getOriginalUuid()));
+		assertEquals(existingDLFileEntryTypeModelImpl.getGroupId(),
+			existingDLFileEntryTypeModelImpl.getOriginalGroupId());
+
+		assertEquals(existingDLFileEntryTypeModelImpl.getGroupId(),
+			existingDLFileEntryTypeModelImpl.getOriginalGroupId());
+		assertTrue(Validator.equals(
+				existingDLFileEntryTypeModelImpl.getName(),
+				existingDLFileEntryTypeModelImpl.getOriginalName()));
+	}
+
 	protected DLFileEntryType addDLFileEntryType() throws Exception {
 		long pk = nextLong();
 
 		DLFileEntryType dlFileEntryType = _persistence.create(pk);
+
+		dlFileEntryType.setUuid(randomString());
 
 		dlFileEntryType.setGroupId(nextLong());
 

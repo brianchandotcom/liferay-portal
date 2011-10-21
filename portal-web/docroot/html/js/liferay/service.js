@@ -237,6 +237,7 @@ Liferay.Service.registerClass(
 		hasUserPermission: true,
 		hasUserPermissions: true,
 		setGroupPermissions: true,
+		setIndividualPermissions: true,
 		setOrgGroupPermissions: true,
 		setRolePermission: true,
 		setRolePermissions: true,
@@ -350,9 +351,9 @@ Liferay.Service.registerClass(
 	Liferay.Service.Portal, "ResourcePermission",
 	{
 		addResourcePermission: true,
-		setIndividualResourcePermissions: true,
 		removeResourcePermission: true,
-		removeResourcePermissions: true
+		removeResourcePermissions: true,
+		setIndividualResourcePermissions: true
 	}
 );
 
@@ -725,6 +726,7 @@ Liferay.Service.registerClass(
 		checkOutFileEntry: true,
 		copyFileEntry: true,
 		deleteFileEntry: true,
+		fetchFileEntryByImageId: true,
 		getFileEntries: true,
 		getFileEntriesCount: true,
 		getFileEntry: true,
@@ -781,6 +783,7 @@ Liferay.Service.registerClass(
 		getFolder: true,
 		getFolderIds: true,
 		getFolders: true,
+		getFoldersAndFileEntriesAndFileShortcuts: true,
 		getFoldersAndFileEntriesAndFileShortcutsCount: true,
 		getFoldersCount: true,
 		getMountFolders: true,
@@ -833,6 +836,7 @@ Liferay.Service.registerClass(
 	{
 		addStructure: true,
 		deleteStructure: true,
+		fetchStructure: true,
 		getStructure: true,
 		updateStructure: true
 	}
@@ -994,6 +998,7 @@ Liferay.Service.registerClass(
 		getGroupMessagesCount: true,
 		getMessage: true,
 		getMessageDisplay: true,
+		getThreadAnswersCount: true,
 		getThreadMessages: true,
 		getThreadMessagesCount: true,
 		subscribeMessage: true,
@@ -1020,6 +1025,51 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.register("Liferay.Service.MDR", "com.liferay.portlet.mobiledevicerules.service");
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRAction",
+	{
+		addAction: true,
+		deleteAction: true,
+		fetchAction: true,
+		getAction: true,
+		updateAction: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRRule",
+	{
+		addRule: true,
+		deleteRule: true,
+		fetchRule: true,
+		getRule: true,
+		updateRule: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRRuleGroup",
+	{
+		addRuleGroup: true,
+		copyRuleGroup: true,
+		deleteRuleGroup: true,
+		fetchRuleGroup: true,
+		getRuleGroup: true,
+		updateRuleGroup: true
+	}
+);
+
+Liferay.Service.registerClass(
+	Liferay.Service.MDR, "MDRRuleGroupInstance",
+	{
+		addRuleGroupInstance: true,
+		deleteRuleGroupInstance: true,
+		getRuleGroupInstances: true,
+		getRuleGroupInstancesCount: true,
+		updateRuleGroupInstance: true
+	}
+);
 
 Liferay.Service.register("Liferay.Service.Polls", "com.liferay.portlet.polls.service");
 
@@ -1101,6 +1151,17 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.register("Liferay.Service.Social", "com.liferay.portlet.social.service");
+
+Liferay.Service.registerClass(
+	Liferay.Service.Social, "SocialActivitySetting",
+	{
+		getActivityDefinition: true,
+		getActivityDefinitions: true,
+		getJSONActivityDefinitions: true,
+		updateActivitySetting: true,
+		updateActivitySettings: true
+	}
+);
 
 Liferay.Service.register("Liferay.Service.SC", "com.liferay.portlet.softwarecatalog.service");
 

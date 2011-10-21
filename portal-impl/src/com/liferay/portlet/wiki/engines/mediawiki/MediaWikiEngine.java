@@ -95,7 +95,7 @@ public class MediaWikiEngine implements WikiEngine {
 					}
 				}
 
-				outgoingLinks.put(title.toLowerCase(), existsObj);
+				outgoingLinks.put(title, existsObj);
 			}
 		}
 

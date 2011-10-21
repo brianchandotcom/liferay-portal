@@ -16,66 +16,56 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//strong/a/span</td>
 	<td>Scope Selector</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[3]</td>
-	<td>3</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[3]</td>
-	<td>3</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//ul[3]/li[3]/a</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//ul[3]/li[3]/a</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//strong/a/span</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a/span</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content</td>
-	<td></td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Add Web Content']</td>
-	<td></td>
+	<td>//input[@value='Add']</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_15_title</td>
+	<td>//input[@id='_15_title_en_US']</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
@@ -84,29 +74,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_15_structure_el_TextAreaField_content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>cke_contents_CKEditor1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_15_structure_el_TextAreaField_content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents_CKEditor1']/iframe</td>
-	<td></td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -116,12 +91,12 @@
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Submit for Publication']</td>
-	<td></td>
+	<td>Submit for Publication</td>
 </tr>
 <tr>
 	<td>assertText</td>

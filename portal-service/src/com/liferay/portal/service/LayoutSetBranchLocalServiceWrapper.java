@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class LayoutSetBranchLocalServiceWrapper
-	implements LayoutSetBranchLocalService {
+	implements LayoutSetBranchLocalService,
+		ServiceWrapper<LayoutSetBranchLocalService> {
 	public LayoutSetBranchLocalServiceWrapper(
 		LayoutSetBranchLocalService layoutSetBranchLocalService) {
 		_layoutSetBranchLocalService = layoutSetBranchLocalService;
@@ -336,11 +337,26 @@ public class LayoutSetBranchLocalServiceWrapper
 			name, description, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public LayoutSetBranchLocalService getWrappedLayoutSetBranchLocalService() {
 		return _layoutSetBranchLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+		_layoutSetBranchLocalService = layoutSetBranchLocalService;
+	}
+
+	public LayoutSetBranchLocalService getWrappedService() {
+		return _layoutSetBranchLocalService;
+	}
+
+	public void setWrappedService(
 		LayoutSetBranchLocalService layoutSetBranchLocalService) {
 		_layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}

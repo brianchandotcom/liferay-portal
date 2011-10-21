@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -59,7 +58,7 @@ import org.im4java.process.ProcessStarter;
  * @author Mika Koivisto
  * @author Juan González
  */
-public class PDFProcessor extends DLPreviewableProcessor {
+public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	public static final String PREVIEW_TYPE = ImageProcessor.TYPE_PNG;
 
@@ -78,11 +77,9 @@ public class PDFProcessor extends DLPreviewableProcessor {
 		return _instance.doGetPreviewAsStream(fileVersion, index);
 	}
 
-	public static int getPreviewFileCount(FileEntry fileEntry, String version) {
+	public static int getPreviewFileCount(FileVersion fileVersion) {
 		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
-			return _instance.getPreviewFileCount(fileVersion);
+			return _instance.doGetPreviewFileCount(fileVersion);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -109,12 +106,10 @@ public class PDFProcessor extends DLPreviewableProcessor {
 		return _instance.doGetThumbnailFileSize(fileVersion);
 	}
 
-	public static boolean hasImages(FileEntry fileEntry, String version) {
+	public static boolean hasImages(FileVersion fileVersion) {
 		boolean hasImages = false;
 
 		try {
-			FileVersion fileVersion = fileEntry.getFileVersion(version);
-
 			hasImages = _instance._hasImages(fileVersion);
 
 			if (!hasImages) {
@@ -173,17 +168,6 @@ public class PDFProcessor extends DLPreviewableProcessor {
 			ProcessStarter.setGlobalSearchPath(globalSearchPath);
 
 			_convertCmd = new ConvertCmd();
-		}
-	}
-
-	public void trigger(FileEntry fileEntry) {
-		try {
-			FileVersion fileVersion = fileEntry.getLatestFileVersion();
-
-			trigger(fileVersion);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 	}
 

@@ -18,7 +18,7 @@ package com.liferay.portlet.documentlibrary.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface DLFileEntryTypeFinder {
-	public int countByKeywords(long companyId, long groupId,
+	public int countByKeywords(long companyId, long[] groupIds,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -26,13 +26,13 @@ public interface DLFileEntryTypeFinder {
 		java.lang.String name, java.lang.String description, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByC_G_N_D_S(long companyId, long groupId,
+	public int countByC_G_N_D_S(long companyId, long[] groupIds,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByKeywords(
-		long companyId, long groupId, java.lang.String keywords, int start,
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -45,6 +45,13 @@ public interface DLFileEntryTypeFinder {
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByC_G_N_D_S(
 		long companyId, long groupId, java.lang.String[] names,
+		java.lang.String[] descriptions, boolean andOperator, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> findByC_G_N_D_S(
+		long companyId, long[] groupIds, java.lang.String[] names,
 		java.lang.String[] descriptions, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

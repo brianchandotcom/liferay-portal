@@ -6,10 +6,14 @@
 		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" name="deleteStructure" qname="operNS:deleteStructure" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:rtns="http://model.dynamicdatamapping.portlet.liferay.com" name="fetchStructure" qname="operNS:fetchStructure" returnQName="fetchStructureReturn" returnType="rtns:DDMStructureSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureKey" type="tns:string"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:rtns="http://model.dynamicdatamapping.portlet.liferay.com" name="getStructure" qname="operNS:getStructure" returnQName="getStructureReturn" returnType="rtns:DDMStructureSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:long"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="deleteStructure getStructure" />
+		<parameter name="allowedMethods" value="deleteStructure fetchStructure getStructure" />
 		<parameter name="className" value="com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.dynamicdatamapping.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

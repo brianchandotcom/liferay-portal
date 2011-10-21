@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Role
  * @generated
  */
-public class RoleWrapper implements Role {
+public class RoleWrapper implements Role, ModelWrapper<Role> {
 	public RoleWrapper(Role role) {
 		_role = role;
 	}
@@ -205,6 +205,14 @@ public class RoleWrapper implements Role {
 		return _role.getTitle(languageId, useDefault);
 	}
 
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _role.getTitleCurrentLanguageId();
+	}
+
+	public java.lang.String getTitleCurrentValue() {
+		return _role.getTitleCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized titles of this role.
 	*
@@ -243,6 +251,10 @@ public class RoleWrapper implements Role {
 	public void setTitle(java.lang.String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_role.setTitle(title, locale, defaultLocale);
+	}
+
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_role.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -320,6 +332,14 @@ public class RoleWrapper implements Role {
 		return _role.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _role.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _role.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this role.
 	*
@@ -359,6 +379,10 @@ public class RoleWrapper implements Role {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_role.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_role.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -439,10 +463,6 @@ public class RoleWrapper implements Role {
 		return _role.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_role.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _role.getPrimaryKeyObj();
 	}
@@ -510,7 +530,14 @@ public class RoleWrapper implements Role {
 		return _role.isTeam();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Role getWrappedRole() {
+		return _role;
+	}
+
+	public Role getWrappedModel() {
 		return _role;
 	}
 

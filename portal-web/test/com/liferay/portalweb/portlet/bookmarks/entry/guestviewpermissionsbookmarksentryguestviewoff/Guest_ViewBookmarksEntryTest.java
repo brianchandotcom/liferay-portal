@@ -25,7 +25,7 @@ public class Guest_ViewBookmarksEntryTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class Guest_ViewBookmarksEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry Name"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
@@ -57,7 +55,6 @@ public class Guest_ViewBookmarksEntryTest extends BaseTestCase {
 		selenium.clickAt("//td/a",
 			RuntimeVariables.replace("Bookmarks Entry Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
@@ -69,7 +66,6 @@ public class Guest_ViewBookmarksEntryTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-asset-name']/a",
 			RuntimeVariables.replace("Bookmarks Entry Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//h1/img[@alt='Liferay']"));
 	}
 }

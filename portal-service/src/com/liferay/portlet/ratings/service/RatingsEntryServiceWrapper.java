@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link RatingsEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.ratings.service;
  * @see       RatingsEntryService
  * @generated
  */
-public class RatingsEntryServiceWrapper implements RatingsEntryService {
+public class RatingsEntryServiceWrapper implements RatingsEntryService,
+	ServiceWrapper<RatingsEntryService> {
 	public RatingsEntryServiceWrapper(RatingsEntryService ratingsEntryService) {
 		_ratingsEntryService = ratingsEntryService;
 	}
@@ -41,12 +44,26 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService {
 		return _ratingsEntryService.updateEntry(className, classPK, score);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public RatingsEntryService getWrappedRatingsEntryService() {
 		return _ratingsEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedRatingsEntryService(
 		RatingsEntryService ratingsEntryService) {
+		_ratingsEntryService = ratingsEntryService;
+	}
+
+	public RatingsEntryService getWrappedService() {
+		return _ratingsEntryService;
+	}
+
+	public void setWrappedService(RatingsEntryService ratingsEntryService) {
 		_ratingsEntryService = ratingsEntryService;
 	}
 

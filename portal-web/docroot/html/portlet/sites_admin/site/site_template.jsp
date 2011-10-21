@@ -43,6 +43,12 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 }
 %>
 
+<c:if test="<%= (publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null) %>">
+	<div class="portlet-msg-info">
+		<liferay-ui:message key="there-are-no-templates-used-on-this-site" />
+	</div>
+</c:if>
+
 <aui:fieldset>
 	<c:if test="<%= publicLayoutSetPrototype != null %>">
 		<aui:fieldset label="public-site-template">

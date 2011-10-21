@@ -83,7 +83,7 @@ public class MBThreadFlagLocalServiceImpl
 	}
 
 	public void deleteThreadFlag(long threadFlagId)
-		throws PortalException,	SystemException {
+		throws PortalException, SystemException {
 
 		MBThreadFlag threadFlag = mbThreadFlagPersistence.findByPrimaryKey(
 			threadFlagId);

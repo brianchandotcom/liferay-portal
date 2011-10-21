@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ThemeLocalService
  * @generated
  */
-public class ThemeLocalServiceWrapper implements ThemeLocalService {
+public class ThemeLocalServiceWrapper implements ThemeLocalService,
+	ServiceWrapper<ThemeLocalService> {
 	public ThemeLocalServiceWrapper(ThemeLocalService themeLocalService) {
 		_themeLocalService = themeLocalService;
 	}
@@ -44,6 +45,17 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_themeLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	public com.liferay.portal.model.ColorScheme fetchColorScheme(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		return _themeLocalService.fetchColorScheme(companyId, themeId,
+			colorSchemeId);
+	}
+
+	public com.liferay.portal.model.Theme fetchTheme(long companyId,
+		java.lang.String themeId) {
+		return _themeLocalService.fetchTheme(companyId, themeId);
 	}
 
 	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
@@ -98,11 +110,25 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService {
 		_themeLocalService.uninstallThemes(themeIds);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ThemeLocalService getWrappedThemeLocalService() {
 		return _themeLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedThemeLocalService(ThemeLocalService themeLocalService) {
+		_themeLocalService = themeLocalService;
+	}
+
+	public ThemeLocalService getWrappedService() {
+		return _themeLocalService;
+	}
+
+	public void setWrappedService(ThemeLocalService themeLocalService) {
 		_themeLocalService = themeLocalService;
 	}
 

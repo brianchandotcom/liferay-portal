@@ -102,7 +102,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				if (user.getUserId() == userIds[0]) {
 					Group group = groupPersistence.findByPrimaryKey(groupId);
 
-					if (user.getCompanyId() == group.getCompanyId()) {
+					if (!group.isOrganization() &&
+						(user.getCompanyId() == group.getCompanyId())) {
+
 						int type = group.getType();
 
 						if (type == GroupConstants.TYPE_SITE_OPEN) {
@@ -735,7 +737,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public User getUserById(long userId)
 		throws PortalException, SystemException {
 
-		User user = userLocalService.getUserById(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
@@ -1200,13 +1202,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         the user
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void updateOrganizations(long userId, long[] organizationIds)
+	public void updateOrganizations(
+			long userId, long[] organizationIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
-		userLocalService.updateOrganizations(userId, organizationIds);
+		userLocalService.updateOrganizations(
+			userId, organizationIds, serviceContext);
 	}
 
 	/**
@@ -1575,7 +1579,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			(!company.isStrangers() && !anonymousUser)) {
 
 			if (!PortalPermissionUtil.contains(
-					getPermissionChecker(), ActionKeys.ADD_USER) ||
+					getPermissionChecker(), ActionKeys.ADD_USER) &&
 				!OrganizationPermissionUtil.contains(
 					getPermissionChecker(), organizationIds,
 					ActionKeys.ASSIGN_MEMBERS)) {

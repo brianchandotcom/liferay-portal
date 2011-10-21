@@ -26,7 +26,7 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,11 +42,9 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//section/div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -60,7 +58,7 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 				"//select[@id='_1_WAR_microblogsportlet_socialRelationType']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -75,10 +73,8 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Content"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
 			RuntimeVariables.replace("Everyone"));
 		assertEquals(RuntimeVariables.replace("133"),
@@ -87,7 +83,7 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Post"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -102,7 +98,6 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));

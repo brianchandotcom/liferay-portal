@@ -16,10 +16,10 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.plugin.PluginPackage" %>
-<%@ page import="com.liferay.portal.kernel.plugin.Version" %>
-<%@ page import="com.liferay.portal.plugin.PluginPackageException" %>
-<%@ page import="com.liferay.portal.plugin.PluginPackageUtil" %>
+<%@ page import="com.liferay.portal.kernel.plugin.PluginPackage" %><%@
+page import="com.liferay.portal.kernel.plugin.Version" %><%@
+page import="com.liferay.portal.plugin.PluginPackageException" %><%@
+page import="com.liferay.portal.plugin.PluginPackageUtil" %>
 
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

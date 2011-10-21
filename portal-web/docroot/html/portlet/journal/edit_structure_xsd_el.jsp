@@ -32,7 +32,9 @@ if (metaDataEl != null) {
 	elMetadataXML = metaDataEl.asXML();
 }
 
-String parentElType = java.net.URLDecoder.decode(el.getParent().attributeValue("type", StringPool.BLANK));
+Element parentEl = el.getParent();
+
+String parentElType = URLDecoder.decode(parentEl.attributeValue("type", StringPool.BLANK));
 
 IntegerWrapper count = (IntegerWrapper)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_COUNT);
 Integer depth = (Integer)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_DEPTH);

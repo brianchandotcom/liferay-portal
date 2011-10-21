@@ -3,6 +3,14 @@ AUI().add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var TPL_FILE_ERROR = '<li class="upload-file upload-error"><span class="file-title" title="{0}">{0}</span> <span class="error-message">{1}</span></li>';
+
+		var TPL_FILE_PENDING = '<li class="upload-file upload-complete pending-file selectable">' +
+			'<input class="select-file" data-fileName="{0}" name="{1}" type="checkbox" value="{0}" />' +
+			'<span class="file-title" title="{0}">{0}</span>' +
+			'<a class="lfr-button delete-button" href="javascript:;">{2}</a>' +
+		'</li>';
+
 		/**
 		 * OPTIONS
 		 *
@@ -98,7 +106,7 @@ AUI().add(
 			instance._fileTypesDescriptionText = options.fileDescription || instance._allowedFileTypes;
 			instance._invalidFileExtensionText = Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + instance._allowedFileTypes;
 			instance._invalidFileNameText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
-			instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size');
+			instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
 			instance._noFilesSelectedText = Liferay.Language.get('no-files-selected');
 			instance._pendingFileText = Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed');
 			instance._unexpectedDeleteErrorText = Liferay.Language.get('an-unexpected-error-occurred-while-deleting-the-file');
@@ -171,7 +179,7 @@ AUI().add(
 				var li = A.Node.create(
 					'<li class="upload-file" id="' + fileId + '">' +
 						'<input class="aui-helper-hidden select-file" data-fileName="' + fileName + '" id="' + fileId + 'checkbox" name="' + instance._namespace('selectUploadedFileCheckbox') + '" type="checkbox" value="' + fileName + '" />' +
-						'<span class="file-title">' + fileName + '</span>' +
+						'<span class="file-title" title="' + fileName + '">' + fileName + '</span>' +
 						'<span class="progress-bar">' +
 							'<span class="progress" id="' + fileId + 'progress"></span>' +
 						'</span>' +
@@ -210,15 +218,18 @@ AUI().add(
 			fileAddError: function(file, error_code, msg) {
 				var instance = this;
 
-				if (error_code == SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT) {
+				var queueError = SWFUpload.QUEUE_ERROR;
+
+				if (error_code == queueError.FILE_EXCEEDS_SIZE_LIMIT || error_code == queueError.ZERO_BYTE_FILE) {
+					var dataBuffer = [file.name, instance._invalidFileSizeText.replace('{0}', instance._maxFileSize)];
+
+					if (error_code == queueError.ZERO_BYTE_FILE) {
+						dataBuffer[1] = instance._zeroByteFileText;
+					}
+
 					var ul = instance.getFileListUl();
 
-					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span> <span class="error-message">' + instance._invalidFileSizeText + '</span></li>');
-				}
-				else if (error_code == SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE) {
-					var ul = instance.getFileListUl();
-
-					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span> <span class="error-message">' + instance._zeroByteFileText + '</span></li>');
+					ul.append(Lang.sub(TPL_FILE_ERROR, dataBuffer));
 				}
 			},
 
@@ -358,7 +369,7 @@ AUI().add(
 
 					var message = instance._errorMessages[msg] || instance._unexpectedUploadErrorText;
 
-					ul.append('<li class="upload-file upload-error"><span class="file-title">' + file.name + '</span><span class="error-message">' + message + '</span></li>');
+					ul.append(Lang.sub(TPL_FILE_ERROR, [file.name, message]));
 				}
 
 				if (instance._onUploadError) {
@@ -411,7 +422,7 @@ AUI().add(
 				var listLength = (stats.successful_uploads + stats.upload_errors + stats.files_queued);
 				var position = (stats.successful_uploads + stats.upload_errors + 1);
 
-				var currentListText = A.substitute(instance._uploadStatusText, [position, listLength]);
+				var currentListText = Lang.sub(instance._uploadStatusText, [position, listLength]);
 				var fileId = instance._namespace(file.id);
 
 				instance._updateList(listLength, currentListText);
@@ -464,12 +475,6 @@ AUI().add(
 
 					var buffer = [];
 
-					var pendingFileTpl = '<li class="upload-file upload-complete pending-file selectable">' +
-						'<input class="select-file" data-fileName="{0}" name="{1}" type="checkbox" value="{0}" />' +
-						'<span class="file-title">{0}</span>' +
-						'<a class="lfr-button delete-button" href="javascript:;">{2}</a>' +
-					'</li>';
-
 					var dataBuffer = [
 						null,
 						instance._namespace('selectUploadedFileCheckbox'),
@@ -481,7 +486,7 @@ AUI().add(
 						function(item, index, collection) {
 							dataBuffer[0] = item;
 
-							buffer.push(Lang.sub(pendingFileTpl, dataBuffer));
+							buffer.push(Lang.sub(TPL_FILE_PENDING, dataBuffer));
 						}
 					);
 
@@ -1034,6 +1039,8 @@ AUI().add(
 
 						if (selectedFilesCountContainer != null) {
 							selectedFilesCountContainer.setContent(selectedFilesText);
+
+							selectedFilesCountContainer.attr('title', selectedFilesText);
 						}
 					}
 
@@ -1070,6 +1077,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-swf', 'collection', 'substitute', 'swfupload']
+		requires: ['aui-base', 'aui-swf', 'collection', 'swfupload']
 	}
 );

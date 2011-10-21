@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ShoppingItem}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.shopping.model;
  * @see       ShoppingItem
  * @generated
  */
-public class ShoppingItemWrapper implements ShoppingItem {
+public class ShoppingItemWrapper implements ShoppingItem,
+	ModelWrapper<ShoppingItem> {
 	public ShoppingItemWrapper(ShoppingItem shoppingItem) {
 		_shoppingItem = shoppingItem;
 	}
@@ -787,10 +790,6 @@ public class ShoppingItemWrapper implements ShoppingItem {
 		return _shoppingItem.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_shoppingItem.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _shoppingItem.getPrimaryKeyObj();
 	}
@@ -864,7 +863,14 @@ public class ShoppingItemWrapper implements ShoppingItem {
 		_shoppingItem.setFieldsQuantitiesArray(fieldsQuantitiesArray);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ShoppingItem getWrappedShoppingItem() {
+		return _shoppingItem;
+	}
+
+	public ShoppingItem getWrappedModel() {
 		return _shoppingItem;
 	}
 

@@ -21,7 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 SCFrameworkVersion frameworkVersion = (SCFrameworkVersion)row.getObject();
 
-String frameworkVersionId =	String.valueOf(frameworkVersion.getFrameworkVersionId());
+String frameworkVersionId = String.valueOf(frameworkVersion.getFrameworkVersionId());
 %>
 
 <liferay-ui:icon-menu>

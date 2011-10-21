@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutRevision
  * @generated
  */
-public class LayoutRevisionWrapper implements LayoutRevision {
+public class LayoutRevisionWrapper implements LayoutRevision,
+	ModelWrapper<LayoutRevision> {
 	public LayoutRevisionWrapper(LayoutRevision layoutRevision) {
 		_layoutRevision = layoutRevision;
 	}
@@ -405,6 +406,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _layoutRevision.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _layoutRevision.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this layout revision.
 	*
@@ -443,6 +452,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_layoutRevision.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -519,6 +532,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.getTitle(languageId, useDefault);
 	}
 
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _layoutRevision.getTitleCurrentLanguageId();
+	}
+
+	public java.lang.String getTitleCurrentValue() {
+		return _layoutRevision.getTitleCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized titles of this layout revision.
 	*
@@ -557,6 +578,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 	public void setTitle(java.lang.String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setTitle(title, locale, defaultLocale);
+	}
+
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_layoutRevision.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -634,6 +659,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _layoutRevision.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _layoutRevision.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this layout revision.
 	*
@@ -673,6 +706,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_layoutRevision.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_layoutRevision.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -750,6 +787,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.getKeywords(languageId, useDefault);
 	}
 
+	public java.lang.String getKeywordsCurrentLanguageId() {
+		return _layoutRevision.getKeywordsCurrentLanguageId();
+	}
+
+	public java.lang.String getKeywordsCurrentValue() {
+		return _layoutRevision.getKeywordsCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized keywordses of this layout revision.
 	*
@@ -788,6 +833,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 	public void setKeywords(java.lang.String keywords, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setKeywords(keywords, locale, defaultLocale);
+	}
+
+	public void setKeywordsCurrentLanguageId(java.lang.String languageId) {
+		_layoutRevision.setKeywordsCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -865,6 +914,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.getRobots(languageId, useDefault);
 	}
 
+	public java.lang.String getRobotsCurrentLanguageId() {
+		return _layoutRevision.getRobotsCurrentLanguageId();
+	}
+
+	public java.lang.String getRobotsCurrentValue() {
+		return _layoutRevision.getRobotsCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized robotses of this layout revision.
 	*
@@ -903,6 +960,10 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 	public void setRobots(java.lang.String robots, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutRevision.setRobots(robots, locale, defaultLocale);
+	}
+
+	public void setRobotsCurrentLanguageId(java.lang.String languageId) {
+		_layoutRevision.setRobotsCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1235,10 +1296,6 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		return _layoutRevision.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layoutRevision.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layoutRevision.getPrimaryKeyObj();
 	}
@@ -1369,7 +1426,14 @@ public class LayoutRevisionWrapper implements LayoutRevision {
 		_layoutRevision.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutRevision getWrappedLayoutRevision() {
+		return _layoutRevision;
+	}
+
+	public LayoutRevision getWrappedModel() {
 		return _layoutRevision;
 	}
 

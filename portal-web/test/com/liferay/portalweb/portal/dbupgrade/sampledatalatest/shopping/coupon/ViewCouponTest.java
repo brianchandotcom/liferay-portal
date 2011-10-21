@@ -25,7 +25,7 @@ public class ViewCouponTest extends BaseTestCase {
 		selenium.open("/web/shopping-coupon-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,17 +40,13 @@ public class ViewCouponTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Coupon Page",
 			RuntimeVariables.replace("Shopping Coupon Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Coupon Code"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals("Coupon Test", selenium.getValue("//input[@id='_34_name']"));
 		assertEquals("This is a coupon test.",
 			selenium.getValue("//textarea[@id='_34_description']"));

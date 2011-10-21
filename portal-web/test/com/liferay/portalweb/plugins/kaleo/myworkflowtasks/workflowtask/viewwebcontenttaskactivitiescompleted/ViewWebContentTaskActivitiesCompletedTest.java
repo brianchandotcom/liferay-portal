@@ -26,7 +26,7 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,24 +41,21 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Workflow Tasks", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Workflow Tasks",
+			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Completed", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[2]/div[1]/div/span",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Portal Content Reviewer role."),
+				"Task initially assigned to the Site Owner role."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[3]"));
@@ -67,11 +64,11 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 			selenium.getText("//div[2]/div[2]/div[2]/div[2]/div[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Joe Bloggs completed the task Review."),
-			selenium.getText("//div[2]/div[3]/div[2]"));
+			selenium.getText("//div[2]/div[2]/div[3]/div[2]"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -86,24 +83,21 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=My Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Submissions",
+			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Completed", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[2]/div[1]/div",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Portal Content Reviewer role."),
+				"Task initially assigned to the Site Owner role."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[3]"));
@@ -112,11 +106,11 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 			selenium.getText("//div[2]/div[2]/div[2]/div[2]/div[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Joe Bloggs completed the task Review."),
-			selenium.getText("//div[2]/div[3]/div[2]"));
+			selenium.getText("//div[2]/div[2]/div[3]/div[2]"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -131,27 +125,23 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Workflow", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Submissions", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Submissions",
+			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Completed", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/div[3]/div[1]/div",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Portal Content Reviewer role."),
+				"Task initially assigned to the Site Owner role."),
 			selenium.getText("//div[3]/div[2]/div/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[3]/div[2]/div/div[3]"));

@@ -25,6 +25,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 
 /**
@@ -77,7 +78,9 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		String titlePattern = null;
 
-		if (activityType == BlogsActivityKeys.ADD_COMMENT) {
+		if ((activityType == BlogsActivityKeys.ADD_COMMENT) ||
+			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
+
 			titlePattern = "activity-blogs-add-comment";
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {

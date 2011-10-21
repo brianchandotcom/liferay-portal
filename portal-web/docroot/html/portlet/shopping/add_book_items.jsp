@@ -34,6 +34,8 @@ long categoryId = ParamUtil.getLong(request, "categoryId", ShoppingCategoryConst
 		<liferay-util:param name="tabs1" value="categories" />
 	</liferay-util:include>
 
+	<liferay-ui:error exception="<%= AmazonException.class %>" />
+
 	<div class="breadcrumbs">
 		<%= ShoppingUtil.getBreadcrumbs(categoryId, pageContext, renderRequest, renderResponse) %>
 	</div>

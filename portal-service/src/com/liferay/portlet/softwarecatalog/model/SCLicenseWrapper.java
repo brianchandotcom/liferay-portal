@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCLicense}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.softwarecatalog.model;
  * @see       SCLicense
  * @generated
  */
-public class SCLicenseWrapper implements SCLicense {
+public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 	public SCLicenseWrapper(SCLicense scLicense) {
 		_scLicense = scLicense;
 	}
@@ -209,10 +211,6 @@ public class SCLicenseWrapper implements SCLicense {
 		return _scLicense.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_scLicense.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _scLicense.getPrimaryKeyObj();
 	}
@@ -267,7 +265,14 @@ public class SCLicenseWrapper implements SCLicense {
 		_scLicense.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SCLicense getWrappedSCLicense() {
+		return _scLicense;
+	}
+
+	public SCLicense getWrappedModel() {
 		return _scLicense;
 	}
 

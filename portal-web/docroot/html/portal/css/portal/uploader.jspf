@@ -21,7 +21,7 @@
 .lfr-upload-container .upload-target {
 	background-color: #8FBE31;
 	border: 1px solid #729A22;
-	height: 30px;
+	min-height: 30px;
 	margin-right: 1.5em;
 	text-align: center;
 	text-shadow: 1px 1px #656565;
@@ -64,10 +64,15 @@
 	display: block;
 	font-weight: bold;
 	margin: 0.3em 1.5em 0.3em 0;
+	overflow: hidden;
 	padding: 5px;
 	padding-left: 25px;
 	position: relative;
 	text-shadow: 1px 1px #FFF;
+}
+
+.lfr-upload-container .upload-file .file-title {
+	padding-right: 16px;
 }
 
 .lfr-upload-container .upload-file.upload-complete {

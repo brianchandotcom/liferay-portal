@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.1.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_1_0.dtd">
+
+<resource-action-mapping>
+	<portlet-resource>
+		<portlet-name>176</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+			<layout-manager>
+				<action-key>VIEW</action-key>
+			</layout-manager>
+		</permissions>
+	</portlet-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.mobiledevicerules</model-name>
+		<portlet-ref>
+			<portlet-name>176</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>ADD_RULE_GROUP</action-key>
+				<action-key>ADD_RULE_GROUP_INSTANCE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_RULE_GROUP</action-key>
+				<action-key>ADD_RULE_GROUP_INSTANCE</action-key>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+			<layout-manager>
+				<action-key>VIEW</action-key>
+			</layout-manager>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup</model-name>
+		<portlet-ref>
+			<portlet-name>176</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance</model-name>
+		<portlet-ref>
+			<portlet-name>176</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

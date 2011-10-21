@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetBranch;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,8 @@ import java.util.Date;
  * @see LayoutSetBranch
  * @generated
  */
-public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch> {
+public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);

@@ -342,6 +342,13 @@ public class ResourceLocalServiceUtil {
 		getService().deleteResources(name);
 	}
 
+	public static com.liferay.portal.model.Resource fetchResource(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchResource(companyId, name, scope, primKey);
+	}
+
 	public static long getLatestResourceId()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getLatestResourceId();

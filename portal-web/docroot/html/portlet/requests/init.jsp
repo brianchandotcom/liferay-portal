@@ -16,8 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.social.NoSuchRequestException" %>
-<%@ page import="com.liferay.portlet.social.model.SocialRequest" %>
-<%@ page import="com.liferay.portlet.social.model.SocialRequestConstants" %>
-<%@ page import="com.liferay.portlet.social.model.SocialRequestFeedEntry" %>
-<%@ page import="com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.social.NoSuchRequestException" %><%@
+page import="com.liferay.portlet.social.model.SocialRequest" %><%@
+page import="com.liferay.portlet.social.model.SocialRequestConstants" %><%@
+page import="com.liferay.portlet.social.model.SocialRequestFeedEntry" %><%@
+page import="com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil" %>

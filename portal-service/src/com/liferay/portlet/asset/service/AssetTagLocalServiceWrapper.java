@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetTagLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.service;
  * @see       AssetTagLocalService
  * @generated
  */
-public class AssetTagLocalServiceWrapper implements AssetTagLocalService {
+public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
+	ServiceWrapper<AssetTagLocalService> {
 	public AssetTagLocalServiceWrapper(
 		AssetTagLocalService assetTagLocalService) {
 		_assetTagLocalService = assetTagLocalService;
@@ -388,6 +391,22 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService {
 	}
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long groupId, java.lang.String socialActivityCounterName, int offset,
+		boolean includeCurrentPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getTags(groupId,
+			socialActivityCounterName, offset, includeCurrentPeriod);
+	}
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long groupId, java.lang.String socialActivityCounterName,
+		int startPeriod, int endPeriod)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getTags(groupId,
+			socialActivityCounterName, startPeriod, endPeriod);
+	}
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTags(className, classPK);
@@ -435,12 +454,26 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService {
 			tagProperties, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetTagLocalService getWrappedAssetTagLocalService() {
 		return _assetTagLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetTagLocalService(
 		AssetTagLocalService assetTagLocalService) {
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	public AssetTagLocalService getWrappedService() {
+		return _assetTagLocalService;
+	}
+
+	public void setWrappedService(AssetTagLocalService assetTagLocalService) {
 		_assetTagLocalService = assetTagLocalService;
 	}
 

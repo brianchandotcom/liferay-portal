@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.journal.model.JournalArticleResource;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing JournalArticleResource in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.journal.model.JournalArticleResource;
  * @see JournalArticleResource
  * @generated
  */
-public class JournalArticleResourceCacheModel implements CacheModel<JournalArticleResource> {
+public class JournalArticleResourceCacheModel implements CacheModel<JournalArticleResource>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

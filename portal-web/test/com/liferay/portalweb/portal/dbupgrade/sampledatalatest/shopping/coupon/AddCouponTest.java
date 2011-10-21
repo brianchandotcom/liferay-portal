@@ -25,7 +25,7 @@ public class AddCouponTest extends BaseTestCase {
 		selenium.open("/web/shopping-coupon-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,40 +40,31 @@ public class AddCouponTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Coupon Page",
 			RuntimeVariables.replace("Shopping Coupon Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Coupon']",
 			RuntimeVariables.replace("Add Coupon"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_34_autoCodeCheckbox']"));
 		selenium.clickAt("//input[@id='_34_autoCodeCheckbox']",
 			RuntimeVariables.replace("Autogenerate Code Checkbox"));
 		assertTrue(selenium.isChecked("//input[@id='_34_autoCodeCheckbox']"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_name']",
 			RuntimeVariables.replace("Coupon Test"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_34_description']",
 			RuntimeVariables.replace("This is a coupon test."));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_34_discount']",
 			RuntimeVariables.replace("0.50"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,7 +79,6 @@ public class AddCouponTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

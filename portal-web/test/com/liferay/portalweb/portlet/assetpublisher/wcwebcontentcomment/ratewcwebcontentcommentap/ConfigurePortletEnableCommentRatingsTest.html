@@ -44,7 +44,7 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
@@ -52,6 +52,16 @@
 	<td>waitForVisible</td>
 	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
 	<td>Enable Comment Ratings</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_86_enableCommentRatingsCheckbox'))</td>
+	<td>enableCommentRatingsUnchecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${enableCommentRatingsUnchecked}</td>
+	<td>EnableCommentRatingsChecked</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -62,6 +72,16 @@
 	<td>clickAt</td>
 	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
 	<td>Enable Comment Ratings</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>Enable Comment Ratings</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>EnableCommentRatingsChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

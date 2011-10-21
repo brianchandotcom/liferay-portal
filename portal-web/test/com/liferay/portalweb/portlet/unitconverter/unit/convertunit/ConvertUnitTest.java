@@ -25,7 +25,7 @@ public class ConvertUnitTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,14 +40,11 @@ public class ConvertUnitTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Unit Converter Test Page",
 			RuntimeVariables.replace("Unit Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_27_fromValue']",
 			RuntimeVariables.replace("1.0"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@name='_27_fromId']",
 			RuntimeVariables.replace("Inch"));
 		selenium.select("//select[@name='_27_toId']",
@@ -58,7 +55,7 @@ public class ConvertUnitTest extends BaseTestCase {
 			RuntimeVariables.replace("Convert"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -75,7 +72,6 @@ public class ConvertUnitTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals("2.5399999187200026",
 			selenium.getValue("//input[@name='_27_to_value']"));
 	}

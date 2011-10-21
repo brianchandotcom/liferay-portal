@@ -89,6 +89,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.OrgLabor"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.OrgLabor"),
+			true);
+	public static long ORGANIZATIONID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -136,14 +140,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return OrgLabor.class;
-	}
-
-	public String getModelClassName() {
-		return OrgLabor.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.OrgLabor"));
 
@@ -166,6 +162,14 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return OrgLabor.class;
+	}
+
+	public String getModelClassName() {
+		return OrgLabor.class.getName();
+	}
+
 	@JSON
 	public long getOrgLaborId() {
 		return _orgLaborId;
@@ -181,7 +185,19 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	}
 
 	public void setOrganizationId(long organizationId) {
+		_columnBitmask |= ORGANIZATIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalOrganizationId) {
+			_setOriginalOrganizationId = true;
+
+			_originalOrganizationId = _organizationId;
+		}
+
 		_organizationId = organizationId;
+	}
+
+	public long getOriginalOrganizationId() {
+		return _originalOrganizationId;
 	}
 
 	@JSON
@@ -319,20 +335,19 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_satClose = satClose;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public OrgLabor toEscapedModel() {
-		if (isEscapedModel()) {
-			return (OrgLabor)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (OrgLabor)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (OrgLabor)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -443,6 +458,13 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public void resetOriginalValues() {
+		OrgLaborModelImpl orgLaborModelImpl = this;
+
+		orgLaborModelImpl._originalOrganizationId = orgLaborModelImpl._organizationId;
+
+		orgLaborModelImpl._setOriginalOrganizationId = false;
+
+		orgLaborModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -616,6 +638,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		};
 	private long _orgLaborId;
 	private long _organizationId;
+	private long _originalOrganizationId;
+	private boolean _setOriginalOrganizationId;
 	private int _typeId;
 	private int _sunOpen;
 	private int _sunClose;
@@ -632,5 +656,6 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	private int _satOpen;
 	private int _satClose;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private OrgLabor _escapedModelProxy;
 }

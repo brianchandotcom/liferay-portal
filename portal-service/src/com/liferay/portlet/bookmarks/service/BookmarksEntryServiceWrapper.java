@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BookmarksEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.bookmarks.service;
  * @see       BookmarksEntryService
  * @generated
  */
-public class BookmarksEntryServiceWrapper implements BookmarksEntryService {
+public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
+	ServiceWrapper<BookmarksEntryService> {
 	public BookmarksEntryServiceWrapper(
 		BookmarksEntryService bookmarksEntryService) {
 		_bookmarksEntryService = bookmarksEntryService;
@@ -117,12 +120,26 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService {
 			name, url, description, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public BookmarksEntryService getWrappedBookmarksEntryService() {
 		return _bookmarksEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedBookmarksEntryService(
 		BookmarksEntryService bookmarksEntryService) {
+		_bookmarksEntryService = bookmarksEntryService;
+	}
+
+	public BookmarksEntryService getWrappedService() {
+		return _bookmarksEntryService;
+	}
+
+	public void setWrappedService(BookmarksEntryService bookmarksEntryService) {
 		_bookmarksEntryService = bookmarksEntryService;
 	}
 

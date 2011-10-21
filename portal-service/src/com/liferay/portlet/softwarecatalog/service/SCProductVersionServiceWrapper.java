@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SCProductVersionService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.softwarecatalog.service;
  * @see       SCProductVersionService
  * @generated
  */
-public class SCProductVersionServiceWrapper implements SCProductVersionService {
+public class SCProductVersionServiceWrapper implements SCProductVersionService,
+	ServiceWrapper<SCProductVersionService> {
 	public SCProductVersionServiceWrapper(
 		SCProductVersionService scProductVersionService) {
 		_scProductVersionService = scProductVersionService;
@@ -82,11 +85,26 @@ public class SCProductVersionServiceWrapper implements SCProductVersionService {
 			testDirectDownloadURL, repoStoreArtifact, frameworkVersionIds);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SCProductVersionService getWrappedSCProductVersionService() {
 		return _scProductVersionService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSCProductVersionService(
+		SCProductVersionService scProductVersionService) {
+		_scProductVersionService = scProductVersionService;
+	}
+
+	public SCProductVersionService getWrappedService() {
+		return _scProductVersionService;
+	}
+
+	public void setWrappedService(
 		SCProductVersionService scProductVersionService) {
 		_scProductVersionService = scProductVersionService;
 	}

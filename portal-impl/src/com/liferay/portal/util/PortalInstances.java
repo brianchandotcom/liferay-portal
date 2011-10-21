@@ -112,6 +112,10 @@ public class PortalInstances {
 		return _instance._isVirtualHostsIgnorePath(path);
 	}
 
+	public static void reload(ServletContext servletContext) {
+		_instance._reload(servletContext);
+	}
+
 	private PortalInstances() {
 		_companyIds = new long[0];
 		_autoLoginIgnoreHosts = SetUtil.fromArray(
@@ -506,6 +510,16 @@ public class PortalInstances {
 
 	private boolean _isVirtualHostsIgnorePath(String path) {
 		return _virtualHostsIgnorePaths.contains(path);
+	}
+
+	private void _reload(ServletContext servletContext) {
+		_companyIds = new long[0];
+
+		String[] webIds = _getWebIds();
+
+		for (String webId : webIds) {
+			PortalInstances.initCompany(servletContext, webId);
+		}
 	}
 
 	private static final String _GET_COMPANY_IDS =

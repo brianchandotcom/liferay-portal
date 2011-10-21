@@ -10,18 +10,8 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/site-name</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Site Name</td>
-	<td>Site Name</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Site Name</td>
-	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -30,17 +20,17 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[4]/div/ul/li[1]/a</td>
+	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div/div[3]/a</td>
+	<td>//a[@class='layout-tree']</td>
 	<td>Public Pages</td>
 </tr>
 <tr>
@@ -66,7 +56,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//li/ul/li[1]/div/div[3]/a</td>
-	<td>Public Page</td>
+	<td>Page Name</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -87,6 +77,231 @@
 	<td>waitForNotValue</td>
 	<td>//input[@id='_88_friendlyURL']</td>
 	<td>/home</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete the selected page?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
+	<td>page2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${page2Present}</td>
+	<td>Page2NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Page Name</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete the selected page?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
+	<td>page3Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${page3Present}</td>
+	<td>Page3NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Page Name</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete the selected page?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
+	<td>page4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${page4Present}</td>
+	<td>Page4NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Page Name</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[3]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete the selected page?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
+	<td>page5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${page5Present}</td>
+	<td>Page5NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>Page Name</td>
+</tr>
+<tr>
+	<td>waitForNotValue</td>
+	<td>//input[@id='_88_friendlyURL']</td>
+	<td>/home</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -114,98 +329,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
-	<td>page2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${page2Present}</td>
-	<td>Page2NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
-	<td>Page Name</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected page?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>Page2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
-	<td>page3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${page3Present}</td>
-	<td>Page3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
-	<td>Page Name</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected page?</td>
 	<td></td>
 </tr>
 <tr>
@@ -214,98 +339,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
-	<td>page4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${page4Present}</td>
-	<td>Page4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
-	<td>Page Name</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected page?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>Page4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]</td>
-	<td>Drop Down Arrow</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
-	<td>page5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${page5Present}</td>
-	<td>Page5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//li/ul/li[1]/div/div[3]/a</td>
-	<td>Page Name</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//button[3]</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected page?</td>
 	<td></td>
 </tr>
 <tr>

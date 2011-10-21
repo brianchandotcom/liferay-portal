@@ -168,8 +168,6 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

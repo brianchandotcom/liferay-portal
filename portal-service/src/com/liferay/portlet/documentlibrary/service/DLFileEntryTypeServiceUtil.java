@@ -62,14 +62,14 @@ public class DLFileEntryTypeServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, int start, int end)
+		long[] groupIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileEntryTypes(groupId, start, end);
+		return getService().getFileEntryTypes(groupIds, start, end);
 	}
 
-	public static int getFileEntryTypesCount(long groupId)
+	public static int getFileEntryTypesCount(long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileEntryTypesCount(groupId);
+		return getService().getFileEntryTypesCount(groupIds);
 	}
 
 	public static void updateFileEntryType(long fileEntryTypeId,

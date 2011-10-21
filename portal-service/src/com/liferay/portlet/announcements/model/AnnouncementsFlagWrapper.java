@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AnnouncementsFlag}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.announcements.model;
  * @see       AnnouncementsFlag
  * @generated
  */
-public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
+public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
+	ModelWrapper<AnnouncementsFlag> {
 	public AnnouncementsFlagWrapper(AnnouncementsFlag announcementsFlag) {
 		_announcementsFlag = announcementsFlag;
 	}
@@ -184,10 +187,6 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
 		return _announcementsFlag.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_announcementsFlag.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _announcementsFlag.getPrimaryKeyObj();
 	}
@@ -242,7 +241,14 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag {
 		_announcementsFlag.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public AnnouncementsFlag getWrappedAnnouncementsFlag() {
+		return _announcementsFlag;
+	}
+
+	public AnnouncementsFlag getWrappedModel() {
 		return _announcementsFlag;
 	}
 

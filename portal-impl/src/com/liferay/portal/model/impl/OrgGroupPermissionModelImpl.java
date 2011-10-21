@@ -64,15 +64,11 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.OrgGroupPermission"),
 			true);
-
-	public Class<?> getModelClass() {
-		return OrgGroupPermission.class;
-	}
-
-	public String getModelClassName() {
-		return OrgGroupPermission.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.OrgGroupPermission"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long PERMISSIONID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.OrgGroupPermission"));
 
@@ -97,6 +93,14 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 		setPrimaryKey((OrgGroupPermissionPK)primaryKeyObj);
 	}
 
+	public Class<?> getModelClass() {
+		return OrgGroupPermission.class;
+	}
+
+	public String getModelClassName() {
+		return OrgGroupPermission.class.getName();
+	}
+
 	public long getOrganizationId() {
 		return _organizationId;
 	}
@@ -110,7 +114,19 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	public long getPermissionId() {
@@ -118,23 +134,34 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 	}
 
 	public void setPermissionId(long permissionId) {
+		_columnBitmask |= PERMISSIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalPermissionId) {
+			_setOriginalPermissionId = true;
+
+			_originalPermissionId = _permissionId;
+		}
+
 		_permissionId = permissionId;
+	}
+
+	public long getOriginalPermissionId() {
+		return _originalPermissionId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
 	public OrgGroupPermission toEscapedModel() {
-		if (isEscapedModel()) {
-			return (OrgGroupPermission)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (OrgGroupPermission)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (OrgGroupPermission)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -188,6 +215,17 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 
 	@Override
 	public void resetOriginalValues() {
+		OrgGroupPermissionModelImpl orgGroupPermissionModelImpl = this;
+
+		orgGroupPermissionModelImpl._originalGroupId = orgGroupPermissionModelImpl._groupId;
+
+		orgGroupPermissionModelImpl._setOriginalGroupId = false;
+
+		orgGroupPermissionModelImpl._originalPermissionId = orgGroupPermissionModelImpl._permissionId;
+
+		orgGroupPermissionModelImpl._setOriginalPermissionId = false;
+
+		orgGroupPermissionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -249,6 +287,11 @@ public class OrgGroupPermissionModelImpl extends BaseModelImpl<OrgGroupPermissio
 		};
 	private long _organizationId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _permissionId;
+	private long _originalPermissionId;
+	private boolean _setOriginalPermissionId;
+	private long _columnBitmask;
 	private OrgGroupPermission _escapedModelProxy;
 }

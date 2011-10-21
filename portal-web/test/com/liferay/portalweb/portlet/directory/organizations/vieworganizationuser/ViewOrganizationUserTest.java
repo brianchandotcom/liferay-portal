@@ -30,7 +30,7 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -69,14 +66,11 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("Test Organization"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Test Organization"),
 					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace(""),
@@ -92,7 +86,6 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("link=View Users",
 					RuntimeVariables.replace("View Users"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("userfn"),
 					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("userln"),
@@ -105,7 +98,6 @@ public class ViewOrganizationUserTest extends BaseTestCase {
 					selenium.getText("//td[5]/a"));
 				selenium.clickAt("//td[1]/a", RuntimeVariables.replace("userfn"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("userfn usermn userln"),
 					selenium.getText(
 						"//div[@class='user-information']/div[1]/h2"));

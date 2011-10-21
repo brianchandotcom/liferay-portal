@@ -86,6 +86,12 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.asset.model.AssetCategoryProperty"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetCategoryProperty"),
+			true);
+	public static long CATEGORYID_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long KEY_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -127,14 +133,6 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return AssetCategoryProperty.class;
-	}
-
-	public String getModelClassName() {
-		return AssetCategoryProperty.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetCategoryProperty"));
 
@@ -157,6 +155,14 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return AssetCategoryProperty.class;
+	}
+
+	public String getModelClassName() {
+		return AssetCategoryProperty.class.getName();
+	}
+
 	@JSON
 	public long getCategoryPropertyId() {
 		return _categoryPropertyId;
@@ -172,7 +178,19 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -230,6 +248,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setCategoryId(long categoryId) {
+		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
+
 		if (!_setOriginalCategoryId) {
 			_setOriginalCategoryId = true;
 
@@ -254,6 +274,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
+
 		if (_originalKey == null) {
 			_originalKey = _key;
 		}
@@ -279,20 +301,19 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		_value = value;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public AssetCategoryProperty toEscapedModel() {
-		if (isEscapedModel()) {
-			return (AssetCategoryProperty)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (AssetCategoryProperty)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (AssetCategoryProperty)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -375,11 +396,17 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	public void resetOriginalValues() {
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = this;
 
+		assetCategoryPropertyModelImpl._originalCompanyId = assetCategoryPropertyModelImpl._companyId;
+
+		assetCategoryPropertyModelImpl._setOriginalCompanyId = false;
+
 		assetCategoryPropertyModelImpl._originalCategoryId = assetCategoryPropertyModelImpl._categoryId;
 
 		assetCategoryPropertyModelImpl._setOriginalCategoryId = false;
 
 		assetCategoryPropertyModelImpl._originalKey = assetCategoryPropertyModelImpl._key;
+
+		assetCategoryPropertyModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -521,6 +548,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		};
 	private long _categoryPropertyId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
@@ -533,5 +562,6 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	private String _originalKey;
 	private String _value;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private AssetCategoryProperty _escapedModelProxy;
 }

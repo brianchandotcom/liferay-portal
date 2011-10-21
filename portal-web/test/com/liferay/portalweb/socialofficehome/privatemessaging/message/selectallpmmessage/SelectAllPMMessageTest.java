@@ -30,7 +30,7 @@ public class SelectAllPMMessageTest extends BaseTestCase {
 				selenium.open("/user/joebloggs/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,10 +45,8 @@ public class SelectAllPMMessageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -63,11 +61,9 @@ public class SelectAllPMMessageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/div[1]/ul/li[4]/a",
 					RuntimeVariables.replace("Private Messaging"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Private Messaging"),
 					selenium.getText("//h1/span[2]"));
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -137,13 +133,10 @@ public class SelectAllPMMessageTest extends BaseTestCase {
 			case 4:
 				assertFalse(selenium.isChecked(
 						"//td[1]/span/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isChecked(
 						"//tr[4]/td[1]/span/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isChecked(
 						"//tr[5]/td[1]/span/span/span/input[2]"));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("All"),
 					selenium.getText("//div/span[1]/a"));
 				selenium.clickAt("//div/span[1]/a",

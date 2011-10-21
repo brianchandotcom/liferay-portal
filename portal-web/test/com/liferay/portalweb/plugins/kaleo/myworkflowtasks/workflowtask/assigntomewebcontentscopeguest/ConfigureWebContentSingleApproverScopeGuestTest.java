@@ -27,7 +27,7 @@ public class ConfigureWebContentSingleApproverScopeGuestTest
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -42,26 +42,24 @@ public class ConfigureWebContentSingleApproverScopeGuestTest
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText("//div[1]/div/span/a"));
+			selenium.getText("//strong/a/span"));
 		selenium.clickAt("link=Workflow Configuration",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Workflow Configuration"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.select("_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle",
+		selenium.select("//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']",
 			RuntimeVariables.replace("label=Single Approver (Version 1)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Single Approver (Version 1)",
 			selenium.getSelectedLabel(
-				"_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle"));
+				"//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']"));
 	}
 }

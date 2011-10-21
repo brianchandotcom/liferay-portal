@@ -22,6 +22,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
@@ -77,7 +78,9 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		String titlePattern = null;
 
-		if (activityType == WikiActivityKeys.ADD_COMMENT) {
+		if ((activityType == WikiActivityKeys.ADD_COMMENT) ||
+			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
+
 			titlePattern = "activity-wiki-add-comment";
 		}
 		else if (activityType == WikiActivityKeys.ADD_PAGE) {

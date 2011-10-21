@@ -22,7 +22,11 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 FileEntry fileEntry = null;
 DLFileShortcut fileShortcut = null;
 
-boolean view = false;
+boolean showWhenSingleIcon = false;
+
+if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+	showWhenSingleIcon = true;
+}
 
 if (row != null) {
 	Object result = row.getObject();
@@ -48,6 +52,10 @@ else {
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 		if (request.getAttribute("view_file_entry.jsp-fileEntry") != null) {
 			fileEntry = (FileEntry)request.getAttribute("view_file_entry.jsp-fileEntry");
+
+			if (request.getAttribute("view_file_entry.jsp-fileShortcut") != null) {
+				fileShortcut = (DLFileShortcut)request.getAttribute("view_file_entry.jsp-fileShortcut");
+			}
 		}
 		else {
 			fileShortcut = (DLFileShortcut)request.getAttribute("view_file_shortcut.jsp-fileShortcut");
@@ -55,16 +63,17 @@ else {
 	}
 	else {
 		if (request.getAttribute("view_entries.jsp-fileEntry") != null) {
-				fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+			fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+
+			if (request.getAttribute("view_entries.jsp-fileShortcut") != null) {
+				fileShortcut = (DLFileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
+			}
+
 		}
 		else {
 			fileShortcut = (DLFileShortcut)request.getAttribute("view_file_shortcut.jsp-fileShortcut");
 		}
 	}
-
-	 if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-		 view = true;
-	 }
 }
 
 long folderId = 0;
@@ -83,9 +92,9 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu align='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? "right" : "auto" %>' direction='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? null : "down" %>' extended="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? true : false %>" icon="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? null : StringPool.BLANK %>" message='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? "actions" : StringPool.BLANK %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+	<liferay-ui:icon-menu align='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? "right" : "auto" %>' direction='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? null : "down" %>' extended="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? true : false %>" icon="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? null : StringPool.BLANK %>" message='<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ? "actions" : StringPool.BLANK %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
 		<c:choose>
-			<c:when test="<%= fileEntry != null %>">
+			<c:when test="<%= (fileEntry != null) && (fileShortcut == null) %>">
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 					<liferay-ui:icon
 						image="download"
@@ -143,7 +152,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 					/>
 				</c:if>
 
-			<c:if test="<%= !view && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
+				<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
 					<portlet:actionURL var="deleteURL">
 						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -172,20 +181,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 
 				<%@ include file="/html/portlet/document_library/file_entry_action_open_document.jspf" %>
 
-				<c:if test="<%= !view && DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
-					<portlet:renderURL var="viewShortcutURL">
-						<portlet:param name="struts_action" value="/document_library/view_file_shortcut" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="fileShortcutId" value="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						image="view"
-						url="<%= viewShortcutURL %>"
-					/>
-				</c:if>
-
-				<c:if test="<%= view && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="viewOriginalFileURL">
 						<portlet:param name="struts_action" value="/document_library/view_file_entry" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />

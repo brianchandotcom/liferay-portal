@@ -26,7 +26,7 @@ public class MarkAsReadAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,18 +41,16 @@ public class MarkAsReadAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Mark as Read"),
 			selenium.getText("//td[@class='control-entry']/a"));
 		selenium.clickAt("//td[@class='control-entry']/a",
 			RuntimeVariables.replace("Mark as Read"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -69,7 +67,6 @@ public class MarkAsReadAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Show"),
 			selenium.getText("//td[@class='control-entry']/a"));
 	}

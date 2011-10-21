@@ -58,6 +58,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setGroupPermissions(getGroupPermissions());
 		serviceContext.setGuestPermissions(getGuestPermissions());
 		serviceContext.setHeaders(getHeaders());
+		serviceContext.setIndexingEnabled(isIndexingEnabled());
 		serviceContext.setLanguageId(getLanguageId());
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
 		serviceContext.setLayoutURL(getLayoutURL());
@@ -246,6 +247,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	public String getUserAgent() {
+		if (_headers == null) {
+			return null;
+		}
+
 		return _headers.get(HttpHeaders.USER_AGENT);
 	}
 
@@ -364,10 +369,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		_expandoBridgeAttributes = expandoBridgeAttributes;
 	}
 
-	public void setIndexingEnabled(boolean indexingEnabled) {
-		_indexingEnabled = indexingEnabled;
-	}
-
 	public void setGroupPermissions(String[] groupPermissions) {
 		_groupPermissions = groupPermissions;
 	}
@@ -378,6 +379,10 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	public void setHeaders(Map<String, String> headers) {
 		_headers = headers;
+	}
+
+	public void setIndexingEnabled(boolean indexingEnabled) {
+		_indexingEnabled = indexingEnabled;
 	}
 
 	public void setLanguageId(String languageId) {

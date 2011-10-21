@@ -20,6 +20,7 @@ import com.liferay.portlet.polls.service.PollsVoteServiceUtil;
 import com.liferay.portlet.polls.util.PollsUtil;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletConfig;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,7 +28,8 @@ import javax.portlet.ActionRequest;
 public class ViewQuestionAction extends EditQuestionAction {
 
 	@Override
-	protected void updateQuestion(ActionRequest actionRequest)
+	protected void updateQuestion(
+			PortletConfig portletConfig, ActionRequest actionRequest)
 		throws Exception {
 
 		long questionId = ParamUtil.getLong(actionRequest, "questionId");

@@ -272,7 +272,7 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
-		long groupId, long ruleGroupId,
+		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
@@ -280,12 +280,12 @@ public class MDRRuleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addRule(groupId, ruleGroupId, nameMap, descriptionMap,
-			type, typeSettings, serviceContext);
+				   .addRule(ruleGroupId, nameMap, descriptionMap, type,
+			typeSettings, serviceContext);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
-		long groupId, long ruleGroupId,
+		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
@@ -294,8 +294,8 @@ public class MDRRuleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addRule(groupId, ruleGroupId, nameMap, descriptionMap,
-			type, typeSettingsProperties, serviceContext);
+				   .addRule(ruleGroupId, nameMap, descriptionMap, type,
+			typeSettingsProperties, serviceContext);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule copyRule(

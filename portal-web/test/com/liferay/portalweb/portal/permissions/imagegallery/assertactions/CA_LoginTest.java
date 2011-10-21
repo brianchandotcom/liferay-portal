@@ -26,7 +26,7 @@ public class CA_LoginTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,16 +41,12 @@ public class CA_LoginTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("_58_login", RuntimeVariables.replace("CA@liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("_58_password", RuntimeVariables.replace("test"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@type='checkbox']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 	}
 }

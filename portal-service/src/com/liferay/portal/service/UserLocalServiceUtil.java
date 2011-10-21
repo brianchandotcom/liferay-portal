@@ -2450,10 +2450,11 @@ public class UserLocalServiceUtil {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateGroups(long userId, long[] newGroupIds)
+	public static void updateGroups(long userId, long[] newGroupIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateGroups(userId, newGroupIds);
+		getService().updateGroups(userId, newGroupIds, serviceContext);
 	}
 
 	/**
@@ -2607,10 +2608,12 @@ public class UserLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void updateOrganizations(long userId,
-		long[] newOrganizationIds)
+		long[] newOrganizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateOrganizations(userId, newOrganizationIds);
+		getService()
+			.updateOrganizations(userId, newOrganizationIds, serviceContext);
 	}
 
 	/**

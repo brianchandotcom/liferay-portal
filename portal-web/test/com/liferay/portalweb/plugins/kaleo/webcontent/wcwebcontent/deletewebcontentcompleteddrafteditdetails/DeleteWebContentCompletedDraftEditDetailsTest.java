@@ -26,7 +26,7 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,13 +41,12 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
 			selenium.getText("//td[3]/a"));
 		assertTrue(selenium.isElementPresent("//td[5]/a"));
@@ -59,26 +58,33 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Web Content Name Edited"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Submit for Publication']"));
 		assertFalse(selenium.isElementPresent(
 				"//input[@value='Submit for Publication' and @disabled='']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Expire Version']"));
-		assertTrue(selenium.isElementPresent(
-				"//input[@value='Expire Version' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
-				"//input[@value='Discard Draft' and @disabled='']"));
-		selenium.click(RuntimeVariables.replace(
-				"//input[@value='Discard Draft']"));
+		assertTrue(selenium.isElementPresent("//button[2]"));
+		selenium.clickAt("//button[2]",
+			RuntimeVariables.replace("Expire this Version"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to discard this draft[\\s\\S]$"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.clickAt("//td[3]/a",
+			RuntimeVariables.replace("Web Content Name Edited"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementPresent("//button[2]"));
+		selenium.clickAt("//button[2]",
+			RuntimeVariables.replace("Delete this Version"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.getConfirmation()
+						   .matches("^Are you sure you want to delete this article version[\\s\\S]$"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//td[3]/a"));
 		assertTrue(selenium.isElementPresent("//td[5]/a"));

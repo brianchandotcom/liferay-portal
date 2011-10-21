@@ -85,6 +85,13 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.documentlibrary.model.DLSync"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLSync"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long FILEID_COLUMN_BITMASK = 2L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 4L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -124,14 +131,6 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return DLSync.class;
-	}
-
-	public String getModelClassName() {
-		return DLSync.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLSync"));
 
@@ -154,6 +153,14 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return DLSync.class;
+	}
+
+	public String getModelClassName() {
+		return DLSync.class.getName();
+	}
+
 	@JSON
 	public long getSyncId() {
 		return _syncId;
@@ -169,7 +176,19 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -187,7 +206,17 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
+		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
+
+		if (_originalModifiedDate == null) {
+			_originalModifiedDate = _modifiedDate;
+		}
+
 		_modifiedDate = modifiedDate;
+	}
+
+	public Date getOriginalModifiedDate() {
+		return _originalModifiedDate;
 	}
 
 	@JSON
@@ -196,6 +225,8 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setFileId(long fileId) {
+		_columnBitmask |= FILEID_COLUMN_BITMASK;
+
 		if (!_setOriginalFileId) {
 			_setOriginalFileId = true;
 
@@ -215,7 +246,19 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setRepositoryId(long repositoryId) {
+		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
+
+		if (!_setOriginalRepositoryId) {
+			_setOriginalRepositoryId = true;
+
+			_originalRepositoryId = _repositoryId;
+		}
+
 		_repositoryId = repositoryId;
+	}
+
+	public long getOriginalRepositoryId() {
+		return _originalRepositoryId;
 	}
 
 	@JSON
@@ -255,20 +298,19 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		_type = type;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public DLSync toEscapedModel() {
-		if (isEscapedModel()) {
-			return (DLSync)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (DLSync)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (DLSync)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -379,9 +421,21 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	public void resetOriginalValues() {
 		DLSyncModelImpl dlSyncModelImpl = this;
 
+		dlSyncModelImpl._originalCompanyId = dlSyncModelImpl._companyId;
+
+		dlSyncModelImpl._setOriginalCompanyId = false;
+
+		dlSyncModelImpl._originalModifiedDate = dlSyncModelImpl._modifiedDate;
+
 		dlSyncModelImpl._originalFileId = dlSyncModelImpl._fileId;
 
 		dlSyncModelImpl._setOriginalFileId = false;
+
+		dlSyncModelImpl._originalRepositoryId = dlSyncModelImpl._repositoryId;
+
+		dlSyncModelImpl._setOriginalRepositoryId = false;
+
+		dlSyncModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -517,15 +571,21 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 		};
 	private long _syncId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private Date _originalModifiedDate;
 	private long _fileId;
 	private long _originalFileId;
 	private boolean _setOriginalFileId;
 	private long _repositoryId;
+	private long _originalRepositoryId;
+	private boolean _setOriginalRepositoryId;
 	private long _parentFolderId;
 	private String _event;
 	private String _type;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private DLSync _escapedModelProxy;
 }

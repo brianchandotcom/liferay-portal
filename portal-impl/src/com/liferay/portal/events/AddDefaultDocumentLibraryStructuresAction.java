@@ -24,14 +24,14 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -79,14 +79,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		long[] ddmStructureId = new long[] {ddmStructure.getStructureId()};
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				groupId, dlFileEntryTypeName, dlFileEntryTypeDescription);
-
-		if (dlFileEntryTypes.isEmpty()) {
+		try {
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				groupId, dlFileEntryTypeName);
+		}
+		catch (NoSuchFileEntryTypeException nsfete) {
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeName,
-				dlFileEntryTypeDescription, ddmStructureId,	serviceContext);
+				dlFileEntryTypeDescription, ddmStructureId, serviceContext);
 		}
 	}
 
@@ -95,12 +95,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 		throws Exception {
 
 		addDLFileEntryType(
-			userId, groupId, "Image", "Image Document Type",
-			"Default Image's Metadata Set", serviceContext);
+			userId, groupId, DLFileEntryTypeConstants.NAME_IMAGE,
+			"Image Document Type", "Default Image's Metadata Set",
+			serviceContext);
 
 		addDLFileEntryType(
-			userId, groupId, "Video", "Video Document Type",
-			"Default Videos's Metadata Set", serviceContext);
+			userId, groupId, DLFileEntryTypeConstants.NAME_VIDEO,
+			"Video Document Type", "Default Videos's Metadata Set",
+			serviceContext);
 	}
 
 	protected void addDLRawMetadataStructures(
@@ -212,8 +214,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 	protected void doRun(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.GUEST);
+		Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 

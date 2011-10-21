@@ -30,6 +30,7 @@ public class UseCaseLARCPTests extends BaseTests {
 		testSuite.addTestSuite(AddCustomSiteWikiUseCaseTest.class);
 		testSuite.addTestSuite(AddPageWikiTest.class);
 		testSuite.addTestSuite(AddPortletWikiTest.class);
+		testSuite.addTestSuite(PermissionsPortletGuestViewOffTest.class);
 		testSuite.addTestSuite(ImportExportCPLARWikiUseCaseTest.class);
 
 		return testSuite;

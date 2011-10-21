@@ -23,15 +23,31 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset>
-		<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= displayAssetTypeFacet %>" />
+	<aui:fieldset label="display-settings">
+		<div class="configuration-style" id="<portlet:namespace />configurationStyle">
+			<aui:field-wrapper>
+				<aui:input checked="<%= !advancedConfiguration %>" id="basic" label="basic" name="preferences--advancedConfiguration--" type="radio" value="false" />
+				<aui:input checked="<%= advancedConfiguration %>" id="advanced" label="advanced" name="preferences--advancedConfiguration--" type="radio" value="true" />
+			</aui:field-wrapper>
+		</div>
 
-		<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= displayAssetTagsFacet %>" />
+		<div class="basic-configuration <%= (advancedConfiguration ? "aui-helper-hidden" : "") %>" id="<portlet:namespace />basicConfiguration">
+			<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= displayAssetTypeFacet %>" />
 
-		<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= displayAssetCategoriesFacet %>" />
+			<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= displayAssetTagsFacet %>" />
 
-		<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
+			<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= displayAssetCategoriesFacet %>" />
 
+			<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
+		</div>
+		<div class="advanced-configuration <%= (!advancedConfiguration ? "aui-helper-hidden" : "") %>" id="<portlet:namespace />advancedConfiguration">
+			<aui:input helpMessage="search-configuration-help" inputCssClass="search-configuration-text" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfiguration %>" />
+		</div>
+	</aui:fieldset>
+
+	<br />
+
+	<aui:fieldset label="other-settings">
 		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 			<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= displayResultsInDocumentForm %>" />
 		</c:if>
@@ -47,3 +63,21 @@
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base">
+	var basicConfiguration = A.one('#<portlet:namespace />basicConfiguration');
+	var advancedConfiguration = A.one('#<portlet:namespace />advancedConfiguration');
+
+	var configurationStyles = A.all('#<portlet:namespace />configurationStyle input');
+
+	configurationStyles.on(
+		'change',
+		function(event) {
+			var value = event.currentTarget.val();
+
+			basicConfiguration.toggle(value != 'true');
+
+			advancedConfiguration.toggle(value == 'true');
+		}
+	);
+</aui:script>

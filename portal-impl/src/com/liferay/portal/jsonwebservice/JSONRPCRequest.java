@@ -16,6 +16,8 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -69,6 +71,10 @@ public class JSONRPCRequest {
 			return jsonrpcRequest;
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON RPC request", e);
+			}
+
 			return null;
 		}
 	}
@@ -86,7 +92,14 @@ public class JSONRPCRequest {
 	}
 
 	public String getParameter(String name) {
-		return String.valueOf(_parameters.get(name));
+		Object value = _parameters.get(name);
+
+		if (value != null) {
+			return String.valueOf(value);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Set<String> getParameterNames() {
@@ -108,6 +121,8 @@ public class JSONRPCRequest {
 	public void setParameters(Map<String, ?> parameters) {
 		_parameters = parameters;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(JSONRPCRequest.class);
 
 	private Integer _id;
 	private String _jsonrpc;

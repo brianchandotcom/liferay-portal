@@ -100,6 +100,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 			friendlyURL.startsWith(_PATH_LANGUAGE) ||
 			friendlyURL.startsWith(_PATH_LUCENE) ||
 			friendlyURL.startsWith(_PATH_NETVIBES) ||
+			friendlyURL.startsWith(_PATH_OSGI) ||
 			friendlyURL.startsWith(_PATH_PBHS) ||
 			friendlyURL.startsWith(_PATH_POLLER) ||
 			friendlyURL.startsWith(_PATH_REST) ||
@@ -226,84 +227,85 @@ public class VirtualHostFilter extends BasePortalFilter {
 			_log.debug("Layout set " + layoutSet);
 		}
 
-		if (layoutSet != null) {
-			try {
-				LastPath lastPath = new LastPath(
-					contextPath, friendlyURL, request.getParameterMap());
+		if (layoutSet == null) {
+			processFilter(
+				VirtualHostFilter.class, request, response, filterChain);
 
-				request.setAttribute(WebKeys.LAST_PATH, lastPath);
+			return;
+		}
 
-				StringBundler forwardURL = new StringBundler(6);
+		try {
+			LastPath lastPath = new LastPath(
+				contextPath, friendlyURL, request.getParameterMap());
 
-				if (i18nLanguageId != null) {
-					forwardURL.append(i18nLanguageId);
-				}
+			request.setAttribute(WebKeys.LAST_PATH, lastPath);
 
-				if (originalFriendlyURL.startsWith(
-						PropsValues.WIDGET_SERVLET_MAPPING)) {
+			StringBundler forwardURL = new StringBundler(5);
 
-					forwardURL.append(PropsValues.WIDGET_SERVLET_MAPPING);
+			if (i18nLanguageId != null) {
+				forwardURL.append(i18nLanguageId);
+			}
 
-					friendlyURL = StringUtil.replaceFirst(
-						friendlyURL, PropsValues.WIDGET_SERVLET_MAPPING,
-						StringPool.BLANK);
-				}
+			if (originalFriendlyURL.startsWith(
+					PropsValues.WIDGET_SERVLET_MAPPING)) {
 
-				long plid = PortalUtil.getPlidFromFriendlyURL(
-					companyId, friendlyURL);
+				forwardURL.append(PropsValues.WIDGET_SERVLET_MAPPING);
 
-				if (plid <= 0) {
-					StringBundler prefix = new StringBundler(2);
+				friendlyURL = StringUtil.replaceFirst(
+					friendlyURL, PropsValues.WIDGET_SERVLET_MAPPING,
+					StringPool.BLANK);
+			}
 
-					Group group = GroupLocalServiceUtil.getGroup(
-						layoutSet.getGroupId());
+			long plid = PortalUtil.getPlidFromFriendlyURL(
+				companyId, friendlyURL);
 
-					if (layoutSet.isPrivateLayout()) {
-						if (group.isUser()) {
-							prefix.append(_PRIVATE_USER_SERVLET_MAPPING);
-						}
-						else {
-							prefix.append(_PRIVATE_GROUP_SERVLET_MAPPING);
-						}
-					}
-					else {
-						prefix.append(_PUBLIC_GROUP_SERVLET_MAPPING);
-					}
+			if (plid <= 0) {
+				Group group = GroupLocalServiceUtil.getGroup(
+					layoutSet.getGroupId());
 
-					prefix.append(group.getFriendlyURL());
+				if (group.isGuest() &&
+					friendlyURL.equals(StringPool.SLASH)) {
 
 					String homeURL = PortalUtil.getRelativeHomeURL(request);
 
-					if (group.isGuest() &&
-						friendlyURL.equals(StringPool.SLASH) &&
-						Validator.isNotNull(homeURL)) {
-
+					if (Validator.isNotNull(homeURL)) {
 						friendlyURL = homeURL;
 					}
-					else {
-						forwardURL.append(prefix);
+				}
+				else {
+					if (layoutSet.isPrivateLayout()) {
+						if (group.isUser()) {
+							forwardURL.append(_PRIVATE_USER_SERVLET_MAPPING);
+						}
+						else {
+							forwardURL.append(_PRIVATE_GROUP_SERVLET_MAPPING);
+						}
 					}
+					else {
+						forwardURL.append(_PUBLIC_GROUP_SERVLET_MAPPING);
+					}
+
+					forwardURL.append(group.getFriendlyURL());
 				}
-
-				forwardURL.append(friendlyURL);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Forward to " + forwardURL);
-				}
-
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher(forwardURL.toString());
-
-				requestDispatcher.forward(request, response);
-
-				return;
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+
+			forwardURL.append(friendlyURL);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Forward to " + forwardURL);
 			}
+
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(forwardURL.toString());
+
+			requestDispatcher.forward(request, response);
 		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-		processFilter(VirtualHostFilter.class, request, response, filterChain);
+			processFilter(
+				VirtualHostFilter.class, request, response, filterChain);
+		}
 	}
 
 	private static final String _PATH_C = "/c/";
@@ -333,6 +335,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 	private static final String _PATH_LUCENE = "/lucene/";
 
 	private static final String _PATH_NETVIBES = "/netvibes/";
+
+	private static final String _PATH_OSGI = "/osgi/";
 
 	private static final String _PATH_PBHS = "/pbhs/";
 

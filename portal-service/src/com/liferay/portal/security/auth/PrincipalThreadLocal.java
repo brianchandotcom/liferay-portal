@@ -17,6 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,6 +36,10 @@ public class PrincipalThreadLocal {
 
 	public static String getPassword() {
 		return _password.get();
+	}
+
+	public static long getUserId() {
+		return GetterUtil.getLong(getName());
 	}
 
 	public static void setName(long name) {

@@ -31,7 +31,7 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,15 +46,12 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -71,7 +68,7 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -87,30 +84,23 @@ public class AdvancedSearchOrganizationZipQuotesTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace("\"11111\""));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent("link=Test Organization"));
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace("\"111111\""));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_11_zip']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("All"));
 				selenium.clickAt("link=\u00ab Basic",

@@ -25,7 +25,7 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,13 +40,11 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//nav/ul/li[1]/a/span"));
 		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Tasks"),
 			selenium.getText("//h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
@@ -54,7 +52,6 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Task Portal Tag Description"),
 			selenium.getText("//td[1]/div[1]/a"));
 		assertTrue(selenium.isPartialText("//td[1]/div[2]/span[1]",
@@ -65,7 +62,7 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 		selenium.clickAt("//a[3]", RuntimeVariables.replace("Filter"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -80,12 +77,11 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Filter by Place"),
 			selenium.getText("//h3[2]"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -100,7 +96,6 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.select("//div[2]/select",
 			RuntimeVariables.replace("label=Liferay"));
 		assertEquals(RuntimeVariables.replace("Task Portal Tag Description"),
@@ -109,7 +104,7 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 				"Community: Liferay"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -124,7 +119,6 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//tr[4]/td[1]/div[1]/a"));
 	}
 }

@@ -31,7 +31,7 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,14 +46,12 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -69,11 +67,9 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
 				assertFalse(selenium.isElementPresent(
@@ -84,7 +80,6 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
 				assertFalse(selenium.isElementPresent(
@@ -92,7 +87,6 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("DL Document Title"),
 					selenium.getText("//a[@class='document-link']"));
 				assertTrue(selenium.isElementPresent(
@@ -101,7 +95,7 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					RuntimeVariables.replace("Publish to Live Now"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -118,13 +112,12 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Change"),
 					selenium.getText("//a/span"));
 				selenium.clickAt("//a/span", RuntimeVariables.replace("Change"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -139,7 +132,6 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//span[1]/span/span/input",
 					RuntimeVariables.replace("Delete live page."));
 
@@ -158,7 +150,7 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -174,7 +166,6 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_88_rangeAll']",
 					RuntimeVariables.replace("All"));
 
@@ -189,17 +180,15 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='_88_PORTLET_DATA_20Checkbox']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='_88_PORTLET_DATA_20Checkbox']",
 					RuntimeVariables.replace("Document Library"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_88_PORTLET_DATA_20Checkbox']"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -214,13 +203,11 @@ public class DeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

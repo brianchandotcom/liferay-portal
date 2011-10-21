@@ -130,12 +130,12 @@ public class DDMStructureFinderImpl
 
 			qPos.add(companyId);
 			qPos.add(groupId);
-			qPos.add(classNameIdsString, 2);
+			qPos.add(classNameIds, 2);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 			qPos.add(storageTypes, 2);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -250,7 +250,7 @@ public class DDMStructureFinderImpl
 
 			qPos.add(companyId);
 			qPos.add(groupId);
-			qPos.add(classNameIdsString, 2);
+			qPos.add(classNameIds, 2);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 			qPos.add(storageTypes, 2);

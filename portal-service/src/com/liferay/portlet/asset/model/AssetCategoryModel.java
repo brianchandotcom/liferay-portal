@@ -263,6 +263,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param locale the locale of the language
 	 * @return the localized title of this asset category
 	 */
+	@AutoEscape
 	public String getTitle(Locale locale);
 
 	/**
@@ -272,6 +273,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized title of this asset category. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getTitle(Locale locale, boolean useDefault);
 
 	/**
@@ -280,6 +282,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param languageId the ID of the language
 	 * @return the localized title of this asset category
 	 */
+	@AutoEscape
 	public String getTitle(String languageId);
 
 	/**
@@ -289,7 +292,14 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized title of this asset category
 	 */
+	@AutoEscape
 	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized titles of this asset category.
@@ -322,6 +332,8 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 */
 	public void setTitle(String title, Locale locale, Locale defaultLocale);
 
+	public void setTitleCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized titles of this asset category from the map of locales and localized titles.
 	 *
@@ -350,6 +362,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param locale the locale of the language
 	 * @return the localized description of this asset category
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
@@ -359,6 +372,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this asset category. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
@@ -367,6 +381,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param languageId the ID of the language
 	 * @return the localized description of this asset category
 	 */
+	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
@@ -376,7 +391,14 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this asset category
 	 */
+	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDescriptionCurrentLanguageId();
+
+	@AutoEscape
+	public String getDescriptionCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized descriptions of this asset category.
@@ -409,6 +431,8 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 */
 	public void setDescription(String description, Locale locale,
 		Locale defaultLocale);
+
+	public void setDescriptionCurrentLanguageId(String languageId);
 
 	/**
 	 * Sets the localized descriptions of this asset category from the map of locales and localized descriptions.
@@ -449,8 +473,6 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

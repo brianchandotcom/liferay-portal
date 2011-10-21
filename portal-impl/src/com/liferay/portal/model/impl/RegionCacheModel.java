@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Region;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Region in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.Region;
  * @see Region
  * @generated
  */
-public class RegionCacheModel implements CacheModel<Region> {
+public class RegionCacheModel implements CacheModel<Region>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceBlockPermission;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ResourceBlockPermission in entity cache.
  *
@@ -25,7 +27,8 @@ import com.liferay.portal.model.ResourceBlockPermission;
  * @see ResourceBlockPermission
  * @generated
  */
-public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlockPermission> {
+public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlockPermission>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

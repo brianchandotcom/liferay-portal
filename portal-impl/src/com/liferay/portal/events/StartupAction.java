@@ -86,7 +86,9 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Add shutdown hook");
 		}
 
-		Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook()));
+		Runtime runtime = Runtime.getRuntime();
+
+		runtime.addShutdownHook(new Thread(new ShutdownHook()));
 
 		// Security manager
 

@@ -22,11 +22,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Diff;
 import com.liferay.portal.kernel.util.DiffResult;
 import com.liferay.portal.kernel.util.DiffUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,7 +34,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -101,7 +99,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	public void addPageAttachment(
-			long nodeId, String title, String fileName,	File file)
+			long nodeId, String title, String fileName, File file)
 		throws PortalException, SystemException {
 
 		WikiNodePermission.check(
@@ -443,7 +441,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
 						HtmlUtil.extractText(page.getContent()),
-						_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
+						PropsValues.WIKI_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
 				}
 				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 					value = StringPool.BLANK;
@@ -516,8 +514,5 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			throw new SystemException(e);
 		}
 	}
-
-	private static final int _RSS_ABSTRACT_LENGTH = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.WIKI_RSS_ABSTRACT_LENGTH));
 
 }

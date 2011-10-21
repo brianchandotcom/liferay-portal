@@ -110,6 +110,12 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowHREF %>"
+			name="mode"
+			value="<%= LanguageUtil.get(pageContext, template.getMode()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowHREF %>"
 			name="language"
 			value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
 		/>

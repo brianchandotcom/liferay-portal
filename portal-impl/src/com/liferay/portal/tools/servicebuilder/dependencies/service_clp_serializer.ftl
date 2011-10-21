@@ -261,6 +261,14 @@ public class ClpSerializer {
 
 							newModel.set${column.methodName}(value${column_index});
 
+							<#if column.localized>
+								Method method${column_index}CurrentLanguageId = oldModelClass.getMethod("get${column.methodName}CurrentLanguageId");
+
+								String value${column_index}CurrentLanguageId = (String)method${column_index}CurrentLanguageId.invoke(oldModel, (Object[])null);
+
+								newModel.set${column.methodName}CurrentLanguageId(value${column_index}CurrentLanguageId);
+							</#if>
+
 							<#if (column.name == "resourcePrimKey") && entity.isResourcedModel()>
 								Method methodIsResourceMain = oldModelClass.getMethod("isResourceMain");
 

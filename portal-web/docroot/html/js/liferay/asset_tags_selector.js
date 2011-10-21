@@ -5,8 +5,6 @@ AUI().add(
 
 		var AArray = A.Array;
 
-		var	getClassName = A.ClassNameManager.getClassName;
-
 		var NAME = 'tagselector';
 
 		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
@@ -16,6 +14,10 @@ AUI().add(
 		var CSS_POPUP = 'lfr-tag-selector-popup';
 
 		var CSS_TAGS_LIST = 'lfr-tags-selector-list';
+
+		var INVALID_CHARACTERS = '&\'@\\]}:,=>/<\n[{%|+#?"\r;/*~';
+
+		var MAP_INVALID_CHARACTERS = {};
 
 		var TPL_CHECKED = ' checked="checked" ';
 
@@ -28,6 +30,10 @@ AUI().add(
 		var TPL_URL_SUGGESTIONS = 'http://search.yahooapis.com/ContentAnalysisService/V1/termExtraction?appid=YahooDemo&output=json&context={context}';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
+
+		for (var i = 0; i < INVALID_CHARACTERS.length; i++) {
+			MAP_INVALID_CHARACTERS[INVALID_CHARACTERS.charCodeAt(i)] = true;
+		}
 
 		/**
 		 * OPTIONS
@@ -157,19 +163,13 @@ AUI().add(
 
 						instance._submitFormListener = A.Do.before(instance._onAddEntryClick, window, 'submitForm', instance);
 
-						A.on(
-							'key',
-							instance._onTagsSelectorCommaPress,
-							instance.get('boundingBox'),
-							'down:188',
-							instance
-						);
+						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
 					},
 
 					_formatEntry: function(item) {
 						var instance = this;
 
-						var input = A.substitute(TPL_INPUT, item);
+						var input = Lang.sub(TPL_INPUT, item);
 
 						instance._buffer.push(input);
 					},
@@ -227,7 +227,7 @@ AUI().add(
 					_getProxyData: function(context) {
 						var instance = this;
 
-						var suggestionsURL = A.substitute(
+						var suggestionsURL = Lang.sub(
 							TPL_URL_SUGGESTIONS,
 							{
 								context: encodeURIComponent(context)
@@ -393,12 +393,12 @@ AUI().add(
 						instance[action](value);
 					},
 
-					_onTagsSelectorCommaPress: function(event) {
+					_onKeyPress: function(event) {
 						var instance = this;
 
-						instance._onAddEntryClick();
-
-						event.preventDefault();
+						if (MAP_INVALID_CHARACTERS[event.charCode]) {
+							event.halt();
+						}
 					},
 
 					_renderIcons: function() {
@@ -623,7 +623,7 @@ AUI().add(
 
 						var buffer = instance._buffer;
 
-						var message = A.substitute(TPL_MESSAGE, [Liferay.Language.get('no-tags-found')]);
+						var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-tags-found')]);
 
 						buffer.push(message);
 						buffer.push('</fieldset>');
@@ -643,6 +643,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource', 'substitute']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-io-request', 'aui-live-search', 'aui-textboxlist', 'aui-form-textfield', 'datasource-cache', 'liferay-service-datasource']
 	}
 );

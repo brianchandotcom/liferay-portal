@@ -25,7 +25,7 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,15 +40,12 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertTrue(selenium.isPartialText("//a[@id='_130_addressesLink']",
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
@@ -57,7 +54,7 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_130_addressStreet1_0']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -72,7 +69,6 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
 		assertFalse(selenium.isTextPresent("123. Liferay Ln."));
 	}

@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       ImageService
  * @generated
  */
-public class ImageServiceWrapper implements ImageService {
+public class ImageServiceWrapper implements ImageService,
+	ServiceWrapper<ImageService> {
 	public ImageServiceWrapper(ImageService imageService) {
 		_imageService = imageService;
 	}
@@ -34,11 +35,25 @@ public class ImageServiceWrapper implements ImageService {
 		return _imageService.getImage(imageId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ImageService getWrappedImageService() {
 		return _imageService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedImageService(ImageService imageService) {
+		_imageService = imageService;
+	}
+
+	public ImageService getWrappedService() {
+		return _imageService;
+	}
+
+	public void setWrappedService(ImageService imageService) {
 		_imageService = imageService;
 	}
 

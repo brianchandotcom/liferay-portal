@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing SCProductScreenshot in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
  * @see SCProductScreenshot
  * @generated
  */
-public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreenshot> {
+public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreenshot>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

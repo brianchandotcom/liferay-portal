@@ -25,6 +25,7 @@ import java.io.InputStream;
  * implementations should extend from the class {@link BaseStore}.
  *
  * @author Brian Wing Shun Chan
+ * @author Edward Han
  * @see    BaseStore
  */
 public interface Store {
@@ -101,6 +102,10 @@ public interface Store {
 
 	public long getFileSize(
 			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException;
+
+	public boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
 	public boolean hasFile(long companyId, long repositoryId, String fileName)

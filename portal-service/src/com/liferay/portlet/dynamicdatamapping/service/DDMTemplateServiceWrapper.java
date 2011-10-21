@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMTemplateService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.service;
  * @see       DDMTemplateService
  * @generated
  */
-public class DDMTemplateServiceWrapper implements DDMTemplateService {
+public class DDMTemplateServiceWrapper implements DDMTemplateService,
+	ServiceWrapper<DDMTemplateService> {
 	public DDMTemplateServiceWrapper(DDMTemplateService ddmTemplateService) {
 		_ddmTemplateService = ddmTemplateService;
 	}
@@ -32,13 +35,13 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService {
 		long groupId, long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateService.addTemplate(groupId, structureId, nameMap,
-			descriptionMap, type, language, script, serviceContext);
+			descriptionMap, type, mode, language, script, serviceContext);
 	}
 
 	public void deleteTemplate(long templateId)
@@ -55,30 +58,44 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService {
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long structureId, java.lang.String type)
+		long structureId, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateService.getTemplates(structureId, type);
+		return _ddmTemplateService.getTemplates(structureId, type, mode);
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateService.updateTemplate(templateId, nameMap,
-			descriptionMap, type, language, script, serviceContext);
+			descriptionMap, type, mode, language, script, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DDMTemplateService getWrappedDDMTemplateService() {
 		return _ddmTemplateService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {
+		_ddmTemplateService = ddmTemplateService;
+	}
+
+	public DDMTemplateService getWrappedService() {
+		return _ddmTemplateService;
+	}
+
+	public void setWrappedService(DDMTemplateService ddmTemplateService) {
 		_ddmTemplateService = ddmTemplateService;
 	}
 

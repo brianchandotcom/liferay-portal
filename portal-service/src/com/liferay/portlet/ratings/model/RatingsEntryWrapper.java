@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link RatingsEntry}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.ratings.model;
  * @see       RatingsEntry
  * @generated
  */
-public class RatingsEntryWrapper implements RatingsEntry {
+public class RatingsEntryWrapper implements RatingsEntry,
+	ModelWrapper<RatingsEntry> {
 	public RatingsEntryWrapper(RatingsEntry ratingsEntry) {
 		_ratingsEntry = ratingsEntry;
 	}
@@ -265,10 +268,6 @@ public class RatingsEntryWrapper implements RatingsEntry {
 		return _ratingsEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ratingsEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ratingsEntry.getPrimaryKeyObj();
 	}
@@ -323,7 +322,14 @@ public class RatingsEntryWrapper implements RatingsEntry {
 		_ratingsEntry.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public RatingsEntry getWrappedRatingsEntry() {
+		return _ratingsEntry;
+	}
+
+	public RatingsEntry getWrappedModel() {
 		return _ratingsEntry;
 	}
 

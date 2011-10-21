@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutBranch;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing LayoutBranch in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.LayoutBranch;
  * @see LayoutBranch
  * @generated
  */
-public class LayoutBranchCacheModel implements CacheModel<LayoutBranch> {
+public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);

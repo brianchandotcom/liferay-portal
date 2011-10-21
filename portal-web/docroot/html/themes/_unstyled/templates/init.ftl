@@ -56,6 +56,15 @@
 <#assign company_logo = theme_display.getCompanyLogo() />
 <#assign company_logo_height = theme_display.getCompanyLogoHeight() />
 <#assign company_logo_width = theme_display.getCompanyLogoWidth() />
+
+<#assign logo_css_class = "logo" />
+
+<#if company.getLogoId() == 0 && !layout.layoutSet.isLogo()>
+	<#assign logo_css_class = logo_css_class + " default-logo" />
+<#else>
+	<#assign logo_css_class = logo_css_class + " custom-logo" />
+</#if>
+
 <#assign company_url = theme_display.getURLHome() />
 
 <#if !request.isRequestedSessionIdFromCookie()>

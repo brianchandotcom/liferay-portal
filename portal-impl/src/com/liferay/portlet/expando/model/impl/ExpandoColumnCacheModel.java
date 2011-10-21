@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.expando.model.ExpandoColumn;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ExpandoColumn in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
  * @see ExpandoColumn
  * @generated
  */
-public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn> {
+public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

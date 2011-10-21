@@ -30,7 +30,7 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,15 +45,12 @@ public class ViewSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -69,11 +66,9 @@ public class ViewSuborganizationTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace("Test Organization"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Test Child"),
 					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
@@ -102,7 +97,7 @@ public class ViewSuborganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -118,14 +113,12 @@ public class ViewSuborganizationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("View Suborganizations"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Test Child"),
 					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
@@ -141,7 +134,6 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.clickAt("//td[1]/a",
 					RuntimeVariables.replace("Test Child"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Test Child"),
 					selenium.getText(
 						"//div[@class='organization-information']/div[1]/h2"));

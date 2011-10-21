@@ -16,22 +16,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=My Workflow Tasks</td>
-	<td></td>
+	<td>My Workflow Tasks</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Pending</td>
-	<td></td>
+	<td>Pending</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -66,7 +66,7 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Completed</td>
-	<td></td>
+	<td>Completed</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -74,29 +74,9 @@
 	<td>There are no completed tasks.</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>assertElementNotPresent</td>
 	<td>link=My Submissions</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Pending</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no pending publications requested by me.</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Completed</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no completed publications requested by me.</td>
+	<td>My Submissions</td>
 </tr>
 </tbody></table>
 </body>

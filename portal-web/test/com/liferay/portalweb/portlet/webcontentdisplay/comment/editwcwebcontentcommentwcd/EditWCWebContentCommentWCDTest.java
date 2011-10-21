@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 	public void testEditWCWebContentCommentWCD() throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -38,11 +38,9 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		assertEquals(RuntimeVariables.replace("WCD Web Content Comment"),
@@ -52,7 +50,7 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -68,15 +66,13 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//div[3]/div/div[2]/span/span/span/textarea",
 			RuntimeVariables.replace("WCD Web Content Comment Edit"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -92,7 +88,6 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

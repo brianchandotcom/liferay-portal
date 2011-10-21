@@ -79,15 +79,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Ticket"),
 			true);
-
-	public Class<?> getModelClass() {
-		return Ticket.class;
-	}
-
-	public String getModelClassName() {
-		return Ticket.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Ticket"),
+			true);
+	public static long KEY_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Ticket"));
 
@@ -108,6 +103,14 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return Ticket.class;
+	}
+
+	public String getModelClassName() {
+		return Ticket.class.getName();
 	}
 
 	public long getTicketId() {
@@ -168,6 +171,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	public void setKey(String key) {
+		_columnBitmask |= KEY_COLUMN_BITMASK;
+
 		if (_originalKey == null) {
 			_originalKey = _key;
 		}
@@ -208,20 +213,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		_expirationDate = expirationDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public Ticket toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Ticket)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Ticket)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Ticket)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -313,6 +317,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		TicketModelImpl ticketModelImpl = this;
 
 		ticketModelImpl._originalKey = ticketModelImpl._key;
+
+		ticketModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -457,5 +463,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private String _extraInfo;
 	private Date _expirationDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Ticket _escapedModelProxy;
 }

@@ -102,7 +102,7 @@ public class MBThreadFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -158,7 +158,7 @@ public class MBThreadFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -218,7 +218,7 @@ public class MBThreadFinderImpl
 			qPos.add(groupId);
 			qPos.add(categoryId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -505,7 +505,7 @@ public class MBThreadFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -554,7 +554,7 @@ public class MBThreadFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -623,7 +623,7 @@ public class MBThreadFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

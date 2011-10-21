@@ -14,27 +14,78 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+
 import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class Field {
+public class Field implements Serializable {
 
 	public Field() {
 	}
 
-	public Field(String name, Serializable value) {
+	public Field(long ddmStructureId, String name, Serializable value) {
+		_ddmStructureId = ddmStructureId;
 		_name = name;
 		_value = value;
+	}
+
+	public Field(String name, Serializable value) {
+		this(0, name, value);
+	}
+
+	public String getDataType() throws SystemException {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		return ddmStructure.getFieldDataType(_name);
+	}
+
+	public DDMStructure getDDMStructure() throws SystemException {
+		return DDMStructureLocalServiceUtil.fetchStructure(_ddmStructureId);
+	}
+
+	public long getDDMStructureId() {
+		return _ddmStructureId;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
+	public String getRenderedValue(ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		String dataType = null;
+
+		if (ddmStructure != null) {
+			dataType = getDataType();
+		}
+
+		FieldRenderer fieldrenderer = FieldRendererFactory.getFieldRenderer(
+			dataType);
+
+		return fieldrenderer.render(themeDisplay, _value);
+	}
+
+	public String getType() throws SystemException {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		return ddmStructure.getFieldType(_name);
+	}
+
 	public Serializable getValue() {
 		return _value;
+	}
+
+	public void setDDMStructureId(long ddmStructureId) {
+		_ddmStructureId = ddmStructureId;
 	}
 
 	public void setName(String name) {
@@ -45,6 +96,7 @@ public class Field {
 		_value = value;
 	}
 
+	private long _ddmStructureId;
 	private String _name;
 	private Serializable _value;
 

@@ -92,7 +92,7 @@ public class WikiPageFinderImpl
 			qPos.add(true);
 			qPos.add(WorkflowConstants.STATUS_APPROVED);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

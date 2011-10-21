@@ -16,9 +16,7 @@ package com.liferay.portlet.blogs.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +28,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.base.BlogsEntryServiceBaseImpl;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
@@ -382,7 +380,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 				value = StringUtil.shorten(
 					HtmlUtil.extractText(entry.getContent()),
-					_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
+					PropsValues.BLOGS_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
 			}
 			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
@@ -427,8 +425,5 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			throw new SystemException(fe);
 		}
 	}
-
-	private static final int _RSS_ABSTRACT_LENGTH = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.BLOGS_RSS_ABSTRACT_LENGTH));
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link AssetEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.asset.service;
  * @see       AssetEntryService
  * @generated
  */
-public class AssetEntryServiceWrapper implements AssetEntryService {
+public class AssetEntryServiceWrapper implements AssetEntryService,
+	ServiceWrapper<AssetEntryService> {
 	public AssetEntryServiceWrapper(AssetEntryService assetEntryService) {
 		_assetEntryService = assetEntryService;
 	}
@@ -107,11 +110,25 @@ public class AssetEntryServiceWrapper implements AssetEntryService {
 			summary, url, layoutUuid, height, width, priority, sync);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public AssetEntryService getWrappedAssetEntryService() {
 		return _assetEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedAssetEntryService(AssetEntryService assetEntryService) {
+		_assetEntryService = assetEntryService;
+	}
+
+	public AssetEntryService getWrappedService() {
+		return _assetEntryService;
+	}
+
+	public void setWrappedService(AssetEntryService assetEntryService) {
 		_assetEntryService = assetEntryService;
 	}
 

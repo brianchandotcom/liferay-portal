@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFileEntryLocalService
  * @generated
  */
-public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
+public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
+	ServiceWrapper<DLFileEntryLocalService> {
 	public DLFileEntryLocalServiceWrapper(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 		_dlFileEntryLocalService = dlFileEntryLocalService;
@@ -543,17 +546,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 			serviceContext);
 	}
 
-	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.updateAsset(userId, dlFileEntry,
-			dlFileVersion, assetCategoryIds, assetTagNames, assetLinkEntryIds);
-	}
-
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
 		long userId, long fileEntryId, java.lang.String sourceFileName,
 		java.lang.String mimeType, java.lang.String title,
@@ -594,11 +586,26 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService {
 			lockUuid);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFileEntryLocalService getWrappedDLFileEntryLocalService() {
 		return _dlFileEntryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	public DLFileEntryLocalService getWrappedService() {
+		return _dlFileEntryLocalService;
+	}
+
+	public void setWrappedService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}

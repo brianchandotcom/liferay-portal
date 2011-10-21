@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMContent}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see       DDMContent
  * @generated
  */
-public class DDMContentWrapper implements DDMContent {
+public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	public DDMContentWrapper(DDMContent ddmContent) {
 		_ddmContent = ddmContent;
 	}
@@ -270,6 +272,14 @@ public class DDMContentWrapper implements DDMContent {
 		return _ddmContent.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _ddmContent.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _ddmContent.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this d d m content.
 	*
@@ -308,6 +318,10 @@ public class DDMContentWrapper implements DDMContent {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddmContent.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_ddmContent.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -388,10 +402,6 @@ public class DDMContentWrapper implements DDMContent {
 		return _ddmContent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmContent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddmContent.getPrimaryKeyObj();
 	}
@@ -446,7 +456,14 @@ public class DDMContentWrapper implements DDMContent {
 		_ddmContent.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDMContent getWrappedDDMContent() {
+		return _ddmContent;
+	}
+
+	public DDMContent getWrappedModel() {
 		return _ddmContent;
 	}
 

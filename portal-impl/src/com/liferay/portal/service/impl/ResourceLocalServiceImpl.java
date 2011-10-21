@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
@@ -35,6 +36,7 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.PermissionsListFilter;
 import com.liferay.portal.security.permission.PermissionsListFilterFactory;
@@ -218,6 +220,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		for (Resource resource : resources) {
 			deleteResource(resource);
+		}
+	}
+
+	public Resource fetchResource(
+			long companyId, String name, int scope, String primKey)
+		throws SystemException {
+
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			return getResource_6(companyId, name, scope, primKey);
+		}
+		else {
+			return fetchResource_1to5(companyId, name, scope, primKey);
 		}
 	}
 
@@ -554,15 +568,28 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		// Permissions
 
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			addModelResources_6(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions, permissionedModel);
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		try {
+			if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+				addModelResources_6(
+					companyId, groupId, userId, resource, groupPermissions,
+					guestPermissions, permissionedModel);
+			}
+			else {
+				addModelResources_1to5(
+					companyId, groupId, userId, resource, groupPermissions,
+					guestPermissions);
+			}
 		}
-		else {
-			addModelResources_1to5(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions);
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
 	}
 
@@ -804,9 +831,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	protected void addResources(
 			long companyId, long groupId, long userId, String name,
-			String primKey, boolean portletActions,
-			boolean addGroupPermissions, boolean addGuestPermissions,
-			PermissionedModel permissionedModel)
+			String primKey, boolean portletActions, boolean addGroupPermissions,
+			boolean addGuestPermissions, PermissionedModel permissionedModel)
 		throws PortalException, SystemException {
 
 		if (!PermissionThreadLocal.isAddResource()) {
@@ -837,6 +863,10 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
 
 		// Permissions
+
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionPersistence.findByC_N_S_P(
@@ -878,6 +908,12 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 		finally {
 			ResourcePermissionsThreadLocal.setResourcePermissions(null);
+
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
 	}
 
@@ -1000,6 +1036,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				_log.warn(nsre);
 			}
 		}
+	}
+
+	protected Resource fetchResource_1to5(
+			long companyId, String name, int scope, String primKey)
+		throws SystemException {
+
+		ResourceCode resourceCode = resourceCodeLocalService.getResourceCode(
+			companyId, name, scope);
+
+		return resourcePersistence.fetchByC_P(
+			resourceCode.getCodeId(), primKey);
 	}
 
 	protected void filterOwnerActions(String name, List<String> actionIds) {

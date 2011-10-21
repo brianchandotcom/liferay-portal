@@ -34,6 +34,7 @@ import java.io.InputStream;
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Edward Han
  */
 public abstract class BaseStore implements Store {
 
@@ -402,6 +403,22 @@ public abstract class BaseStore implements Store {
 	 */
 	public abstract long getFileSize(
 			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException;
+
+	/**
+	 * Returns <code>true</code> if the directory exists.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository (optionally
+	 *         {@link CompanyConstants#SYSTEM})
+	 * @param  dirName the directory's name
+	 * @return <code>true</code> if the directory exists; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if the directory's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public abstract boolean hasDirectory(
+			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
 	/**

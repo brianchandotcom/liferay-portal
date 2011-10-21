@@ -37,6 +37,23 @@ public class RoleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RoleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Adds a role. The user is reindexed after role is added.
+	*
+	* @param name the role's name
+	* @param titleMap the role's localized titles (optionally
+	<code>null</code>)
+	* @param descriptionMap the role's localized descriptions (optionally
+	<code>null</code>)
+	* @param type the role's type (optionally <code>0</code>)
+	* @return the role
+	* @throws PortalException if a user with the primary key could not be
+	found, if the user did not have permission to add roles, if the
+	class name or the role name were invalid, or if the role is a
+	duplicate
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.Role addRole(java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -46,30 +63,84 @@ public class RoleServiceUtil {
 		return getService().addRole(name, titleMap, descriptionMap, type);
 	}
 
+	/**
+	* Adds the roles to the user. The user is reindexed after the roles are
+	* added.
+	*
+	* @param userId the primary key of the user
+	* @param roleIds the primary keys of the roles
+	* @throws PortalException if a user with the primary key could not be
+	found or if the user did not have permission to assign members
+	to one of the roles
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void addUserRoles(long userId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().addUserRoles(userId, roleIds);
 	}
 
+	/**
+	* Deletes the role with the primary key and its associated permissions.
+	*
+	* @param roleId the primary key of the role
+	* @throws PortalException if the user did not have permission to delete
+	the role, if a role with the primary key could not be found, if
+	the role is a default system role, or if the role's resource
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteRole(long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteRole(roleId);
 	}
 
+	/**
+	* Returns all the roles associated with the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the roles associated with the group
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Role> getGroupRoles(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupRoles(groupId);
 	}
 
+	/**
+	* Returns the role with the primary key.
+	*
+	* @param roleId the primary key of the role
+	* @return the role with the primary key
+	* @throws PortalException if a role with the primary key could not be
+	found or if the user did not have permission to view the role
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.Role getRole(long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRole(roleId);
 	}
 
+	/**
+	* Returns the role with the name in the company.
+	*
+	* <p>
+	* The method searches the system roles map first for default roles. If a
+	* role with the name is not found, then the method will query the
+	* database.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the role's name
+	* @return the role with the name
+	* @throws PortalException if a role with the name could not be found in
+	the company or if the user did not have permission to view the
+	role
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.Role getRole(long companyId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -77,29 +148,76 @@ public class RoleServiceUtil {
 		return getService().getRole(companyId, name);
 	}
 
+	/**
+	* Returns all the user's roles within the user group.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group
+	* @return the user's roles within the user group
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Role> getUserGroupGroupRoles(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserGroupGroupRoles(userId, groupId);
 	}
 
+	/**
+	* Returns all the user's roles within the user group.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group
+	* @return the user's roles within the user group
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Role> getUserGroupRoles(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserGroupRoles(userId, groupId);
 	}
 
+	/**
+	* Returns the union of all the user's roles within the groups.
+	*
+	* @param userId the primary key of the user
+	* @param groups the groups (optionally <code>null</code>)
+	* @return the union of all the user's roles within the groups
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Role> getUserRelatedRoles(
 		long userId, java.util.List<com.liferay.portal.model.Group> groups)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserRelatedRoles(userId, groups);
 	}
 
+	/**
+	* Returns all the roles associated with the user.
+	*
+	* @param userId the primary key of the user
+	* @return the roles associated with the user
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portal.model.Role> getUserRoles(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserRoles(userId);
 	}
 
+	/**
+	* Returns <code>true</code> if the user is associated with the named
+	* regular role.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param name the name of the role
+	* @param inherited whether to include the user's inherited roles in the
+	search
+	* @return <code>true</code> if the user is associated with the regular
+	role; <code>false</code> otherwise
+	* @throws PortalException if a role with the name could not be found in
+	the company or if a default user for the company could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static boolean hasUserRole(long userId, long companyId,
 		java.lang.String name, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -107,6 +225,22 @@ public class RoleServiceUtil {
 		return getService().hasUserRole(userId, companyId, name, inherited);
 	}
 
+	/**
+	* Returns <code>true</code> if the user has any one of the named regular
+	* roles.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param names the names of the roles
+	* @param inherited whether to include the user's inherited roles in the
+	search
+	* @return <code>true</code> if the user has any one of the regular roles;
+	<code>false</code> otherwise
+	* @throws PortalException if any one of the roles with the names could not
+	be found in the company or if the default user for the company
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static boolean hasUserRoles(long userId, long companyId,
 		java.lang.String[] names, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -114,12 +248,40 @@ public class RoleServiceUtil {
 		return getService().hasUserRoles(userId, companyId, names, inherited);
 	}
 
+	/**
+	* Removes the matching roles associated with the user. The user is
+	* reindexed after the roles are removed.
+	*
+	* @param userId the primary key of the user
+	* @param roleIds the primary keys of the roles
+	* @throws PortalException if a user with the primary key could not be
+	found, if the user did not have permission to remove members
+	from a role, or if a role with any one of the primary keys could
+	not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unsetUserRoles(long userId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().unsetUserRoles(userId, roleIds);
 	}
 
+	/**
+	* Updates the role with the primary key.
+	*
+	* @param roleId the primary key of the role
+	* @param name the role's new name
+	* @param titleMap the new localized titles (optionally <code>null</code>)
+	to replace those existing for the role
+	* @param descriptionMap the new localized descriptions (optionally
+	<code>null</code>) to replace those existing for the role
+	* @param subtype the role's new subtype (optionally <code>null</code>)
+	* @return the role with the primary key
+	* @throws PortalException if the user did not have permission to update
+	the role, if a role with the primary could not be found, or if
+	the role's name was invalid
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.Role updateRole(long roleId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

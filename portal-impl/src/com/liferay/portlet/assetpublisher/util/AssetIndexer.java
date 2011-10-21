@@ -54,9 +54,9 @@ public class AssetIndexer extends BaseIndexer {
 			return;
 		}
 
-		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, true);
-		addSearchTerm(searchQuery, searchContext, Field.TITLE, true);
-		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, true);
+		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 	}
 
 	@Override

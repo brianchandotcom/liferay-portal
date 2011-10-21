@@ -33,6 +33,11 @@
 		<put name="selectable" value="true" />
 	</definition>
 
+	<definition name="portal.license" extends="portal">
+		<put name="title" value="license" />
+		<put name="content" value="/portal/license.jsp" />
+	</definition>
+
 	<definition name="portal.login_disabled" extends="portal">
 		<put name="title" value="sign-in-disabled" />
 		<put name="content" value="/portal/login_disabled.jsp" />
@@ -48,6 +53,11 @@
 
 	<definition name="portal.portlet_not_setup" extends="portlet">
 		<put name="portlet_content" value="/portal/portlet_not_setup.jsp" />
+	</definition>
+
+	<definition name="portal.setup_wizard" extends="portal">
+		<put name="title" value="basic-configuration" />
+		<put name="content" value="/portal/setup_wizard.jsp" />
 	</definition>
 
 	<definition name="portal.status" extends="portal">
@@ -459,10 +469,6 @@
 		<put name="portlet_content" value="/portlet/document_library/view_file_entry_type.jsp" />
 	</definition>
 
-	<definition name="portlet.document_library.view_file_shortcut" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/view_file_shortcut.jsp" />
-	</definition>
-
 	<!-- Document Library Display-->
 
 	<definition name="portlet.document_library_display" extends="portlet" />
@@ -809,10 +815,6 @@
 		<put name="portlet_content" value="/portlet/login/create_anonymous_account.jsp" />
 	</definition>
 
-	<definition name="portlet.login.facebook_login" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/facebook_login.jsp" />
-	</definition>
-
 	<definition name="portlet.login.forgot_password" extends="portlet.login">
 		<put name="portlet_content" value="/portlet/login/forgot_password.jsp" />
 	</definition>
@@ -1066,6 +1068,10 @@
 	<!-- Polls Display -->
 
 	<definition name="portlet.polls_display" extends="portlet" />
+
+	<definition name="portlet.polls_display.add_question_redirect" extends="portlet.polls_display">
+		<put name="portlet_content" value="/portlet/polls_display/add_question_redirect.jsp" />
+	</definition>
 
 	<definition name="portlet.polls_display.error" extends="portlet.polls_display">
 		<put name="portlet_content" value="/portlet/polls_display/error.jsp" />
@@ -1476,6 +1482,30 @@
 		<put name="portlet_content" value="/portlet/update_manager/view.jsp" />
 	</definition>
 
+    <!-- User Groups Admin -->
+
+    <definition name="portlet.user_groups_admin" extends="portlet" />
+
+    <definition name="portlet.user_groups_admin.error" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/users_admin/error.jsp" />
+	</definition>
+
+	<definition name="portlet.user_groups_admin.edit_user_group" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/edit_user_group.jsp" />
+	</definition>
+
+	<definition name="portlet.user_groups_admin.edit_user_group_assignments" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/edit_user_group_assignments.jsp" />
+	</definition>
+
+	<definition name="portlet.user_groups_admin.select_user_group" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/select_user_group.jsp" />
+	</definition>
+
+    <definition name="portlet.user_groups_admin.view" extends="portlet.user_groups_admin">
+		<put name="portlet_content" value="/portlet/user_groups_admin/view.jsp" />
+	</definition>
+
 	<!-- Users Admin -->
 
 	<definition name="portlet.users_admin" extends="portlet" />
@@ -1496,14 +1526,6 @@
 		<put name="portlet_content" value="/portlet/users_admin/edit_user.jsp" />
 	</definition>
 
-	<definition name="portlet.users_admin.edit_user_group" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_user_group.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.edit_user_group_assignments" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_user_group_assignments.jsp" />
-	</definition>
-
 	<definition name="portlet.users_admin.edit_user_portrait" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/edit_user_portrait.jsp" />
 	</definition>
@@ -1514,10 +1536,6 @@
 
 	<definition name="portlet.users_admin.select_organization" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/select_organization.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.select_user_group" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/select_user_group.jsp" />
 	</definition>
 
 	<definition name="portlet.users_admin.view" extends="portlet.users_admin">

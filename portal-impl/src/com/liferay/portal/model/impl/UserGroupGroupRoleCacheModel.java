@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserGroupGroupRole;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing UserGroupGroupRole in entity cache.
  *
@@ -25,7 +27,8 @@ import com.liferay.portal.model.UserGroupGroupRole;
  * @see UserGroupGroupRole
  * @generated
  */
-public class UserGroupGroupRoleCacheModel implements CacheModel<UserGroupGroupRole> {
+public class UserGroupGroupRoleCacheModel implements CacheModel<UserGroupGroupRole>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);

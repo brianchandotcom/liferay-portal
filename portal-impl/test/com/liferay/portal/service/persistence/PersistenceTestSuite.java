@@ -84,7 +84,11 @@ import com.liferay.portlet.shopping.service.persistence.ShoppingItemPersistenceT
 import com.liferay.portlet.shopping.service.persistence.ShoppingItemPricePersistenceTest;
 import com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemPersistenceTest;
 import com.liferay.portlet.shopping.service.persistence.ShoppingOrderPersistenceTest;
+import com.liferay.portlet.social.service.persistence.SocialActivityAchievementPersistenceTest;
+import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistenceTest;
+import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistenceTest;
+import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialEquityAssetEntryPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialEquityGroupSettingPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialEquityHistoryPersistenceTest;
@@ -265,7 +269,11 @@ public class PersistenceTestSuite extends TestSuite {
 		testSuite.addTestSuite(ShoppingOrderItemPersistenceTest.class);
 		testSuite.addTestSuite(ShoppingOrderPersistenceTest.class);
 
+		testSuite.addTestSuite(SocialActivityAchievementPersistenceTest.class);
+		testSuite.addTestSuite(SocialActivityCounterPersistenceTest.class);
+		testSuite.addTestSuite(SocialActivityLimitPersistenceTest.class);
 		testSuite.addTestSuite(SocialActivityPersistenceTest.class);
+		testSuite.addTestSuite(SocialActivitySettingPersistenceTest.class);
 		testSuite.addTestSuite(SocialEquityAssetEntryPersistenceTest.class);
 		testSuite.addTestSuite(SocialEquityGroupSettingPersistenceTest.class);
 		testSuite.addTestSuite(SocialEquityHistoryPersistenceTest.class);

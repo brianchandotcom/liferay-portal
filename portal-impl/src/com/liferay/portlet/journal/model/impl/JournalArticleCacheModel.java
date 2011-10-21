@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.journal.model.JournalArticle;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see JournalArticle
  * @generated
  */
-public class JournalArticleCacheModel implements CacheModel<JournalArticle> {
+public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(65);

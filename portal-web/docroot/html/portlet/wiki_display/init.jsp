@@ -16,12 +16,12 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.wiki.NoSuchNodeException" %>
-<%@ page import="com.liferay.portlet.wiki.model.WikiNode" %>
-<%@ page import="com.liferay.portlet.wiki.model.WikiPage" %>
-<%@ page import="com.liferay.portlet.wiki.model.WikiPageConstants" %>
-<%@ page import="com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.wiki.NoSuchNodeException" %><%@
+page import="com.liferay.portlet.wiki.model.WikiNode" %><%@
+page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
+page import="com.liferay.portlet.wiki.model.WikiPageConstants" %><%@
+page import="com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil" %><%@
+page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

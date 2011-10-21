@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Resource;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Resource in entity cache.
  *
@@ -26,7 +28,7 @@ import com.liferay.portal.model.Resource;
  * @see Resource
  * @generated
  */
-public class ResourceCacheModel implements CacheModel<Resource> {
+public class ResourceCacheModel implements CacheModel<Resource>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);

@@ -80,15 +80,10 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.shopping.model.ShoppingOrderItem"),
 			true);
-
-	public Class<?> getModelClass() {
-		return ShoppingOrderItem.class;
-	}
-
-	public String getModelClassName() {
-		return ShoppingOrderItem.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingOrderItem"),
+			true);
+	public static long ORDERID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingOrderItem"));
 
@@ -111,6 +106,14 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return ShoppingOrderItem.class;
+	}
+
+	public String getModelClassName() {
+		return ShoppingOrderItem.class.getName();
+	}
+
 	public long getOrderItemId() {
 		return _orderItemId;
 	}
@@ -124,7 +127,19 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	}
 
 	public void setOrderId(long orderId) {
+		_columnBitmask |= ORDERID_COLUMN_BITMASK;
+
+		if (!_setOriginalOrderId) {
+			_setOriginalOrderId = true;
+
+			_originalOrderId = _orderId;
+		}
+
 		_orderId = orderId;
+	}
+
+	public long getOriginalOrderId() {
+		return _originalOrderId;
 	}
 
 	public String getItemId() {
@@ -216,20 +231,19 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		_shippedDate = shippedDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ShoppingOrderItem toEscapedModel() {
-		if (isEscapedModel()) {
-			return (ShoppingOrderItem)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (ShoppingOrderItem)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (ShoppingOrderItem)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -317,6 +331,13 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	@Override
 	public void resetOriginalValues() {
+		ShoppingOrderItemModelImpl shoppingOrderItemModelImpl = this;
+
+		shoppingOrderItemModelImpl._originalOrderId = shoppingOrderItemModelImpl._orderId;
+
+		shoppingOrderItemModelImpl._setOriginalOrderId = false;
+
+		shoppingOrderItemModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -471,6 +492,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		};
 	private long _orderItemId;
 	private long _orderId;
+	private long _originalOrderId;
+	private boolean _setOriginalOrderId;
 	private String _itemId;
 	private String _sku;
 	private String _name;
@@ -480,5 +503,6 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	private int _quantity;
 	private Date _shippedDate;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private ShoppingOrderItem _escapedModelProxy;
 }

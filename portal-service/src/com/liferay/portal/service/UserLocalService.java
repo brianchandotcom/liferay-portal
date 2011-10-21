@@ -2209,7 +2209,8 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateGroups(long userId, long[] newGroupIds)
+	public void updateGroups(long userId, long[] newGroupIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -2345,7 +2346,8 @@ public interface UserLocalService extends PersistedModelLocalService {
 	found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateOrganizations(long userId, long[] newOrganizationIds)
+	public void updateOrganizations(long userId, long[] newOrganizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

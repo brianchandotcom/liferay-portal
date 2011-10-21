@@ -101,28 +101,29 @@ public class VelocityTaglib {
 
 	/**
 	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean,
-	 *             String, long, String, Boolean, Boolean, long, long, Boolean,
-	 *             String)}
+	 *             String, long, long, String, Boolean, Boolean, long, long,
+	 *             Boolean, String)}
 	 */
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
-			long plid, String portletName, Boolean anchor, Boolean encrypt,
-			long doAsUserId, Boolean portletConfiguration, String queryString)
+			long plid, long refererPlid, String portletName, Boolean anchor,
+			Boolean encrypt, long doAsUserId, Boolean portletConfiguration,
+			String queryString)
 		throws Exception {
 
 		actionURL(
 			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, name, plid, portletName, anchor, encrypt, 0, doAsUserId,
-			portletConfiguration, queryString);
+			escapeXml, name, plid, refererPlid, portletName, anchor, encrypt, 0,
+			doAsUserId, portletConfiguration, queryString);
 	}
 
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
-			long plid, String portletName, Boolean anchor, Boolean encrypt,
-			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
-			String queryString)
+			long plid, long refererPlid, String portletName, Boolean anchor,
+			Boolean encrypt, long doAsGroupId, long doAsUserId,
+			Boolean portletConfiguration, String queryString)
 		throws Exception {
 
 		String var = null;
@@ -135,8 +136,9 @@ public class VelocityTaglib {
 		ActionURLTag.doTag(
 			PortletRequest.ACTION_PHASE, windowState, portletMode, var, varImpl,
 			secure, copyCurrentRenderParameters, escapeXml, name, resourceID,
-			cacheability, plid, portletName, anchor, encrypt, doAsGroupId,
-			doAsUserId, portletConfiguration, params, _pageContext);
+			cacheability, plid, refererPlid, portletName, anchor, encrypt,
+			doAsGroupId, doAsUserId, portletConfiguration, params,
+			_pageContext);
 	}
 
 	public void actionURL(
@@ -147,6 +149,7 @@ public class VelocityTaglib {
 		Boolean secure = null;
 		Boolean copyCurrentRenderParameters = null;
 		Boolean escapeXml = null;
+		long refererPlid = LayoutConstants.DEFAULT_PLID;
 		String name = null;
 		Boolean anchor = null;
 		Boolean encrypt = null;
@@ -156,8 +159,8 @@ public class VelocityTaglib {
 
 		actionURL(
 			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, name, plid, portletName, anchor, encrypt, doAsGroupId,
-			doAsUserId, portletConfiguration, queryString);
+			escapeXml, name, plid, refererPlid, portletName, anchor, encrypt,
+			doAsGroupId, doAsUserId, portletConfiguration, queryString);
 	}
 
 	public void actionURL(
@@ -509,7 +512,8 @@ public class VelocityTaglib {
 
 	/**
 	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean,
-	 *             long, String, Boolean, Boolean, long, long, Boolean, String)}
+	 *             long, long, String, Boolean, Boolean, long, long, Boolean,
+	 *             String)}
 	 */
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
@@ -518,18 +522,20 @@ public class VelocityTaglib {
 			long doAsUserId, Boolean portletConfiguration, String queryString)
 		throws Exception {
 
+		long refererPlid = LayoutConstants.DEFAULT_PLID;
+
 		renderURL(
 			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, plid, portletName, anchor, encrypt, 0, doAsUserId,
-			portletConfiguration, queryString);
+			escapeXml, plid, refererPlid, portletName, anchor, encrypt, 0,
+			doAsUserId, portletConfiguration, queryString);
 	}
 
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml,
-			long plid, String portletName, Boolean anchor, Boolean encrypt,
-			long doAsGroupId, long doAsUserId, Boolean portletConfiguration,
-			String queryString)
+			long plid, long refererPlid, String portletName, Boolean anchor,
+			Boolean encrypt, long doAsGroupId, long doAsUserId,
+			Boolean portletConfiguration, String queryString)
 		throws Exception {
 
 		String var = null;
@@ -543,8 +549,9 @@ public class VelocityTaglib {
 		ActionURLTag.doTag(
 			PortletRequest.RENDER_PHASE, windowState, portletMode, var, varImpl,
 			secure, copyCurrentRenderParameters, escapeXml, name, resourceID,
-			cacheability, plid, portletName, anchor, encrypt, doAsGroupId,
-			doAsUserId, portletConfiguration, params, _pageContext);
+			cacheability, plid, refererPlid, portletName, anchor, encrypt,
+			doAsGroupId, doAsUserId, portletConfiguration, params,
+			_pageContext);
 	}
 
 	public void renderURL(
@@ -555,6 +562,7 @@ public class VelocityTaglib {
 		Boolean secure = null;
 		Boolean copyCurrentRenderParameters = null;
 		Boolean escapeXml = null;
+		long referPlid = LayoutConstants.DEFAULT_PLID;
 		Boolean anchor = null;
 		Boolean encrypt = null;
 		long doAsGroupId = 0;
@@ -563,8 +571,8 @@ public class VelocityTaglib {
 
 		renderURL(
 			windowState, portletMode, secure, copyCurrentRenderParameters,
-			escapeXml, plid, portletName, anchor, encrypt, doAsGroupId,
-			doAsUserId, portletConfiguration, queryString);
+			escapeXml, plid, referPlid, portletName, anchor, encrypt,
+			doAsGroupId, doAsUserId, portletConfiguration, queryString);
 	}
 
 	public void renderURL(

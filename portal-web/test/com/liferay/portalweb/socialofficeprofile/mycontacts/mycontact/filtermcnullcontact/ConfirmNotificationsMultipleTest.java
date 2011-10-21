@@ -25,7 +25,7 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,16 +40,14 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Notifications"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -64,7 +62,6 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficecoworkerfn socialofficecoworkermn socialofficecoworkerln says you are a coworker."),
 			selenium.getText("//section/div/div/div/div/div[2]/div[1]"));
@@ -73,7 +70,6 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[1]/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -86,14 +82,13 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[1]/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -108,11 +103,9 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//section/div/div/div/div/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Friends"),
 			selenium.getText(
 				"//div/div/div/div[2]/div/div/div/div/div/div/div/span"));

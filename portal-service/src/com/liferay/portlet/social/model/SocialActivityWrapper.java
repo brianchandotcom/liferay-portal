@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivity}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialActivity
  * @generated
  */
-public class SocialActivityWrapper implements SocialActivity {
+public class SocialActivityWrapper implements SocialActivity,
+	ModelWrapper<SocialActivity> {
 	public SocialActivityWrapper(SocialActivity socialActivity) {
 		_socialActivity = socialActivity;
 	}
@@ -321,10 +324,6 @@ public class SocialActivityWrapper implements SocialActivity {
 		return _socialActivity.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialActivity.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialActivity.getPrimaryKeyObj();
 	}
@@ -379,7 +378,24 @@ public class SocialActivityWrapper implements SocialActivity {
 		_socialActivity.persist();
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry getAssetEntry()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivity.getAssetEntry();
+	}
+
+	public void setAssetEntry(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
+		_socialActivity.setAssetEntry(assetEntry);
+	}
+
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialActivity getWrappedSocialActivity() {
+		return _socialActivity;
+	}
+
+	public SocialActivity getWrappedModel() {
 		return _socialActivity;
 	}
 

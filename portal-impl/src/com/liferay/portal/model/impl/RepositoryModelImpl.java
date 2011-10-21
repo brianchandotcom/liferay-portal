@@ -84,6 +84,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Repository"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Repository"),
+			true);
+	public static long GROUPID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -125,14 +129,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Repository.class;
-	}
-
-	public String getModelClassName() {
-		return Repository.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Repository"));
 
@@ -155,6 +151,14 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Repository.class;
+	}
+
+	public String getModelClassName() {
+		return Repository.class.getName();
+	}
+
 	@JSON
 	public long getRepositoryId() {
 		return _repositoryId;
@@ -170,7 +174,19 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -282,20 +298,19 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_dlFolderId = dlFolderId;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public Repository toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Repository)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Repository)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Repository)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -380,6 +395,13 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public void resetOriginalValues() {
+		RepositoryModelImpl repositoryModelImpl = this;
+
+		repositoryModelImpl._originalGroupId = repositoryModelImpl._groupId;
+
+		repositoryModelImpl._setOriginalGroupId = false;
+
+		repositoryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -543,6 +565,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		};
 	private long _repositoryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -553,5 +577,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private String _typeSettings;
 	private long _dlFolderId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Repository _escapedModelProxy;
 }

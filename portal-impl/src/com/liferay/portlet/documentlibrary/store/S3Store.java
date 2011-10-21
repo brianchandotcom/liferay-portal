@@ -48,6 +48,7 @@ import org.jets3t.service.security.AWSCredentials;
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
+ * @author Edward Han
  */
 public class S3Store extends BaseStore {
 
@@ -245,6 +246,13 @@ public class S3Store extends BaseStore {
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
 		}
+	}
+
+	@Override
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
+
+		return true;
 	}
 
 	@Override

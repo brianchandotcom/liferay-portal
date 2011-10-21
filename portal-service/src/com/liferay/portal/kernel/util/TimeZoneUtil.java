@@ -40,7 +40,7 @@ public class TimeZoneUtil {
 	}
 
 	private TimeZone _getDefault() {
-		TimeZone timeZone = TimeZoneThreadLocal.getTimeZone();
+		TimeZone timeZone = TimeZoneThreadLocal.getDefaultTimeZone();
 
 		if (timeZone != null) {
 			return timeZone;

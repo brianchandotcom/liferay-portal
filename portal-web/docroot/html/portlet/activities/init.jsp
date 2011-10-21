@@ -16,5 +16,5 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.social.model.SocialActivity" %>
-<%@ page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.social.model.SocialActivity" %><%@
+page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %>

@@ -44,14 +44,9 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -61,12 +56,12 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_86_selectionStyle']</td>
-	<td>label=Dynamic</td>
+	<td>Dynamic</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@class='lfr-panel-title']/span</td>
-	<td>Source</td>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_selectionStyle']</td>
+	<td>Dynamic</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -90,7 +85,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-panel-title']/span</td>
+	<td>xPath=(//div[@class='lfr-panel-title'])[1]/span</td>
 	<td>Source</td>
 </tr>
 <tr>
@@ -101,11 +96,16 @@
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='lfr-panel-title'])[3]/span</td>
-	<td>Ordering and Grouping</td>
+	<td>Custom User Attributes</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='lfr-panel-title'])[4]/span</td>
+	<td>Ordering and Grouping</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='lfr-panel-title'])[5]/span</td>
 	<td>Display Settings</td>
 </tr>
 

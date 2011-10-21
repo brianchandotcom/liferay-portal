@@ -60,6 +60,10 @@ public class FreeMarkerEngineImpl implements FreeMarkerEngine {
 	}
 
 	public void init() throws Exception {
+		if (_configuration != null) {
+			return;
+		}
+
 		LiferayTemplateLoader liferayTemplateLoader =
 			new LiferayTemplateLoader();
 

@@ -25,12 +25,12 @@ public class PreviousButtonAPTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Asset Publisher Test Page")) {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
 					break;
 				}
 			}
@@ -40,30 +40,32 @@ public class PreviousButtonAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//a[@class='previous']"));
+		assertEquals(RuntimeVariables.replace("Previous"),
+			selenium.getText("//a[@class='previous']"));
 		assertFalse(selenium.isElementPresent("//a[@class='next']"));
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isElementPresent("//a[@class='previous']"));
-		assertTrue(selenium.isElementPresent("//a[@class='next']"));
+		assertEquals(RuntimeVariables.replace("Previous"),
+			selenium.getText("//a[@class='previous']"));
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
-		assertTrue(selenium.isElementPresent("//a[@class='next']"));
+		assertEquals(RuntimeVariables.replace("Next"),
+			selenium.getText("//a[@class='next']"));
 	}
 }

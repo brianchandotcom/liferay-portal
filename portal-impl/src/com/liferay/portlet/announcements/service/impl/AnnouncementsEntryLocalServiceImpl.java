@@ -396,7 +396,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		List<User> users = null;
 
 		if (className.equals(User.class.getName())) {
-			User user = userLocalService.getUserById(classPK);
+			User user = userPersistence.findByPrimaryKey(classPK);
 
 			toName = user.getFullName();
 			toAddress = user.getEmailAddress();

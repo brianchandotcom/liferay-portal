@@ -19,21 +19,33 @@
 <aui:script position="inline">
 	Liferay.Util.addInputFocus();
 
-	<c:if test="<%= !themeDisplay.isStatePopUp() %>">
-
-		<%
-		String scroll = ParamUtil.getString(request, "scroll");
-		%>
-
-		<c:if test="<%= Validator.isNotNull(scroll) %>">
-			Liferay.on(
-				'allPortletsReady',
-				function(event) {
-					document.getElementById('<%= HtmlUtil.escape(scroll) %>').scrollIntoView();
+	<c:choose>
+		<c:when test="<%= themeDisplay.isStatePopUp() %>">
+			Liferay.Util.getTop().Liferay.fire(
+				'popupReady',
+				{
+					doc: document,
+					win: window,
+					windowName: Liferay.Util.getWindowName()
 				}
 			);
-		</c:if>
-	</c:if>
+		</c:when>
+		<c:otherwise>
+
+			<%
+			String scroll = ParamUtil.getString(request, "scroll");
+			%>
+
+			<c:if test="<%= Validator.isNotNull(scroll) %>">
+				Liferay.on(
+					'allPortletsReady',
+					function(event) {
+						document.getElementById('<%= HtmlUtil.escape(scroll) %>').scrollIntoView();
+					}
+				);
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 </aui:script>
 
 <aui:script use="aui-base">
@@ -122,7 +134,7 @@ if (layout != null) {
 						</c:if>
 
 						navBlock: navBlock,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>
+						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) %>
 					}
 				);
 			}
@@ -152,7 +164,7 @@ if (layout != null) {
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		<c:choose>
-			<c:when test="<%= (group != null) && group.isControlPanel() %>">
+			<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
 				Liferay._editControlsState = 'visible';
 			</c:when>
 			<c:otherwise>

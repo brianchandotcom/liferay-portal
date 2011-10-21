@@ -102,6 +102,11 @@ public class ActionKeys {
 
 	public static final String ADD_ROLE = "ADD_ROLE";
 
+	public static final String ADD_RULE_GROUP = "ADD_RULE_GROUP";
+
+	public static final String ADD_RULE_GROUP_INSTANCE =
+		"ADD_RULE_GROUP_INSTANCE";
+
 	public static final String ADD_SHORTCUT = "ADD_SHORTCUT";
 
 	public static final String ADD_STRUCTURE = "ADD_STRUCTURE";
@@ -151,6 +156,11 @@ public class ActionKeys {
 	public static final String EXPIRE = "EXPIRE";
 
 	public static final String EXPORT_ALL_EVENTS = "EXPORT_ALL_EVENTS";
+
+	public static final String EXPORT_IMPORT_LAYOUTS = "EXPORT_IMPORT_LAYOUTS";
+
+	public static final String EXPORT_IMPORT_PORTLET_INFO =
+		"EXPORT_IMPORT_PORTLET_INFO";
 
 	public static final String EXPORT_USER = "EXPORT_USER";
 
@@ -224,6 +234,8 @@ public class ActionKeys {
 	public static final String VIEW_CONTROL_PANEL = "VIEW_CONTROL_PANEL";
 
 	public static final String VIEW_MEMBERS = "VIEW_MEMBERS";
+
+	public static final String VIEW_STAGING = "VIEW_STAGING";
 
 	public static final String VIEW_TREE = "VIEW_TREE";
 

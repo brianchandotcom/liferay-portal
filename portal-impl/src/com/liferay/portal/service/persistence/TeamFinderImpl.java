@@ -85,7 +85,7 @@ public class TeamFinderImpl
 			qPos.add(description);
 			qPos.add(description);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

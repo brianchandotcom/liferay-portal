@@ -40,6 +40,13 @@ public class IconCloseTag extends IconTag {
 		setCssClass("portlet-close portlet-close-icon");
 		setImage("../portlet/close");
 		setMessage("remove");
+
+		String onClick =
+			"Liferay.Portlet.close('#p_p_id_".concat(
+				portletDisplay.getId()).concat("_'); return false;");
+
+		setOnClick(onClick);
+
 		setToolTip(false);
 		setUrl(portletDisplay.getURLClose());
 

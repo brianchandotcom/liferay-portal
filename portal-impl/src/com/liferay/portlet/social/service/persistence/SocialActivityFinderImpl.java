@@ -108,7 +108,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(groupId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -144,7 +144,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(groupId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -182,7 +182,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(organizationId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -220,7 +220,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(organizationId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -256,7 +256,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(userId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -295,7 +295,7 @@ public class SocialActivityFinderImpl
 			qPos.add(userId);
 			qPos.add(type);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -331,7 +331,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(userId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -373,7 +373,7 @@ public class SocialActivityFinderImpl
 
 			int count = 0;
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			while (itr.hasNext()) {
 				Long l = itr.next();
@@ -409,7 +409,7 @@ public class SocialActivityFinderImpl
 
 			qPos.add(userId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

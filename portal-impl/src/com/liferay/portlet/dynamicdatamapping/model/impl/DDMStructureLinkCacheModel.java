@@ -19,6 +19,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing DDMStructureLink in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
  * @see DDMStructureLink
  * @generated
  */
-public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink> {
+public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

@@ -31,7 +31,7 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -46,19 +46,15 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -75,7 +71,7 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 			case 2:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -90,17 +86,13 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace("web content template description"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Template Name"),
 					selenium.getText("//td[3]/a"));
@@ -110,14 +102,11 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(
 						"web1 content1 template1 description1"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(""));
-				selenium.saveScreenShotAndSource();
 				assertFalse(selenium.isTextPresent("Web Content Template Name"));
 				assertFalse(selenium.isTextPresent(
 						"Web Content Template Description"));

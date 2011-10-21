@@ -64,6 +64,53 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class LayoutServiceSoap {
+	/**
+	* Adds a layout with empty maps for descriptions, keywords, and titles ,
+	* and a names map containing a mapping for the default locale as its only
+	* entry.
+	*
+	* <p>
+	* This method handles the creation of the layout including its resources,
+	* metadata, and internal data structures. It is not necessary to make
+	* subsequent calls to any methods to setup default groups, resources, ...
+	* etc.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param parentLayoutId the primary key of the parent layout (optionally
+	{@link
+	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	* @param name Map the layout's locales and localized names
+	* @param title Map the layout's locales and localized titles
+	* @param description Map the layout's locales and localized descriptions
+	* @param type the layout's type (optionally {@link
+	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
+	possible types can be found in {@link
+	com.liferay.portal.model.LayoutConstants}.
+	* @param hidden whether the layout is hidden
+	* @param friendlyURL the layout's friendly URL (optionally {@link
+	com.liferay.portal.util.PropsValues#DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL}
+	or {@link
+	com.liferay.portal.util.PropsValues#DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL}).
+	The default values can be overridden in
+	<code>portal-ext.properties</code> by specifying new values for
+	the corresponding properties defined in {@link
+	com.liferay.portal.util.PropsValues}. To see how the URL is
+	normalized when accessed see {@link
+	com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	String)}.
+	* @param locked whether the layout is locked
+	* @param serviceContext the service context. Must specify the replacement
+	universally unique identifier and can specify the replacement
+	create date, replacement modified date and the new expando
+	bridge attributes.
+	* @return the layout
+	* @throws PortalException if a group with the primary key could not be
+	found, if the group did not have permission to manage the
+	layouts involved, or if layout values were invalid
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap addLayout(long groupId,
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
@@ -84,6 +131,17 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the layout with the plid, also deleting the layout's child
+	* layouts, and associated resources.
+	*
+	* @param plid the primary key of the layout
+	* @param serviceContext the service context
+	* @throws PortalException if the user did not have permission to delete
+	the layout, if a layout with the primary key could not be found
+	, or if some other portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteLayout(long plid,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -97,6 +155,19 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the layout with the primary key, also deleting the layout's
+	* child layouts, and associated resources.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param serviceContext the service context
+	* @throws PortalException if the user did not have permission to delete
+	the layout, if a matching layout could not be found , or if some
+	other portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteLayout(long groupId, boolean privateLayout,
 		long layoutId, com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -111,6 +182,20 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Returns the primary key of the default layout for the group.
+	*
+	* @param groupId the primary key of the group
+	* @param scopeGroupId the primary key of the scope group. See {@link
+	ServiceContext#getScopeGroupId()}.
+	* @param privateLayout whether the layout is private to the group
+	* @param portletId the primary key of the portlet
+	* @return Returns the primary key of the default layout group; {@link
+	com.liferay.portal.model.LayoutConstants#DEFAULT_PLID} otherwise
+	* @throws PortalException if a group, layout, or portlet with the primary
+	key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static long getDefaultPlid(long groupId, long scopeGroupId,
 		boolean privateLayout, java.lang.String portletId)
 		throws RemoteException {
@@ -127,6 +212,18 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Returns the name of the layout.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param languageId the primary key of the language. For more information
+	See {@link java.util.Locale}.
+	* @return the layout's name
+	* @throws PortalException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.lang.String getLayoutName(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String languageId)
 		throws RemoteException {
@@ -143,6 +240,17 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Returns the layout references for all the layouts that belong to the
+	* company and belong to the portlet that matches the preferences.
+	*
+	* @param companyId the primary key of the company
+	* @param portletId the primary key of the portlet
+	* @param preferencesKey the portlet's preference key
+	* @param preferencesValue the portlet's preference value
+	* @return the layout references of the matching layouts
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutReference[] getLayoutReferences(
 		long companyId, java.lang.String portletId,
 		java.lang.String preferencesKey, java.lang.String preferencesValue)
@@ -160,6 +268,22 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Sets the layouts for the group, replacing and prioritizing all layouts
+	* of the parent layout.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param parentLayoutId the primary key of the parent layout
+	* @param layoutIds the primary keys of the layouts
+	* @param serviceContext the service context
+	* @throws PortalException if a group or layout with the primary key could
+	not be found, if the group did not have permission to manage the
+	layouts, if no layouts were specified, if the first layout was
+	not page-able, if the first layout was hidden, or if some other
+	portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void setLayouts(long groupId, boolean privateLayout,
 		long parentLayoutId, long[] layoutIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -175,6 +299,19 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the job from the scheduler's queue.
+	*
+	* @param groupId the primary key of the group
+	* @param jobName the job name
+	* @param groupName the group name (optionally {@link
+	com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
+	See {@link
+	com.liferay.portal.kernel.messaging.DestinationNames}.
+	* @throws PortalException if the group did not permission to manage
+	staging and publish
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unschedulePublishToLive(long groupId,
 		java.lang.String jobName, java.lang.String groupName)
 		throws RemoteException {
@@ -189,6 +326,19 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the job from the scheduler's persistent queue.
+	*
+	* @param groupId the primary key of the group
+	* @param jobName the job name
+	* @param groupName the group name (optionally {@link
+	com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
+	See {@link
+	com.liferay.portal.kernel.messaging.DestinationNames}.
+	* @throws PortalException if a group with the primary key could not be
+	found or if the group did not have permission to publish
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void unschedulePublishToRemote(long groupId,
 		java.lang.String jobName, java.lang.String groupName)
 		throws RemoteException {
@@ -203,6 +353,20 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the layout replacing its type settings.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param typeSettings the settings to load the unicode properties object.
+	See {@link com.liferay.portal.kernel.util.UnicodeProperties
+	#fastLoad(String)}.
+	* @return the updated layout
+	* @throws PortalException if a matching layout could not be found or if
+	the user did not have permission to update the layout
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateLayout(
 		long groupId, boolean privateLayout, long layoutId,
 		java.lang.String typeSettings) throws RemoteException {
@@ -219,6 +383,22 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the look and feel of the layout.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param themeId the primary key of the layout's new theme
+	* @param colorSchemeId the primary key of the layout's new color scheme
+	* @param css the layout's new CSS
+	* @param wapTheme whether the theme is for WAP browsers
+	* @return the updated layout
+	* @throws PortalException if a matching layout could not be found, or if
+	the user did not have permission to update the layout and
+	permission to apply the theme
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateLookAndFeel(
 		long groupId, boolean privateLayout, long layoutId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
@@ -237,6 +417,22 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the name of the layout matching the group, layout ID, and
+	* privacy.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param name the layout's new name
+	* @param languageId the primary key of the language. For more information
+	see {@link java.util.Locale}.
+	* @return the updated layout
+	* @throws PortalException if a matching layout could not be found, if the
+	user did not have permission to update the layout, or if the new
+	name was <code>null</code>
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateName(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String name,
 		java.lang.String languageId) throws RemoteException {
@@ -253,6 +449,19 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the name of the layout matching the primary key.
+	*
+	* @param plid the primary key of the layout
+	* @param name the name to be assigned
+	* @param languageId the primary key of the language. For more information
+	see {@link java.util.Locale}.
+	* @return the updated layout
+	* @throws PortalException if a layout with the primary key could not be
+	found, or if the user did not have permission to update the
+	layout, or if the name was <code>null</code>
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateName(long plid,
 		java.lang.String name, java.lang.String languageId)
 		throws RemoteException {
@@ -269,6 +478,21 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the parent layout ID of the layout matching the group, layout
+	* ID, and privacy.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param parentLayoutId the primary key to be assigned to the parent
+	layout
+	* @return the matching layout
+	* @throws PortalException if a valid parent layout ID to use could not be
+	found, if a matching layout could not be found, or if the user
+	did not have permission to update the layout
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateParentLayoutId(
 		long groupId, boolean privateLayout, long layoutId, long parentLayoutId)
 		throws RemoteException {
@@ -285,6 +509,21 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the parent layout ID of the layout matching the primary key. If
+	* a layout matching the parent primary key is found, the layout ID of that
+	* layout is assigned, otherwise {@link
+	* com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID} is
+	* assigned.
+	*
+	* @param plid the primary key of the layout
+	* @param parentPlid the primary key of the parent layout
+	* @return the layout matching the primary key
+	* @throws PortalException if a layout with the primary key could not be
+	found, if the user did not have permission to update the layout,
+	or if a valid parent layout ID to use could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateParentLayoutId(
 		long plid, long parentPlid) throws RemoteException {
 		try {
@@ -300,6 +539,19 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the priority of the layout matching the group, layout ID, and
+	* privacy.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param priority the layout's new priority
+	* @return the updated layout
+	* @throws PortalException if a matching layout could not be found or if
+	the user did not have permission to update the layout
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updatePriority(
 		long groupId, boolean privateLayout, long layoutId, int priority)
 		throws RemoteException {
@@ -316,6 +568,16 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the priority of the layout matching the primary key.
+	*
+	* @param plid the primary key of the layout
+	* @param priority the layout's new priority
+	* @return the updated layout
+	* @throws PortalException if a layout with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updatePriority(
 		long plid, int priority) throws RemoteException {
 		try {

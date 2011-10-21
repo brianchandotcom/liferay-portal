@@ -114,9 +114,8 @@ public interface PortletPermission {
 		throws PortalException, SystemException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker, long groupId, long plid,
-			Collection<Portlet> portlets, String actionId)
-		throws PortalException, SystemException;
+		PermissionChecker permissionChecker, long groupId, long plid,
+		Collection<Portlet> portlets, String actionId);
 
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, long plid,

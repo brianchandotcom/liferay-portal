@@ -41,14 +41,14 @@ public class DDMTemplateServiceUtil {
 		long groupId, long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addTemplate(groupId, structureId, nameMap, descriptionMap,
-			type, language, script, serviceContext);
+			type, mode, language, script, serviceContext);
 	}
 
 	public static void deleteTemplate(long templateId)
@@ -65,23 +65,23 @@ public class DDMTemplateServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long structureId, java.lang.String type)
+		long structureId, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTemplates(structureId, type);
+		return getService().getTemplates(structureId, type, mode);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTemplate(templateId, nameMap, descriptionMap, type,
-			language, script, serviceContext);
+			mode, language, script, serviceContext);
 	}
 
 	public static DDMTemplateService getService() {

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
@@ -39,8 +38,6 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portal.util.WebAppPool;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.bookmarks.util.BookmarksIndexer;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
@@ -75,13 +72,13 @@ public class ServiceTestUtil {
 
 		InitUtil.initWithSpring();
 
-		PortalInstances.addCompanyId(TestPropsValues.COMPANY_ID);
-
-		PrincipalThreadLocal.setName(TestPropsValues.USER_ID);
-
 		try {
+			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
+
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 			User user = UserLocalServiceUtil.getUserById(
-				TestPropsValues.USER_ID);
+				TestPropsValues.getUserId());
 
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user, true);
@@ -189,21 +186,13 @@ public class ServiceTestUtil {
 			return;
 		}
 
-		WebAppPool.put(
-			TestPropsValues.COMPANY_ID,	WebKeys.PORTLET_CATEGORY,
-			new PortletCategory());
-
 		for (int i = 0; i < 200; i++) {
 			String portletId = String.valueOf(i);
 
 			Portlet portlet = new PortletImpl();
 
 			portlet.setPortletId(portletId);
-			portlet.setCompanyId(TestPropsValues.COMPANY_ID);
 			portlet.setPortletModes(new HashMap<String, Set<String>>());
-
-			PortletLocalServiceUtil.deployRemotePortlet(
-				portlet, "category.test");
 
 			List<String> portletActions =
 				ResourceActionsUtil.getPortletResourceActions(portletId);

@@ -173,7 +173,7 @@
 					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBMessage.userId = ?)
+				(MBMessage.userId = ?) AND
 				(MBMessage.anonymous = ?)
 		]]>
 	</sql>
@@ -270,7 +270,7 @@
 					(MBThread.threadId = MBMessage.threadId)
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBMessage.userId = ?)
+				(MBMessage.userId = ?) AND
 				(MBMessage.anonymous = ?)
 			ORDER BY
 				MBThread.priority DESC,

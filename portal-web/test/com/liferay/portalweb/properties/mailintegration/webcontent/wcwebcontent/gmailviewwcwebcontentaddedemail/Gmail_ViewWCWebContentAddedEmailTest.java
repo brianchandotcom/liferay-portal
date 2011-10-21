@@ -28,16 +28,17 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(60000);
 
-				boolean SignedIn = selenium.isElementPresent("link=Sign out");
+				boolean SignedIn1 = selenium.isElementPresent("link=Sign out");
 
-				if (!SignedIn) {
+				if (!SignedIn1) {
 					label = 2;
 
 					continue;
@@ -49,12 +50,11 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
 				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
-						"link=Sign in as a different user");
+						"link=Sign out and sign in as a different user");
 
 				if (!signInAsADifferentUserPresent) {
 					label = 3;
@@ -62,15 +62,15 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Sign in as a different user",
-					RuntimeVariables.replace("Sign in as a different user"));
+				selenium.clickAt("link=Sign out and sign in as a different user",
+					RuntimeVariables.replace(
+						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -85,13 +85,10 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.testing.trunk"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
-				selenium.saveScreenShotAndSource();
 
 				boolean staySignedInChecked = selenium.isChecked(
 						"PersistentCookie");
@@ -104,21 +101,18 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
 			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -134,11 +128,11 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isPartialText("//td[3]/div/span",
 						"Administrator"));
 				selenium.clickAt("//td[3]/div/span",
 					RuntimeVariables.replace("Administrator"));
+				Thread.sleep(5000);
 				assertTrue(selenium.isPartialText("//h1/span[1]",
 						"Web Content: Article Added"));
 				assertTrue(selenium.isPartialText(
@@ -146,9 +140,9 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 						"Web Content Name was added."));
 				Thread.sleep(5000);
 
-				boolean signedIn2 = selenium.isElementPresent("link=Sign out");
+				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 
-				if (!signedIn2) {
+				if (!SignedIn2) {
 					label = 5;
 
 					continue;
@@ -163,7 +157,6 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

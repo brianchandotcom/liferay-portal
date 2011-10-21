@@ -316,6 +316,49 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutBranchException} if it could not be found.
+	*
+	* @param layoutSetBranchId the layout set branch ID
+	* @param plid the plid
+	* @param name the name
+	* @return the matching layout branch
+	* @throws com.liferay.portal.NoSuchLayoutBranchException if a matching layout branch could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutBranch findByL_P_N(
+		long layoutSetBranchId, long plid, java.lang.String name)
+		throws com.liferay.portal.NoSuchLayoutBranchException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param layoutSetBranchId the layout set branch ID
+	* @param plid the plid
+	* @param name the name
+	* @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutBranch fetchByL_P_N(
+		long layoutSetBranchId, long plid, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param layoutSetBranchId the layout set branch ID
+	* @param plid the plid
+	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutBranch fetchByL_P_N(
+		long layoutSetBranchId, long plid, java.lang.String name,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and master = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutBranchException} if it could not be found.
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -421,6 +464,19 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; from the database.
+	*
+	* @param layoutSetBranchId the layout set branch ID
+	* @param plid the plid
+	* @param name the name
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByL_P_N(long layoutSetBranchId, long plid,
+		java.lang.String name)
+		throws com.liferay.portal.NoSuchLayoutBranchException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes the layout branch where layoutSetBranchId = &#63; and plid = &#63; and master = &#63; from the database.
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -459,6 +515,19 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByL_P(long layoutSetBranchId, long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of layout branchs where layoutSetBranchId = &#63; and plid = &#63; and name = &#63;.
+	*
+	* @param layoutSetBranchId the layout set branch ID
+	* @param plid the plid
+	* @param name the name
+	* @return the number of matching layout branchs
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByL_P_N(long layoutSetBranchId, long plid,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

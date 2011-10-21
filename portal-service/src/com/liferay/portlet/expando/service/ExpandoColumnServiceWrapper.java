@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoColumnService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.expando.service;
  * @see       ExpandoColumnService
  * @generated
  */
-public class ExpandoColumnServiceWrapper implements ExpandoColumnService {
+public class ExpandoColumnServiceWrapper implements ExpandoColumnService,
+	ServiceWrapper<ExpandoColumnService> {
 	public ExpandoColumnServiceWrapper(
 		ExpandoColumnService expandoColumnService) {
 		_expandoColumnService = expandoColumnService;
@@ -73,12 +76,26 @@ public class ExpandoColumnServiceWrapper implements ExpandoColumnService {
 		return _expandoColumnService.updateTypeSettings(columnId, typeSettings);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public ExpandoColumnService getWrappedExpandoColumnService() {
 		return _expandoColumnService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedExpandoColumnService(
 		ExpandoColumnService expandoColumnService) {
+		_expandoColumnService = expandoColumnService;
+	}
+
+	public ExpandoColumnService getWrappedService() {
+		return _expandoColumnService;
+	}
+
+	public void setWrappedService(ExpandoColumnService expandoColumnService) {
 		_expandoColumnService = expandoColumnService;
 	}
 

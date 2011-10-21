@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.mail.model.Attachment;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,14 +34,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -57,17 +59,24 @@ import javax.mail.internet.InternetAddress;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class SubscriptionSender implements Serializable {
 
-	public void addAttachment(File attachment) {
-		if (attachment == null) {
+	public void addAttachment(File file) {
+		addAttachment(file, null);
+	}
+
+	public void addAttachment(File file, String fileName) {
+		if (file == null) {
 			return;
 		}
 
 		if (attachments == null) {
-			attachments = new ArrayList<File>();
+			attachments = new ArrayList<Attachment>();
 		}
+
+		Attachment attachment = new Attachment(file, fileName);
 
 		attachments.add(attachment);
 	}
@@ -334,7 +343,12 @@ public class SubscriptionSender implements Serializable {
 	protected boolean hasPermission(Subscription subscription, User user)
 		throws Exception {
 
-		return _PERMISSION;
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user, true);
+
+		return SubscriptionPermissionUtil.contains(
+			permissionChecker, subscription.getClassName(),
+			subscription.getClassPK());
 	}
 
 	protected void notifySubscriber(Subscription subscription)
@@ -383,28 +397,6 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			return;
-		}
-
-		if (groupId > 0) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (!GroupLocalServiceUtil.hasUserGroup(
-					user.getUserId(), groupId) &&
-				!group.isCompany() &&
-				(LayoutServiceUtil.getDefaultPlid(
-					groupId, scopeGroupId, false, portletId) ==
-						LayoutConstants.DEFAULT_PLID)) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Subscription " + subscription.getSubscriptionId() +
-							" is stale and will be deleted");
-				}
-
-				deleteSubscription(subscription);
-
-				return;
-			}
 		}
 
 		try {
@@ -559,8 +551,9 @@ public class SubscriptionSender implements Serializable {
 			from, to, processedSubject, processedBody, htmlFormat);
 
 		if (attachments != null) {
-			for (File attachment : attachments) {
-				mailMessage.addAttachment(attachment);
+			for (Attachment attachment : attachments) {
+				mailMessage.addAttachment(
+					attachment.getFile(), attachment.getFileName());
 			}
 		}
 
@@ -595,7 +588,7 @@ public class SubscriptionSender implements Serializable {
 		MailServiceUtil.sendEmail(mailMessage);
 	}
 
-	protected List<File> attachments;
+	protected List<Attachment> attachments = new ArrayList<Attachment>();
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
@@ -613,8 +606,6 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected long userId;
-
-	private static final boolean _PERMISSION = true;
 
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionSender.class);
 

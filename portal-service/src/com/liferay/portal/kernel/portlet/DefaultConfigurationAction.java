@@ -118,6 +118,10 @@ public class DefaultConfigurationAction
 
 			SessionMessages.add(
 				actionRequest, portletConfig.getPortletName() + ".doConfigure");
+
+			SessionMessages.add(
+				actionRequest, portletConfig.getPortletName() + ".doRefresh",
+				portletResource);
 		}
 	}
 

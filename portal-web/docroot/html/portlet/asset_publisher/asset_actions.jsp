@@ -48,6 +48,7 @@ if (showEditURL && (editPortletURL != null)) {
 
 	editPortletURLString = editPortletURL.toString();
 
+	editPortletURLString = HttpUtil.addParameter(editPortletURLString, "doAsGroupId", assetRenderer.getGroupId());
 	editPortletURLString = HttpUtil.addParameter(editPortletURLString, "refererPlid", plid);
 }
 

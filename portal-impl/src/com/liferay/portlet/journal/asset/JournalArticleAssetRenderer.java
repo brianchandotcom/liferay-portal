@@ -140,26 +140,26 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 			String noSuchEntryRedirect)
 		throws Exception {
 
+		if (Validator.isNull(_article.getLayoutUuid())) {
+			return null;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String urlViewInContext = null;
+		Group group = themeDisplay.getScopeGroup();
 
-		if (Validator.isNotNull(_article.getLayoutUuid())) {
-			Group group = themeDisplay.getScopeGroup();
-
-			if (group.getGroupId() != _article.getGroupId()) {
-				group = GroupLocalServiceUtil.getGroup(_article.getGroupId());
-			}
-
-			urlViewInContext =
-				PortalUtil.getGroupFriendlyURL(group, false, themeDisplay) +
-					JournalArticleConstants.CANONICAL_URL_SEPARATOR +
-						_article.getUrlTitle();
+		if (group.getGroupId() != _article.getGroupId()) {
+			group = GroupLocalServiceUtil.getGroup(_article.getGroupId());
 		}
 
-		return urlViewInContext;
+		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+			group, false, themeDisplay);
+
+		return groupFriendlyURL.concat(
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
+				_article.getUrlTitle());
 	}
 
 	public long getUserId() {

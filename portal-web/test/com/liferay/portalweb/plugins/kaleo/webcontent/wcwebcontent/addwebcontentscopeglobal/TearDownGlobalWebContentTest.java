@@ -30,7 +30,7 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,22 +45,20 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				selenium.clickAt("//div[1]/div/span/a",
+				selenium.clickAt("//strong/a/span",
 					RuntimeVariables.replace("Scope Selector"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
-						if (selenium.isVisible("//div[3]/div[2]/ul/li[1]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
 							break;
 						}
 					}
@@ -70,21 +68,22 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-				selenium.clickAt("//div[3]/div[2]/ul/li[1]/a",
-					RuntimeVariables.replace("Global"));
+				assertEquals(RuntimeVariables.replace("Global"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
 					try {
 						if (RuntimeVariables.replace("Global")
 												.equals(selenium.getText(
-										"//div[1]/div/span/a"))) {
+										"//strong/a/span"))) {
 							break;
 						}
 					}
@@ -94,13 +93,11 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Global"),
-					selenium.getText("//div[1]/div/span/a"));
+					selenium.getText("//strong/a/span"));
 				selenium.clickAt("link=Web Content",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean webContent1Present = selenium.isElementPresent(
 						"_15_rowIds");
@@ -111,13 +108,13 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -130,13 +127,13 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -149,13 +146,13 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -168,13 +165,13 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -187,13 +184,13 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_allRowIds", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_15_allRowIds']",
+					RuntimeVariables.replace(""));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

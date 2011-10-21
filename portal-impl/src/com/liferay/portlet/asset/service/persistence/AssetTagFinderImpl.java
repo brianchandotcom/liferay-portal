@@ -34,6 +34,9 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +47,9 @@ import java.util.List;
  */
 public class AssetTagFinderImpl
 	extends BasePersistenceImpl<AssetTag> implements AssetTagFinder {
+
+	public static String COUNT_BY_G_N =
+		AssetTagFinder.class.getName() + ".countByG_N";
 
 	public static String COUNT_BY_G_C_N =
 		AssetTagFinder.class.getName() + ".countByG_C_N";
@@ -66,6 +72,9 @@ public class AssetTagFinderImpl
 	public static String FIND_BY_G_N_P =
 		AssetTagFinder.class.getName() + ".findByG_N_P";
 
+	public static String FIND_BY_G_N_S_E =
+			AssetTagFinder.class.getName() + ".findByG_N_S_E";
+
 	public int countByG_C_N(long groupId, long classNameId, String name)
 		throws SystemException {
 
@@ -76,6 +85,18 @@ public class AssetTagFinderImpl
 		throws SystemException {
 
 		return doCountByG_N_P(groupId, name, tagProperties, false);
+	}
+
+	public int filterCountByG_N(long groupId, String name)
+		throws SystemException {
+
+		return doCountByG_N(groupId, name, true);
+	}
+
+	public int filterCountByG_C_N(long groupId, long classNameId, String name)
+		throws SystemException {
+
+		return doCountByG_C_N(groupId, classNameId, name, true);
 	}
 
 	public int filterCountByG_N_P(
@@ -198,6 +219,53 @@ public class AssetTagFinderImpl
 			groupId, name, tagProperties, start, end, obc, false);
 	}
 
+	public List<AssetTag> findByG_N_S_E(
+			long groupId, String name, int startPeriod, int endPeriod)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_N_S_E);
+			SQLQuery q = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(name);
+			qPos.add(startPeriod);
+			qPos.add(endPeriod);
+
+			List<AssetTag> assetTags = new ArrayList<AssetTag>();
+
+			Iterator<Object[]> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				AssetTag assetTag = new AssetTagImpl();
+
+				assetTag.setTagId(
+					GetterUtil.getLong((Serializable)array[0]));
+				assetTag.setName(GetterUtil.getString((Serializable)array[1]));
+				assetTag.setAssetCount(
+					GetterUtil.getInteger((Serializable)array[2]));
+
+				assetTags.add(assetTag);
+			}
+
+			return assetTags;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	protected String getJoin(String[] tagProperties) {
 		if (tagProperties.length == 0) {
 			return StringPool.BLANK;
@@ -218,6 +286,51 @@ public class AssetTagFinderImpl
 			}
 
 			return sb.toString();
+		}
+	}
+
+	protected int doCountByG_N(
+			long groupId, String name, boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_G_N);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(name);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 	}
 
@@ -249,7 +362,7 @@ public class AssetTagFinderImpl
 			qPos.add(name);
 			qPos.add(name);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -300,7 +413,7 @@ public class AssetTagFinderImpl
 			qPos.add(name);
 			qPos.add(name);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

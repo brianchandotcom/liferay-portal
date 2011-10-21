@@ -42,22 +42,7 @@ import javax.portlet.PortletPreferences;
  */
 public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
-	@Override
-	public PortletDataHandlerControl[] getExportControls() {
-		return new PortletDataHandlerControl[] {_structures, _templates};
-	}
-
-	@Override
-	public PortletDataHandlerControl[] getImportControls() {
-		return new PortletDataHandlerControl[] {_structures, _templates};
-	}
-
-	@Override
-	public boolean isAlwaysExportable() {
-		return _ALWAYS_EXPORTABLE;
-	}
-
-	protected static void exportStructure(
+	public static void exportStructure(
 			PortletDataContext portletDataContext, Element structuresElement,
 			DDMStructure structure)
 		throws Exception {
@@ -74,54 +59,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			structureElement, path, structure, _NAMESPACE);
 	}
 
-	protected static void exportTemplate(
-			PortletDataContext portletDataContext, Element templatesElement,
-			DDMTemplate template)
-		throws Exception {
-
-		String path = getTemplatePath(portletDataContext, template);
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		Element templateElement = templatesElement.addElement("template");
-
-		portletDataContext.addClassedModel(
-			templateElement, path, template, _NAMESPACE);
-	}
-
-	protected static String getStructurePath(
-		PortletDataContext portletDataContext, DDMStructure structure) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/structures/");
-		sb.append(structure.getStructureId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected static String getTemplatePath(
-		PortletDataContext portletDataContext, DDMTemplate template) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/templates/");
-		sb.append(template.getTemplateId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected static void importStructure(
+	public static void importStructure(
 			PortletDataContext portletDataContext, Element structureElement)
 		throws Exception {
 
@@ -175,6 +113,68 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			structure, importedStructure, _NAMESPACE);
 	}
 
+	@Override
+	public PortletDataHandlerControl[] getExportControls() {
+		return new PortletDataHandlerControl[] {_structures, _templates};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportControls() {
+		return new PortletDataHandlerControl[] {_structures, _templates};
+	}
+
+	@Override
+	public boolean isAlwaysExportable() {
+		return _ALWAYS_EXPORTABLE;
+	}
+
+	protected static void exportTemplate(
+			PortletDataContext portletDataContext, Element templatesElement,
+			DDMTemplate template)
+		throws Exception {
+
+		String path = getTemplatePath(portletDataContext, template);
+
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
+
+		Element templateElement = templatesElement.addElement("template");
+
+		portletDataContext.addClassedModel(
+			templateElement, path, template, _NAMESPACE);
+	}
+
+	protected static String getStructurePath(
+		PortletDataContext portletDataContext, DDMStructure structure) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.DYNAMIC_DATA_MAPPING));
+		sb.append("/structures/");
+		sb.append(structure.getStructureId());
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	protected static String getTemplatePath(
+		PortletDataContext portletDataContext, DDMTemplate template) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.DYNAMIC_DATA_MAPPING));
+		sb.append("/templates/");
+		sb.append(template.getTemplateId());
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
 	protected static void importTemplate(
 			PortletDataContext portletDataContext, Element templateElement)
 		throws Exception {
@@ -212,22 +212,23 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 					userId, portletDataContext.getScopeGroupId(), structureId,
 					template.getNameMap(), template.getDescriptionMap(),
-					template.getType(), template.getLanguage(),
-					template.getScript(), serviceContext);
+					template.getType(), template.getMode(),
+					template.getLanguage(), template.getScript(),
+					serviceContext);
 			}
 			else {
 				importedTemplate = DDMTemplateLocalServiceUtil.updateTemplate(
 					existingTemplate.getTemplateId(), template.getNameMap(),
 					template.getDescriptionMap(), template.getType(),
-					template.getLanguage(), template.getScript(),
-					serviceContext);
+					template.getMode(), template.getLanguage(),
+					template.getScript(), serviceContext);
 			}
 		}
 		else {
 			importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 				userId, portletDataContext.getScopeGroupId(), structureId,
 				template.getNameMap(), template.getDescriptionMap(),
-				template.getType(), template.getLanguage(),
+				template.getType(), template.getMode(), template.getLanguage(),
 				template.getScript(), serviceContext);
 		}
 
@@ -273,10 +274,10 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element structuresElement = rootElement.addElement("structures");
 
-		List<DDMStructure> structures = DDMStructureUtil.findByGroupId(
+		List<DDMStructure> ddmStructures = DDMStructureUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
 
-		for (DDMStructure structure : structures) {
+		for (DDMStructure structure : ddmStructures) {
 			if (portletDataContext.isWithinDateRange(
 					structure.getModifiedDate())) {
 

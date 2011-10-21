@@ -26,7 +26,7 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.open("/web/community-staging-community-quartz-staging/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,16 +41,14 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Community Quartz",
 			RuntimeVariables.replace("Page Staging Community Quartz"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,14 +64,13 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Schedule Publication to Live"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,10 +85,8 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@name='_88_description']",
 			RuntimeVariables.replace("Quartz Scheduler Event"));
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_88_schedulerStartDateMonth']",
 			RuntimeVariables.replace("December"));
 		selenium.select("//select[@id='_88_schedulerStartDateDay']",
@@ -106,7 +101,7 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("//span[1]/a", RuntimeVariables.replace("View All"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -123,7 +118,6 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Quartz Scheduler Event"),
 			selenium.getText(
 				"//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td"));

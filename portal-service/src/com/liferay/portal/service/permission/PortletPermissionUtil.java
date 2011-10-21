@@ -181,9 +181,8 @@ public class PortletPermissionUtil {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId, long plid,
-			Collection<Portlet> portlets, String actionId)
-		throws PortalException, SystemException {
+		PermissionChecker permissionChecker, long groupId, long plid,
+		Collection<Portlet> portlets, String actionId) {
 
 		return getPortletPermission().contains(
 			permissionChecker, groupId, plid, portlets, actionId);

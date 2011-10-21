@@ -40,7 +40,7 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copying web plugin for " + file.getPath());
+			_log.info("Copying hook plugin for " + file.getPath());
 		}
 
 		_autoDeployer.autoDeploy(file, context);

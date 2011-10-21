@@ -29,8 +29,8 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//form/div[2]/div/div/div/div/div[2]'))</td>
+	<td>storeElementPresent</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>usersPresent</td>
 </tr>
 <tr>
@@ -40,11 +40,11 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@id='usersAdminUsersPanel']/div[2]/div/div/table/tbody/tr/th/input</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
@@ -52,16 +52,6 @@
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to deactivate the selected users?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -109,12 +99,22 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>users2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${users2Present}</td>
+	<td>Users2NotPresent</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
@@ -124,14 +124,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>No users were found.</td>
+	<td>label</td>
+	<td>Users2NotPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>

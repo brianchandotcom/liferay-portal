@@ -73,15 +73,14 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.journal.model.JournalContentSearch"),
 			true);
-
-	public Class<?> getModelClass() {
-		return JournalContentSearch.class;
-	}
-
-	public String getModelClassName() {
-		return JournalContentSearch.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalContentSearch"),
+			true);
+	public static long ARTICLEID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long LAYOUTID_COLUMN_BITMASK = 4L;
+	public static long PORTLETID_COLUMN_BITMASK = 8L;
+	public static long PRIVATELAYOUT_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalContentSearch"));
 
@@ -104,6 +103,14 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return JournalContentSearch.class;
+	}
+
+	public String getModelClassName() {
+		return JournalContentSearch.class.getName();
+	}
+
 	public long getContentSearchId() {
 		return _contentSearchId;
 	}
@@ -117,6 +124,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -147,6 +156,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
+		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
+
 		if (!_setOriginalPrivateLayout) {
 			_setOriginalPrivateLayout = true;
 
@@ -165,6 +176,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setLayoutId(long layoutId) {
+		_columnBitmask |= LAYOUTID_COLUMN_BITMASK;
+
 		if (!_setOriginalLayoutId) {
 			_setOriginalLayoutId = true;
 
@@ -188,6 +201,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setPortletId(String portletId) {
+		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
+
 		if (_originalPortletId == null) {
 			_originalPortletId = _portletId;
 		}
@@ -209,6 +224,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	}
 
 	public void setArticleId(String articleId) {
+		_columnBitmask |= ARTICLEID_COLUMN_BITMASK;
+
 		if (_originalArticleId == null) {
 			_originalArticleId = _articleId;
 		}
@@ -220,20 +237,19 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		return GetterUtil.getString(_originalArticleId);
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public JournalContentSearch toEscapedModel() {
-		if (isEscapedModel()) {
-			return (JournalContentSearch)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (JournalContentSearch)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (JournalContentSearch)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -331,6 +347,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		journalContentSearchModelImpl._originalPortletId = journalContentSearchModelImpl._portletId;
 
 		journalContentSearchModelImpl._originalArticleId = journalContentSearchModelImpl._articleId;
+
+		journalContentSearchModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -450,5 +468,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private String _articleId;
 	private String _originalArticleId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private JournalContentSearch _escapedModelProxy;
 }

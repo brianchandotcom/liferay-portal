@@ -34,8 +34,7 @@ public class UnlockFolderDocumentTests extends BaseTests {
 		testSuite.addTestSuite(LockFolderDocumentTest.class);
 		testSuite.addTestSuite(UnlockFolderDocumentTest.class);
 		testSuite.addTestSuite(AssertUnlockFolderDocumentTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

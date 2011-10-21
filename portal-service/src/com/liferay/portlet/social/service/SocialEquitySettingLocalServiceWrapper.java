@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquitySettingLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialEquitySettingLocalServiceWrapper
-	implements SocialEquitySettingLocalService {
+	implements SocialEquitySettingLocalService,
+		ServiceWrapper<SocialEquitySettingLocalService> {
 	public SocialEquitySettingLocalServiceWrapper(
 		SocialEquitySettingLocalService socialEquitySettingLocalService) {
 		_socialEquitySettingLocalService = socialEquitySettingLocalService;
@@ -308,11 +311,26 @@ public class SocialEquitySettingLocalServiceWrapper
 			className, equityActionMappings);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialEquitySettingLocalService getWrappedSocialEquitySettingLocalService() {
 		return _socialEquitySettingLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialEquitySettingLocalService(
+		SocialEquitySettingLocalService socialEquitySettingLocalService) {
+		_socialEquitySettingLocalService = socialEquitySettingLocalService;
+	}
+
+	public SocialEquitySettingLocalService getWrappedService() {
+		return _socialEquitySettingLocalService;
+	}
+
+	public void setWrappedService(
 		SocialEquitySettingLocalService socialEquitySettingLocalService) {
 		_socialEquitySettingLocalService = socialEquitySettingLocalService;
 	}

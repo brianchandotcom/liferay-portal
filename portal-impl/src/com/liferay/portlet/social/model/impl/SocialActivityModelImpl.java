@@ -81,15 +81,18 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.social.model.SocialActivity"),
 			true);
-
-	public Class<?> getModelClass() {
-		return SocialActivity.class;
-	}
-
-	public String getModelClassName() {
-		return SocialActivity.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialActivity"),
+			true);
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static long GROUPID_COLUMN_BITMASK = 16L;
+	public static long MIRRORACTIVITYID_COLUMN_BITMASK = 32L;
+	public static long RECEIVERUSERID_COLUMN_BITMASK = 64L;
+	public static long TYPE_COLUMN_BITMASK = 128L;
+	public static long USERID_COLUMN_BITMASK = 256L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivity"));
 
@@ -112,6 +115,14 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return SocialActivity.class;
+	}
+
+	public String getModelClassName() {
+		return SocialActivity.class.getName();
+	}
+
 	public long getActivityId() {
 		return _activityId;
 	}
@@ -125,6 +136,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -143,7 +156,19 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -151,6 +176,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
 		if (!_setOriginalUserId) {
 			_setOriginalUserId = true;
 
@@ -177,6 +204,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setCreateDate(long createDate) {
+		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+
 		if (!_setOriginalCreateDate) {
 			_setOriginalCreateDate = true;
 
@@ -195,6 +224,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setMirrorActivityId(long mirrorActivityId) {
+		_columnBitmask |= MIRRORACTIVITYID_COLUMN_BITMASK;
+
 		if (!_setOriginalMirrorActivityId) {
 			_setOriginalMirrorActivityId = true;
 
@@ -221,6 +252,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
 
@@ -239,6 +272,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
 
@@ -257,6 +292,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
 		if (!_setOriginalType) {
 			_setOriginalType = true;
 
@@ -288,6 +325,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public void setReceiverUserId(long receiverUserId) {
+		_columnBitmask |= RECEIVERUSERID_COLUMN_BITMASK;
+
 		if (!_setOriginalReceiverUserId) {
 			_setOriginalReceiverUserId = true;
 
@@ -310,20 +349,19 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalReceiverUserId;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public SocialActivity toEscapedModel() {
-		if (isEscapedModel()) {
-			return (SocialActivity)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SocialActivity)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SocialActivity)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -422,6 +460,10 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		socialActivityModelImpl._setOriginalGroupId = false;
 
+		socialActivityModelImpl._originalCompanyId = socialActivityModelImpl._companyId;
+
+		socialActivityModelImpl._setOriginalCompanyId = false;
+
 		socialActivityModelImpl._originalUserId = socialActivityModelImpl._userId;
 
 		socialActivityModelImpl._setOriginalUserId = false;
@@ -449,6 +491,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		socialActivityModelImpl._originalReceiverUserId = socialActivityModelImpl._receiverUserId;
 
 		socialActivityModelImpl._setOriginalReceiverUserId = false;
+
+		socialActivityModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -583,6 +627,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;
@@ -608,5 +654,6 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	private long _originalReceiverUserId;
 	private boolean _setOriginalReceiverUserId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SocialActivity _escapedModelProxy;
 }

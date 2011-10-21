@@ -25,6 +25,7 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 
 import java.io.IOException;
@@ -292,7 +293,7 @@ public class ShoppingPreferences {
 	public String getEmailFromAddress(long companyId) throws SystemException {
 		return PortalUtil.getEmailFromAddress(
 			_portletPreferences, companyId,
-			PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS);
+			PropsValues.SHOPPING_EMAIL_FROM_ADDRESS);
 	}
 
 	public void setEmailFromAddress(String emailFromAddress)
@@ -304,7 +305,7 @@ public class ShoppingPreferences {
 	public String getEmailFromName(long companyId) throws SystemException {
 		return PortalUtil.getEmailFromAddress(
 			_portletPreferences, companyId,
-			PropsKeys.SHOPPING_EMAIL_FROM_NAME);
+			PropsValues.SHOPPING_EMAIL_FROM_NAME);
 	}
 
 	public void setEmailFromName(String emailFromName)

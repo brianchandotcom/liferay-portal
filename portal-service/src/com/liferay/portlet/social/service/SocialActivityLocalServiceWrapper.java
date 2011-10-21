@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialActivityLocalServiceWrapper
-	implements SocialActivityLocalService {
+	implements SocialActivityLocalService,
+		ServiceWrapper<SocialActivityLocalService> {
 	public SocialActivityLocalServiceWrapper(
 		SocialActivityLocalService socialActivityLocalService) {
 		_socialActivityLocalService = socialActivityLocalService;
@@ -284,19 +287,16 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social activity or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addActivity(
-		long userId, long groupId, java.util.Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addActivity(userId, groupId,
-			createDate, className, classPK, type, extraData, receiverUserId);
+		_socialActivityLocalService.addActivity(userId, groupId, createDate,
+			className, classPK, type, extraData, receiverUserId);
 	}
 
 	/**
@@ -310,18 +310,24 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social activity or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addActivity(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addActivity(userId, groupId,
-			className, classPK, type, extraData, receiverUserId);
+		_socialActivityLocalService.addActivity(userId, groupId, className,
+			classPK, type, extraData, receiverUserId);
+	}
+
+	public void addActivity(
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityLocalService.addActivity(activity, mirrorActivity);
 	}
 
 	/**
@@ -341,19 +347,15 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social stored activity, or the existing activity if it
-	matches the parameters, or <code>null</code> if an import is
-	processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addUniqueActivity(
-		long userId, long groupId, java.util.Date createDate,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addUniqueActivity(userId, groupId,
+		_socialActivityLocalService.addUniqueActivity(userId, groupId,
 			createDate, className, classPK, type, extraData, receiverUserId);
 	}
 
@@ -373,17 +375,15 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @return the social stored activity, or an existing activity that matches
-	the parameters, or <code>null</code> if an import is processing
 	* @throws PortalException if the user or group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.social.model.SocialActivity addUniqueActivity(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityLocalService.addUniqueActivity(userId, groupId,
+		_socialActivityLocalService.addUniqueActivity(userId, groupId,
 			className, classPK, type, extraData, receiverUserId);
 	}
 
@@ -391,26 +391,13 @@ public class SocialActivityLocalServiceWrapper
 	* Removes stored activities for the asset identified by the class name ID
 	* and class primary key.
 	*
-	* @param classNameId the target asset's class ID
-	* @param classPK the primary key of the target asset
 	* @throws SystemException if a system exception occurred
 	*/
-	public void deleteActivities(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialActivityLocalService.deleteActivities(classNameId, classPK);
-	}
-
-	/**
-	* Removes stored activities for the asset identified by the class name and
-	* class primary key.
-	*
-	* @param className the target asset's class name
-	* @param classPK the primary key of the target asset
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteActivities(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialActivityLocalService.deleteActivities(className, classPK);
+	public void deleteActivities(
+		com.liferay.portlet.asset.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityLocalService.deleteActivities(assetEntry);
 	}
 
 	/**
@@ -1075,11 +1062,26 @@ public class SocialActivityLocalServiceWrapper
 		return _socialActivityLocalService.getUserOrganizationsActivitiesCount(userId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialActivityLocalService getWrappedSocialActivityLocalService() {
 		return _socialActivityLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	public SocialActivityLocalService getWrappedService() {
+		return _socialActivityLocalService;
+	}
+
+	public void setWrappedService(
 		SocialActivityLocalService socialActivityLocalService) {
 		_socialActivityLocalService = socialActivityLocalService;
 	}

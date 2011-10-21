@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
+.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden, .aui-password-cell-editor-hidden {
+	display: none;
+}
+
 .portlet-dynamic-data-lists {
 	.lfr-spreadsheet-add-rows-buttons {
 		padding: 5px;
@@ -37,7 +41,7 @@
 	}
 
 	.yui3-datatable-liner {
-		height: 17px;
+		min-height: 17px;
 		padding: 1px 10px;
 	}
 
@@ -68,7 +72,7 @@
 	}
 
 	[class~="aui-form-validator-message"] {
-		clip: auto;
+		clip: rect(auto auto auto auto);
 		width: auto;
 	}
 }

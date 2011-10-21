@@ -28,12 +28,16 @@ else {
 	workflowHandlers = WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
 }
 
+List<WorkflowHandler> hiddenWorkflowHandlers = new ArrayList<WorkflowHandler>();
+
 Iterator<WorkflowHandler> itr = workflowHandlers.iterator();
 
 while (itr.hasNext()) {
 	WorkflowHandler workflowHandler = itr.next();
 
 	if (!workflowHandler.isVisible()) {
+		hiddenWorkflowHandlers.add(workflowHandler);
+
 		itr.remove();
 	}
 }
@@ -149,4 +153,45 @@ portletURL.setParameter("tabs1", "default-configuration");
 	<aui:button-row>
 		<aui:button type="submit" />
 	</aui:button-row>
+
+	<br />
+
+	<div class="portlet-msg-info">
+		<liferay-ui:message key="the-workflows-for-the-following-resources-can-be-configured-within-their-respective-portlets" />
+	</div>
+
+	<liferay-ui:search-container
+		iteratorURL="<%= portletURL %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.subList(hiddenWorkflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			total="<%= hiddenWorkflowHandlers.size() %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.workflow.WorkflowHandler"
+			modelVar="workflowHandler"
+		>
+			<liferay-ui:search-container-row-parameter
+				name="workflowHandler"
+				value="<%= workflowHandler %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				buffer="buffer"
+				name="resource"
+			>
+
+				<%
+				buffer.append("<img align=\"left\" border=\"0\" src=\"");
+				buffer.append(workflowHandler.getIconPath(liferayPortletRequest));
+				buffer.append("\" style=\"margin-right: 5px;\">");
+				buffer.append(ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()));
+				%>
+
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>

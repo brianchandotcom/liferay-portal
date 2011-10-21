@@ -208,6 +208,34 @@
 
 	.lfr-header-row {
 		margin-bottom: 0.5em;
+
+		.aui-icon-add, .aui-icon-copy, .aui-icon-delete, .aui-icon-export, .aui-icon-permissions, .aui-icon-search {
+			background: url() no-repeat 0 0;
+		}
+
+		.aui-icon-add {
+			background-image: url(<%= themeImagesPath %>/common/add.png);
+		}
+
+		.aui-icon-copy {
+			background-image: url(<%= themeImagesPath %>/common/copy.png);
+		}
+
+		.aui-icon-delete {
+			background-image: url(<%= themeImagesPath %>/common/delete.png);
+		}
+
+		.aui-icon-export {
+			background-image: url(<%= themeImagesPath %>/common/export.png);
+		}
+
+		.aui-icon-permissions {
+			background-image: url(<%= themeImagesPath %>/common/permissions.png);
+		}
+
+		.aui-icon-search {
+			background-image: url(<%= themeImagesPath %>/common/search.png);
+		}
 	}
 
 	.manage-view {
@@ -223,7 +251,6 @@
 	}
 
 	.manage-layout-content {
-		border-left: 1px solid #CCC;
 	}
 
 	.edit-layout-form, .edit-layoutset-form {

@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.v6_1_0.util;
 import java.sql.Types;
 
 /**
- * @author	  Juan Fernández
+ * @author	  Brian Wing Shun Chan
  * @generated
  */
 public class JournalTemplateTable {
@@ -45,7 +45,7 @@ public class JournalTemplateTable {
 		{"smallImageURL", Types.VARCHAR}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table JournalTemplate (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,templateId VARCHAR(75) null,structureId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,xsl TEXT null,langType VARCHAR(75) null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalTemplate (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,templateId VARCHAR(75) null,structureId VARCHAR(75) null,name STRING null,description STRING null,xsl TEXT null,langType VARCHAR(75) null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table JournalTemplate";
 

@@ -89,3 +89,8 @@
 		font-weight: bold;
 	}
 }
+
+.lfr-translation-manager-selector, .lfr-translation-manager-add-menu {
+	display: inline-block;
+	margin: 0.5em 0;
+}

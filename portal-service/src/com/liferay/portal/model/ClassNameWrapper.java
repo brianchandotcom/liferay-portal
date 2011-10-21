@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       ClassName
  * @generated
  */
-public class ClassNameWrapper implements ClassName {
+public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	public ClassNameWrapper(ClassName className) {
 		_className = className;
 	}
@@ -119,10 +119,6 @@ public class ClassNameWrapper implements ClassName {
 		return _className.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_className.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _className.getPrimaryKeyObj();
 	}
@@ -176,7 +172,14 @@ public class ClassNameWrapper implements ClassName {
 		_className.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public ClassName getWrappedClassName() {
+		return _className;
+	}
+
+	public ClassName getWrappedModel() {
 		return _className;
 	}
 

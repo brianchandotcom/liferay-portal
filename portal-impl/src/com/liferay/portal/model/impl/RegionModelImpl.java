@@ -78,6 +78,11 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Region"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Region"),
+			true);
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long COUNTRYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -113,14 +118,6 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return Region.class;
-	}
-
-	public String getModelClassName() {
-		return Region.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Region"));
 
@@ -143,6 +140,14 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return Region.class;
+	}
+
+	public String getModelClassName() {
+		return Region.class.getName();
+	}
+
 	@JSON
 	public long getRegionId() {
 		return _regionId;
@@ -158,7 +163,19 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setCountryId(long countryId) {
+		_columnBitmask |= COUNTRYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCountryId) {
+			_setOriginalCountryId = true;
+
+			_originalCountryId = _countryId;
+		}
+
 		_countryId = countryId;
+	}
+
+	public long getOriginalCountryId() {
+		return _originalCountryId;
 	}
 
 	@JSON
@@ -199,23 +216,34 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
 	public Region toEscapedModel() {
-		if (isEscapedModel()) {
-			return (Region)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (Region)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (Region)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -292,6 +320,17 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public void resetOriginalValues() {
+		RegionModelImpl regionModelImpl = this;
+
+		regionModelImpl._originalCountryId = regionModelImpl._countryId;
+
+		regionModelImpl._setOriginalCountryId = false;
+
+		regionModelImpl._originalActive = regionModelImpl._active;
+
+		regionModelImpl._setOriginalActive = false;
+
+		regionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -381,9 +420,14 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		};
 	private long _regionId;
 	private long _countryId;
+	private long _originalCountryId;
+	private boolean _setOriginalCountryId;
 	private String _regionCode;
 	private String _name;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private Region _escapedModelProxy;
 }

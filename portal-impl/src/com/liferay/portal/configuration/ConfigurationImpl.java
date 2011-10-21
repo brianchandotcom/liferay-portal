@@ -32,6 +32,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 
@@ -89,18 +90,27 @@ public class ConfigurationImpl
 					String fileName = StringUtil.replace(
 						url.getFile(), "%20", StringPool.SPACE);
 
-					Writer writer =	new FileWriter(fileName, true);
+					File file = new File(fileName);
 
-					StringBundler sb = new StringBundler(4);
+					if (file.exists() && file.canWrite()) {
+						Writer writer = new FileWriter(file, true);
 
-					sb.append(StringPool.OS_EOL);
-					sb.append(StringPool.OS_EOL);
-					sb.append("base.path=");
-					sb.append(basePath);
+						StringBundler sb = new StringBundler(4);
 
-					writer.write(sb.toString());
+						sb.append(StringPool.OS_EOL);
+						sb.append(StringPool.OS_EOL);
+						sb.append("base.path=");
+						sb.append(basePath);
 
-					writer.close();
+						writer.write(sb.toString());
+
+						writer.close();
+					}
+					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Unable to write " + file);
+						}
+					}
 				}
 			}
 		}

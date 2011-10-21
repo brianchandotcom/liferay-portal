@@ -48,6 +48,14 @@
 		</delete>
 
 		<if>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<then>
+				<delete dir="${app.server.instance.dir}/applications/liferay-portal" />
+				<delete dir="${app.server.instance.dir}/applications/tunnel-web" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<delete failonerror="false">
@@ -221,6 +229,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 							<replacetoken><![CDATA[<jvm-options>-Xmx512m</jvm-options>]]></replacetoken>
 							<replacevalue><![CDATA[<jvm-options>-Dfile.encoding=UTF8</jvm-options>
 	<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
+	<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
 	<jvm-options>-Duser.timezone=GMT</jvm-options>
 	<jvm-options>-Xmx1024m</jvm-options>
 	<jvm-options>-XX:MaxPermSize=256m</jvm-options>]]></replacevalue>
@@ -355,6 +364,15 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 					</then>
 				</if>
 
+				<replace file="${app.server.instance.dir}/configuration/standalone.xml">
+					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">]]></replacetoken>
+					<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">
+						<configuration>
+							<jsp-configuration development="true" />
+						</configuration>]]>
+					</replacevalue>
+				</replace>
+
 				<if>
 					<not>
 						<available file="${app.server.lib.global.dir}/module.xml" />
@@ -390,8 +408,8 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 						/>
 
 						<replace file="${app.server.jetty.bin.dir}/run.bat">
-							<replacetoken>set "JAVA_OPTS=</replacetoken>
-							<replacevalue expandProperties="true">set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date}</replacevalue>
+							<replacetoken>set "JAVA_OPTS=-D</replacetoken>
+							<replacevalue expandProperties="true">set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
 					</then>
 				</if>
@@ -412,8 +430,8 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 						/>
 
 						<replace file="${app.server.jetty.bin.dir}/run.sh">
-							<replacetoken>export JAVA_OPTS="</replacetoken>
-							<replacevalue expandProperties="true">export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date}</replacevalue>
+							<replacetoken>export JAVA_OPTS="-D</replacetoken>
+							<replacevalue expandProperties="true">export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
 					</then>
 				</if>
@@ -577,7 +595,7 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 				<delete>
 					<fileset
 						dir="${app.server.lib.portal.dir}"
-						includes="osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar"
+						includes="equinox.jar,osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar"
 					/>
 				</delete>
 			</then>

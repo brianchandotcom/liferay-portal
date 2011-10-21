@@ -16,40 +16,40 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %>
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
-<%@ page import="com.liferay.portal.kernel.repository.model.FileVersion" %>
-<%@ page import="com.liferay.portal.kernel.repository.model.Folder" %>
-<%@ page import="com.liferay.portal.kernel.search.Document" %>
-<%@ page import="com.liferay.portal.kernel.search.Hits" %>
-<%@ page import="com.liferay.portal.kernel.search.Indexer" %>
-<%@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %>
-<%@ page import="com.liferay.portal.kernel.search.SearchContext" %>
-<%@ page import="com.liferay.portal.kernel.search.SearchContextFactory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %>
-<%@ page import="com.liferay.portlet.asset.util.AssetUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %>
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
+<%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@
+page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
+page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portal.kernel.search.Hits" %><%@
+page import="com.liferay.portal.kernel.search.Indexer" %><%@
+page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.search.SearchContext" %><%@
+page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
+page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
+page import="com.liferay.portlet.asset.model.AssetTag" %><%@
+page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
+page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %><%@
+page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
+page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %><%@
+page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %><%@
+page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
@@ -156,16 +156,4 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	</c:otherwise>
 </c:choose>
 
-<%!
-private static final String _getFileEntryImage(FileEntry fileEntry, ThemeDisplay themeDisplay) {
-	StringBundler sb = new StringBundler(5);
-
-	sb.append("<img style=\"border-width: 0; text-align: left;\" src=\"");
-	sb.append(themeDisplay.getPathThemeImages());
-	sb.append("/file_system/small/");
-	sb.append(fileEntry.getIcon());
-	sb.append(".png\">");
-
-	return sb.toString();
-}
-%>
+<%@ include file="/html/portlet/document_library/util.jspf" %>

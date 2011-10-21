@@ -34,12 +34,15 @@ import java.util.Map;
 public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 
 	public MDRRule addRule(
-			long groupId, long ruleGroupId, Map<Locale, String> nameMap,
+			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userPersistence.findByPrimaryKey(
+			serviceContext.getUserId());
+		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
+			ruleGroupId);
 		Date now = new Date();
 
 		long ruleId = counterLocalService.increment();
@@ -47,7 +50,7 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		MDRRule rule = mdrRulePersistence.create(ruleId);
 
 		rule.setUuid(serviceContext.getUuid());
-		rule.setGroupId(groupId);
+		rule.setGroupId(ruleGroup.getGroupId());
 		rule.setCompanyId(serviceContext.getCompanyId());
 		rule.setCreateDate(serviceContext.getCreateDate(now));
 		rule.setModifiedDate(serviceContext.getModifiedDate(now));
@@ -63,14 +66,14 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 	}
 
 	public MDRRule addRule(
-			long groupId, long ruleGroupId, Map<Locale, String> nameMap,
+			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return addRule(
-			groupId, ruleGroupId, nameMap, descriptionMap, type,
+			ruleGroupId, nameMap, descriptionMap, type,
 			typeSettingsProperties.toString(), serviceContext);
 	}
 
@@ -91,9 +94,9 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 			ruleGroupId);
 
 		MDRRule newRule = addRule(
-			ruleGroup.getGroupId(), ruleGroup.getRuleGroupId(),
-			rule.getNameMap(), rule.getDescriptionMap(), rule.getType(),
-			rule.getTypeSettings(), serviceContext);
+			ruleGroup.getRuleGroupId(), rule.getNameMap(),
+			rule.getDescriptionMap(), rule.getType(), rule.getTypeSettings(),
+			serviceContext);
 
 		return newRule;
 	}

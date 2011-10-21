@@ -25,7 +25,7 @@ public class ViewCategoryTest extends BaseTestCase {
 		selenium.open("/web/shopping-category-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,11 +40,9 @@ public class ViewCategoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Shopping Category Page",
 			RuntimeVariables.replace("Shopping Category Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Category Test\nThis is a category test."),
 			selenium.getText("//td[1]/a"));

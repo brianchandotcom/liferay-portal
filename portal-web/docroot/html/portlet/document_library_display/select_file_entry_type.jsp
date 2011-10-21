@@ -31,7 +31,7 @@ basicDocumentType.setName(LanguageUtil.get(pageContext, "basic-document"));
 
 fileEntryTypes.add(basicDocumentType);
 
-fileEntryTypes.addAll(DLFileEntryTypeServiceUtil.getFileEntryTypes(scopeGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+fileEntryTypes.addAll(DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay), QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 %>
 
 <liferay-ui:search-container

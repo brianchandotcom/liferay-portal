@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link PollsChoice}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.polls.model;
  * @see       PollsChoice
  * @generated
  */
-public class PollsChoiceWrapper implements PollsChoice {
+public class PollsChoiceWrapper implements PollsChoice,
+	ModelWrapper<PollsChoice> {
 	public PollsChoiceWrapper(PollsChoice pollsChoice) {
 		_pollsChoice = pollsChoice;
 	}
@@ -179,6 +182,14 @@ public class PollsChoiceWrapper implements PollsChoice {
 		return _pollsChoice.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _pollsChoice.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _pollsChoice.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this polls choice.
 	*
@@ -218,6 +229,10 @@ public class PollsChoiceWrapper implements PollsChoice {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_pollsChoice.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_pollsChoice.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -260,10 +275,6 @@ public class PollsChoiceWrapper implements PollsChoice {
 
 	public boolean isEscapedModel() {
 		return _pollsChoice.isEscapedModel();
-	}
-
-	public void setEscapedModel(boolean escapedModel) {
-		_pollsChoice.setEscapedModel(escapedModel);
 	}
 
 	public java.io.Serializable getPrimaryKeyObj() {
@@ -325,7 +336,14 @@ public class PollsChoiceWrapper implements PollsChoice {
 		return _pollsChoice.getVotesCount();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PollsChoice getWrappedPollsChoice() {
+		return _pollsChoice;
+	}
+
+	public PollsChoice getWrappedModel() {
 		return _pollsChoice;
 	}
 

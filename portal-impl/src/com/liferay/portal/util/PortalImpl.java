@@ -154,6 +154,7 @@ import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseImpl;
@@ -1086,7 +1087,7 @@ public class PortalImpl implements Portal {
 			portletId = PortletKeys.DOCUMENT_LIBRARY;
 		}
 		else if (className.startsWith("com.liferay.portlet.imagegallery")) {
-			portletId = PortletKeys.IMAGE_GALLERY_DISPLAY;
+			portletId = PortletKeys.MEDIA_GALLERY_DISPLAY;
 		}
 		else if (className.startsWith("com.liferay.portlet.journal")) {
 			portletId = PortletKeys.JOURNAL;
@@ -1236,6 +1237,38 @@ public class PortalImpl implements Portal {
 			themeDisplay.getCompanyId(), category);
 
 		return filterControlPanelPortlets(portlets, category, themeDisplay);
+	}
+
+	public String getCreateAccountURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
+			PortletURL createAccountURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+				PortletRequest.RENDER_PHASE);
+
+			createAccountURL.setWindowState(WindowState.MAXIMIZED);
+			createAccountURL.setPortletMode(PortletMode.VIEW);
+
+			createAccountURL.setParameter("saveLastPath", "0");
+			createAccountURL.setParameter(
+				"struts_action", "/login/create_account");
+
+			return createAccountURL.toString();
+		}
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				themeDisplay.getScopeGroupId(), false,
+				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
+
+			return PortalUtil.getLayoutURL(layout, themeDisplay);
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getCurrentCompleteURL(HttpServletRequest request) {
@@ -1444,10 +1477,8 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getEmailFromAddress(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException {
-
-		String defaultValue = PropsUtil.get(key);
 
 		if (Validator.isNull(defaultValue)) {
 			defaultValue = PrefsPropsUtil.getString(
@@ -1458,10 +1489,8 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getEmailFromName(
-			PortletPreferences preferences, long companyId, String key)
+			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException {
-
-		String defaultValue = PropsUtil.get(key);
 
 		if (Validator.isNull(defaultValue)) {
 			defaultValue = PrefsPropsUtil.getString(
@@ -3997,14 +4026,8 @@ public class PortalImpl implements Portal {
 			Group group = layout.getGroup();
 
 			if (group.isSite()) {
-				long scopeGroupId = themeDisplay.getScopeGroupId();
-
-				if (GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.MANAGE_LAYOUTS) ||
-					GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.PUBLISH_STAGING) ||
+				if (LayoutPermissionUtil.contains(
+						permissionChecker, layout, ActionKeys.CUSTOMIZE) ||
 					LayoutPermissionUtil.contains(
 						permissionChecker, layout, ActionKeys.UPDATE)) {
 
@@ -4041,8 +4064,7 @@ public class PortalImpl implements Portal {
 				long organizationId = group.getOrganizationId();
 
 				if (OrganizationPermissionUtil.contains(
-						permissionChecker, organizationId,
-						ActionKeys.MANAGE_LAYOUTS)) {
+						permissionChecker, organizationId, ActionKeys.UPDATE)) {
 
 					return true;
 				}
@@ -4051,13 +4073,7 @@ public class PortalImpl implements Portal {
 				long scopeGroupId = themeDisplay.getScopeGroupId();
 
 				if (GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.MANAGE_LAYOUTS) ||
-					GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId,
-						ActionKeys.PUBLISH_STAGING) ||
-					LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.UPDATE)) {
+						permissionChecker, scopeGroupId, ActionKeys.UPDATE)) {
 
 					return true;
 				}
@@ -4947,6 +4963,21 @@ public class PortalImpl implements Portal {
 
 			return portletMode;
 		}
+	}
+
+	public String updateRedirect(
+		String redirect, String oldPath, String newPath) {
+
+		if (Validator.isNotNull(redirect) && (oldPath != null) &&
+			!oldPath.equals(newPath)) {
+
+			redirect = StringUtil.replace(redirect, oldPath, newPath);
+			redirect = StringUtil.replace(
+				redirect, HttpUtil.encodeURL(oldPath),
+				HttpUtil.encodeURL(newPath));
+		}
+
+		return redirect;
 	}
 
 	public WindowState updateWindowState(

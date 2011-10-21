@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.expando.model.ExpandoTable;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing ExpandoTable in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.expando.model.ExpandoTable;
  * @see ExpandoTable
  * @generated
  */
-public class ExpandoTableCacheModel implements CacheModel<ExpandoTable> {
+public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

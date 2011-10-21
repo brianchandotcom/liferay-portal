@@ -2073,7 +2073,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		List<File> images = new ArrayList<File>(resourcePaths.size());
+		List<File> imageFiles = new ArrayList<File>(resourcePaths.size());
 
 		for (String curResourcePath : resourcePaths) {
 			if (curResourcePath.endsWith(StringPool.SLASH)) {
@@ -2084,7 +2084,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					servletContext, curResourcePath);
 
 				if (realPath != null) {
-					images.add(new File(realPath));
+					File imageFile = new File(realPath);
+
+					imageFiles.add(imageFile);
 				}
 				else {
 					if (ServerDetector.isTomcat()) {
@@ -2107,8 +2109,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			servletContext, StringPool.SLASH);
 
 		Properties spriteProperties = SpriteProcessorUtil.generate(
-			images, spriteFileName, spritePropertiesFileName,
-			spritePropertiesRootPath, 16, 16, 10240);
+			servletContext, imageFiles, spriteFileName,
+			spritePropertiesFileName, spritePropertiesRootPath, 16, 16, 10240);
 
 		if (spriteProperties == null) {
 			return;

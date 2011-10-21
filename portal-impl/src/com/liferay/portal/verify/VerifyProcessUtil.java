@@ -36,8 +36,6 @@ public class VerifyProcessUtil {
 			boolean ranUpgradeProcess, boolean verified)
 		throws VerifyException {
 
-		boolean ranVerifyProcess = false;
-
 		int verifyFrequency = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VERIFY_FREQUENCY));
 
@@ -45,41 +43,57 @@ public class VerifyProcessUtil {
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
 			(ranUpgradeProcess)) {
 
-			if (ranUpgradeProcess && PropsValues.INDEX_ON_UPGRADE) {
-				PropsUtil.set(
-					PropsKeys.INDEX_ON_STARTUP, Boolean.TRUE.toString());
+			return _verifyProcess(ranUpgradeProcess);
+		}
 
-				PropsValues.INDEX_ON_STARTUP = true;
-			}
+		return false;
+	}
 
+	private static boolean _verifyProcess(boolean ranUpgradeProcess)
+		throws VerifyException {
+
+		boolean ranVerifyProcess = false;
+
+		boolean tempIndexOnStartUp = PropsValues.INDEX_ON_STARTUP;
+
+		if (ranUpgradeProcess && PropsValues.INDEX_ON_UPGRADE) {
+			PropsUtil.set(PropsKeys.INDEX_ON_STARTUP, Boolean.TRUE.toString());
+
+			PropsValues.INDEX_ON_STARTUP = true;
+		}
+
+		boolean tempIndexReadOnly = SearchEngineUtil.isIndexReadOnly();
+
+		SearchEngineUtil.setIndexReadOnly(true);
+
+		BatchSessionUtil.setEnabled(true);
+		NotificationThreadLocal.setEnabled(false);
+		WorkflowThreadLocal.setEnabled(false);
+
+		try {
 			String[] verifyProcessClassNames = PropsUtil.getArray(
 				PropsKeys.VERIFY_PROCESSES);
 
-			BatchSessionUtil.setEnabled(true);
-			NotificationThreadLocal.setEnabled(false);
-			WorkflowThreadLocal.setEnabled(false);
+			for (String verifyProcessClassName : verifyProcessClassNames) {
+				boolean tempRanVerifyProcess = _verifyProcess(
+					verifyProcessClassName);
 
-			boolean tempIndexReadOnly = SearchEngineUtil.isIndexReadOnly();
-
-			SearchEngineUtil.setIndexReadOnly(true);
-
-			try {
-				for (String verifyProcessClassName : verifyProcessClassNames) {
-					boolean tempRanVerifyProcess = _verifyProcess(
-						verifyProcessClassName);
-
-					if (tempRanVerifyProcess) {
-						ranVerifyProcess = true;
-					}
+				if (tempRanVerifyProcess) {
+					ranVerifyProcess = true;
 				}
 			}
-			finally {
-				BatchSessionUtil.setEnabled(false);
-				NotificationThreadLocal.setEnabled(true);
-				WorkflowThreadLocal.setEnabled(true);
+		}
+		finally {
+			PropsUtil.set(
+				PropsKeys.INDEX_ON_STARTUP, String.valueOf(tempIndexOnStartUp));
 
-				SearchEngineUtil.setIndexReadOnly(tempIndexReadOnly);
-			}
+			PropsValues.INDEX_ON_STARTUP = tempIndexOnStartUp;
+
+			SearchEngineUtil.setIndexReadOnly(tempIndexReadOnly);
+
+			BatchSessionUtil.setEnabled(false);
+			NotificationThreadLocal.setEnabled(true);
+			WorkflowThreadLocal.setEnabled(true);
 		}
 
 		return ranVerifyProcess;

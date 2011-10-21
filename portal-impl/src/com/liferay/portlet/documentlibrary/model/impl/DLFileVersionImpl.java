@@ -18,25 +18,34 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Image;
-import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Jorge Ferrer
+ * @author Alexander Chow
  */
 public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	public DLFileVersionImpl() {
+	}
+
+	public InputStream getContentStream(boolean incrementCounter)
+		throws PortalException, SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileAsStream(
+			PrincipalThreadLocal.getUserId(), getFileEntryId(), getVersion(),
+			incrementCounter);
 	}
 
 	@Override
@@ -78,38 +87,28 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		return DLFileEntryLocalServiceUtil.getFileEntry(getFileEntryId());
 	}
 
-	public DLFolder getFolder() throws PortalException, SystemException {
-		DLFileEntry dlFileEntry = getFileEntry();
+	public DLFolder getFolder() {
+		DLFolder dlFolder = null;
 
-		return dlFileEntry.getFolder();
-	}
+		if (getFolderId() > 0) {
+			try {
+				dlFolder = DLFolderLocalServiceUtil.getFolder(getFolderId());
+			}
+			catch (Exception e) {
+				dlFolder = new DLFolderImpl();
 
-	public long getFolderId() throws PortalException, SystemException {
-		DLFileEntry dlFileEntry = getFileEntry();
+				_log.error(e, e);
+			}
+		}
+		else {
+			dlFolder = new DLFolderImpl();
+		}
 
-		return dlFileEntry.getFolderId();
+		return dlFolder;
 	}
 
 	public String getIcon() {
 		return DLUtil.getFileIcon(getExtension());
-	}
-
-	public String getImageType() {
-		if (_imageType == null) {
-			try {
-				Image largeImage = ImageLocalServiceUtil.getImage(
-					getLargeImageId());
-
-				_imageType = largeImage.getType();
-			}
-			catch (Exception e) {
-				_imageType = StringPool.BLANK;
-
-				_log.error(e);
-			}
-		}
-
-		return _imageType;
 	}
 
 	@Override
@@ -131,6 +130,5 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	private ExpandoBridge _expandoBridge;
 	private UnicodeProperties _extraSettingsProperties;
-	private String _imageType;
 
 }

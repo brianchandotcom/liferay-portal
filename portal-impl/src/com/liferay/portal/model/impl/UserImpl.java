@@ -213,6 +213,12 @@ public class UserImpl extends UserBaseImpl {
 		return GroupLocalServiceUtil.getUserGroup(getCompanyId(), getUserId());
 	}
 
+	public long getGroupId() throws PortalException, SystemException {
+		Group group = getGroup();
+
+		return group.getGroupId();
+	}
+
 	public long[] getGroupIds() throws PortalException, SystemException {
 		List<Group> groups = getGroups();
 

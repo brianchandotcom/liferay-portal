@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link BlogsEntryService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.blogs.service;
  * @see       BlogsEntryService
  * @generated
  */
-public class BlogsEntryServiceWrapper implements BlogsEntryService {
+public class BlogsEntryServiceWrapper implements BlogsEntryService,
+	ServiceWrapper<BlogsEntryService> {
 	public BlogsEntryServiceWrapper(BlogsEntryService blogsEntryService) {
 		_blogsEntryService = blogsEntryService;
 	}
@@ -169,11 +172,25 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService {
 			smallImageFileName, smallImageInputStream, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public BlogsEntryService getWrappedBlogsEntryService() {
 		return _blogsEntryService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedBlogsEntryService(BlogsEntryService blogsEntryService) {
+		_blogsEntryService = blogsEntryService;
+	}
+
+	public BlogsEntryService getWrappedService() {
+		return _blogsEntryService;
+	}
+
+	public void setWrappedService(BlogsEntryService blogsEntryService) {
 		_blogsEntryService = blogsEntryService;
 	}
 

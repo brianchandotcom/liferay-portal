@@ -14,9 +14,10 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.JavaProps;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsUtil;
 
@@ -119,9 +120,8 @@ public class LiferayFileItem extends DiskFileItem {
 
 		File tempFile = new File(_repository, tempFileName);
 
-		if (!JavaProps.hasSunBug6291034()) {
-			tempFile.deleteOnExit();
-		}
+		FinalizeManager.register(
+			tempFile, new DeleteFileFinalizeAction(tempFile.getAbsolutePath()));
 
 		return tempFile;
 	}

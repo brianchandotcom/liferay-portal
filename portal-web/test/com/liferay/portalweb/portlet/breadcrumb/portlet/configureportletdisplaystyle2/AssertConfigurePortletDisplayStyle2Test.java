@@ -26,7 +26,7 @@ public class AssertConfigurePortletDisplayStyle2Test extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,10 +41,8 @@ public class AssertConfigurePortletDisplayStyle2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.click(RuntimeVariables.replace("link=Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
 				"//div/ul[@class='breadcrumbs breadcrumbs-vertical lfr-component']/li[1]/span/a"));

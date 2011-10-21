@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryType}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFileEntryType
  * @generated
  */
-public class DLFileEntryTypeWrapper implements DLFileEntryType {
+public class DLFileEntryTypeWrapper implements DLFileEntryType,
+	ModelWrapper<DLFileEntryType> {
 	public DLFileEntryTypeWrapper(DLFileEntryType dlFileEntryType) {
 		_dlFileEntryType = dlFileEntryType;
 	}
@@ -52,6 +55,24 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_dlFileEntryType.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this document library file entry type.
+	*
+	* @return the uuid of this document library file entry type
+	*/
+	public java.lang.String getUuid() {
+		return _dlFileEntryType.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this document library file entry type.
+	*
+	* @param uuid the uuid of this document library file entry type
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_dlFileEntryType.setUuid(uuid);
 	}
 
 	/**
@@ -256,10 +277,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 		return _dlFileEntryType.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFileEntryType.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFileEntryType.getPrimaryKeyObj();
 	}
@@ -319,7 +336,14 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType {
 		return _dlFileEntryType.getDDMStructures();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFileEntryType getWrappedDLFileEntryType() {
+		return _dlFileEntryType;
+	}
+
+	public DLFileEntryType getWrappedModel() {
 		return _dlFileEntryType;
 	}
 

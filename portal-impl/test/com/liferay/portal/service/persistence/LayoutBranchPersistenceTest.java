@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.impl.LayoutBranchModelImpl;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
@@ -224,6 +225,13 @@ public class LayoutBranchPersistenceTest extends BasePersistenceTestCase {
 		_persistence.clearCache();
 
 		LayoutBranchModelImpl existingLayoutBranchModelImpl = (LayoutBranchModelImpl)_persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
+
+		assertEquals(existingLayoutBranchModelImpl.getLayoutSetBranchId(),
+			existingLayoutBranchModelImpl.getOriginalLayoutSetBranchId());
+		assertEquals(existingLayoutBranchModelImpl.getPlid(),
+			existingLayoutBranchModelImpl.getOriginalPlid());
+		assertTrue(Validator.equals(existingLayoutBranchModelImpl.getName(),
+				existingLayoutBranchModelImpl.getOriginalName()));
 
 		assertEquals(existingLayoutBranchModelImpl.getLayoutSetBranchId(),
 			existingLayoutBranchModelImpl.getOriginalLayoutSetBranchId());

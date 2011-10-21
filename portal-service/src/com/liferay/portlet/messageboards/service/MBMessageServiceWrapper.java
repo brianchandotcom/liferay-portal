@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MBMessageService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.messageboards.service;
  * @see       MBMessageService
  * @generated
  */
-public class MBMessageServiceWrapper implements MBMessageService {
+public class MBMessageServiceWrapper implements MBMessageService,
+	ServiceWrapper<MBMessageService> {
 	public MBMessageServiceWrapper(MBMessageService mbMessageService) {
 		_mbMessageService = mbMessageService;
 	}
@@ -164,6 +167,13 @@ public class MBMessageServiceWrapper implements MBMessageService {
 			threadView, includePrevAndNext);
 	}
 
+	public int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageService.getThreadAnswersCount(groupId, categoryId,
+			threadId);
+	}
+
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getThreadMessages(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -233,11 +243,25 @@ public class MBMessageServiceWrapper implements MBMessageService {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MBMessageService getWrappedMBMessageService() {
 		return _mbMessageService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	public MBMessageService getWrappedService() {
+		return _mbMessageService;
+	}
+
+	public void setWrappedService(MBMessageService mbMessageService) {
 		_mbMessageService = mbMessageService;
 	}
 

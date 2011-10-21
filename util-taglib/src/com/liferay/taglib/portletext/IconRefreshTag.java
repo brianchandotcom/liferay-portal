@@ -40,6 +40,13 @@ public class IconRefreshTag extends IconTag {
 		setCssClass("portlet-refresh portlet-refresh-icon");
 		setImage("../portlet/refresh");
 		setMessage("refresh");
+
+		String onClick =
+			"Liferay.Portlet.refresh('#p_p_id_".concat(
+				portletDisplay.getId()).concat("_'); return false;");
+
+		setOnClick(onClick);
+
 		setToolTip(false);
 		setUrl(portletDisplay.getURLRefresh());
 

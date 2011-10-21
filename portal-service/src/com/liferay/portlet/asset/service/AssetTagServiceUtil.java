@@ -121,6 +121,17 @@ public class AssetTagServiceUtil {
 		return getService().getTags(className, classPK);
 	}
 
+	public static int getTagsCount(long groupId, long classNameId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTagsCount(groupId, classNameId, name);
+	}
+
+	public static int getTagsCount(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTagsCount(groupId, name);
+	}
+
 	public static int getTagsCount(long groupId, java.lang.String name,
 		java.lang.String[] tagProperties)
 		throws com.liferay.portal.kernel.exception.SystemException {

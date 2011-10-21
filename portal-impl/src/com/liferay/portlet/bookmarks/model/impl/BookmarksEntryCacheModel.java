@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see BookmarksEntry
  * @generated
  */
-public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry> {
+public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);

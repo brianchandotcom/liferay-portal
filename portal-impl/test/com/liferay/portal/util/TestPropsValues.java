@@ -16,15 +16,17 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.List;
@@ -32,65 +34,86 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class TestPropsValues {
 
-	public static final long COMPANY_ID;
-
 	public static final String COMPANY_WEB_ID;
 
-	public static final long LAYOUT_PLID;
-
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
-
-	public static final long USER_ID;
 
 	public static final String USER_PASSWORD =
 		TestPropsUtil.get("user.password");
 
+	public static long getCompanyId() throws Exception {
+		if (_companyId > 0) {
+			return _companyId;
+		}
+
+		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
+			TestPropsValues.COMPANY_WEB_ID);
+
+		_companyId =company.getCompanyId();
+
+		return _companyId;
+	}
+
+	public static long getGroupId() throws Exception {
+		if (_groupId > 0) {
+			return _groupId;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			getCompanyId(), GroupConstants.GUEST);
+
+		_groupId = group.getGroupId();
+
+		return _groupId;
+	}
+
+	public static long getPlid() throws Exception {
+		if (_plid > 0) {
+			return _plid;
+		}
+
+		_plid = LayoutLocalServiceUtil.getDefaultPlid(getGroupId());
+
+		return _plid;
+	}
+
+	public static long getUserId() throws Exception {
+		if (_userId > 0) {
+			return _userId;
+		}
+
+		Role role = RoleLocalServiceUtil.getRole(
+			getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		List<User> users = UserLocalServiceUtil.getRoleUsers(
+			role.getRoleId(), 0, 2);
+
+		User user = users.get(0);
+
+		_userId = user.getUserId();
+
+		return _userId;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(TestPropsValues.class);
 
+	private static long _companyId;
+	private static long _groupId;
+	private static long _plid;
+	private static long _userId;
+
 	static {
-		long companyId = GetterUtil.getLong(TestPropsUtil.get("company.id"));
 		String companyWebId = TestPropsUtil.get("company.web.id");
-		long layoutPlid = GetterUtil.getLong(TestPropsUtil.get("layout.plid"));
-		long userId = GetterUtil.getLong(TestPropsUtil.get("user.id"));
 
 		try {
 			if (Validator.isNull(companyWebId)) {
 				companyWebId = PropsValues.COMPANY_DEFAULT_WEB_ID;
 
 				TestPropsUtil.set("company.web.id", companyWebId);
-			}
-
-			if (companyId == 0) {
-				Company company = CompanyLocalServiceUtil.getCompanyByWebId(
-					companyWebId);
-
-				companyId = company.getCompanyId();
-
-				TestPropsUtil.set("company.id", String.valueOf(companyId));
-			}
-
-			if (layoutPlid == 0) {
-				Group group = GroupLocalServiceUtil.getGroup(
-					companyId, GroupConstants.GUEST);
-
-				layoutPlid = LayoutLocalServiceUtil.getDefaultPlid(
-					group.getGroupId());
-
-				TestPropsUtil.set("layout.plid", String.valueOf(layoutPlid));
-			}
-
-			if (userId == 0) {
-				List<User> users = UserLocalServiceUtil.getCompanyUsers(
-					companyId, 0, 2);
-
-				User user = users.get(1);
-
-				userId = user.getUserId();
-
-				TestPropsUtil.set("user.id", String.valueOf(userId));
 			}
 		}
 		catch (Exception e) {
@@ -99,10 +122,7 @@ public class TestPropsValues {
 
 		TestPropsUtil.printProperties();
 
-		COMPANY_ID = companyId;
 		COMPANY_WEB_ID = companyWebId;
-		LAYOUT_PLID = layoutPlid;
-		USER_ID = userId;
 	}
 
 }

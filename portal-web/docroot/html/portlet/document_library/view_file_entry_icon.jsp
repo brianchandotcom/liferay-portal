@@ -19,6 +19,10 @@
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
 
+FileVersion fileVersion = fileEntry.getFileVersion();
+
+DLFileShortcut fileShortcut = (DLFileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
+
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
 boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE);
@@ -28,7 +32,7 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 
 <div class="document-display-style icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
 	<c:if test="<%= showCheckBox %>">
-		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + StringPool.UNDERLINE + FileEntry.class.getName() %>" type="checkbox" value="<%= fileEntry.getFileEntryId() %>" />
+		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + FileEntry.class.getSimpleName() %>" type="checkbox" value="<%= fileEntry.getFileEntryId() %>" />
 	</c:if>
 
 	<liferay-util:include page="/html/portlet/document_library/file_entry_action.jsp" />
@@ -37,12 +41,16 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 		<span class="document-thumbnail">
 			<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
+			<c:if test="<%= fileShortcut != null %>">
+				<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png">
+			</c:if>
+
 			<c:if test="<%= fileEntry.isCheckedOut() %>">
 				<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png">
 			</c:if>
 		</span>
 
-		<span class="document-title">
+		<span class="entry-title">
 			<%= StringUtil.shorten(fileEntry.getTitle(), 60) %>
 		</span>
 	</a>

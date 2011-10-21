@@ -84,12 +84,9 @@ public class BookmarksEntryAssetRenderer extends BaseAssetRenderer {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" +
-			_entry.getEntryId();
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect, "/bookmarks/find_entry",
+			"entryId", _entry.getEntryId());
 	}
 
 	public long getUserId() {

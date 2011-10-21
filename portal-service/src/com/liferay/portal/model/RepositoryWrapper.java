@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Repository
  * @generated
  */
-public class RepositoryWrapper implements Repository {
+public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	public RepositoryWrapper(Repository repository) {
 		_repository = repository;
 	}
@@ -281,10 +281,6 @@ public class RepositoryWrapper implements Repository {
 		return _repository.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_repository.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _repository.getPrimaryKeyObj();
 	}
@@ -342,7 +338,14 @@ public class RepositoryWrapper implements Repository {
 		_repository.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Repository getWrappedRepository() {
+		return _repository;
+	}
+
+	public Repository getWrappedModel() {
 		return _repository;
 	}
 

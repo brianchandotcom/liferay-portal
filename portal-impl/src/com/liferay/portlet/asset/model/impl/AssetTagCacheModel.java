@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.asset.model.AssetTag;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see AssetTag
  * @generated
  */
-public class AssetTagCacheModel implements CacheModel<AssetTag> {
+public class AssetTagCacheModel implements CacheModel<AssetTag>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

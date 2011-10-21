@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLContent}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLContent
  * @generated
  */
-public class DLContentWrapper implements DLContent {
+public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	public DLContentWrapper(DLContent dlContent) {
 		_dlContent = dlContent;
 	}
@@ -106,24 +108,6 @@ public class DLContentWrapper implements DLContent {
 	*/
 	public void setCompanyId(long companyId) {
 		_dlContent.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the portlet ID of this document library content.
-	*
-	* @return the portlet ID of this document library content
-	*/
-	public java.lang.String getPortletId() {
-		return _dlContent.getPortletId();
-	}
-
-	/**
-	* Sets the portlet ID of this document library content.
-	*
-	* @param portletId the portlet ID of this document library content
-	*/
-	public void setPortletId(java.lang.String portletId) {
-		_dlContent.setPortletId(portletId);
 	}
 
 	/**
@@ -236,10 +220,6 @@ public class DLContentWrapper implements DLContent {
 		return _dlContent.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlContent.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlContent.getPrimaryKeyObj();
 	}
@@ -294,7 +274,14 @@ public class DLContentWrapper implements DLContent {
 		_dlContent.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLContent getWrappedDLContent() {
+		return _dlContent;
+	}
+
+	public DLContent getWrappedModel() {
 		return _dlContent;
 	}
 

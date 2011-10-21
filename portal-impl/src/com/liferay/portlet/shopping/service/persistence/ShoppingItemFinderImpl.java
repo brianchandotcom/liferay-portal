@@ -93,7 +93,7 @@ public class ShoppingItemFinderImpl
 			qPos.add(true);
 			qPos.add(true);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -164,7 +164,7 @@ public class ShoppingItemFinderImpl
 			qPos.add(keywords);
 			qPos.add(keywords);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -230,7 +230,7 @@ public class ShoppingItemFinderImpl
 			qPos.add(true);
 			qPos.add(true);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -473,7 +473,7 @@ public class ShoppingItemFinderImpl
 				qPos.add(categoryId);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

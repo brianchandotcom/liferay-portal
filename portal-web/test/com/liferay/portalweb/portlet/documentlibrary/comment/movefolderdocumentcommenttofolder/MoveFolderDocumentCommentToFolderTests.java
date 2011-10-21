@@ -31,13 +31,12 @@ public class MoveFolderDocumentCommentToFolderTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddFolder2Test.class);
-		testSuite.addTestSuite(AddFolderDocumentTest.class);
-		testSuite.addTestSuite(AddFolderDocumentCommentTest.class);
+		testSuite.addTestSuite(AddFolder1DocumentTest.class);
+		testSuite.addTestSuite(AddFolder1DocumentCommentTest.class);
 		testSuite.addTestSuite(MoveFolderDocumentCommentToFolderTest.class);
 		testSuite.addTestSuite(
 			AssertMoveFolderDocumentCommentToFolderTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

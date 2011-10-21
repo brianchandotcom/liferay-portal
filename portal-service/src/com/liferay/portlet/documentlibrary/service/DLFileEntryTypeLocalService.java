@@ -167,6 +167,21 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the document library file entry type with the UUID in the group.
+	*
+	* @param uuid the UUID of document library file entry type
+	* @param groupId the group id of the document library file entry type
+	* @return the document library file entry type
+	* @throws PortalException if a document library file entry type with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns a range of all the document library file entry types.
 	*
 	* <p>
@@ -251,7 +266,7 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultFileEntryType(long groupId, long folderId)
+	public long getDefaultFileEntryTypeId(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -262,9 +277,10 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
@@ -273,28 +289,28 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, java.lang.String name, java.lang.String description)
+		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
-		long groupId, long folderId, boolean inherited)
+		long[] groupIds, long folderId, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
+	public int searchCount(long companyId, long[] groupIds,
 		java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void updateFileEntryType(long fileEntryTypeId,
+	public void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,
 		com.liferay.portal.service.ServiceContext serviceContext)

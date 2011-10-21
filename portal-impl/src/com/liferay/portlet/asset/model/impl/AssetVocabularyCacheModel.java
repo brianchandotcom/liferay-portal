@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.asset.model.AssetVocabulary;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see AssetVocabulary
  * @generated
  */
-public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary> {
+public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);

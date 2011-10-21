@@ -26,7 +26,7 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isVisible("//div[@class='my-entry-bubble ']"));
@@ -59,7 +57,7 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 		selenium.clickAt("//span[1]/a/span", RuntimeVariables.replace("Edit"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -74,13 +72,12 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"What do you want to say instead?"),
 			selenium.getText("//h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -95,11 +92,9 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Whats Happening Content"),
 			selenium.getText("//textarea"));
 		selenium.typeKeys("//textarea", RuntimeVariables.replace(" Edit"));
-		selenium.saveScreenShotAndSource();
 		assertEquals("Followers", selenium.getSelectedLabel("//span/select"));
 		assertEquals(RuntimeVariables.replace("123"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
@@ -108,7 +103,7 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//div/span/a/img"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -125,12 +120,11 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs (joebloggs)"),
 			selenium.getText("//div[@class='user-name']"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -147,7 +141,6 @@ public class EditWHEntryContentViewableByFollowersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Whats Happening Content Edit"),
 			selenium.getText("//div[@class='content']"));
 	}

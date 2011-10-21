@@ -241,7 +241,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>20</portlet-name>
-		<display-name>Document Library</display-name>
+		<display-name>Documents and Media</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -416,7 +416,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
-		<display-name>Image Gallery</display-name>
+		<display-name>Media Gallery</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1458,7 +1458,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>110</portlet-name>
-		<display-name>Document Library Display</display-name>
+		<display-name>Documents and Media Display</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>view-action</name>
@@ -1723,6 +1723,23 @@
 		<init-param>
 			<name>view-action</name>
 			<value>/users_admin/view</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>127</portlet-name>
+		<display-name>User Groups Admin</display-name>
+		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<init-param>
+			<name>view-action</name>
+			<value>/user_groups_admin/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -2630,6 +2647,27 @@
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
+	<portlet>
+		<portlet-name>176</portlet-name>
+		<display-name>License Manager</display-name>
+		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<init-param>
+			<name>view-jsp</name>
+			<value>/html/portlet/license_manager/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+	</portlet>
+	<custom-portlet-mode>
+		<portlet-mode>edit_guest</portlet-mode>
+		<portal-managed>true</portal-managed>
+	</custom-portlet-mode>
 	<custom-window-state>
 		<window-state>exclusive</window-state>
 	</custom-window-state>

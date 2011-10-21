@@ -222,8 +222,6 @@ public interface RatingsEntryModel extends AttachedModel, AuditedModel,
 
 	public boolean isEscapedModel();
 
-	public void setEscapedModel(boolean escapedModel);
-
 	public Serializable getPrimaryKeyObj();
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.OrgLabor;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing OrgLabor in entity cache.
  *
@@ -25,7 +27,7 @@ import com.liferay.portal.model.OrgLabor;
  * @see OrgLabor
  * @generated
  */
-public class OrgLaborCacheModel implements CacheModel<OrgLabor> {
+public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);

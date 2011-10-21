@@ -16,17 +16,22 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -50,18 +55,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_toggle_id_enterprise_admin_user_searchkeywords</td>
-	<td></td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_125_toggle_id_enterprise_admin_user_searchkeywords</td>
+	<td>//input[@name='_125_keywords']</td>
 	<td>usersn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -100,17 +105,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>_125_active</td>
-	<td>Active</td>
+	<td>//select[@id='_125_status']</td>
+	<td>Status</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_125_active</td>
-	<td>No</td>
+	<td>//select[@id='_125_status']</td>
+	<td>Inactive</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/span[2]/span/input</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -148,7 +153,6 @@
 	<td>link=« Basic</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

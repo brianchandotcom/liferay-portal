@@ -503,6 +503,8 @@
 					<fileset dir="docroot/html/js/editor/fckeditor_diffs" />
 				</copy>
 
+				<!-- fck_link.js -->
+
 				<replace file="docroot/html/js/editor/fckeditor/editor/dialog/fck_link/fck_link.js">
 					<replacetoken><![CDATA[var aMatch = aLinkInfo[2].match( /^location\.href='mailto:'\+(String\.fromCharCode\([\d,]+\))\+'(.*)'$/ ) ;]]></replacetoken>
 					<replacevalue><![CDATA[var aMatch = aLinkInfo[2].match( /^(?:void\()?location\.href='mailto:'\+(String\.fromCharCode\([\d,]+\))\+'(.*)'\)?$/ ) ;]]></replacevalue>
@@ -512,6 +514,8 @@
 					<replacetoken><![CDATA[return 'javascript:location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\'' ;]]></replacetoken>
 					<replacevalue><![CDATA[return 'javascript:void(location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\')' ;]]></replacevalue>
 				</replace>
+
+				<!-- browser.html -->
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html"
 					match="(if \( oConnector.ShowAllTypes \)\r?(\n)\t*oConnector.ResourceType = ')File(')"
@@ -571,38 +575,34 @@ if (currentFolderParam) {
 function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></replacevalue>
 				</replace>
 
-				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
-					<replacetoken><![CDATA[default :]]></replacetoken>
-					<replacevalue><![CDATA[
-		case 203 :
-			alert( 'An unexpected error occurred.' ) ;
-			break ;
-		case 204 :
-			alert( 'You cannot upload into the root folder.' ) ;
-			break ;
-		case 205:
-			alert( 'Please enter a valid image name.' );
-			break ;
-		case 206:
-			alert( 'Please enter a valid file name.' );
-			break ;
-		case 207:
-			alert( 'You do not have the permission to upload to this folder.' );
-			break ;
-		case 208:
-			alert( 'File size exceeds upload limit.' );
-			break ;
-		case 209:
-			alert( 'An internal server error occured.' );
-			break ;
+				<!-- frmfolders.html -->
 
-		default :]]>
-					</replacevalue>
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[var sLink = '<a href="#" onclick="OpenFolder(\'' + folderPath + '\');return false;">' ;]]></replacetoken>
+					<replacevalue><![CDATA[var sLink = '<a href="#" onclick="OpenFolder(\'' + folderPath.replace( /&#039;/g, '\\\'') + '\');return false;">' ;]]></replacevalue>
 				</replace>
 
-				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
-					<replacetoken><![CDATA[<body>]]></replacetoken>
-					<replacevalue><![CDATA[<body bottommargin="0" topmargin="0">]]></replacevalue>
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[this.TableRows[ folderPath ] = oRow ;]]></replacetoken>
+					<replacevalue><![CDATA[this.TableRows[ folderPath.replace( /&#039;/g, '\\\'') ] = oRow ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[( sFolderPath == folderPath ? 'FolderListCurrentFolder' : 'FolderListFolder' ) ;]]></replacetoken>
+					<replacevalue><![CDATA[( sFolderPath == folderPath.replace( /'/g, '\\\'') ? 'FolderListCurrentFolder' : 'FolderListFolder' ) ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[oListManager.AddItem( sFolderName, sCurrentFolderPath + sFolderName + '/' ) ;]]></replacetoken>
+					<replacevalue><![CDATA[oListManager.AddItem( sFolderName, sCurrentFolderPath.replace( /'/g, '\\\'') + sFolderName + '/' ) ;]]></replacevalue>
+				</replace>
+
+				<!-- frmresourceslist.html -->
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[path = path.replace( /'/g, '\\\'') ;]]></replacetoken>
+					<replacevalue><![CDATA[path = path.replace( /'/g, '\\\'') ;
+	path = path.replace( /&#039;/g, '\\\'') ;]]></replacevalue>
 				</replace>
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html"
@@ -610,6 +610,8 @@ function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )]]></repl
 					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize ) ) ;"
 					flags="s"
 				/>
+
+				<!-- frmresourcetype.html -->
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
 					match="var aTypes = \[\r?(\n)(\t*)(.)+\] ;"
@@ -651,13 +653,53 @@ var defaultTypes = []]>
 					</replacevalue>
 				</replace>
 
+				<!-- frmupload.html -->
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
+					<replacetoken><![CDATA[default :]]></replacetoken>
+					<replacevalue><![CDATA[
+		case 203 :
+			alert( 'An unexpected error occurred.' ) ;
+			break ;
+		case 204 :
+			alert( 'You cannot upload into the root folder.' ) ;
+			break ;
+		case 205:
+			alert( 'Please enter a valid image name.' );
+			break ;
+		case 206:
+			alert( 'Please enter a valid file name.' );
+			break ;
+		case 207:
+			alert( 'You do not have the permission to upload to this folder.' );
+			break ;
+		case 208:
+			alert( 'File size exceeds upload limit.' );
+			break ;
+		case 209:
+			alert( 'An internal server error occured.' );
+			break ;
+
+		default :]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
+					<replacetoken><![CDATA[<body>]]></replacetoken>
+					<replacevalue><![CDATA[<body bottommargin="0" topmargin="0">]]></replacevalue>
+				</replace>
+
 				<replace dir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay">
 					<include name="**/*.html"/>
 					<replacetoken><![CDATA[<html>]]></replacetoken>
 					<replacevalue><![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">]]></replacevalue>
 				</replace>
 
+				<!-- EOL -->
+
 				<fixcrlf includes="**/*.html" srcdir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay" eol="unix" />
+
+				<!-- CKEditor -->
 
 				<mkdir dir="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay" />
 

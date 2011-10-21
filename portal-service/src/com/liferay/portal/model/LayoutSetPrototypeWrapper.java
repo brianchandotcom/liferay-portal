@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       LayoutSetPrototype
  * @generated
  */
-public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
+public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
+	ModelWrapper<LayoutSetPrototype> {
 	public LayoutSetPrototypeWrapper(LayoutSetPrototype layoutSetPrototype) {
 		_layoutSetPrototype = layoutSetPrototype;
 	}
@@ -160,6 +161,14 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		return _layoutSetPrototype.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _layoutSetPrototype.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _layoutSetPrototype.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this layout set prototype.
 	*
@@ -198,6 +207,10 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_layoutSetPrototype.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_layoutSetPrototype.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -305,10 +318,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		return _layoutSetPrototype.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_layoutSetPrototype.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _layoutSetPrototype.getPrimaryKeyObj();
 	}
@@ -388,7 +397,14 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype {
 		_layoutSetPrototype.setSettingsProperties(settingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public LayoutSetPrototype getWrappedLayoutSetPrototype() {
+		return _layoutSetPrototype;
+	}
+
+	public LayoutSetPrototype getWrappedModel() {
 		return _layoutSetPrototype;
 	}
 

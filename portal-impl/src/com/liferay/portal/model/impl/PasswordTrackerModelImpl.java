@@ -76,15 +76,10 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.PasswordTracker"),
 			true);
-
-	public Class<?> getModelClass() {
-		return PasswordTracker.class;
-	}
-
-	public String getModelClassName() {
-		return PasswordTracker.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.PasswordTracker"),
+			true);
+	public static long USERID_COLUMN_BITMASK = 1L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PasswordTracker"));
 
@@ -107,6 +102,14 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return PasswordTracker.class;
+	}
+
+	public String getModelClassName() {
+		return PasswordTracker.class.getName();
+	}
+
 	public long getPasswordTrackerId() {
 		return _passwordTrackerId;
 	}
@@ -120,6 +123,14 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -129,6 +140,10 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	public Date getCreateDate() {
@@ -152,20 +167,19 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		_password = password;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public PasswordTracker toEscapedModel() {
-		if (isEscapedModel()) {
-			return (PasswordTracker)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (PasswordTracker)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (PasswordTracker)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -260,6 +274,13 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public void resetOriginalValues() {
+		PasswordTrackerModelImpl passwordTrackerModelImpl = this;
+
+		passwordTrackerModelImpl._originalUserId = passwordTrackerModelImpl._userId;
+
+		passwordTrackerModelImpl._setOriginalUserId = false;
+
+		passwordTrackerModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -343,8 +364,11 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	private long _passwordTrackerId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _password;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private PasswordTracker _escapedModelProxy;
 }

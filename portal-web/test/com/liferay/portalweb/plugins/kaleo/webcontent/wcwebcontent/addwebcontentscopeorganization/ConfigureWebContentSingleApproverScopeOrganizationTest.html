@@ -16,67 +16,57 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//strong/a/span</td>
 	<td>Scope Selector</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[3]</td>
-	<td>3</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[3]</td>
-	<td>3</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//ul[3]/li[3]/a</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//ul[3]/li[3]/a</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/div/span/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//strong/a/span</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a/span</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Workflow Configuration</td>
-	<td></td>
+	<td>Workflow Configuration</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
 	<td>label=Single Approver (Version 1)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -85,7 +75,7 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
 	<td>Single Approver (Version 1)</td>
 </tr>
 

@@ -38,27 +38,34 @@ import javax.servlet.ServletContext;
  */
 public class ThemeHotDeployListener extends BaseHotDeployListener {
 
-	public void invokeDeploy(HotDeployEvent event) throws HotDeployException {
-		try {
-			doInvokeDeploy(event);
-		}
-		catch (Throwable t) {
-			throwHotDeployException(event, "Error registering themes for ", t);
-		}
-	}
+	public void invokeDeploy(HotDeployEvent hotDeployEvent)
+		throws HotDeployException {
 
-	public void invokeUndeploy(HotDeployEvent event) throws HotDeployException {
 		try {
-			doInvokeUndeploy(event);
+			doInvokeDeploy(hotDeployEvent);
 		}
 		catch (Throwable t) {
 			throwHotDeployException(
-				event, "Error unregistering themes for ", t);
+				hotDeployEvent, "Error registering themes for ", t);
 		}
 	}
 
-	protected void doInvokeDeploy(HotDeployEvent event) throws Exception {
-		ServletContext servletContext = event.getServletContext();
+	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws HotDeployException {
+
+		try {
+			doInvokeUndeploy(hotDeployEvent);
+		}
+		catch (Throwable t) {
+			throwHotDeployException(
+				hotDeployEvent, "Error unregistering themes for ", t);
+		}
+	}
+
+	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
+		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 
@@ -76,13 +83,11 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Registering themes for " + servletContextName);
-		}
+		logRegistration(servletContextName);
 
 		List<String> themeIds = ThemeLocalServiceUtil.init(
 			servletContextName, servletContext, null, true, xmls,
-			event.getPluginPackage());
+			hotDeployEvent.getPluginPackage());
 
 		FileTimestampUtil.reset();
 
@@ -102,8 +107,10 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	protected void doInvokeUndeploy(HotDeployEvent event) throws Exception {
-		ServletContext servletContext = event.getServletContext();
+	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
+		throws Exception {
+
+		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		String servletContextName = servletContext.getServletContextName();
 
@@ -155,6 +162,12 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 					themeIds.size() + " themes for " + servletContextName +
 						" was unregistered");
 			}
+		}
+	}
+
+	protected void logRegistration(String servletContextName) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Registering themes for " + servletContextName);
 		}
 	}
 

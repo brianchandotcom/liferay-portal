@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see MDRRuleGroupInstance
  * @generated
  */
-public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupInstance> {
+public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupInstance>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);

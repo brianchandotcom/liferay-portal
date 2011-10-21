@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       PluginSetting
  * @generated
  */
-public class PluginSettingWrapper implements PluginSetting {
+public class PluginSettingWrapper implements PluginSetting,
+	ModelWrapper<PluginSetting> {
 	public PluginSettingWrapper(PluginSetting pluginSetting) {
 		_pluginSetting = pluginSetting;
 	}
@@ -191,10 +192,6 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_pluginSetting.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _pluginSetting.getPrimaryKeyObj();
 	}
@@ -291,7 +288,14 @@ public class PluginSettingWrapper implements PluginSetting {
 		return _pluginSetting.hasPermission(userId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public PluginSetting getWrappedPluginSetting() {
+		return _pluginSetting;
+	}
+
+	public PluginSetting getWrappedModel() {
 		return _pluginSetting;
 	}
 

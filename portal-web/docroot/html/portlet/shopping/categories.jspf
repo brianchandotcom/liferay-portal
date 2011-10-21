@@ -341,13 +341,15 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 							<aui:button href="<%= addItemURL %>" value="add-item" />
 
-							<portlet:renderURL var="addBooksURL">
-								<portlet:param name="struts_action" value="/shopping/add_book_items" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-							</portlet:renderURL>
+							<c:if test="<%= AmazonRankingsUtil.isEnabled() %>">
+								<portlet:renderURL var="addBooksURL">
+									<portlet:param name="struts_action" value="/shopping/add_book_items" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+								</portlet:renderURL>
 
-							<aui:button href="<%= addBooksURL %>" value="add-books" />
+								<aui:button href="<%= addBooksURL %>" value="add-books" />
+							</c:if>
 						</c:if>
 					</aui:button-row>
 				</c:if>

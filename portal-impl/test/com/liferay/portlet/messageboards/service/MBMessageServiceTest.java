@@ -64,7 +64,7 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 		boolean mailingListActive = false;
 
 		Group group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.COMPANY_ID, GroupConstants.GUEST);
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -95,9 +95,7 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 	}
 
 	public void testAddMessagesConcurrently() throws Exception {
-		int threadCount = 5;
-
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[threadCount];
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[THREAD_COUNT];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			String subject = "Test Message " + i;
@@ -122,9 +120,9 @@ public class MBMessageServiceTest extends BaseServiceTestCase {
 		}
 
 		assertTrue(
-			"Only " + successCount + " out of " + threadCount +
+			"Only " + successCount + " out of " + THREAD_COUNT +
 				" threads added messages successfully",
-			successCount == threadCount);
+			successCount == THREAD_COUNT);
 	}
 
 	private MBCategory _category;

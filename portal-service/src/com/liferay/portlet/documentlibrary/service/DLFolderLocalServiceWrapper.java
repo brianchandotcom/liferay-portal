@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFolderLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFolderLocalService
  * @generated
  */
-public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
+public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
+	ServiceWrapper<DLFolderLocalService> {
 	public DLFolderLocalServiceWrapper(
 		DLFolderLocalService dlFolderLocalService) {
 		_dlFolderLocalService = dlFolderLocalService;
@@ -365,11 +368,28 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
+	}
+
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, status, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	public int getFoldersCount(long groupId, long parentFolderId)
@@ -472,12 +492,26 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService {
 		_dlFolderLocalService.updateLastPostDate(folderId, lastPostDate);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFolderLocalService getWrappedDLFolderLocalService() {
 		return _dlFolderLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFolderLocalService(
 		DLFolderLocalService dlFolderLocalService) {
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
+	public DLFolderLocalService getWrappedService() {
+		return _dlFolderLocalService;
+	}
+
+	public void setWrappedService(DLFolderLocalService dlFolderLocalService) {
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 

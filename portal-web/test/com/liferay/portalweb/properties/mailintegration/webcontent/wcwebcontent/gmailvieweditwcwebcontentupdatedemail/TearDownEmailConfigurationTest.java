@@ -30,7 +30,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,22 +45,19 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -76,7 +73,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
@@ -84,7 +80,7 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -99,28 +95,22 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Email From",
 					RuntimeVariables.replace("Email From"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_emailFromName']",
 					RuntimeVariables.replace("Joe Bloggs"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_86_emailFromAddress']",
 					RuntimeVariables.replace("test@liferay.com"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Web Content Added Email",
 					RuntimeVariables.replace("Web Content Added Email"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_emailArticleAddedEnabledCheckbox']"));
 
@@ -139,7 +129,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -148,7 +137,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Denied Email",
 					RuntimeVariables.replace("Web Content Denied Email"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_emailArticleApprovalDeniedEnabledCheckbox']"));
 
@@ -167,7 +155,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -176,7 +163,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Granted Email",
 					RuntimeVariables.replace("Web Content Granted Email"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_emailArticleApprovalGrantedEnabledCheckbox']"));
 
@@ -195,7 +181,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -204,7 +189,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Requested Email",
 					RuntimeVariables.replace("Web Content Requested Email"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_emailArticleApprovalRequestedEnabledCheckbox']"));
 
@@ -223,7 +207,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -232,7 +215,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Review Email",
 					RuntimeVariables.replace("Web Content Review Email"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_emailArticleReviewEnabledCheckbox']"));
 
@@ -251,7 +233,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -260,7 +241,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Updated Email",
 					RuntimeVariables.replace("Web Content Updated Email"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_emailArticleUpdatedEnabledCheckbox']"));
 
@@ -279,7 +259,6 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

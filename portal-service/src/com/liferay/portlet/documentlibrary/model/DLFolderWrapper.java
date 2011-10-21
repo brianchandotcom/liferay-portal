@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFolder}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.documentlibrary.model;
  * @see       DLFolder
  * @generated
  */
-public class DLFolderWrapper implements DLFolder {
+public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	public DLFolderWrapper(DLFolder dlFolder) {
 		_dlFolder = dlFolder;
 	}
@@ -400,10 +402,6 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_dlFolder.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _dlFolder.getPrimaryKeyObj();
 	}
@@ -498,7 +496,14 @@ public class DLFolderWrapper implements DLFolder {
 		return _dlFolder.isRoot();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DLFolder getWrappedDLFolder() {
+		return _dlFolder;
+	}
+
+	public DLFolder getWrappedModel() {
 		return _dlFolder;
 	}
 

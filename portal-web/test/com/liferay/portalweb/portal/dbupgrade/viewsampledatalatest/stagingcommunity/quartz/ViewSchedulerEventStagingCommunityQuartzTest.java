@@ -26,7 +26,7 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.open("/web/community-staging-community-quartz-staging/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,16 +41,14 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Page Staging Community Quartz",
 			RuntimeVariables.replace("Page Staging Community Quartz"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,7 +64,6 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Schedule Publication to Live"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -75,7 +72,7 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -90,13 +87,12 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("View All"),
 			selenium.getText("//span[1]/a"));
 		selenium.clickAt("//span[1]/a", RuntimeVariables.replace("View All"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -113,7 +109,6 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Quartz Scheduler Event"),
 			selenium.getText(
 				"//div[@id='_88_scheduledPublishEventsDiv']/div/div/table/tbody/tr[3]/td"));

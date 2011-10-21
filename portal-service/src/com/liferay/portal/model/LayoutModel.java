@@ -206,6 +206,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param locale the locale of the language
 	 * @return the localized name of this layout
 	 */
+	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
@@ -215,6 +216,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
@@ -223,6 +225,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param languageId the ID of the language
 	 * @return the localized name of this layout
 	 */
+	@AutoEscape
 	public String getName(String languageId);
 
 	/**
@@ -232,7 +235,14 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized name of this layout
 	 */
+	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getNameCurrentLanguageId();
+
+	@AutoEscape
+	public String getNameCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized names of this layout.
@@ -265,6 +275,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 */
 	public void setName(String name, Locale locale, Locale defaultLocale);
 
+	public void setNameCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized names of this layout from the map of locales and localized names.
 	 *
@@ -293,6 +305,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param locale the locale of the language
 	 * @return the localized title of this layout
 	 */
+	@AutoEscape
 	public String getTitle(Locale locale);
 
 	/**
@@ -302,6 +315,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized title of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getTitle(Locale locale, boolean useDefault);
 
 	/**
@@ -310,6 +324,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param languageId the ID of the language
 	 * @return the localized title of this layout
 	 */
+	@AutoEscape
 	public String getTitle(String languageId);
 
 	/**
@@ -319,7 +334,14 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized title of this layout
 	 */
+	@AutoEscape
 	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized titles of this layout.
@@ -352,6 +374,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 */
 	public void setTitle(String title, Locale locale, Locale defaultLocale);
 
+	public void setTitleCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized titles of this layout from the map of locales and localized titles.
 	 *
@@ -380,6 +404,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param locale the locale of the language
 	 * @return the localized description of this layout
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
@@ -389,6 +414,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
@@ -397,6 +423,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param languageId the ID of the language
 	 * @return the localized description of this layout
 	 */
+	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
@@ -406,7 +433,14 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized description of this layout
 	 */
+	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDescriptionCurrentLanguageId();
+
+	@AutoEscape
+	public String getDescriptionCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized descriptions of this layout.
@@ -440,6 +474,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 	public void setDescription(String description, Locale locale,
 		Locale defaultLocale);
 
+	public void setDescriptionCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized descriptions of this layout from the map of locales and localized descriptions.
 	 *
@@ -469,6 +505,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param locale the locale of the language
 	 * @return the localized keywords of this layout
 	 */
+	@AutoEscape
 	public String getKeywords(Locale locale);
 
 	/**
@@ -478,6 +515,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized keywords of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getKeywords(Locale locale, boolean useDefault);
 
 	/**
@@ -486,6 +524,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param languageId the ID of the language
 	 * @return the localized keywords of this layout
 	 */
+	@AutoEscape
 	public String getKeywords(String languageId);
 
 	/**
@@ -495,7 +534,14 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized keywords of this layout
 	 */
+	@AutoEscape
 	public String getKeywords(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getKeywordsCurrentLanguageId();
+
+	@AutoEscape
+	public String getKeywordsCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized keywordses of this layout.
@@ -528,6 +574,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 */
 	public void setKeywords(String keywords, Locale locale, Locale defaultLocale);
 
+	public void setKeywordsCurrentLanguageId(String languageId);
+
 	/**
 	 * Sets the localized keywordses of this layout from the map of locales and localized keywordses.
 	 *
@@ -557,6 +605,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param locale the locale of the language
 	 * @return the localized robots of this layout
 	 */
+	@AutoEscape
 	public String getRobots(Locale locale);
 
 	/**
@@ -566,6 +615,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized robots of this layout. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
+	@AutoEscape
 	public String getRobots(Locale locale, boolean useDefault);
 
 	/**
@@ -574,6 +624,7 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param languageId the ID of the language
 	 * @return the localized robots of this layout
 	 */
+	@AutoEscape
 	public String getRobots(String languageId);
 
 	/**
@@ -583,7 +634,14 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
 	 * @return the localized robots of this layout
 	 */
+	@AutoEscape
 	public String getRobots(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getRobotsCurrentLanguageId();
+
+	@AutoEscape
+	public String getRobotsCurrentValue();
 
 	/**
 	 * Returns a map of the locales and localized robotses of this layout.
@@ -615,6 +673,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param defaultLocale the default locale
 	 */
 	public void setRobots(String robots, Locale locale, Locale defaultLocale);
+
+	public void setRobotsCurrentLanguageId(String languageId);
 
 	/**
 	 * Sets the localized robotses of this layout from the map of locales and localized robotses.
@@ -882,8 +942,6 @@ public interface LayoutModel extends BaseModel<Layout> {
 	public void setCachedModel(boolean cachedModel);
 
 	public boolean isEscapedModel();
-
-	public void setEscapedModel(boolean escapedModel);
 
 	public Serializable getPrimaryKeyObj();
 

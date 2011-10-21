@@ -15,15 +15,10 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.NoSuchResourceException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.BaseServiceTestCase;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.TestPropsValues;
 
 /**
@@ -35,18 +30,19 @@ public class ResourceLocalServiceTest extends BaseServiceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.COMPANY_ID, GroupConstants.GUEST);
+		_userIds = new long[THREAD_COUNT];
 
-		_layout = LayoutLocalServiceUtil.getLayout(TestPropsValues.LAYOUT_PLID);
+		for (int i = 0 ; i < THREAD_COUNT; i++) {
+			User user = addUser(
+				"ResourceLocalServiceTest" + (i + 1), false,
+				new long[] {TestPropsValues.getGroupId()});
 
-		_userIds = UserLocalServiceUtil.getGroupUserIds(group.getGroupId());
+			_userIds[i] = user.getUserId();
+		}
 	}
 
 	public void testAddResourcesConcurrently() throws Exception {
-		int threadCount = 5;
-
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[threadCount];
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[THREAD_COUNT];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			doAsUserThreads[i] = new AddResources(_userIds[i]);
@@ -69,12 +65,11 @@ public class ResourceLocalServiceTest extends BaseServiceTestCase {
 		}
 
 		assertTrue(
-			"Only " + successCount + " out of " + threadCount +
+			"Only " + successCount + " out of " + THREAD_COUNT +
 				" threads added resources successfully",
-			successCount == threadCount);
+			successCount == THREAD_COUNT);
 	}
 
-	private Layout _layout;
 	private long[] _userIds;
 
 	private class AddResources extends DoAsUserThread {
@@ -92,22 +87,19 @@ public class ResourceLocalServiceTest extends BaseServiceTestCase {
 		protected void doRun() throws Exception {
 			try {
 				ResourceLocalServiceUtil.getResource(
-					_layout.getCompanyId(), Layout.class.getName(),
+					TestPropsValues.getCompanyId(), Layout.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(_layout.getPlid()));
+					String.valueOf(TestPropsValues.getPlid()));
 			}
 			catch (NoSuchResourceException nsre) {
 				boolean addGroupPermission = true;
 				boolean addGuestPermission = true;
 
-				if (_layout.isPrivateLayout()) {
-					addGuestPermission = false;
-				}
-
 				ResourceLocalServiceUtil.addResources(
-					_layout.getCompanyId(), _layout.getGroupId(), 0,
-					Layout.class.getName(), _layout.getPlid(), false,
-					addGroupPermission, addGuestPermission);
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), 0, Layout.class.getName(),
+					TestPropsValues.getPlid(), false, addGroupPermission,
+					addGuestPermission);
 			}
 		}
 

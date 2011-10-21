@@ -55,7 +55,7 @@ public class JSONRPCResponse implements JSONSerializable {
 				message = cause.toString();
 			}
 			else {
-				message = exception.getMessage();
+				message = exception.toString();
 			}
 
 			if (message == null) {

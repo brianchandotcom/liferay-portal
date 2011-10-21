@@ -29,11 +29,7 @@
 		}
 	}
 
-	.facebook-login {
-		clear: both;
-		margin-top: 300px;
-		text-align: center;
-
+	.facebook-login-button {
 		.aui-button-content {
 			background: url(<%= themeImagesPath %>/login/facebook_login_button.png) no-repeat scroll 0 50%;
 			padding: 5px 5px 5px 30px;

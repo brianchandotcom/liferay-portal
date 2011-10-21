@@ -18,7 +18,7 @@
 
 <aui:form name="fm">
 
-<div class="categories-admin-container">
+<div class="categories-admin-container lfr-app-column-view">
 	<div class="lfr-header-row">
 		<div class="lfr-header-row-content">
 			<div class="categories-admin-actions toolbar">

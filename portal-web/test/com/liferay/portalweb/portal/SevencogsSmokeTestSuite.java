@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
+import com.liferay.portalweb.portal.smoke.SmokeTests;
 import com.liferay.portalweb.sevencogs.signin.SignInTests;
 
 import junit.framework.Test;
@@ -28,6 +29,7 @@ public class SevencogsSmokeTestSuite extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(SignInTests.suite());
+		testSuite.addTest(SmokeTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

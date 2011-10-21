@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.ImageLocalService;
+import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutService;
 import com.liferay.portal.service.LockLocalService;
@@ -35,6 +37,7 @@ import com.liferay.portal.service.WebDAVPropsLocalService;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LayoutFinder;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
@@ -77,7 +80,6 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.service.DLSyncLocalService;
 import com.liferay.portlet.documentlibrary.service.DLSyncService;
-import com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataPersistence;
@@ -224,24 +226,6 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	public void setDLContentPersistence(
 		DLContentPersistence dlContentPersistence) {
 		this.dlContentPersistence = dlContentPersistence;
-	}
-
-	/**
-	 * Returns the document library content finder.
-	 *
-	 * @return the document library content finder
-	 */
-	public DLContentFinder getDLContentFinder() {
-		return dlContentFinder;
-	}
-
-	/**
-	 * Sets the document library content finder.
-	 *
-	 * @param dlContentFinder the document library content finder
-	 */
-	public void setDLContentFinder(DLContentFinder dlContentFinder) {
-		this.dlContentFinder = dlContentFinder;
 	}
 
 	/**
@@ -817,6 +801,60 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	 */
 	public void setGroupFinder(GroupFinder groupFinder) {
 		this.groupFinder = groupFinder;
+	}
+
+	/**
+	 * Returns the image local service.
+	 *
+	 * @return the image local service
+	 */
+	public ImageLocalService getImageLocalService() {
+		return imageLocalService;
+	}
+
+	/**
+	 * Sets the image local service.
+	 *
+	 * @param imageLocalService the image local service
+	 */
+	public void setImageLocalService(ImageLocalService imageLocalService) {
+		this.imageLocalService = imageLocalService;
+	}
+
+	/**
+	 * Returns the image remote service.
+	 *
+	 * @return the image remote service
+	 */
+	public ImageService getImageService() {
+		return imageService;
+	}
+
+	/**
+	 * Sets the image remote service.
+	 *
+	 * @param imageService the image remote service
+	 */
+	public void setImageService(ImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	/**
+	 * Returns the image persistence.
+	 *
+	 * @return the image persistence
+	 */
+	public ImagePersistence getImagePersistence() {
+		return imagePersistence;
+	}
+
+	/**
+	 * Sets the image persistence.
+	 *
+	 * @param imagePersistence the image persistence
+	 */
+	public void setImagePersistence(ImagePersistence imagePersistence) {
+		this.imagePersistence = imagePersistence;
 	}
 
 	/**
@@ -1816,8 +1854,6 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	protected DLContentLocalService dlContentLocalService;
 	@BeanReference(type = DLContentPersistence.class)
 	protected DLContentPersistence dlContentPersistence;
-	@BeanReference(type = DLContentFinder.class)
-	protected DLContentFinder dlContentFinder;
 	@BeanReference(type = DLFileEntryLocalService.class)
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 	@BeanReference(type = DLFileEntryService.class)
@@ -1880,6 +1916,12 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = GroupFinder.class)
 	protected GroupFinder groupFinder;
+	@BeanReference(type = ImageLocalService.class)
+	protected ImageLocalService imageLocalService;
+	@BeanReference(type = ImageService.class)
+	protected ImageService imageService;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = LayoutLocalService.class)
 	protected LayoutLocalService layoutLocalService;
 	@BeanReference(type = LayoutService.class)

@@ -25,7 +25,7 @@ public class ViewTasksTaskAssignedToMeTagTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,13 +40,11 @@ public class ViewTasksTaskAssignedToMeTagTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//nav/ul/li[1]/a/span"));
 		selenium.clickAt("//div[2]/div[1]/ul/li[5]/a",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Tasks"),
 			selenium.getText("//h1/span[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
@@ -54,14 +52,13 @@ public class ViewTasksTaskAssignedToMeTagTest extends BaseTestCase {
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Task Tag Description"),
 			selenium.getText("//tr[4]/td[1]/div[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/div[1]/a",
 			RuntimeVariables.replace("Task Tag Description"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -77,7 +74,6 @@ public class ViewTasksTaskAssignedToMeTagTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Task Tag Description"),
 			selenium.getText("//h1/span"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),

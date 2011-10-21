@@ -220,9 +220,11 @@ public class LayoutTypePortletImpl
 				layout.getCompanyId(), portletId);
 
 			if (portlet == null) {
-				_log.error(
-					"Portlet " + portletId +
-						" cannot be added because it is not registered");
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Portlet " + portletId +
+							" cannot be added because it is not registered");
+				}
 
 				return null;
 			}
@@ -1374,7 +1376,7 @@ public class LayoutTypePortletImpl
 		if (hasUserPreferences() &&
 			((customizable == null) ? isCustomizable() : customizable) &&
 			((columnDisabled == null) ?
-				!isColumnDisabled(columnId) : columnDisabled)) {
+				!isColumnDisabled(columnId) : !columnDisabled)) {
 
 			return getUserPreference(columnId);
 		}

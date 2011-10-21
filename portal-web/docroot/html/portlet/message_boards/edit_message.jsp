@@ -103,7 +103,7 @@ if (Validator.isNull(redirect)) {
 		message.setThreadId(temp.getThreadId());
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setFormat(MBMessageConstants.DEFAULT_FORMAT);
+		message.setFormat(messageFormat);
 		message.setAttachments(temp.isAttachments());
 		message.setAnonymous(temp.isAnonymous());
 	}
@@ -119,7 +119,7 @@ if (Validator.isNull(redirect)) {
 		message.setThreadId(threadId);
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setFormat(MBMessageConstants.DEFAULT_FORMAT);
+		message.setFormat(messageFormat);
 		message.setAttachments(attachments);
 		message.setAnonymous(BeanParamUtil.getBoolean(message, request, "anonymous"));
 	}
@@ -177,7 +177,13 @@ if (Validator.isNull(redirect)) {
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 		<%
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024;
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if (fileMaxSize == 0) {
+			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		}
+
+		fileMaxSize /= 1024;
 		%>
 
 		<liferay-ui:message arguments="<%= fileMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
@@ -287,7 +293,7 @@ if (Validator.isNull(redirect)) {
 			<aui:input helpMessage="message-boards-message-anonymous-help" inlineLabel="left" name="anonymous" type="checkbox" />
 		</c:if>
 
-		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(),	MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
+		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
 			<aui:input helpMessage="message-boards-message-subscribe-me-help" inlineLabel="left" label="subscribe-me" name="subscribe" type="checkbox" value="<%= subscribeByDefault %>" />
 		</c:if>
 
@@ -451,11 +457,10 @@ if (Validator.isNull(redirect)) {
 	}
 
 	function <portlet:namespace />previewMessage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = " <%= Constants.PREVIEW %>";
 		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
 		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
 
-		submitForm(document.<portlet:namespace />fm);
+		<portlet:namespace />saveMessage(true);
 	}
 
 	function <portlet:namespace />saveMessage(draft) {

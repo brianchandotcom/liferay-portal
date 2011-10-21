@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.OrgGroupPermission;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing OrgGroupPermission in entity cache.
  *
@@ -25,7 +27,8 @@ import com.liferay.portal.model.OrgGroupPermission;
  * @see OrgGroupPermission
  * @generated
  */
-public class OrgGroupPermissionCacheModel implements CacheModel<OrgGroupPermission> {
+public class OrgGroupPermissionCacheModel implements CacheModel<OrgGroupPermission>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);

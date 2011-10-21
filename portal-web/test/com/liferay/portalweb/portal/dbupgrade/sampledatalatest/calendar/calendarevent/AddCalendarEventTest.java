@@ -25,7 +25,7 @@ public class AddCalendarEventTest extends BaseTestCase {
 		selenium.open("/web/calendar-event-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,14 @@ public class AddCalendarEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Calendar Event Page",
 			RuntimeVariables.replace("Calendar Event Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.select("//select[@id='_8_startDateMonth']",
 			RuntimeVariables.replace("May"));
 		selenium.select("//select[@id='_8_startDateDay']",
@@ -68,11 +64,10 @@ public class AddCalendarEventTest extends BaseTestCase {
 			RuntimeVariables.replace("All Day Event Checkbox"));
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Hashi's birthday bash"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -88,15 +83,12 @@ public class AddCalendarEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame("//td[@id='cke_contents__8_editor']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("This is so much fun!"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -109,7 +101,6 @@ public class AddCalendarEventTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("5/31/10"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("5/31/10"),
 			selenium.getText("//dd[1]"));
 		assertEquals(RuntimeVariables.replace("This is so much fun!"),

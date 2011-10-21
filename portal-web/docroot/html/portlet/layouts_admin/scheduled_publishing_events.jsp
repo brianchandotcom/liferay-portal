@@ -25,7 +25,7 @@ SearchContainer searchContainer = new SearchContainer();
 
 List<String> headerNames = new ArrayList<String>();
 
-headerNames.add("description");
+headerNames.add("title");
 headerNames.add("start-date");
 headerNames.add("end-date");
 headerNames.add(StringPool.BLANK);
@@ -42,7 +42,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(schedulerResponse, schedulerResponse.getJobName(), i);
 
-	// Description
+	// Title
 
 	row.addText(schedulerResponse.getDescription());
 

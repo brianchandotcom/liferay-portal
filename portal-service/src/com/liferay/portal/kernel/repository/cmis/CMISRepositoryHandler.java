@@ -395,6 +395,11 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 			fileEntryId, version, serviceContext);
 	}
 
+	@Override
+	public Hits search(SearchContext searchContext) throws SearchException {
+		return _baseCmisRepository.search(searchContext);
+	}
+
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 

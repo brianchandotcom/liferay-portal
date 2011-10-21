@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDLRecordSet}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatalists.model;
  * @see       DDLRecordSet
  * @generated
  */
-public class DDLRecordSetWrapper implements DDLRecordSet {
+public class DDLRecordSetWrapper implements DDLRecordSet,
+	ModelWrapper<DDLRecordSet> {
 	public DDLRecordSetWrapper(DDLRecordSet ddlRecordSet) {
 		_ddlRecordSet = ddlRecordSet;
 	}
@@ -306,6 +309,14 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _ddlRecordSet.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _ddlRecordSet.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this d d l record set.
 	*
@@ -344,6 +355,10 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddlRecordSet.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_ddlRecordSet.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -421,6 +436,14 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _ddlRecordSet.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _ddlRecordSet.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this d d l record set.
 	*
@@ -460,6 +483,10 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_ddlRecordSet.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_ddlRecordSet.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -540,10 +567,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddlRecordSet.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddlRecordSet.getPrimaryKeyObj();
 	}
@@ -622,7 +645,14 @@ public class DDLRecordSetWrapper implements DDLRecordSet {
 		return _ddlRecordSet.getRecordsFieldsList();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDLRecordSet getWrappedDDLRecordSet() {
+		return _ddlRecordSet;
+	}
+
+	public DDLRecordSet getWrappedModel() {
 		return _ddlRecordSet;
 	}
 

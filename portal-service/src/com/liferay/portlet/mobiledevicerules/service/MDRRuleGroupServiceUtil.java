@@ -37,6 +37,73 @@ public class MDRRuleGroupServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup addRuleGroup(
+		long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addRuleGroup(groupId, nameMap, descriptionMap,
+			serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
+		long ruleGroupId, long groupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup copyRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup,
+		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
+	}
+
+	public static void deleteRuleGroup(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRuleGroup(ruleGroupId);
+	}
+
+	public static void deleteRuleGroup(
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup ruleGroup)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRuleGroup(ruleGroup);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchRuleGroup(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRuleGroup(ruleGroupId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getRuleGroup(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleGroup(ruleGroupId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(
+		long ruleGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,
+			serviceContext);
+	}
+
 	public static MDRRuleGroupService getService() {
 		if (_service == null) {
 			_service = (MDRRuleGroupService)PortalBeanLocatorUtil.locate(MDRRuleGroupService.class.getName());

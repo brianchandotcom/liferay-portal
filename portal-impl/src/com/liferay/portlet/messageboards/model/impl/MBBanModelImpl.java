@@ -82,6 +82,12 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.messageboards.model.MBBan"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBBan"),
+			true);
+	public static long BANUSERID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -120,14 +126,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return MBBan.class;
-	}
-
-	public String getModelClassName() {
-		return MBBan.class.getName();
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBBan"));
 
@@ -150,6 +148,14 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return MBBan.class;
+	}
+
+	public String getModelClassName() {
+		return MBBan.class.getName();
+	}
+
 	@JSON
 	public long getBanId() {
 		return _banId;
@@ -165,6 +171,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
 
@@ -193,6 +201,14 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -202,6 +218,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -242,6 +262,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public void setBanUserId(long banUserId) {
+		_columnBitmask |= BANUSERID_COLUMN_BITMASK;
+
 		if (!_setOriginalBanUserId) {
 			_setOriginalBanUserId = true;
 
@@ -263,20 +285,19 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return _originalBanUserId;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public MBBan toEscapedModel() {
-		if (isEscapedModel()) {
-			return (MBBan)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (MBBan)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (MBBan)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -364,9 +385,15 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		mbBanModelImpl._setOriginalGroupId = false;
 
+		mbBanModelImpl._originalUserId = mbBanModelImpl._userId;
+
+		mbBanModelImpl._setOriginalUserId = false;
+
 		mbBanModelImpl._originalBanUserId = mbBanModelImpl._banUserId;
 
 		mbBanModelImpl._setOriginalBanUserId = false;
+
+		mbBanModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -493,6 +520,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -501,5 +530,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _originalBanUserId;
 	private boolean _setOriginalBanUserId;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private MBBan _escapedModelProxy;
 }

@@ -23,25 +23,25 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * The document library local service. All portlets should interact with the
@@ -192,20 +192,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		final FileEntry fileEntry = localRepository.addFileEntry(
+		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
-
-					return null;
-				}
-
-			});
+		dlAppHelperLocalService.addFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -267,20 +259,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		final FileEntry fileEntry = localRepository.addFileEntry(
+		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
-
-					return null;
-				}
-
-			});
+		dlAppHelperLocalService.addFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -389,7 +373,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
 		localRepository.deleteFileEntry(fileEntryId);
+
+		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 	}
 
 	/**
@@ -1013,10 +1001,21 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			repositoryId, folderId, status, null, includeMountFolders, start,
+			end, obc);
+	}
+
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long repositoryId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcuts(
-			folderId, status, includeMountFolders, start, end, obc);
+			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
 	}
 
 	/**
@@ -1039,10 +1038,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			boolean includeMountFolders)
 		throws PortalException, SystemException {
 
+		return getFoldersAndFileEntriesAndFileShortcutsCount(
+			repositoryId, folderId, status, null, includeMountFolders);
+	}
+
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long repositoryId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws PortalException, SystemException {
+
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status, includeMountFolders);
+			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	/**
@@ -1252,10 +1260,25 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
+		LocalRepository fromLocalRepository = getLocalRepository(
+			0, fileEntryId, 0);
+		LocalRepository toLocalRepository = getLocalRepository(
+			newFolderId, serviceContext);
 
-		return localRepository.moveFileEntry(
-			userId, fileEntryId, newFolderId, serviceContext);
+		if (fromLocalRepository.getRepositoryId() ==
+				toLocalRepository.getRepositoryId()) {
+
+			// Move file entries within repository
+
+			return fromLocalRepository.moveFileEntry(
+				userId, fileEntryId, newFolderId, serviceContext);
+		}
+
+		// Move file entries between repositories
+
+		return moveFileEntries(
+			userId, fileEntryId, newFolderId, fromLocalRepository,
+			toLocalRepository, serviceContext);
 	}
 
 	/**
@@ -1414,20 +1437,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		final FileEntry fileEntry = localRepository.updateFileEntry(
+		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
-
-					return null;
-				}
-
-			});
+		dlAppHelperLocalService.updateFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -1487,20 +1502,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
-		final FileEntry fileEntry = localRepository.updateFileEntry(
+		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
-
-					return null;
-				}
-
-			});
+		dlAppHelperLocalService.updateFileEntry(
+			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
 		return fileEntry;
 	}
@@ -1621,6 +1628,80 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			folderId, parentFolderId, name, description, serviceContext);
 	}
 
+	protected FileEntry copyFileEntry(
+			long userId, LocalRepository toLocalRepository, FileEntry fileEntry,
+			long newFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<FileVersion> fileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_ANY);
+
+		FileVersion latestFileVersion = fileVersions.get(
+			fileVersions.size() - 1);
+
+		FileEntry destinationFileEntry = toLocalRepository.addFileEntry(
+			userId, newFolderId, fileEntry.getTitle(),
+			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
+			latestFileVersion.getDescription(), StringPool.BLANK,
+			latestFileVersion.getContentStream(false),
+			latestFileVersion.getSize(), serviceContext);
+
+		for (int i = fileVersions.size() - 2; i >= 0 ; i--) {
+			FileVersion fileVersion = fileVersions.get(i);
+
+			FileVersion previousFileVersion = fileVersions.get(i + 1);
+
+			try {
+				destinationFileEntry = toLocalRepository.updateFileEntry(
+					userId, destinationFileEntry.getFileEntryId(),
+					fileEntry.getTitle(), destinationFileEntry.getMimeType(),
+					destinationFileEntry.getTitle(),
+					destinationFileEntry.getDescription(), StringPool.BLANK,
+					isMajorVersion(fileVersion, previousFileVersion),
+					fileVersion.getContentStream(false), fileVersion.getSize(),
+					serviceContext);
+			}
+			catch (PortalException pe) {
+				toLocalRepository.deleteFileEntry(
+					destinationFileEntry.getFileEntryId());
+
+				throw  pe;
+			}
+		}
+
+		dlAppHelperLocalService.addFileEntry(
+			userId, destinationFileEntry, destinationFileEntry.getFileVersion(),
+			serviceContext);
+
+		return destinationFileEntry;
+	}
+
+	protected void deleteFileEntry(
+			long oldFileEntryId, long newFileEntryId,
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository)
+		throws PortalException, SystemException {
+
+		try {
+			FileEntry fileEntry = fromLocalRepository.getFileEntry(
+				oldFileEntryId);
+
+			fromLocalRepository.deleteFileEntry(oldFileEntryId);
+
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+		}
+		catch (PortalException pe) {
+			FileEntry fileEntry = toLocalRepository.getFileEntry(
+				newFileEntryId);
+
+			toLocalRepository.deleteFileEntry(newFileEntryId);
+
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+			throw pe;
+		}
+	}
+
 	protected LocalRepository getLocalRepository(long repositoryId)
 		throws PortalException, SystemException {
 
@@ -1633,6 +1714,54 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return repositoryService.getLocalRepositoryImpl(
 			folderId, fileEntryId, fileVersionId);
+	}
+
+	protected LocalRepository getLocalRepository(
+			long folderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = null;
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			localRepository =
+				getLocalRepository(serviceContext.getScopeGroupId());
+		}
+		else {
+			localRepository = getLocalRepository(folderId, 0, 0);
+		}
+
+		return localRepository;
+	}
+
+	protected boolean isMajorVersion(
+		FileVersion previousFileVersion, FileVersion currentFileVersion) {
+
+		long currentVersion = GetterUtil.getLong(
+			currentFileVersion.getVersion());
+		long previousVersion = GetterUtil.getLong(
+			previousFileVersion.getVersion());
+
+		return (currentVersion - previousVersion) >= 1;
+	}
+
+	protected FileEntry moveFileEntries(
+			long userId, long fileEntryId, long newFolderId,
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository, ServiceContext serviceContext)
+		throws SystemException, PortalException {
+
+		FileEntry sourceFileEntry = fromLocalRepository.getFileEntry(
+			fileEntryId);
+
+		FileEntry destinationFileEntry = copyFileEntry(
+			userId, toLocalRepository, sourceFileEntry, newFolderId,
+			serviceContext);
+
+		deleteFileEntry(
+			fileEntryId, destinationFileEntry.getFileEntryId(),
+			fromLocalRepository, toLocalRepository);
+
+		return destinationFileEntry;
 	}
 
 }

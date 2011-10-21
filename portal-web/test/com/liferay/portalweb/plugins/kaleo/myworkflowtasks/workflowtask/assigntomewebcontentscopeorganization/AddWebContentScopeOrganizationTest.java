@@ -25,7 +25,7 @@ public class AddWebContentScopeOrganizationTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,21 +40,20 @@ public class AddWebContentScopeOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		Thread.sleep(5000);
-		selenium.clickAt("//div[1]/div/span/a",
+		selenium.clickAt("//strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("//a[3]")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -64,40 +63,22 @@ public class AddWebContentScopeOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//a[3]", RuntimeVariables.replace("3"));
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//ul[3]/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//ul[3]/li[3]/a",
+		assertEquals(RuntimeVariables.replace("Organization Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
 				if (RuntimeVariables.replace("Organization Name")
 										.equals(selenium.getText(
-								"//div[1]/div/span/a"))) {
+								"//strong/a/span"))) {
 					break;
 				}
 			}
@@ -107,28 +88,26 @@ public class AddWebContentScopeOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//div[1]/div/span/a"));
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
+			selenium.getText("//strong/a/span"));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("//input[@value='Add Web Content']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Add']",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.type("_15_title", RuntimeVariables.replace("Web Content Name"));
-		selenium.saveScreenShotAndSource();
+		selenium.type("//input[@id='_15_title_en_US']",
+			RuntimeVariables.replace("Web Content Name"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"_15_structure_el_TextAreaField_content")) {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe")) {
 					break;
 				}
 			}
@@ -138,49 +117,13 @@ public class AddWebContentScopeOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("cke_contents_CKEditor1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 60) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.saveScreenShotAndSource();
 		selenium.selectFrame(
-			"//iframe[@id='_15_structure_el_TextAreaField_content']");
-		selenium.selectFrame("//td[@id='cke_contents_CKEditor1']/iframe");
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("Web Content Content"));
 		selenium.selectFrame("relative=top");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Submit for Publication']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

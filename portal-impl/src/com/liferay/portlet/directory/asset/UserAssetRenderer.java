@@ -90,12 +90,9 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-			"/directory/find_user?p_u_i_d=" + _user.getUserId();
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect, "/directory/find_user",
+			"p_u_i_d", _user.getUserId());
 	}
 
 	public long getUserId() {

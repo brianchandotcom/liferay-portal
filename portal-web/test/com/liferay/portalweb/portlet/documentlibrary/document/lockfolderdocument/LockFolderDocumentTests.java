@@ -33,8 +33,7 @@ public class LockFolderDocumentTests extends BaseTests {
 		testSuite.addTestSuite(AddFolderDocumentTest.class);
 		testSuite.addTestSuite(LockFolderDocumentTest.class);
 		testSuite.addTestSuite(AssertLockFolderDocumentTest.class);
-		testSuite.addTestSuite(TearDownDLFolderTest.class);
-		testSuite.addTestSuite(TearDownDocumentTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

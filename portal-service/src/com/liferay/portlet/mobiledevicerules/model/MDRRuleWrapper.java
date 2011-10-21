@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRule}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.mobiledevicerules.model;
  * @see       MDRRule
  * @generated
  */
-public class MDRRuleWrapper implements MDRRule {
+public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	public MDRRuleWrapper(MDRRule mdrRule) {
 		_mdrRule = mdrRule;
 	}
@@ -288,6 +290,14 @@ public class MDRRuleWrapper implements MDRRule {
 		return _mdrRule.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _mdrRule.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _mdrRule.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this m d r rule.
 	*
@@ -326,6 +336,10 @@ public class MDRRuleWrapper implements MDRRule {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_mdrRule.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_mdrRule.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -403,6 +417,14 @@ public class MDRRuleWrapper implements MDRRule {
 		return _mdrRule.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _mdrRule.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _mdrRule.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this m d r rule.
 	*
@@ -442,6 +464,10 @@ public class MDRRuleWrapper implements MDRRule {
 	public void setDescription(java.lang.String description,
 		java.util.Locale locale, java.util.Locale defaultLocale) {
 		_mdrRule.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_mdrRule.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -522,10 +548,6 @@ public class MDRRuleWrapper implements MDRRule {
 		return _mdrRule.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_mdrRule.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _mdrRule.getPrimaryKeyObj();
 	}
@@ -589,7 +611,14 @@ public class MDRRuleWrapper implements MDRRule {
 		_mdrRule.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public MDRRule getWrappedMDRRule() {
+		return _mdrRule;
+	}
+
+	public MDRRule getWrappedModel() {
 		return _mdrRule;
 	}
 

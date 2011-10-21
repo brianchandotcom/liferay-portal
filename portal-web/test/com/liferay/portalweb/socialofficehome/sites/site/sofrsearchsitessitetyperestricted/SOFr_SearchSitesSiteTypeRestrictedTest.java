@@ -26,7 +26,7 @@ public class SOFr_SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 		selenium.open("/user/socialofficefriendsn/home");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,11 +41,9 @@ public class SOFr_SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div/ul/li/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -56,7 +54,6 @@ public class SOFr_SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Private Site Name"));
 		assertTrue(selenium.isVisible("//div/input[1]"));
 		selenium.type("//div/input[1]", RuntimeVariables.replace("Restricted"));
-		selenium.saveScreenShotAndSource();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
 			selenium.getText(

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.image.DLHook;
 import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,6 +32,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 import java.io.InputStream;
 
@@ -45,7 +46,7 @@ import java.util.Map;
 
 /**
  * @author Sergio González
- *  @author Miguel Pastor
+ * @author Miguel Pastor
  */
 public class UpgradeImageGallery extends UpgradeProcess {
 
@@ -120,10 +121,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			String userName, Date createDate, long repositoryId,
 			long fileEntryId, String extension, String mimeType, String title,
 			String description, String changeLog, String extraSettings,
-			long fileEntryTypeId, String version, long size, long smallImageId,
-			long largeImageId, long custom1ImageId, long custom2ImageId,
-			int status, long statusByUserId, String statusByUserName,
-			Date statusDate)
+			long fileEntryTypeId, String version, long size, int status,
+			long statusByUserId, String statusByUserName, Date statusDate)
 		throws Exception {
 
 		Connection con = null;
@@ -138,11 +137,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			sb.append("companyId, userId, userName, createDate, ");
 			sb.append("repositoryId, fileEntryId, extension, mimeType, ");
 			sb.append("title, description, changeLog, extraSettings, ");
-			sb.append("fileEntryTypeId, version, size_, smallImageId, ");
-			sb.append("largeImageId, custom1ImageId, custom2ImageId, status, ");
+			sb.append("fileEntryTypeId, version, size_, status, ");
 			sb.append("statusByUserId, statusByUserName, statusDate) values (");
 			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -165,14 +163,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setLong(15, fileEntryTypeId);
 			ps.setString(16, version);
 			ps.setLong(17, size);
-			ps.setLong(18, smallImageId);
-			ps.setLong(19, largeImageId);
-			ps.setLong(20, custom1ImageId);
-			ps.setLong(21, custom2ImageId);
-			ps.setInt(22, status);
-			ps.setLong(23, statusByUserId);
-			ps.setString(24, statusByUserName);
-			ps.setDate(25, statusDate);
+			ps.setInt(18, status);
+			ps.setLong(19, statusByUserId);
+			ps.setString(20, statusByUserName);
+			ps.setDate(21, statusDate);
 
 			ps.executeUpdate();
 		}
@@ -254,7 +248,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"select type_, size_  from Image where imageId = " + imageId);
+				"select type_, size_ from Image where imageId = " + imageId);
 
 			rs = ps.executeQuery();
 
@@ -302,9 +296,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		DLStoreUtil.addFile(companyId, repositoryId, name, true, bytes);
 	}
 
-	protected void migrateImage(long imageId, boolean migrateOnlyLargeImage)
-		throws Exception {
-
+	protected void migrateImage(long imageId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -312,30 +304,72 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
-				"select groupId, companyId, folderId, name from DLFileEntry " +
-					"where largeImageId = " + imageId);
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("select fileVersionId, fileEntry.fileEntryId, ");
+			sb.append("fileEntry.groupId, fileEntry.companyId, ");
+			sb.append("folderId, name, largeImageId, smallImageId, ");
+			sb.append("custom1ImageId, custom2ImageId from DLFileVersion ");
+			sb.append("fileVersion, DLFileEntry fileEntry where ");
+			sb.append("fileEntry.fileEntryId = fileVersion.fileEntryId and ");
+			sb.append("(largeImageId = ? or smallImageId = ? or ");
+			sb.append("custom1ImageId = ? or custom2ImageId = ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, imageId);
+			ps.setLong(2, imageId);
+			ps.setLong(3, imageId);
+			ps.setLong(4, imageId);
 
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long groupId = rs.getLong("groupId");
+				long fileVersionId = rs.getLong("fileVersionId");
+				long fileEntryId = rs.getLong("fileEntry.fileEntryId");
+				long companyId = rs.getLong("fileEntry.companyId");
+				long groupId = rs.getLong("fileEntry.groupId");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
-
-				long repositoryId = DLFolderConstants.getDataRepositoryId(
-					groupId, folderId);
+				long largeImageId = rs.getLong("largeImageId");
+				long custom1ImageId = rs.getLong("custom1ImageId");
+				long custom2ImageId = rs.getLong("custom2ImageId");
 
 				Image image = ImageLocalServiceUtil.getImage(imageId);
 
-				try {
-					migrateFile(repositoryId, companyId, name, image);
+				if (largeImageId == imageId) {
+					long repositoryId = DLFolderConstants.getDataRepositoryId(
+						groupId, folderId);
+
+					try {
+						migrateFile(repositoryId, companyId, name, image);
+					}
+					catch (Exception e) {
+					}
 				}
-				catch (Exception e) {
+				else {
+					ClassLoader classLoader =
+						PortalClassLoaderUtil.getClassLoader();
+
+					String sourceHookClassName = FileSystemHook.class.getName();
+
+					if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
+						sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
+					}
+
+					Hook sourceHook = (Hook)InstanceFactory.newInstance(
+						classLoader, sourceHookClassName);
+
+					InputStream is = sourceHook.getImageAsStream(image);
+
+					ImageProcessor.storeThumbnail(
+						companyId, groupId, fileEntryId, fileVersionId,
+						custom1ImageId, custom2ImageId, is, image.getType());
 				}
 			}
-			else if (!migrateOnlyLargeImage) {
+			else {
 				Image image = ImageLocalServiceUtil.getImage(imageId);
 
 				try {
@@ -351,12 +385,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void migrateImageFiles() throws Exception {
-		boolean migrateOnlyLargeImage = false;
-
-		if (PropsValues.IMAGE_HOOK_IMPL.equals(DLHook.class.getName())) {
-			migrateOnlyLargeImage = true;
-		}
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -371,7 +399,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			while (rs.next()) {
 				long imageId = rs.getLong("imageId");
 
-				migrateImage(imageId, migrateOnlyLargeImage);
+				migrateImage(imageId);
 			}
 		}
 		finally {
@@ -510,7 +538,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				addDLFileEntry(
 					uuid, imageId, groupId, companyId, userId,
 					userName, userId, userName, createDate, modifiedDate,
-					groupId, folderId, name, extension, StringPool.BLANK, title,
+					groupId, folderId, name, extension, mimeType, title,
 					description, StringPool.BLANK, "1.0", size, 0, smallImageId,
 					largeImageId, custom1ImageId, custom2ImageId);
 
@@ -518,8 +546,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					increment(), groupId, companyId, userId, userName,
 					createDate, groupId, imageId, extension, mimeType,
 					title, description, StringPool.BLANK, StringPool.BLANK, 0,
-					"1.0", size, smallImageId, largeImageId, custom1ImageId,
-					custom2ImageId, 0, userId, userName, modifiedDate);
+					"1.0", size, 0, userId, userName, modifiedDate);
 			}
 
 			runSQL("drop table IGImage");

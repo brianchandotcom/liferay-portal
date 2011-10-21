@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.calendar.model.CalEvent;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see CalEvent
  * @generated
  */
-public class CalEventCacheModel implements CacheModel<CalEvent> {
+public class CalEventCacheModel implements CacheModel<CalEvent>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(47);

@@ -31,6 +31,10 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.io.InputStream getContentStream(boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge();
 
 	public java.lang.String getExtraSettings();
@@ -41,17 +45,9 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public long getFolderId()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder();
 
 	public java.lang.String getIcon();
-
-	public java.lang.String getImageType();
 
 	public void setExtraSettings(java.lang.String extraSettings);
 

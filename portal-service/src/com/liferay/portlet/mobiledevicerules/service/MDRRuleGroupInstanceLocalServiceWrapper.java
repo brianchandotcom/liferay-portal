@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link MDRRuleGroupInstanceLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.mobiledevicerules.service;
  * @generated
  */
 public class MDRRuleGroupInstanceLocalServiceWrapper
-	implements MDRRuleGroupInstanceLocalService {
+	implements MDRRuleGroupInstanceLocalService,
+		ServiceWrapper<MDRRuleGroupInstanceLocalService> {
 	public MDRRuleGroupInstanceLocalServiceWrapper(
 		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
@@ -293,6 +296,27 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstances(ruleGroupId);
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(ruleGroupInstanceId);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(className,
+			classPK, ruleGroupId);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstance(className,
+			classPK, ruleGroupId);
+	}
+
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getRuleGroupInstances(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -341,11 +365,26 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 			priority);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public MDRRuleGroupInstanceLocalService getWrappedMDRRuleGroupInstanceLocalService() {
 		return _mdrRuleGroupInstanceLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	public MDRRuleGroupInstanceLocalService getWrappedService() {
+		return _mdrRuleGroupInstanceLocalService;
+	}
+
+	public void setWrappedService(
 		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}

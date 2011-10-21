@@ -14,121 +14,42 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.struts.FindAction;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindFolderAction extends Action {
+public class FindFolderAction extends FindAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
+	protected long getGroupId(long primaryKey) throws Exception {
+		Folder folder = DLAppLocalServiceUtil.getFolder(primaryKey);
 
-		try {
-			long plid = ParamUtil.getLong(request, "p_l_id");
-			long groupId = ParamUtil.getLong(request,"groupId");
-			long folderId = ParamUtil.getLong(request, "folderId");
-
-			plid = getPlid(plid, groupId, folderId);
-
-			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.DOCUMENT_LIBRARY_DISPLAY, plid,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setWindowState(WindowState.NORMAL);
-			portletURL.setPortletMode(PortletMode.VIEW);
-
-			portletURL.setParameter("struts_action", "/document_library/view");
-			portletURL.setParameter("folderId", String.valueOf(folderId));
-
-			response.sendRedirect(portletURL.toString());
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
+		return folder.getRepositoryId();
 	}
 
-	protected long getPlid(long plid, long groupId, long folderId)
-		throws Exception {
+	@Override
+	protected String getPrimaryKeyParameterName() {
+		return "folderId";
+	}
 
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+	@Override
+	protected String getStrutsAction(
+		HttpServletRequest request, String portletId) {
 
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
+		return "/document_library/view";
+	}
 
-				if (layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-					layoutTypePortlet.hasPortletId(
-						PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-
-					return plid;
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-			}
-		}
-
-		if (groupId <= 0) {
-			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
-
-			groupId = folder.getRepositoryId();
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			groupId, PortletKeys.DOCUMENT_LIBRARY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			groupId, PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			groupId, PortletKeys.IMAGE_GALLERY_DISPLAY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		throw new NoSuchLayoutException(
-			"No page was found with the Document Library portlet");
+	@Override
+	protected String[] initPortletIds() {
+		return new String[] {
+			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+			PortletKeys.MEDIA_GALLERY_DISPLAY};
 	}
 
 }

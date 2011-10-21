@@ -20,4 +20,8 @@
 	.staging-section {
 		margin-left: 1.5em;
 	}
+
+	.staging-types .aui-field-choice label {
+		font-weight: normal;
+	}
 }

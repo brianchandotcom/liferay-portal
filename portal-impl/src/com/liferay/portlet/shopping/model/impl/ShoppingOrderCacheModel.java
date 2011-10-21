@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ import java.util.Date;
  * @see ShoppingOrder
  * @generated
  */
-public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder> {
+public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(103);

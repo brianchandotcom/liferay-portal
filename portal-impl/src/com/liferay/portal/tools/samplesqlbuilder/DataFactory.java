@@ -323,10 +323,6 @@ public class DataFactory {
 		dlFileVersion.setTitle(dlFileEntry.getTitle());
 		dlFileVersion.setDescription(dlFileEntry.getDescription());
 		dlFileVersion.setSize(dlFileEntry.getSize());
-		dlFileVersion.setSmallImageId(dlFileEntry.getSmallImageId());
-		dlFileVersion.setLargeImageId(dlFileEntry.getLargeImageId());
-		dlFileVersion.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
-		dlFileVersion.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
 
 		return dlFileVersion;
 	}

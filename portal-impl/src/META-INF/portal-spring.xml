@@ -249,7 +249,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLContentLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder" class="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistenceImpl" parent="basePersistence" />
@@ -411,7 +410,17 @@
 	<bean id="com.liferay.portlet.social.service.SocialActivityLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivityPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityFinder" class="com.liferay.portlet.social.service.persistence.SocialActivityFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.social.service.SocialActivityAchievementLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityAchievementPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivityAchievementPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.social.service.SocialActivityCounterLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityCounterLocalServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder" class="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialActivityInterpreterLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityInterpreterLocalServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.SocialActivityLimitLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.social.service.SocialActivitySettingLocalService" class="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.SocialActivitySettingService" class="com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialEquityAssetEntryPersistence" class="com.liferay.portlet.social.service.persistence.SocialEquityAssetEntryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialEquityGroupSettingLocalService" class="com.liferay.portlet.social.service.impl.SocialEquityGroupSettingLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialEquityGroupSettingPersistence" class="com.liferay.portlet.social.service.persistence.SocialEquityGroupSettingPersistenceImpl" parent="basePersistence" />

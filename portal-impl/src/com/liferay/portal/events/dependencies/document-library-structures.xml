@@ -2,8 +2,8 @@
 
 <root>
 	<structure>
-		<name><![CDATA[Dublin Core Metadata Iniative]]></name>
-		<description><![CDATA[Dublin Core Metadata Iniative]]></description>
+		<name><![CDATA[Dublin Core Metadata Initiative]]></name>
+		<description><![CDATA[Dublin Core Metadata Initiative]]></description>
 		<root available-locales="en_US" default-locale="en_US">
 			<dynamic-element dataType="string" name="contributor" type="text">
 				<meta-data locale="en_US">

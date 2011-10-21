@@ -30,7 +30,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,11 +45,9 @@ public class TearDownPageCommentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Page Comments Test Page",
 					RuntimeVariables.replace("Page Comments Test Page"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean pageComment1Present = selenium.isElementPresent(
 						"//li[4]/span/a/span");
@@ -66,7 +64,6 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -85,7 +82,6 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
@@ -104,7 +100,6 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 4:
 
@@ -123,7 +118,6 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 
@@ -142,7 +136,6 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				Thread.sleep(5000);
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.saveScreenShotAndSource();
 
 			case 6:
 			case 100:

@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
+.aui-document-library-folder-cell-editor-hidden {
+	display: none;
+}
+
 .portlet-document-library, .portlet-dynamic-data-mapping {
 	.aui-diagram-builder-drop-container {
 		overflow: auto;

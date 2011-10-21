@@ -87,7 +87,7 @@ AUI().add(
 
 			instance._helperId = instance._getNamespacedId('journalArticleHelper', instance.portletNamespace, '');
 
-			var helperHTML = A.substitute(TPL_HELPER, [instance._helperId]);
+			var helperHTML = Lang.sub(TPL_HELPER, [instance._helperId]);
 
 			instance._helper = A.Node.create(helperHTML);
 
@@ -407,7 +407,7 @@ AUI().add(
 				var instanceId = fieldInstance.get('instanceId');
 				var name = instance.portletNamespace + 'structure_el_' + instanceId + '_content';
 
-				var editorHTML = A.substitute(
+				var editorHTML = Lang.sub(
 					TPL_EDITOR_ELEMENT,
 					{
 						id: name,
@@ -1786,16 +1786,20 @@ AUI().add(
 						);
 					}
 
-					var dynConAttributes = null;
+					var dynamicContentAttrs = null;
 
 					if (fieldInstance.get('localized')) {
-						dynConAttributes = {
-							'language-id': fieldInstance.get('localizedValue')
-						};
+						var localizedValue = fieldInstance.get('localizedValue');
+
+						if (localizedValue !== 'false') {
+							dynamicContentAttrs = {
+								'language-id': localizedValue
+							};
+						}
 					}
 
 					var nodeTypeContent = instance.getNodeTypeContent();
-					var typeContent = instance._createDynamicNode(nodeTypeContent, dynConAttributes);
+					var typeContent = instance._createDynamicNode(nodeTypeContent, dynamicContentAttrs);
 					var metadata = instance._createDynamicNode('meta-data');
 
 					var entryInstructions = instance._createDynamicNode(
@@ -2109,7 +2113,7 @@ AUI().add(
 
 						button.val(buttonValue);
 					},
-					'[name="' + instance.portletNamespace + 'journalImageDeleteButton"]'
+					'#' + instance.portletNamespace + 'journalImageDeleteButton'
 				);
 
 				container.delegate(
@@ -3189,7 +3193,7 @@ AUI().add(
 							var variableName = instance.get('variableName') + getUID();
 							var randomInstanceId = generateInstanceId();
 
-							htmlTemplate = A.substitute(
+							htmlTemplate = Lang.sub(
 								TPL_FIELD_CONTAINER,
 								{
 									articleButtonsRowCSSClass: articleButtonsRowCSSClass,
@@ -3503,6 +3507,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-data-set', 'aui-datatype','aui-dialog', 'aui-dialog-iframe', 'aui-io-request', 'aui-nested-list', 'aui-overlay-context-panel', 'json', 'substitute']
+		requires: ['aui-base', 'aui-data-set', 'aui-datatype','aui-dialog', 'aui-dialog-iframe', 'aui-io-request', 'aui-nested-list', 'aui-overlay-context-panel', 'json']
 	}
 );

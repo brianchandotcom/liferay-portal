@@ -275,14 +275,14 @@ public class DDMTemplateLocalServiceUtil {
 		long userId, long groupId, long structureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addTemplate(userId, groupId, structureId, nameMap,
-			descriptionMap, type, language, script, serviceContext);
+			descriptionMap, type, mode, language, script, serviceContext);
 	}
 
 	public static void addTemplateResources(
@@ -337,60 +337,65 @@ public class DDMTemplateLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
-		long structureId, java.lang.String type)
+		long structureId, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTemplates(structureId, type);
+		return getService().getTemplates(structureId, type, mode);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long structureId,
-		java.lang.String keywords, java.lang.String type, int start, int end,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .search(companyId, groupId, structureId, keywords, type,
-			start, end, orderByComparator);
+			mode, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long structureId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String language, boolean andOperator, int start, int end,
+		java.lang.String mode, java.lang.String language, boolean andOperator,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .search(companyId, groupId, structureId, name, description,
-			type, language, andOperator, start, end, orderByComparator);
+			type, mode, language, andOperator, start, end, orderByComparator);
 	}
 
 	public static int searchCount(long companyId, long groupId,
-		long structureId, java.lang.String keywords, java.lang.String type)
+		long structureId, java.lang.String keywords, java.lang.String type,
+		java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .searchCount(companyId, groupId, structureId, keywords, type);
+				   .searchCount(companyId, groupId, structureId, keywords,
+			type, mode);
 	}
 
 	public static int searchCount(long companyId, long groupId,
 		long structureId, java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String language, boolean andOperator)
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .searchCount(companyId, groupId, structureId, name,
-			description, type, language, andOperator);
+			description, type, mode, language, andOperator);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
 		long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String language,
-		java.lang.String script,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTemplate(templateId, nameMap, descriptionMap, type,
-			language, script, serviceContext);
+			mode, language, script, serviceContext);
 	}
 
 	public static DDMTemplateLocalService getService() {

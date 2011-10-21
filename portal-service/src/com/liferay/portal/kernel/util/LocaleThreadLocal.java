@@ -21,15 +21,27 @@ import java.util.Locale;
  */
 public class LocaleThreadLocal {
 
-	public static Locale getLocale() {
-		return _locale.get();
+	public static Locale getDefaultLocale() {
+		return _defaultLocale.get();
 	}
 
-	public static void setLocale(Locale locale) {
-		_locale.set(locale);
+	public static Locale getThemeDisplayLocale() {
+		return _themeDisplayLocale.get();
 	}
 
-	private static ThreadLocal<Locale> _locale =
-		new AutoResetThreadLocal<Locale>(LocaleThreadLocal.class + "._locale");
+	public static void setDefaultLocale(Locale locale) {
+		_defaultLocale.set(locale);
+	}
+
+	public static void setThemeDisplayLocale(Locale locale) {
+		_themeDisplayLocale.set(locale);
+	}
+
+	private static ThreadLocal<Locale> _defaultLocale =
+		new AutoResetThreadLocal<Locale>(
+			LocaleThreadLocal.class + "._defaultLocale");
+	private static ThreadLocal<Locale> _themeDisplayLocale =
+		new AutoResetThreadLocal<Locale>(
+			LocaleThreadLocal.class + "._themeDisplayLocale");
 
 }

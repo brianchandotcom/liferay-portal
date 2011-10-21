@@ -207,11 +207,11 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 
 			if (Validator.isNotNull(title)) {
 				value = LocalizationUtil.updateLocalization(
-					value, "Title",	title, languageId);
+					value, "Title", title, languageId);
 			}
 			else {
 				value = LocalizationUtil.removeLocalization(
-					value, "Title",	languageId);
+					value, "Title", languageId);
 			}
 		}
 

@@ -24,7 +24,8 @@ package com.liferay.portal.service;
  * @generated
  */
 public class PasswordPolicyLocalServiceWrapper
-	implements PasswordPolicyLocalService {
+	implements PasswordPolicyLocalService,
+		ServiceWrapper<PasswordPolicyLocalService> {
 	public PasswordPolicyLocalServiceWrapper(
 		PasswordPolicyLocalService passwordPolicyLocalService) {
 		_passwordPolicyLocalService = passwordPolicyLocalService;
@@ -340,11 +341,26 @@ public class PasswordPolicyLocalServiceWrapper
 			lockoutDuration, resetFailureCount, resetTicketMaxAge);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PasswordPolicyLocalService getWrappedPasswordPolicyLocalService() {
 		return _passwordPolicyLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPasswordPolicyLocalService(
+		PasswordPolicyLocalService passwordPolicyLocalService) {
+		_passwordPolicyLocalService = passwordPolicyLocalService;
+	}
+
+	public PasswordPolicyLocalService getWrappedService() {
+		return _passwordPolicyLocalService;
+	}
+
+	public void setWrappedService(
 		PasswordPolicyLocalService passwordPolicyLocalService) {
 		_passwordPolicyLocalService = passwordPolicyLocalService;
 	}

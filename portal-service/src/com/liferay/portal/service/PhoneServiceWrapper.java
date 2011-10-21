@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       PhoneService
  * @generated
  */
-public class PhoneServiceWrapper implements PhoneService {
+public class PhoneServiceWrapper implements PhoneService,
+	ServiceWrapper<PhoneService> {
 	public PhoneServiceWrapper(PhoneService phoneService) {
 		_phoneService = phoneService;
 	}
@@ -65,11 +66,25 @@ public class PhoneServiceWrapper implements PhoneService {
 			primary);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PhoneService getWrappedPhoneService() {
 		return _phoneService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPhoneService(PhoneService phoneService) {
+		_phoneService = phoneService;
+	}
+
+	public PhoneService getWrappedService() {
+		return _phoneService;
+	}
+
+	public void setWrappedService(PhoneService phoneService) {
 		_phoneService = phoneService;
 	}
 

@@ -16,5 +16,5 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.util.LayoutLister" %>
-<%@ page import="com.liferay.portal.util.LayoutView" %>
+<%@ page import="com.liferay.portal.util.LayoutLister" %><%@
+page import="com.liferay.portal.util.LayoutView" %>

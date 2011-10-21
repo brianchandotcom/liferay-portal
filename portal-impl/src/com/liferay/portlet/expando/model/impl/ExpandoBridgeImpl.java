@@ -15,6 +15,7 @@
 package com.liferay.portlet.expando.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -69,9 +70,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void addAttribute(String name) throws PortalException {
-		addAttribute(
-			name, ExpandoColumnConstants.STRING, null,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		addAttribute(name, ExpandoColumnConstants.STRING, null, secure);
 	}
 
 	public void addAttribute(String name, boolean secure)
@@ -81,9 +87,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void addAttribute(String name, int type) throws PortalException {
-		addAttribute(
-			name, type, null,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		addAttribute(name, type, null, secure);
 	}
 
 	public void addAttribute(String name, int type, boolean secure)
@@ -96,9 +107,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			String name, int type, Serializable defaultValue)
 		throws PortalException {
 
-		addAttribute(
-			name, type, defaultValue,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		addAttribute(name, type, defaultValue, secure);
 	}
 
 	public void addAttribute(
@@ -134,9 +150,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Serializable getAttribute(String name) {
-		return getAttribute(
-			name,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isExportInProcess()) {
+			secure = false;
+		}
+
+		return getAttribute(name, secure);
 	}
 
 	public Serializable getAttribute(String name, boolean secure) {
@@ -218,8 +239,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Map<String, Serializable> getAttributes() {
-		return getAttributes(
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isExportInProcess()) {
+			secure = false;
+		}
+
+		return getAttributes(secure);
 	}
 
 	public Map<String, Serializable> getAttributes(boolean secure) {
@@ -247,9 +274,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Map<String, Serializable> getAttributes(Collection<String> names) {
-		return getAttributes(
-			names,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isExportInProcess()) {
+			secure = false;
+		}
+
+		return getAttributes(names, secure);
 	}
 
 	public Map<String, Serializable> getAttributes(
@@ -350,9 +382,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttribute(String name, Serializable value) {
-		setAttribute(
-			name, value,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		setAttribute(name, value, secure);
 	}
 
 	public void setAttribute(String name, Serializable value, boolean secure) {
@@ -398,9 +435,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	public void setAttributeProperties(
 		String name, UnicodeProperties properties) {
 
-		setAttributeProperties(
-			name, properties,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		setAttributeProperties(name, properties, secure);
 	}
 
 	public void setAttributeProperties(
@@ -426,9 +468,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttributes(Map<String, Serializable> attributes) {
-		setAttributes(
-			attributes,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		setAttributes(attributes, secure);
 	}
 
 	public void setAttributes(
@@ -463,9 +510,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public void setAttributes(ServiceContext serviceContext) {
-		setAttributes(
-			serviceContext,
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT);
+		boolean secure =
+			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (ImportExportThreadLocal.isImportInProcess()) {
+			secure = false;
+		}
+
+		setAttributes(serviceContext, secure);
 	}
 
 	public void setAttributes(ServiceContext serviceContext, boolean secure) {

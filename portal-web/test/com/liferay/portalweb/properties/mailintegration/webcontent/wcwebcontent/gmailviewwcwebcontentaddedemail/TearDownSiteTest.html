@@ -25,13 +25,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//strong/a','Global'))</td>
-	<td>GlobalSitePresent</td>
+	<td>eval(selenium.isPartialText('//strong/a','Liferay'))</td>
+	<td>LiferaySitePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>${GlobalSitePresent}</td>
-	<td>GlobalSiteIsPresent</td>
+	<td>${LiferaySitePresent}</td>
+	<td>LiferaySiteIsPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -39,13 +39,8 @@
 	<td>Site Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Global</td>
-	<td>Global</td>
-</tr>
-<tr>
 	<td>label</td>
-	<td>GlobalSiteIsPresent</td>
+	<td>LiferaySiteIsPresent</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,28 +49,23 @@
 	<td>Sites</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
-	<td>Sites1Present</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site1Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${Sites1Present}</td>
-	<td>Sites1NotPresent</td>
+	<td>!${Site1Present}</td>
+	<td>Site1NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -105,22 +95,22 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
-	<td>Sites2Present</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${Sites2Present}</td>
-	<td>Sites2NotPresent</td>
+	<td>!${Site2Present}</td>
+	<td>Site2NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -150,22 +140,22 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
-	<td>Sites3Present</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site3Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${Sites3Present}</td>
-	<td>Sites3NotPresent</td>
+	<td>!${Site3Present}</td>
+	<td>Site3NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -195,22 +185,22 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
-	<td>Sites4Present</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Site4Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${Sites4Present}</td>
-	<td>Sites4NotPresent</td>
+	<td>!${Site4Present}</td>
+	<td>Site4NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -240,22 +230,22 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//td[1]/a</td>
-	<td>sites5Present</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>site5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${sites5Present}</td>
-	<td>Sites5NotPresent</td>
+	<td>!${site5Present}</td>
+	<td>Site5NotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
+	<td>xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -285,27 +275,27 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>Sites1NotPresent</td>
+	<td>Site1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Sites2NotPresent</td>
+	<td>Site2NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Sites3NotPresent</td>
+	<td>Site3NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Sites4NotPresent</td>
+	<td>Site4NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Sites5NotPresent</td>
+	<td>Site5NotPresent</td>
 	<td></td>
 </tr>
 

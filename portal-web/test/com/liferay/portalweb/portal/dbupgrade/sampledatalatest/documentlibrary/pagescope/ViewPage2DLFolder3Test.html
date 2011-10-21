@@ -64,43 +64,33 @@
 	<td>Documents and Media (DL Page2 Name)</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//a[contains(@class,'aui-paginator-next-link')]</td>
-	<td>Next</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//span[@class='document-title']</td>
-	<td>DL Folder3 Name</td>
-</tr>
-<tr>
 	<td>assertVisible</td>
-	<td>//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png']</td>
+	<td>//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png']</td>
 	<td>Folder Image</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='document-title']</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder3 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='document-title']</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder3 Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>xPath=(//a[@class='browse-folder'])[1]</td>
+	<td>//a[@class='browse-folder']</td>
 	<td>Up</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='browse-folder'])[1]</td>
+	<td>//a[@class='browse-folder']</td>
 	<td>Up</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='browse-folder'])[3]</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>DL Folder3 Name</td>
 </tr>
 <tr>
@@ -140,32 +130,32 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xPath=(//img[@src='/html/themes/classic/images/file_system/large/folder_full_document.png'])[2]</td>
+	<td>//img[@src='/html/themes/classic/images/file_system/large/folder_empty.png']</td>
 	<td>Folder Image</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='document-title'])[2]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder3 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//span[@class='document-title'])[2]</td>
+	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]</td>
 	<td>DL Folder3 Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>xPath=(//a[@class='browse-folder'])[1]</td>
+	<td>//a[@class='browse-folder']</td>
 	<td>Up</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='browse-folder'])[1]</td>
+	<td>//a[@class='browse-folder']</td>
 	<td>Up</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[@class='browse-folder'])[3]</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>DL Folder3 Name</td>
 </tr>
 <tr>

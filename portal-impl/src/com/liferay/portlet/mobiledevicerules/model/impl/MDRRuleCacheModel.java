@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see MDRRule
  * @generated
  */
-public class MDRRuleCacheModel implements CacheModel<MDRRule> {
+public class MDRRuleCacheModel implements CacheModel<MDRRule>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(27);

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Contact;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Date;
  * @see Contact
  * @generated
  */
-public class ContactCacheModel implements CacheModel<Contact> {
+public class ContactCacheModel implements CacheModel<Contact>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(61);

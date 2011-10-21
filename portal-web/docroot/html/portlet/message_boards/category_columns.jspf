@@ -94,7 +94,4 @@
 	value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
 />
 
-<liferay-ui:search-container-column-jsp
-	align="right"
-	path="/html/portlet/message_boards/category_action.jsp"
-/>
+<%@ include file="/html/portlet/message_boards/category_columns_action.jspf" %>

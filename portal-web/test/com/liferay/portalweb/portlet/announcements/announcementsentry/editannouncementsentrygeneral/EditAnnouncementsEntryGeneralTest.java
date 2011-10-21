@@ -25,7 +25,7 @@ public class EditAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,43 +40,57 @@ public class EditAnnouncementsEntryGeneralTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),
 			selenium.getText("//h3[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace(
-				"General Announcements Entry Content"),
-			selenium.getText("//p[@class=' entry-content entry-type-general']"));
-		assertFalse(selenium.isTextPresent("Edited Announcements Entry Title"));
-		assertFalse(selenium.isTextPresent(
-				"General Edited Announcements Entry Content"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("//span[@class='entry-scope']"));
+		assertEquals(RuntimeVariables.replace("Announcements Entry Content"),
+			selenium.getText(
+				"//div[@class=' entry-content entry-type-general']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//td[@class='edit-entry']/span/a/span"));
 		selenium.clickAt("//td[@class='edit-entry']/span/a/span",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_84_title']",
-			RuntimeVariables.replace("Edited Announcements Entry Title"));
-		selenium.saveScreenShotAndSource();
+			RuntimeVariables.replace("Announcements Entry Title Edit"));
 		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.alloyui.com"));
-		selenium.saveScreenShotAndSource();
-		selenium.type("//textarea[@id='_84_content']",
-			RuntimeVariables.replace("Edited Announcements Entry Content"));
-		selenium.saveScreenShotAndSource();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__84_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
+		selenium.type("//body",
+			RuntimeVariables.replace("Announcements Entry Content Edit"));
+		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertEquals(RuntimeVariables.replace(
-				"Edited Announcements Entry Title"),
+		assertEquals(RuntimeVariables.replace("Announcements Entry Title Edit"),
 			selenium.getText("//h3[@class='entry-title']/a"));
+		assertEquals(RuntimeVariables.replace("General"),
+			selenium.getText("//span[@class='entry-scope']"));
 		assertEquals(RuntimeVariables.replace(
-				"General Edited Announcements Entry Content"),
-			selenium.getText("//p[@class=' entry-content entry-type-general']"));
+				"Announcements Entry Content Edit"),
+			selenium.getText(
+				"//div[@class=' entry-content entry-type-general']/p"));
 	}
 }

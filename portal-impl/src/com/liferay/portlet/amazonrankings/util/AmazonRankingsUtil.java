@@ -15,13 +15,12 @@
 package com.liferay.portlet.amazonrankings.util;
 
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
 
 import java.text.DateFormat;
@@ -34,11 +33,11 @@ import java.util.Calendar;
 public class AmazonRankingsUtil {
 
 	public static String getAmazonAccessKeyId() {
-		return PropsUtil.get(PropsKeys.AMAZON_ACCESS_KEY_ID);
+		return PropsValues.AMAZON_ACCESS_KEY_ID;
 	}
 
 	public static String getAmazonAssociateTag() {
-		return PropsUtil.get(PropsKeys.AMAZON_ASSOCIATE_TAG);
+		return PropsValues.AMAZON_ASSOCIATE_TAG;
 	}
 
 	public static AmazonRankings getAmazonRankings(String isbn) {
@@ -53,7 +52,7 @@ public class AmazonRankingsUtil {
 	}
 
 	public static String getAmazonSecretAccessKey() {
-		return PropsUtil.get(PropsKeys.AMAZON_SECRET_ACCESS_KEY);
+		return PropsValues.AMAZON_SECRET_ACCESS_KEY;
 	}
 
 	public static String getTimestamp() {
@@ -65,6 +64,18 @@ public class AmazonRankingsUtil {
 		Calendar calendar = Calendar.getInstance();
 
 		return dateFormat.format(calendar.getTime());
+	}
+
+	public static boolean isEnabled() {
+		if (Validator.isNull(PropsValues.AMAZON_ACCESS_KEY_ID) ||
+			Validator.isNull(PropsValues.AMAZON_ASSOCIATE_TAG) ||
+			Validator.isNull(PropsValues.AMAZON_SECRET_ACCESS_KEY)) {
+
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	private static final String _TIMESTAMP = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";

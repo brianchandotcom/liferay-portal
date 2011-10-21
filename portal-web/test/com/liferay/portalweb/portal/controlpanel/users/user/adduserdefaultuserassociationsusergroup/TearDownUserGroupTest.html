@@ -25,57 +25,42 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users and Organizations</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>link=User Groups</td>
 	<td>User Groups</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[2]/a'))</td>
-	<td>userGroup1Present</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>UserGroup1Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${userGroup1Present}</td>
+	<td>!${UserGroup1Present}</td>
 	<td>UserGroup1NotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -84,53 +69,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[2]/a'))</td>
-	<td>userGroup2Present</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>UserGroup2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${userGroup2Present}</td>
+	<td>!${UserGroup2Present}</td>
 	<td>UserGroup2NotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -139,108 +109,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[2]/a'))</td>
-	<td>userGroup3Present</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>UserGroup3Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${userGroup3Present}</td>
+	<td>!${UserGroup3Present}</td>
 	<td>UserGroup3NotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[2]/a'))</td>
-	<td>userGroup4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${userGroup4Present}</td>
-	<td>UserGroup4NotPresent</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -249,53 +149,78 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>UserGroup4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${UserGroup4Present}</td>
+	<td>UserGroup4NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>User Groups</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[2]/a'))</td>
-	<td>userGroup5Present</td>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>UserGroup5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${userGroup5Present}</td>
+	<td>!${UserGroup5Present}</td>
 	<td>UserGroup5NotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>All Rows</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -305,17 +230,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>UserGroup5NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>UserGroup4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>UserGroup3NotPresent</td>
+	<td>UserGroup1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
@@ -325,7 +240,17 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>UserGroup1NotPresent</td>
+	<td>UserGroup3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UserGroup4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UserGroup5NotPresent</td>
 	<td></td>
 </tr>
 

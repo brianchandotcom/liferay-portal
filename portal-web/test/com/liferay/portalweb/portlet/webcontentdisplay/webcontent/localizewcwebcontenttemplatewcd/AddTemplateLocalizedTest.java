@@ -30,7 +30,7 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -45,36 +45,29 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Add Template']",
 					RuntimeVariables.replace("Add Template"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='_15_name_en_US']",
 					RuntimeVariables.replace(
 						"Web Content Localized Template Name"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//textarea[@id='_15_description_en_US']",
 					RuntimeVariables.replace(
 						"Web Content Localized Template Description"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -90,8 +83,6 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
-
 				boolean localizedPresentA = selenium.isElementPresent(
 						"//td[1]/a");
 
@@ -103,7 +94,6 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
@@ -118,7 +108,6 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 
 				selenium.click("//td[1]/a");
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 				Thread.sleep(5000);
@@ -128,11 +117,9 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 				selenium.type("//input[@id='_15_xsl']",
 					RuntimeVariables.replace(
 						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\webcontentdisplay\\dependencies\\LocalizedTemplate.html"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

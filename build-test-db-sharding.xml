@@ -33,44 +33,45 @@ jdbc.two.url=jdbc:mysql://${db.mysql.host}/lportal2?useUnicode=true&characterEnc
 jdbc.two.username=
 jdbc.two.password=
 
-shard.available.names=default,one,two
-
 spring.configs=\
-		META-INF/base-spring.xml,\
-		\
-		META-INF/hibernate-spring.xml,\
-		META-INF/infrastructure-spring.xml,\
-		META-INF/management-spring.xml,\
-		\
-		META-INF/util-spring.xml,\
-		\
-		META-INF/jpa-spring.xml,\
-		\
-		META-INF/cluster-spring.xml,\
-		META-INF/editor-spring.xml,\
-		META-INF/jcr-spring.xml,\
-        META-INF/ldap-spring.xml,\
-		META-INF/messaging-core-spring.xml,\
-		META-INF/messaging-misc-spring.xml,\
-		META-INF/poller-spring.xml,\
-		META-INF/rules-spring.xml,\
-		META-INF/scheduler-spring.xml,\
-		META-INF/scripting-spring.xml,\
-		META-INF/search-spring.xml,\
-		META-INF/workflow-spring.xml,\
-		\
-		META-INF/counter-spring.xml,\
-		META-INF/document-library-spring.xml,\
-		META-INF/mail-spring.xml,\
-		META-INF/portal-spring.xml,\
-		META-INF/portlet-container-spring.xml,\
-		\
-		#META-INF/audit-spring.xml,\
-		META-INF/dynamic-data-source-spring.xml,\
-		META-INF/shard-data-source-spring.xml,\
-        #META-INF/memcached-spring.xml,\
-		#META-INF/monitoring-spring.xml,\
-		\
-		META-INF/ext-spring.xml]]></echo>
+	META-INF/base-spring.xml,\
+	\
+	META-INF/hibernate-spring.xml,\
+	META-INF/infrastructure-spring.xml,\
+	META-INF/management-spring.xml,\
+	\
+	META-INF/util-spring.xml,\
+	\
+	META-INF/jpa-spring.xml,\
+	\
+	META-INF/audit-spring.xml,\
+	META-INF/cluster-spring.xml,\
+	META-INF/editor-spring.xml,\
+	META-INF/executor-spring.xml,\
+	META-INF/jcr-spring.xml,\
+	META-INF/ldap-spring.xml,\
+	META-INF/messaging-core-spring.xml,\
+	META-INF/messaging-misc-spring.xml,\
+	META-INF/mobile-device-spring.xml,\
+	META-INF/notifications-spring.xml,\
+	META-INF/poller-spring.xml,\
+	META-INF/rules-spring.xml,\
+	META-INF/scheduler-spring.xml,\
+	META-INF/scripting-spring.xml,\
+	META-INF/search-spring.xml,\
+	META-INF/workflow-spring.xml,\
+	\
+	META-INF/counter-spring.xml,\
+	META-INF/mail-spring.xml,\
+	META-INF/portal-spring.xml,\
+	META-INF/portlet-container-spring.xml,\
+	META-INF/staging-spring.xml,\
+	\
+	META-INF/dynamic-data-source-spring.xml,\
+	META-INF/shard-data-source-spring.xml,\
+	#META-INF/memcached-spring.xml,\
+	#META-INF/monitoring-spring.xml,\
+	\
+	META-INF/ext-spring.xml]]></echo>
 	</target>
 </project>

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Permission;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Permission in entity cache.
  *
@@ -26,7 +28,8 @@ import com.liferay.portal.model.Permission;
  * @see Permission
  * @generated
  */
-public class PermissionCacheModel implements CacheModel<Permission> {
+public class PermissionCacheModel implements CacheModel<Permission>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

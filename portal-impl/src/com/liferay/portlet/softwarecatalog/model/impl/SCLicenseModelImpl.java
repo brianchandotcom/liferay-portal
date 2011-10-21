@@ -80,6 +80,11 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.softwarecatalog.model.SCLicense"),
 			true);
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.softwarecatalog.model.SCLicense"),
+			true);
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long RECOMMENDED_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -116,14 +121,6 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		return models;
 	}
 
-	public Class<?> getModelClass() {
-		return SCLicense.class;
-	}
-
-	public String getModelClassName() {
-		return SCLicense.class.getName();
-	}
-
 	public static final String MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME = "SCLicenses_SCProductEntries";
 	public static final Object[][] MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_COLUMNS =
 		{
@@ -156,6 +153,14 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
+	}
+
+	public Class<?> getModelClass() {
+		return SCLicense.class;
+	}
+
+	public String getModelClassName() {
+		return SCLicense.class.getName();
 	}
 
 	@JSON
@@ -218,7 +223,19 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	}
 
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@JSON
@@ -231,23 +248,34 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	}
 
 	public void setRecommended(boolean recommended) {
+		_columnBitmask |= RECOMMENDED_COLUMN_BITMASK;
+
+		if (!_setOriginalRecommended) {
+			_setOriginalRecommended = true;
+
+			_originalRecommended = _recommended;
+		}
+
 		_recommended = recommended;
+	}
+
+	public boolean getOriginalRecommended() {
+		return _originalRecommended;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
 	public SCLicense toEscapedModel() {
-		if (isEscapedModel()) {
-			return (SCLicense)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (SCLicense)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (SCLicense)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -325,6 +353,17 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public void resetOriginalValues() {
+		SCLicenseModelImpl scLicenseModelImpl = this;
+
+		scLicenseModelImpl._originalActive = scLicenseModelImpl._active;
+
+		scLicenseModelImpl._setOriginalActive = false;
+
+		scLicenseModelImpl._originalRecommended = scLicenseModelImpl._recommended;
+
+		scLicenseModelImpl._setOriginalRecommended = false;
+
+		scLicenseModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -425,7 +464,12 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	private String _url;
 	private boolean _openSource;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private boolean _recommended;
+	private boolean _originalRecommended;
+	private boolean _setOriginalRecommended;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private SCLicense _escapedModelProxy;
 }

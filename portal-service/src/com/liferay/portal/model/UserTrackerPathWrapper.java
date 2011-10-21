@@ -23,7 +23,8 @@ package com.liferay.portal.model;
  * @see       UserTrackerPath
  * @generated
  */
-public class UserTrackerPathWrapper implements UserTrackerPath {
+public class UserTrackerPathWrapper implements UserTrackerPath,
+	ModelWrapper<UserTrackerPath> {
 	public UserTrackerPathWrapper(UserTrackerPath userTrackerPath) {
 		_userTrackerPath = userTrackerPath;
 	}
@@ -146,10 +147,6 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 		return _userTrackerPath.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_userTrackerPath.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _userTrackerPath.getPrimaryKeyObj();
 	}
@@ -204,7 +201,14 @@ public class UserTrackerPathWrapper implements UserTrackerPath {
 		_userTrackerPath.persist();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public UserTrackerPath getWrappedUserTrackerPath() {
+		return _userTrackerPath;
+	}
+
+	public UserTrackerPath getWrappedModel() {
 		return _userTrackerPath;
 	}
 

@@ -70,15 +70,12 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.wiki.model.WikiPageResource"),
 			true);
-
-	public Class<?> getModelClass() {
-		return WikiPageResource.class;
-	}
-
-	public String getModelClassName() {
-		return WikiPageResource.class.getName();
-	}
-
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiPageResource"),
+			true);
+	public static long NODEID_COLUMN_BITMASK = 1L;
+	public static long TITLE_COLUMN_BITMASK = 2L;
+	public static long UUID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.wiki.model.WikiPageResource"));
 
@@ -101,6 +98,14 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
+	public Class<?> getModelClass() {
+		return WikiPageResource.class;
+	}
+
+	public String getModelClassName() {
+		return WikiPageResource.class.getName();
+	}
+
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -111,7 +116,15 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
 		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	public long getResourcePrimKey() {
@@ -127,6 +140,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public void setNodeId(long nodeId) {
+		_columnBitmask |= NODEID_COLUMN_BITMASK;
+
 		if (!_setOriginalNodeId) {
 			_setOriginalNodeId = true;
 
@@ -150,6 +165,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	public void setTitle(String title) {
+		_columnBitmask |= TITLE_COLUMN_BITMASK;
+
 		if (_originalTitle == null) {
 			_originalTitle = _title;
 		}
@@ -161,20 +178,19 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		return GetterUtil.getString(_originalTitle);
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public WikiPageResource toEscapedModel() {
-		if (isEscapedModel()) {
-			return (WikiPageResource)this;
+		if (_escapedModelProxy == null) {
+			_escapedModelProxy = (WikiPageResource)ProxyUtil.newProxyInstance(_classLoader,
+					_escapedModelProxyInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
-		else {
-			if (_escapedModelProxy == null) {
-				_escapedModelProxy = (WikiPageResource)ProxyUtil.newProxyInstance(_classLoader,
-						_escapedModelProxyInterfaces,
-						new AutoEscapeBeanHandler(this));
-			}
 
-			return _escapedModelProxy;
-		}
+		return _escapedModelProxy;
 	}
 
 	@Override
@@ -254,11 +270,15 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public void resetOriginalValues() {
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = this;
 
+		wikiPageResourceModelImpl._originalUuid = wikiPageResourceModelImpl._uuid;
+
 		wikiPageResourceModelImpl._originalNodeId = wikiPageResourceModelImpl._nodeId;
 
 		wikiPageResourceModelImpl._setOriginalNodeId = false;
 
 		wikiPageResourceModelImpl._originalTitle = wikiPageResourceModelImpl._title;
+
+		wikiPageResourceModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -339,6 +359,7 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 			WikiPageResource.class
 		};
 	private String _uuid;
+	private String _originalUuid;
 	private long _resourcePrimKey;
 	private long _nodeId;
 	private long _originalNodeId;
@@ -346,5 +367,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private String _title;
 	private String _originalTitle;
 	private transient ExpandoBridge _expandoBridge;
+	private long _columnBitmask;
 	private WikiPageResource _escapedModelProxy;
 }

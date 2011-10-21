@@ -28,17 +28,17 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 
-				boolean signedIn1 = selenium.isPartialText("//td/a", "Sign out");
+				boolean SignedIn1 = selenium.isElementPresent("link=Sign out");
 
-				if (!signedIn1) {
+				if (!SignedIn1) {
 					label = 2;
 
 					continue;
@@ -50,12 +50,11 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 2:
 
 				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
-						"link=Sign in as a different user");
+						"link=Sign out and sign in as a different user");
 
 				if (!signInAsADifferentUserPresent) {
 					label = 3;
@@ -63,15 +62,15 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=Sign in as a different user",
-					RuntimeVariables.replace("Sign in as a different user"));
+				selenium.clickAt("link=Sign out and sign in as a different user",
+					RuntimeVariables.replace(
+						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 3:
 
 				for (int second = 0;; second++) {
-					if (second >= 60) {
+					if (second >= 90) {
 						fail("timeout");
 					}
 
@@ -86,13 +85,10 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.server.trunk"));
-				selenium.saveScreenShotAndSource();
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
-				selenium.saveScreenShotAndSource();
 
 				boolean staySignedInChecked = selenium.isChecked(
 						"PersistentCookie");
@@ -105,37 +101,29 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 
 				assertFalse(selenium.isChecked(
 						"//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
 			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				Thread.sleep(5000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				selenium.openWindow("http://groups.google.com/",
 					RuntimeVariables.replace("Google Groups"));
 				selenium.waitForPopUp("Google Groups",
 					RuntimeVariables.replace(""));
 				selenium.selectWindow("Google Groups");
-				selenium.saveScreenShotAndSource();
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
 					selenium.getText("//a[1]/font/b"));
 				selenium.clickAt("//a[1]/font/b",
 					RuntimeVariables.replace("liferay-mailinglist"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean MLMessage1Present = selenium.isElementPresent(
 						"//span[1]/a");
@@ -150,16 +138,13 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"[MB Category Name] MB Message Subject"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Remove",
 					RuntimeVariables.replace("Remove"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.check("//input[@id='really_delete.yes']");
 				selenium.clickAt("//input[@name='Action.Confirm']",
 					RuntimeVariables.replace("Confirm"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean MLMessage2Present = selenium.isElementPresent(
 						"//span[1]/a");
@@ -174,16 +159,13 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"[MB Category Name] MB Message Subject"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Remove",
 					RuntimeVariables.replace("Remove"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.check("//input[@id='really_delete.yes']");
 				selenium.clickAt("//input[@name='Action.Confirm']",
 					RuntimeVariables.replace("Confirm"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean MLMessage3Present = selenium.isElementPresent(
 						"//span[1]/a");
@@ -198,16 +180,13 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"[MB Category Name] MB Message Subject"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Remove",
 					RuntimeVariables.replace("Remove"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.check("//input[@id='really_delete.yes']");
 				selenium.clickAt("//input[@name='Action.Confirm']",
 					RuntimeVariables.replace("Confirm"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean MLMessage4Present = selenium.isElementPresent(
 						"//span[1]/a");
@@ -222,16 +201,13 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"[MB Category Name] MB Message Subject"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Remove",
 					RuntimeVariables.replace("Remove"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.check("//input[@id='really_delete.yes']");
 				selenium.clickAt("//input[@name='Action.Confirm']",
 					RuntimeVariables.replace("Confirm"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 				boolean MLMessage5Present = selenium.isElementPresent(
 						"//span[1]/a");
@@ -246,16 +222,13 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"[MB Category Name] MB Message Subject"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.clickAt("link=Remove",
 					RuntimeVariables.replace("Remove"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 				selenium.check("//input[@id='really_delete.yes']");
 				selenium.clickAt("//input[@name='Action.Confirm']",
 					RuntimeVariables.replace("Confirm"));
 				selenium.waitForPageToLoad("30000");
-				selenium.saveScreenShotAndSource();
 
 			case 5:
 			case 6:
@@ -276,11 +249,9 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
 			case 10:
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");
-				selenium.saveScreenShotAndSource();
 
 			case 100:
 				label = -1;

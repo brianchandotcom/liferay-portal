@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,7 @@ import java.util.Date;
  * @see DLFolder
  * @generated
  */
-public class DLFolderCacheModel implements CacheModel<DLFolder> {
+public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(33);

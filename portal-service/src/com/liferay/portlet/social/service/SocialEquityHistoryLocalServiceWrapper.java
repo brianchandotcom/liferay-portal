@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityHistoryLocalService}.
@@ -24,7 +26,8 @@ package com.liferay.portlet.social.service;
  * @generated
  */
 public class SocialEquityHistoryLocalServiceWrapper
-	implements SocialEquityHistoryLocalService {
+	implements SocialEquityHistoryLocalService,
+		ServiceWrapper<SocialEquityHistoryLocalService> {
 	public SocialEquityHistoryLocalServiceWrapper(
 		SocialEquityHistoryLocalService socialEquityHistoryLocalService) {
 		_socialEquityHistoryLocalService = socialEquityHistoryLocalService;
@@ -250,11 +253,26 @@ public class SocialEquityHistoryLocalServiceWrapper
 		_socialEquityHistoryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public SocialEquityHistoryLocalService getWrappedSocialEquityHistoryLocalService() {
 		return _socialEquityHistoryLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedSocialEquityHistoryLocalService(
+		SocialEquityHistoryLocalService socialEquityHistoryLocalService) {
+		_socialEquityHistoryLocalService = socialEquityHistoryLocalService;
+	}
+
+	public SocialEquityHistoryLocalService getWrappedService() {
+		return _socialEquityHistoryLocalService;
+	}
+
+	public void setWrappedService(
 		SocialEquityHistoryLocalService socialEquityHistoryLocalService) {
 		_socialEquityHistoryLocalService = socialEquityHistoryLocalService;
 	}

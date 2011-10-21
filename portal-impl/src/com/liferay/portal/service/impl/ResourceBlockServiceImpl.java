@@ -20,6 +20,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.service.base.ResourceBlockServiceBaseImpl;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Connor McKay
@@ -141,6 +142,17 @@ public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {
 
 		resourceBlockLocalService.setIndividualScopePermissions(
 			companyId, groupId, name, primKey, roleId, actionIds);
+	}
+
+	public void setIndividualScopePermissions(
+			long companyId, long groupId, String name, long primKey,
+			Map<Long, String[]> roleIdsToActionIds)
+		throws PortalException, SystemException {
+
+		permissionService.checkPermission(groupId, name, primKey);
+
+		resourceBlockLocalService.setIndividualScopePermissions(
+			companyId, groupId, name, primKey, roleIdsToActionIds);
 	}
 
 }

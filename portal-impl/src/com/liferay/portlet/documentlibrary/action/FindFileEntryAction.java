@@ -14,133 +14,34 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
+ * @author Juan Fernández
  * @author Ryan Park
  */
-public class FindFileEntryAction extends Action {
+public class FindFileEntryAction extends FindFolderAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
+	protected long getGroupId(long primaryKey) throws Exception {
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(primaryKey);
 
-		try {
-			long plid = ParamUtil.getLong(request, "p_l_id");
-			long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
-
-			plid = getPlid(plid, fileEntryId);
-
-			PortletURL portletURL = new PortletURLImpl(
-				request, getPortletId(plid), plid, PortletRequest.RENDER_PHASE);
-
-			portletURL.setWindowState(WindowState.NORMAL);
-			portletURL.setPortletMode(PortletMode.VIEW);
-
-			portletURL.setParameter(
-				"struts_action", "/document_library/view_file_entry");
-			portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-
-			response.sendRedirect(portletURL.toString());
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
+		return fileEntry.getRepositoryId();
 	}
 
-	protected long getPlid(long plid, long fileEntryId) throws Exception {
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				if (layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY) ||
-					layoutTypePortlet.hasPortletId(
-						PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-					layoutTypePortlet.hasPortletId(
-						PortletKeys.IMAGE_GALLERY_DISPLAY)) {
-
-					return plid;
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-			}
-		}
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-
-		plid = PortalUtil.getPlidFromPortletId(
-			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			fileEntry.getRepositoryId(), PortletKeys.DOCUMENT_LIBRARY_DISPLAY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		plid = PortalUtil.getPlidFromPortletId(
-			fileEntry.getRepositoryId(), PortletKeys.IMAGE_GALLERY_DISPLAY);
-
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			return plid;
-		}
-
-		throw new NoSuchLayoutException(
-			"No page was found with the Document Library portlet");
+	@Override
+	protected String getPrimaryKeyParameterName() {
+		return "fileEntryId";
 	}
 
-	protected String getPortletId(long plid) throws Exception {
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+	@Override
+	protected String getStrutsAction(
+		HttpServletRequest request, String portletId) {
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		for (String portletId : layoutTypePortlet.getPortletIds()) {
-			if (portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY) ||
-				portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-
-				return portletId;
-			}
-		}
-
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return "/document_library/view_file_entry";
 	}
 
 }

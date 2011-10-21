@@ -138,9 +138,8 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		throws Exception {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
-			companyId, defaultUserId,
-			"Site with Calendar, Documents and Images", StringPool.BLANK,
-			layoutSetPrototypes);
+			companyId, defaultUserId, "Intranet Site",
+			"Site with Documents, Calendar and News", layoutSetPrototypes);
 
 		if (layoutSet == null) {
 			return;
@@ -148,12 +147,50 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// Home layout
 
-		Layout layout = addLayout(layoutSet, "Home", "/home", "2_columns_iii");
+		Layout layout = addLayout(layoutSet, "Home", "/home", "2_columns_i");
 
-		addPortletId(layout, PortletKeys.ANNOUNCEMENTS, "column-1");
 		addPortletId(layout, PortletKeys.ACTIVITIES, "column-1");
-		addPortletId(layout, PortletKeys.INVITATION, "column-2");
-		addPortletId(layout, PortletKeys.DIRECTORY, "column-2");
+
+		String portletId = addPortletId(layout, PortletKeys.SEARCH, "column-2");
+
+		Map<String, String> preferences = new HashMap<String, String>();
+
+		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
+
+		portletId = addPortletId(layout, PortletKeys.LANGUAGE, "column-2");
+
+		preferences = new HashMap<String, String>();
+
+		preferences.put("displayStyle", "3");
+
+		updatePortletSetup(layout, portletId, preferences);
+
+		portletId = addPortletId(
+			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
+
+		preferences = new HashMap<String, String>();
+
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
+
+		// Documents layout
+
+		layout = addLayout(
+			layoutSet, "Documents and Media", "/documents", "1_column");
+
+		portletId = addPortletId(
+			layout, PortletKeys.DOCUMENT_LIBRARY, "column-1");
+
+		preferences = new HashMap<String, String>();
+
+		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
 
 		// Calendar layout
 
@@ -161,10 +198,10 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		addPortletId(layout, PortletKeys.CALENDAR, "column-1");
 
-		String portletId = addPortletId(
+		portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 
-		Map<String, String> preferences = new HashMap<String, String>();
+		preferences = new HashMap<String, String>();
 
 		preferences.put("anyAssetType", Boolean.FALSE.toString());
 
@@ -178,19 +215,36 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		updatePortletSetup(layout, portletId, preferences);
 
-		// Documents layout
+		// News layout
 
-		layout = addLayout(
-			layoutSet, "Documents", "/documents", "2_columns_iii");
+		layout = addLayout(layoutSet, "News", "/news", "2_columns_iii");
 
-		addPortletId(layout, PortletKeys.DOCUMENT_LIBRARY_DISPLAY, "column-1");
-		addPortletId(layout, PortletKeys.RECENT_DOCUMENTS, "column-2");
+		portletId = addPortletId(layout, PortletKeys.RSS, "column-1");
 
-		// Images layout
+		preferences = new HashMap<String, String>();
 
-		layout = addLayout(layoutSet, "Images", "/images", "1_column");
+		preferences.put("expandedEntriesPerFeed", "3");
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Technology news");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		preferences.put(
+			"urls", "http://partners.userland.com/nytRss/technology.xml");
 
-		addPortletId(layout, PortletKeys.IMAGE_GALLERY_DISPLAY, "column-1");
+		updatePortletSetup(layout, portletId, preferences);
+
+		portletId = addPortletId(layout, PortletKeys.RSS, "column-2");
+
+		preferences = new HashMap<String, String>();
+
+		preferences.put("expandedEntriesPerFeed", "0");
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Liferay news");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		preferences.put(
+			"urls", "http://www.liferay.com/en/about-us/news/-/blogs/rss");
+		preferences.put("titles", "Liferay Press Releases");
+
+		updatePortletSetup(layout, portletId, preferences);
 	}
 
 	protected void addPublicSite(
@@ -199,9 +253,8 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		throws Exception {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
-			companyId, defaultUserId, "Site with Blog, Wiki and Forum",
-			"Pages that are available to both guests and members of this site.",
-			layoutSetPrototypes);
+			companyId, defaultUserId, "Community Site",
+			"Site with Forums, Calendar and Wiki", layoutSetPrototypes);
 
 		if (layoutSet == null) {
 			return;
@@ -209,20 +262,43 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// Home layout
 
-		Layout layout = addLayout(layoutSet, "Home", "/home", "1_2_columns_ii");
+		Layout layout = addLayout(layoutSet, "Home", "/home", "2_columns_iii");
 
-		addPortletId(layout, PortletKeys.JOURNAL_CONTENT_SEARCH, "column-1");
-		addPortletId(layout, PortletKeys.JOURNAL_CONTENT, "column-1");
-		addPortletId(layout, PortletKeys.ASSET_PUBLISHER, "column-2");
-		addPortletId(layout, PortletKeys.POLLS_DISPLAY, "column-3");
+		addPortletId(layout, PortletKeys.MESSAGE_BOARDS, "column-1");
 
-		// Blog layout
+		String portletId = addPortletId(layout, PortletKeys.SEARCH, "column-2");
 
-		layout = addLayout(layoutSet, "Blog", "/blog", "2_columns_iii");
+		Map<String, String> preferences = new HashMap<String, String>();
 
-		addPortletId(layout, PortletKeys.BLOGS, "column-1");
-		addPortletId(layout, PortletKeys.TAGS_CLOUD, "column-2");
-		addPortletId(layout, PortletKeys.RECENT_BLOGGERS, "column-2");
+		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
+
+		addPortletId(layout, PortletKeys.POLLS_DISPLAY, "column-2");
+		addPortletId(layout, PortletKeys.TOP_USERS, "column-2");
+
+		// Calendar layout
+
+		layout = addLayout(layoutSet, "Calendar", "/calendar", "2_columns_iii");
+
+		addPortletId(layout, PortletKeys.CALENDAR, "column-1");
+
+		portletId = addPortletId(
+			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
+
+		preferences = new HashMap<String, String>();
+
+		preferences.put("anyAssetType", Boolean.FALSE.toString());
+
+		long classNameId = PortalUtil.getClassNameId(CalEvent.class);
+
+		preferences.put("classNameIds", String.valueOf(classNameId));
+
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Upcoming Events");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+		updatePortletSetup(layout, portletId, preferences);
 
 		// Wiki layout
 
@@ -231,13 +307,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		addPortletId(layout, PortletKeys.WIKI, "column-1");
 		addPortletId(
 			layout, PortletKeys.TAGS_CATEGORIES_NAVIGATION, "column-2");
-		addPortletId(layout, PortletKeys.TAGS_ENTRIES_NAVIGATION, "column-2");
-
-		// Forum layout
-
-		layout = addLayout(layoutSet, "Forum", "/forum", "1_column");
-
-		addPortletId(layout, PortletKeys.MESSAGE_BOARDS, "column-1");
+		addPortletId(layout, PortletKeys.TAGS_CLOUD, "column-2");
 	}
 
 	protected void doRun(long companyId) throws Exception {

@@ -16,47 +16,92 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Organizations</td>
-	<td></td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Add</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_126_name</td>
+	<td>//input[@id='_125_name']</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[3]/h1/span</td>
 	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_organizationSiteLink']</td>
+	<td>Organization site</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_125_organizationSiteLink']</td>
+	<td>Organization site</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_125_siteCheckbox']</td>
+	<td>Create Site Checkbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_125_siteCheckbox']</td>
+	<td>Create Site Checkbox</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_125_siteCheckbox']</td>
+	<td>Create Site Checkbox</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 
 </tbody></table>

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link PollsVoteLocalService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.polls.service;
  * @see       PollsVoteLocalService
  * @generated
  */
-public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService {
+public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
+	ServiceWrapper<PollsVoteLocalService> {
 	public PollsVoteLocalServiceWrapper(
 		PollsVoteLocalService pollsVoteLocalService) {
 		_pollsVoteLocalService = pollsVoteLocalService;
@@ -282,12 +285,26 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService {
 		return _pollsVoteLocalService.getVote(questionId, userId);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public PollsVoteLocalService getWrappedPollsVoteLocalService() {
 		return _pollsVoteLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedPollsVoteLocalService(
 		PollsVoteLocalService pollsVoteLocalService) {
+		_pollsVoteLocalService = pollsVoteLocalService;
+	}
+
+	public PollsVoteLocalService getWrappedService() {
+		return _pollsVoteLocalService;
+	}
+
+	public void setWrappedService(PollsVoteLocalService pollsVoteLocalService) {
 		_pollsVoteLocalService = pollsVoteLocalService;
 	}
 

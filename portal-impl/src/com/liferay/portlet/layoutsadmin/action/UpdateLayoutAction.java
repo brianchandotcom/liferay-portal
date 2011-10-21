@@ -41,7 +41,6 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -98,19 +97,11 @@ public class UpdateLayoutAction extends JSONAction {
 				groupId, privateLayout, parentLayoutId);
 		}
 
-		if (layout != null) {
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE)) {
+		if ((layout != null) &&
+			!LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.UPDATE)) {
 
-				return null;
-			}
-		}
-		else {
-			if (!GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS)) {
-
-				return null;
-			}
+			return null;
 		}
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);

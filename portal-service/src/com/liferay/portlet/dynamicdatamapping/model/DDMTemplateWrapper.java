@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDMTemplate}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  * @see       DDMTemplate
  * @generated
  */
-public class DDMTemplateWrapper implements DDMTemplate {
+public class DDMTemplateWrapper implements DDMTemplate,
+	ModelWrapper<DDMTemplate> {
 	public DDMTemplateWrapper(DDMTemplate ddmTemplate) {
 		_ddmTemplate = ddmTemplate;
 	}
@@ -288,6 +291,14 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		return _ddmTemplate.getName(languageId, useDefault);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _ddmTemplate.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _ddmTemplate.getNameCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized names of this d d m template.
 	*
@@ -326,6 +337,10 @@ public class DDMTemplateWrapper implements DDMTemplate {
 	public void setName(java.lang.String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
 		_ddmTemplate.setName(name, locale, defaultLocale);
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_ddmTemplate.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -403,6 +418,14 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		return _ddmTemplate.getDescription(languageId, useDefault);
 	}
 
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _ddmTemplate.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _ddmTemplate.getDescriptionCurrentValue();
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this d d m template.
 	*
@@ -444,6 +467,10 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		_ddmTemplate.setDescription(description, locale, defaultLocale);
 	}
 
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_ddmTemplate.setDescriptionCurrentLanguageId(languageId);
+	}
+
 	/**
 	* Sets the localized descriptions of this d d m template from the map of locales and localized descriptions.
 	*
@@ -482,6 +509,24 @@ public class DDMTemplateWrapper implements DDMTemplate {
 	*/
 	public void setType(java.lang.String type) {
 		_ddmTemplate.setType(type);
+	}
+
+	/**
+	* Returns the mode of this d d m template.
+	*
+	* @return the mode of this d d m template
+	*/
+	public java.lang.String getMode() {
+		return _ddmTemplate.getMode();
+	}
+
+	/**
+	* Sets the mode of this d d m template.
+	*
+	* @param mode the mode of this d d m template
+	*/
+	public void setMode(java.lang.String mode) {
+		_ddmTemplate.setMode(mode);
 	}
 
 	/**
@@ -538,10 +583,6 @@ public class DDMTemplateWrapper implements DDMTemplate {
 
 	public boolean isEscapedModel() {
 		return _ddmTemplate.isEscapedModel();
-	}
-
-	public void setEscapedModel(boolean escapedModel) {
-		_ddmTemplate.setEscapedModel(escapedModel);
 	}
 
 	public java.io.Serializable getPrimaryKeyObj() {
@@ -604,7 +645,14 @@ public class DDMTemplateWrapper implements DDMTemplate {
 		return _ddmTemplate.getStructure();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDMTemplate getWrappedDDMTemplate() {
+		return _ddmTemplate;
+	}
+
+	public DDMTemplate getWrappedModel() {
 		return _ddmTemplate;
 	}
 

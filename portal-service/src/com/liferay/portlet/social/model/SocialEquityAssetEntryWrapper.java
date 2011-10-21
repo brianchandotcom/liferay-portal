@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link SocialEquityAssetEntry}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.social.model;
  * @see       SocialEquityAssetEntry
  * @generated
  */
-public class SocialEquityAssetEntryWrapper implements SocialEquityAssetEntry {
+public class SocialEquityAssetEntryWrapper implements SocialEquityAssetEntry,
+	ModelWrapper<SocialEquityAssetEntry> {
 	public SocialEquityAssetEntryWrapper(
 		SocialEquityAssetEntry socialEquityAssetEntry) {
 		_socialEquityAssetEntry = socialEquityAssetEntry;
@@ -221,10 +224,6 @@ public class SocialEquityAssetEntryWrapper implements SocialEquityAssetEntry {
 		return _socialEquityAssetEntry.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_socialEquityAssetEntry.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _socialEquityAssetEntry.getPrimaryKeyObj();
 	}
@@ -274,7 +273,14 @@ public class SocialEquityAssetEntryWrapper implements SocialEquityAssetEntry {
 		return _socialEquityAssetEntry.toXmlString();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public SocialEquityAssetEntry getWrappedSocialEquityAssetEntry() {
+		return _socialEquityAssetEntry;
+	}
+
+	public SocialEquityAssetEntry getWrappedModel() {
 		return _socialEquityAssetEntry;
 	}
 

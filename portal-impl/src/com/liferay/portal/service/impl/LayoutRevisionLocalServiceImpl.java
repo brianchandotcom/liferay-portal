@@ -54,7 +54,7 @@ public class LayoutRevisionLocalServiceImpl
 
 		// Layout revision
 
-		User user = userLocalService.getUserById(userId);
+		User user = userPersistence.findByPrimaryKey(userId);
 		LayoutSetBranch layoutSetBranch =
 			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 		parentLayoutRevisionId = getParentLayoutRevisionId(

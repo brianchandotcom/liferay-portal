@@ -955,10 +955,11 @@ public class UserServiceUtil {
 	the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateOrganizations(long userId, long[] organizationIds)
+	public static void updateOrganizations(long userId, long[] organizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateOrganizations(userId, organizationIds);
+		getService().updateOrganizations(userId, organizationIds, serviceContext);
 	}
 
 	/**

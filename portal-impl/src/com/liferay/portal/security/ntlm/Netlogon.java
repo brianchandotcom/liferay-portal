@@ -41,7 +41,7 @@ public class Netlogon {
 
 	public NtlmUserAccount logon(
 			String domain, String userName, String workstation,
-			byte[] serverChallenge,	byte[] ntResponse, byte[] lmResponse)
+			byte[] serverChallenge, byte[] ntResponse, byte[] lmResponse)
 		throws NtlmLogonException {
 
 		NetlogonConnection netlogonConnection = new NetlogonConnection();
@@ -60,7 +60,7 @@ public class Netlogon {
 					domain, 0x00000820, 0, 0, userName, workstation);
 
 			NetlogonNetworkInfo netlogonNetworkInfo = new NetlogonNetworkInfo(
-				netlogonIdentityInfo, serverChallenge,	ntResponse, lmResponse);
+				netlogonIdentityInfo, serverChallenge, ntResponse, lmResponse);
 
 			NetrLogonSamLogon netrLogonSamLogon = new NetrLogonSamLogon(
 				_domainControllerName, _ntlmServiceAccount.getComputerName(),

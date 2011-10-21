@@ -20,6 +20,8 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.wiki.model.WikiPageResource;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing WikiPageResource in entity cache.
  *
@@ -27,7 +29,8 @@ import com.liferay.portlet.wiki.model.WikiPageResource;
  * @see WikiPageResource
  * @generated
  */
-public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource> {
+public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
+	Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

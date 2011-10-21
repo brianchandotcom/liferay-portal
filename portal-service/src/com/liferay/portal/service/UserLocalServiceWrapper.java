@@ -23,7 +23,8 @@ package com.liferay.portal.service;
  * @see       UserLocalService
  * @generated
  */
-public class UserLocalServiceWrapper implements UserLocalService {
+public class UserLocalServiceWrapper implements UserLocalService,
+	ServiceWrapper<UserLocalService> {
 	public UserLocalServiceWrapper(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -2419,10 +2420,11 @@ public class UserLocalServiceWrapper implements UserLocalService {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateGroups(long userId, long[] newGroupIds)
+	public void updateGroups(long userId, long[] newGroupIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userLocalService.updateGroups(userId, newGroupIds);
+		_userLocalService.updateGroups(userId, newGroupIds, serviceContext);
 	}
 
 	/**
@@ -2575,10 +2577,12 @@ public class UserLocalServiceWrapper implements UserLocalService {
 	found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateOrganizations(long userId, long[] newOrganizationIds)
+	public void updateOrganizations(long userId, long[] newOrganizationIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userLocalService.updateOrganizations(userId, newOrganizationIds);
+		_userLocalService.updateOrganizations(userId, newOrganizationIds,
+			serviceContext);
 	}
 
 	/**
@@ -2847,11 +2851,25 @@ public class UserLocalServiceWrapper implements UserLocalService {
 		_userLocalService.verifyEmailAddress(ticketKey);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public UserLocalService getWrappedUserLocalService() {
 		return _userLocalService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	public UserLocalService getWrappedService() {
+		return _userLocalService;
+	}
+
+	public void setWrappedService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 

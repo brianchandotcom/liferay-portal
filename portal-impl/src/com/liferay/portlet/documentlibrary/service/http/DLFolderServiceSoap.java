@@ -205,12 +205,44 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcuts(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders) throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(groupId,
+					folderId, status, mimeTypes, includeMountFolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, boolean includeMountFolders)
 		throws RemoteException {
 		try {
 			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 					folderId, status, includeMountFolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
+		boolean includeMountFolders) throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
+					folderId, status, mimeTypes, includeMountFolders);
 
 			return returnValue;
 		}
@@ -284,13 +316,11 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getSubfolderIds(long groupId, long folderId,
-		boolean recurse) throws RemoteException {
+	public static void getSubfolderIds(Long[] folderIds, long groupId,
+		long folderId) throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = DLFolderServiceUtil.getSubfolderIds(groupId,
-					folderId, recurse);
-
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			DLFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
+				groupId, folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -299,11 +329,13 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static void getSubfolderIds(Long[] folderIds, long groupId,
-		long folderId) throws RemoteException {
+	public static java.lang.Long[] getSubfolderIds(long groupId, long folderId,
+		boolean recurse) throws RemoteException {
 		try {
-			DLFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
-				groupId, folderId);
+			java.util.List<java.lang.Long> returnValue = DLFolderServiceUtil.getSubfolderIds(groupId,
+					folderId, recurse);
+
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -26,7 +26,7 @@ public class IgnoreNotificationsAddAsFriendProfileTest extends BaseTestCase {
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,16 +41,14 @@ public class IgnoreNotificationsAddAsFriendProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Notifications"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -65,7 +63,6 @@ public class IgnoreNotificationsAddAsFriendProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln wants to be your friend."),
 			selenium.getText("//section/div/div/div/div/div[2]/div[1]"));
@@ -74,14 +71,13 @@ public class IgnoreNotificationsAddAsFriendProfileTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[2]/a",
 			RuntimeVariables.replace("Ignore"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/joebloggs/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -96,11 +92,9 @@ public class IgnoreNotificationsAddAsFriendProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("You have no contacts."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/user/joebloggs/home/");

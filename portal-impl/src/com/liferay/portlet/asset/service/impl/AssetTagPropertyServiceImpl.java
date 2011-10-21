@@ -24,11 +24,24 @@ import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import java.util.List;
 
 /**
+ * The implementation of the asset tag property service.
+ *
  * @author Brian Wing Shun Chan
  */
 public class AssetTagPropertyServiceImpl
 	extends AssetTagPropertyServiceBaseImpl {
 
+	/**
+	 * Adds an asset tag property.
+	 *
+	 * @param  tagId the primary key of the tag
+	 * @param  key the key to be associated to the value
+	 * @param  value the value to which the key will refer
+	 * @return the created asset tag property
+	 * @throws PortalException if the user did not have permission to update
+	 *         the asset tag, or if the key or value were invalid
+	 * @throws SystemException if a system exception occurred
+	 */
 	public AssetTagProperty addTagProperty(long tagId, String key, String value)
 		throws PortalException, SystemException {
 
@@ -39,6 +52,15 @@ public class AssetTagPropertyServiceImpl
 			getUserId(), tagId, key, value);
 	}
 
+	/**
+	 * Deletes the asset tag property with the specified ID.
+	 *
+	 * @param  tagPropertyId the primary key of the asset tag property instance
+	 * @throws PortalException if an asset tag property with the primary key
+	 *         could not be found or if the user did not have permission to
+	 *         update the asset tag property
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteTagProperty(long tagPropertyId)
 		throws PortalException, SystemException {
 
@@ -52,12 +74,27 @@ public class AssetTagPropertyServiceImpl
 		assetTagPropertyLocalService.deleteTagProperty(tagPropertyId);
 	}
 
+	/**
+	 * Returns all the asset tag property instances with the specified tag ID.
+	 *
+	 * @param  tagId the primary key of the tag
+	 * @return the matching asset tag properties
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<AssetTagProperty> getTagProperties(long tagId)
 		throws SystemException {
 
 		return assetTagPropertyLocalService.getTagProperties(tagId);
 	}
 
+	/**
+	 * Returns asset tag properties with the specified group and key.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  key the key that refers to some value
+	 * @return the matching asset tag properties
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<AssetTagProperty> getTagPropertyValues(
 			long companyId, String key)
 		throws SystemException {
@@ -66,6 +103,18 @@ public class AssetTagPropertyServiceImpl
 			companyId, key);
 	}
 
+	/**
+	 * Updates the asset tag property.
+	 *
+	 * @param  tagPropertyId the primary key of the asset tag property
+	 * @param  key the new key to be associated to the value
+	 * @param  value the new value to which the key will refer
+	 * @return the updated asset tag property
+	 * @throws PortalException if an asset tag property with the primary key
+	 *         could not be found, if the user did not have permission to
+	 *         update the asset tag, or if the key or value were invalid
+	 * @throws SystemException if a system exception occurred
+	 */
 	public AssetTagProperty updateTagProperty(
 			long tagPropertyId, String key, String value)
 		throws PortalException, SystemException {

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
@@ -32,6 +34,7 @@ import com.liferay.portlet.asset.service.base.AssetEntryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,8 +104,25 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public AssetEntry incrementViewCounter(String className, long classPK)
 		throws PortalException, SystemException {
 
-		return assetEntryLocalService.incrementViewCounter(
-			getGuestOrUserId(), className, classPK, 1);
+		if (!PropsValues.ASSET_ENTRY_INCREMENT_VIEW_COUNTER_ENABLED) {
+			return null;
+		}
+
+		User user = getGuestOrUser();
+
+		assetEntryLocalService.incrementViewCounter(
+			user.getUserId(), className, classPK, 1);
+
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+			className, classPK);
+
+		if (!user.isDefaultUser()) {
+			socialActivityLocalService.addActivity(
+				user.getUserId(), assetEntry.getGroupId(), className, classPK,
+				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
+		}
+
+		return assetEntry;
 	}
 
 	public AssetEntryDisplay[] searchEntryDisplays(

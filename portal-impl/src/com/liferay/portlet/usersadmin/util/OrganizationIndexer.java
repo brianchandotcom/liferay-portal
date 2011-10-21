@@ -103,15 +103,15 @@ public class OrganizationIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, "city", true);
-		addSearchTerm(searchQuery, searchContext, "country", true);
-		addSearchTerm(searchQuery, searchContext, "name", true);
+		addSearchTerm(searchQuery, searchContext, "city", false);
+		addSearchTerm(searchQuery, searchContext, "country", false);
+		addSearchTerm(searchQuery, searchContext, "name", false);
 		addSearchTerm(
 			searchQuery, searchContext, "parentOrganizationId", false);
-		addSearchTerm(searchQuery, searchContext, "region", true);
-		addSearchTerm(searchQuery, searchContext, "street", true);
-		addSearchTerm(searchQuery, searchContext, "type", true);
-		addSearchTerm(searchQuery, searchContext, "zip", true);
+		addSearchTerm(searchQuery, searchContext, "region", false);
+		addSearchTerm(searchQuery, searchContext, "street", false);
+		addSearchTerm(searchQuery, searchContext, "type", false);
+		addSearchTerm(searchQuery, searchContext, "zip", false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");

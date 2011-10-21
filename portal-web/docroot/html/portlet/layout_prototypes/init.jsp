@@ -16,6 +16,6 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchLayoutPrototypeException" %>
-<%@ page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %>
-<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
+<%@ page import="com.liferay.portal.NoSuchLayoutPrototypeException" %><%@
+page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>

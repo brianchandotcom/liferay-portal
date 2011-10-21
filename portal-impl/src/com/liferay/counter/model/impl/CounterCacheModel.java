@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
+import java.io.Serializable;
+
 /**
  * The cache model class for representing Counter in entity cache.
  *
@@ -27,7 +29,7 @@ import com.liferay.portal.model.CacheModel;
  * @see Counter
  * @generated
  */
-public class CounterCacheModel implements CacheModel<Counter> {
+public class CounterCacheModel implements CacheModel<Counter>, Serializable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);

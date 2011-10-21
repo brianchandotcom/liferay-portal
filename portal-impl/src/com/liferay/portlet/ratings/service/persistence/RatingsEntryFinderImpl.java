@@ -43,7 +43,8 @@ public class RatingsEntryFinderImpl
 	public static final FinderPath FINDER_PATH_FIND_BY_U_C_C = new FinderPath(
 		RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
 		RatingsEntryModelImpl.FINDER_CACHE_ENABLED, RatingsEntryImpl.class,
-		RatingsEntryPersistenceImpl.FINDER_CLASS_NAME_LIST, "findByU_C_C",
+		RatingsEntryPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		"findByU_C_C",
 		new String[] {
 			Long.class.getName(), Long.class.getName(), List.class.getName()
 		});

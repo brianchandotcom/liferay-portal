@@ -26,7 +26,7 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -41,21 +41,16 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Groups Orgs"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Community Groups Orgs"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -64,7 +59,7 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -80,25 +75,20 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Manage Memberships"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Organizations"),
 			selenium.getText("link=Organizations"));
 		selenium.clickAt("link=Organizations",
 			RuntimeVariables.replace("Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Organization Groups Orgs"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText("//tr[3]/td[3]"));
 	}
 }

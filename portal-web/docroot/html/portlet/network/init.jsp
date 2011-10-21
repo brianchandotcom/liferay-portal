@@ -16,6 +16,6 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.network.model.DNSLookup" %>
-<%@ page import="com.liferay.portlet.network.model.Whois" %>
-<%@ page import="com.liferay.portlet.network.util.NetworkUtil" %>
+<%@ page import="com.liferay.portlet.network.model.DNSLookup" %><%@
+page import="com.liferay.portlet.network.model.Whois" %><%@
+page import="com.liferay.portlet.network.util.NetworkUtil" %>

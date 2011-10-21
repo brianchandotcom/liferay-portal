@@ -70,13 +70,16 @@ public class ActionUtil {
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-				if (groupId != themeDisplay.getCompanyGroupId()) {
-					try {
-						structure = JournalStructureServiceUtil.getStructure(
-							themeDisplay.getCompanyGroupId(), structureId);
-					}
-					catch (NoSuchStructureException nsse2) {
-					}
+				if (groupId == themeDisplay.getCompanyGroupId()) {
+					return;
+				}
+
+				try {
+					structure = JournalStructureServiceUtil.getStructure(
+						themeDisplay.getCompanyGroupId(), structureId);
+				}
+				catch (NoSuchStructureException nsse2) {
+					return;
 				}
 			}
 

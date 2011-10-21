@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.service.ServiceWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DLFileShortcutService}.
@@ -23,7 +25,8 @@ package com.liferay.portlet.documentlibrary.service;
  * @see       DLFileShortcutService
  * @generated
  */
-public class DLFileShortcutServiceWrapper implements DLFileShortcutService {
+public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
+	ServiceWrapper<DLFileShortcutService> {
 	public DLFileShortcutServiceWrapper(
 		DLFileShortcutService dlFileShortcutService) {
 		_dlFileShortcutService = dlFileShortcutService;
@@ -60,12 +63,26 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService {
 			folderId, toFileEntryId, serviceContext);
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedService}
+	 */
 	public DLFileShortcutService getWrappedDLFileShortcutService() {
 		return _dlFileShortcutService;
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #setWrappedService}
+	 */
 	public void setWrappedDLFileShortcutService(
 		DLFileShortcutService dlFileShortcutService) {
+		_dlFileShortcutService = dlFileShortcutService;
+	}
+
+	public DLFileShortcutService getWrappedService() {
+		return _dlFileShortcutService;
+	}
+
+	public void setWrappedService(DLFileShortcutService dlFileShortcutService) {
 		_dlFileShortcutService = dlFileShortcutService;
 	}
 

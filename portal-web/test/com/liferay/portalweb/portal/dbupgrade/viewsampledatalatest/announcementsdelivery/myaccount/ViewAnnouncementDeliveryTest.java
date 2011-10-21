@@ -22,15 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 	public void testViewAnnouncementDelivery() throws Exception {
-		selenium.open("/web/guest/home");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("link=Joe Bloggs")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -40,28 +40,67 @@ public class ViewAnnouncementDeliveryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("link=Joe Bloggs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
-		selenium.clickAt("announcementsLink", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Account",
+			RuntimeVariables.replace("My Account"));
+		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_2_announcementsLink']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isPartialText("//a[@id='_2_announcementsLink']",
+				"Announcements"));
+		selenium.clickAt("//a[@id='_2_announcementsLink']",
+			RuntimeVariables.replace("Announcements"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@id='_2_announcementsTypegeneralEmailCheckbox']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isChecked(
-				"_2_announcementsTypegeneralEmailCheckbox"));
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("_2_announcementsTypegeneralSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
+				"//input[@id='_2_announcementsTypegeneralEmailCheckbox']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_2_announcementsTypegeneralSmsCheckbox']"));
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_2_announcementsTypegeneralWebsiteCheckbox' and @disabled='']"));
-		assertTrue(selenium.isChecked("_2_announcementsTypenewsSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("_2_announcementsTypenewsSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isChecked(
+				"//input[@id='_2_announcementsTypenewsEmailCheckbox']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_2_announcementsTypenewsSmsCheckbox']"));
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_2_announcementsTypenewsWebsiteCheckbox' and @disabled='']"));
-		assertTrue(selenium.isChecked("_2_announcementsTypetestEmailCheckbox"));
-		selenium.saveScreenShotAndSource();
-		assertTrue(selenium.isChecked("_2_announcementsTypetestSmsCheckbox"));
-		selenium.saveScreenShotAndSource();
+		assertTrue(selenium.isChecked(
+				"//input[@id='_2_announcementsTypetestEmailCheckbox']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_2_announcementsTypetestSmsCheckbox']"));
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_2_announcementsTypetestWebsiteCheckbox' and @disabled='']"));
 	}

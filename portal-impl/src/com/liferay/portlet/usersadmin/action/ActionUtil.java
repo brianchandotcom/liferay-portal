@@ -20,14 +20,12 @@ import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressServiceUtil;
 import com.liferay.portal.service.OrgLaborServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.PhoneServiceUtil;
-import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.WebsiteServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -155,29 +153,6 @@ public class ActionUtil {
 			portletRequest);
 
 		getPhone(request);
-	}
-
-	public static void getUserGroup(HttpServletRequest request)
-		throws Exception {
-
-		long userGroupId = ParamUtil.getLong(request, "userGroupId");
-
-		UserGroup userGroup = null;
-
-		if (userGroupId > 0) {
-			userGroup = UserGroupServiceUtil.getUserGroup(userGroupId);
-		}
-
-		request.setAttribute(WebKeys.USER_GROUP, userGroup);
-	}
-
-	public static void getUserGroup(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getUserGroup(request);
 	}
 
 	public static void getWebsite(HttpServletRequest request) throws Exception {

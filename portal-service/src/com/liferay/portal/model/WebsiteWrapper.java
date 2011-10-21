@@ -23,7 +23,7 @@ package com.liferay.portal.model;
  * @see       Website
  * @generated
  */
-public class WebsiteWrapper implements Website {
+public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	public WebsiteWrapper(Website website) {
 		_website = website;
 	}
@@ -310,10 +310,6 @@ public class WebsiteWrapper implements Website {
 		return _website.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_website.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _website.getPrimaryKeyObj();
 	}
@@ -373,7 +369,14 @@ public class WebsiteWrapper implements Website {
 		return _website.getType();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public Website getWrappedWebsite() {
+		return _website;
+	}
+
+	public Website getWrappedModel() {
 		return _website;
 	}
 

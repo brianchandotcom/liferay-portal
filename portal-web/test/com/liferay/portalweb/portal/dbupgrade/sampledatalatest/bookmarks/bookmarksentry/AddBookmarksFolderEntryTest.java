@@ -25,7 +25,7 @@ public class AddBookmarksFolderEntryTest extends BaseTestCase {
 		selenium.open("/web/bookmarks-entry-community/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,18 +40,15 @@ public class AddBookmarksFolderEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Bookmarks Entry Page",
 			RuntimeVariables.replace("Bookmarks Entry Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("Bookmarks Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -66,27 +63,21 @@ public class AddBookmarksFolderEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//div[2]/ul/li[5]/a",
 			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Bookmarks Entry Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.saveScreenShotAndSource();
 		selenium.type("//textarea[@id='_28_description']",
 			RuntimeVariables.replace("Bookmarks Entry Comments"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -101,7 +92,6 @@ public class AddBookmarksFolderEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

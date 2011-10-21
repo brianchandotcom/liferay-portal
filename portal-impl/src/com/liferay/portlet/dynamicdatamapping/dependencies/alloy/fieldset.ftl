@@ -2,6 +2,6 @@
 
 <div class="aui-field-wrapper-content lfr-forms-field-wrapper">
 	<@aui.fieldset label=label>
-		${field.children}
+		${fieldStructure.children}
 	</@aui.fieldset>
 </div>

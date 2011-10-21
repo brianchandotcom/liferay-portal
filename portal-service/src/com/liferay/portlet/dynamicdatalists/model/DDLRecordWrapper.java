@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.model.ModelWrapper;
+
 /**
  * <p>
  * This class is a wrapper for {@link DDLRecord}.
@@ -23,7 +25,7 @@ package com.liferay.portlet.dynamicdatalists.model;
  * @see       DDLRecord
  * @generated
  */
-public class DDLRecordWrapper implements DDLRecord {
+public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	public DDLRecordWrapper(DDLRecord ddlRecord) {
 		_ddlRecord = ddlRecord;
 	}
@@ -366,10 +368,6 @@ public class DDLRecordWrapper implements DDLRecord {
 		return _ddlRecord.isEscapedModel();
 	}
 
-	public void setEscapedModel(boolean escapedModel) {
-		_ddlRecord.setEscapedModel(escapedModel);
-	}
-
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _ddlRecord.getPrimaryKeyObj();
 	}
@@ -426,7 +424,7 @@ public class DDLRecordWrapper implements DDLRecord {
 
 	public com.liferay.portlet.dynamicdatamapping.storage.Field getField(
 		java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StorageException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getField(fieldName);
 	}
 
@@ -437,7 +435,7 @@ public class DDLRecordWrapper implements DDLRecord {
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields()
-		throws com.liferay.portlet.dynamicdatamapping.StorageException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getFields();
 	}
 
@@ -447,7 +445,7 @@ public class DDLRecordWrapper implements DDLRecord {
 	}
 
 	public java.io.Serializable getFieldValue(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StorageException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getFieldValue(fieldName);
 	}
 
@@ -482,7 +480,14 @@ public class DDLRecordWrapper implements DDLRecord {
 		return _ddlRecord.getStatus();
 	}
 
+	/**
+	 * @deprecated Renamed to {@link #getWrappedModel}
+	 */
 	public DDLRecord getWrappedDDLRecord() {
+		return _ddlRecord;
+	}
+
+	public DDLRecord getWrappedModel() {
 		return _ddlRecord;
 	}
 

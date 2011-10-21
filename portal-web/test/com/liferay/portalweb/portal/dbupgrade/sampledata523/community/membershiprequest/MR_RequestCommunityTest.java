@@ -25,7 +25,7 @@ public class MR_RequestCommunityTest extends BaseTestCase {
 		selenium.open("/user/requestmembersn/home/");
 
 		for (int second = 0;; second++) {
-			if (second >= 60) {
+			if (second >= 90) {
 				fail("timeout");
 			}
 
@@ -40,32 +40,25 @@ public class MR_RequestCommunityTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("link=Available Communities",
 			RuntimeVariables.replace("Available Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_29_name",
 			RuntimeVariables.replace("Membership Request Community Name"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace("Request Membership"),
 			selenium.getText("//span/a[2]"));
 		selenium.clickAt("//span/a[2]",
 			RuntimeVariables.replace("Request Membership"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		selenium.type("_29_comments",
 			RuntimeVariables.replace(
 				"Community Description comments request to join"));
-		selenium.saveScreenShotAndSource();
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.saveScreenShotAndSource();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[1]"));

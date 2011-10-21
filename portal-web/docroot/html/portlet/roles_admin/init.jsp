@@ -16,24 +16,24 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.DuplicateRoleException" %>
-<%@ page import="com.liferay.portal.NoSuchRoleException" %>
-<%@ page import="com.liferay.portal.RequiredRoleException" %>
-<%@ page import="com.liferay.portal.RoleAssignmentException" %>
-<%@ page import="com.liferay.portal.RoleNameException" %>
-<%@ page import="com.liferay.portal.RolePermissionsException" %>
-<%@ page import="com.liferay.portal.security.permission.comparator.ActionComparator" %>
-<%@ page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %>
-<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
-<%@ page import="com.liferay.portal.service.permission.RolePermissionUtil" %>
-<%@ page import="com.liferay.portlet.rolesadmin.search.ResourceActionRowChecker" %>
-<%@ page import="com.liferay.portlet.rolesadmin.search.RoleDisplayTerms" %>
-<%@ page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %>
-<%@ page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %>
-<%@ page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
+<%@ page import="com.liferay.portal.DuplicateRoleException" %><%@
+page import="com.liferay.portal.NoSuchRoleException" %><%@
+page import="com.liferay.portal.RequiredRoleException" %><%@
+page import="com.liferay.portal.RoleAssignmentException" %><%@
+page import="com.liferay.portal.RoleNameException" %><%@
+page import="com.liferay.portal.RolePermissionsException" %><%@
+page import="com.liferay.portal.security.permission.comparator.ActionComparator" %><%@
+page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %><%@
+page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
+page import="com.liferay.portlet.rolesadmin.search.ResourceActionRowChecker" %><%@
+page import="com.liferay.portlet.rolesadmin.search.RoleDisplayTerms" %><%@
+page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
+page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
+page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
+page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
+page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%
 boolean filterManageableGroups = true;

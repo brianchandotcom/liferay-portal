@@ -173,7 +173,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();

@@ -135,7 +135,7 @@ public class UserFinderImpl
 
 			qPos.add(userId);
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -265,7 +265,7 @@ public class UserFinderImpl
 				qPos.add(status);
 			}
 
-			Iterator<Long> itr = q.list().iterator();
+			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
 				Long count = itr.next();
@@ -400,8 +400,8 @@ public class UserFinderImpl
 		String[] emailAddresses = CustomSQLUtil.keywords(emailAddress);
 
 		return findByC_FN_MN_LN_SN_EA_S(
-			companyId, firstNames, middleNames,	lastNames, screenNames,
-			emailAddresses, status, params, andOperator, start,	end, obc);
+			companyId, firstNames, middleNames, lastNames, screenNames,
+			emailAddresses, status, params, andOperator, start, end, obc);
 	}
 
 	public List<User> findByC_FN_MN_LN_SN_EA_S(

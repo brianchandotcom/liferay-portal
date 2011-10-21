@@ -17,10 +17,9 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -29,21 +28,23 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
  * @author Alexander Chow
+ * @author Edward Han
  */
 public class FileSystemStore extends BaseStore {
 
 	public FileSystemStore() {
-		_rootDir = new File(_ROOT_DIR);
-
 		if (!_rootDir.exists()) {
 			_rootDir.mkdirs();
 		}
@@ -192,25 +193,21 @@ public class FileSystemStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException, SystemException {
+		throws PortalException {
+
+		if (Validator.isNull(versionLabel)) {
+			versionLabel = getHeadVersionLabel(
+				companyId, repositoryId, fileName);
+		}
+
+		File fileNameVersionFile = getFileNameVersionFile(
+			companyId, repositoryId, fileName, versionLabel);
 
 		try {
-			if (Validator.isNull(versionLabel)) {
-				versionLabel = getHeadVersionLabel(
-					companyId, repositoryId, fileName);
-			}
-
-			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, versionLabel);
-
-			if (!fileNameVersionFile.exists()) {
-				throw new NoSuchFileException(fileNameVersionFile.getPath());
-			}
-
 			return new FileInputStream(fileNameVersionFile);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (FileNotFoundException fnfe) {
+			throw new NoSuchFileException(fileNameVersionFile.getPath(), fnfe);
 		}
 	}
 
@@ -260,6 +257,15 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return fileNameVersionFile.length();
+	}
+
+	@Override
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
+
+		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
+
+		return dirNameDir.exists();
 	}
 
 	@Override
@@ -444,21 +450,60 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {
-		File companyDir = getCompanyDir(companyId);
+		RepositoryDirKey repositoryDirKey =
+			new RepositoryDirKey(companyId, repositoryId);
 
-		File repositoryDir = new File(
-			companyDir + StringPool.SLASH + repositoryId);
+		File repositoryDir = _repositoryDirs.get(repositoryDirKey);
 
-		if (!repositoryDir.exists()) {
-			repositoryDir.mkdirs();
+		if (repositoryDir == null) {
+			File companyDir = getCompanyDir(companyId);
+
+			repositoryDir = new File(
+				companyDir + StringPool.SLASH + repositoryId);
+
+			if (!repositoryDir.exists()) {
+				repositoryDir.mkdirs();
+			}
+
+			_repositoryDirs.put(repositoryDirKey, repositoryDir);
 		}
 
 		return repositoryDir;
 	}
 
-	private static final String _ROOT_DIR = PropsUtil.get(
-		PropsKeys.DL_STORE_FILE_SYSTEM_ROOT_DIR);
+	private Map<RepositoryDirKey, File> _repositoryDirs =
+		new ConcurrentHashMap<RepositoryDirKey, File>();
+	private File _rootDir = new File(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
 
-	private File _rootDir;
+	private class RepositoryDirKey {
+
+		public RepositoryDirKey(long companyId, long repositoryId) {
+			_companyId = companyId;
+			_repositoryId = repositoryId;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			RepositoryDirKey repositoryDirKey = (RepositoryDirKey)obj;
+
+			if ((_companyId == repositoryDirKey._companyId) &&
+				(_repositoryId == repositoryDirKey._repositoryId)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		@Override
+		public int hashCode() {
+			return (int)(_companyId * 11 + _repositoryId);
+		}
+
+		private long _companyId;
+		private long _repositoryId;
+
+	}
 
 }

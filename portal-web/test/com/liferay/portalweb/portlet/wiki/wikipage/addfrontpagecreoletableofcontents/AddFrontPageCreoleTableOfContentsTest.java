@@ -83,9 +83,9 @@ public class AddFrontPageCreoleTableOfContentsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Section"),
 			selenium.getText("//div[@class='toc-index']/ol/li/ol/li/ol/li/a"));
 		assertEquals(RuntimeVariables.replace("Unit #"),
-			selenium.getText("//div/h2"));
+			selenium.getText("//div[6]/div/h2"));
 		assertEquals(RuntimeVariables.replace("Chapter #"),
-			selenium.getText("//div/h3"));
+			selenium.getText("//div[6]/div/h3"));
 		assertEquals(RuntimeVariables.replace("Section #"),
 			selenium.getText("//div[6]/div/h4"));
 	}

@@ -28,26 +28,6 @@ public class TearDownPageTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Site Name",
-					RuntimeVariables.replace("Site Name"));
-				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 
@@ -109,7 +89,7 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Public Page")
+						if (RuntimeVariables.replace("Welcome")
 												.equals(selenium.getText(
 										"//li/ul/li[1]/div/div[3]/a"))) {
 							break;

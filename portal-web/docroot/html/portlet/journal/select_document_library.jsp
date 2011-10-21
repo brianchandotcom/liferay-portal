@@ -201,7 +201,7 @@ if (folder != null) {
 		Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
 
 		if (imageMimeTypes.contains(fileEntry.getMimeType())) {
-			sb.append("&t=");
+			sb.append("?t=");
 			sb.append(WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId()));
 		}
 

@@ -78,7 +78,9 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		String titlePattern = null;
 
-		if (activityType == SocialActivityConstants.TYPE_ADD_COMMENT) {
+		if ((activityType == WikiActivityKeys.ADD_COMMENT) ||
+			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
+
 			titlePattern = "activity-wiki-add-comment";
 		}
 		else if (activityType == WikiActivityKeys.ADD_PAGE) {

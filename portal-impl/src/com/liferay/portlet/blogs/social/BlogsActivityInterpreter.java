@@ -78,7 +78,9 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		String titlePattern = null;
 
-		if (activityType == SocialActivityConstants.TYPE_ADD_COMMENT) {
+		if ((activityType == BlogsActivityKeys.ADD_COMMENT) ||
+			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
+
 			titlePattern = "activity-blogs-add-comment";
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {

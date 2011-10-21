@@ -31,6 +31,7 @@
 				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
 			FROM
 				DLFileVersion
+			[$JOIN$]
 			WHERE
 				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.status = ?) AND
@@ -169,6 +170,7 @@
 				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
 			FROM
 				DLFileVersion
+			[$JOIN$]
 			WHERE
 				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.status = ?) AND
@@ -181,9 +183,7 @@
 				COUNT(DISTINCT fileShortcutId) AS COUNT_VALUE
 			FROM
 				DLFileShortcut
-			INNER JOIN
-				DLFileEntry ON
-					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
+			[$JOIN$]
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = 0) AND
@@ -241,6 +241,20 @@
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = 0) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFV_ByDLFileEntry">
+		<![CDATA[
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileVersion.fileEntryId)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.joinFS_ByDLFileEntry">
+		<![CDATA[
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
 		]]>
 	</sql>
 </custom-sql>

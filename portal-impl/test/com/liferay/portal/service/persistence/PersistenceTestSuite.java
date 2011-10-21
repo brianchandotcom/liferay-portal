@@ -32,12 +32,14 @@ import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryPersisten
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderPersistenceTest;
 import com.liferay.portlet.calendar.service.persistence.CalEventPersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistenceTest;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinderTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataPersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankPersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistenceTest;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinderTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistenceTest;
 import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistenceTest;
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordPersistenceTest;
@@ -292,6 +294,10 @@ public class PersistenceTestSuite extends TestSuite {
 		testSuite.addTestSuite(WikiNodePersistenceTest.class);
 		testSuite.addTestSuite(WikiPagePersistenceTest.class);
 		testSuite.addTestSuite(WikiPageResourcePersistenceTest.class);
+
+		// Finders
+		testSuite.addTestSuite(DLFileEntryFinderTest.class);
+		testSuite.addTestSuite(DLFolderFinderTest.class);
 
 		return testSuite;
 	}

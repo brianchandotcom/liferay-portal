@@ -1262,6 +1262,16 @@ public class SourceFormatter {
 					fileName, "aui:button " + fileName + " " + lineCount);
 			}
 
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (trimmedLine.contains(StringPool.TAB) &&
+				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				!trimmedLine.startsWith(StringPool.STAR)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "tab: " + fileName + " " + lineCount);
+			}
+
 			int x = line.indexOf("<%@ include file");
 
 			if (x != -1) {

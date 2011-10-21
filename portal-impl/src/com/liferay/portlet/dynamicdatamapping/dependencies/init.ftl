@@ -21,6 +21,7 @@
 </#if>
 
 <#assign namespacedFieldName = "${namespace}${fieldName}">
+<#assign namespacedParentName = "${namespace}${parentName}">
 
 <#-- Predefined value -->
 

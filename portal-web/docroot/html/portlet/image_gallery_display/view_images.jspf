@@ -73,7 +73,7 @@
 						}
 						%>
 
-						<a class="image-thumbnail preview" <%= (supportedAudio || supportedVideo) ? "data-options=\"width=640&height=500&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileEntry.getTitle(), fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1")) : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+						<a class="image-thumbnail preview" <%= (supportedAudio || supportedVideo) ? "data-options=\"width=640&height=500&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileEntry.getTitle(), fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1")) + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
 							<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" />
 
 							<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>

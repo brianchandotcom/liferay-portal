@@ -16,7 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.configuration.Filter" %>
 <%@ page import="com.liferay.portal.setup.SetupWizardUtil" %>
 
 <style>

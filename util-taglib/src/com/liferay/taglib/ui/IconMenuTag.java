@@ -292,13 +292,13 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("<span class=\"taglib-text\">");
 					jspWriter.write(LanguageUtil.get(pageContext, _message));
 					jspWriter.write("</span></a></strong>");
+
+					ScriptTag.doTag(
+						null, "liferay-menu",
+						"Liferay.Menu.register('#" + _id + "');", pageContext);
 				}
 
 				jspWriter.write("<ul>");
-
-				ScriptTag.doTag(
-					null, "liferay-menu",
-					"Liferay.Menu.register('#" + _id + "');", pageContext);
 			}
 			else {
 				PortalIncludeUtil.include(pageContext, getStartPage());

@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -82,6 +82,46 @@
 	<td>clickAt</td>
 	<td>//input[@id='_165_local']</td>
 	<td>Local Live</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_165_branchingPublicCheckbox'))</td>
+	<td>enabledOnPublicPagesChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${enabledOnPublicPagesChecked}</td>
+	<td>EnabledOnPublicPagesChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_165_branchingPublicCheckbox']</td>
+	<td>Enabled on Public Pages</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>EnabledOnPublicPagesChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_165_branchingPrivateCheckbox'))</td>
+	<td>enabledOnPrivatePagesChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${enabledOnPrivatePagesChecked}</td>
+	<td>EnabledOnPrivatePagesChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_165_branchingPrivateCheckbox']</td>
+	<td>Enabled on Private Pages</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>EnabledOnPrivatePagesChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>store</td>

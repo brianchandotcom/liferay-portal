@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.sites.activatestaging;
+package com.liferay.portalweb.stagingcommunity.sites.site.activatestaging;
 
 import com.liferay.portalweb.portal.BaseTests;
 

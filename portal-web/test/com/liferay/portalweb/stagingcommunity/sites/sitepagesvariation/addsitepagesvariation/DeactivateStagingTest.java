@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.sites.deactivatestaging;
+package com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.addsitepagesvariation;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddSiteTest extends BaseTestCase {
-	public void testAddSite() throws Exception {
+public class DeactivateStagingTest extends BaseTestCase {
+	public void testDeactivateStaging() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -45,10 +45,14 @@ public class AddSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[2]/ul/li/strong/a/span"));
-		selenium.clickAt("//span[2]/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Site Name"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
+		selenium.click("//td[7]/span/ul/li/strong/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -67,28 +71,45 @@ public class AddSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Site"),
+		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
-			RuntimeVariables.replace("Site"));
+			RuntimeVariables.replace("Edit Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Site Name"));
-		selenium.type("//textarea[@id='_134_description']",
-			RuntimeVariables.replace("Site Description"));
+		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",
+				"Staging"));
+		selenium.clickAt("//a[@id='_165_stagingLink']",
+			RuntimeVariables.replace("Staging"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_165_none']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//input[@id='_165_none']",
+			RuntimeVariables.replace("None"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Site name"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("Site Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertNotEquals(RuntimeVariables.replace("Site Name (Staging)"),
+			selenium.getText("//h1[@class='header-title']/span"));
 	}
 }

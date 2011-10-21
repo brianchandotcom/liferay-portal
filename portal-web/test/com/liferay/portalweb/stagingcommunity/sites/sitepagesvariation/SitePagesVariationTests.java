@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.sites;
+package com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.stagingcommunity.sites.pagevariation.PageVariationTests;
-import com.liferay.portalweb.stagingcommunity.sites.site.SiteTests;
-import com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.SitePagesVariationTests;
+import com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.addsitepagesvariation.AddSitePagesVariationTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,14 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SitesTests extends BaseTests {
+public class SitePagesVariationTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(PageVariationTests.suite());
-		testSuite.addTest(SiteTests.suite());
-		testSuite.addTest(SitePagesVariationTests.suite());
+		testSuite.addTest(AddSitePagesVariationTests.suite());
 
 		return testSuite;
 	}

@@ -610,6 +610,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		_dlFileVersion.persist();
 	}
 
+	public java.io.InputStream getContentStream(boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.getContentStream(incrementCounter);
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
 		return _dlFileVersion.getExtraSettingsProperties();
 	}

@@ -64,9 +64,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	public InputStream getContentStream(boolean incrementCounter)
 		throws PortalException, SystemException {
 
-		return DLFileEntryLocalServiceUtil.getFileAsStream(
-			PrincipalThreadLocal.getUserId(), _dlFileVersion.getFileEntryId(),
-			_dlFileVersion.getVersion(), incrementCounter);
+		return _dlFileVersion.getContentStream(incrementCounter);
 	}
 
 	public Date getCreateDate() {

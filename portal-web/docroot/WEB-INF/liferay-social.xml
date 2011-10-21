@@ -197,7 +197,7 @@
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
-		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.ADD_ATTACHMENT}</activity-type>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_ADD_ATTACHMENT}</activity-type>
 		<language-key>ADD_ATTACHMENT</language-key>
 		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>

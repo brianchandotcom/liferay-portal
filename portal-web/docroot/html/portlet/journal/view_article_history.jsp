@@ -107,20 +107,7 @@ portletURL.setParameter("articleId", article.getArticleId());
 
 		// Status
 
-		String status = null;
-
-		if (articleVersion.isApproved()) {
-			status = "approved";
-		}
-		else if (articleVersion.isDraft()) {
-			status = "draft";
-		}
-		else if (articleVersion.isExpired()) {
-			status = "expired";
-		}
-		else if (articleVersion.isPending()) {
-			status = "pending";
-		}
+		String status = WorkflowConstants.toLabel(articleVersion.getStatus());
 
 		row.addText(LanguageUtil.get(pageContext, status), rowURL);
 

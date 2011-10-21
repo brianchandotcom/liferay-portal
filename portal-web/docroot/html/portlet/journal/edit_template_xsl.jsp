@@ -44,7 +44,9 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 %>
 
 <style type="text/css">
-	.aui-ace-editor {
+	#rich-editor {
+		width: 100%;
+		height: 400px;
 		position: relative;
 		border: 1px solid #A1A2A4;
 		border-radius: 4px;

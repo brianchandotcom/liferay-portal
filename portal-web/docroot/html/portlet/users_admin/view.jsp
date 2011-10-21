@@ -58,10 +58,18 @@ String portletURLString = portletURL.toString();
 				<portlet:param name="struts_action" value="/users_admin/view_users" />
 			</portlet:renderURL>
 
+			<%
+			String headerTitle = "users";
+
+			if (usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS)) {
+				headerTitle = "organizations";
+			}
+			%>
+
 			<liferay-ui:header
 				backLabel="users-and-organizations-home"
 				backURL="<%= headerBackURL.toString() %>"
-				title="organizations"
+				title="<%= headerTitle %>"
 			/>
 		</c:if>
 	</c:if>

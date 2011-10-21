@@ -1756,6 +1756,10 @@ public class SourceFormatter {
 
 		int x = importLine.indexOf("page");
 
+		if (x == -1) {
+			return false;
+		}
+
 		if (checkFile && content.contains(importLine.substring(x))) {
 			return true;
 		}

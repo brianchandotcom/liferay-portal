@@ -37,6 +37,8 @@ public class FieldConstants {
 
 	public static final String EDITABLE = "editable";
 
+	public static final String FILE_UPLOAD = "file-upload";
+
 	public static final String FLOAT = "float";
 
 	public static final String INTEGER = "integer";

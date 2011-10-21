@@ -18,24 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.Serializable;
 
 /**
  * @author Bruno Basto
  */
-public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
+public class FileUploadFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(
@@ -64,29 +59,10 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 			return fieldValueJSON;
 		}
 
-		long fileEntryGroupId = fieldValueJSONObject.getLong("groupId");
-		String fileEntryUUID = fieldValueJSONObject.getString("uuid");
-
-		try {
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
-				fileEntryUUID, fileEntryGroupId);
-
-			return fileEntry.getTitle();
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
-
-				return LanguageUtil.format(
-					themeDisplay.getLocale(), "is-temporarily-unavailable",
-					"content");
-			}
-		}
-
-		return StringPool.BLANK;
+		return fieldValueJSONObject.getString("name");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentLibraryFieldRenderer.class);
+		FileUploadFieldRenderer.class);
 
 }

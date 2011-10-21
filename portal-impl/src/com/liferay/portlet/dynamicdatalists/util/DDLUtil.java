@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,22 +28,24 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.util.PwdGenerator;
 import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.InputStream;
@@ -84,16 +85,8 @@ public class DDLUtil {
 			String.valueOf(recordSet.getDDMStructureId()));
 	}
 
-	public static JSONObject getRecordFileJSONObject(FileEntry fileEntry) {
-		JSONObject recordFileJSONObject = JSONFactoryUtil.createJSONObject();
-
-		if (fileEntry != null) {
-			recordFileJSONObject.put("groupId", fileEntry.getGroupId());
-			recordFileJSONObject.put("uuid", fileEntry.getUuid());
-			recordFileJSONObject.put("version", fileEntry.getVersion());
-		}
-
-		return recordFileJSONObject;
+	public static String getRecordFileUploadPath(DDLRecord record) {
+		return RECORD_FILES_PATH.concat(String.valueOf(record.getRecordId()));
 	}
 
 	public static JSONObject getRecordJSONObject(DDLRecord record)
@@ -256,69 +249,98 @@ public class DDLUtil {
 			template.getScript(), template.getLanguage());
 	}
 
-	public static FileEntry uploadFieldFile(
-			DDMStructure ddmStructure, String fieldName,
-			JSONObject fileJSONObject,
-			UploadPortletRequest uploadPortletRequest,
+	public static String uploadFieldFile(
+			DDLRecord record, String fieldName, InputStream inputStream)
+		throws Exception {
+
+		long companyId = record.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
+
+		String dirName =
+			getRecordFileUploadPath(record) + "/" + recordVersion.getVersion();
+
+		try {
+			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
+		}
+		catch (DuplicateDirectoryException dde) {
+		}
+
+		String fileName = dirName + "/" + fieldName;
+
+		try {
+			DLStoreUtil.addFile(companyId, repositoryId, fileName, inputStream);
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		return fileName;
+	}
+
+	public static void uploadRecordFiles(
+			DDLRecord record, UploadPortletRequest uploadPortletRequest,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		FileEntry fileEntry = null;
+		InputStream inputStream = null;
 
-		long size = uploadPortletRequest.getSize(fieldName);
-		long groupId = PortalUtil.getScopeGroupId(uploadPortletRequest);
-		InputStream inputStream = uploadPortletRequest.getFileAsStream(
-			fieldName);
-		String contentType = uploadPortletRequest.getContentType(fieldName);
-		String sourceFileName = uploadPortletRequest.getFileName(fieldName);
+		DDLRecordSet recordSet = record.getRecordSet();
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		if (fileJSONObject != null) {
-			try {
-				fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
-					fileJSONObject.getString("uuid"),
-					fileJSONObject.getLong("groupId"));
+		Fields fields = new Fields();
+
+		for (String fieldName : ddmStructure.getFieldNames()) {
+			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+
+			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
+				String fileName = uploadPortletRequest.getFileName(fieldName);
+
+				try {
+					inputStream = uploadPortletRequest.getFileAsStream(
+						fieldName, true);
+
+					Field oldField = record.getField(fieldName);
+					String fieldValue = StringPool.BLANK;
+
+					if (oldField != null) {
+						fieldValue = String.valueOf(oldField.getValue());
+					}
+
+					if (inputStream != null) {
+						String filePath = uploadFieldFile(
+							record, fieldName, inputStream);
+
+						JSONObject recordFileJSONObject =
+							JSONFactoryUtil.createJSONObject();
+
+						recordFileJSONObject.put("name", fileName);
+						recordFileJSONObject.put("path", filePath);
+						recordFileJSONObject.put(
+							"recordId", record.getRecordId());
+
+						fieldValue = recordFileJSONObject.toString();
+					}
+
+					Field field = new Field(
+						ddmStructure.getStructureId(), fieldName, fieldValue);
+
+					fields.put(field);
+				}
+				finally {
+					StreamUtil.cleanUp(inputStream);
+				}
 			}
-			catch (NoSuchFileEntryException e) {
-			}
 		}
 
-		if (size <= 0) {
-			return fileEntry;
-		}
+		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
 
-		if (fileEntry != null) {
-			fileEntry = DLAppServiceUtil.updateFileEntry(
-				fileEntry.getFileEntryId(), sourceFileName, contentType,
-				fileEntry.getTitle(), fileEntry.getDescription(),
-				StringPool.BLANK, false, inputStream, size, serviceContext);
-		}
-		else {
-			String folder = ddmStructure.getFieldProperty(fieldName, "folder");
-
-			JSONObject folderJSONObject = JSONFactoryUtil.createJSONObject(
-				folder);
-
-			String fieldLabel = ddmStructure.getFieldLabel(
-				fieldName, uploadPortletRequest.getLocale());
-
-			String randomSuffix =
-				PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
-
-			String title = fieldLabel.concat(
-				StringPool.SPACE).concat(randomSuffix);
-
-			long folderId = folderJSONObject.getLong("folderId");
-
-			fileEntry = DLAppServiceUtil.addFileEntry(
-				groupId, folderId, sourceFileName, contentType, title, title,
-				StringPool.BLANK, inputStream, size, serviceContext);
-		}
-
-		StreamUtil.cleanUp(inputStream);
-
-		return fileEntry;
+		StorageEngineUtil.update(
+			recordVersion.getDDMStorageId(), fields, true, serviceContext);
 	}
 
 	private static Transformer _transformer = new DDLTransformer();
+
+	private static final String RECORD_FILES_PATH = "ddl_records/";
 
 }

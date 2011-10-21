@@ -145,28 +145,68 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 				_handleSaveEvent: function(event) {
 					var instance = this;
 
-					var portletURL = Liferay.PortletURL.createResourceURL();
+					var record = instance.get('record');
+					var recordData = record.get('data');
 
-					portletURL.setParameter('fieldName', instance.get('elementName'));
-					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+					if (!recordData.recordId) {
+						var serviceParameterTypes = [
+							'long',
+							'long',
+							'int',
+							'java.util.Map<java.lang.String, java.io.Serializable>',
+							'com.liferay.portal.service.ServiceContext'
+						];
+
+						Liferay.Service.DDL.DDLRecord.addRecord(
+							{
+								groupId: themeDisplay.getScopeGroupId(),
+								recordsetId: <%= recordSet.getRecordSetId() %>,
+								displayIndex: 0,
+								fieldsMap: JSON.stringify({}),
+								serviceContext: JSON.stringify(
+									{
+										scopeGroupId: themeDisplay.getScopeGroupId(),
+										userId: themeDisplay.getUserId(),
+										workflowAction: Liferay.Workflow.ACTION_SAVE_DRAFT
+									}
+								),
+								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+							},
+							function(response) {
+								if (response.recordId > 0) {
+									recordData.recordId = response.recordId;
+								}
+
+								instance.uploadFile();
+							}
+						);
+					}
+					else {
+						instance.uploadFile();
+					}
+				},
+
+				uploadFile: function() {
+					var instance = this;
 
 					var record = instance.get('record');
 					var recordData = record.get('data');
 
-					if (recordData.recordId) {
-						portletURL.setParameter('recordId', recordData.recordId);
-					}
+					var portletURL = Liferay.PortletURL.createResourceURL();
 
 					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
+					portletURL.setParameter('fieldName', instance.get('elementName'));
+					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+					portletURL.setParameter('recordId', recordData.recordId);
 					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
 
 					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
 
 					portletURL.setWindowState('pop_up');
 
-					var uri = portletURL.toString();
-
 					var form = instance.get('contentBox');
+
+					var uri = portletURL.toString();
 
 					form.attr('action', uri);
 
@@ -181,14 +221,14 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 							method: 'POST',
 							on: {
 								complete: function(ioEvent, id, xhr) {
-									instance._onUploadComplete.call(instance, event, xhr);
+									instance._onUploadComplete.call(instance, xhr);
 								}
 							}
 						}
 					);
 				},
 
-				_onUploadComplete: function(event, xhr) {
+				_onUploadComplete: function(xhr) {
 					var instance = this;
 
 					var responseText = xhr.responseText;
@@ -198,9 +238,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 						var exception = data.exception;
 
 						if (!exception) {
-							if (data.uuid) {
-								instance.set('value', responseText);
-							}
+							instance.set('value', responseText);
 
 							FileUploadCellEditor.superclass._handleSaveEvent.apply(instance, arguments);
 						}

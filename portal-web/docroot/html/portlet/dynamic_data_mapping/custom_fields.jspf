@@ -155,72 +155,6 @@
 		}
 	);
 
-	var DLFolderCellEditor = A.Component.create({
-		NAME: 'document-library-folder-cell-editor',
-
-		EXTENDS: A.BaseCellEditor,
-
-		prototype: {
-			ELEMENT_TEMPLATE: '<div><label></label></div>',
-
-			initializer: function() {
-				var instance = this;
-
-				Liferay.provide(
-					window,
-					'<%= PortalUtil.getPortletNamespace(PortletKeys.DOCUMENT_LIBRARY) %>selectFolder',
-					A.bind(instance._selectFolder, instance),
-					[]
-				);
-			},
-
-			getElementsValue: function() {
-				var instance = this;
-
-				return instance.get('value');
-			},
-
-			_defInitToolbarFn: function() {
-				var instance = this;
-
-				DLFolderCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
-
-				instance.toolbar.add(
-					{
-						handler: A.bind(instance._handleChooseEvent, instance),
-						label: '<liferay-ui:message key="choose" />'
-					},
-					1
-				);
-			},
-
-			_handleChooseEvent: function(event) {
-				var folderWindow = window.open('<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" portletName='<%= PortletKeys.DOCUMENT_LIBRARY %>'><portlet:param name="struts_action" value="/document_library/select_folder" /></liferay-portlet:renderURL>', 'folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=830');
-
-				folderWindow.focus();
-			},
-
-			_selectFolder: function(folderId, folderName) {
-				var instance = this;
-
-				instance.set(
-					'value',
-					{
-						folderId: folderId,
-						folderName: folderName
-					}
-				);
-			},
-
-			_uiSetValue: function(val) {
-				var instance = this;
-
-				instance.elements.one('label').setContent(val.folderName);
-			}
-
-		}
-	});
-
 	var DDMFileUploadField = A.Component.create(
 		{
 			EXTENDS: A.FormBuilderFileUploadField,
@@ -232,7 +166,7 @@
 					value: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
 				},
 				dataType: {
-					value: 'document-library'
+					value: 'file-upload'
 				},
 				fieldNamespace: {
 					value: 'ddm'
@@ -274,16 +208,6 @@
 						{
 							attributeName: 'acceptFiles',
 							name: '<liferay-ui:message key="allowed-file-extensions" />'
-						},
-						{
-							attributeName: 'folder',
-							editor: new DLFolderCellEditor(),
-							formatter: function(o) {
-								var data = o.record.get('data');
-
-								return data.value.folderName;
-							},
-							name: '<liferay-ui:message key="folder" />'
 						}
 					);
 

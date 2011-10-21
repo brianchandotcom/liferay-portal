@@ -19,7 +19,7 @@ package com.liferay.portlet.blogs.social;
  */
 public class BlogsActivityKeys {
 
-	//public static final int ADD_COMMENT = 1;
+	public static final int ADD_COMMENT = 1;
 
 	public static final int ADD_ENTRY = 2;
 

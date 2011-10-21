@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -86,7 +85,6 @@ import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.util.SerializableUtil;
 
 import java.io.InputStream;
@@ -1640,23 +1638,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					if (parentMessageId !=
 							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-						GroupedModel groupedModel = null;
-						int activityKey = 0;
+						AssetEntry assetEntry =
+							assetEntryLocalService.getEntry(className, classPK);
 
-						if (className.equals(BlogsEntry.class.getName())) {
-							groupedModel =
-								blogsEntryPersistence.findByPrimaryKey(classPK);
-							activityKey =
-								SocialActivityConstants.TYPE_ADD_COMMENT;
-						}
-						else if (className.equals(WikiPage.class.getName())) {
-							groupedModel = wikiPageLocalService.getPage(
-								classPK);
-							activityKey =
-								SocialActivityConstants.TYPE_ADD_COMMENT;
-						}
-
-						if (groupedModel != null) {
+						if (assetEntry != null) {
 							JSONObject extraDataJSONObject =
 								JSONFactoryUtil.createJSONObject();
 
@@ -1664,10 +1649,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								"messageId", message.getMessageId());
 
 							socialActivityLocalService.addActivity(
-								userId, groupedModel.getGroupId(),
-								className, classPK,
-								activityKey, extraDataJSONObject.toString(),
-								groupedModel.getUserId());
+								userId, assetEntry.getGroupId(), className,
+								classPK,
+								SocialActivityConstants.TYPE_ADD_COMMENT,
+								extraDataJSONObject.toString(),
+								assetEntry.getUserId());
 						}
 					}
 				}

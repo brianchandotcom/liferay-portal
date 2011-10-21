@@ -63,7 +63,7 @@ public class ServiceBuilderMojo extends AbstractMojo {
 		}
 	}
 
-	protected void copyServicePropertiesFile() {
+	protected void copyServicePropertiesFile() throws Exception {
 		File servicePropertiesFile = new File(
 			resourcesDir, "service.properties");
 

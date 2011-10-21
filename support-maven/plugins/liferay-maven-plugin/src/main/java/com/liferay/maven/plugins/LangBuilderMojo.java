@@ -41,7 +41,7 @@ public class LangBuilderMojo extends AbstractMojo {
 	}
 
 	protected void doExecute() throws Exception {
-		new LangBuilder(langDir, langFile, langCode);
+		new LangBuilder(langDir, langFile, langPlugin, langTranslate);
 	}
 
 	protected void initPortal() {
@@ -55,11 +55,6 @@ public class LangBuilderMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter expression="${langCode}"
-	 */
-	private String langCode;
-
-	/**
 	 * @parameter default-value="${basedir}/src/main/resources/content" expression="${langDir}"
 	 * @required
 	 */
@@ -69,5 +64,15 @@ public class LangBuilderMojo extends AbstractMojo {
 	 * @parameter default-value="Language" expression="${langFile}"
 	 */
 	private String langFile;
+
+	/**
+	 * @parameter default-value="true" expression="${langPlugin}"
+	 */
+	private boolean langPlugin;
+
+	/**
+	 * @parameter default-value="true" expression="${langTranslate}"
+	 */
+	private boolean langTranslate;
 
 }

@@ -110,6 +110,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
 				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Manage Pages Test Page"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

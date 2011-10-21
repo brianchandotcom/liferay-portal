@@ -55,7 +55,7 @@ public class ViewFolderDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder Description"),
 			selenium.getText("//div[@class='lfr-asset-description']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
-			selenium.getText("//a/div[1]"));
+			selenium.getText("//span[@class='entry-title']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Document Description"),
 			selenium.getText("//div[@class='file-entry-list-description']"));
 		assertEquals(RuntimeVariables.replace("9.6k"),

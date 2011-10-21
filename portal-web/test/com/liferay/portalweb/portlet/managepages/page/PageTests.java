@@ -27,7 +27,6 @@ import com.liferay.portalweb.portlet.managepages.page.savepagetypelinktopage.Sav
 import com.liferay.portalweb.portlet.managepages.page.savepagetypepanel.SavePageTypePanelTests;
 import com.liferay.portalweb.portlet.managepages.page.savepagetypeportlet.SavePageTypePortletTests;
 import com.liferay.portalweb.portlet.managepages.page.savepagetypeurl.SavePageTypeURLTests;
-import com.liferay.portalweb.portlet.managepages.page.savepagetypewebcontent.SavePageTypeWebContentTests;
 import com.liferay.portalweb.portlet.managepages.page.setdisplayorder.SetDisplayOrderTests;
 
 import junit.framework.Test;
@@ -53,7 +52,7 @@ public class PageTests extends BaseTests {
 		testSuite.addTest(SavePageTypePanelTests.suite());
 		testSuite.addTest(SavePageTypePortletTests.suite());
 		testSuite.addTest(SavePageTypeURLTests.suite());
-		testSuite.addTest(SavePageTypeWebContentTests.suite());
+		//testSuite.addTest(SavePageTypeWebContentTests.suite());
 		testSuite.addTest(SetDisplayOrderTests.suite());
 
 		return testSuite;

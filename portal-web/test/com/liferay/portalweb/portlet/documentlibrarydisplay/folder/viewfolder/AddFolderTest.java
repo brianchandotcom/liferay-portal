@@ -43,6 +43,7 @@ public class AddFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/ul/li/strong/a"));
 		selenium.clickAt("//span[3]/span/ul/li/strong/a",
@@ -54,7 +55,7 @@ public class AddFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
+				if (selenium.isElementPresent(
 							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}

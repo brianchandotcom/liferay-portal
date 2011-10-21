@@ -51,6 +51,7 @@ public class ConfigurePortletShowFolderSearchTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"Documents and Media Display Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",

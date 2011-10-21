@@ -27,7 +27,6 @@ import com.liferay.portalweb.portlet.managepages.page.savepagetypelinktopage.Sav
 import com.liferay.portalweb.portlet.managepages.page.savepagetypepanel.SavePageTypePanelTests;
 import com.liferay.portalweb.portlet.managepages.page.savepagetypeportlet.SavePageTypePortletTests;
 import com.liferay.portalweb.portlet.managepages.page.savepagetypeurl.SavePageTypeURLTests;
-import com.liferay.portalweb.portlet.managepages.page.savepagetypewebcontent.SavePageTypeWebContentTests;
 import com.liferay.portalweb.portlet.managepages.page.setdisplayorder.SetDisplayOrderTests;
 
 import junit.framework.Test;

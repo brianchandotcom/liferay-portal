@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -28,13 +29,24 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Jorge Ferrer
+ * @author Alexander Chow
  */
 public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	public DLFileVersionImpl() {
+	}
+
+	@Override
+	public InputStream getContentStream(boolean incrementCounter)
+		throws PortalException, SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileAsStream(
+			PrincipalThreadLocal.getUserId(), getFileEntryId(), getVersion(),
+			incrementCounter);
 	}
 
 	@Override

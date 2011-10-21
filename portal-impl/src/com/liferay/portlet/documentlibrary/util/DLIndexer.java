@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -21,13 +25,17 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -35,22 +43,37 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.model.FileModel;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.store.DLStoreIndexer;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -64,16 +87,13 @@ import javax.portlet.WindowStateException;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Alexander Chow
  */
 public class DLIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {DLFileEntry.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.DOCUMENT_LIBRARY;
-
-	public DLIndexer() {
-		IndexerRegistryUtil.register(new DLStoreIndexer());
-	}
 
 	public String[] getClassNames() {
 		return CLASS_NAMES;
@@ -176,60 +196,196 @@ public class DLIndexer extends BaseIndexer {
 		}
 	}
 
+	protected void addFileEntryTypeAttributes(
+			Document document, DLFileVersion dlFileVersion)
+		throws PortalException, SystemException {
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				dlFileVersion.getFileEntryTypeId());
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Fields fields = null;
+
+			try {
+				DLFileEntryMetadata fileEntryMetadata =
+					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						dlFileVersion.getFileVersionId());
+
+				fields = StorageEngineUtil.getFields(
+					fileEntryMetadata.getDDMStorageId());
+			}
+			catch (Exception e) {
+			}
+
+			if (fields != null) {
+				DDMIndexerUtil.addAttributes(document, ddmStructure, fields);
+			}
+		}
+	}
+
 	@Override
 	protected void doDelete(Object obj) throws Exception {
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		FileModel fileModel = new FileModel();
+		Document document = new DocumentImpl();
 
-		fileModel.setCompanyId(dlFileEntry.getCompanyId());
-		fileModel.setFileName(dlFileEntry.getName());
-		fileModel.setPortletId(PORTLET_ID);
-		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
+		document.addUID(PORTLET_ID, dlFileEntry.getFileEntryId());
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-		indexer.delete(fileModel);
+		SearchEngineUtil.deleteDocument(
+			dlFileEntry.getCompanyId(), document.get(Field.UID));
 	}
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		FileModel fileModel = new FileModel();
+		if (_log.isDebugEnabled()) {
+			_log.debug("Indexing document " + dlFileEntry);
+		}
 
-		long[] assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
-			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+		boolean indexContent = true;
 
-		fileModel.setAssetCategoryIds(assetCategoryIds);
+		InputStream is = null;
 
-		String[] assetCategoryNames =
-			AssetCategoryLocalServiceUtil.getCategoryNames(
-				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+		try {
+			if (PropsValues.DL_FILE_INDEXING_MAX_SIZE == 0) {
+				indexContent = false;
+			}
+			else if (PropsValues.DL_FILE_INDEXING_MAX_SIZE != -1) {
+				if (dlFileEntry.getSize() >
+						PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
 
-		fileModel.setAssetCategoryNames(assetCategoryNames);
+					indexContent = false;
+				}
+			}
 
-		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+			if (indexContent) {
+				String[] ignoreExtensions = PrefsPropsUtil.getStringArray(
+					PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS,
+					StringPool.COMMA);
 
-		fileModel.setAssetTagNames(assetTagNames);
+				if (ArrayUtil.contains(
+						ignoreExtensions,
+						StringPool.PERIOD + dlFileEntry.getExtension())) {
 
-		fileModel.setCompanyId(dlFileEntry.getCompanyId());
-		fileModel.setCreateDate(dlFileEntry.getCreateDate());
-		fileModel.setFileEntryId(dlFileEntry.getFileEntryId());
-		fileModel.setFileName(dlFileEntry.getName());
-		fileModel.setGroupId(dlFileEntry.getGroupId());
-		fileModel.setModifiedDate(dlFileEntry.getModifiedDate());
-		fileModel.setPortletId(PORTLET_ID);
-		fileModel.setProperties(dlFileEntry.getLuceneProperties());
-		fileModel.setRepositoryId(dlFileEntry.getDataRepositoryId());
-		fileModel.setUserId(dlFileEntry.getUserId());
-		fileModel.setUserName(dlFileEntry.getUserName());
-		fileModel.setUserUuid(dlFileEntry.getUserUuid());
+					indexContent = false;
+				}
+			}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
+			if (indexContent) {
+				is = dlFileEntry.getFileVersion().getContentStream(false);
+			}
+		}
+		catch (Exception e) {
+		}
 
-		return indexer.getDocument(fileModel);
+		if (indexContent && (is == null)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Document " + dlFileEntry + " does not have any content");
+			}
+
+			return null;
+		}
+
+		try {
+			Document document = new DocumentImpl();
+
+			long fileEntryId = dlFileEntry.getFileEntryId();
+
+			document.addUID(PORTLET_ID, fileEntryId);
+
+			long[] assetCategoryIds =
+				AssetCategoryLocalServiceUtil.getCategoryIds(
+					DLFileEntry.class.getName(), fileEntryId);
+
+			document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
+
+			String[] assetCategoryNames =
+					AssetCategoryLocalServiceUtil.getCategoryNames(
+						DLFileEntry.class.getName(), fileEntryId);
+
+			document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
+
+			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+				DLFileEntry.class.getName(), fileEntryId);
+
+			document.addKeyword(Field.ASSET_TAG_NAMES, assetTagNames);
+			document.addKeyword(Field.COMPANY_ID, dlFileEntry.getCompanyId());
+
+			if (indexContent) {
+				try {
+					document.addFile(Field.CONTENT, is, dlFileEntry.getTitle());
+				}
+				catch (IOException ioe) {
+					throw new SearchException(
+						"Cannot extract text from file" + dlFileEntry);
+				}
+			}
+
+			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
+			document.addKeyword(
+				Field.ENTRY_CLASS_NAME, DLFileEntry.class.getName());
+			document.addKeyword(Field.ENTRY_CLASS_PK, fileEntryId);
+			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
+			document.addKeyword(
+				Field.GROUP_ID, getParentGroupId(dlFileEntry.getGroupId()));
+			document.addDate(
+				Field.MODIFIED_DATE, dlFileEntry.getModifiedDate());
+			document.addKeyword(Field.PORTLET_ID, PORTLET_ID);
+			document.addText(
+				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
+			document.addKeyword(Field.SCOPE_GROUP_ID, dlFileEntry.getGroupId());
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			document.addKeyword(Field.STATUS, dlFileVersion.getStatus());
+			document.addText(Field.TITLE, dlFileEntry.getTitle());
+
+			long userId = dlFileEntry.getUserId();
+
+			document.addKeyword(Field.USER_ID, userId);
+			document.addKeyword(
+				Field.USER_NAME, PortalUtil.getUserName(
+					userId, dlFileEntry.getUserName()),
+				true);
+			document.addKeyword("extension", dlFileEntry.getExtension());
+			document.addKeyword(
+				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
+			document.addKeyword("path", dlFileEntry.getTitle());
+			document.addKeyword(
+				"repositoryId", dlFileEntry.getDataRepositoryId());
+
+			ExpandoBridge expandoBridge =
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
+					dlFileVersion.getFileVersionId());
+
+			ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
+
+			if (dlFileEntry.getFileEntryTypeId() > 0) {
+				addFileEntryTypeAttributes(document, dlFileVersion);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Document " + dlFileEntry + " indexed successfully");
+			}
+
+			return document;
+		}
+		finally {
+			if (is != null) {
+				try {
+					is.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
+		}
 	}
 
 	@Override
@@ -285,15 +441,67 @@ public class DLIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
+		if (ids.length == 1) {
+			long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexFolders(companyId);
-		reindexRoot(companyId);
+			reindexFolders(companyId);
+			reindexRoot(companyId);
+		}
+		else {
+			long companyId = GetterUtil.getLong(ids[0]);
+			long groupId = GetterUtil.getLong(ids[2]);
+			long dataRepositoryId = GetterUtil.getLong(ids[3]);
+
+			reindexFileEntries(companyId, groupId, dataRepositoryId);
+		}
 	}
 
 	@Override
 	protected String getPortletId(SearchContext searchContext) {
 		return PORTLET_ID;
+	}
+
+	protected void reindexFileEntries(
+			long companyId, long groupId, long dataRepositoryId)
+		throws Exception {
+
+		long folderId = DLFolderConstants.getFolderId(
+			groupId, dataRepositoryId);
+
+		int fileEntriesCount = DLFileEntryLocalServiceUtil.getFileEntriesCount(
+			companyId, folderId);
+
+		int fileEntriesPages = fileEntriesCount / Indexer.DEFAULT_INTERVAL;
+
+		for (int i = 0; i <= fileEntriesPages; i++) {
+			int fileEntriesStart = (i * Indexer.DEFAULT_INTERVAL);
+			int fileEntriesEnd = fileEntriesStart + Indexer.DEFAULT_INTERVAL;
+
+			reindexFileEntries(
+				companyId, groupId, folderId, fileEntriesStart, fileEntriesEnd);
+		}
+	}
+
+	protected void reindexFileEntries(
+			long companyId, long groupId, long folderId, int fileEntriesStart,
+			int fileEntriesEnd)
+		throws Exception {
+
+		Collection<Document> documents = new ArrayList<Document>();
+
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntries(
+				groupId, folderId, fileEntriesStart, fileEntriesEnd, null);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			Document document = getDocument(dlFileEntry);
+
+			if (document != null) {
+				documents.add(document);
+			}
+		}
+
+		SearchEngineUtil.updateDocuments(companyId, documents);
 	}
 
 	protected void reindexFolders(long companyId) throws Exception {
@@ -327,9 +535,7 @@ public class DLIndexer extends BaseIndexer {
 				String.valueOf(groupId), String.valueOf(folderId)
 			};
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			indexer.reindex(newIds);
+			reindex(newIds);
 		}
 	}
 
@@ -362,11 +568,11 @@ public class DLIndexer extends BaseIndexer {
 				String.valueOf(groupId), String.valueOf(folderId)
 			};
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(FileModel.class);
-
-			indexer.reindex(newIds);
+			reindex(newIds);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(DLIndexer.class);
 
 	private static final boolean _FILTER_SEARCH = true;
 

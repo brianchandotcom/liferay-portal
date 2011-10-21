@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.documentlibrary.model.FileModel;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +170,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 				for (String className : indexer.getClassNames()) {
 					if (!entryClassNamesList.contains(className) &&
 						!className.equals(AssetEntry.class.getName()) &&
-						!className.equals(FileModel.class.getName()) &&
+						!className.equals(DLFileEntry.class.getName()) &&
 						!className.equals(PluginPackage.class.getName())) {
 
 						entryClassNamesList.add(className);

@@ -240,8 +240,8 @@ public class SetupWizardUtil {
 			HttpServletRequest request, UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		boolean defaultDatabase = GetterUtil.getBoolean(
-			_getParameter(request, "defaultDatabase", "true"));
+		boolean defaultDatabase = ParamUtil.getBoolean(
+			request, "defaultDatabase", true);
 
 		if (defaultDatabase) {
 			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_URL);

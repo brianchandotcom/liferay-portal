@@ -58,11 +58,22 @@ String portletURLString = portletURL.toString();
 				<portlet:param name="struts_action" value="/users_admin/view_users" />
 			</portlet:renderURL>
 
-			<liferay-ui:header
-				backLabel="users-and-organizations-home"
-				backURL="<%= headerBackURL.toString() %>"
-				title="organizations"
-			/>
+			<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+				<liferay-ui:header
+					backLabel="users-and-organizations-home"
+					backURL="<%= headerBackURL.toString() %>"
+					title="organizations"
+				/>
+			</c:if>
+
+			<c:else>
+				<liferay-ui:header
+					backLabel="users-and-organizations-home"
+					backURL="<%= headerBackURL.toString() %>"
+					title="users"
+				/>
+			</c:else>
+
 		</c:if>
 	</c:if>
 

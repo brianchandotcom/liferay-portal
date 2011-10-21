@@ -67,6 +67,12 @@ public class DLFolderFinderImpl
 	public static String FIND_FS_BY_G_F_S =
 		DLFolderFinder.class.getName() + ".findFS_ByG_F_S";
 
+	public static String JOIN_FV_BY_DLFILEENTRY =
+		DLFolderFinder.class.getName() + ".joinFV_ByDLFileEntry";
+
+	public static String JOIN_FS_BY_DLFILEENTRY =
+		DLFolderFinder.class.getName() + ".joinFS_ByDLFileEntry";
+
 	public int countF_FE_FS_ByG_F_S(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -166,6 +172,16 @@ public class DLFolderFinderImpl
 			}
 			else {
 				sql = CustomSQLUtil.get(COUNT_FE_BY_G_F_S);
+
+				if ((inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) ||
+					((mimeTypes != null) && (mimeTypes.length > 0))) {
+
+					sql = StringUtil.replace(sql, "[$JOIN$]",
+						CustomSQLUtil.get(JOIN_FV_BY_DLFILEENTRY));
+				}
+				else {
+					sql = StringUtil.replace(sql, "[$JOIN$]", "");
+				}
 			}
 
 			if (inlineSQLHelper) {
@@ -196,6 +212,16 @@ public class DLFolderFinderImpl
 			sb.append(") UNION ALL (");
 
 			sql = CustomSQLUtil.get(COUNT_FS_BY_G_F_S);
+
+			if ((inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) ||
+					((mimeTypes != null) && (mimeTypes.length > 0))) {
+
+				sql = StringUtil.replace(sql, "[$JOIN$]",
+					CustomSQLUtil.get(JOIN_FS_BY_DLFILEENTRY));
+			}
+			else {
+				sql = StringUtil.replace(sql, "[$JOIN$]", "");
+			}
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -315,6 +341,14 @@ public class DLFolderFinderImpl
 			}
 			else {
 				sql = CustomSQLUtil.get(COUNT_FE_BY_G_F_S);
+
+				if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
+					sql = StringUtil.replace(sql, "[$JOIN$]",
+						CustomSQLUtil.get(JOIN_FV_BY_DLFILEENTRY));
+				}
+				else {
+					sql = StringUtil.replace(sql, "[$JOIN$]", "");
+				}
 			}
 
 			if (inlineSQLHelper) {
@@ -328,10 +362,16 @@ public class DLFolderFinderImpl
 
 			sql = CustomSQLUtil.get(COUNT_FS_BY_G_F_S);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
+				sql = StringUtil.replace(sql, "[$JOIN$]",
+					CustomSQLUtil.get(JOIN_FS_BY_DLFILEENTRY));
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, DLFileShortcut.class.getName(),
 					"DLFileShortcut.fileShortcutId", groupId);
+			}
+			else {
+				sql = StringUtil.replace(sql, "[$JOIN$]", "");
 			}
 
 			sb.append(sql);

@@ -53,6 +53,8 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 		assertFalse(selenium.isChecked("//input[@name='_15_rowIds']"));
 		assertTrue(selenium.isVisible(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
+		assertTrue(selenium.isVisible(
+				"//input[@value='Expire' and @disabled='']"));
 		selenium.clickAt("//input[@name='_15_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		assertTrue(selenium.isChecked("//input[@name='_15_allRowIds']"));
@@ -76,6 +78,8 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 
 		assertFalse(selenium.isElementPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
+		assertFalse(selenium.isElementPresent(
+				"//input[@value='Expire' and @disabled='']"));
 		assertTrue(selenium.isVisible("//input[@value='Expire']"));
 		selenium.clickAt("//input[@name='_15_allRowIds']",
 			RuntimeVariables.replace("Select All"));
@@ -100,6 +104,8 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
+		assertTrue(selenium.isVisible(
+				"//input[@value='Expire' and @disabled='']"));
 		selenium.clickAt("//input[@name='_15_rowIds']",
 			RuntimeVariables.replace("Row Entry Check Box"));
 		assertTrue(selenium.isChecked("//input[@name='_15_rowIds']"));
@@ -123,6 +129,8 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 
 		assertFalse(selenium.isElementPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
+		assertFalse(selenium.isElementPresent(
+				"//input[@value='Expire' and @disabled='']"));
 		assertTrue(selenium.isVisible("//input[@value='Expire']"));
 		selenium.clickAt("//input[@name='_15_rowIds']",
 			RuntimeVariables.replace("Row Entry Check Box"));
@@ -147,5 +155,7 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
+		assertTrue(selenium.isVisible(
+				"//input[@value='Expire' and @disabled='']"));
 	}
 }

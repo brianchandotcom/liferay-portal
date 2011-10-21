@@ -406,26 +406,6 @@
 		}
 	);
 
-	var DDMPasswordField = A.Component.create(
-		{
-			EXTENDS: DDMTextField,
-
-			NAME: 'ddm-password',
-
-			prototype: {
-				getNode: function() {
-					var instance = this;
-
-					var passwordNode = A.Node.create(instance.getHTML());
-
-					passwordNode.attr('type', 'password');
-
-					return passwordNode;
-				}
-			}
-		}
-	);
-
 	var DDMSeparatorField = A.Component.create(
 		{
 			ATTRS: {
@@ -470,6 +450,5 @@
 	FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 	FormBuilderTypes['ddm-number'] = DDMNumberField;
 	FormBuilderTypes['ddm-paragraph'] = DDMParagraphField;
-	FormBuilderTypes['ddm-password'] = DDMPasswordField;
 	FormBuilderTypes['ddm-separator'] = DDMSeparatorField;
 </aui:script>

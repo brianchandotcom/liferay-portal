@@ -286,10 +286,11 @@ public class SeleneseToJavaBuilder {
 			String param3 = fixParam(params[2]);
 
 			if (param1.equals("addSelection") || param1.equals("clickAt") ||
-				param1.equals("keyPress") || param1.equals("mouseMoveAt") ||
-				param1.equals("openWindow") || param1.equals("select") ||
-				param1.equals("type") || param1.equals("typeKeys") ||
-				param1.equals("uploadFile") || param1.equals("waitForPopUp")) {
+				param1.equals("doubleClickAt") || param1.equals("keyPress") ||
+				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
+				param1.equals("select") || param1.equals("type") ||
+				param1.equals("typeKeys") || param1.equals("uploadFile") ||
+				param1.equals("waitForPopUp")) {
 
 				sb.append("selenium.");
 				sb.append(param1);

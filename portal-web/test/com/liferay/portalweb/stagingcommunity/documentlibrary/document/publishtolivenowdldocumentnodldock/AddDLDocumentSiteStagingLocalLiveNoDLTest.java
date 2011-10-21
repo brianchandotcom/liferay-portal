@@ -58,6 +58,7 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-alert']"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/ul/li/strong/a"));
+		Thread.sleep(5000);
 		selenium.clickAt("//span[3]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 

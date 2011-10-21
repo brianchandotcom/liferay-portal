@@ -56,8 +56,9 @@ public class ActivateStagingTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.click("//td[6]/span/ul/li/strong/a/span");
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

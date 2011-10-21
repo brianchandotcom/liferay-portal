@@ -1733,6 +1733,12 @@
 
 		<action path="/sites_admin/view_teams" forward="portlet.sites_admin.view_teams" />
 
+		<!-- Social Activity Admin -->
+
+		<action path="/social_activity_admin/view" type="com.liferay.portlet.socialactivityadmin.action.ViewAction">
+			<forward name="portlet.social_activity_admin.view" path="portlet.social_activity_admin.view" />
+		</action>
+
 		<!-- Social Equity Admin -->
 
 		<action path="/social_equity_admin/view" type="com.liferay.portlet.socialequityadmin.action.ViewAction">

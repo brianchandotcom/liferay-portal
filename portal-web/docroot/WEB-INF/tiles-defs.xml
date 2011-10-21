@@ -1470,6 +1470,14 @@
 		<put name="portlet_content" value="/portlet/shopping/view_item.jsp" />
 	</definition>
 
+	<!-- Social Activity Admin -->
+
+	<definition name="portlet.social_activity_admin" extends="portlet" />
+
+	<definition name="portlet.social_activity_admin.view" extends="portlet.social_activity_admin">
+		<put name="portlet_content" value="/portlet/social_activity_admin/view.jsp" />
+	</definition>
+
 	<!-- Social Equity Admin -->
 
 	<definition name="portlet.social_equity_admin" extends="portlet" />

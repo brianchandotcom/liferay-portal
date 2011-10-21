@@ -974,7 +974,7 @@ public class SourceFormatter {
 				}
 			}
 
-			String trimmedLine = StringUtil.trim(line);
+			String trimmedLine = StringUtil.trimLeading(line);
 
 			if (trimmedLine.contains(StringPool.TAB) &&
 				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&

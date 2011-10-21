@@ -25,58 +25,118 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Users and Organizations</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>User Group</td>
+	<td>link=User Groups</td>
+	<td>User Groups</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>User Group</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>User Group</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Members</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Members</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>Assign Members</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_127_keywords']</td>
+	<td>selen01</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>selen01 lenn nium01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>selenium01</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_127_rowIds']</td>
+	<td>Test User</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Update Associations']</td>
+	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=User Groups</td>
+	<td>User Groups</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>View Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>View Users</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
 	<td>View Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
 	<td>selen01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>nium01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>selenium01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/a</td>
+	<td>Test User Group</td>
 </tr>
 
 </tbody></table>

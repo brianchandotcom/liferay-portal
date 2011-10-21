@@ -29,7 +29,7 @@ public class SearchUserFullNameCPTests extends BaseTests {
 
 		testSuite.addTestSuite(AddUserCPTest.class);
 		testSuite.addTestSuite(SearchUserFullNameCPTest.class);
-		testSuite.addTestSuite(TearDownUserCPTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

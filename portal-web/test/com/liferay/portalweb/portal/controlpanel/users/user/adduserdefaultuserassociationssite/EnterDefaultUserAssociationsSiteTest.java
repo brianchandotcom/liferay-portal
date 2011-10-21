@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationscommunity;
+package com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationssite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EnterDefaultUserAssociationsCommunityTest extends BaseTestCase {
-	public void testEnterDefaultUserAssociationsCommunity()
+public class EnterDefaultUserAssociationsSiteTest extends BaseTestCase {
+	public void testEnterDefaultUserAssociationsSite()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 

@@ -53,28 +53,27 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		selenium.type("//input[@id='_130_mx']",
 			RuntimeVariables.replace("liferay.com"));
 		selenium.type("//input[@id='_130_homeURL']",
-			RuntimeVariables.replace("Home URL"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@name='_130_settings--default.landing.page.path--']",
-			RuntimeVariables.replace("Default Landing Page"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@name='_130_settings--default.logout.page.path--']",
-			RuntimeVariables.replace("Default Logout Page"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_130_legalName']",
 			RuntimeVariables.replace("Liferay, Inc."));
 		selenium.type("//input[@id='_130_sicCode']",
-			RuntimeVariables.replace("SIC Code"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_130_legalId']",
-			RuntimeVariables.replace("Legal ID"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_130_tickerSymbol']",
-			RuntimeVariables.replace("Ticker Symbol"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_130_legalType']",
-			RuntimeVariables.replace("Legal Type"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_130_industry']",
-			RuntimeVariables.replace("Industry"));
-		selenium.type("//input[@id='_130_type']",
-			RuntimeVariables.replace("Type"));
-		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", "Users"));
+			RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_130_type']", RuntimeVariables.replace(""));
+		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", ""));
 		selenium.clickAt("//a[@id='_130_usersLink']",
-			RuntimeVariables.replace("Users"));
+			RuntimeVariables.replace(""));
 		selenium.clickAt("link=Reserved Credentials",
 			RuntimeVariables.replace("Reserved Credentials"));
 		selenium.type("//textarea[@name='_130_settings--admin.reserved.screen.names--']",
@@ -83,22 +82,22 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.clickAt("link=Default User Associations",
 			RuntimeVariables.replace("Default User Associations"));
-		selenium.type("//textarea[@name='_130_settings--admin.default.group.names--']",
+		selenium.type("//textarea[@id='_130_admin.default.group.names']",
 			RuntimeVariables.replace(""));
-		selenium.type("//textarea[@name='_130_settings--admin.default.role.names--']",
+		selenium.type("//textarea[@id='_130_admin.default.role.names']",
 			RuntimeVariables.replace("Power User\nUser"));
-		selenium.type("//textarea[@name='_130_settings--admin.default.user.group.names--']",
+		selenium.type("//textarea[@id='_130_admin.default.user.group.names']",
 			RuntimeVariables.replace(""));
 		assertTrue(selenium.isPartialText("//a[@id='_130_mailHostNamesLink']",
 				"Mail Host Names"));
 		selenium.clickAt("//a[@id='_130_mailHostNamesLink']",
 			RuntimeVariables.replace("Mail Host Names"));
 		selenium.type("//textarea[@name='_130_settings--admin.mail.host.names--']",
-			RuntimeVariables.replace("Mail Host Names"));
+			RuntimeVariables.replace(""));
 		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
+				"//a[@id='_130_emailNotificationsLink']", ""));
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
-			RuntimeVariables.replace("Email Notifications"));
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@name='_130_settings--admin.email.from.name--']",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.type("//input[@name='_130_settings--admin.email.from.address--']",

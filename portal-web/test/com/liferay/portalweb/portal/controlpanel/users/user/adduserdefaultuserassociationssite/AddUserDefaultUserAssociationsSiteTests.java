@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationscommunity;
+package com.liferay.portalweb.portal.controlpanel.users.user.adduserdefaultuserassociationssite;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,15 +22,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserDefaultUserAssociationsCommunityTests extends BaseTests {
+public class AddUserDefaultUserAssociationsSiteTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(EnterDefaultUserAssociationsCommunityTest.class);
+		testSuite.addTestSuite(EnterDefaultUserAssociationsSiteTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(
-			AssertDefaultUserAssociationsCommunityTest.class);
+		testSuite.addTestSuite(AssertDefaultUserAssociationsSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownSettingsConfigurationTest.class);
 

@@ -52,14 +52,11 @@ public class SearchUserAddressStreetCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("selen01"),
-			selenium.getText(
-				"//div[@id='usersAdminUsersPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[2]/a"));
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("nium01"),
-			selenium.getText(
-				"//div[@id='usersAdminUsersPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[3]/a"));
+			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("selenium01"),
-			selenium.getText(
-				"//div[@id='usersAdminUsersPanel']/div[2]/div/div[1]/table/tbody/tr[3]/td[4]/a"));
+			selenium.getText("//td[4]/a"));
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("1231 Street1 Dr.1"));
 		selenium.clickAt("//input[@value='Search']",
@@ -68,5 +65,7 @@ public class SearchUserAddressStreetCPTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("selen01"));
 		assertFalse(selenium.isTextPresent("nium01"));
 		assertFalse(selenium.isTextPresent("selenium01"));
+		assertEquals(RuntimeVariables.replace("No users were found."),
+			selenium.getText("xpath=(//div[@class='portlet-msg-info'])[2]"));
 	}
 }

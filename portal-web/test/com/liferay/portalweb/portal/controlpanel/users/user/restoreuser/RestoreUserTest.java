@@ -51,31 +51,10 @@ public class RestoreUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
-					RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//span/a/span"));
+				selenium.clickAt("//span/a/span",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean advancedVisible = selenium.isVisible(
@@ -110,11 +89,11 @@ public class RestoreUserTest extends BaseTestCase {
 
 				selenium.select("//select[@name='_125_status']",
 					RuntimeVariables.replace("label=Inactive"));
-				selenium.clickAt("//div[2]/span[2]/span/input",
+				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("xPath=(//input[@name='_125_rowIds'])[2]",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='_125_rowIds']",
+					RuntimeVariables.replace("Check All"));
 				selenium.clickAt("//input[@value='Restore']",
 					RuntimeVariables.replace("Restore"));
 				selenium.waitForPageToLoad("30000");
@@ -139,42 +118,27 @@ public class RestoreUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertFalse(selenium.isElementPresent("link=selen01"));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
+					RuntimeVariables.replace("Search All Users"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=\u00ab Basic",
+					RuntimeVariables.replace("\u00ab Basic"));
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("selenium"));
+					RuntimeVariables.replace("selenium01"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("selen01"),
 					selenium.getText("//td[2]/a"));
-				selenium.clickAt("//div[1]/span[1]/ul/li/strong/a/span",
-					RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("All Users"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
+				assertEquals(RuntimeVariables.replace("nium01"),
+					selenium.getText("//td[3]/a"));
+				assertEquals(RuntimeVariables.replace("selenium01"),
+					selenium.getText("//td[4]/a"));
 
 			case 100:
 				label = -1;

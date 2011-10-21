@@ -39,9 +39,14 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>selen01</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//td[2]/a</td>
-	<td>User Name</td>
+	<td>selen01</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -69,14 +74,19 @@
 	<td>!!!!!!!!!!!!!!!!!!!!</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td>Your request failed to complete.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid email address.</td>
-	<td></td>
 </tr>
 
 </tbody></table>

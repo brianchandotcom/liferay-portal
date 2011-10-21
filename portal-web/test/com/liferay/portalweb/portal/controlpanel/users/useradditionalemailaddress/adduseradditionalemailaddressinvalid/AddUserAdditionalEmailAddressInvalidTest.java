@@ -52,7 +52,9 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
+		assertEquals(RuntimeVariables.replace("selen01"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("selen01"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -99,6 +101,12 @@ public class AddUserAdditionalEmailAddressInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("!!!!!!!!!!!!!!!!!!!!"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		assertTrue(selenium.isTextPresent("Please enter a valid email address."));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xpath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Please enter a valid email address."),
+			selenium.getText("xpath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

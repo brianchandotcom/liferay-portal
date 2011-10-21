@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddUserCPTest</title>
+<title>AddUserTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddUserCPTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddUserTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -199,6 +199,11 @@
 	<td>Sign Out</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Sign In']</td>
+	<td>Sign In</td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
@@ -337,6 +342,11 @@
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
 	<td>Sign Out</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Sign In']</td>
+	<td>Sign In</td>
 </tr>
 <tr>
 	<td>open</td>

@@ -48,231 +48,206 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Users and Organizations",
-					RuntimeVariables.replace("Users and Organizations"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("User Groups"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				selenium.clickAt("link=User Groups",
+					RuntimeVariables.replace("User Groups"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean userGroup1Present = selenium.isElementPresent(
-						"//td[2]/a");
+				boolean UserGroup1Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
 
-				if (!userGroup1Present) {
-					label = 6;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@name='_125_allRowIds']"));
-				selenium.clickAt("//input[@name='_125_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("User Groups"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
-
-				boolean userGroup2Present = selenium.isElementPresent(
-						"//td[2]/a");
-
-				if (!userGroup2Present) {
-					label = 5;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@name='_125_allRowIds']"));
-				selenium.clickAt("//input[@name='_125_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("User Groups"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
-
-				boolean userGroup3Present = selenium.isElementPresent(
-						"//td[2]/a");
-
-				if (!userGroup3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@name='_125_allRowIds']"));
-				selenium.clickAt("//input[@name='_125_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("User Groups"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
-
-				boolean userGroup4Present = selenium.isElementPresent(
-						"//td[2]/a");
-
-				if (!userGroup4Present) {
-					label = 3;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@name='_125_allRowIds']"));
-				selenium.clickAt("//input[@name='_125_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-				selenium.clickAt("link=View", RuntimeVariables.replace("View"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("User Groups"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
-
-				boolean userGroup5Present = selenium.isElementPresent(
-						"//td[2]/a");
-
-				if (!userGroup5Present) {
+				if (!UserGroup1Present) {
 					label = 2;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_125_allRowIds']"));
-				selenium.clickAt("//input[@name='_125_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean UserGroup2Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
+
+				if (!UserGroup2Present) {
+					label = 3;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean UserGroup3Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
+
+				if (!UserGroup3Present) {
+					label = 4;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean UserGroup4Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
+
+				if (!UserGroup4Present) {
+					label = 5;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+				boolean UserGroup5Present = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
+
+				if (!UserGroup5Present) {
+					label = 6;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

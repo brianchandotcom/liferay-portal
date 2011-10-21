@@ -63,7 +63,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 					}
 
 					InputSource inputSource = new InputSource(is);
+
 					inputSource.setSystemId(kvp.getKey());
+
 					return inputSource;
 				}
 			}
@@ -538,29 +540,26 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/j2ee/jsp_2_0.xsd",
-			"jsp_2_0.xsd"
+			"http://java.sun.com/xml/ns/javaee/javaee_5.xsd",
+			"javaee_5.xsd"
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/javaee/javaee_web_services_client_1_3.xsd",
-			"javaee_web_services_client_1_3.xsd"
+			"http://java.sun.com/xml/ns/javaee/javaee_6.xsd",
+			"javaee_6.xsd"
 		),
 
 		new KeyValuePair(
-			"http://java.sun.com/xml/ns/javaee/javaee_web_services_client_1_2.xsd",
+			"http://java.sun.com/xml/ns/javaee/" +
+				"javaee_web_services_client_1_2.xsd",
 			"javaee_web_services_client_1_2.xsd"
 		),
 
 		new KeyValuePair(
-				"http://java.sun.com/xml/ns/javaee/javaee_5.xsd",
-				"javaee_5.xsd"
-			),
-
-		new KeyValuePair(
-				"http://java.sun.com/xml/ns/javaee/javaee_6.xsd",
-				"javaee_6.xsd"
-			),
+			"http://java.sun.com/xml/ns/javaee/" +
+				"javaee_web_services_client_1_3.xsd",
+			"javaee_web_services_client_1_3.xsd"
+		),
 
 		new KeyValuePair(
 			"http://java.sun.com/xml/ns/j2ee/jsp_2_0.xsd",
@@ -608,11 +607,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
-			"http://www.w3.org/2001/xml.xsd",
-			"xml.xsd"
-		),
-
-		new KeyValuePair(
 			"http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd",
 			"web-facesconfig_1_2.xsd"
 		),
@@ -625,6 +619,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd",
 			"web-facesconfig_2_1.xsd"
+		),
+
+		new KeyValuePair(
+			"http://www.w3.org/2001/xml.xsd",
+			"xml.xsd"
 		)
 	};
 

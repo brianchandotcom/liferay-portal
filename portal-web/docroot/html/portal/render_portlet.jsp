@@ -739,6 +739,7 @@ if (portletDecorateObj != null) {
 if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
 	request.removeAttribute(ComponentConstants.COMPONENT_CONTEXT);
 }
+
 %>
 
 <%@ include file="/html/portal/render_portlet-ext.jsp" %>
@@ -776,6 +777,12 @@ if (portlet.isActive() && portlet.isReady() && access && supportsMimeType) {
 
 		LogUtil.log(_log, e);
 	}
+}
+
+// Make sure the Tiles context is reset for the next portlet
+
+if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
+	request.removeAttribute(ComponentConstants.COMPONENT_CONTEXT);
 }
 
 if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.getId().equals(PortletKeys.CONTROL_PANEL_MENU)) {

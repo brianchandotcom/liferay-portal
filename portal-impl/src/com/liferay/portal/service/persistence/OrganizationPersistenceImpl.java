@@ -395,12 +395,14 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		OrganizationModelImpl organizationModelImpl = (OrganizationModelImpl)organization;
 
 		if (isNew) {
-			expandTree(organization);
+			expandTree(organization, null);
 		}
 		else {
 			if (organization.getParentOrganizationId() != organizationModelImpl.getOriginalParentOrganizationId()) {
+				List<Long> childrenOrganizationIds = getChildrenTreeOrganizationIds(organization);
+
 				shrinkTree(organization);
-				expandTree(organization);
+				expandTree(organization, childrenOrganizationIds);
 			}
 		}
 
@@ -4404,8 +4406,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 	}
 
-	protected void expandTree(Organization organization)
-		throws SystemException {
+	protected void expandTree(Organization organization,
+		List<Long> childrenOrganizationIds) throws SystemException {
 		long companyId = organization.getCompanyId();
 
 		long lastRightOrganizationId = getLastRightOrganizationId(companyId,
@@ -4416,12 +4418,32 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		if (lastRightOrganizationId > 0) {
 			leftOrganizationId = lastRightOrganizationId + 1;
-			rightOrganizationId = lastRightOrganizationId + 2;
 
-			expandTreeLeftOrganizationId.expand(companyId,
-				lastRightOrganizationId);
-			expandTreeRightOrganizationId.expand(companyId,
-				lastRightOrganizationId);
+			long childrenDistance = organization.getRightOrganizationId() -
+				organization.getLeftOrganizationId();
+
+			if (childrenDistance > 1) {
+				rightOrganizationId = leftOrganizationId + childrenDistance;
+
+				long diff = leftOrganizationId -
+					organization.getLeftOrganizationId();
+
+				updateChildrenTree(diff, companyId, childrenOrganizationIds);
+
+				expandNoChildrenLeftOrganizationId(childrenDistance + 1,
+					companyId, lastRightOrganizationId, childrenOrganizationIds);
+
+				expandNoChildrenRightOrganizationId(childrenDistance + 1,
+					companyId, lastRightOrganizationId, childrenOrganizationIds);
+			}
+			else {
+				rightOrganizationId = lastRightOrganizationId + 2;
+
+				expandTreeLeftOrganizationId.expand(companyId,
+					lastRightOrganizationId);
+				expandTreeRightOrganizationId.expand(companyId,
+					lastRightOrganizationId);
+			}
 
 			CacheRegistryUtil.clear(OrganizationImpl.class.getName());
 			EntityCacheUtil.clearCache(OrganizationImpl.class.getName());
@@ -4537,6 +4559,99 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		EntityCacheUtil.clearCache(OrganizationImpl.class.getName());
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+	}
+
+	protected List<Long> getChildrenTreeOrganizationIds(
+		Organization parentOrganization) throws SystemException {
+		List<Long> childrenOrganizationIds = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(
+					"SELECT OrganizationId FROM Organization WHERE (companyId = ?) AND (leftOrganizationId BETWEEN ? AND ?)");
+
+			q.addScalar("OrganizationId",
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(parentOrganization.getCompanyId());
+			qPos.add(parentOrganization.getLeftOrganizationId() + 1);
+			qPos.add(parentOrganization.getRightOrganizationId());
+
+			childrenOrganizationIds = q.list();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return childrenOrganizationIds;
+	}
+
+	protected void updateChildrenTree(long delta, long companyId,
+		List<Long> childrenOrganizationIds) {
+		String sql = "UPDATE Organization SET leftOrganizationId = (leftOrganizationId + ?), rightOrganizationId = (rightOrganizationId + ?) WHERE (companyId = ?) AND (OrganizationId IN (" +
+			buildSqlInClause(childrenOrganizationIds) + "))";
+
+		SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+				sql,
+				new int[] {
+					java.sql.Types.BIGINT, java.sql.Types.BIGINT,
+					java.sql.Types.BIGINT
+				});
+
+		_sqlUpdate.update(new Object[] { delta, delta, companyId });
+	}
+
+	protected void expandNoChildrenLeftOrganizationId(long delta,
+		long companyId, long leftOrganizationId,
+		List<Long> childrenOrganizationIds) {
+		String sql = "UPDATE Organization SET leftOrganizationId = (leftOrganizationId + ?) WHERE (companyId = ?) AND (leftOrganizationId > ?) AND (OrganizationId NOT IN (" +
+			buildSqlInClause(childrenOrganizationIds) + "))";
+
+		SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+				sql,
+				new int[] {
+					java.sql.Types.BIGINT, java.sql.Types.BIGINT,
+					java.sql.Types.BIGINT
+				});
+
+		_sqlUpdate.update(new Object[] { delta, companyId, leftOrganizationId });
+	}
+
+	protected void expandNoChildrenRightOrganizationId(long delta,
+		long companyId, long rightOrganizationId,
+		List<Long> childrenOrganizationIds) {
+		String sql = "UPDATE Organization SET rightOrganizationId = (rightOrganizationId + ?) WHERE (companyId = ?) AND (rightOrganizationId > ?) AND (OrganizationId NOT IN (" +
+			buildSqlInClause(childrenOrganizationIds) + "))";
+
+		SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+				sql,
+				new int[] {
+					java.sql.Types.BIGINT, java.sql.Types.BIGINT,
+					java.sql.Types.BIGINT
+				});
+
+		_sqlUpdate.update(new Object[] { delta, companyId, rightOrganizationId });
+	}
+
+	protected String buildSqlInClause(List<Long> OrganizationIds) {
+		String sqlInClause = StringPool.BLANK;
+
+		for (long OrganizationId : OrganizationIds) {
+			sqlInClause = sqlInClause + OrganizationId +
+				StringPool.COMMA_AND_SPACE;
+		}
+
+		return sqlInClause.equals(StringPool.BLANK) ? sqlInClause
+													: sqlInClause.substring(0,
+			sqlInClause.length() - 2);
 	}
 
 	/**

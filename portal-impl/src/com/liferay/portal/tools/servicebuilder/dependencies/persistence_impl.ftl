@@ -4116,7 +4116,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			private SqlUpdate _sqlUpdate;
 
 		}
-	
+
 		protected class UpdateTree {
 
 			protected UpdateTree() {

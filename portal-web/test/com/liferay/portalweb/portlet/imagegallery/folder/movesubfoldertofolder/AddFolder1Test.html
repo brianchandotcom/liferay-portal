@@ -14,46 +14,50 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[2]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_name</td>
-	<td>Test1 Folder1</td>
+	<td>//input[@id='_31_name']</td>
+	<td>MG Folder1 Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_description</td>
-	<td>This is Test1 Folder1.</td>
+	<td>//textarea[@id='_31_description']</td>
+	<td>MG Folder1 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test1 Folder1</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

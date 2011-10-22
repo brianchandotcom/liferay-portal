@@ -30,7 +30,7 @@ public class EditFolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,98 +41,75 @@ public class EditFolderImageTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
-		assertEquals(RuntimeVariables.replace("Test1 Image1"),
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//span[@class='image-title']"));
-		selenium.clickAt("//img[@alt='Test1 Image1 - This is Test1 Image1.']",
-			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@alt='Edit']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//img[@alt='Edit']", RuntimeVariables.replace(""));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_31_name",
-			RuntimeVariables.replace("Test1 Image1 Edited1"));
-		selenium.type("_31_description",
-			RuntimeVariables.replace("This is Test1 Image1. Edited1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Image Title"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//img")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//img"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"MG Folder Image Title - MG Folder Image Description")
+										.equals(selenium.getText(
+								"//div/div[2]/div"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"MG Folder Image Title - MG Folder Image Description"),
+			selenium.getText("//div/div[2]/div"));
+		selenium.clickAt("//img[@alt='Edit']", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//img[@alt='Test1 Image1 Edited1 - This is Test1 Image1. Edited1.']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 Edited1 - This is Test1 Image1. Edited1.']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent("Test1 Image1 Edited1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent("Test1 Image1 Edited1"));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
+			selenium.getText("//div[2]/h1/span"));
+		selenium.type("//input[@id='_31_title']",
+			RuntimeVariables.replace("MG Folder Image Title Edit"));
+		selenium.type("//textarea[@id='_31_description']",
+			RuntimeVariables.replace("MG Folder Image Description Edit"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//div/h1/span"));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title Edit"),
+			selenium.getText("//span[@class='image-title']"));
 	}
 }

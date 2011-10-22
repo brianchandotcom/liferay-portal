@@ -29,6 +29,7 @@ public class MoveSubfolderToFolderTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(AddFolder2Test.class);

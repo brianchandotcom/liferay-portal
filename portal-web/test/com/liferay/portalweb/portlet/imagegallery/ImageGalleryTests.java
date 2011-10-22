@@ -33,7 +33,7 @@ public class ImageGalleryTests extends BaseTests {
 
 		testSuite.addTest(FolderTests.suite());
 		testSuite.addTest(ImageTests.suite());
-		testSuite.addTest(LARTests.suite());
+		//testSuite.addTest(LARTests.suite());
 		testSuite.addTest(PortletTests.suite());
 
 		return testSuite;

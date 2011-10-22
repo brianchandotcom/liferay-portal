@@ -14,44 +14,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='image-title']</td>
-	<td>Test1 Image1</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//img[@alt='Delete']</td>
-	<td></td>
+	<td>//img</td>
+	<td>Image</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>assertVisible</td>
+	<td>//img</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div/div[2]/div</td>
+	<td>MG Folder Image Title - MG Folder Image Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/div[2]/div</td>
+	<td>MG Folder Image Title - MG Folder Image Description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//img[@alt='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -59,21 +74,30 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no media files in this folder.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test1 Image1</td>
+	<td>MG Folder Image Title</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

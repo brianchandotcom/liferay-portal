@@ -14,49 +14,59 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Test1 Subfolder1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_31_parentFolderName</td>
-	<td>Test1 Folder1</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder1 Subfolder Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder1 Subfolder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder1 Subfolder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_31_parentFolderName']</td>
+	<td>MG Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForPopUp</td>
@@ -65,23 +75,28 @@
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=folder</td>
-	<td></td>
+	<td>folder</td>
+	<td>Folder Window</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Images Home</td>
-	<td></td>
+	<td>Images Home</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Images Home</td>
-	<td></td>
+	<td>Images Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td/a</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[4]/td[4]/input</td>
-	<td></td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -89,23 +104,53 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//a[@id='_31_parentFolderName']</td>
+	<td>MG Folder2 Name</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>_31_parentFolderName</td>
-	<td>Test2 Folder2</td>
+	<td>//a[@id='_31_parentFolderName']</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
+	<td>//input[@value='Move']</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test1 Subfolder1</td>
+	<td>MG Folder1 Subfolder Name</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,26 +159,30 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='image-title'])[2]</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a[1]/strong</td>
-	<td></td>
+	<td>xPath=(//span[@class='image-title'])[2]</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test1 Subfolder1</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder1 Subfolder Name</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

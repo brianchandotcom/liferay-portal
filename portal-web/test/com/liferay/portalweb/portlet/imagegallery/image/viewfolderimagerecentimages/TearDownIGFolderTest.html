@@ -16,16 +16,16 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
 	<td>igFolder1Present</td>
 </tr>
 <tr>
@@ -34,24 +34,39 @@
 	<td>IGFolder1NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -60,7 +75,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
 	<td>igFolder2Present</td>
 </tr>
 <tr>
@@ -69,24 +84,39 @@
 	<td>IGFolder2NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -95,7 +125,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
 	<td>igFolder3Present</td>
 </tr>
 <tr>
@@ -104,24 +134,39 @@
 	<td>IGFolder3NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -130,7 +175,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
 	<td>igFolder4Present</td>
 </tr>
 <tr>
@@ -139,24 +184,39 @@
 	<td>IGFolder4NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -165,7 +225,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
 	<td>igFolder5Present</td>
 </tr>
 <tr>
@@ -174,19 +234,29 @@
 	<td>IGFolder5NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG DL Folder Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -194,11 +264,15 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>IGFolder5NotPresent</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

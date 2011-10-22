@@ -14,34 +14,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test1 Folder1</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -49,16 +59,15 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Test1 Folder1</td>
+	<td>MG Folder Name</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

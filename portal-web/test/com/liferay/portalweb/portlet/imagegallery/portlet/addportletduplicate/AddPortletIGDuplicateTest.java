@@ -41,10 +41,12 @@ public class AddPortletIGDuplicateTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -52,7 +54,8 @@ public class AddPortletIGDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
 					break;
 				}
 			}
@@ -63,7 +66,7 @@ public class AddPortletIGDuplicateTest extends BaseTestCase {
 		}
 
 		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("i"));
+			RuntimeVariables.replace("m"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,7 +74,7 @@ public class AddPortletIGDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Image Gallery']")) {
+				if (selenium.isVisible("//div[@title='Media Gallery']")) {
 					break;
 				}
 			}
@@ -81,6 +84,6 @@ public class AddPortletIGDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isVisible("//div[@title='Image Gallery']/p/a"));
+		assertFalse(selenium.isVisible("//div[@title='Media Gallery']/p/a"));
 	}
 }

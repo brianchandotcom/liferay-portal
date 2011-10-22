@@ -30,7 +30,7 @@ public class AddFolderImageImageNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,14 +41,27 @@ public class AddFolderImageImageNullTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/ul/li[5]/a", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.selectWindow("null");
-		selenium.windowFocus();
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//div/h1/span"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertTrue(selenium.isVisible(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a",
+			RuntimeVariables.replace("Add Media"));
+		assertEquals(RuntimeVariables.replace("Add Media"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a",
+			RuntimeVariables.replace("Add Media"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -56,7 +69,8 @@ public class AddFolderImageImageNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Use the classic uploader.")) {
+				if (RuntimeVariables.replace("Image")
+										.equals(selenium.getText("//tr[4]/td/a"))) {
 					break;
 				}
 			}
@@ -66,30 +80,30 @@ public class AddFolderImageImageNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("link=Use the classic uploader.");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_31_file")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.type("_31_file", RuntimeVariables.replace(""));
-		selenium.type("_31_name", RuntimeVariables.replace("Test1 Image1"));
-		selenium.type("_31_description",
-			RuntimeVariables.replace("This is Test1 Image1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText("//tr[4]/td/a"));
+		Thread.sleep(5000);
+		selenium.clickAt("//tr[4]/td/a", RuntimeVariables.replace("Image"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
+		selenium.type("//input[@id='_31_file']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_31_title']",
+			RuntimeVariables.replace("MG Folder Image Title"));
+		selenium.type("//textarea[@id='_31_description']",
+			RuntimeVariables.replace("MG Folder Image Description"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//div/h1/span"));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
+			selenium.getText("//span[@class='image-title']"));
 	}
 }

@@ -32,7 +32,6 @@ public class ImportLARTests extends BaseTests {
 		testSuite.addTestSuite(ImportLARTest.class);
 		testSuite.addTestSuite(AssertImportLARTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
-		testSuite.addTestSuite(TearDownImageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

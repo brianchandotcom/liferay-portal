@@ -29,12 +29,12 @@ public class SearchFolderImageFolderDetailsTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderImageTest.class);
 		testSuite.addTestSuite(SearchFolderImageFolderDetailsTest.class);
 		testSuite.addTestSuite(SearchFolderImageFolderDetailsQuotesTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
-		testSuite.addTestSuite(TearDownImageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

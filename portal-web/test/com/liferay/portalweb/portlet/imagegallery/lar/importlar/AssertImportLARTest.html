@@ -14,49 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//td[1]/a[1]</td>
-	<td>Test Folder<br />This is a test folder!</td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a[1]</td>
-	<td>Test Folder<br />This is a test folder!</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//tr[4]/td[1]/a[1]</td>
-	<td>Test3 Folder3<br />This is a test3 folder3.</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a[1]</td>
-	<td>Test3 Folder3<br />This is a test3 folder3.</td>
+	<td>xPath=(//span[@class='image-title'])[2]</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//td[1]/a</td>
-	<td>Test Subfolder<br />This is a test subfolder!</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Subfolder<br />This is a test subfolder!</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder1 Subfolder Name</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -64,46 +49,55 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a[1]/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//td[1]/a</td>
-	<td>Test3 Subfolder3<br />This is a test3 subfolder3.</td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test3 Subfolder3<br />This is a test3 subfolder3.</td>
+	<td>xPath=(//span[@class='image-title'])[2]</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>xPath=(//span[@class='image-title'])[2]</td>
+	<td>MG Folder2 Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Test Image - This is the Liferay logo!']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder2 Subfolder Name</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test Image - This is the Liferay logo!']</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//span[@class='image-title'])[1]</td>
+	<td>MG Folder2 Subfolder Name</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder2 Subfolder Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//img[@alt='MG Folder2 Subfolder Image Title - MG Folder2 Subfolder Image Description']</td>
+	<td>Image Thumbnail</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@alt='MG Folder2 Subfolder Image Title - MG Folder2 Subfolder Image Description']</td>
+	<td>Image Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder2 Subfolder Image Title</td>
+</tr>
 </tbody></table>
 </body>
 </html>

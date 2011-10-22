@@ -14,76 +14,85 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//a[@class='aui-image-viewer-close']</td>
-	<td></td>
+	<td>Close</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//img</td>
+	<td>Image</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
+	<td>//img</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//img[@alt='Download (12.9k)']</td>
-	<td></td>
+	<td>Download (12.9k)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
+	<td>//img[@alt='Download (12.9k)']</td>
+	<td>Download (12.9k)</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
 	<td>//img[@alt='View']</td>
-	<td></td>
+	<td>View</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//img[@alt='Edit']</td>
-	<td></td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//img[@alt='Permissions']</td>
-	<td></td>
+	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//img[@alt='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//a[@class='aui-image-viewer-close']</td>
-	<td></td>
+	<td>Close</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

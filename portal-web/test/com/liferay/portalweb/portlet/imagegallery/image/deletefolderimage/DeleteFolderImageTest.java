@@ -30,7 +30,7 @@ public class DeleteFolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,16 +41,17 @@ public class DeleteFolderImageTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
-		assertEquals(RuntimeVariables.replace("Test1 Image1"),
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//span[@class='image-title']"));
-		selenium.clickAt("//img[@alt='Test1 Image1 - This is Test1 Image1.']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Image Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,7 +59,7 @@ public class DeleteFolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//img[@alt='Delete']")) {
+				if (selenium.isVisible("//img")) {
 					break;
 				}
 			}
@@ -68,14 +69,62 @@ public class DeleteFolderImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
-		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//img"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"MG Folder Image Title - MG Folder Image Description")
+										.equals(selenium.getText(
+								"//div/div[2]/div"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"MG Folder Image Title - MG Folder Image Description"),
+			selenium.getText("//div/div[2]/div"));
+		selenium.clickAt("//img[@alt='Delete']",
+			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
-		assertFalse(selenium.isTextPresent("Test1 Image1"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Your request completed successfully.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-success']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//div/h1/span"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("MG Folder Image Title"));
 	}
 }

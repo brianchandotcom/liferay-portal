@@ -34,7 +34,6 @@ public class MoveFolderImageToFolderTests extends BaseTests {
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(MoveFolderImageToFolderTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
-		testSuite.addTestSuite(TearDownImageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

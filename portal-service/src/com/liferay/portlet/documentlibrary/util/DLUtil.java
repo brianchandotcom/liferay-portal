@@ -112,8 +112,7 @@ public class DLUtil {
 		portletURL.setParameter(
 			"struts_action", "/document_library/view_file_entry");
 		portletURL.setParameter(
-			"folderId", String.valueOf(fileEntry.getFolderId()));
-		portletURL.setParameter("title", fileEntry.getTitle());
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, fileEntry.getTitle(), portletURL.toString());

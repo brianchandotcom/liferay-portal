@@ -372,6 +372,12 @@ public class Validator {
 			return false;
 		}
 
+		if (domainName.startsWith(StringPool.PERIOD) ||
+			domainName.endsWith(StringPool.PERIOD)) {
+
+			return false;
+		}
+
 		if (!domainName.contains(StringPool.PERIOD) &&
 			!domainName.equals(_LOCALHOST)) {
 
@@ -390,14 +396,14 @@ public class Validator {
 				if ((i == 0) && (c == CharPool.DASH)) {
 					return false;
 				}
-				else if ((i == (domainNamePartCharArray.length - 1)) &&
-						 (c == CharPool.DASH)) {
+
+				if ((i == (domainNamePartCharArray.length - 1)) &&
+					(c == CharPool.DASH)) {
 
 					return false;
 				}
-				else if ((!isChar(c)) && (!isDigit(c)) &&
-						 (c != CharPool.DASH)) {
 
+				if ((!isChar(c)) && (!isDigit(c)) && (c != CharPool.DASH)) {
 					return false;
 				}
 			}

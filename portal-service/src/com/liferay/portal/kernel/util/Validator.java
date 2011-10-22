@@ -372,6 +372,12 @@ public class Validator {
 			return false;
 		}
 
+		if (!domainName.contains(StringPool.PERIOD) &&
+			!domainName.equals(_LOCALHOST)) {
+
+			return false;
+		}
+
 		String[] domainNameArray = StringUtil.split(
 			domainName, CharPool.PERIOD);
 
@@ -963,6 +969,8 @@ public class Validator {
 		'.', '!', '#', '$', '%', '&', '\'', '*', '+', '-', '/', '=', '?', '^',
 		'_', '`', '{', '|', '}', '~'
 	};
+
+	private static final String _LOCALHOST = "localhost";
 
 	private static final String _VARIABLE_TERM_BEGIN = "[$";
 

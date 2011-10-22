@@ -42,6 +42,12 @@ String mode = BeanParamUtil.getString(template, request, "mode", "create");
 String type = BeanParamUtil.getString(template, request, "type", "detail");
 String script = BeanParamUtil.getString(template, request, "script");
 
+JSONArray scriptJSONArray = null;
+
+if (type.equals("detail") && Validator.isNotNull(script)) {
+	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
+}
+
 String structureAvailableFields = ParamUtil.getString(request, "structureAvailableFields");
 
 if (Validator.isNotNull(structureAvailableFields)) {

@@ -170,8 +170,8 @@ for (int i = 0; i < locales.length; i++) {
 			boundingBox: '#<portlet:namespace />formBuilder',
 			enableEditing: false,
 
-			<c:if test="<%= Validator.isNotNull(script) %>">
-				fields: <%= DDMXSDUtil.getJSONArray(script) %>,
+			<c:if test="<%= scriptJSONArray != null %>">
+				fields: <%= scriptJSONArray.toString() %>,
 			</c:if>
 
 			portletNamespace: '<portlet:namespace />',

@@ -27,6 +27,12 @@ DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA
 long structureId = BeanParamUtil.getLong(structure, request, "structureId");
 
 String script = BeanParamUtil.getString(structure, request, "xsd");
+
+JSONArray scriptJSONArray = null;
+
+if (Validator.isNotNull(script)) {
+	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
+}
 %>
 
 <portlet:actionURL var="editStructureURL">

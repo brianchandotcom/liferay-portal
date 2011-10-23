@@ -16,419 +16,88 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tags</td>
-	<td></td>
+	<td>Tags</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag1Present</td>
+	<td>storeElementPresent</td>
+	<td>//span[@class='tag-item']/a</td>
+	<td>tagsVisible</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${tag1Present}</td>
-	<td>Tag1NotPresent</td>
+	<td>!${tagsVisible}</td>
+	<td>TagsNotVisible</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[2]</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[2]</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
+	<td>Are you sure you want to delete the selected tags?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Tag1NotPresent</td>
+	<td>TagsNotVisible</td>
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-info']</td>
+	<td>There are no tags.</td>
 </tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag2Present}</td>
-	<td>Tag2NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag3Present}</td>
-	<td>Tag3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag4Present}</td>
-	<td>Tag4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag5Present}</td>
-	<td>Tag5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag5NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag6Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag6Present}</td>
-	<td>Tag6NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag6NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag7Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag7Present}</td>
-	<td>Tag7NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag7NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag8Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag8Present}</td>
-	<td>Tag8NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag8NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag9Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag9Present}</td>
-	<td>Tag9NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag9NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>500</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[4]/ul/li/span/a'))</td>
-	<td>tag10Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${tag10Present}</td>
-	<td>Tag10NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[4]/ul/li/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this tag?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Tag10NotPresent</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

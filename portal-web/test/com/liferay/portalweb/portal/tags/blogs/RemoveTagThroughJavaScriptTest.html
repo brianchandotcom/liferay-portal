@@ -14,48 +14,83 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Tags3 Blogs3 Test3 Entry3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Tags3 Blogs3 Test3 Entry3</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Tags Blog Entry3 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Tags Blog Entry3 Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>tagsVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${tagsVisible}</td>
+	<td>TagsVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[3]/div/div/span</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TagsVisible</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//li[2]/span/span[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>xPath=(//span[@class='aui-icon aui-icon-close aui-textboxlistentry-close'])[2]</td>
+	<td>Remove selenium3 liferay3</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
 	<td>selenium2 liferay2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>selenium3 liferay3</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,19 +101,18 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>selenium3 liferay3</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

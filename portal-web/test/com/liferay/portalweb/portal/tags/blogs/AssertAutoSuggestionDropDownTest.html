@@ -14,121 +14,135 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Tags3 Blogs3 Test3 Entry3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Tags3 Blogs3 Test3 Entry3</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Tags Blog Entry3 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+	<td>xPath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Tags Blog Entry3 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__33_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>tagsVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${tagsVisible}</td>
+	<td>TagsVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
+	<td>//div[3]/div/div/span</td>
+	<td>Categorization</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
+	<td>assertVisible</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
+	<td>Categorization</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//li[2]/span/span/input</td>
+	<td>label</td>
+	<td>TagsVisible</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//li[2]/span/span/input</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>//li[2]/span/span/input</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text focus']</td>
 	<td>selenium</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[7]/div/div/ul/li[1]</td>
+	<td>waitForText</td>
+	<td>//li[contains(@class,'aui-autocomplete-list-item')]</td>
 	<td>selenium1 liferay1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[7]/div/div/ul/li[2]</td>
+	<td>//li[contains(@class,'aui-autocomplete-list-item')]</td>
+	<td>selenium1 liferay1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//li[@class='aui-autocomplete-list-item'])[1]</td>
 	<td>selenium2 liferay2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[7]/div/div/ul/li[3]</td>
+	<td>xPath=(//li[@class='aui-autocomplete-list-item'])[2]</td>
 	<td>selenium3 liferay3</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[7]/div/div/ul/li[4]</td>
+	<td>xPath=(//li[@class='aui-autocomplete-list-item'])[3]</td>
 	<td>selenium4 liferay4</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>//li[2]/span/span/input</td>
+	<td>//input[@class='lfr-tag-selector-input aui-field-input-text focus']</td>
 	<td>2*</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[7]/div/div/ul/li[1]</td>
+	<td>waitForText</td>
+	<td>//li[contains(@class,'aui-autocomplete-list-item')]</td>
 	<td>selenium2 liferay2</td>
 </tr>
 <tr>
-	<td>assertNotVisible</td>
-	<td>//div[7]/div/div/ul/li[2]</td>
+	<td>assertText</td>
+	<td>//li[contains(@class,'aui-autocomplete-list-item')]</td>
+	<td>selenium2 liferay2</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//li[@class='aui-autocomplete-list-item'])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertNotVisible</td>
-	<td>//div[7]/div/div/ul/li[3]</td>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//li[@class='aui-autocomplete-list-item'])[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertNotVisible</td>
-	<td>//div[7]/div/div/ul/li[4]</td>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//li[@class='aui-autocomplete-list-item'])[3]</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

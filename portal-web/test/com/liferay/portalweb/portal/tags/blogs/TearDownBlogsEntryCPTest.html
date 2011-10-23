@@ -16,144 +16,58 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs</td>
-	<td></td>
+	<td>Blogs</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Delete'))</td>
-	<td>entry1Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${entry1Present}</td>
-	<td>Entry1NotPresent</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Entry1NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Delete'))</td>
-	<td>entry2Present</td>
+	<td>storeVisible</td>
+	<td>//th/input</td>
+	<td>blogsVisible</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${entry2Present}</td>
-	<td>Entry2NotPresent</td>
+	<td>!${blogsVisible}</td>
+	<td>BlogsNotVisible</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+	<td>click</td>
+	<td>//th/input</td>
+	<td>Select All</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Entry2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Delete'))</td>
-	<td>entry3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${entry3Present}</td>
-	<td>Entry3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete the selected entries?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Entry3NotPresent</td>
+	<td>BlogsNotVisible</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Delete'))</td>
-	<td>entry4Present</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No entries were found.</td>
 </tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${entry4Present}</td>
-	<td>Entry4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Entry4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Delete'))</td>
-	<td>entry5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${entry5Present}</td>
-	<td>Entry5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Entry5NotPresent</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

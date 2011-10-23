@@ -22,58 +22,110 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddColonTagTest extends BaseTestCase {
 	public void testAddColonTag() throws Exception {
-		selenium.open("/web/guest/home/");
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
 
-			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Blogs Tags Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Blogs Tags Test Page",
+					RuntimeVariables.replace("Blogs Tags Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Tags Blog Entry1 Title"),
+					selenium.getText(
+						"xPath=(//div[@class='entry-title']/h2/a)[3]"));
+				selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[3]",
+					RuntimeVariables.replace("Tags Blog Entry1 Title"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Edit"),
+					selenium.getText("//span/a/span"));
+				selenium.click(RuntimeVariables.replace("//span/a/span"));
+				selenium.waitForPageToLoad("30000");
 
-		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//td[@id='cke_contents__33_editor']/iframe")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isElementPresent("link=Tags1 Blogs1 Test1 Entry1")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				boolean tagsVisible = selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+
+				if (tagsVisible) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//div[3]/div/div/span",
+					RuntimeVariables.replace("Categorization"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//input[@class='lfr-tag-selector-input aui-field-input-text']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+
+			case 2:
+				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+					RuntimeVariables.replace(":test"));
+				selenium.clickAt("//input[@value='Publish']",
+					RuntimeVariables.replace("Publish"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request failed to complete."),
+					selenium.getText(
+						"xPath=(//div[@class='portlet-msg-error'])[1]"));
+				assertEquals(RuntimeVariables.replace(
+						"One or more tags contains invalid characters."),
+					selenium.getText(
+						"xPath=(//div[@class='portlet-msg-error'])[2]"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		selenium.clickAt("link=Tags1 Blogs1 Test1 Entry1",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.type("//span[7]/span/span/div/div/ul/li/span/span/input",
-			RuntimeVariables.replace(":test"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"You have entered invalid data. Please try again."));
-		assertTrue(selenium.isTextPresent(
-				"One or more tags contains invalid characters."));
 	}
 }

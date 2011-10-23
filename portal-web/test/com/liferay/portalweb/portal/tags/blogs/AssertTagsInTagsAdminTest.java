@@ -40,9 +40,10 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Tags", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -51,7 +52,7 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=selenium1 liferay1")) {
+				if (selenium.isVisible("xPath=(//span[@class='tag-item']/a)[1]")) {
 					break;
 				}
 			}
@@ -61,9 +62,13 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent("link=selenium1 liferay1"));
-		assertTrue(selenium.isElementPresent("link=selenium2 liferay2"));
-		assertTrue(selenium.isElementPresent("link=selenium3 liferay3"));
-		assertTrue(selenium.isElementPresent("link=selenium4 liferay4"));
+		assertEquals(RuntimeVariables.replace("selenium1 liferay1"),
+			selenium.getText("xPath=(//span[@class='tag-item']/a)[1]"));
+		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+			selenium.getText("xPath=(//span[@class='tag-item']/a)[2]"));
+		assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
+			selenium.getText("xPath=(//span[@class='tag-item']/a)[3]"));
+		assertEquals(RuntimeVariables.replace("selenium4 liferay4"),
+			selenium.getText("xPath=(//span[@class='tag-item']/a)[4]"));
 	}
 }

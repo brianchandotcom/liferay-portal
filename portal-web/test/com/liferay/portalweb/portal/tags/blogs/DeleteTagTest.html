@@ -16,37 +16,47 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Tags</td>
-	<td></td>
+	<td>Tags</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=selenium2 liferay2</td>
-	<td></td>
+	<td>xPath=(//span[@class='tag-item']/a)[2]</td>
+	<td>selenium2 liferay2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='tag-item']/a)[2]</td>
+	<td>selenium2 liferay2</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=selenium2 liferay2</td>
-	<td></td>
+	<td>xPath=(//span[@class='tag-item']/a)[2]</td>
+	<td>selenium2 liferay2</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>//div/h1/span</td>
+	<td>selenium2 liferay2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>selenium2 liferay2</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Delete']</td>
-	<td></td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -55,15 +65,14 @@
 </tr>
 <tr>
 	<td>waitForTextNotPresent</td>
-	<td>link=selenium2 liferay2</td>
+	<td>selenium2 liferay2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>link=selenium2 liferay2</td>
+	<td>selenium2 liferay2</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

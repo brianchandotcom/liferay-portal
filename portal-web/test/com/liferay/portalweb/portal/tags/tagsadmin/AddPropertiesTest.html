@@ -44,9 +44,44 @@
 	<td>Edit</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_99_name']</td>
 	<td>Name</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@id='_99_key0']</td>
+	<td>propertiesVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${propertiesVisible}</td>
+	<td>PropertiesVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div/div/div/div/span</td>
+	<td>Properties</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_99_key0']</td>
+	<td>Key</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_99_key0']</td>
+	<td>Key</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PropertiesVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -64,36 +99,25 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@id='portletMessages']</td>
-	<td>Your request processed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='portletMessages']</td>
-	<td>Your request processed successfully.</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>link=Tags</td>
 	<td>Tags</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='view-tag']/div/span[1]</td>
-	<td>Properties</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='view-tag']/div/span[1]</td>
+	<td>waitForText</td>
+	<td>//span[@class='property-key']</td>
 	<td>This is a tag for anything</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='view-tag']/div/span[2]</td>
+	<td>//span[@class='property-key']</td>
+	<td>This is a tag for anything</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='property-value']</td>
 	<td>related to selenium.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

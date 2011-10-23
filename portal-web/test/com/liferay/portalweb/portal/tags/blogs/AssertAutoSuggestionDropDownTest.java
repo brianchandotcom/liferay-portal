@@ -22,89 +22,162 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 	public void testAssertAutoSuggestionDropDown() throws Exception {
-		selenium.open("/web/guest/home/");
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
 
-			try {
-				if (selenium.isElementPresent("link=Blogs Tags Test Page")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Blogs Tags Test Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Blogs Tags Test Page",
+					RuntimeVariables.replace("Blogs Tags Test Page"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Tags Blog Entry3 Title"),
+					selenium.getText(
+						"xPath=(//div[@class='entry-title']/h2/a)[1]"));
+				selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
+					RuntimeVariables.replace("Tags Blog Entry3 Title"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Edit"),
+					selenium.getText("//span/a/span"));
+				selenium.click(RuntimeVariables.replace("//span/a/span"));
+				selenium.waitForPageToLoad("30000");
 
-		selenium.clickAt("link=Blogs Tags Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible(
+									"//td[@id='cke_contents__33_editor']/iframe")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isElementPresent("link=Tags3 Blogs3 Test3 Entry3")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				boolean tagsVisible = selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
 
-		selenium.clickAt("link=Tags3 Blogs3 Test3 Entry3",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edit", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+				if (tagsVisible) {
+					label = 2;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//li[2]/span/span/input")) {
-					break;
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				selenium.clickAt("//div[3]/div/div/span",
+					RuntimeVariables.replace("Categorization"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//input[@class='lfr-tag-selector-input aui-field-input-text']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertTrue(selenium.isVisible(
+						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+
+			case 2:
+				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+					RuntimeVariables.replace(""));
+				selenium.typeKeys("//input[@class='lfr-tag-selector-input aui-field-input-text focus']",
+					RuntimeVariables.replace("selenium"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("selenium1 liferay1")
+												.equals(selenium.getText(
+										"//li[contains(@class,'aui-autocomplete-list-item')]"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("selenium1 liferay1"),
+					selenium.getText(
+						"//li[contains(@class,'aui-autocomplete-list-item')]"));
+				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+					selenium.getText(
+						"xPath=(//li[@class='aui-autocomplete-list-item'])[1]"));
+				assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
+					selenium.getText(
+						"xPath=(//li[@class='aui-autocomplete-list-item'])[2]"));
+				assertEquals(RuntimeVariables.replace("selenium4 liferay4"),
+					selenium.getText(
+						"xPath=(//li[@class='aui-autocomplete-list-item'])[3]"));
+				selenium.typeKeys("//input[@class='lfr-tag-selector-input aui-field-input-text focus']",
+					RuntimeVariables.replace("2*"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("selenium2 liferay2")
+												.equals(selenium.getText(
+										"//li[contains(@class,'aui-autocomplete-list-item')]"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+					selenium.getText(
+						"//li[contains(@class,'aui-autocomplete-list-item')]"));
+				assertFalse(selenium.isElementPresent(
+						"xPath=(//li[@class='aui-autocomplete-list-item'])[1]"));
+				assertFalse(selenium.isElementPresent(
+						"xPath=(//li[@class='aui-autocomplete-list-item'])[2]"));
+				assertFalse(selenium.isElementPresent(
+						"xPath=(//li[@class='aui-autocomplete-list-item'])[3]"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		selenium.type("//li[2]/span/span/input", RuntimeVariables.replace(""));
-		selenium.typeKeys("//li[2]/span/span/input",
-			RuntimeVariables.replace("selenium"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("selenium1 liferay1"),
-			selenium.getText("//div[7]/div/div/ul/li[1]"));
-		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
-			selenium.getText("//div[7]/div/div/ul/li[2]"));
-		assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
-			selenium.getText("//div[7]/div/div/ul/li[3]"));
-		assertEquals(RuntimeVariables.replace("selenium4 liferay4"),
-			selenium.getText("//div[7]/div/div/ul/li[4]"));
-		selenium.typeKeys("//li[2]/span/span/input",
-			RuntimeVariables.replace("2*"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
-			selenium.getText("//div[7]/div/div/ul/li[1]"));
-		assertFalse(selenium.isVisible("//div[7]/div/div/ul/li[2]"));
-		assertFalse(selenium.isVisible("//div[7]/div/div/ul/li[3]"));
-		assertFalse(selenium.isVisible("//div[7]/div/div/ul/li[4]"));
 	}
 }

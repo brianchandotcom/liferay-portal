@@ -15,108 +15,83 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
+	<td>//nav[@id='navigation']</td>
+	<td>Navigation</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>addPage</td>
-	<td></td>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>addPage</td>
-	<td></td>
+	<td>//a[@id='addPage']</td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input</td>
-	<td></td>
+	<td>//input[@type='text']</td>
+	<td>Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input</td>
+	<td>//input[@type='text']</td>
 	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>save</td>
-	<td></td>
+	<td>//button[@id='save']</td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Tags Test Page</td>
-	<td></td>
+	<td>Blogs Tags Test Page</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_145_addApplication</td>
-	<td></td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>layout_configuration_content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>typeKeys</td>
-	<td>layout_configuration_content</td>
-	<td>b</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>//div[@title='Blogs']/p/a</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@title='Blogs']/p/a</td>
-	<td></td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>_33_title</td>
-	<td></td>
+	<td>Add Blog Entry</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_33_title</td>
-	<td>Tags1 Blogs1 Test1 Entry1</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>//input[@id='_33_title']</td>
+	<td>Tags Blog Entry1 Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -131,47 +106,32 @@
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>This is a test entry for tags!</td>
+	<td>Tags Blog Entry1 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>_33_title</td>
-	<td></td>
+	<td>Add Blog Entry</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_33_title</td>
-	<td>Tags2 Blogs2 Test2 Entry2</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>//input[@id='_33_title']</td>
+	<td>Tags Blog Entry2 Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -186,47 +146,32 @@
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>This is a second test entry for tags!</td>
+	<td>Tags Blog Entry2 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>_33_title</td>
-	<td></td>
+	<td>Add Blog Entry</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_33_title</td>
-	<td>Tags3 Blogs3 Test3 Entry3</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>//input[@id='_33_title']</td>
+	<td>Tags Blog Entry3 Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -241,24 +186,23 @@
 <tr>
 	<td>type</td>
 	<td>//body</td>
-	<td>This is a third test entry for tags!</td>
+	<td>Tags Blog Entry3 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

@@ -53,8 +53,8 @@ public class DeployUtil {
 		File targetFile = new File(targetDir, targetFileName);
 
 		if (!targetFile.exists()) {
-			CopyTask.copyFile(
-				file, new File(targetDir), filterMap, overwrite, true);
+			CopyTask.copyFile(file, new File(targetDir), targetFileName,
+				filterMap, overwrite, true);
 		}
 	}
 

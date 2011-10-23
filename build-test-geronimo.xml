@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-geronimo" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-geronimo">
+		<antcall target="run-simple-server">
+			<param name="simple.server.dir" value="${app.server.geronimo.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.geronimo.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.geronimo.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.geronimo.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.geronimo.portal.dir}" />
+			<param name="simple.server.start.executable" value="geronimo${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="run" />
+			<param name="simple.server.stop.executable" value="geronimo${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="stop --user system --password manager" />
+		</antcall>
+	</target>
+
+	<target name="run-selenium-geronimo">
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-geronimo" />
+			</then>
+		</if>
+
+		<antcall target="revert-test-properties" />
+
+		<antcall target="prepare-virtual-host-name-properties" />
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-geronimo">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+	</target>
+</project>

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.Locale;
@@ -33,8 +32,7 @@ import javax.servlet.jsp.PageContext;
 public interface DDMXSD {
 
 	public String getHTML(
-			PageContext pageContext, DDMTemplate ddmTemplate, Fields fields,
-			Locale locale)
+			PageContext pageContext, Document document, Locale locale)
 		throws Exception;
 
 	public String getHTML(
@@ -48,16 +46,10 @@ public interface DDMXSD {
 		throws Exception;
 
 	public String getHTML(
-			PageContext pageContext, Document document, Fields fields,
-			String namespace, String mode, boolean readOnly, Locale locale)
-		throws Exception;
-
-	public String getHTML(
-			PageContext pageContext, Document document, Locale locale)
-		throws Exception;
-
-	public String getHTML(
 			PageContext pageContext, Element element, Locale locale)
+		throws Exception;
+
+	public String getHTML(PageContext pageContext, String xml, Locale locale)
 		throws Exception;
 
 	public String getHTML(
@@ -66,15 +58,12 @@ public interface DDMXSD {
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace, boolean readOnly, Locale locale)
+			String namespace, Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace, Locale locale)
-		throws Exception;
-
-	public String getHTML(PageContext pageContext, String xml, Locale locale)
+			String namespace, boolean readOnly, Locale locale)
 		throws Exception;
 
 	public JSONArray getJSONArray(Document document) throws JSONException;

@@ -33,6 +33,23 @@ AUI().add(
 			return (/^[\w\-]+$/).test(value);
 		};
 
+		var LiferayAvailableField = A.Component.create(
+			{
+				NAME: 'availableField',
+
+				ATTRS: {
+					localizationMap: {
+						validator: isObject,
+						value: {}
+					}
+				},
+
+				EXTENDS: A.FormBuilderAvailableField
+			}
+		);
+
+		A.LiferayAvailableField = LiferayAvailableField;
+
 		var LiferayFormBuilder = A.Component.create(
 			{
 				ATTRS: {
@@ -443,6 +460,22 @@ AUI().add(
 						);
 
 						return str.replace(/ /g, '_');
+					},
+
+					_setAvailableFields: function(val) {
+						var instance = this;
+						var fields = [];
+
+						AArray.each(
+							val,
+							function(item, index, collection) {
+								fields.push(
+									A.instanceOf(item, A.AvailableField) ? item : new A.LiferayAvailableField(item)
+								);
+							}
+						);
+
+						return fields;
 					},
 
 					_syncFieldOptionsLocaleUI: function(field, locale) {

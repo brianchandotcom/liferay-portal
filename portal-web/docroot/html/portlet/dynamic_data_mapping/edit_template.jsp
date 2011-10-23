@@ -38,8 +38,15 @@ if ((structure == null) && (template != null)) {
 
 long structureId = BeanParamUtil.getLong(structure, request, "structureId");
 
+String mode = BeanParamUtil.getString(template, request, "mode", "create");
 String type = BeanParamUtil.getString(template, request, "type", "detail");
 String script = BeanParamUtil.getString(template, request, "script");
+
+JSONArray scriptJSONArray = null;
+
+if (type.equals("detail") && Validator.isNotNull(script)) {
+	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
+}
 
 String structureAvailableFields = ParamUtil.getString(request, "structureAvailableFields");
 
@@ -96,7 +103,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<aui:input name="description" />
 
 				<c:if test='<%= type.equals("detail") %>'>
-					<aui:select helpMessage="only-display-required-fields-in-creation-mode" label="mode" name="mode">
+					<aui:select helpMessage="only-allows-deleting-required-fields-in-edit-mode" label="mode" name="mode">
 						<aui:option label="create" />
 						<aui:option label="edit" />
 					</aui:select>
@@ -105,9 +112,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						A.one('#<portlet:namespace />mode').on(
 							'valueChange',
 							function(event) {
-								var msgNode = A.one('#<portlet:namespace />modeEditMessage');
-
-								msgNode.toggle(event.newVal === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+								<portlet:namespace />toggleMode(event.newVal);
 							}
 						);
 					</aui:script>
@@ -127,9 +132,17 @@ if (Validator.isNotNull(structureAvailableFields)) {
 </aui:form>
 
 <c:if test='<%= type.equals("detail") %>'>
-	<div class="portlet-msg-info <%= ((template != null) && DDMTemplateConstants.TEMPLATE_MODE_EDIT.equals(template.getMode())) ? StringPool.BLANK : "aui-helper-hidden" %> " id="<portlet:namespace />modeEditMessage"><liferay-ui:message key="the-required-fields-will-not-be-displayed-when-the-form-is-rendered" /></div>
-
 	<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
+
+	<aui:script use="aui-base">
+		window.<portlet:namespace />toggleMode = function(mode) {
+			var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+
+			window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
+		};
+
+		<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
+	</aui:script>
 </c:if>
 
 <aui:button-row>

@@ -19,15 +19,14 @@ String languageId = LanguageUtil.getLanguageId(request);
 
 if (Validator.isNull(script)) {
 	script = structure.getXsd();
+	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
+}
+
+if (scriptJSONArray != null) {
+	scriptJSONArray = _addDetailTemplateFieldAttributes(structure, scriptJSONArray);
 }
 
 Set<String> fieldNames = structure.getFieldNames();
-
-JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
-
-readOnlyAttributesJSONArray.put("name");
-readOnlyAttributesJSONArray.put("options");
-readOnlyAttributesJSONArray.put("required");
 
 JSONArray structureAvailableFieldsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -48,8 +47,8 @@ while (itr.hasNext()) {
 
 	fieldJSONObject.put("id", fieldName);
 	fieldJSONObject.put("label", structure.getFieldLabel(fieldName, languageId));
-	fieldJSONObject.put("name", fieldName);
-	fieldJSONObject.put("readOnlyAttributes", readOnlyAttributesJSONArray);
+	fieldJSONObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
+	fieldJSONObject.put("required", structure.getFieldRequired(fieldName));
 	fieldJSONObject.put("type", structure.getFieldType(fieldName));
 	fieldJSONObject.put("unique", true);
 
@@ -91,3 +90,32 @@ if (Validator.isNotNull(portletResourceNamespace)){
 
 	window.<%= namespace %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
 </aui:script>
+
+<%!
+public JSONArray _addDetailTemplateFieldAttributes(DDMStructure structure, JSONArray scriptJSONArray) {
+	for (int i = 0; i < scriptJSONArray.length(); i++) {
+		JSONObject jsonObject = scriptJSONArray.getJSONObject(i);
+
+		String fieldName = jsonObject.getString("name");
+
+		jsonObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
+	}
+
+	return scriptJSONArray;
+}
+
+public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) {
+	JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
+
+	readOnlyAttributesJSONArray.put("name");
+	readOnlyAttributesJSONArray.put("options");
+
+	boolean required = structure.getFieldRequired(fieldName);
+
+	if (required) {
+		readOnlyAttributesJSONArray.put("required");
+	}
+
+	return readOnlyAttributesJSONArray;
+}
+%>

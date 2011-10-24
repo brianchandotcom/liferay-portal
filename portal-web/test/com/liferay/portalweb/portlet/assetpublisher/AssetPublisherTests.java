@@ -41,20 +41,20 @@ public class AssetPublisherTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(ArchivedSetupTests.suite());
-//		testSuite.addTest(BlogsEntryTests.suite());
-//		testSuite.addTest(BlogsEntryCommentTests.suite());
+		testSuite.addTest(ArchivedSetupTests.suite());
+		testSuite.addTest(BlogsEntryTests.suite());
+		testSuite.addTest(BlogsEntryCommentTests.suite());
 		testSuite.addTest(BMBookmarkTests.suite());
 		testSuite.addTest(DLDocumentTests.suite());
 		testSuite.addTest(DLDocumentCommentTests.suite());
 		testSuite.addTest(IGImageTests.suite());
-//		testSuite.addTest(LARTests.suite());
-//		testSuite.addTest(MBThreadMessageTests.suite());
-//		testSuite.addTest(PortletTests.suite());
-//		testSuite.addTest(WCWebContentTests.suite());
-//		testSuite.addTest(WCWebContentCommentTests.suite());
-//		testSuite.addTest(WikiPageTests.suite());
-//		testSuite.addTest(WikiPageCommentTests.suite());
+		testSuite.addTest(LARTests.suite());
+		testSuite.addTest(MBThreadMessageTests.suite());
+		testSuite.addTest(PortletTests.suite());
+		testSuite.addTest(WCWebContentTests.suite());
+		testSuite.addTest(WCWebContentCommentTests.suite());
+		testSuite.addTest(WikiPageTests.suite());
+		testSuite.addTest(WikiPageCommentTests.suite());
 
 		return testSuite;
 	}

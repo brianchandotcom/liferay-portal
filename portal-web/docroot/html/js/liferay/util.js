@@ -1096,15 +1096,15 @@
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 
-			if (config.showGlobalScope) {
+			if ('showGlobalScope' in config) {
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 			}
 
-			if (config.showManageTemplates) {
+			if ('showManageTemplates' in config) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
 			}
 
-			if (config.showToolbar) {
+			if ('showToolbar' in config) {
 				ddmURL.setParameter('showToolbar', config.showToolbar);
 			}
 

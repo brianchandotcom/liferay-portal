@@ -33,6 +33,11 @@
 	padding-left: 0;
 }
 
+.lfr-preview-image-content img {
+	max-height: 480px;
+	max-width: 100%;
+}
+
 .lfr-preview-file-image-current-column {
 	background: url(<%= themeImagesPath %>/common/checkerboard.png);
 	padding: 20px;

@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 
 /**
@@ -38,15 +38,17 @@ public class VelocityUtil {
 	public static String evaluate(String input, Map<String, Object> variables)
 		throws Exception {
 
-		Velocity.setProperty(
+		VelocityEngine velocityEngine = new VelocityEngine();
+
+		velocityEngine.setProperty(
 			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
 
-		Velocity.setProperty(
+		velocityEngine.setProperty(
 			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
 
-		Velocity.init();
+		velocityEngine.init();
 
 		VelocityContext velocityContext = new VelocityContext();
 
@@ -68,7 +70,7 @@ public class VelocityUtil {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		Velocity.evaluate(
+		velocityEngine.evaluate(
 			velocityContext, unsyncStringWriter, VelocityUtil.class.getName(),
 			input);
 

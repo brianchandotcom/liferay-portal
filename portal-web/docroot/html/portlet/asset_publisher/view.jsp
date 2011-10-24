@@ -110,7 +110,7 @@ if (!paginationType.equals("none")) {
 }
 %>
 
-<c:if test='<%= showContentMessages  %>'>
+<c:if test='<%= showMetadataDescriptions  %>'>
 	<c:if test='<%= (assetCategoryId > 0) && selectionStyle.equals("dynamic") %>'>
 		<h1 class="asset-categorization-title">
 			<%= LanguageUtil.format(pageContext, "content-with-x-x", new String[] {assetVocabularyTitle, assetCategoryTitle}) %>

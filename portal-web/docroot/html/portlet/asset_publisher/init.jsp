@@ -184,7 +184,7 @@ boolean excludeZeroViewCount = GetterUtil.getBoolean(preferences.getValue("exclu
 int delta = GetterUtil.getInteger(preferences.getValue("delta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
 String paginationType = GetterUtil.getString(preferences.getValue("paginationType", "none"));
 boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", null));
-boolean showContentMessages = GetterUtil.getBoolean(preferences.getValue("showContentMessages", null), true);
+boolean showMetadataDescriptions = GetterUtil.getBoolean(preferences.getValue("showMetadataDescriptions", null), true);
 
 boolean defaultAssetPublisher = false;
 

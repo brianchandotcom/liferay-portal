@@ -24,31 +24,28 @@ String previewFileURL = (String)request.getAttribute("view_file_entry.jsp-previe
 String videoThumbnailURL = (String)request.getAttribute("view_file_entry.jsp-videoThumbnailURL");
 %>
 
-<liferay-util:html-bottom outputKey="documentLibraryPlayer">
-	<script src="<%= themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>
-</liferay-util:html-bottom>
-
-<aui:script use="aui-base,aui-swf">
-	var previewDivObject = A.one('#<portlet:namespace />previewFileContent');
-
-	var so = new SWFObject(
-		'<%= themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
-		'<portlet:namespace />previewFileContent',
-		previewDivObject.getStyle('width'),
-		previewDivObject.getStyle('height'),
-		'9',
-		'#000000'
+<aui:script use="aui-swf">
+	new A.SWF(
+		{
+			boundingBox: '#<portlet:namespace />previewFileContent',
+			url: '<%= themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
+			version: 9,
+			useExpressInstall: true,
+			fixedAttributes: {
+				allowFullScreen: true,
+				bgColor: '#000000'
+			},
+			flashVars: {
+				<c:choose>
+					<c:when test="<%= supportedAudio %>">
+							'<%= AudioProcessor.PREVIEW_TYPE %>': '<%= previewFileURL %>'
+					</c:when>
+					<c:when test="<%= supportedVideo %>">
+						'<%= VideoProcessor.PREVIEW_TYPE %>': '<%= previewFileURL %>',
+						'<%= VideoProcessor.THUMBNAIL_TYPE %>': '<%= videoThumbnailURL %>'
+					</c:when>
+				</c:choose>
+			}
+		}
 	);
-
-	so.addParam('allowFullScreen', 'true');
-
-	if (<%= supportedAudio %>) {
-		so.addVariable('<%= AudioProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
-	}
-	else if (<%= supportedVideo %>) {
-		so.addVariable('<%= VideoProcessor.PREVIEW_TYPE %>', '<%= previewFileURL %>');
-		so.addVariable('<%= VideoProcessor.THUMBNAIL_TYPE %>', '<%= videoThumbnailURL %>');
-	}
-
-	so.write('<portlet:namespace />previewFileContent');
 </aui:script>

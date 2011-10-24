@@ -140,8 +140,8 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 				dialog: {
 					width:820
 				},
-				showManageTemplates: 'false',
 				showGlobalScope: 'true',
+				showManageTemplates: 'false',
 				storageType: 'xml',
 				structureName: 'metadata-set',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',

@@ -196,7 +196,7 @@ public class DDMStructureFinderImpl
 
 	public List<DDMStructure> findByC_G_C_N_D_S(
 			long companyId, long[] groupIds, long[] classNameIds,
-			String[] names,	String[] descriptions, String[] storageTypes,
+			String[] names, String[] descriptions, String[] storageTypes,
 			boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {

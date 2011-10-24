@@ -46,6 +46,7 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
+boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
@@ -55,8 +56,6 @@ String scopeStructureName = ParamUtil.getString(request, "scopeStructureName");
 String scopeStructureType = ParamUtil.getString(request, "scopeStructureType");
 String scopeTemplateMode = ParamUtil.getString(request, "scopeTemplateMode");
 String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
-
-boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 
 String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 String saveCallback = ParamUtil.getString(request, "saveCallback");

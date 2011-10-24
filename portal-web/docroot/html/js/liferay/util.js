@@ -1095,7 +1095,10 @@
 			ddmURL.setParameter('scopeStructureType', config.structureType);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
-            ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
+
+			if (config.showGlobalScope) {
+				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
+			}
 
 			if (config.showManageTemplates) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);

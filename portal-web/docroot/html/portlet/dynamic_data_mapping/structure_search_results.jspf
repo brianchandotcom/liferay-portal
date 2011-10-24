@@ -1,4 +1,5 @@
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
+
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -20,7 +21,7 @@ StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSear
 
 long[] groupIds = new long[] {scopeGroupId};
 
-if(showGlobalScope) {
+if (showGlobalScope) {
 	groupIds = DLUtil.getGroupIds(themeDisplay);
 }
 

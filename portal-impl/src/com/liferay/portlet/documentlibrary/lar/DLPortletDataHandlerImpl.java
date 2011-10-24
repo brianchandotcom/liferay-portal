@@ -669,42 +669,44 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
-				fileEntryTypeId);
+		if (fileEntryTypeId > 0) {
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
+					fileEntryTypeId);
 
-		exportFileEntryType(
-			portletDataContext, fileEntryTypesElement, dlFileEntryType);
+			exportFileEntryType(
+				portletDataContext, fileEntryTypesElement, dlFileEntryType);
 
-		fileEntryElement.addAttribute(
-			"fileEntryTypeUuid", dlFileEntryType.getUuid());
+			fileEntryElement.addAttribute(
+				"fileEntryTypeUuid", dlFileEntryType.getUuid());
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+			List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Element structureFields = fileEntryElement.addElement(
-				"structure-fields");
+			for (DDMStructure ddmStructure : ddmStructures) {
+				Element structureFields = fileEntryElement.addElement(
+					"structure-fields");
 
-			String path = getFileEntryFileEntryTypeStructureFieldsPath(
-				portletDataContext, fileEntry, dlFileEntryType.getUuid(),
-				ddmStructure.getStructureId());
+				String path = getFileEntryFileEntryTypeStructureFieldsPath(
+					portletDataContext, fileEntry, dlFileEntryType.getUuid(),
+					ddmStructure.getStructureId());
 
-			structureFields.addAttribute("path", path);
+				structureFields.addAttribute("path", path);
 
-			structureFields.addAttribute(
-				"structureUuid", ddmStructure.getUuid());
+				structureFields.addAttribute(
+					"structureUuid", ddmStructure.getUuid());
 
-			FileVersion fileVersion = fileEntry.getFileVersion();
+				FileVersion fileVersion = fileEntry.getFileVersion();
 
-			DLFileEntryMetadata dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					fileVersion.getFileVersionId());
+				DLFileEntryMetadata dlFileEntryMetadata =
+					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						fileVersion.getFileVersionId());
 
-			Fields fields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getDDMStorageId());
+				Fields fields = StorageEngineUtil.getFields(
+					dlFileEntryMetadata.getDDMStorageId());
 
-			portletDataContext.addZipEntry(path, fields);
+				portletDataContext.addZipEntry(path, fields);
+			}
 		}
 	}
 

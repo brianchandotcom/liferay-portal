@@ -36,7 +36,7 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 String rowCheckerName = FileEntry.class.getSimpleName();
 long rowCheckerId = fileEntry.getFileEntryId();
 
-if (Validator.isNotNull(fileShortcut)) {
+if (fileShortcut != null) {
 	rowCheckerName = DLFileShortcut.class.getSimpleName();
 	rowCheckerId = fileShortcut.getFileShortcutId();
 }

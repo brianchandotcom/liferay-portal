@@ -46,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
@@ -290,13 +291,22 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			Validator.isNotNull(portletURLClass)) {
 
 			try {
-				Class<?> portletURLClassObj = Class.forName(portletURLClass);
+				Constructor<? extends PortletURLImpl> constructor =
+					_constructorMap.get(portletURLClass);
 
-				Constructor<?> constructor = portletURLClassObj.getConstructor(
-					new Class[] {
-						com.liferay.portlet.PortletResponseImpl.class,
-						long.class, String.class
-					});
+				if (constructor == null) {
+					Class<?> portletURLClassObj = Class.forName(
+						portletURLClass);
+
+					constructor = (Constructor<? extends PortletURLImpl>)
+						portletURLClassObj.getConstructor(
+							new Class[] {
+								com.liferay.portlet.PortletResponseImpl.class,
+								long.class, String.class
+							});
+
+					_constructorMap.put(portletURLClass, constructor);
+				}
 
 				portletURLImpl = (PortletURLImpl)constructor.newInstance(
 					new Object[] {this, plid, lifecycle});
@@ -659,6 +669,8 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	private static Log _log = LogFactoryUtil.getLog(PortletResponseImpl.class);
 
 	private long _companyId;
+	private Map<String, Constructor<? extends PortletURLImpl>> _constructorMap =
+		new ConcurrentHashMap<String, Constructor<? extends PortletURLImpl>>();
 	private Document _document;
 	private Map<String, Object> _headers = new LinkedHashMap<String, Object>();
 	private Map<String, List<Element>> _markupHeadElements =

@@ -44,6 +44,14 @@ public class LayoutSetServiceUtil {
 		getService().updateLogo(groupId, privateLayout, logo, inputStream);
 	}
 
+	public static void updateLogo(long groupId, boolean privateLayout,
+		boolean logo, java.io.InputStream inputStream, boolean closeStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateLogo(groupId, privateLayout, logo, inputStream, closeStream);
+	}
+
 	public static com.liferay.portal.model.LayoutSet updateLookAndFeel(
 		long groupId, boolean privateLayout, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)

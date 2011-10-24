@@ -160,6 +160,13 @@ public class FileUtil {
 		return getFile().getBytes(is);
 	}
 
+	public static byte[] getBytes(
+			InputStream is, int bufferSize, boolean closeStream)
+		throws IOException {
+
+		return getFile().getBytes(is, bufferSize, closeStream);
+	}
+
 	public static String getExtension(String fileName) {
 		return getFile().getExtension(fileName);
 	}

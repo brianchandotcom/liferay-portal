@@ -259,6 +259,12 @@ public interface ImageLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Image getImage(java.io.InputStream is,
+		boolean closeStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Image getImageOrDefault(long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -283,6 +289,11 @@ public interface ImageLocalService extends PersistedModelLocalService {
 
 	public com.liferay.portal.model.Image updateImage(long imageId,
 		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.Image updateImage(long imageId,
+		java.io.InputStream is, boolean closeStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

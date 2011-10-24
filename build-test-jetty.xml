@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-jetty" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-jetty">
+		<antcall target="run-simple-server">
+			<param name="simple.server.dir" value="${app.server.jetty.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.jetty.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.jetty.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.jetty.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.jetty.portal.dir}" />
+			<param name="simple.server.start.executable" value="run${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="" />
+			<param name="simple.server.stop.executable" value="shutdown${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="" />
+		</antcall>
+	</target>
+
+	<target name="run-selenium-jetty">
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jetty" />
+			</then>
+		</if>
+
+		<replace file="${app.server.jetty.bin.dir}/run.bat">
+			<replacetoken>set "JAVA_OPTS=-Djetty.version=7.5.1 -Djetty.version.date=20110908 -Dfile.encoding=UTF8 -Djava.io.tmpdir=../temp -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"</replacetoken>
+			<replacevalue expandProperties="true">set "JAVA_OPTS=-Djetty.version=7.5.1 -Djetty.version.date=20110908 -Dfile.encoding=UTF8 -Djava.io.tmpdir=../temp -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m -DSTOP.PORT=8079 -DSTOP.KEY=secret"</replacevalue>
+		</replace>
+
+		<copy
+			file="${app.server.jetty.bin.dir}/run.bat"
+			tofile="${app.server.jetty.bin.dir}/shutdown.bat"
+		/>
+
+		<replace file="${app.server.jetty.bin.dir}/shutdown.bat">
+			<replacetoken>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar</replacetoken>
+			<replacevalue expandProperties="true">"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar --stop</replacevalue>
+		</replace>
+
+		<antcall target="revert-test-properties" />
+
+		<antcall target="prepare-virtual-host-name-properties" />
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-jetty">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+	</target>
+</project>

@@ -89,7 +89,7 @@ public class AddFolderImageImageInvalidTest extends BaseTestCase {
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\imagegallery\\image\\addfolderimageimageinvalid\\dependencies\\test_image.invalid"));
 		assertEquals("Image names must end with one of the following extensions: .bmp, .gif, .jpeg, .jpg, .png, .tif, .tiff",
 			selenium.getAlert());
-		Thread.sleep();
+		Thread.sleep(5000);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -163,7 +163,7 @@ public class AddFolderImageImageInvalidTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep();
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -242,6 +242,13 @@ public class EditEntryAction extends PortletAction {
 			DLAppServiceUtil.deleteFolder(deleteFolderIds[i]);
 		}
 
+		long[] fileShortcutIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
+
+		for (int i = 0; i < fileShortcutIds.length; i++) {
+			DLAppServiceUtil.deleteFileShortcut(fileShortcutIds[i]);
+		}
+
 		long[] deleteFileEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
 

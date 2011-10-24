@@ -295,6 +295,10 @@ for (int i = 0; i < results.size(); i++) {
 
 					ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
+					if (Validator.isNotNull(fileShortcut)) {
+						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
+					}
+
 					for (String columnName : entryColumns) {
 						if (columnName.equals("action")) {
 							row.addJSP("/html/portlet/document_library/file_entry_action.jsp");

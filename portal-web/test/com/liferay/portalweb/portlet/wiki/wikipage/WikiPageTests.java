@@ -23,6 +23,7 @@ import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagename255c
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagenameduplicate.AddFrontPageChildPageNameDuplicateTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagenamenull.AddFrontPageChildPageNameNullTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagenamesymbol.AddFrontPageChildPageNameSymbolTests;
+import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecontentjavascript.AddFrontPageContentJavascriptTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreolebold.AddFrontPageCreoleBoldTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreolebolditalics.AddFrontPageCreoleBoldItalicsTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreoleexternallinks.AddFrontPageCreoleExternalLinksTests;
@@ -114,6 +115,7 @@ public class WikiPageTests extends BaseTests {
 		testSuite.addTest(AddFrontPageChildPageNameDuplicateTests.suite());
 		testSuite.addTest(AddFrontPageChildPageNameNullTests.suite());
 		testSuite.addTest(AddFrontPageChildPageNameSymbolTests.suite());
+		testSuite.addTest(AddFrontPageContentJavascriptTests.suite());
 		testSuite.addTest(AddFrontPageCreoleBoldTests.suite());
 		testSuite.addTest(AddFrontPageCreoleBoldItalicsTests.suite());
 		testSuite.addTest(AddFrontPageCreoleExternalLinksTests.suite());

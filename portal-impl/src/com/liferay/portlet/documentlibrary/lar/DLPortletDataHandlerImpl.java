@@ -41,6 +41,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -669,44 +670,49 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 
-		if (fileEntryTypeId > 0) {
-			DLFileEntryType dlFileEntryType =
+		DLFileEntryType dlFileEntryType = null;
+
+		try {
+			dlFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
 					fileEntryTypeId);
+		}
+		catch (NoSuchFileEntryTypeException nsfete) {
+			return;
+		}
 
-			exportFileEntryType(
-				portletDataContext, fileEntryTypesElement, dlFileEntryType);
+		exportFileEntryType(
+			portletDataContext, fileEntryTypesElement, dlFileEntryType);
 
-			fileEntryElement.addAttribute(
-				"fileEntryTypeUuid", dlFileEntryType.getUuid());
+		fileEntryElement.addAttribute(
+			"fileEntryTypeUuid", dlFileEntryType.getUuid());
 
-			List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-			for (DDMStructure ddmStructure : ddmStructures) {
-				Element structureFields = fileEntryElement.addElement(
-					"structure-fields");
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Element structureFields = fileEntryElement.addElement(
+				"structure-fields");
 
-				String path = getFileEntryFileEntryTypeStructureFieldsPath(
-					portletDataContext, fileEntry, dlFileEntryType.getUuid(),
-					ddmStructure.getStructureId());
+			String path = getFileEntryFileEntryTypeStructureFieldsPath(
+				portletDataContext, fileEntry, dlFileEntryType.getUuid(),
+				ddmStructure.getStructureId());
 
-				structureFields.addAttribute("path", path);
+			structureFields.addAttribute("path", path);
 
-				structureFields.addAttribute(
-					"structureUuid", ddmStructure.getUuid());
+			structureFields.addAttribute(
+				"structureUuid", ddmStructure.getUuid());
 
-				FileVersion fileVersion = fileEntry.getFileVersion();
+			FileVersion fileVersion = fileEntry.getFileVersion();
 
-				DLFileEntryMetadata dlFileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						fileVersion.getFileVersionId());
+			DLFileEntryMetadata dlFileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					fileVersion.getFileVersionId());
 
-				Fields fields = StorageEngineUtil.getFields(
-					dlFileEntryMetadata.getDDMStorageId());
+			Fields fields = StorageEngineUtil.getFields(
+				dlFileEntryMetadata.getDDMStorageId());
 
-				portletDataContext.addZipEntry(path, fields);
-			}
+			portletDataContext.addZipEntry(path, fields);
 		}
 	}
 

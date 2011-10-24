@@ -350,11 +350,13 @@
 					if (!parentThemeDisplay) {
 						break;
 					}
-					else if (!parentThemeDisplay.isStatePopUp()) {
+					else if (!parentThemeDisplay.isStatePopUp() || (parentWindow == parentWindow.parent)) {
 						topWindow = parentWindow;
 
 						break;
 					}
+
+					parentWindow = parentWindow.parent;
 				}
 
 				if (!topWindow) {

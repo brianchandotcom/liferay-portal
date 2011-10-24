@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.servlet.BodyContentWrapper;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
@@ -40,8 +41,16 @@ public class ScriptTag extends BaseScriptTag {
 
 	public static void doTag(
 			String position, String use, String bodyContentString,
-			PageContext pageContext)
+			BodyContent previousBodyContent, PageContext pageContext)
 		throws Exception {
+
+		String previousBodyContentString = null;
+
+		if ((previousBodyContent != null) &&
+			!(previousBodyContent instanceof BodyContentWrapper)) {
+
+			previousBodyContentString = previousBodyContent.getString();
+		}
 
 		ScriptTag scriptTag = new ScriptTag();
 
@@ -60,6 +69,12 @@ public class ScriptTag extends BaseScriptTag {
 		scriptTag.doEndTag();
 
 		scriptTag.release();
+
+		if (previousBodyContentString != null) {
+			previousBodyContent.clear();
+
+			previousBodyContent.append(previousBodyContentString);
+		}
 	}
 
 	public static void flushScriptData(PageContext pageContext)

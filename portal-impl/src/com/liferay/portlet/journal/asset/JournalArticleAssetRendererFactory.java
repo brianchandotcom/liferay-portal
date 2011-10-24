@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -37,6 +38,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
+import com.liferay.portlet.journal.service.permission.JournalStructurePermission;
 
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +139,17 @@ public class JournalArticleAssetRendererFactory
 		if (!JournalPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ARTICLE)) {
+
+			return null;
+		}
+
+		long classTypeId = GetterUtil.getLong(
+			(String)liferayPortletRequest.getAttribute("classTypeId"));
+
+		if ((classTypeId > 0) &&
+			(!JournalStructurePermission.contains(
+				themeDisplay.getPermissionChecker(), classTypeId,
+				ActionKeys.VIEW))) {
 
 			return null;
 		}

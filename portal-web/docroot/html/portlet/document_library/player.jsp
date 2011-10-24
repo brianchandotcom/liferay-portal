@@ -28,7 +28,7 @@ String videoThumbnailURL = (String)request.getAttribute("view_file_entry.jsp-vid
 	<script src="<%= themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>
 </liferay-util:html-bottom>
 
-<aui:script use="aui-base">
+<aui:script use="aui-base,aui-swf">
 	var previewDivObject = A.one('#<portlet:namespace />previewFileContent');
 
 	var so = new SWFObject(

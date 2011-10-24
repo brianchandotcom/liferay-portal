@@ -65,6 +65,24 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DDMStructureServiceSoap {
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap copyStructure(
+		long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.dynamicdatamapping.model.DDMStructure returnValue =
+				DDMStructureServiceUtil.copyStructure(structureId,
+					serviceContext);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteStructure(long structureId)
 		throws RemoteException {
 		try {

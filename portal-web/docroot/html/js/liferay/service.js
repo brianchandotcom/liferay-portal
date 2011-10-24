@@ -835,6 +835,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMStructure",
 	{
 		addStructure: true,
+		copyStructure: true,
 		deleteStructure: true,
 		fetchStructure: true,
 		getStructure: true,

@@ -78,6 +78,7 @@ import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PermissionLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -886,6 +887,30 @@ public class LayoutImporter {
 
 				importedLayout.setIconImageId(iconImageId);
 			}
+
+			// Resources
+
+			boolean addGroupPermissions = true;
+
+			if (privateLayout && layout.getGroup().isUser()) {
+				addGroupPermissions = false;
+			}
+
+			boolean addGuestPermissions = false;
+
+			if (!privateLayout || layout.isTypeControlPanel()) {
+				addGuestPermissions = true;
+			}
+
+			ResourceLocalServiceUtil.addResources(
+				user.getCompanyId(), groupId, user.getUserId(),
+				Layout.class.getName(), importedLayout.getPlid(), false,
+				addGroupPermissions, addGuestPermissions);
+
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, privateLayout);
+
+			importedLayout.setLayoutSet(layoutSet);
 		}
 		else {
 			importedLayout = existingLayout;

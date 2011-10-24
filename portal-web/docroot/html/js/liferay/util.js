@@ -333,15 +333,31 @@
 			if (!topWindow) {
 				var parentWindow = window.parent;
 
-				try {
-					if (parentWindow != window &&
-						typeof parentWindow.location.href != 'undefined' &&
-						!parentWindow.themeDisplay.isStatePopUp()) {
+				var parentThemeDisplay;
 
-						topWindow = parentWindow;
+				while (parentWindow != window) {
+					try {
+						if (typeof parentWindow.location.href == 'undefined') {
+							break;
+						}
 					}
+					catch (e) {
+						break;
+					}
+
+					parentThemeDisplay = parentWindow.themeDisplay;
+
+					if (!parentThemeDisplay) {
+						break;
+					}
+					else if (!parentThemeDisplay.isStatePopUp() || (parentWindow == parentWindow.parent)) {
+						topWindow = parentWindow;
+
+						break;
+					}
+
+					parentWindow = parentWindow.parent;
 				}
-				catch (e) {}
 
 				if (!topWindow) {
 					topWindow = window;

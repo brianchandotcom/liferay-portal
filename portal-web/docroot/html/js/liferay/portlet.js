@@ -614,7 +614,7 @@
 				var titleHtml = title.html();
 
 				if (portlet.one('#cpPortletTitle')) {
-					titleHtml = '<span class="portlet-title-text">' + title.one('span').html() + '</span>';
+					titleHtml = title.one('.portlet-title-text').outerHTML();
 				}
 
 				var dialog = Liferay.Util._openWindow(

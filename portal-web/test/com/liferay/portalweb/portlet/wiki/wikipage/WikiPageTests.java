@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.wiki.wikipage;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portlet.wiki.wikipage.addchildpage1childpageduplicatechildpage2.AddChildPage1ChildPageDuplicateChildPage2Tests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpage.AddFrontPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpage.AddFrontPageChildPageTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagemultiple.AddFrontPageChildPageMultipleTests;
@@ -22,6 +23,7 @@ import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagename255c
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagenameduplicate.AddFrontPageChildPageNameDuplicateTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagenamenull.AddFrontPageChildPageNameNullTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpagenamesymbol.AddFrontPageChildPageNameSymbolTests;
+import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecontentjavascript.AddFrontPageContentJavascriptTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreolebold.AddFrontPageCreoleBoldTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreolebolditalics.AddFrontPageCreoleBoldItalicsTests;
 import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagecreoleexternallinks.AddFrontPageCreoleExternalLinksTests;
@@ -104,6 +106,8 @@ public class WikiPageTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(
+			AddChildPage1ChildPageDuplicateChildPage2Tests.suite());
 		testSuite.addTest(AddFrontPageTests.suite());
 		testSuite.addTest(AddFrontPageChildPageTests.suite());
 		testSuite.addTest(AddFrontPageChildPageMultipleTests.suite());
@@ -111,6 +115,7 @@ public class WikiPageTests extends BaseTests {
 		testSuite.addTest(AddFrontPageChildPageNameDuplicateTests.suite());
 		testSuite.addTest(AddFrontPageChildPageNameNullTests.suite());
 		testSuite.addTest(AddFrontPageChildPageNameSymbolTests.suite());
+		testSuite.addTest(AddFrontPageContentJavascriptTests.suite());
 		testSuite.addTest(AddFrontPageCreoleBoldTests.suite());
 		testSuite.addTest(AddFrontPageCreoleBoldItalicsTests.suite());
 		testSuite.addTest(AddFrontPageCreoleExternalLinksTests.suite());

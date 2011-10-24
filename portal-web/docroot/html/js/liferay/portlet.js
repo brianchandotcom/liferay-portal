@@ -611,9 +611,15 @@
 			if (portlet && configurationURL) {
 				var title = portlet.one('.portlet-title') || portlet.one('.portlet-title-default');
 
+				var titleHtml = title.html();
+
+				if (portlet.one('#cpPortletTitle')) {
+					titleHtml = title.one('.portlet-title-text').outerHTML();
+				}
+
 				var dialog = Liferay.Util._openWindow(
 					{
-						title: title.html() + ' - ' + Liferay.Language.get('configuration'),
+						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
 						uri: configurationURL,
 						cache: false,
 						dialog: {

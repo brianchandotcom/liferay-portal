@@ -50,6 +50,14 @@ public class DDMStructureServiceUtil {
 			descriptionMap, xsd, storageType, serviceContext);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
+		long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().copyStructure(structureId, serviceContext);
+	}
+
 	public static void deleteStructure(long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

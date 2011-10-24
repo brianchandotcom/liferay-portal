@@ -48,6 +48,18 @@ public class DDMStructureServiceImpl
 			descriptionMap, xsd, storageType, serviceContext);
 	}
 
+	public DDMStructure copyStructure(
+			long structureId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_STRUCTURE);
+
+		return ddmStructureLocalService.copyStructure(
+			getUserId(), structureId, serviceContext);
+	}
+
 	public void deleteStructure(long structureId)
 		throws PortalException, SystemException {
 

@@ -44,6 +44,14 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 			serviceContext);
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
+		long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureService.copyStructure(structureId, serviceContext);
+	}
+
 	public void deleteStructure(long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

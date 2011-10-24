@@ -48,6 +48,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
+ * @author Marcellus Tavares
  */
 public class DDMStructureLocalServiceImpl
 	extends DDMStructureLocalServiceBaseImpl {
@@ -136,6 +137,18 @@ public class DDMStructureLocalServiceImpl
 			structure.getCompanyId(), structure.getGroupId(),
 			structure.getUserId(), DDMStructure.class.getName(),
 			structure.getStructureId(), groupPermissions, guestPermissions);
+	}
+
+	public DDMStructure copyStructure(
+			long userId, long structureId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = getStructure(structureId);
+
+		 return addStructure(
+			 userId, structure.getGroupId(), structure.getClassNameId(), null,
+			 structure.getNameMap(), structure.getDescriptionMap(),
+			 structure.getXsd(), structure.getStorageType(), serviceContext);
 	}
 
 	public void deleteStructure(DDMStructure structure)

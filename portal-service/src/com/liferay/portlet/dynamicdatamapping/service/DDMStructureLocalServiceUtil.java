@@ -304,6 +304,14 @@ public class DDMStructureLocalServiceUtil {
 			.addStructureResources(structure, groupPermissions, guestPermissions);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
+		long userId, long structureId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().copyStructure(userId, structureId, serviceContext);
+	}
+
 	public static void deleteStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure)
 		throws com.liferay.portal.kernel.exception.PortalException,

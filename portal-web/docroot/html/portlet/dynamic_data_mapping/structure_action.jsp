@@ -51,6 +51,20 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE) %>">
+		<portlet:actionURL var="copyURL">
+			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.COPY %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			image="copy"
+			url="<%= copyURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DDMStructure.class.getName() %>"

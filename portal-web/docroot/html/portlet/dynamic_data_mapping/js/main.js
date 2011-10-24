@@ -35,14 +35,14 @@ AUI().add(
 
 		var LiferayAvailableField = A.Component.create(
 			{
-				NAME: 'availableField',
-
 				ATTRS: {
 					localizationMap: {
 						validator: isObject,
 						value: {}
 					}
 				},
+
+				NAME: 'availableField',
 
 				EXTENDS: A.FormBuilderAvailableField
 			}

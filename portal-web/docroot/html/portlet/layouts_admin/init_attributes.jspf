@@ -162,6 +162,10 @@ if (privateLayout) {
 	pagesName = "private-pages";
 }
 
+if (portletName.equals(PortletKeys.LAYOUT_SET_PROTOTYPE)) {
+	pagesName = "pages";
+}
+
 String rootNodeName = LanguageUtil.get(pageContext, pagesName);
 
 LayoutView layoutView = layoutLister.getLayoutView(groupId, privateLayout, rootNodeName, locale);
@@ -199,21 +203,6 @@ request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
 </liferay-portlet:resourceURL>
 
 <%
-if ((renderResponse != null) && !portletName.equals(PortletKeys.GROUP_PAGES) && !portletName.equals(PortletKeys.MY_PAGES)) {
-	if (group.isLayoutPrototype()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "page-template"), null);
-
-		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), redirectURL.toString());
-	}
-	else {
-		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), null);
-	}
-
-	if (!group.isLayoutPrototype()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, pagesName), redirectURL.toString());
-	}
-}
-
 request.setAttribute("edit_pages.jsp-group", group);
 request.setAttribute("edit_pages.jsp-selGroup", selGroup);
 request.setAttribute("edit_pages.jsp-liveGroup", liveGroup);

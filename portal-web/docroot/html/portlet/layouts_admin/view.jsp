@@ -18,6 +18,23 @@
 
 <%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
+<%
+if ((renderResponse != null) && !portletName.equals(PortletKeys.GROUP_PAGES) && !portletName.equals(PortletKeys.MY_PAGES)) {
+	if (group.isLayoutPrototype()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "page-template"), null);
+
+		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), redirectURL.toString());
+	}
+	else {
+		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), null);
+	}
+
+	if (!group.isLayoutPrototype()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, pagesName), redirectURL.toString());
+	}
+}
+%>
+
 <c:choose>
 	<c:when test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
 		<c:if test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
@@ -75,14 +92,6 @@
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<%
-if ((selLayout != null) && !group.isLayoutPrototype()) {
-	redirectURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
-
-	PortalUtil.addPortletBreadcrumbEntry(request, selLayout.getName(locale), redirectURL.toString());
-}
-%>
 
 <aui:layout cssClass="manage-view lfr-app-column-view">
 	<c:if test="<%= !group.isLayoutPrototype() %>">

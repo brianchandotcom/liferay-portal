@@ -21,6 +21,21 @@
 <%
 boolean viewTree = ParamUtil.getBoolean(request, "viewTree");
 boolean viewLayout = ParamUtil.getBoolean(request, "viewLayout");
+
+if ((renderResponse != null) && !portletName.equals(PortletKeys.GROUP_PAGES) && !portletName.equals(PortletKeys.MY_PAGES)) {
+	if (group.isLayoutPrototype()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "page-template"), null);
+
+		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), redirectURL.toString());
+	}
+	else {
+		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), null);
+	}
+
+	if (!group.isLayoutPrototype()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, pagesName), redirectURL.toString());
+	}
+}
 %>
 
 <c:if test="<%= viewTree %>">

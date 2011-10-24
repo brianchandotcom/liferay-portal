@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -299,15 +301,19 @@ public class DLIndexer extends BaseIndexer {
 
 			document.addUID(PORTLET_ID, fileEntryId);
 
-			long[] assetCategoryIds =
-				AssetCategoryLocalServiceUtil.getCategoryIds(
+			List<AssetCategory> categories =
+				AssetCategoryLocalServiceUtil.getCategories(
 					DLFileEntry.class.getName(), fileEntryId);
+
+			long[] assetCategoryIds = StringUtil.split(
+				ListUtil.toString(categories,
+					AssetCategory.CATEGORY_ID_ACCESSOR),
+				0L);
 
 			document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
 
-			String[] assetCategoryNames =
-					AssetCategoryLocalServiceUtil.getCategoryNames(
-						DLFileEntry.class.getName(), fileEntryId);
+			String[] assetCategoryNames = StringUtil.split(
+				ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
 
 			document.addKeyword(Field.ASSET_CATEGORY_NAMES, assetCategoryNames);
 

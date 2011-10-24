@@ -43,7 +43,7 @@
 				DDMStructure
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				[$GROUP_ID$]
 				(classNameId = ? OR ? IS NULL) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -60,7 +60,7 @@
 				DDMStructure
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				[$GROUP_ID$]
 				(classNameId = ? OR ? IS NULL) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

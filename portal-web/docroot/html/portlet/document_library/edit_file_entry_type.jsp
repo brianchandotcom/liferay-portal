@@ -144,8 +144,8 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 					width:680
 				},
 				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>',
-				showManageTemplates: 'false',
-				showToolbar: 'true',
+				showManageTemplates: false,
+				showToolbar: true,
 				storageType: 'xml',
 				structureName: '<liferay-ui:message key="metadata-sets" />',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',

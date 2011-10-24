@@ -403,40 +403,40 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long groupId, long[] classNameIds,
+		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameIds, keywords, start,
+				   .search(companyId, groupIds, classNameIds, keywords, start,
 			end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long groupId, long[] classNameIds,
+		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupId, classNameIds, name, description,
-			storageType, andOperator, start, end, orderByComparator);
+				   .search(companyId, groupIds, classNameIds, name,
+			description, storageType, andOperator, start, end, orderByComparator);
 	}
 
-	public static int searchCount(long companyId, long groupId,
+	public static int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .searchCount(companyId, groupId, classNameIds, keywords);
+				   .searchCount(companyId, groupIds, classNameIds, keywords);
 	}
 
-	public static int searchCount(long companyId, long groupId,
+	public static int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String name,
 		java.lang.String description, java.lang.String storageType,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .searchCount(companyId, groupId, classNameIds, name,
+				   .searchCount(companyId, groupIds, classNameIds, name,
 			description, storageType, andOperator);
 	}
 

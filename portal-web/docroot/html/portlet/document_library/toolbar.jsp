@@ -140,6 +140,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 				dialog: {
 					width:820
 				},
+				showGlobalScope: 'true',
 				showManageTemplates: 'false',
 				storageType: 'xml',
 				structureName: 'metadata-set',

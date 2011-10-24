@@ -397,37 +397,38 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long groupId, long[] classNameIds,
+		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.search(companyId, groupId,
+		return _ddmStructureLocalService.search(companyId, groupIds,
 			classNameIds, keywords, start, end, orderByComparator);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long groupId, long[] classNameIds,
+		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.search(companyId, groupId,
+		return _ddmStructureLocalService.search(companyId, groupIds,
 			classNameIds, name, description, storageType, andOperator, start,
 			end, orderByComparator);
 	}
 
-	public int searchCount(long companyId, long groupId, long[] classNameIds,
-		java.lang.String keywords)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.searchCount(companyId, groupId,
+		return _ddmStructureLocalService.searchCount(companyId, groupIds,
 			classNameIds, keywords);
 	}
 
-	public int searchCount(long companyId, long groupId, long[] classNameIds,
-		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, boolean andOperator)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String name,
+		java.lang.String description, java.lang.String storageType,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.searchCount(companyId, groupId,
+		return _ddmStructureLocalService.searchCount(companyId, groupIds,
 			classNameIds, name, description, storageType, andOperator);
 	}
 

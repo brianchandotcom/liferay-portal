@@ -347,28 +347,29 @@ public interface DDMStructureLocalService extends PersistedModelLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long groupId, long[] classNameIds,
+		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long groupId, long[] classNameIds,
+		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId, long[] classNameIds,
-		java.lang.String keywords)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId, long[] classNameIds,
-		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, boolean andOperator)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String name,
+		java.lang.String description, java.lang.String storageType,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(

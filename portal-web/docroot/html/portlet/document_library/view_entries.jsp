@@ -251,11 +251,27 @@ for (int i = 0; i < results.size(); i++) {
 				</c:when>
 
 				<c:otherwise>
+
+					<%
+					PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+					rowURL.setParameter("struts_action", "/document_library/view_file_entry");
+					rowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
+					rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+
+					Map<String,Object> data = new HashMap<String,Object>();
+
+					data.put("file-entry-id", fileEntry.getFileEntryId());
+					%>
+
 					<liferay-util:buffer var="fileEntryTitle">
 						<liferay-ui:icon
+							cssClass="document-display-style selectable"
+							data="<%= data %>"
 							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 							label="<%= true %>"
 							message="<%= fileEntry.getTitle() %>"
+							url="<%= rowURL.toString() %>"
 						/>
 					</liferay-util:buffer>
 
@@ -263,12 +279,6 @@ for (int i = 0; i < results.size(); i++) {
 					List resultRows = searchContainer.getResultRows();
 
 					ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
-
-					PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-					rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-					rowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
-					rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 					for (String columnName : entryColumns) {
 						if (columnName.equals("action")) {
@@ -290,15 +300,6 @@ for (int i = 0; i < results.size(); i++) {
 						if (columnName.equals("name")) {
 							TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 
-							folderTitleSearchEntry.setCssClass("document-display-style selectable");
-
-							Map<String,Object> data = new HashMap<String,Object>();
-
-							data.put("file-entry-id", fileEntry.getFileEntryId());
-
-							folderTitleSearchEntry.setData(data);
-
-							folderTitleSearchEntry.setHref(rowURL.toString());
 							folderTitleSearchEntry.setName(fileEntryTitle);
 
 							row.addSearchEntry(folderTitleSearchEntry);
@@ -376,8 +377,25 @@ for (int i = 0; i < results.size(); i++) {
 					</c:choose>
 				</c:when>
 				<c:otherwise>
+					<%
+					Map<String,Object> data = new HashMap<String,Object>();
+
+					data.put("folder", true);
+					data.put("folder-id", curFolder.getFolderId());
+					data.put("refresh-folders", true);
+					data.put("resource-url", viewEntriesURL);
+
+					PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+					rowURL.setParameter("struts_action", "/document_library/view");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+					%>
+
 					<liferay-util:buffer var="folderTitle">
 						<liferay-ui:icon
+							data="<%= data %>"
+							url="<%= rowURL.toString() %>"
 							image="<%= folderImage %>"
 							label="<%= true %>"
 							message="<%= curFolder.getName() %>"
@@ -388,19 +406,6 @@ for (int i = 0; i < results.size(); i++) {
 					List resultRows = searchContainer.getResultRows();
 
 					ResultRow row = new ResultRow(curFolder, curFolder.getPrimaryKey(), i);
-
-					PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-					rowURL.setParameter("struts_action", "/document_library/view");
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-					Map<String,Object> data = new HashMap<String,Object>();
-
-					data.put("folder", true);
-					data.put("folder-id", curFolder.getFolderId());
-					data.put("refresh-folders", true);
-					data.put("resource-url", viewEntriesURL);
 
 					for (String columnName : entryColumns) {
 						if (columnName.equals("action")) {
@@ -422,8 +427,6 @@ for (int i = 0; i < results.size(); i++) {
 						if (columnName.equals("name")) {
 							TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 
-							folderTitleSearchEntry.setData(data);
-							folderTitleSearchEntry.setHref(rowURL.toString());
 							folderTitleSearchEntry.setName(folderTitle);
 
 							row.addSearchEntry(folderTitleSearchEntry);

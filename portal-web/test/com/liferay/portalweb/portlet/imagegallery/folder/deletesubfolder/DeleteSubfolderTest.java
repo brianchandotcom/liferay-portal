@@ -64,8 +64,24 @@ public class DeleteSubfolderTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if ("Are you sure you want to delete this?".equals(
+							selenium.getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

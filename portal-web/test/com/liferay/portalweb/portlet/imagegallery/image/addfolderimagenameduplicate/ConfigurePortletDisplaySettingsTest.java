@@ -48,6 +48,7 @@ public class ConfigurePortletDisplaySettingsTest extends BaseTestCase {
 				selenium.clickAt("link=Image Gallery Test Page",
 					RuntimeVariables.replace("Image Gallery Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",

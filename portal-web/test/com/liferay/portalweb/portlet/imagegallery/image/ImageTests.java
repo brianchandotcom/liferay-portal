@@ -45,8 +45,8 @@ public class ImageTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddFolderImageTests.suite());
-		//testSuite.addTest(AddFolderImageImageInvalidTests.suite());
-		//testSuite.addTest(AddFolderImageImageNullTests.suite());
+		testSuite.addTest(AddFolderImageImageInvalidTests.suite());
+		testSuite.addTest(AddFolderImageImageNullTests.suite());
 		testSuite.addTest(AddFolderImageMultipleTests.suite());
 		testSuite.addTest(AddFolderImageNameDuplicateTests.suite());
 		testSuite.addTest(AddFolderImageNameNullTests.suite());

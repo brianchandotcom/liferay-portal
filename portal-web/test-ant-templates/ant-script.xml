@@ -35,6 +35,22 @@
 		</ant>
 	</target>
 
+	<target name="test-${test.ant.script.command}-jetty-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
+			${test.ant.script.file.database.minimal}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite}" />
+		</ant>
+	</target>
+
 	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}

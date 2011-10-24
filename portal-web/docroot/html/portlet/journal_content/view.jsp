@@ -87,7 +87,6 @@ try {
 						<c:choose>
 							<c:when test="<%= print %>">
 								<div class="print-action">
-
 									<liferay-ui:icon
 										image="print"
 										label="<%= true %>"
@@ -342,6 +341,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 			</c:if>
 
 			<c:if test="<%= showSelectArticleIcon %>">
+
 				<%
 				String taglibOnClick = "Liferay.Portlet.openConfiguration(\'#p_p_id_" + portletDisplay.getId() + "_\', \'" + portletDisplay.getId() + "\', \'" + portletDisplay.getURLConfiguration() + " \', \'" + portletDisplay.getNamespace() + "\'); return false;";
 				%>

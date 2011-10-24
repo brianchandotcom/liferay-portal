@@ -56,6 +56,6 @@ public class BA_SignInTest extends BaseTestCase {
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Bruno Admin."),
-			selenium.getText("//section[@id='portlet_58']/div/div/div"));
+			selenium.getText("//div[@id='p_p_id_58_']/div/div/div[2]"));
 	}
 }

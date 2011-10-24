@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.sevencogs.signin.user.jrsignin;
+package com.liferay.portalweb.sevencogs.signin.user.brsignin;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,12 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class JR_SignInTests extends BaseTests {
+public class BR_SignInTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(JR_SignInTest.class);
+		testSuite.addTestSuite(BR_SignInTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 
 		return testSuite;

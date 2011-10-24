@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.sevencogs.signin.user.jrsignin;
+package com.liferay.portalweb.sevencogs.signin.user.mwsignin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

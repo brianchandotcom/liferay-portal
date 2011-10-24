@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.sevencogs.signin.user.mesignin;
+package com.liferay.portalweb.sevencogs.signin.user.mwsignin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ME_SignInTest extends BaseTestCase {
-	public void testME_SignIn() throws Exception {
+public class MW_SignInTest extends BaseTestCase {
+	public void testMW_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -56,6 +56,6 @@ public class ME_SignInTest extends BaseTestCase {
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Michelle Writer."),
-			selenium.getText("//section[@id='portlet_58']/div/div/div"));
+			selenium.getText("//div[@id='p_p_id_58_']/div/div/div"));
 	}
 }

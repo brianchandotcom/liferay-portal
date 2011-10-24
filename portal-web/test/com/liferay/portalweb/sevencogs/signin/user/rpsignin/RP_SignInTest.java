@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.sevencogs.signin.user.rwsignin;
+package com.liferay.portalweb.sevencogs.signin.user.rpsignin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RW_SignInTest extends BaseTestCase {
-	public void testRW_SignIn() throws Exception {
+public class RP_SignInTest extends BaseTestCase {
+	public void testRP_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -52,10 +52,10 @@ public class RW_SignInTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Richard Editor"),
+		assertEquals(RuntimeVariables.replace("Richard Publisher"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
-				"You are signed in as Richard Editor."),
-			selenium.getText("//section[@id='portlet_58']/div/div/div"));
+				"You are signed in as Richard Publisher."),
+			selenium.getText("//div[@id='p_p_id_58_']/div/div/div"));
 	}
 }

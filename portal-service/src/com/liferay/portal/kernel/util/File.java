@@ -83,6 +83,10 @@ public interface File {
 
 	public byte[] getBytes(InputStream is, int bufferSize) throws IOException;
 
+	public byte[] getBytes(
+			InputStream inputStream, int bufferSize, boolean closeStream)
+		throws IOException;
+
 	public byte[] getBytes(java.io.File file) throws IOException;
 
 	public String getExtension(String fileName);

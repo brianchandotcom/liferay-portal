@@ -34,11 +34,19 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			InputStream inputStream)
 		throws PortalException, SystemException {
 
+		updateLogo(groupId, privateLayout, logo, inputStream, true);
+	}
+
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo,
+			InputStream inputStream, boolean closeStream)
+		throws PortalException, SystemException {
+
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		layoutSetLocalService.updateLogo(
-			groupId, privateLayout, logo, inputStream);
+			groupId, privateLayout, logo, inputStream, closeStream);
 	}
 
 	public LayoutSet updateLookAndFeel(

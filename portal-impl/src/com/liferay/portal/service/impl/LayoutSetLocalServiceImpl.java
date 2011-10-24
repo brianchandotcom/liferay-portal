@@ -221,6 +221,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, boolean logo, InputStream is)
 		throws PortalException, SystemException {
 
+		updateLogo(groupId, privateLayout, logo, is, true);
+	}
+
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo, InputStream is,
+			boolean closeStream)
+		throws PortalException, SystemException {
+
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
@@ -239,7 +247,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSetPersistence.update(layoutSet, false);
 
 		if (logo) {
-			imageLocalService.updateImage(layoutSet.getLogoId(), is);
+			imageLocalService.updateImage(
+				layoutSet.getLogoId(), is, closeStream);
 		}
 		else {
 			imageLocalService.deleteImage(layoutSet.getLogoId());

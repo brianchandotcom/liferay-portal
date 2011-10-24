@@ -268,6 +268,11 @@ public interface LayoutSetLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
+		java.io.InputStream is, boolean closeStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void updateLookAndFeel(long groupId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.PortalException,

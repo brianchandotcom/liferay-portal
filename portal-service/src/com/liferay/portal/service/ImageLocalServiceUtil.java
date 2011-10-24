@@ -294,6 +294,13 @@ public class ImageLocalServiceUtil {
 		return getService().getImage(is);
 	}
 
+	public static com.liferay.portal.model.Image getImage(
+		java.io.InputStream is, boolean closeStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getImage(is, closeStream);
+	}
+
 	public static com.liferay.portal.model.Image getImageOrDefault(long imageId) {
 		return getService().getImageOrDefault(imageId);
 	}
@@ -331,6 +338,13 @@ public class ImageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateImage(imageId, is);
+	}
+
+	public static com.liferay.portal.model.Image updateImage(long imageId,
+		java.io.InputStream is, boolean closeStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateImage(imageId, is, closeStream);
 	}
 
 	public static com.liferay.portal.model.Image updateImage(long imageId,

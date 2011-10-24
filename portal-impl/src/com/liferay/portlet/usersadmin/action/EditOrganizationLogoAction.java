@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchOrganizationException;
+import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -26,6 +27,7 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -93,19 +95,19 @@ public class EditOrganizationLogoAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
-			inputStream = uploadPortletRequest.getFileAsStream("fileName");
+			File file = uploadPortletRequest.getFile("fileName");
 
-			if (inputStream == null) {
-				throw new UploadException();
-			}
+			inputStream = new ByteArrayFileInputStream(file, 1024);
 
 			inputStream.mark(0);
 
-			LayoutSetServiceUtil.updateLogo(groupId, true, true, inputStream);
+			LayoutSetServiceUtil.updateLogo(
+				groupId, true, true, inputStream, false);
 
 			inputStream.reset();
 
-			LayoutSetServiceUtil.updateLogo(groupId, false, true, inputStream);
+			LayoutSetServiceUtil.updateLogo(
+				groupId, false, true, inputStream, false);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-jonas" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-jonas">
+		<antcall target="run-simple-server">
+			<param name="simple.server.dir" value="${app.server.jonas.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.jonas.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.jonas.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.jonas.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.jonas.portal.dir}" />
+			<param name="simple.server.start.executable" value="jonas${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="start" />
+			<param name="simple.server.stop.executable" value="jonas${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="stop" />
+		</antcall>
+	</target>
+
+	<target name="run-selenium-jonas">
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jonas" />
+			</then>
+		</if>
+
+		<antcall target="revert-test-properties" />
+
+		<antcall target="prepare-virtual-host-name-properties" />
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-jonas">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+	</target>
+</project>

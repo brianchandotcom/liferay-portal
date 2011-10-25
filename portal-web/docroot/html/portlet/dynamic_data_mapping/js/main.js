@@ -567,31 +567,31 @@ AUI().add(
 						fields = fields || instance.get('fields');
 
 						fields.each(
-							function(item, index, collection) {
+							function(item1, index1, collection1) {
 								var localizationMap = {};
 
 								localizationMap[locale] = {};
 
 								AArray.each(
 									LOCALIZABLE_FIELD_ATTRS,
-									function(item1, index1, collection1) {
-										localizationMap[locale][item1] = item.get(item1);
+									function(item2, index2, collection2) {
+										localizationMap[locale][item2] = item1.get(item2);
 									}
 								);
 
-								item.set(
+								item1.set(
 									'localizationMap',
 									A.mix(
 										localizationMap,
-										item.get('localizationMap')
+										item1.get('localizationMap')
 									)
 								);
 
-								if (instanceOf(item, A.FormBuilderMultipleChoiceField)) {
-									instance._updateFieldOptionsLocalizationMap(item, locale);
+								if (instanceOf(item1, A.FormBuilderMultipleChoiceField)) {
+									instance._updateFieldOptionsLocalizationMap(item1, locale);
 								}
 
-								instance._updateFieldsLocalizationMap(locale, item.get('fields'));
+								instance._updateFieldsLocalizationMap(locale, item1.get('fields'));
 							}
 						);
 					}

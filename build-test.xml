@@ -828,7 +828,7 @@
 			<param name="test.ant.script.command" value="plugins-drools" />
 			<param name="test.ant.script.plugin.portlets" value="sample-drools-portlet" />
 			<param name="test.ant.script.plugin.webs" value="drools-web" />
-			<param name="test.ant.script.suite" value="PluginsDroolsWebTestSuite" />
+			<param name="test.ant.script.suite" value="PluginsDroolsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

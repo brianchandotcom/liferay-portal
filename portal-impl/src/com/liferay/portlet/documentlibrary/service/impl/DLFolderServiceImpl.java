@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -108,8 +110,22 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status)
 		throws SystemException {
 
-		return dlFolderFinder.filterCountFE_FS_ByG_F_S(
-			groupId, folderId, status);
+		int fileEntriesCount = 0;
+
+		if ((status == WorkflowConstants.STATUS_ANY) &&
+			!InlineSQLHelperUtil.isEnabled(groupId)) {
+			fileEntriesCount = dlFileEntryPersistence.countByG_F(
+				groupId, folderId);
+		}
+		else {
+			fileEntriesCount = dlFolderFinder.filterCountFE_ByG_F_S(
+				groupId, folderId, status);
+		}
+
+		int fileShortcutsCount = dlFileShortcutPersistence.filterCountByG_F_S(
+			groupId, folderId, 0);
+
+		return fileEntriesCount + fileShortcutsCount;
 	}
 
 	public DLFolder getFolder(long folderId)

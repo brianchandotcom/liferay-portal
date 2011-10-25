@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -174,7 +175,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long groupId, long folderId, int status)
 		throws SystemException {
 
-		return dlFolderFinder.countFE_FS_ByG_F_S(groupId, folderId, status);
+		int fileEntriesCount = 0;
+
+		if ((status == WorkflowConstants.STATUS_ANY)) {
+			fileEntriesCount = dlFileEntryPersistence.countByG_F(
+				groupId, folderId);
+		}
+		else {
+			fileEntriesCount = dlFolderFinder.countFE_ByG_F_S(
+				groupId, folderId, status);
+		}
+
+		int fileShortcutsCount = dlFileShortcutPersistence.countByG_F_S(
+			groupId, folderId, 0);
+
+		return fileEntriesCount + fileShortcutsCount;
 	}
 
 	public DLFolder getFolder(long folderId)

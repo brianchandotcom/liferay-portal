@@ -22,14 +22,14 @@ public interface DLFolderFinder {
 		java.lang.String[] mimeTypes, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
+	public int countFE_ByG_F_S(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int filterCountF_FE_FS_ByG_F_S(long groupId, long folderId,
 		int status, java.lang.String[] mimeTypes, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int filterCountFE_FS_ByG_F_S(long groupId, long folderId, int status)
+	public int filterCountFE_ByG_F_S(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Object> filterFindF_FE_FS_ByG_F_S(

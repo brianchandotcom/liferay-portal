@@ -29,9 +29,9 @@ public class DLFolderFinderUtil {
 			includeMountFolders);
 	}
 
-	public static int countFE_FS_ByG_F_S(long groupId, long folderId, int status)
+	public static int countFE_ByG_F_S(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countFE_FS_ByG_F_S(groupId, folderId, status);
+		return getFinder().countFE_ByG_F_S(groupId, folderId, status);
 	}
 
 	public static int filterCountF_FE_FS_ByG_F_S(long groupId, long folderId,
@@ -42,9 +42,9 @@ public class DLFolderFinderUtil {
 			mimeTypes, includeMountFolders);
 	}
 
-	public static int filterCountFE_FS_ByG_F_S(long groupId, long folderId,
+	public static int filterCountFE_ByG_F_S(long groupId, long folderId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().filterCountFE_FS_ByG_F_S(groupId, folderId, status);
+		return getFinder().filterCountFE_ByG_F_S(groupId, folderId, status);
 	}
 
 	public static java.util.List<java.lang.Object> filterFindF_FE_FS_ByG_F_S(

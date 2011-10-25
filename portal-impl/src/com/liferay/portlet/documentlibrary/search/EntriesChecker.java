@@ -61,7 +61,9 @@ public class EntriesChecker extends RowChecker {
 	}
 
 	@Override
-	public String getRowCheckBox(boolean checked, String primaryKey) {
+	public String getRowCheckBox(
+		boolean checked, boolean disabled, String primaryKey) {
+
 		DLFileShortcut dlFileShortcut = null;
 		FileEntry fileEntry = null;
 		Folder folder = null;
@@ -167,7 +169,7 @@ public class EntriesChecker extends RowChecker {
 		String checkBoxRowIds = sb.toString();
 
 		return getRowCheckBox(
-			checked,
+			checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "Checkbox",
 			primaryKey,

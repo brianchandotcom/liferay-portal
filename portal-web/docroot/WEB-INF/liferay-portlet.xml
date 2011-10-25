@@ -1810,6 +1810,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/layouts_admin/css/main.jsp</header-portlet-css>
+		<header-portlet-css>/html/portlet/sites_admin/css/main.jsp</header-portlet-css>
 		<css-class-wrapper>portlet-communities</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>

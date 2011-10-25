@@ -48,6 +48,12 @@ if (tabs2.equals("current")) {
 	emptyResultsMessage ="no-organization-was-found-that-is-a-member-of-this-site";
 }
 
+Organization groupOrganization = null;
+
+if (group.isOrganization()) {
+	groupOrganization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+}
+
 OrganizationSearch organizationSearch = new OrganizationSearch(renderRequest, viewOrganizationsURL);
 
 organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
@@ -186,6 +192,12 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<div class="separator"><!-- --></div>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
+			<c:if test='<%= tabs2.equals("current") && groupOrganization != null %>'>
+				<div class="organizations-msg-info portlet-msg">
+					<liferay-ui:message key="this-site-belongs-to-x-which-is-an-organization-of-type-x" arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" />
+				</div>
+			</c:if>
+
 			<c:if test="<%= total > organizationSearch.getDelta() %>">
 				<%= formButton %>
 			</c:if>

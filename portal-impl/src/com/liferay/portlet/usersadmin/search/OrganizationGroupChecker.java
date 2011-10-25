@@ -41,12 +41,25 @@ public class OrganizationGroupChecker extends RowChecker {
 		Organization organization = (Organization)obj;
 
 		try {
-			return OrganizationLocalServiceUtil.hasGroupOrganization(
-				_group.getGroupId(), organization.getOrganizationId());
+			return (OrganizationLocalServiceUtil.hasGroupOrganization(
+				_group.getGroupId(), organization.getOrganizationId()) ||
+				_group.getOrganizationId() == organization.getOrganizationId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		Organization organization = (Organization)obj;
+
+		if (_group.getOrganizationId() == organization.getOrganizationId()) {
+			return true;
+		}
+		else {
 			return false;
 		}
 	}

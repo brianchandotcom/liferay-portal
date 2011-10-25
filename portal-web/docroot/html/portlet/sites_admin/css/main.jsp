@@ -25,3 +25,11 @@
 		font-weight: normal;
 	}
 }
+
+.portlet-communities {
+	.organizations-msg-info {
+		background-color: #FEFEFE;
+		background-image: url(<%= themeImagesPath %>/common/organization_icon.png);
+		border-color: #BBB;
+	}
+}

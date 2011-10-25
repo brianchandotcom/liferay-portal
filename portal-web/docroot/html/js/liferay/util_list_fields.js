@@ -45,7 +45,7 @@ AUI().add(
 					function(item, index, collection) {
 						var val = item.val();
 
-						if (val && item.get('name') != except && item.get('checked')) {
+						if (val && item.get('name') != except && item.get('checked') && !item.get('disabled')) {
 							buffer.push(val);
 						}
 					}
@@ -101,7 +101,7 @@ AUI().add(
 					function(item, index, collection) {
 						var val = item.val();
 
-						if (val && item.get('name') != except && !item.get('checked')) {
+						if (val && item.get('name') != except && !item.get('checked') && !item.get('disabled')) {
 							buffer.push(val);
 						}
 					}

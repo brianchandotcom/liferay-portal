@@ -92,10 +92,12 @@ public class RowChecker {
 		return _formName;
 	}
 
-	public String getRowCheckBox(boolean checked, String primaryKey) {
+	public String getRowCheckBox(
+		boolean checked, boolean disabled, String primaryKey) {
+
 		return getRowCheckBox(
-			checked, _rowIds, primaryKey, "'" + _rowIds + "'",
-			"'" + _allRowIds + "'", StringPool.BLANK);
+			checked, disabled, _rowIds, primaryKey, "'" + _rowIds + "'", 
+			_allRowIds, StringPool.BLANK);
 	}
 
 	public String getRowId() {
@@ -111,6 +113,10 @@ public class RowChecker {
 	}
 
 	public boolean isChecked(Object obj) {
+		return false;
+	}
+
+	public boolean isDisabled(Object obj) {
 		return false;
 	}
 
@@ -156,8 +162,9 @@ public class RowChecker {
 	}
 
 	protected String getRowCheckBox(
-		boolean checked, String name, String value, String checkBoxRowIds,
-		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+		boolean checked, boolean disabled, String name, String value,
+		String checkBoxRowIds, String checkBoxAllRowIds,
+		String checkBoxPostOnClick) {
 
 		StringBundler sb = new StringBundler();
 
@@ -165,6 +172,10 @@ public class RowChecker {
 
 		if (checked) {
 			sb.append("checked ");
+		}
+
+		if (disabled) {
+			sb.append("disabled ");
 		}
 
 		sb.append("name=\"");

@@ -1292,13 +1292,15 @@ AUI().add(
 						else {
 							var errorText;
 
+							var disableMessageTimeout = false;
+
 							if (exception.indexOf('DuplicateTagException') > -1) {
 								errorText = Liferay.Language.get('that-tag-already-exists');
 							}
-							else if ((exception.indexOf('TagNameException') > -1) ||
-									 (exception.indexOf('AssetTagException') > -1)) {
+							else if ((exception.indexOf('AssetTagException') > -1)) {
+								errorText = Liferay.Language.get('tag-name-cannot-be-empty-string-or-contain-characters-such-as') + '<br>' + exception.substr(exception.lastIndexOf(':') + 1);
 
-								errorText = Liferay.Language.get('one-of-your-fields-contains-invalid-characters');
+								disableMessageTimeout = true;
 							}
 							else if (exception.indexOf('auth.PrincipalException') > -1) {
 								errorText = Liferay.Language.get('you-do-not-have-permission-to-access-the-requested-resource');
@@ -1307,7 +1309,7 @@ AUI().add(
 								errorText = Liferay.Language.get('your-request-failed-to-complete');
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_ERROR, errorText);
+							instance._sendMessage(MESSAGE_TYPE_ERROR, errorText, disableMessageTimeout);
 						}
 					},
 
@@ -1469,7 +1471,7 @@ AUI().add(
 						return tag;
 					},
 
-					_sendMessage: function(type, message) {
+					_sendMessage: function(type, message, disableMessageTimeout) {
 						var instance = this;
 
 						var output = instance._portletMessageContainer;
@@ -1481,7 +1483,9 @@ AUI().add(
 
 						output.show();
 
-						instance._hideMessageTask();
+						if(!disableMessageTimeout) {
+							instance._hideMessageTask();
+						}
 					},
 
 					_showTagPanel: function(action) {

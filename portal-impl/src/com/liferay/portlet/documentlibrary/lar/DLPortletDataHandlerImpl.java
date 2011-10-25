@@ -1234,8 +1234,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
-			(DLFolder)folder, fileEntryTypeIds, defaultFileEntryTypeId,
-			serviceContext);
+			(DLFolder)folder.getModel(), fileEntryTypeIds,
+			defaultFileEntryTypeId, serviceContext);
 	}
 
 	protected static void importMetaData(

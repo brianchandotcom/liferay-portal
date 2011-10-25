@@ -99,6 +99,16 @@ public class HtmlImpl implements Html {
 					replacement = "&#187;";
 
 					break;
+
+				case '\u2013':
+					replacement = "&#x2013;";
+
+					break;
+
+				case '\u2014':
+					replacement = "&#x2014;";
+
+					break;
 			}
 
 			if (replacement != null) {

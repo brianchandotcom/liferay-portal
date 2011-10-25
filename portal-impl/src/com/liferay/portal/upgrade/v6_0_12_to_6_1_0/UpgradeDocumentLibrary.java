@@ -99,8 +99,14 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long fileEntryId = rs.getLong("fileEntryId");
 				long folderId = rs.getLong("folderId");
 
-				runSQL("update DLFileVersion set folderId = " + folderId +
-					" where fileEntryId = " + fileEntryId);
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("update DLFileVersion set folderId = ");
+				sb.append(folderId);
+				sb.append(" where fileEntryId = ");
+				sb.append(fileEntryId);
+
+				runSQL(sb.toString());
 			}
 
 		}

@@ -552,6 +552,12 @@ numberFormat.setMinimumIntegerDigits(2);
 			<c:when test='<%= tabs2.equals("external-services") %>'>
 				<aui:fieldset>
 					<liferay-ui:panel-container extended="<%= true %>" id="adminExternalServicesPanelContainer" persistState="<%= true %>">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminImageMagickConversionPanel" persistState="<%= true %>" title="enabling-imagemagick-provides-document-preview-functionality">
+							<aui:input inlineLabel="right" label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
+
+							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessor.getGlobalSearchPath() %>" />
+						</liferay-ui:panel>
+
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminOpenOfficeConversionPanel" persistState="<%= true %>" title="enabling-openoffice-integration-provides-document-conversion-functionality">
 							<aui:input inlineLabel="right" label="enabled" name="openOfficeEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED) %>" />
 

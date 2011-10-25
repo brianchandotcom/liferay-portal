@@ -75,6 +75,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
+import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -462,6 +463,10 @@ public class EditServerAction extends PortletAction {
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 
+		boolean imageMagickEnabled = ParamUtil.getBoolean(
+			actionRequest, "imageMagickEnabled");
+		String imageMagickPath = ParamUtil.getString(
+			actionRequest, "imageMagickPath");
 		boolean openOfficeEnabled = ParamUtil.getBoolean(
 			actionRequest, "openOfficeEnabled");
 		int openOfficePort = ParamUtil.getInteger(
@@ -469,6 +474,10 @@ public class EditServerAction extends PortletAction {
 		boolean xugglerEnabled = ParamUtil.getBoolean(
 			actionRequest, "xugglerEnabled");
 
+		preferences.setValue(
+			PropsKeys.IMAGEMAGICK_ENABLED, String.valueOf(imageMagickEnabled));
+		preferences.setValue(
+			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, imageMagickPath);
 		preferences.setValue(
 			PropsKeys.OPENOFFICE_SERVER_ENABLED,
 			String.valueOf(openOfficeEnabled));
@@ -478,6 +487,8 @@ public class EditServerAction extends PortletAction {
 			PropsKeys.XUGGLER_ENABLED, String.valueOf(xugglerEnabled));
 
 		preferences.store();
+
+		PDFProcessor.reset();
 	}
 
 	protected void updateFileUploads(

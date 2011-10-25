@@ -508,7 +508,7 @@ public class EditFileEntryAction extends PortletAction {
 		}
 		else {
 			long[] deleteFileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
 
 			for (int i = 0; i < deleteFileEntryIds.length; i++) {
 				DLAppServiceUtil.deleteFileEntry(deleteFileEntryIds[i]);

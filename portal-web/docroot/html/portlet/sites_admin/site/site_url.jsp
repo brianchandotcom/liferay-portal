@@ -100,7 +100,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	<aui:input label="private-pages" name="privateVirtualHost" type="text" value="<%= privateVirtualHost %>">
 		<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
 			function(val, fieldNode, ruleValue) {
-				return (val != A.one('#<portlet:namespace />publicVirtualHost').val());
+				return (!val || val != A.one('#<portlet:namespace />publicVirtualHost').val());
 			}
 		</aui:validator>
 	</aui:input>

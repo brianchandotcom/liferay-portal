@@ -70,6 +70,10 @@ public class ImportLayoutsAction extends PortletAction {
 				groupId, privateLayout, actionRequest.getParameterMap(), file);
 
 			addSuccessMessage(actionRequest, actionResponse);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if ((e instanceof LARFileException) ||
@@ -84,8 +88,6 @@ public class ImportLayoutsAction extends PortletAction {
 					actionRequest, LayoutImportException.class.getName());
 			}
 		}
-
-		setForward(actionRequest, "portlet.layouts_admin.edit_layouts");
 	}
 
 	@Override

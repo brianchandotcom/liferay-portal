@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -96,6 +97,9 @@ public class FacebookConnectAction extends PortletAction {
 			session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
 
 			setFacebookCredentials(session, themeDisplay.getCompanyId(), token);
+		}
+		else {
+			return mapping.findForward(ActionConstants.COMMON_REFERER);
 		}
 
 		if ((session.getAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN) == null) ||

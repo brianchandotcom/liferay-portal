@@ -26,7 +26,7 @@ AUI().add(
 			instance._sections = instance._container.all(SELECTOR_FORM_SECTION);
 
 			if (instance._navigation) {
-				instance._navigation.delegate('click', instance._onClick, 'li a', instance)
+				instance._navigation.delegate('click', instance._onClick, 'li a', instance);
 			}
 
 			if (options.modifiedSections) {
@@ -91,8 +91,7 @@ AUI().add(
 
 					instance._formValidator = formValidator;
 
-					formValidator.on('errorField', instance._updateSectionStatus, instance);
-					formValidator.on('validField', instance._updateSectionStatus, instance);
+					formValidator.on(['errorField', 'validField'], instance._updateSectionStatus, instance);
 				}
 			},
 
@@ -205,28 +204,30 @@ AUI().add(
 			_updateSectionStatus: function() {
 				var instance = this;
 
-				var selectedSectionNode = instance._navigation.one(SELECTOR_LIST_ITEM_SELECTED);
+				var navigation = instance._navigation;
 
-				if (selectedSectionNode) {
-					if (instance._formValidator.hasErrors()) {
-						var hasOwnProperty = Object.prototype.hasOwnProperty;
+				var lis = navigation.all('li');
 
-						var errors = instance._formValidator.errors;
+				lis.removeClass(CSS_SECTION_ERROR);
 
-						for (var item in errors) {
-							if (hasOwnProperty.call(errors, item)) {
-								var section = A.one('#' + item).ancestor(SELECTOR_FORM_SECTION);
+				var formValidator = instance._formValidator;
 
-								if (section && section.hasClass(CSS_SELECTED)) {
-									selectedSectionNode.addClass(CSS_SECTION_ERROR);
+				if (formValidator.hasErrors()) {
+					var selectors = A.Object.keys(formValidator.errors);
 
-									return;
+					A.all('#' + selectors.join(', #')).each(
+						function(item, index, collection) {
+							var section = item.ancestor(SELECTOR_FORM_SECTION);
+
+							if (section) {
+								var navItem = navigation.one('a[href="#' + section.attr('id') + '"]');
+
+								if (navItem) {
+									navItem.ancestor().addClass(CSS_SECTION_ERROR);
 								}
 							}
 						}
-					}
-
-					selectedSectionNode.removeClass(CSS_SECTION_ERROR);
+					);
 				}
 			},
 

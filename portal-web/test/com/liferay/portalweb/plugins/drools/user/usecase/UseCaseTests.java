@@ -48,13 +48,13 @@ public class UseCaseTests extends BaseTests {
 		testSuite.addTestSuite(AddBlogsEntry3TagWCSTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User1_SignInTest.class);
-		testSuite.addTestSuite(User1_ViewBlogsEntry1TagESSD.class);
+		testSuite.addTestSuite(User1_ViewBlogsEntry1TagESSDTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User2_SignInTest.class);
-		testSuite.addTestSuite(User2_ViewBlogsEntry2TagISSD.class);
+		testSuite.addTestSuite(User2_ViewBlogsEntry2TagISSDTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User3_SignInTest.class);
-		testSuite.addTestSuite(User3_ViewBlogsEntry3TagWCSSD.class);
+		testSuite.addTestSuite(User3_ViewBlogsEntry3TagWCSSDTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);

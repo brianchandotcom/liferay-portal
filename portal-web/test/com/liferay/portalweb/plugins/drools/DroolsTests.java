@@ -15,6 +15,7 @@
 package com.liferay.portalweb.plugins.drools;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.plugins.drools.user.UserTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

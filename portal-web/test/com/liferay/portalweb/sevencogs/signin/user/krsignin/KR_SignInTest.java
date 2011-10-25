@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.sevencogs.signin.user.brsignin;
+package com.liferay.portalweb.sevencogs.signin.user.krsignin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BR_SignInTest extends BaseTestCase {
-	public void testBR_SignIn() throws Exception {
+public class KR_SignInTest extends BaseTestCase {
+	public void testKR_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -40,10 +40,10 @@ public class BR_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Login as Bradley"),
+		assertEquals(RuntimeVariables.replace("Login as Kendra."),
 			selenium.getText("xPath=(//a[@class='express_login'])[4]"));
 		selenium.clickAt("xPath=(//a[@class='express_login'])[4]",
-			RuntimeVariables.replace("Login as Bradley"));
+			RuntimeVariables.replace("Login as Kendra."));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='password1']",
 			RuntimeVariables.replace("password"));
@@ -52,10 +52,10 @@ public class BR_SignInTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Bradley Regular"),
+		assertEquals(RuntimeVariables.replace("Kendra Regular"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
-				"You are signed in as Bradley Regular."),
+				"You are signed in as Kendra Regular."),
 			selenium.getText("//div[@id='p_p_id_58_']/div/div/div"));
 	}
 }

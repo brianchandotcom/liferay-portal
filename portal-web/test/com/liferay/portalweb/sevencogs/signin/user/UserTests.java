@@ -16,7 +16,7 @@ package com.liferay.portalweb.sevencogs.signin.user;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.sevencogs.signin.user.basignin.BA_SignInTests;
-import com.liferay.portalweb.sevencogs.signin.user.brsignin.BR_SignInTests;
+import com.liferay.portalweb.sevencogs.signin.user.krsignin.KR_SignInTests;
 import com.liferay.portalweb.sevencogs.signin.user.mwsignin.MW_SignInTests;
 import com.liferay.portalweb.sevencogs.signin.user.rpsignin.RP_SignInTests;
 import com.liferay.portalweb.sevencogs.signin.user.signin.SignInTests;
@@ -33,7 +33,7 @@ public class UserTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(BA_SignInTests.suite());
-		testSuite.addTest(BR_SignInTests.suite());
+		testSuite.addTest(KR_SignInTests.suite());
 		testSuite.addTest(MW_SignInTests.suite());
 		testSuite.addTest(RP_SignInTests.suite());
 		testSuite.addTest(SignInTests.suite());

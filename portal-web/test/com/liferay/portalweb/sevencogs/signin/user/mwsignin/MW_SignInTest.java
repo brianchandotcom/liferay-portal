@@ -40,10 +40,10 @@ public class MW_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Login as michelle"),
+		assertEquals(RuntimeVariables.replace("Login as Michelle."),
 			selenium.getText("xPath=(//a[@class='express_login'])[3]"));
 		selenium.clickAt("xPath=(//a[@class='express_login'])[3]",
-			RuntimeVariables.replace("Login as michelle"));
+			RuntimeVariables.replace("Login as Michelle."));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='password1']",
 			RuntimeVariables.replace("password"));

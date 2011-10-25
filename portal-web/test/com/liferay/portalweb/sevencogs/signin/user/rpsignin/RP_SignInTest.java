@@ -40,10 +40,10 @@ public class RP_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Login as richard"),
+		assertEquals(RuntimeVariables.replace("Login as Richard."),
 			selenium.getText("xPath=(//a[@class='express_login'])[2]"));
 		selenium.clickAt("xPath=(//a[@class='express_login'])[2]",
-			RuntimeVariables.replace("Login as richard"));
+			RuntimeVariables.replace("Login as Richard."));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='password1']",
 			RuntimeVariables.replace("password"));

@@ -16,14 +16,20 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -34,12 +40,15 @@ import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -340,6 +349,50 @@ public class DDMStructureLocalServiceImpl
 			nameMap, descriptionMap, xsd, serviceContext, structure);
 	}
 
+	protected void appendNewStructureRequiredFields(
+		DDMStructure structure, Document templateDoc) {
+
+		try {
+			String xsd = structure.getXsd();
+
+			Document structureDoc = SAXReaderUtil.read(xsd);
+
+			Element templateElement = templateDoc.getRootElement();
+
+			XPath structureXPathSelector = SAXReaderUtil.createXPath(
+				"//dynamic-element" +
+				"[.//meta-data/entry[@name=\"required\"]=\"true\"]");
+
+			List<Node> nodes = structureXPathSelector.selectNodes(structureDoc);
+
+			Iterator<Node> itr = nodes.iterator();
+
+			while (itr.hasNext()) {
+				Element element = (Element)itr.next();
+
+				String name = element.attributeValue("name");
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("//dynamic-element[@name=\"");
+				sb.append(name);
+				sb.append("\"]");
+
+				XPath templateXPathSelector =
+					SAXReaderUtil.createXPath(sb.toString());
+
+				if (!templateXPathSelector.booleanValueOf(templateDoc)) {
+					templateElement.add(element.createCopy());
+				}
+			}
+		}
+		catch (DocumentException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+	}
+
 	protected DDMStructure doUpdateStructure(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String xsd, ServiceContext serviceContext, DDMStructure structure)
@@ -361,7 +414,93 @@ public class DDMStructureLocalServiceImpl
 
 		ddmStructurePersistence.update(structure, false);
 
+		syncStructureTemplatesFields(structure);
+
 		return structure;
+	}
+
+	protected void syncStructureTemplatesFields(DDMStructure structure)
+		throws PortalException, SystemException {
+
+		List<DDMTemplate> templates = ddmTemplateLocalService.getTemplates(
+			structure.getStructureId(),
+			DDMTemplateConstants.TEMPLATE_TYPE_DETAIL);
+
+		try {
+			for (DDMTemplate template : templates) {
+				String script = template.getScript();
+
+				Document templateDoc = SAXReaderUtil.read(script);
+
+				Element templateRootElement = templateDoc.getRootElement();
+
+				syncStructureTemplatesFields(template, templateRootElement);
+
+				appendNewStructureRequiredFields(structure, templateDoc);
+
+				try {
+					script = DDMXMLUtil.formatXML(templateDoc.asXML());
+				}
+				catch (Exception e) {
+					throw new StructureXsdException();
+				}
+
+				template.setScript(script);
+
+				ddmTemplatePersistence.update(template, false);
+			}
+		}
+		catch (DocumentException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+	}
+
+	protected void syncStructureTemplatesFields(
+			DDMTemplate template, Element templateElement)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = template.getStructure();
+
+		List<Element> dynamicElementElements = templateElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String fieldName = dynamicElementElement.attributeValue("name");
+
+			if (!structure.hasField(fieldName)) {
+				templateElement.remove(dynamicElementElement);
+			}
+			else {
+				String mode = template.getMode();
+
+				if (mode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
+					boolean requiredAtStructure = structure.getFieldRequired(
+						fieldName);
+
+					List<Element> metadataElements =
+						dynamicElementElement.elements("meta-data");
+
+					for (Element metadataElement : metadataElements) {
+						for (Element metadataEntryElement :
+								metadataElement.elements()) {
+
+							String attributeName =
+								metadataEntryElement.attributeValue("name");
+
+							if (requiredAtStructure &&
+								attributeName.equals("required")) {
+
+								metadataEntryElement.setText("true");
+							}
+						}
+					}
+				}
+
+				syncStructureTemplatesFields(template, dynamicElementElement);
+			}
+		}
 	}
 
 	protected void validate(List<Element> elements, Set<String> names)
@@ -485,5 +624,8 @@ public class DDMStructureLocalServiceImpl
 			throw new StructureNameException();
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DDMStructureLocalServiceImpl.class);
 
 }

@@ -77,8 +77,42 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateFileVersions();
 		updateThumbnails();
 		//updateSyncs();
+	}
+
+	protected void updateFileVersions() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select fileEntryId, folderId from DLFileEntry");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long fileEntryId = rs.getLong("fileEntryId");
+				long folderId = rs.getLong("folderId");
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("update DLFileVersion set folderId = ");
+				sb.append(folderId);
+				sb.append(" where fileEntryId = ");
+				sb.append(fileEntryId);
+
+				runSQL(sb.toString());
+			}
+
+		}
+		finally {
+			DataAccess.cleanUp(con,ps, rs);
+		}
 	}
 
 	protected void updateSyncs() throws Exception {

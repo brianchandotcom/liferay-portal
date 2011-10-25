@@ -671,7 +671,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
-					fileEntryTypeId);
+				fileEntryTypeId);
 
 		if (dlFileEntryType == null) {
 			return;

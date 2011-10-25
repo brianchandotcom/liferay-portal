@@ -1844,6 +1844,16 @@
 		<render-weight>50</render-weight>
 		<css-class-wrapper>license-manager</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>200</portlet-name>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>true</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<header-portlet-css>/html/portlet/users_stats/css/main.css</header-portlet-css>
+		<css-class-wrapper>portlet-users-stats</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

@@ -53,7 +53,7 @@ public class UserDisplayTag extends TagSupport {
 
 				pageContext.setAttribute("userDisplay", user);
 			}
-			catch (NoSuchUserException usue) {
+			catch (NoSuchUserException nsue) {
 				request.removeAttribute("liferay-ui:user-display:user");
 
 				pageContext.removeAttribute("userDisplay");

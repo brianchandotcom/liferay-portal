@@ -425,6 +425,11 @@ create table MDRRuleGroupInstance (
 	priority INTEGER
 );
 
+alter table PollsVote add companyId LONG;
+alter table PollsVote add userName VARCHAR(75) null;
+alter table PollsVote add createDate DATE null;
+alter table PollsVote add modifiedDate DATE null;
+
 create table Repository (
 	repositoryId LONG not null primary key,
 	groupId LONG,

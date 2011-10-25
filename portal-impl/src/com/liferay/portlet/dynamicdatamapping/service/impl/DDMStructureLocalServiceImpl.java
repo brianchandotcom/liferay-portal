@@ -467,7 +467,12 @@ public class DDMStructureLocalServiceImpl
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
+			String dataType = dynamicElementElement.attributeValue("dataType");
 			String fieldName = dynamicElementElement.attributeValue("name");
+
+			if (Validator.isNull(dataType)) {
+				continue;
+			}
 
 			if (!structure.hasField(fieldName)) {
 				templateElement.remove(dynamicElementElement);

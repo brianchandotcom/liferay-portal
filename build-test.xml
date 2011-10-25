@@ -789,7 +789,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-antisamy" />
-			<param name="test.ant.script.plugin.hooks" value="antisamy" />
+			<param name="test.ant.script.plugin.hooks" value="antisamy-hook" />
 			<param name="test.ant.script.suite" value="PluginsAntisamyTestSuite" />
 		</antcall>
 
@@ -825,8 +825,8 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="plugins-drools-web" />
-			<param name="test.ant.script.plugin.portlet" value="sample-drools-portlet" />
+			<param name="test.ant.script.command" value="plugins-drools" />
+			<param name="test.ant.script.plugin.portlets" value="sample-drools-portlet" />
 			<param name="test.ant.script.plugin.webs" value="drools-web" />
 			<param name="test.ant.script.suite" value="PluginsDroolsWebTestSuite" />
 		</antcall>

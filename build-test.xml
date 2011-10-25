@@ -788,6 +788,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="plugins-antisamy" />
+			<param name="test.ant.script.plugin.hooks" value="antisamy-hook" />
+			<param name="test.ant.script.suite" value="PluginsAntisamyTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-asset-management-system" />
 			<param name="test.ant.script.plugin.portlets" value="ams-portlet" />
 			<param name="test.ant.script.suite" value="PluginsAssetManagementSystemTestSuite" />
@@ -816,6 +822,13 @@
 			<param name="test.ant.script.command" value="plugins-digg" />
 			<param name="test.ant.script.plugin.portlets" value="digg-portlet" />
 			<param name="test.ant.script.suite" value="PluginsDiggTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="plugins-drools" />
+			<param name="test.ant.script.plugin.portlets" value="sample-drools-portlet" />
+			<param name="test.ant.script.plugin.webs" value="drools-web" />
+			<param name="test.ant.script.suite" value="PluginsDroolsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

@@ -19,12 +19,18 @@
 <%
 String emailAddress1 = ParamUtil.getString(request, "emailAddress1");
 String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
+
+String referer = ParamUtil.get(request, WebKeys.REFERER, PortalUtil.getCurrentURL(request));
+
+if (referer.equals(themeDisplay.getPathMain() + "/portal/update_email_address")) {
+	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
+}
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_email_address" %>' method="post" name="fm">
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value='<%= themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId() %>' />
+	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value='<%= referer %>' />
 
 	<c:choose>
 		<c:when test="<%= SessionErrors.contains(request, DuplicateUserEmailAddressException.class.getName()) %>">

@@ -15,9 +15,33 @@ AUI().add(
 
 		var CSS_TAGS_LIST = 'lfr-tags-selector-list';
 
-		var INVALID_CHARACTERS = '&\'@\\]}:,=>/<\n[{%|+#?"\r;/*~';
-
-		var MAP_INVALID_CHARACTERS = {};
+		var MAP_INVALID_CHARACTERS = {
+			'&': 1,
+			'\'': 1,
+			'@': 1,
+			'\\': 1,
+			']': 1,
+			'}': 1,
+			':': 1,
+			',': 1,
+			'=': 1,
+			'>': 1,
+			'/': 1,
+			'<': 1,
+			'\n': 1,
+			'[': 1,
+			'{': 1,
+			'%': 1,
+			'|': 1,
+			'+': 1,
+			'#': 1,
+			'?': 1,
+			'"': 1,
+			'\r': 1,
+			';': 1,
+			'*': 1,
+			'~': 1
+		};
 
 		var TPL_CHECKED = ' checked="checked" ';
 
@@ -30,10 +54,6 @@ AUI().add(
 		var TPL_URL_SUGGESTIONS = 'http://search.yahooapis.com/ContentAnalysisService/V1/termExtraction?appid=YahooDemo&output=json&context={context}';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
-
-		for (var i = 0; i < INVALID_CHARACTERS.length; i++) {
-			MAP_INVALID_CHARACTERS[INVALID_CHARACTERS.charCodeAt(i)] = true;
-		}
 
 		/**
 		 * OPTIONS
@@ -396,7 +416,14 @@ AUI().add(
 					_onKeyPress: function(event) {
 						var instance = this;
 
-						if (MAP_INVALID_CHARACTERS[event.charCode]) {
+						var charCode = event.charCode;
+
+						if (charCode == '44') {
+							instance._onAddEntryClick();
+
+							event.preventDefault();
+						}
+						else if (MAP_INVALID_CHARACTERS[String.fromCharCode(charCode)]) {
 							event.halt();
 						}
 					},

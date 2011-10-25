@@ -414,6 +414,32 @@ public class StringUtil {
 		return merge(col.toArray(new Object[col.size()]), delimiter);
 	}
 
+	public static String merge(char[] array) {
+		return merge(array, StringPool.COMMA);
+	}
+
+	public static String merge(char[] array, String delimiter) {
+		if (array == null) {
+			return null;
+		}
+
+		if (array.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
+
+		for (int i = 0; i < array.length; i++) {
+			sb.append(String.valueOf(array[i]).trim());
+
+			if ((i + 1) != array.length) {
+				sb.append(delimiter);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static String merge(double[] array) {
 		return merge(array, StringPool.COMMA);
 	}

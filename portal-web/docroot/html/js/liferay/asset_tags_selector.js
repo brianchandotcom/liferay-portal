@@ -39,7 +39,6 @@ AUI().add(
 			'"': 1,
 			'\r': 1,
 			';': 1,
-			'/': 1,
 			'*': 1,
 			'~': 1
 		};
@@ -420,11 +419,11 @@ AUI().add(
 						var charCode = event.charCode;
 
 						if (charCode == '44') {
-                        	instance._onAddEntryClick();
+							instance._onAddEntryClick();
 
-                            event.preventDefault();
-                        }
-                        else if (MAP_INVALID_CHARACTERS[String.fromCharCode(charCode)]) {
+							event.preventDefault();
+						}
+						else if (MAP_INVALID_CHARACTERS[String.fromCharCode(charCode)]) {
 							event.halt();
 						}
 					},

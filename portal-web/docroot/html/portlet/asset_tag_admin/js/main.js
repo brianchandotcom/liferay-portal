@@ -1292,15 +1292,18 @@ AUI().add(
 						else {
 							var errorText;
 
-							var disableMessageTimeout = false;
+							var autoHide = true;
 
 							if (exception.indexOf('DuplicateTagException') > -1) {
 								errorText = Liferay.Language.get('that-tag-already-exists');
 							}
 							else if ((exception.indexOf('AssetTagException') > -1)) {
-								errorText = Liferay.Language.get('tag-name-cannot-be-empty-string-or-contain-characters-such-as') + '<br>' + exception.substr(exception.lastIndexOf(':') + 1);
+								errorText = Lang.sub(
+									Liferay.Language.get('tag-names-cannot-be-empty-string-or-contain-characters-such-as-x'),
+									['<br />' + exception.substr(exception.lastIndexOf(':') + 1)]
+								);
 
-								disableMessageTimeout = true;
+								autoHide = false;
 							}
 							else if (exception.indexOf('auth.PrincipalException') > -1) {
 								errorText = Liferay.Language.get('you-do-not-have-permission-to-access-the-requested-resource');
@@ -1309,7 +1312,7 @@ AUI().add(
 								errorText = Liferay.Language.get('your-request-failed-to-complete');
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_ERROR, errorText, disableMessageTimeout);
+							instance._sendMessage(MESSAGE_TYPE_ERROR, errorText, autoHide);
 						}
 					},
 
@@ -1471,7 +1474,7 @@ AUI().add(
 						return tag;
 					},
 
-					_sendMessage: function(type, message, disableMessageTimeout) {
+					_sendMessage: function(type, message, autoHide) {
 						var instance = this;
 
 						var output = instance._portletMessageContainer;
@@ -1483,7 +1486,7 @@ AUI().add(
 
 						output.show();
 
-						if(!disableMessageTimeout) {
+						if(autoHide !== false) {
 							instance._hideMessageTask();
 						}
 					},

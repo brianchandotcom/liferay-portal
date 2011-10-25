@@ -98,32 +98,19 @@ public interface OrganizationModel extends BaseModel<Organization> {
 	public void setParentOrganizationId(long parentOrganizationId);
 
 	/**
-	 * Returns the left organization ID of this organization.
+	 * Returns the tree path of this organization.
 	 *
-	 * @return the left organization ID of this organization
+	 * @return the tree path of this organization
 	 */
-	public long getLeftOrganizationId();
+	@AutoEscape
+	public String getTreePath();
 
 	/**
-	 * Sets the left organization ID of this organization.
+	 * Sets the tree path of this organization.
 	 *
-	 * @param leftOrganizationId the left organization ID of this organization
+	 * @param treePath the tree path of this organization
 	 */
-	public void setLeftOrganizationId(long leftOrganizationId);
-
-	/**
-	 * Returns the right organization ID of this organization.
-	 *
-	 * @return the right organization ID of this organization
-	 */
-	public long getRightOrganizationId();
-
-	/**
-	 * Sets the right organization ID of this organization.
-	 *
-	 * @param rightOrganizationId the right organization ID of this organization
-	 */
-	public void setRightOrganizationId(long rightOrganizationId);
+	public void setTreePath(String treePath);
 
 	/**
 	 * Returns the name of this organization.

@@ -350,8 +350,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			FinderCacheUtil.clearCache(OrganizationModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
 		}
 
-		shrinkTree(organization);
-
 		Session session = null;
 
 		try {
@@ -393,16 +391,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		boolean isNew = organization.isNew();
 
 		OrganizationModelImpl organizationModelImpl = (OrganizationModelImpl)organization;
-
-		if (isNew) {
-			expandTree(organization);
-		}
-		else {
-			if (organization.getParentOrganizationId() != organizationModelImpl.getOriginalParentOrganizationId()) {
-				shrinkTree(organization);
-				expandTree(organization);
-			}
-		}
 
 		Session session = null;
 
@@ -539,8 +527,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		organizationImpl.setOrganizationId(organization.getOrganizationId());
 		organizationImpl.setCompanyId(organization.getCompanyId());
 		organizationImpl.setParentOrganizationId(organization.getParentOrganizationId());
-		organizationImpl.setLeftOrganizationId(organization.getLeftOrganizationId());
-		organizationImpl.setRightOrganizationId(organization.getRightOrganizationId());
+		organizationImpl.setTreePath(organization.getTreePath());
 		organizationImpl.setName(organization.getName());
 		organizationImpl.setType(organization.getType());
 		organizationImpl.setRecursable(organization.isRecursable());
@@ -4356,190 +4343,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	/**
-	 * Rebuilds the organizations tree for the scope using the modified pre-order tree traversal algorithm.
-	 *
-	 * <p>
-	 * Only call this method if the tree has become stale through operations other than normal CRUD. Under normal circumstances the tree is automatically rebuilt whenver necessary.
-	 * </p>
-	 *
-	 * @param companyId the ID of the scope
-	 * @param force whether to force the rebuild even if the tree is not stale
-	 */
-	public void rebuildTree(long companyId, boolean force)
-		throws SystemException {
-		if (force || (countOrphanTreeNodes(companyId) > 0)) {
-			rebuildTree(companyId, 0, 1);
-
-			CacheRegistryUtil.clear(OrganizationImpl.class.getName());
-			EntityCacheUtil.clearCache(OrganizationImpl.class.getName());
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-	}
-
-	protected long countOrphanTreeNodes(long companyId)
-		throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(
-					"SELECT COUNT(*) AS COUNT_VALUE FROM Organization_ WHERE companyId = ? AND (leftOrganizationId = 0 OR leftOrganizationId IS NULL OR rightOrganizationId = 0 OR rightOrganizationId IS NULL)");
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-
-			return (Long)q.uniqueResult();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected void expandTree(Organization organization)
-		throws SystemException {
-		long companyId = organization.getCompanyId();
-
-		long lastRightOrganizationId = getLastRightOrganizationId(companyId,
-				organization.getParentOrganizationId());
-
-		long leftOrganizationId = 2;
-		long rightOrganizationId = 3;
-
-		if (lastRightOrganizationId > 0) {
-			leftOrganizationId = lastRightOrganizationId + 1;
-			rightOrganizationId = lastRightOrganizationId + 2;
-
-			expandTreeLeftOrganizationId.expand(companyId,
-				lastRightOrganizationId);
-			expandTreeRightOrganizationId.expand(companyId,
-				lastRightOrganizationId);
-
-			CacheRegistryUtil.clear(OrganizationImpl.class.getName());
-			EntityCacheUtil.clearCache(OrganizationImpl.class.getName());
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-
-		organization.setLeftOrganizationId(leftOrganizationId);
-		organization.setRightOrganizationId(rightOrganizationId);
-	}
-
-	protected long getLastRightOrganizationId(long companyId,
-		long parentOrganizationId) throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(
-					"SELECT rightOrganizationId FROM Organization_ WHERE (companyId = ?) AND (parentOrganizationId = ?) ORDER BY rightOrganizationId DESC");
-
-			q.addScalar("rightOrganizationId",
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(parentOrganizationId);
-
-			List<Long> list = (List<Long>)QueryUtil.list(q, getDialect(), 0, 1);
-
-			if (list.isEmpty()) {
-				if (parentOrganizationId > 0) {
-					session.clear();
-
-					Organization parentOrganization = findByPrimaryKey(parentOrganizationId);
-
-					return parentOrganization.getLeftOrganizationId();
-				}
-
-				return 0;
-			}
-			else {
-				return list.get(0);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected long rebuildTree(long companyId, long parentOrganizationId,
-		long leftOrganizationId) throws SystemException {
-		List<Long> organizationIds = null;
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(
-					"SELECT organizationId FROM Organization_ WHERE companyId = ? AND parentOrganizationId = ? ORDER BY organizationId ASC");
-
-			q.addScalar("organizationId",
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(parentOrganizationId);
-
-			organizationIds = q.list();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		long rightOrganizationId = leftOrganizationId + 1;
-
-		for (long organizationId : organizationIds) {
-			rightOrganizationId = rebuildTree(companyId, organizationId,
-					rightOrganizationId);
-		}
-
-		if (parentOrganizationId > 0) {
-			updateTree.update(parentOrganizationId, leftOrganizationId,
-				rightOrganizationId);
-		}
-
-		return rightOrganizationId + 1;
-	}
-
-	protected void shrinkTree(Organization organization) {
-		long companyId = organization.getCompanyId();
-
-		long leftOrganizationId = organization.getLeftOrganizationId();
-		long rightOrganizationId = organization.getRightOrganizationId();
-
-		long delta = (rightOrganizationId - leftOrganizationId) + 1;
-
-		shrinkTreeLeftOrganizationId.shrink(companyId, rightOrganizationId,
-			delta);
-		shrinkTreeRightOrganizationId.shrink(companyId, rightOrganizationId,
-			delta);
-
-		CacheRegistryUtil.clear(OrganizationImpl.class.getName());
-		EntityCacheUtil.clearCache(OrganizationImpl.class.getName());
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-	}
-
-	/**
 	 * Initializes the organization persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -4574,12 +4377,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		addUser = new AddUser(this);
 		clearUsers = new ClearUsers(this);
 		removeUser = new RemoveUser(this);
-
-		expandTreeLeftOrganizationId = new ExpandTreeLeftOrganizationId();
-		expandTreeRightOrganizationId = new ExpandTreeRightOrganizationId();
-		shrinkTreeLeftOrganizationId = new ShrinkTreeLeftOrganizationId();
-		shrinkTreeRightOrganizationId = new ShrinkTreeRightOrganizationId();
-		updateTree = new UpdateTree();
 	}
 
 	public void destroy() {
@@ -5059,96 +4856,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		private SqlUpdate _sqlUpdate;
 		private OrganizationPersistenceImpl _persistenceImpl;
-	}
-
-	protected ExpandTreeLeftOrganizationId expandTreeLeftOrganizationId;
-	protected ExpandTreeRightOrganizationId expandTreeRightOrganizationId;
-	protected ShrinkTreeLeftOrganizationId shrinkTreeLeftOrganizationId;
-	protected ShrinkTreeRightOrganizationId shrinkTreeRightOrganizationId;
-	protected UpdateTree updateTree;
-
-	protected class ExpandTreeLeftOrganizationId {
-		protected ExpandTreeLeftOrganizationId() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"UPDATE Organization_ SET leftOrganizationId = (leftOrganizationId + 2) WHERE (companyId = ?) AND (leftOrganizationId > ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void expand(long companyId, long leftOrganizationId) {
-			_sqlUpdate.update(new Object[] { companyId, leftOrganizationId });
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ExpandTreeRightOrganizationId {
-		protected ExpandTreeRightOrganizationId() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"UPDATE Organization_ SET rightOrganizationId = (rightOrganizationId + 2) WHERE (companyId = ?) AND (rightOrganizationId > ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void expand(long companyId, long rightOrganizationId) {
-			_sqlUpdate.update(new Object[] { companyId, rightOrganizationId });
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ShrinkTreeLeftOrganizationId {
-		protected ShrinkTreeLeftOrganizationId() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"UPDATE Organization_ SET leftOrganizationId = (leftOrganizationId - ?) WHERE (companyId = ?) AND (leftOrganizationId > ?)",
-					new int[] {
-						java.sql.Types.BIGINT, java.sql.Types.BIGINT,
-						java.sql.Types.BIGINT
-					});
-		}
-
-		protected void shrink(long companyId, long leftOrganizationId,
-			long delta) {
-			_sqlUpdate.update(new Object[] { delta, companyId, leftOrganizationId });
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ShrinkTreeRightOrganizationId {
-		protected ShrinkTreeRightOrganizationId() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"UPDATE Organization_ SET rightOrganizationId = (rightOrganizationId - ?) WHERE (companyId = ?) AND (rightOrganizationId > ?)",
-					new int[] {
-						java.sql.Types.BIGINT, java.sql.Types.BIGINT,
-						java.sql.Types.BIGINT
-					});
-		}
-
-		protected void shrink(long companyId, long rightOrganizationId,
-			long delta) {
-			_sqlUpdate.update(new Object[] { delta, companyId, rightOrganizationId });
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class UpdateTree {
-		protected UpdateTree() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"UPDATE Organization_ SET leftOrganizationId = ?, rightOrganizationId = ? WHERE organizationId = ?",
-					new int[] {
-						java.sql.Types.BIGINT, java.sql.Types.BIGINT,
-						java.sql.Types.BIGINT
-					});
-		}
-
-		protected void update(long organizationId, long leftOrganizationId,
-			long rightOrganizationId) {
-			_sqlUpdate.update(new Object[] {
-					leftOrganizationId, rightOrganizationId, organizationId
-				});
-		}
-
-		private SqlUpdate _sqlUpdate;
 	}
 
 	private static final String _SQL_SELECT_ORGANIZATION = "SELECT organization FROM Organization organization";

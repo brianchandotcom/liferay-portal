@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -653,19 +654,19 @@ public class UserFinderImpl
 			}
 		}
 		else if (key.equals("usersOrgsTree")) {
-			Long[][] leftAndRightOrganizationIds = (Long[][])value;
+			List<Organization> organizationsTree = (List<Organization>)value;
 
-			if (leftAndRightOrganizationIds.length > 0) {
-				StringBundler sb = new StringBundler(
-					leftAndRightOrganizationIds.length * 2 + 1);
+			int size = organizationsTree.size();
+
+			if (size > 0) {
+				StringBundler sb = new StringBundler(size * 2 + 1);
 
 				sb.append("WHERE (");
 
-				for (int i = 0; i < leftAndRightOrganizationIds.length; i++) {
-					sb.append(
-						"(Organization_.leftOrganizationId BETWEEN ? AND ?) ");
+				for (int i = 0; i < size; i++) {
+					sb.append("(Organization_.treePath LIKE ?) ");
 
-					if ((i + 1) < leftAndRightOrganizationIds.length) {
+					if ((i + 1) < size) {
 						sb.append("OR ");
 					}
 				}
@@ -739,7 +740,25 @@ public class UserFinderImpl
 
 			Object value = entry.getValue();
 
-			if (value instanceof Long) {
+			if (key.equals("usersOrgsTree")) {
+				List<Organization> organizationsTree =
+					(List<Organization>)value;
+
+				if (!organizationsTree.isEmpty()) {
+					for (Organization organization : organizationsTree) {
+						StringBundler treePath = new StringBundler(5);
+
+						treePath.append(StringPool.PERCENT);
+						treePath.append(StringPool.SLASH);
+						treePath.append(organization.getOrganizationId());
+						treePath.append(StringPool.SLASH);
+						treePath.append(StringPool.PERCENT);
+
+						qPos.add(treePath.toString());
+					}
+				}
+			}
+			else if (value instanceof Long) {
 				Long valueLong = (Long)value;
 
 				if (Validator.isNotNull(valueLong)) {
@@ -749,9 +768,9 @@ public class UserFinderImpl
 			else if (value instanceof Long[]) {
 				Long[] valueArray = (Long[])value;
 
-				for (int i = 0; i < valueArray.length; i++) {
-					if (Validator.isNotNull(valueArray[i])) {
-						qPos.add(valueArray[i]);
+				for (Long element : valueArray) {
+					if (Validator.isNotNull(element)) {
+						qPos.add(element);
 					}
 				}
 			}
@@ -774,9 +793,9 @@ public class UserFinderImpl
 			else if (value instanceof String[]) {
 				String[] valueArray = (String[])value;
 
-				for (int i = 0; i < valueArray.length; i++) {
-					if (Validator.isNotNull(valueArray[i])) {
-						qPos.add(valueArray[i]);
+				for (String element : valueArray) {
+					if (Validator.isNotNull(element)) {
+						qPos.add(element);
 					}
 				}
 			}

@@ -70,9 +70,9 @@ public class OrganizationPersistenceTest extends BasePersistenceTestCase {
 
 		newOrganization.setCompanyId(nextLong());
 
-		newOrganization.setLeftOrganizationId(nextLong());
+		newOrganization.setParentOrganizationId(nextLong());
 
-		newOrganization.setRightOrganizationId(nextLong());
+		newOrganization.setTreePath(randomString());
 
 		newOrganization.setName(randomString());
 
@@ -98,10 +98,8 @@ public class OrganizationPersistenceTest extends BasePersistenceTestCase {
 			newOrganization.getCompanyId());
 		assertEquals(existingOrganization.getParentOrganizationId(),
 			newOrganization.getParentOrganizationId());
-		assertEquals(existingOrganization.getLeftOrganizationId(),
-			newOrganization.getLeftOrganizationId());
-		assertEquals(existingOrganization.getRightOrganizationId(),
-			newOrganization.getRightOrganizationId());
+		assertEquals(existingOrganization.getTreePath(),
+			newOrganization.getTreePath());
 		assertEquals(existingOrganization.getName(), newOrganization.getName());
 		assertEquals(existingOrganization.getType(), newOrganization.getType());
 		assertEquals(existingOrganization.getRecursable(),
@@ -245,9 +243,9 @@ public class OrganizationPersistenceTest extends BasePersistenceTestCase {
 
 		organization.setCompanyId(nextLong());
 
-		organization.setLeftOrganizationId(nextLong());
+		organization.setParentOrganizationId(nextLong());
 
-		organization.setRightOrganizationId(nextLong());
+		organization.setTreePath(randomString());
 
 		organization.setName(randomString());
 

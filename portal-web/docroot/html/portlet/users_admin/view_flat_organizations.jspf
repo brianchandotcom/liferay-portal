@@ -30,12 +30,8 @@
 
 	LinkedHashMap organizationParams = new LinkedHashMap();
 
-	Long[][] leftAndRightOrganizationIds = null;
-
 	if (filterManageableOrganizations) {
-		leftAndRightOrganizationIds = UsersAdminUtil.getLeftAndRightOrganizationIds(user.getOrganizations());
-
-		organizationParams.put("organizationsTree", leftAndRightOrganizationIds);
+		organizationParams.put("organizationsTree", user.getOrganizations());
 	}
 
 	long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);

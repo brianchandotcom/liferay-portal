@@ -50,9 +50,7 @@ if (Validator.isNotNull(target)) {
 			LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 			if (filterManageableOrganizations) {
-				Long[][] leftAndRightOrganizationIds = UsersAdminUtil.getLeftAndRightOrganizationIds(user.getOrganizations());
-
-				organizationParams.put("organizationsTree", leftAndRightOrganizationIds);
+				organizationParams.put("organizationsTree", user.getOrganizations());
 			}
 
 			if (searchTerms.isAdvancedSearch()) {

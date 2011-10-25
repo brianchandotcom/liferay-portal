@@ -425,6 +425,10 @@ create table MDRRuleGroupInstance (
 	priority INTEGER
 );
 
+alter table Organization_ drop column leftOrganizationId;
+alter table Organization_ drop column rightOrganizationId;
+alter table Organization_ add treePath STRING null;
+
 create table Repository (
 	repositoryId LONG not null primary key,
 	groupId LONG,

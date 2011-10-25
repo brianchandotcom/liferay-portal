@@ -285,6 +285,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated Replaced by {@link #getOrganizations(long, long, int, int)}
 	 */
+	@Deprecated
 	public List<Organization> getManageableOrganizations(
 			String actionId, int max)
 		throws PortalException, SystemException {
@@ -305,10 +306,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			organizationLocalService.getUserOrganizations(
 				permissionChecker.getUserId());
 
-		Long[][] leftAndRightOrganizationIds =
-			UsersAdminUtil.getLeftAndRightOrganizationIds(userOrganizations);
-
-		params.put("organizationsTree", leftAndRightOrganizationIds);
+		params.put("organizationsTree", userOrganizations);
 
 		List<Organization> manageableOrganizations =
 			organizationLocalService.search(

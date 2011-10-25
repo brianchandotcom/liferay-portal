@@ -440,8 +440,9 @@
 		<field name="organizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="parentOrganizationId" type="long" />
-		<field name="leftOrganizationId" type="long" />
-		<field name="rightOrganizationId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="name" type="String">
 			<hint name="display-width">150</hint>
 			<hint name="max-length">100</hint>

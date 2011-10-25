@@ -52,9 +52,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 		userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
 	}
 	else if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin()) {
-		Long[][] leftAndRightOrganizationIds = UsersAdminUtil.getLeftAndRightOrganizationIds(user.getOrganizations());
-
-		userParams.put("usersOrgsTree", leftAndRightOrganizationIds);
+		userParams.put("usersOrgsTree", user.getOrganizations());
 	}
 	%>
 

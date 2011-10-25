@@ -33,8 +33,7 @@ public class OrganizationSoap implements Serializable {
 		soapModel.setOrganizationId(model.getOrganizationId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setParentOrganizationId(model.getParentOrganizationId());
-		soapModel.setLeftOrganizationId(model.getLeftOrganizationId());
-		soapModel.setRightOrganizationId(model.getRightOrganizationId());
+		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
 		soapModel.setRecursable(model.getRecursable());
@@ -118,20 +117,12 @@ public class OrganizationSoap implements Serializable {
 		_parentOrganizationId = parentOrganizationId;
 	}
 
-	public long getLeftOrganizationId() {
-		return _leftOrganizationId;
+	public String getTreePath() {
+		return _treePath;
 	}
 
-	public void setLeftOrganizationId(long leftOrganizationId) {
-		_leftOrganizationId = leftOrganizationId;
-	}
-
-	public long getRightOrganizationId() {
-		return _rightOrganizationId;
-	}
-
-	public void setRightOrganizationId(long rightOrganizationId) {
-		_rightOrganizationId = rightOrganizationId;
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	public String getName() {
@@ -197,8 +188,7 @@ public class OrganizationSoap implements Serializable {
 	private long _organizationId;
 	private long _companyId;
 	private long _parentOrganizationId;
-	private long _leftOrganizationId;
-	private long _rightOrganizationId;
+	private String _treePath;
 	private String _name;
 	private String _type;
 	private boolean _recursable;

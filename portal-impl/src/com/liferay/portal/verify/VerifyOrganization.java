@@ -27,7 +27,7 @@ public class VerifyOrganization extends VerifyProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
-			OrganizationLocalServiceUtil.rebuildTree(companyId, false);
+			OrganizationLocalServiceUtil.rebuildTree(companyId);
 		}
 	}
 

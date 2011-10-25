@@ -1154,22 +1154,19 @@ public class OrganizationFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_ROLES);
 		}
 		else if (key.equals("organizationsTree")) {
-			Long[][] leftAndRightOrganizationIds = (Long[][])value;
+			List<Organization> organizationsTree = (List<Organization>)value;
 
-			if (leftAndRightOrganizationIds.length == 0) {
-				join = "WHERE ((Organization_.organizationId = -1) )";
-			}
-			else if (leftAndRightOrganizationIds.length > 0) {
-				StringBundler sb = new StringBundler(
-					leftAndRightOrganizationIds.length * 2 + 1);
+			int size = organizationsTree.size();
+
+			if (!organizationsTree.isEmpty()) {
+				StringBundler sb = new StringBundler(size * 2 + 1);
 
 				sb.append("WHERE (");
 
-				for (int i = 0; i < leftAndRightOrganizationIds.length; i++) {
-					sb.append(
-						"(Organization_.leftOrganizationId BETWEEN ? AND ?) ");
+				for (int i = 0; i < size; i++) {
+					sb.append("(Organization_.treePath LIKE ?) ");
 
-					if ((i + 1) < leftAndRightOrganizationIds.length) {
+					if ((i + 1) < size) {
 						sb.append("OR ");
 					}
 				}
@@ -1222,7 +1219,25 @@ public class OrganizationFinderImpl
 
 			Object value = entry.getValue();
 
-			if (value instanceof Long) {
+			if (key.equals("organizationsTree")) {
+				List<Organization> organizationsTree =
+					(List<Organization>)value;
+
+				if (!organizationsTree.isEmpty()) {
+					for (Organization organization : organizationsTree) {
+						StringBundler treePath = new StringBundler(5);
+
+						treePath.append(StringPool.PERCENT);
+						treePath.append(StringPool.SLASH);
+						treePath.append(organization.getOrganizationId());
+						treePath.append(StringPool.SLASH);
+						treePath.append(StringPool.PERCENT);
+
+						qPos.add(treePath.toString());
+					}
+				}
+			}
+			else if (value instanceof Long) {
 				Long valueLong = (Long)value;
 
 				if (Validator.isNotNull(valueLong)) {
@@ -1232,9 +1247,9 @@ public class OrganizationFinderImpl
 			else if (value instanceof Long[]) {
 				Long[] valueArray = (Long[])value;
 
-				for (int i = 0; i < valueArray.length; i++) {
-					if (Validator.isNotNull(valueArray[i])) {
-						qPos.add(valueArray[i]);
+				for (Long element : valueArray) {
+					if (Validator.isNotNull(element)) {
+						qPos.add(element);
 					}
 				}
 			}

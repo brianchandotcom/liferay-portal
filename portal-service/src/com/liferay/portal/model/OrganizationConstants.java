@@ -14,6 +14,11 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -27,5 +32,29 @@ public class OrganizationConstants {
 
 	public static final String TYPE_REGULAR_ORGANIZATION =
 		"regular-organization";
+
+	public static StringBundler buildTreePath(Organization organization)
+		throws PortalException, SystemException {
+
+		return buildTreePath(new StringBundler(), organization);
+	}
+
+	public static StringBundler buildTreePath(
+			StringBundler sb, Organization organization)
+		throws PortalException, SystemException {
+
+		if (organization == null) {
+			sb.append(StringPool.SLASH);
+
+			return sb;
+		}
+
+		buildTreePath(sb, organization.getParentOrganization());
+
+		sb.append(organization.getOrganizationId());
+		sb.append(StringPool.SLASH);
+
+		return sb;
+	}
 
 }

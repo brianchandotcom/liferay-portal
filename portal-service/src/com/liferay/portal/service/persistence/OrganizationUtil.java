@@ -1498,21 +1498,6 @@ public class OrganizationUtil {
 		getPersistence().setUsers(pk, users);
 	}
 
-	/**
-	* Rebuilds the organizations tree for the scope using the modified pre-order tree traversal algorithm.
-	*
-	* <p>
-	* Only call this method if the tree has become stale through operations other than normal CRUD. Under normal circumstances the tree is automatically rebuilt whenver necessary.
-	* </p>
-	*
-	* @param companyId the ID of the scope
-	* @param force whether to force the rebuild even if the tree is not stale
-	*/
-	public static void rebuildTree(long companyId, boolean force)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().rebuildTree(companyId, force);
-	}
-
 	public static OrganizationPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (OrganizationPersistence)PortalBeanLocatorUtil.locate(OrganizationPersistence.class.getName());

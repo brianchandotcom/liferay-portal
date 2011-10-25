@@ -75,9 +75,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		LinkedHashMap userParams = new LinkedHashMap();
 
 		if (filterManageableOrganizations) {
-			Long[][] leftAndRightOrganizationIds = UsersAdminUtil.getLeftAndRightOrganizationIds(user.getOrganizations());
-
-			userParams.put("usersOrgsTree", leftAndRightOrganizationIds);
+			userParams.put("usersOrgsTree", user.getOrganizations());
 		}
 
 		if (tabs2.equals("current")) {

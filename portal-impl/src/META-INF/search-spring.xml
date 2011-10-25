@@ -139,6 +139,7 @@
 				<entry key="structureId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="tag" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="templateId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="treePath" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="type" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="userName" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key=".*_ar" value-ref="org.apache.lucene.analysis.ar.ArabicAnalyzer" />

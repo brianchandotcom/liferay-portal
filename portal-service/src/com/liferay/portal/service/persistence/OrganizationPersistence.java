@@ -1202,19 +1202,6 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		java.util.List<com.liferay.portal.model.User> users)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* Rebuilds the organizations tree for the scope using the modified pre-order tree traversal algorithm.
-	*
-	* <p>
-	* Only call this method if the tree has become stale through operations other than normal CRUD. Under normal circumstances the tree is automatically rebuilt whenver necessary.
-	* </p>
-	*
-	* @param companyId the ID of the scope
-	* @param force whether to force the rebuild even if the tree is not stale
-	*/
-	public void rebuildTree(long companyId, boolean force)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public Organization remove(Organization organization)
 		throws SystemException;
 }

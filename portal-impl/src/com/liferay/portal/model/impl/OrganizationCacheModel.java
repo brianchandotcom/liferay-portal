@@ -32,7 +32,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{organizationId=");
 		sb.append(organizationId);
@@ -40,10 +40,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		sb.append(companyId);
 		sb.append(", parentOrganizationId=");
 		sb.append(parentOrganizationId);
-		sb.append(", leftOrganizationId=");
-		sb.append(leftOrganizationId);
-		sb.append(", rightOrganizationId=");
-		sb.append(rightOrganizationId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", type=");
@@ -69,8 +67,13 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		organizationImpl.setOrganizationId(organizationId);
 		organizationImpl.setCompanyId(companyId);
 		organizationImpl.setParentOrganizationId(parentOrganizationId);
-		organizationImpl.setLeftOrganizationId(leftOrganizationId);
-		organizationImpl.setRightOrganizationId(rightOrganizationId);
+
+		if (treePath == null) {
+			organizationImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			organizationImpl.setTreePath(treePath);
+		}
 
 		if (name == null) {
 			organizationImpl.setName(StringPool.BLANK);
@@ -106,8 +109,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public long organizationId;
 	public long companyId;
 	public long parentOrganizationId;
-	public long leftOrganizationId;
-	public long rightOrganizationId;
+	public String treePath;
 	public String name;
 	public String type;
 	public boolean recursable;

@@ -537,8 +537,7 @@
 			<id name="organizationId" />
 			<basic name="companyId" />
 			<basic name="parentOrganizationId" />
-			<basic name="leftOrganizationId" />
-			<basic name="rightOrganizationId" />
+			<basic name="treePath" />
 			<basic name="name" />
 			<basic name="type">
 				<column name="TYPE_" />

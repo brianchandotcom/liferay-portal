@@ -33,21 +33,19 @@ if (organization != null) {
 
 LinkedHashMap organizationParams = new LinkedHashMap();
 
-Long[][] leftAndRightOrganizationIds = null;
+List<Organization> organizations = new ArrayList<Organization>();
 
 if (filterManageableOrganizations) {
-	leftAndRightOrganizationIds = UsersAdminUtil.getLeftAndRightOrganizationIds(user.getOrganizations());
+	organizations.addAll(user.getOrganizations());
 }
 
 if (organizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
-	Long[][] leftAndRightParentOrganizationIds = UsersAdminUtil.getLeftAndRightOrganizationIds(organizationId);
+	organizations.clear();
 
-	leftAndRightOrganizationIds = _filterSuborganizations(leftAndRightOrganizationIds, leftAndRightParentOrganizationIds);
+	organizations.add(OrganizationLocalServiceUtil.getOrganization(organizationId));
 }
 
-if (leftAndRightOrganizationIds != null) {
-	organizationParams.put("organizationsTree", leftAndRightOrganizationIds);
-}
+organizationParams.put("organizationsTree", organizations);
 
 int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
 %>

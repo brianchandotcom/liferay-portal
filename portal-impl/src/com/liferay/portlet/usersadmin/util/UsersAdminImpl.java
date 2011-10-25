@@ -501,42 +501,6 @@ public class UsersAdminImpl implements UsersAdmin {
 		return orderByComparator;
 	}
 
-	public Long[][] getLeftAndRightOrganizationIds(long organizationId)
-		throws PortalException, SystemException {
-
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(organizationId);
-
-		return getLeftAndRightOrganizationIds(organization);
-	}
-
-	public Long[][] getLeftAndRightOrganizationIds(Organization organization) {
-		return new Long[][] {
-			new Long[] {
-				organization.getLeftOrganizationId(),
-				organization.getRightOrganizationId()
-			}
-		};
-	}
-
-	public Long[][] getLeftAndRightOrganizationIds(
-		List<Organization> organizations) {
-
-		Long[][] leftAndRightOrganizationIds = new Long[organizations.size()][];
-
-		for (int i = 0; i < organizations.size(); i++) {
-			Organization organization = organizations.get(i);
-
-			leftAndRightOrganizationIds[i] =
-				new Long[] {
-					organization.getLeftOrganizationId(),
-					organization.getRightOrganizationId()
-				};
-		}
-
-		return leftAndRightOrganizationIds;
-	}
-
 	public Long[] getOrganizationIds(List<Organization> organizations) {
 		if ((organizations == null) || organizations.isEmpty()) {
 			return new Long[0];

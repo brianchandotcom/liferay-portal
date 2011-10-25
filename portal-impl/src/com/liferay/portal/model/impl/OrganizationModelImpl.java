@@ -62,8 +62,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "organizationId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "parentOrganizationId", Types.BIGINT },
-			{ "leftOrganizationId", Types.BIGINT },
-			{ "rightOrganizationId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "recursable", Types.BOOLEAN },
@@ -72,7 +71,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "statusId", Types.INTEGER },
 			{ "comments", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Organization_ (organizationId LONG not null primary key,companyId LONG,parentOrganizationId LONG,leftOrganizationId LONG,rightOrganizationId LONG,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table Organization_ (organizationId LONG not null primary key,companyId LONG,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 	public static final String ORDER_BY_JPQL = " ORDER BY organization.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Organization_.name ASC";
@@ -104,8 +103,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		model.setOrganizationId(soapModel.getOrganizationId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setParentOrganizationId(soapModel.getParentOrganizationId());
-		model.setLeftOrganizationId(soapModel.getLeftOrganizationId());
-		model.setRightOrganizationId(soapModel.getRightOrganizationId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
 		model.setRecursable(soapModel.getRecursable());
@@ -231,21 +229,17 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	@JSON
-	public long getLeftOrganizationId() {
-		return _leftOrganizationId;
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
 	}
 
-	public void setLeftOrganizationId(long leftOrganizationId) {
-		_leftOrganizationId = leftOrganizationId;
-	}
-
-	@JSON
-	public long getRightOrganizationId() {
-		return _rightOrganizationId;
-	}
-
-	public void setRightOrganizationId(long rightOrganizationId) {
-		_rightOrganizationId = rightOrganizationId;
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -377,8 +371,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationImpl.setOrganizationId(getOrganizationId());
 		organizationImpl.setCompanyId(getCompanyId());
 		organizationImpl.setParentOrganizationId(getParentOrganizationId());
-		organizationImpl.setLeftOrganizationId(getLeftOrganizationId());
-		organizationImpl.setRightOrganizationId(getRightOrganizationId());
+		organizationImpl.setTreePath(getTreePath());
 		organizationImpl.setName(getName());
 		organizationImpl.setType(getType());
 		organizationImpl.setRecursable(getRecursable());
@@ -461,9 +454,13 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		organizationCacheModel.parentOrganizationId = getParentOrganizationId();
 
-		organizationCacheModel.leftOrganizationId = getLeftOrganizationId();
+		organizationCacheModel.treePath = getTreePath();
 
-		organizationCacheModel.rightOrganizationId = getRightOrganizationId();
+		String treePath = organizationCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			organizationCacheModel.treePath = null;
+		}
 
 		organizationCacheModel.name = getName();
 
@@ -502,7 +499,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{organizationId=");
 		sb.append(getOrganizationId());
@@ -510,10 +507,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		sb.append(getCompanyId());
 		sb.append(", parentOrganizationId=");
 		sb.append(getParentOrganizationId());
-		sb.append(", leftOrganizationId=");
-		sb.append(getLeftOrganizationId());
-		sb.append(", rightOrganizationId=");
-		sb.append(getRightOrganizationId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", type=");
@@ -534,7 +529,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Organization");
@@ -553,12 +548,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		sb.append(getParentOrganizationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>leftOrganizationId</column-name><column-value><![CDATA[");
-		sb.append(getLeftOrganizationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rightOrganizationId</column-name><column-value><![CDATA[");
-		sb.append(getRightOrganizationId());
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -605,8 +596,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private long _parentOrganizationId;
 	private long _originalParentOrganizationId;
 	private boolean _setOriginalParentOrganizationId;
-	private long _leftOrganizationId;
-	private long _rightOrganizationId;
+	private String _treePath;
 	private String _name;
 	private String _originalName;
 	private String _type;

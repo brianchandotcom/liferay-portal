@@ -133,24 +133,6 @@ public class UsersAdminUtil {
 			orderByCol, orderByType);
 	}
 
-	public static Long[][] getLeftAndRightOrganizationIds(long organizationId)
-		throws PortalException, SystemException {
-
-		return getUsersAdmin().getLeftAndRightOrganizationIds(organizationId);
-	}
-
-	public static Long[][] getLeftAndRightOrganizationIds(
-		Organization organization) {
-
-		return getUsersAdmin().getLeftAndRightOrganizationIds(organization);
-	}
-
-	public static Long[][] getLeftAndRightOrganizationIds(
-		List<Organization> organizations) {
-
-		return getUsersAdmin().getLeftAndRightOrganizationIds(organizations);
-	}
-
 	public static Long[] getOrganizationIds(List<Organization> organizations) {
 		return getUsersAdmin().getOrganizationIds(organizations);
 	}

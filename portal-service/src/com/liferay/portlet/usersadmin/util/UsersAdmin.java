@@ -91,14 +91,6 @@ public interface UsersAdmin {
 	public OrderByComparator getGroupOrderByComparator(
 		String orderByCol, String orderByType);
 
-	public Long[][] getLeftAndRightOrganizationIds(long organizationId)
-		throws PortalException, SystemException;
-
-	public Long[][] getLeftAndRightOrganizationIds(Organization organization);
-
-	public Long[][] getLeftAndRightOrganizationIds(
-		List<Organization> organizations);
-
 	public Long[] getOrganizationIds(List<Organization> organizations);
 
 	public OrderByComparator getOrganizationOrderByComparator(

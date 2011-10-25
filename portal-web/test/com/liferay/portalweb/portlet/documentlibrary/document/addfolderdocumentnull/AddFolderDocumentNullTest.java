@@ -43,11 +43,11 @@ public class AddFolderDocumentNullTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +55,7 @@ public class AddFolderDocumentNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -67,7 +67,7 @@ public class AddFolderDocumentNullTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
@@ -101,12 +101,27 @@ public class AddFolderDocumentNullTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_title']", RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//label[@class='aui-form-validator-stack-error']/div")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"Please enter a file with a valid file name."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"You must specify a file or a title."),
+			selenium.getText(
+				"//label[@class='aui-form-validator-stack-error']/div"));
 	}
 }

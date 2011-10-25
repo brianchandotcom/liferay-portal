@@ -55,8 +55,9 @@ public class AddDLSubfolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//span[3]/span/span/ul/li/strong/a/span")) {
+				if (RuntimeVariables.replace("DL Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -66,9 +67,11 @@ public class AddDLSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

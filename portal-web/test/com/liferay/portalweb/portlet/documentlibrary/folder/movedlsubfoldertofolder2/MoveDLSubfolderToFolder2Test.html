@@ -36,7 +36,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DL Subfolder Name</td>
+	<td>DL Folder1 Subfolder Name</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -81,12 +81,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[@id='_20_folderName']</td>
-	<td>DL Folder1 Name</td>
+	<td>Documents Home</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='folder-title']</td>
-	<td>DL Subfolder Name</td>
+	<td>DL Folder1 Subfolder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -105,13 +105,8 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Documents Home</td>
-	<td>Documents Home</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Documents Home</td>
-	<td>Documents Home</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>DL Folder2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -148,6 +143,7 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

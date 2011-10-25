@@ -24,6 +24,16 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
+	<td>iconViewNotSelected</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${iconViewNotSelected}</td>
+	<td>IconViewSelected</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
@@ -31,7 +41,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
-	<td></td>
+	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -41,12 +51,17 @@
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('//div[1]/a/span[1]/img'))</td>
-	<td>dmlDocumentPresent</td>
+	<td>dlDocumentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${dmlDocumentPresent}</td>
-	<td>DMLDocumentNotPresent</td>
+	<td>!${dlDocumentPresent}</td>
+	<td>DLDocumentNotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -95,14 +110,20 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>DMLDocumentNotPresent</td>
+	<td>DLDocumentNotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no documents or media files in this folder.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents in this folder.</td>
+	<td>There are no documents or media files in this folder.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

@@ -95,6 +95,8 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("20",
+			selenium.getSelectedLabel("//select[@id='_86_entriesPerPage']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -116,22 +118,22 @@ public class ConfigurePortletFoldersPerPage20Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder3 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
-		assertEquals(RuntimeVariables.replace("DML Folder4 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder4 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
-		assertEquals(RuntimeVariables.replace("DML Folder5 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder5 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
-		assertEquals(RuntimeVariables.replace("DML Folder6 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder6 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[6]"));
 	}

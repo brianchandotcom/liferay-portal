@@ -55,9 +55,9 @@ public class AddDLFolderImage3Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DL Folder Image1 Title")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
-								"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"))) {
+								"//li[@class='folder selected']/a/span[2]"))) {
 					break;
 				}
 			}
@@ -67,9 +67,11 @@ public class AddDLFolderImage3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -141,15 +143,15 @@ public class AddDLFolderImage3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DL Folder Image3 Title"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image3 Description"),
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (21.9k)"),
+		assertEquals(RuntimeVariables.replace("Download (14.0k)"),
 			selenium.getText("//span[@class='download-document']"));
-		assertEquals(RuntimeVariables.replace("Content Type image/png"),
+		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
 			selenium.getText("//div[2]/div[2]/div/div[2]/div[2]/div"));
 	}
 }

@@ -72,20 +72,20 @@ public class AddFolder3Test extends BaseTestCase {
 			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("DML Folder3 Name"));
+			RuntimeVariables.replace("DL Folder3 Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder3 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder3 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
 	}

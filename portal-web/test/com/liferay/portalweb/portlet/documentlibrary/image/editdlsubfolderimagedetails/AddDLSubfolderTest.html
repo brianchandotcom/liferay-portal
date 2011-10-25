@@ -34,18 +34,23 @@
 	<td>DL Folder Name</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
-	<td>Add</td>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>

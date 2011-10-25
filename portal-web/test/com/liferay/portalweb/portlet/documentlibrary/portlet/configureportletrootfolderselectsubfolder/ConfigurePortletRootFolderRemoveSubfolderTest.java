@@ -97,7 +97,7 @@ public class ConfigurePortletRootFolderRemoveSubfolderTest extends BaseTestCase 
 			}
 
 			try {
-				if (!RuntimeVariables.replace("DML Subfolder Name")
+				if (!RuntimeVariables.replace("DL Subfolder Name")
 										 .equals(selenium.getText(
 								"//a[@id='_86_rootFolderName']"))) {
 					break;
@@ -138,13 +138,13 @@ public class ConfigurePortletRootFolderRemoveSubfolderTest extends BaseTestCase 
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isElementPresent(
 				"//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -152,7 +152,7 @@ public class ConfigurePortletRootFolderRemoveSubfolderTest extends BaseTestCase 
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a[2]"))) {
 					break;
@@ -164,9 +164,9 @@ public class ConfigurePortletRootFolderRemoveSubfolderTest extends BaseTestCase 
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
-		assertEquals(RuntimeVariables.replace("DML Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

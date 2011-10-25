@@ -43,14 +43,14 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder2 Name Edit"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name Edit"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
-			RuntimeVariables.replace("DML Folder1 Name"));
+			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,7 +58,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder1 Name")
+				if (RuntimeVariables.replace("DL Folder1 Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a[2]"))) {
 					break;
@@ -70,13 +70,13 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder1 Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder1 Subfolder Name"));
+			RuntimeVariables.replace("DL Folder1 Subfolder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -84,7 +84,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder1 Subfolder Name")
+				if (RuntimeVariables.replace("DL Folder1 Subfolder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -96,21 +96,20 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder1 Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace(
-				"DML Folder1 Subfolder Document Title Edit"),
+				"DL Folder1 Subfolder Document Title Edit"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace(
-				"DML Folder1 Subfolder Document Title Edit"));
+			RuntimeVariables.replace("DL Folder1 Subfolder Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"DML Folder1 Subfolder Document Title Edit"),
+				"DL Folder1 Subfolder Document Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace(
-				"DML Folder1 Subfolder Document Description Edit"),
+				"DL Folder1 Subfolder Document Description Edit"),
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Download (0.5k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
@@ -135,11 +134,11 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder2 Name Edit"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name Edit"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
-			RuntimeVariables.replace("DML Folder2 Name Edit"));
+			RuntimeVariables.replace("DL Folder2 Name Edit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -147,7 +146,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder2 Name Edit")
+				if (RuntimeVariables.replace("DL Folder2 Name Edit")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a[2]"))) {
 					break;
@@ -159,9 +158,9 @@ public class AssertImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder2 Name Edit"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name Edit"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
-		assertEquals(RuntimeVariables.replace("DML Folder2 Subfolder Name Edit"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Subfolder Name Edit"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

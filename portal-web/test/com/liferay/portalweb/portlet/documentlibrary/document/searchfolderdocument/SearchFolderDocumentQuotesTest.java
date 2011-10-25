@@ -44,7 +44,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_keywords']",
-			RuntimeVariables.replace("\"DML Folder Document Title\""));
+			RuntimeVariables.replace("\"DL Folder Document Title\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
@@ -65,9 +65,9 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Searched for \"DML Folder Document Title\" in every folder."),
+				"Searched for \"DL Folder Document Title\" in every folder."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
@@ -92,7 +92,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_keywords']",
-			RuntimeVariables.replace("\"DML Folder Document Title 1\""));
+			RuntimeVariables.replace("\"DL Folder Document Title 1\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
@@ -113,10 +113,10 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Searched for \"DML Folder Document Title 1\" in every folder."),
+				"Searched for \"DL Folder Document Title 1\" in every folder."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		assertFalse(selenium.isElementPresent("link=DML Folder Document Title"));
+		assertFalse(selenium.isElementPresent("link=DL Folder Document Title"));
 	}
 }

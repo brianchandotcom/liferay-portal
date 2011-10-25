@@ -101,6 +101,6 @@ public class DeleteFolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent("DML Folder Name"));
+		assertFalse(selenium.isTextPresent("DL Folder Name"));
 	}
 }

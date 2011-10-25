@@ -49,6 +49,16 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
+
+				boolean iconViewNotSelected = selenium.isElementPresent(
+						"//button[contains(@class,'item-focused') and @title='Icon View']");
+
+				if (iconViewNotSelected) {
+					label = 2;
+
+					continue;
+				}
+
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
 
@@ -71,15 +81,16 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 			case 2:
 
-				boolean dmlDocumentPresent = selenium.isElementPresent(
+				boolean dlDocumentPresent = selenium.isElementPresent(
 						"//div[1]/a/span[1]/img");
 
-				if (!dmlDocumentPresent) {
+				if (!dlDocumentPresent) {
 					label = 3;
 
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertFalse(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
@@ -119,8 +130,26 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 
 			case 3:
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-info']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace(
-						"There are no documents in this folder."),
+						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 100:

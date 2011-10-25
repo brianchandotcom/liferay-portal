@@ -56,7 +56,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"There are no documents in this folder.")
+							"There are no documents or media files in this folder.")
 										.equals(selenium.getText(
 								"//div[@class='portlet-msg-info']"))) {
 					break;
@@ -69,9 +69,9 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"There are no documents in this folder."),
+				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("DL Subfolder Name"));
+		assertFalse(selenium.isTextPresent("DL Folder1 Subfolder Name"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -105,7 +105,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DL Subfolder Name")
+				if (RuntimeVariables.replace("DL Folder1 Subfolder Name")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -117,7 +117,7 @@ public class ViewMoveDLSubfolderToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

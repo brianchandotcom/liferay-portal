@@ -26,22 +26,22 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DML Folder Name</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DML Folder Name</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//li[@class='folder selected']/a</td>
-	<td>DML Folder Name</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//li[@class='folder selected']/a</td>
-	<td>DML Folder Name</td>
+	<td>DL Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -79,21 +79,20 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>waitForVisible</td>
+	<td>//label[@class='aui-form-validator-stack-error']/div</td>
+	<td>You must specify a file or a title.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Please enter a file with a valid file name.</td>
+	<td>//label[@class='aui-form-validator-stack-error']/div</td>
+	<td>You must specify a file or a title.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

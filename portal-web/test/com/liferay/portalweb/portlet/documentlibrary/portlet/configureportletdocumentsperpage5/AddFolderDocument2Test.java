@@ -43,11 +43,11 @@ public class AddFolderDocument2Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +55,7 @@ public class AddFolderDocument2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -67,7 +67,7 @@ public class AddFolderDocument2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
@@ -101,9 +101,9 @@ public class AddFolderDocument2Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_document.txt"));
 		selenium.type("//input[@id='_20_title']",
-			RuntimeVariables.replace("DML Folder Document2 Title"));
+			RuntimeVariables.replace("DL Folder Document2 Title"));
 		selenium.type("//textarea[@id='_20_description']",
-			RuntimeVariables.replace("DML Folder Document2 Description"));
+			RuntimeVariables.replace("DL Folder Document2 Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -127,10 +127,10 @@ public class AddFolderDocument2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document1 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document1 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DML Folder Document2 Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document2 Title"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 	}

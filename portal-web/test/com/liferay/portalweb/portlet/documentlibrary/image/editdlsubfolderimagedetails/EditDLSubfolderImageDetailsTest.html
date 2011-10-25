@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[1]</td>
+	<td>//button[2]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//button[1]</td>
+	<td>//button[2]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -94,7 +94,12 @@
 	<td>DL Subfolder Image Title Edit</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
+	<td>Liferay Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
 	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
 	<td>Liferay Image</td>
 </tr>

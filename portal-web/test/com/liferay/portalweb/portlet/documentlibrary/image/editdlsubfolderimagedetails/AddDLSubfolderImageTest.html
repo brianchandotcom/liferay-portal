@@ -45,17 +45,22 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents in this folder.</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Subfolder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>DL Subfolder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -119,7 +124,7 @@
 	<td>DL Subfolder Image Title</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
 	<td>Liferay Image</td>
 </tr>
@@ -143,6 +148,7 @@
 	<td>//div[2]/div[2]/div/div[2]/div[2]/div</td>
 	<td>Content Type image/jpeg</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

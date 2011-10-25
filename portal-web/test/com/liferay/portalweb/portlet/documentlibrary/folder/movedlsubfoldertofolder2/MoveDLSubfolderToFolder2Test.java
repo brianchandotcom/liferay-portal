@@ -55,7 +55,7 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DL Subfolder Name")
+				if (RuntimeVariables.replace("DL Folder1 Subfolder Name")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -74,8 +74,8 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 		assertTrue(selenium.isChecked(
 				"//form/div[1]/div/div/span[1]/span/span/input[2]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[2]/ul/li/strong/a/span"));
-		selenium.clickAt("//span[2]/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -101,9 +101,9 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//a[@id='_20_folderName']"));
-		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
 			selenium.getText("//span[@class='folder-title']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
@@ -116,7 +116,7 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Documents Home")) {
+				if (selenium.isVisible("//tr[4]/td[1]/a")) {
 					break;
 				}
 			}
@@ -126,9 +126,6 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Documents Home",
-			RuntimeVariables.replace("Documents Home"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",

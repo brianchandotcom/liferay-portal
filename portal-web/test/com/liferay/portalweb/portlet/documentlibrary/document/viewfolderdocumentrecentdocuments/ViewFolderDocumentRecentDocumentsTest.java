@@ -55,7 +55,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document Title")
+				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -67,7 +67,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//button[@title='List View']",
@@ -79,9 +79,9 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
-								"//a/span/span"))) {
+								"//tr[3]/td[2]/span/a/span"))) {
 					break;
 				}
 			}
@@ -91,31 +91,8 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
-			selenium.getText("//a/span/span"));
-		selenium.clickAt("//a/span/span",
-			RuntimeVariables.replace("DML Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DML Folder Document Title")
-										.equals(selenium.getText(
-								"//tr[3]/td[2]/a/span/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//tr[3]/td[2]/a/span/span"));
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+			selenium.getText("//tr[3]/td[2]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("0.5k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("0"),
@@ -129,7 +106,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document Title")
+				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -141,7 +118,7 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

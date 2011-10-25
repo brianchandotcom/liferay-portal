@@ -170,7 +170,7 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -182,11 +182,11 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -194,7 +194,7 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//span[@id='_20_breadcrumb']/ul/li[2]/span/a"))) {
 					break;
@@ -232,9 +232,9 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document Title")
+				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
-								"//tr[3]/td[2]/a/span/span"))) {
+								"//tr[3]/td[2]/span/a/span"))) {
 					break;
 				}
 			}
@@ -244,8 +244,8 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
-			selenium.getText("//tr[3]/td[2]/a/span/span"));
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+			selenium.getText("//tr[3]/td[2]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("0.5k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("0"),
@@ -259,7 +259,7 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document Title")
+				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -271,7 +271,7 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

@@ -24,13 +24,18 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[3]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -94,6 +99,11 @@
 	<td>DL Document Title</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='document-info']/h2</td>
+	<td>DL Document Title</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='document-info']/h2</td>
 	<td>DL Document Title</td>
@@ -108,6 +118,7 @@
 	<td>//span[@class='download-document']/span/a/span</td>
 	<td>Download (0.5k)</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

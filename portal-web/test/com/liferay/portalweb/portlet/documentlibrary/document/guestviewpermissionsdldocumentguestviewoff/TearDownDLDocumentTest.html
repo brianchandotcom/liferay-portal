@@ -24,204 +24,104 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span[2]/span/ul/li/strong/a'))</td>
-	<td>document1Present</td>
+	<td>storeElementPresent</td>
+	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
+	<td>iconViewNotSelected</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${document1Present}</td>
-	<td>Document1NotPresent</td>
+	<td>${iconViewNotSelected}</td>
+	<td>IconViewSelected</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[2]/span/ul/li/strong/a</td>
-	<td>Actions</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
+	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Document1NotPresent</td>
+	<td>IconViewSelected</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span[2]/span/ul/li/strong/a'))</td>
-	<td>document2Present</td>
+	<td>eval(selenium.isElementPresent('//div[1]/a/span[1]/img'))</td>
+	<td>dlDocumentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${document2Present}</td>
-	<td>Document2NotPresent</td>
+	<td>!${dlDocumentPresent}</td>
+	<td>DLDocumentNotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Check Box</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[2]/span/ul/li/strong/a</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Check Box</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Check Box</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete the selected entries?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Document2NotPresent</td>
+	<td>DLDocumentNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span[2]/span/ul/li/strong/a'))</td>
-	<td>document3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${document3Present}</td>
-	<td>Document3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/span/ul/li/strong/a</td>
-	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no documents or media files in this folder.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Document3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span[2]/span/ul/li/strong/a'))</td>
-	<td>document4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${document4Present}</td>
-	<td>Document4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/span/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Document4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//span[2]/span/ul/li/strong/a'))</td>
-	<td>document5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${document5Present}</td>
-	<td>Document5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/span/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Document5NotPresent</td>
-	<td></td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no documents or media files in this folder.</td>
 </tr>
 
 </tbody></table>

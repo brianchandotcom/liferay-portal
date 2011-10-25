@@ -44,11 +44,11 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder1 Name"));
+			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -56,7 +56,7 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder1 Document Title")
+				if (RuntimeVariables.replace("DL Folder1 Document Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -102,33 +102,12 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("Documents Home"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=folder");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Documents Home"),
-			selenium.getText("//span/a"));
-		selenium.clickAt("//span/a", RuntimeVariables.replace("Documents Home"));
-		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -155,7 +134,7 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder2 Name")
+				if (RuntimeVariables.replace("DL Folder2 Name")
 										.equals(selenium.getText(
 								"//a[@id='_20_folderName']"))) {
 					break;
@@ -167,7 +146,7 @@ public class MoveFolderDocumentCommentToFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));

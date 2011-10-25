@@ -159,11 +159,11 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder Name"));
+			RuntimeVariables.replace("DL Folder Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -171,7 +171,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Name")
+				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
 								"//span[@id='_20_breadcrumb']/ul/li[2]/span/a"))) {
 					break;
@@ -225,7 +225,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertFalse(selenium.isTextPresent("DML Folder Document Title"));
+		assertFalse(selenium.isTextPresent("DL Folder Document Title"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
 
@@ -235,7 +235,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder Document Title")
+				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
 								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
 					break;
@@ -247,7 +247,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

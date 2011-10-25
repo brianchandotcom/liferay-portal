@@ -30,7 +30,7 @@ public class MoveDLSubfolderToFolder2Tests extends BaseTests {
 		testSuite.addTestSuite(AddPageDLTest.class);
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddDLFolder1Test.class);
-		testSuite.addTestSuite(AddDLSubfolderTest.class);
+		testSuite.addTestSuite(AddDLFolder1SubfolderTest.class);
 		testSuite.addTestSuite(AddDLFolder2Test.class);
 		testSuite.addTestSuite(MoveDLSubfolderToFolder2Test.class);
 		testSuite.addTestSuite(ViewMoveDLSubfolderToFolder2Test.class);

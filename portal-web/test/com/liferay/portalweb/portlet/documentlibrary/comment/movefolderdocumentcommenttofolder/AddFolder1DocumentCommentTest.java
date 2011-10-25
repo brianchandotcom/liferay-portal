@@ -43,11 +43,11 @@ public class AddFolder1DocumentCommentTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder1 Name"));
+			RuntimeVariables.replace("DL Folder1 Name"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +55,7 @@ public class AddFolder1DocumentCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DML Folder1 Name")
+				if (RuntimeVariables.replace("DL Folder1 Name")
 										.equals(selenium.getText(
 								"//li[@class='folder selected']/a"))) {
 					break;
@@ -67,13 +67,13 @@ public class AddFolder1DocumentCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("DML Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
-		assertEquals(RuntimeVariables.replace("DML Folder1 Document Title"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DML Folder1 Document Title"));
+			RuntimeVariables.replace("DL Folder1 Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText("//fieldset/div/a"));
@@ -97,7 +97,7 @@ public class AddFolder1DocumentCommentTest extends BaseTestCase {
 		}
 
 		selenium.type("//textarea[@name='_20_postReplyBody0']",
-			RuntimeVariables.replace("DML Folder1 Document Comment"));
+			RuntimeVariables.replace("DL Folder1 Document Comment"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
@@ -122,7 +122,7 @@ public class AddFolder1DocumentCommentTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DML Folder1 Document Comment"),
+		assertEquals(RuntimeVariables.replace("DL Folder1 Document Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

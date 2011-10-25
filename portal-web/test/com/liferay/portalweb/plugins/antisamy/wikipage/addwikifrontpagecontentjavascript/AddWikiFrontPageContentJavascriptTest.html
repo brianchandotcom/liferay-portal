@@ -4,7 +4,10 @@
 <title>AddWikiFrontPageContentJavascriptTest</title>
 </head>
 <body>
-<table cellpadding="1" cellspacing="1" border="1"><thead><tr><td rowspan="1" colspan="3">AddWikiFrontPageContentJavascriptTest</td></tr></thead><tbody>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddWikiFrontPageContentJavascriptTest</td></tr>
+</thead><tbody>
 <tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
@@ -41,24 +44,34 @@
 	<td>IFrame</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>selectAndWait</td>
 	<td>//select[@id='_36_format']</td>
 	<td>HTML</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td></td>
 	<td>You may lose some formatting when switching from Creole to HTML. Do you want to continue?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='cke_48_label']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//span[@id='cke_48_label']</td>
-	<td></td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//textarea[@class='cke_source cke_enable_context_menu']</td>
+	<td>HTML Editor</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@class='cke_source cke_enable_context_menu']</td>
-	<td>&lt;h6&gt;a&lt;/h6&gt;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt; 	document.getElementsByTagName('h6')[0].innerHTML=&quot;b&quot;; &lt;/script&gt;</td>
+	<td><p id="demo">PASS</p><script type="text/javascript">document.getElementById('demo').innerHTML="FAIL";</script></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -72,11 +85,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p</td>
-	<td>a</td>
+	<td>//div[@class='wiki-body']/p[@id='demo']</td>
+	<td>PASS</td>
 </tr>
-
-</tbody>
-</table>
+</tbody></table>
 </body>
 </html>

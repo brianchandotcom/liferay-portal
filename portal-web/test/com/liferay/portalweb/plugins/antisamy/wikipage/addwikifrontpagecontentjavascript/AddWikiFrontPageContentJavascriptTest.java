@@ -52,19 +52,44 @@ public class AddWikiFrontPageContentJavascriptTest extends BaseTestCase {
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-		assertTrue(selenium.isVisible(
-				"//td[@id='cke_contents__36_editor']/iframe"));
-		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("Wiki Front Page Content"));
-		selenium.selectFrame("relative=top");
+		assertTrue(selenium.isVisible("//select[@id='_36_format']"));
+		selenium.select("//select[@id='_36_format']",
+			RuntimeVariables.replace("HTML"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.getConfirmation()
+						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_48_label']"));
+		selenium.clickAt("//span[@id='cke_48_label']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//textarea[@class='cke_source cke_enable_context_menu']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//textarea[@class='cke_source cke_enable_context_menu']",
+			RuntimeVariables.replace(
+				"<p id=\"demo\">PASS</p><script type=\"text/javascript\">document.getElementById('demo').innerHTML=\"FAIL\";</script>"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Content"),
-			selenium.getText("//div[@class='wiki-body']/p"));
+		assertEquals(RuntimeVariables.replace("PASS"),
+			selenium.getText("//div[@class='wiki-body']/p[@id='demo']"));
 	}
 }

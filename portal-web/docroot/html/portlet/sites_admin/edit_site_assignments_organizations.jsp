@@ -193,7 +193,7 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
 			<c:if test='<%= tabs2.equals("current") && groupOrganization != null %>'>
-				<div class="organizations-msg-info">
+				<div class="organizations-msg-info portlet-msg">
 					<liferay-ui:message key="this-site-belongs-to-x-which-is-an-organization-of-type-x" arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" />
 				</div>
 			</c:if>

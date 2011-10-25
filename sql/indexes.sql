@@ -169,6 +169,7 @@ create index IX_17692B58 on DDMStructureLink (structureId);
 create index IX_DB24DDDD on DDMTemplate (groupId);
 create index IX_33BEF579 on DDMTemplate (language);
 create index IX_C9757A51 on DDMTemplate (structureId);
+create index IX_5BC0E264 on DDMTemplate (structureId, type_);
 create index IX_5B019FE8 on DDMTemplate (structureId, type_, mode_);
 create index IX_C4F283C8 on DDMTemplate (type_);
 create index IX_F2A243A7 on DDMTemplate (uuid_);

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-maven" default="deploy-artifacts" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-maven" default="zip-maven" xmlns:antelope="antlib:ise.antelope.tasks">
 	<property name="project.dir" value="." />
 
 	<import file="build-common.xml" />
@@ -26,10 +26,20 @@
 			</filterset>
 		</copy>
 
+		<if>
+			<equals arg1="${artifact.id}" arg2="portal-web" />
+			<then>
+				<property name="artifact.file" value="dist/liferay-portal-${lp.version}.war" />
+			</then>
+			<else>
+				<property name="artifact.file" value="${artifact.id}/${artifact.id}.${packaging}" />
+			</else>
+		</if>
+
 		<exec dir="." executable="${maven.executable}" failonerror="true">
 			<arg value="gpg:sign-and-deploy-file" />
 			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=${artifact.id}/${artifact.id}.${packaging}" />
+			<arg value="-Dfile=${artifact.file}" />
 			<arg value="-Dgpg.executable=${gpg.executable}" />
 			<arg value="-Dgpg.keyname=${gpg.keyname}" />
 			<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
@@ -128,33 +138,20 @@
 		</antcall>
 	</target>
 
-	<!--<target name="deploy-dependencies">
-		<xmltask source="lib/versions.xml">
-			<call buffer="maven" path="//library/maven" target="deploy-dependency">
-				<param name="artifactId" path="artifactId/text()" />
-				<param name="file" path="../file-name/text()" />
-				<param name="groupId" path="groupId/text()" />
-				<param name="pom" path="pom-file/text()" />
-				<param name="version" path="version/text()" />
-			</call>
-		</xmltask>
-	</target>
-
-	<target name="deploy-dependency">
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="deploy:deploy-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=lib/${file}" />
-			<arg value="-DgeneratePom=true" />
-			<arg value="-DgroupId=${groupId}" />
-			<arg value="-Dpackaging=jar" />
-			<arg value="-DrepositoryId=${maven.repository.id}" />
-			<arg value="-Durl=${maven.url}" />
-			<arg value="-Dversion=${maven.version}" />
-		</exec>
-	</target>-->
-
 	<target name="deploy-release-artifacts">
+		<if>
+			<not>
+				<available file="dist/liferay-portal-${lp.version}.war" />
+			</not>
+			<then>
+				<fail>
+					dist/liferay-portal-${lp.version}.war not available. 
+
+					Run ant -f build-dist.xml first.
+				</fail>
+			</then>
+		</if>
+
 		<antcall target="jar-javadoc" />
 
 		<antcall target="jar-sources" />
@@ -174,6 +171,19 @@
 	</target>
 
 	<target name="deploy-snapshot-artifacts">
+		<if>
+			<not>
+				<available file="dist/liferay-portal-${lp.version}.war" />
+			</not>
+			<then>
+				<fail>
+					dist/liferay-portal-${lp.version}.war not available. 
+
+					Run ant -f build-dist.xml first.
+				</fail>
+			</then>
+		</if>
+
 		<antcall target="deploy-artifacts">
 			<param name="maven.repository.id" value="sonatype-snapshot" />
 			<param name="maven.url" value="http://oss.sonatype.org/content/repositories/snapshots" />
@@ -258,30 +268,6 @@
 		</antcall>
 	</target>
 
-	<!--<target name="install-dependencies">
-		<xmltask source="lib/versions.xml">
-			<call buffer="maven" path="//library/maven" target="install-dependency">
-				<param name="artifactId" path="artifactId/text()" />
-				<param name="file" path="../file-name/text()" />
-				<param name="groupId" path="groupId/text()" />
-				<param name="pom" path="pom-file/text()" />
-				<param name="version" path="version/text()" />
-			</call>
-		</xmltask>
-	</target>
-
-	<target name="install-dependency">
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="install:install-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=lib/${file}" />
-			<arg value="-DgeneratePom=true" />
-			<arg value="-DgroupId=${groupId}" />
-			<arg value="-Dpackaging=jar" />
-			<arg value="-Dversion=${maven.version}" />
-		</exec>
-	</target>-->
-
 	<target name="install-release-artifacts">
 		<antcall target="install-artifacts">
 			<param name="maven.version" value="${lp.version}" />
@@ -313,4 +299,221 @@
 		<ant dir="util-java" target="jar-sources" inheritAll="false" />
 		<ant dir="util-taglib" target="jar-sources" inheritAll="false" />
 	</target>
+
+	<target name="zip-maven">
+		<if>
+			<not>
+				<available file="dist/liferay-portal-${lp.version}.war" />
+			</not>
+			<then>
+				<fail>
+					dist/liferay-portal-${lp.version}.war not available. 
+
+					Run ant -f build-dist.xml first.
+				</fail>
+			</then>
+		</if>
+<!--
+		<antcall target="jar-javadoc" />
+		<antcall target="jar-sources" />
+-->
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}/dist" />
+		<mkdir dir="${tstamp.value}/lib" />
+		<mkdir dir="${tstamp.value}/license" />
+
+		<copy todir="${tstamp.value}">
+			<fileset
+				dir="tools/maven"
+				includes="build.xml,readme.txt"
+			/>
+		</copy>
+
+		<copy todir="${tstamp.value}/license">
+			<fileset
+				dir="lib"
+				includes="versions.html"
+			/>
+			<fileset
+				dir="."
+				includes="copyright.txt"
+			/>
+		</copy>
+
+		<copy todir="${tstamp.value}/lib">
+			<fileset
+				dir="lib/development"
+				includes="ant-contrib.jar,antelope.jar"
+			/>
+		</copy>
+
+		<copy file="tools/maven/build.properties" tofile="${tstamp.value}/build.properties">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+
+		<copy todir="${tstamp.value}/dist">
+			<fileset
+				dir="portal-client"
+				includes="portal-client.jar,portal-client-javadoc.jar,portal-client-sources.jar"
+			/>
+			<fileset
+				dir="portal-impl"
+				includes="portal-impl.jar,portal-impl-javadoc.jar,portal-impl-sources.jar"
+			/>
+			<fileset
+				dir="portal-service"
+				includes="portal-service.jar,portal-service-javadoc.jar,portal-service-sources.jar"
+			/>
+			<fileset
+				dir="tunnel-web"
+				includes="tunnel-web.war"
+			/>
+			<fileset
+				dir="support-tomcat"
+				includes="support-tomcat.jar,support-tomcat-javadoc.jar,support-tomcat-sources.jar"
+			/>
+			<fileset
+				dir="util-bridges"
+				includes="util-bridges.jar,util-bridges-javadoc.jar,util-bridges-sources.jar"
+			/>
+			<fileset
+				dir="util-java"
+				includes="util-java.jar,util-java-javadoc.jar,util-java-sources.jar"
+			/>
+			<fileset
+				dir="util-taglib"
+				includes="util-taglib.jar,util-taglib-javadoc.jar,util-taglib-sources.jar"
+			/>
+		</copy>
+
+		<copy file="dist/liferay-portal-${lp.version}.war" tofile="${tstamp.value}/dist/portal-web.war" />
+
+		<copy file="tools/maven/portal-client.xml" tofile="${tstamp.value}/dist/portal-client.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-impl.xml" tofile="${tstamp.value}/dist/portal-impl.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-service.xml" tofile="${tstamp.value}/dist/portal-service.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-web.xml" tofile="${tstamp.value}/dist/portal-web.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/tunnel-web.xml" tofile="${tstamp.value}/dist/tunnel-web.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/support-tomcat.xml" tofile="${tstamp.value}/dist/support-tomcat.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/util-bridges.xml" tofile="${tstamp.value}/dist/util-bridges.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/util-java.xml" tofile="${tstamp.value}/dist/util-java.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/util-taglib.xml" tofile="${tstamp.value}/dist/util-taglib.pom">
+			<filterset>
+				<filter token="version" value="${lp.version.maven}" />
+			</filterset>
+		</copy>
+
+		<ant dir="${tstamp.value}" target="install-liferay-artifacts" inheritAll="false" />
+
+		<exec dir="support-maven" executable="${maven.executable}" failonerror="true">
+			<arg value="install" />
+		</exec>
+
+		<copy
+			file="support-maven/pom.xml"
+			tofile="${tstamp.value}/dist/maven-support.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-ext-archetype/target/liferay-ext-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-ext-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-ext-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-ext-archetype.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-hook-archetype/target/liferay-hook-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-hook-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-hook-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-hook-archetype.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-layouttpl-archetype/target/liferay-layouttpl-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-layouttpl-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-layouttpl-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-layouttpl-archetype.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-portlet-archetype/target/liferay-portlet-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-portlet-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-portlet-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-portlet-archetype.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-servicebuilder-archetype/target/liferay-servicebuilder-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-servicebuilder-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-portlet-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-servicebuilder-archetype.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-theme-archetype/target/liferay-theme-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-theme-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-theme-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-theme-archetype.pom" />
+		<copy
+			file="support-maven/archetypes/liferay-web-archetype/target/liferay-web-archetype-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-web-archetype.jar" />
+		<copy
+			file="support-maven/archetypes/liferay-web-archetype/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-web-archetype.pom" />
+		<copy
+			file="support-maven/plugins/liferay-maven-plugin/target/liferay-maven-plugin-${lp.version.maven}.jar"
+			tofile="${tstamp.value}/dist/liferay-maven-plugin.jar" />
+		<copy
+			file="support-maven/plugins/liferay-maven-plugin/pom.xml"
+			tofile="${tstamp.value}/dist/liferay-maven-plugin.pom" />
+
+		<mkdir dir="dist" />
+
+		<zip destfile="dist/liferay-portal-maven-${lp.version}.zip">
+			<zipfileset
+				dir="${tstamp.value}"
+				excludes="run.sh"
+				prefix="liferay-portal-maven-${lp.version}"
+			/>
+			<zipfileset
+				dir="${tstamp.value}"
+				filemode="744"
+				includes="run.sh"
+				prefix="liferay-portal-maven-${lp.version}"
+			/>
+		</zip>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 </project>

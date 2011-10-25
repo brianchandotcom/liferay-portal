@@ -234,7 +234,7 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder Document Title")
 										.equals(selenium.getText(
-								"//tr[3]/td[2]/a/span/span"))) {
+								"//tr[3]/td[2]/span/a/span"))) {
 					break;
 				}
 			}
@@ -245,7 +245,7 @@ public class ConfigurePortletShowDocumentColumnsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
-			selenium.getText("//tr[3]/td[2]/a/span/span"));
+			selenium.getText("//tr[3]/td[2]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("0.5k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("0"),

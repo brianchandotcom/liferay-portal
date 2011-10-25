@@ -119,7 +119,7 @@ public class EditSubfolderTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Subfolder Name Edit")
 										.equals(selenium.getText(
-								"//tr[3]/td[2]/a/span/span"))) {
+								"//tr[3]/td[2]/span/a/span"))) {
 					break;
 				}
 			}
@@ -130,7 +130,7 @@ public class EditSubfolderTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DL Subfolder Name Edit"),
-			selenium.getText("//tr[3]/td[2]/a/span/span"));
+			selenium.getText("//tr[3]/td[2]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("0k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("0"),

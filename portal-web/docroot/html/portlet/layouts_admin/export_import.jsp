@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String redirectWindowState = ParamUtil.getString(request, "redirectWindowState");
+String redirect = ParamUtil.getString(request, "redirect");
 
-String redirectURL = ParamUtil.getString(request, "redirect");
+String redirectWindowState = ParamUtil.getString(request, "redirectWindowState");
 
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EXPORT);
 
@@ -144,9 +144,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				<c:otherwise>
 					<portlet:actionURL windowState="<%= redirectWindowState %>" var="importPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						<portlet:param name="redirect"  value="<%= redirectURL %>" />
 					</portlet:actionURL>
 
 					form.attr('encoding', 'multipart/form-data');

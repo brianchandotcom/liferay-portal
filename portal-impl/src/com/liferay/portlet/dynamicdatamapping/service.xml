@@ -172,6 +172,10 @@
 		<finder name="Language" return-type="Collection">
 			<finder-column name="language" />
 		</finder>
+		<finder name="S_T" return-type="Collection">
+			<finder-column name="structureId" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="S_T_M" return-type="Collection">
 			<finder-column name="structureId" />
 			<finder-column name="type" />

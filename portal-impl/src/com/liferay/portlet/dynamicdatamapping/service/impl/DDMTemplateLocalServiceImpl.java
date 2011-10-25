@@ -161,6 +161,12 @@ public class DDMTemplateLocalServiceImpl
 		return ddmTemplatePersistence.findByStructureId(structureId);
 	}
 
+	public List<DDMTemplate> getTemplates(long structureId, String type)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByS_T(structureId, type);
+	}
+
 	public List<DDMTemplate> getTemplates(
 			long structureId, String type, String mode)
 		throws SystemException {

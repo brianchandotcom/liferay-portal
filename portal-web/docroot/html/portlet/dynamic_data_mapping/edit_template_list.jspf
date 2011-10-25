@@ -47,7 +47,6 @@ String language = BeanParamUtil.getString(template, request, "language", DDMTemp
 </aui:field-wrapper>
 
 <%
-// Make the URL for our popup editor
 Group controlPanelGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.CONTROL_PANEL);
 long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
 
@@ -61,13 +60,15 @@ inlineEditorUrl.setParameter("editorContentOutputElement", "#" + renderResponse.
 %>
 
 <aui:script>
-	Liferay.Util.inlineEditor({
-		button: '#<portlet:namespace />editorButton',
-		id: '<portlet:namespace />scriptContentIFrame',
-		textarea: '<portlet:namespace />scriptContent',
-		title: '<liferay-ui:message key="editor" />',
-		uri: '<%= inlineEditorUrl.toString() %>&langType=' + document.<portlet:namespace />fm.<portlet:namespace />language.value
-	});
+	Liferay.Util.inlineEditor(
+		{
+			button: '#<portlet:namespace />editorButton',
+			id: '<portlet:namespace />scriptContentIFrame',
+			textarea: '<portlet:namespace />scriptContent',
+			title: '<liferay-ui:message key="editor" />',
+			uri: '<%= inlineEditorUrl.toString() %>&langType=' + document.<portlet:namespace />fm.<portlet:namespace />language.value
+		}
+	);
 
 	Liferay.provide(
 		window,

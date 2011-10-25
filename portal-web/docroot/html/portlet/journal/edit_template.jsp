@@ -67,7 +67,6 @@ String langType = BeanParamUtil.getString(template, request, "langType", Journal
 String editorContent = xsl;
 
 if (editorContent.isEmpty()) {
-	// Use default content for selected type
 	editorContent = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(langType)));
 }
 
@@ -95,7 +94,7 @@ if (template == null) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 	<aui:input name="xslContent" type="hidden" value="<%= JS.encodeURIComponent(xsl) %>" />
-	<aui:input name="editorContentInput" type="hidden" value="<%= JS.encodeURIComponent(editorContent) %>" disabled="true" />
+	<aui:input disabled="true" name="editorContentInput" type="hidden" value="<%= JS.encodeURIComponent(editorContent) %>" />
 	<aui:input name="saveAndContinue" type="hidden" />
 
 	<liferay-ui:header

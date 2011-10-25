@@ -43,33 +43,6 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 }
 %>
 
-<style type="text/css">
-	#rich-editor {
-		width: 100%;
-		height: 400px;
-		position: relative;
-		border: 1px solid #A1A2A4;
-		border-radius: 4px;
-		box-shadow: 0 1px 0 white, 0 1px 2px #CCC inset;
-	}
-
-	.ace_gutter {
-		border-top-left-radius: 4px;
-		border-bottom-left-radius: 4px;
-	}
-
-	.lfr-editor-textarea {
-		width: 100%;
-		padding: 0;
-	}
-
-	#plain-editor textarea,
-	#rich-editor.ace_editor {
-		font-family: 'Monaco', 'Menlo', 'Droid Sans Mono', 'Courier New', monospace;
-		font-size: 12px;
-	}
-</style>
-
 <aui:form method="post" name="editorForm">
 	<aui:fieldset>
 		<aui:select name="editorType">
@@ -77,10 +50,10 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 			<aui:option label="rich" selected="<%= useRichEditor %>" value="rich" />
 		</aui:select>
 
-		<div id="plain-editor" style="display: <%= useRichEditor ? "none" : "block" %>">
-			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plain-editor-input" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" wrap="off" value='' />
+		<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
+			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" wrap="off" value='' />
 		</div>
-		<div id="rich-editor" style="display: <%= useRichEditor ? "block" : "none" %>"></div>
+		<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -89,100 +62,106 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-AUI().use('aui-dialog', 'aui-io-request', 'aui-ace-editor-base', 'aui-ace-editor-mode-<%= editorMode %>', function(A) {
-	// Multiple functions need access to these variables
+<aui:script use='<%= "aui-ace-editor-base,aui-ace-editor-mode-" + editorMode + ",aui-dialog,aui-io-request" %>'>
 	var editorType = '<%= editorType %>';
-	var editorContentOutputElement;
+
+	var openerAUI = Liferay.Util.getOpener().AUI();
+
+	var editorContentInputElement = openerAUI.one('<%= editorContentInputElement %>');
+	var editorContentOutputElement = openerAUI.one('<%= editorContentOutputElement %>');
+
+	var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
+
 	var richEditor;
 
-	A.ready(init);
+	var prevEditorContent;
 
-	function init() {
-		richEditor = new A.AceEditor({
-			boundingBox: '#rich-editor',
-			width: '100%',
-			height: '400',
-			mode: '<%= editorMode %>'
-		}).render();
+	function getEditorContent(type) {
+		var content = '';
 
-		var openerAUI = Liferay.Util.getOpener().AUI();
-
-		editorContentOutputElement = openerAUI.one('<%= editorContentOutputElement %>');
-		var editorContentInputElement = openerAUI.one('<%= editorContentInputElement %>');
-
-		if (editorContentInputElement) {
-			setEditorContentForType(editorType, decodeURIComponent(editorContentInputElement.val()));
+		if (type == 'plain') {
+			content = plainEditorField.val();
+		}
+		else {
+			content = richEditor.getSession().getValue();
 		}
 
-		// Register event handlers
-		A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
-		A.one('#<portlet:namespace />update-button').on('click', updateTemplateXsl);
+		return content;
 	}
 
-	function getEditorContentForType(type) {
+	function setEditorContent(type, content) {
 		if (type == 'plain') {
-			return A.one('#<portlet:namespace />plain-editor-input').get('value');
-		} else {
-			return richEditor.getSession().getValue();
+			plainEditorField.val(content);
 		}
-	}
+		else {
+			richEditor.getSession().setValue(content);
+		}
 
-	function setEditorContentForType(type, content) {
-		if (type == 'plain') {
-			return A.one('#<portlet:namespace />plain-editor-input').set('value', content);
-		} else {
-			return richEditor.getSession().setValue(content);
-		}
+		prevEditorContent = content;
 	}
 
 	function updateEditorType(event) {
 		var oldEditorType = editorType;
-		var newEditorType = A.one('#<portlet:namespace />editorType').get('value');
 
-		var oldEditorContent = getEditorContentForType(oldEditorType);
+		var newEditorType = A.one('#<portlet:namespace />editorType').val();
 
-		setEditorContentForType(newEditorType, oldEditorContent);
+		var oldEditorContent = getEditorContent(oldEditorType);
 
-		// Make old editor invisible
-		if (oldEditorType == 'plain') {
-			A.one('#plain-editor').setStyle('display', 'none');
-		} else {
-			A.one('#rich-editor').setStyle('display', 'none');
-		}
+		setEditorContent(newEditorType, oldEditorContent);
 
-		// Make new editor visible
-		if (newEditorType == 'plain') {
-			A.one('#plain-editor').setStyle('display', 'block');
-		} else {
-			A.one('#rich-editor').setStyle('display', 'block');
+		var richEditorType = (newEditorType != 'plain');
 
-			// If Ace editor is initialized while it is set to "display: none",
-			// the size will be wrong, so we resize it when we re-display it
+		A.one('#<portlet:namespace />plainEditor').toggle(!richEditorType);
+		A.one('#<portlet:namespace />richEditor').toggle(richEditorType);
+
+		if (richEditorType) {
 			richEditor.editor.resize();
 		}
 
-		persistEditorType(newEditorType);
+		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/journal/edit_template_xsl" /></portlet:renderURL>&editorType=' + newEditorType;
+
+		A.io.request(uri);
 
 		editorType = newEditorType;
 	}
 
-	function persistEditorType(editorType) {
-		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/journal/edit_template_xsl" /></portlet:renderURL>&editorType=' + editorType;
-		var request = A.io.request(uri).start();
-	}
-
 	function updateTemplateXsl() {
-		var content = getEditorContentForType(editorType);
+		var content = getEditorContent(editorType);
 
-		editorContentOutputElement.val(encodeURIComponent(content));
+		if (editorContentOutputElement) {
+			editorContentOutputElement.val(encodeURIComponent(content));
 
-		var dialog = Liferay.Util.getWindow();
+			var dialog = Liferay.Util.getWindow();
 
-		if (dialog) {
-			dialog.close();
-			dialog.fire('update');
+			if (dialog) {
+				dialog.close();
+
+				if (content != prevEditorContent) {
+					dialog.fire('update');
+				}
+			}
 		}
 	}
-});
+
+	A.on(
+		'domready',
+		function(event) {
+			richEditor = new A.AceEditor(
+				{
+					boundingBox: '#<portlet:namespace />richEditor',
+					width: '100%',
+					height: '400',
+					mode: '<%= editorMode %>'
+				}
+			).render();
+
+			if (editorContentInputElement) {
+				setEditorContent(editorType, decodeURIComponent(editorContentInputElement.val()));
+			}
+
+			A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
+			A.one('#<portlet:namespace />update-button').on('click', updateTemplateXsl);
+		},
+		'#<portlet:namespace />richEditor'
+	);
 </aui:script>

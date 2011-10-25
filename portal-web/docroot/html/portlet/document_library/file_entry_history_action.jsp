@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
+String redirect = ParamUtil.getString(request, "redirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -33,14 +33,9 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 	url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>'
 />
 
-<portlet:renderURL var="viewLatestFileVersionURL">
-	<portlet:param name="struts_action" value="/document_library/view_file_entry" />
-	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-</portlet:renderURL>
-
 <portlet:renderURL var="viewFileVersionURL">
 	<portlet:param name="struts_action" value="/document_library/view_file_entry" />
-	<portlet:param name="redirect" value="<%= viewLatestFileVersionURL.toString() %>" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 	<portlet:param name="version" value="<%= fileVersion.getVersion() %>" />
 </portlet:renderURL>

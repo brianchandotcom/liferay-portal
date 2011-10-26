@@ -58,8 +58,7 @@ public class AddFolderNameInvalidTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"Please enter a unique folder name."),
+		assertEquals(RuntimeVariables.replace("Please enter a valid name."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

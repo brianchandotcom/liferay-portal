@@ -43,6 +43,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.click("//strong/a");
 
 		for (int second = 0;; second++) {

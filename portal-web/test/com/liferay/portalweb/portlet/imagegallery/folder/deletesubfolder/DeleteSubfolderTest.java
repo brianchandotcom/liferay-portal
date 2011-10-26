@@ -58,12 +58,6 @@ public class DeleteSubfolderTest extends BaseTestCase {
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
 			RuntimeVariables.replace("Delete"));
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -82,9 +76,22 @@ public class DeleteSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isTextPresent("MG Subfolder Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertFalse(selenium.isTextPresent("MG Subfolder Name"));
 	}
 }

@@ -43,6 +43,61 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
+		Thread.sleep(5000);
+		assertTrue(selenium.isChecked("//input[@id='_86_showActionsCheckbox']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_showFolderMenuCheckbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_86_showTabsCheckbox']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_showFoldersSearchCheckbox']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Image Gallery Test Page",
+			RuntimeVariables.replace("Image Gallery Test Page"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),

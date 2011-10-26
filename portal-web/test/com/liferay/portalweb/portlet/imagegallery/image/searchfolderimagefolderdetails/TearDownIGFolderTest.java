@@ -59,19 +59,13 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//div[2]/a/span",
-					RuntimeVariables.replace("MG Folder Name"));
+					RuntimeVariables.replace("MG Folder1 Name"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 				selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
 					RuntimeVariables.replace("Delete"));
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -90,11 +84,7 @@ public class TearDownIGFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 2:
+				Thread.sleep(5000);
 
 				boolean igFolder2Present = selenium.isElementPresent(
 						"//div[2]/a/span");
@@ -106,19 +96,13 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//div[2]/a/span",
-					RuntimeVariables.replace("MG Folder Name"));
+					RuntimeVariables.replace("MG Folder2 Name"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 				selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
 					RuntimeVariables.replace("Delete"));
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -137,11 +121,7 @@ public class TearDownIGFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 3:
+				Thread.sleep(5000);
 
 				boolean igFolder3Present = selenium.isElementPresent(
 						"//div[2]/a/span");
@@ -153,19 +133,13 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//div[2]/a/span",
-					RuntimeVariables.replace("MG Folder Name"));
+					RuntimeVariables.replace("MG Folder3 Name"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 				selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
 					RuntimeVariables.replace("Delete"));
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -184,11 +158,7 @@ public class TearDownIGFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 4:
+				Thread.sleep(5000);
 
 				boolean igFolder4Present = selenium.isElementPresent(
 						"//div[2]/a/span");
@@ -200,19 +170,13 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//div[2]/a/span",
-					RuntimeVariables.replace("MG Folder Name"));
+					RuntimeVariables.replace("MG Folder4 Name"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 				selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
 					RuntimeVariables.replace("Delete"));
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -231,11 +195,7 @@ public class TearDownIGFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 5:
+				Thread.sleep(5000);
 
 				boolean igFolder5Present = selenium.isElementPresent(
 						"//div[2]/a/span");
@@ -247,19 +207,13 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//div[2]/a/span",
-					RuntimeVariables.replace("MG DL Folder Name"));
+					RuntimeVariables.replace("MG Folder5 Name"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
 				selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
 					RuntimeVariables.replace("Delete"));
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
-				selenium.waitForPageToLoad("30000");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -278,10 +232,10 @@ public class TearDownIGFolderTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

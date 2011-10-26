@@ -14,71 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[5]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>windowFocus</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_31_file</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_31_file</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\imagegallery\image\addfolderimageimageinvalid\dependencies\test_image.invalid</td>
-</tr>
-<tr>
-	<td>assertAlert</td>
-	<td>Image names must end with one of the following extensions: .bmp, .gif, .jpeg, .jpg, .png, .tif, .tiff</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
 	<td>Image Gallery Test Page</td>
@@ -169,34 +104,9 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='image-title']</td>
-	<td>MG Folder Name</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//span[@class='image-title']</td>
-	<td>MG Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div/h1/span</td>
-	<td>MG Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='image-title']</td>
-	<td>MG Folder Image Title</td>
+	<td>//div[@class='portlet-msg-error']</td>
+	<td>Image names must end with one of the following extensions: .bmp, .gif, .jpeg, .jpg, .png, .tif, .tiff</td>
 </tr>
 </tbody></table>
 </body>

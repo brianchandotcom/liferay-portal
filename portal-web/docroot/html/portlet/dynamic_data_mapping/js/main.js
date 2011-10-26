@@ -27,6 +27,13 @@ AUI().add(
 
 		var TPL_ELEMENT = '<{nodeName}{attributeList}></{nodeName}>';
 
+		var XML_ATTRIBUTES_FIELD_ATTRS = {
+			'dataType': 1,
+			'name': 1,
+			'options': 1,
+			'type': 1
+		};
+
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
@@ -349,24 +356,26 @@ AUI().add(
 									function(item2, index2, collection2) {
 										var attributeName = item2.attributeName;
 
-										var attributeTag = instance._createDynamicNode(
-											'entry',
-											{
-												name: attributeName
+										if (!XML_ATTRIBUTES_FIELD_ATTRS[attributeName]) {
+											var attributeTag = instance._createDynamicNode(
+												'entry',
+												{
+													name: attributeName
+												}
+											);
+
+											var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
+
+											if (attributeName === 'folder') {
+												attributeValue = A.JSON.stringify(attributeValue);
 											}
-										);
 
-										var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
-
-										if (attributeName === 'folder') {
-											attributeValue = A.JSON.stringify(attributeValue);
+											buffer.push(
+												attributeTag.openTag,
+												STR_CDATA_OPEN + attributeValue + STR_CDATA_CLOSE,
+												attributeTag.closeTag
+											);
 										}
-
-										buffer.push(
-											attributeTag.openTag,
-											STR_CDATA_OPEN + attributeValue + STR_CDATA_CLOSE,
-											attributeTag.closeTag
-										);
 									}
 								);
 

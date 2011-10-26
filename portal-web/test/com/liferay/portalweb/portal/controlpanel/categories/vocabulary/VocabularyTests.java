@@ -31,6 +31,7 @@ import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabu
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyassettypewikipage.AddVocabularyAssetTypeWikiPageTests;
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularydisallowmultiplecategories.AddVocabularyDisallowMultipleCategoriesTests;
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularymultiple.AddVocabularyMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularynamenull.AddVocabularyNameNullTests;
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyviewablebyanyone.AddVocabularyViewableByAnyoneTests;
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyviewablebyowner.AddVocabularyViewableByOwnerTests;
 import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyviewablebysitemembers.AddVocabularyViewableBySiteMembersTests;
@@ -67,6 +68,7 @@ public class VocabularyTests extends BaseTests {
 		testSuite.addTest(
 			AddVocabularyDisallowMultipleCategoriesTests.suite());
 		testSuite.addTest(AddVocabularyMultipleTests.suite());
+		testSuite.addTest(AddVocabularyNameNullTests.suite());
 		testSuite.addTest(AddVocabularyViewableByAnyoneTests.suite());
 		testSuite.addTest(AddVocabularyViewableByOwnerTests.suite());
 		testSuite.addTest(AddVocabularyViewableBySiteMembersTests.suite());

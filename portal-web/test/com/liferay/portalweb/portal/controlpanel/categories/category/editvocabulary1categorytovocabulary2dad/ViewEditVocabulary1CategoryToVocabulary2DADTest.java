@@ -129,7 +129,9 @@ public class ViewEditVocabulary1CategoryToVocabulary2DADTest
 			}
 
 			try {
-				if (selenium.isVisible("//li/div/div[4]")) {
+				if (RuntimeVariables.replace("Vocabulary1 Category Name")
+										.equals(selenium.getText(
+								"//li/div/div[4]"))) {
 					break;
 				}
 			}

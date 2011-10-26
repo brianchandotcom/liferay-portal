@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.closevocabulary;
+package com.liferay.portalweb.portal.controlpanel.categories.category.addcategorynamenull;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CloseVocabularyTest extends BaseTestCase {
-	public void testCloseVocabulary() throws Exception {
+public class AddCategoryNameNullTest extends BaseTestCase {
+	public void testAddCategoryNameNull() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -46,8 +46,8 @@ public class CloseVocabularyTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add Vocabulary']",
-			RuntimeVariables.replace("Add Vocabulary"));
+		selenium.clickAt("//input[@value='Add Category']",
+			RuntimeVariables.replace("Add Category"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,12 +66,12 @@ public class CloseVocabularyTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='_147_title_en_US']",
-			RuntimeVariables.replace("Vocabulary Name"));
+			RuntimeVariables.replace(""));
 		selenium.type("//textarea[@id='_147_description_en_US']",
-			RuntimeVariables.replace("Vocabulary Description"));
-		selenium.clickAt("//input[@value='Close']",
-			RuntimeVariables.replace("Close"));
-		selenium.open("/web/guest/home/");
+			RuntimeVariables.replace("Category Description"));
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -79,7 +79,8 @@ public class CloseVocabularyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-error']")) {
 					break;
 				}
 			}
@@ -89,12 +90,9 @@ public class CloseVocabularyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Categories",
-			RuntimeVariables.replace("Categories"));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Vocabulary Name"));
+		assertEquals(RuntimeVariables.replace(
+				"One of your fields contains invalid characters."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-error']"));
 	}
 }

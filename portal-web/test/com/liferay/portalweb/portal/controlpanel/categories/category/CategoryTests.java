@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.categories.category;
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.addcategory.AddCategoryTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.addcategorymultiple.AddCategoryMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.categories.category.addcategorynamenull.AddCategoryNameNullTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.addcategoryproperty.AddCategoryPropertyTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.addcategorytovocabulary.AddCategoryToVocabularyTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.addcategoryviewablebyanyone.AddCategoryViewableByAnyoneTests;
@@ -47,6 +48,7 @@ public class CategoryTests extends BaseTests {
 
 		testSuite.addTest(AddCategoryTests.suite());
 		testSuite.addTest(AddCategoryMultipleTests.suite());
+		testSuite.addTest(AddCategoryNameNullTests.suite());
 		testSuite.addTest(AddCategoryPropertyTests.suite());
 		testSuite.addTest(AddCategoryToVocabularyTests.suite());
 		testSuite.addTest(AddCategoryViewableByAnyoneTests.suite());

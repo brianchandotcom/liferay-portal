@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.categories.category.editvocabulary1categorytovocabulary2dad;
+package com.liferay.portalweb.portal.controlpanel.categories.category.addcategorynamenull;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
-	public void testEditVocabulary1CategoryToVocabulary2DAD()
-		throws Exception {
+public class AddVocabularyTest extends BaseTestCase {
+	public void testAddVocabulary() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -47,6 +46,8 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//input[@value='Add Vocabulary']",
+			RuntimeVariables.replace("Add Vocabulary"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -54,7 +55,7 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//li/div/div[4]")) {
+				if (selenium.isVisible("//input[@id='_147_title_en_US']")) {
 					break;
 				}
 			}
@@ -64,10 +65,12 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		selenium.clickAt("//li/div/div[4]",
-			RuntimeVariables.replace("Vocabulary1 Category Name"));
+		selenium.type("//input[@id='_147_title_en_US']",
+			RuntimeVariables.replace("Vocabulary Name"));
+		selenium.type("//textarea[@id='_147_description_en_US']",
+			RuntimeVariables.replace("Vocabulary Description"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -76,7 +79,7 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='view-category']/div/h1/span")) {
+							"//div[@class='lfr-message-response portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -86,15 +89,10 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//div[@class='view-category']/div/h1/span"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		assertEquals(RuntimeVariables.replace("Vocabulary2 Name"),
-			selenium.getText("xPath=(//span[@class='vocabulary-item']/a)[2]"));
-		selenium.dragAndDropToObject("//li/div/div[4]",
-			"xPath=(//span[@class='vocabulary-item']/a)[2]");
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -102,9 +100,9 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Vocabulary2 Name")
+				if (RuntimeVariables.replace("Vocabulary Name")
 										.equals(selenium.getText(
-								"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"))) {
+								"//span[@class='vocabulary-item']/a"))) {
 					break;
 				}
 			}
@@ -114,10 +112,7 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Vocabulary2 Name"),
-			selenium.getText(
-				"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"));
-		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
+		assertEquals(RuntimeVariables.replace("Vocabulary Name"),
+			selenium.getText("//span[@class='vocabulary-item']/a"));
 	}
 }

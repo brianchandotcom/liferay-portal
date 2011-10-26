@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyassettypeddlrecord;
+package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularynamenull;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
-	public void testViewVocabularyAssetTypeDDLRecord()
-		throws Exception {
+public class TearDownVocabularyTest extends BaseTestCase {
+	public void testTearDownVocabulary() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -52,47 +51,27 @@ public class ViewVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
 				selenium.clickAt("link=Categories",
 					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Vocabulary Name"),
-					selenium.getText("//span[@class='vocabulary-item']/a"));
-				selenium.clickAt("//a[@class='vocabulary-item-actions-trigger']",
-					RuntimeVariables.replace("Edit"));
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
+				boolean vocabularyPresent = selenium.isElementPresent(
+						"//input[@name='vocabulary-item-check']");
 
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_147_title_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals("Vocabulary Name",
-					selenium.getValue("//input[@id='_147_title_en_US']"));
-				assertEquals(RuntimeVariables.replace("Vocabulary Description"),
-					selenium.getText("//textarea[@id='_147_description_en_US']"));
-				assertEquals(RuntimeVariables.replace("Associated Asset Types"),
-					selenium.getText(
-						"//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span"));
-
-				boolean chooseAssetTypeNotVisible = selenium.isVisible(
-						"_147_classNameId0");
-
-				if (chooseAssetTypeNotVisible) {
+				if (!vocabularyPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span",
-					RuntimeVariables.replace("Associated Asset Types"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_147_checkAllVocabulariesCheckbox']"));
+				selenium.clickAt("//input[@id='_147_checkAllVocabulariesCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_147_checkAllVocabulariesCheckbox']"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -100,8 +79,9 @@ public class ViewVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//select[@id='_147_classNameId0']")) {
+						if (RuntimeVariables.replace("Delete")
+												.equals(selenium.getText(
+										"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"))) {
 							break;
 						}
 					}
@@ -111,11 +91,35 @@ public class ViewVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-			case 2:
-				assertEquals("Dynamic Data Lists Record",
-					selenium.getSelectedLabel(
-						"//select[@id='_147_classNameId0']"));
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+					RuntimeVariables.replace("Delete"));
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected vocabularies[\\s\\S]$"));
 
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (!selenium.isElementPresent(
+									"//input[@name='vocabulary-item-check']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertFalse(selenium.isElementPresent(
+						"//input[@name='vocabulary-item-check']"));
+
+			case 2:
 			case 100:
 				label = -1;
 			}

@@ -110,7 +110,7 @@ public class AddVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
 
 			case 2:
 				selenium.select("//select[@id='_147_classNameId0']",
-					RuntimeVariables.replace("Document Library Document"));
+					RuntimeVariables.replace("Dynamic Data Lists Record"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 

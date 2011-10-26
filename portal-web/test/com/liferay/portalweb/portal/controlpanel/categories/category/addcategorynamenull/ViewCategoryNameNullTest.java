@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.closevocabulary;
+package com.liferay.portalweb.portal.controlpanel.categories.category.addcategorynamenull;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class CloseVocabularyTest extends BaseTestCase {
-	public void testCloseVocabulary() throws Exception {
+public class ViewCategoryNameNullTest extends BaseTestCase {
+	public void testViewCategoryNameNull() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -46,8 +46,6 @@ public class CloseVocabularyTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add Vocabulary']",
-			RuntimeVariables.replace("Add Vocabulary"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +53,8 @@ public class CloseVocabularyTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_147_title_en_US']")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-info']")) {
 					break;
 				}
 			}
@@ -65,36 +64,10 @@ public class CloseVocabularyTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_147_title_en_US']",
-			RuntimeVariables.replace("Vocabulary Name"));
-		selenium.type("//textarea[@id='_147_description_en_US']",
-			RuntimeVariables.replace("Vocabulary Description"));
-		selenium.clickAt("//input[@value='Close']",
-			RuntimeVariables.replace("Close"));
-		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Categories",
-			RuntimeVariables.replace("Categories"));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Vocabulary Name"));
+		assertEquals(RuntimeVariables.replace("There are no categories."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-info']"));
+		assertFalse(selenium.isElementPresent("//li/div/div[4]"));
+		assertFalse(selenium.isTextPresent("Category Name"));
 	}
 }

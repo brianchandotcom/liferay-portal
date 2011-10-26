@@ -20,8 +20,8 @@
 boolean supportedAudio = GetterUtil.getBoolean((String)request.getAttribute("view_file_entry.jsp-supportedAudio"));
 boolean supportedVideo = GetterUtil.getBoolean((String)request.getAttribute("view_file_entry.jsp-supportedVideo"));
 
-String previewFileURL = HtmlUtil.escapeURL((String)request.getAttribute("view_file_entry.jsp-previewFileURL"));
-String videoThumbnailURL = HtmlUtil.escapeURL((String)request.getAttribute("view_file_entry.jsp-videoThumbnailURL"));
+String previewFileURL = (String)request.getAttribute("view_file_entry.jsp-previewFileURL");
+String videoThumbnailURL = (String)request.getAttribute("view_file_entry.jsp-videoThumbnailURL");
 %>
 
 <aui:script use="aui-swf">

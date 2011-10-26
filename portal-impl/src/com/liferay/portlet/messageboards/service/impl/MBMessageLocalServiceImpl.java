@@ -541,10 +541,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Thread
 
-		int count = mbMessagePersistence.countByT_S(
-			message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+		int count = mbMessagePersistence.countByThreadId(message.getThreadId());
 
-		if ((count == 1) && !message.isDraft()) {
+		if (count == 1) {
 
 			// Attachments
 
@@ -587,7 +586,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				mbCategoryPersistence.update(category, false);
 			}
 		}
-		else if ((count > 1) || ((count == 1) && !message.isDraft())) {
+		else {
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(
 				message.getThreadId());
 
@@ -660,8 +659,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			if (!message.isDraft()) {
-				thread.setMessageCount(count - 1);
+			if (message.isApproved()) {
+				int messageCount = mbMessagePersistence.countByT_S(
+					message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+
+				thread.setMessageCount(messageCount - 1);
 			}
 
 			mbThreadPersistence.update(thread, false);

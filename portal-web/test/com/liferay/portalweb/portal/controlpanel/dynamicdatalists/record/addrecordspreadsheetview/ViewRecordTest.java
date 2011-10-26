@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecord;
+package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecordspreadsheetview;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

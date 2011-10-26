@@ -15,18 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect;
 
 import com.liferay.portalweb.portal.BaseTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.addfieldselect.AddFieldSelectTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.deletefieldselect.DeleteFieldSelectTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectfieldlabel.EditFieldSelectFieldLabelTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectshowlabel.EditFieldSelectShowLabelTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectrequired.EditFieldSelectRequiredTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectname.EditFieldSelectNameTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectpredefinedvalue.EditFieldSelectPredefinedValueTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselecttip.EditFieldSelectTipTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectoptions.EditFieldSelectOptionsTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectoptionsutf8.EditFieldSelectOptionsUTF8Tests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.editfieldselectmultiple.EditFieldSelectMultipleTests;
-
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -39,17 +28,7 @@ public class FieldSelectTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(AddFieldSelectTests.suite());
-//		testSuite.addTest(DeleteFieldSelectTests.suite());
-//		testSuite.addTest(EditFieldSelectFieldLabelTests.suite());
-//		testSuite.addTest(EditFieldSelectShowLabelTests.suite());
-//		testSuite.addTest(EditFieldSelectRequiredTests.suite());
-//		testSuite.addTest(EditFieldSelectNameTests.suite());
-//		testSuite.addTest(EditFieldSelectPredefinedValueTests.suite());
-//		testSuite.addTest(EditFieldSelectTipTests.suite());
-//		testSuite.addTest(EditFieldSelectOptionsTests.suite());
 		testSuite.addTest(EditFieldSelectOptionsUTF8Tests.suite());
-//		testSuite.addTest(EditFieldSelectMultipleTests.suite());
 
 		return testSuite;
 	}

@@ -75,7 +75,7 @@ public class AddDMDocumentTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@id='_20_file']"));
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\dynamicdatalists\\record\\dependencies\\document.txt"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\dynamicdatalists\\dependencies\\document.txt"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

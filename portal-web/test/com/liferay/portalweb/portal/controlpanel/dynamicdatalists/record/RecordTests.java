@@ -16,9 +16,9 @@ package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecord.AddRecordTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecordspreadsheetview.AddRecordSpreadsheetViewTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.deleterecord.DeleteRecordTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.editrecord.EditRecordTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.addrecordspreadsheetview.AddRecordSpreadsheetViewTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,9 +32,9 @@ public class RecordTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddRecordTests.suite());
+		testSuite.addTest(AddRecordSpreadsheetViewTests.suite());
 		testSuite.addTest(DeleteRecordTests.suite());
 		testSuite.addTest(EditRecordTests.suite());
-		//testSuite.addTest(AddRecordSpreadsheetViewTests.suite());
 
 		return testSuite;
 	}

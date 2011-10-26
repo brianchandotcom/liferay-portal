@@ -15,18 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio;
 
 import com.liferay.portalweb.portal.BaseTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.addfieldradio.AddFieldRadioTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.deletefieldradio.DeleteFieldRadioTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiofieldlabel.EditFieldRadioFieldLabelTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradioshowlabel.EditFieldRadioShowLabelTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiorequired.EditFieldRadioRequiredTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradioname.EditFieldRadioNameTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiopredefinedvalue.EditFieldRadioPredefinedValueTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiotip.EditFieldRadioTipTests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiooptions.EditFieldRadioOptionsTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiooptionsutf8.EditFieldRadioOptionsUTF8Tests;
-//import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.editfieldradiomultiple.EditFieldRadioMultipleTests;
-
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -39,17 +28,7 @@ public class FieldRadioTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(AddFieldRadioTests.suite());
-//		testSuite.addTest(DeleteFieldRadioTests.suite());
-//		testSuite.addTest(EditFieldRadioFieldLabelTests.suite());
-//		testSuite.addTest(EditFieldRadioShowLabelTests.suite());
-//		testSuite.addTest(EditFieldRadioRequiredTests.suite());
-//		testSuite.addTest(EditFieldRadioNameTests.suite());
-//		testSuite.addTest(EditFieldRadioPredefinedValueTests.suite());
-//		testSuite.addTest(EditFieldRadioTipTests.suite());
-//		testSuite.addTest(EditFieldRadioOptionsTests.suite());
 		testSuite.addTest(EditFieldRadioOptionsUTF8Tests.suite());
-//		testSuite.addTest(EditFieldRadioMultipleTests.suite());
 
 		return testSuite;
 	}

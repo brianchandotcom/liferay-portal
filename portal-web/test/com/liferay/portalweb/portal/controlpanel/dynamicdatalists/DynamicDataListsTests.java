@@ -16,7 +16,11 @@ package com.liferay.portalweb.portal.controlpanel.dynamicdatalists;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.datadefinition.DataDefinitionTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.FieldBooleanTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldradio.FieldRadioTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldselect.FieldSelectTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.list.ListTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.record.RecordTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +34,11 @@ public class DynamicDataListsTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(DataDefinitionTests.suite());
+		testSuite.addTest(FieldBooleanTests.suite());
+		testSuite.addTest(FieldRadioTests.suite());
+		testSuite.addTest(FieldSelectTests.suite());
 		testSuite.addTest(ListTests.suite());
+		testSuite.addTest(RecordTests.suite());
 
 		return testSuite;
 	}

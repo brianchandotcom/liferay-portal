@@ -31,7 +31,7 @@ public class AddRecordSpreadsheetViewTests extends BaseTests {
 		testSuite.addTestSuite(AddListTest.class);
 		testSuite.addTestSuite(AddDMDocumentTest.class);
 		testSuite.addTestSuite(AddRecordSpreadsheetViewTest.class);
-//		testSuite.addTestSuite(ViewRecordSpreadsheetViewTest.class);
+		testSuite.addTestSuite(ViewRecordTest.class);
 		testSuite.addTestSuite(TearDownListTest.class);
 		testSuite.addTestSuite(TearDownDataDefinitionTest.class);
 		testSuite.addTestSuite(TearDownDMContentTest.class);

@@ -18,10 +18,10 @@ import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.addfieldboolean.AddFieldBooleanTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.deletefieldboolean.DeleteFieldBooleanTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanfieldlabel.EditFieldBooleanFieldLabelTests;
-import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanshowlabel.EditFieldBooleanShowLabelTests;
-import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanrequired.EditFieldBooleanRequiredTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanname.EditFieldBooleanNameTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanpredefinedvalue.EditFieldBooleanPredefinedValueTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanrequired.EditFieldBooleanRequiredTests;
+import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleanshowlabel.EditFieldBooleanShowLabelTests;
 import com.liferay.portalweb.portal.controlpanel.dynamicdatalists.fieldboolean.editfieldbooleantip.EditFieldBooleanTipTests;
 
 import junit.framework.Test;
@@ -38,10 +38,10 @@ public class FieldBooleanTests extends BaseTests {
 		testSuite.addTest(AddFieldBooleanTests.suite());
 		testSuite.addTest(DeleteFieldBooleanTests.suite());
 		testSuite.addTest(EditFieldBooleanFieldLabelTests.suite());
-		testSuite.addTest(EditFieldBooleanShowLabelTests.suite());
-		testSuite.addTest(EditFieldBooleanRequiredTests.suite());
 		testSuite.addTest(EditFieldBooleanNameTests.suite());
 		testSuite.addTest(EditFieldBooleanPredefinedValueTests.suite());
+		testSuite.addTest(EditFieldBooleanRequiredTests.suite());
+		testSuite.addTest(EditFieldBooleanShowLabelTests.suite());
 		testSuite.addTest(EditFieldBooleanTipTests.suite());
 
 		return testSuite;

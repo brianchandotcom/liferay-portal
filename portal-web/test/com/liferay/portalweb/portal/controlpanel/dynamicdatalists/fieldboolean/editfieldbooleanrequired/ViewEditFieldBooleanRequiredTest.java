@@ -134,7 +134,7 @@ public class ViewEditFieldBooleanRequiredTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
 				"//span[@class='aui-form-builder-required']"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]/",
+		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("field"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/span/span/button[1]"));
@@ -142,6 +142,8 @@ public class ViewEditFieldBooleanRequiredTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/span/span/button[2]"));
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/span/span/button[3]"));
+		assertEquals(RuntimeVariables.replace("*"),
+			selenium.getText("//span[@class='aui-form-builder-required']"));
 		selenium.selectFrame("relative=top");
 	}
 }

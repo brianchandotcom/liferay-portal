@@ -227,6 +227,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	public MBThread fetchThread(long threadId) throws SystemException {
+		return mbThreadPersistence.fetchByPrimaryKey(threadId);
+	}
+
 	public int getCategoryThreadsCount(
 			long groupId, long categoryId, int status)
 		throws SystemException {

@@ -16,17 +16,21 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
@@ -63,12 +67,23 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, classPK, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(MBCategory.class.getName())) {
-			return MBCategoryPermission.contains(
-				permissionChecker, classPK, ActionKeys.SUBSCRIBE);
+			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+			if (group == null) {
+				return MBCategoryPermission.contains(
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
+			}
+			else {
+				return MBPermission.contains(
+					permissionChecker, classPK, ActionKeys.SUBSCRIBE);
+			}
 		}
 		else if (className.equals(MBThread.class.getName())) {
+			MBThread thread = MBThreadLocalServiceUtil.fetchThread(classPK);
+
 			return MBMessagePermission.contains(
-				permissionChecker, classPK, ActionKeys.SUBSCRIBE);
+				permissionChecker, thread.getRootMessageId(),
+				ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(WikiNode.class.getName())) {
 			return WikiNodePermission.contains(

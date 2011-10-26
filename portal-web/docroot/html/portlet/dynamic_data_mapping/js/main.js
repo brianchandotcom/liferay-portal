@@ -28,10 +28,10 @@ AUI().add(
 		var TPL_ELEMENT = '<{nodeName}{attributeList}></{nodeName}>';
 
 		var XML_ATTRIBUTES_FIELD_ATTRS = {
-			'dataType': 1,
-			'name': 1,
-			'options': 1,
-			'type': 1
+			dataType: 1,
+			name: 1,
+			options: 1,
+			type: 1
 		};
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');

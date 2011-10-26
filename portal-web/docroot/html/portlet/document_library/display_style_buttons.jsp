@@ -39,7 +39,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		function onButtonClick(displayStyle) {
 			var config = {
 				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',
-				'<portlet:namespace />navigation': '<%= navigation %>',
+				'<portlet:namespace />navigation': '<%= HtmlUtil.escapeJS(navigation) %>',
 				'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
 				'<portlet:namespace />displayStyle': displayStyle,
 				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>

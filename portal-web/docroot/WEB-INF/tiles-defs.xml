@@ -533,6 +533,10 @@
 
 	<definition name="portlet.dynamic_data_mapping" extends="portlet" />
 
+	<definition name="portlet.dynamic_data_mapping.copy_structure" extends="portlet.dynamic_data_mapping">
+		<put name="portlet_content" value="/portlet/dynamic_data_mapping/copy_structure.jsp" />
+	</definition>
+
 	<definition name="portlet.dynamic_data_mapping.edit_structure" extends="portlet.dynamic_data_mapping">
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/edit_structure.jsp" />
 	</definition>

@@ -636,6 +636,11 @@
 
 		<!-- Dynamic Data Mapping -->
 
+		<action path="/dynamic_data_mapping/copy_structure" type="com.liferay.portlet.dynamicdatamapping.action.CopyStructureAction">
+			<forward name="portlet.dynamic_data_mapping.copy_structure" path="portlet.dynamic_data_mapping.copy_structure" />
+			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
+		</action>
+
 		<action path="/dynamic_data_mapping/edit_structure" type="com.liferay.portlet.dynamicdatamapping.action.EditStructureAction">
 			<forward name="portlet.dynamic_data_mapping.edit_structure" path="portlet.dynamic_data_mapping.edit_structure" />
 			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />

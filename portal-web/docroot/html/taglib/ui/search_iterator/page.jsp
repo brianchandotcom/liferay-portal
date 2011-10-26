@@ -38,6 +38,7 @@ List<String> headerNames = searchContainer.getHeaderNames();
 Map orderableHeaders = searchContainer.getOrderableHeaders();
 String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 RowChecker rowChecker = searchContainer.getRowChecker();
+String orderByJS = searchContainer.getOrderByJS();
 
 if (end > total) {
 	end = total;
@@ -147,7 +148,14 @@ int sortColumnIndex = -1;
 
 					<c:if test="<%= orderKey != null %>">
 						<span class="result-column-name">
-							<a href="<%= url %>&<%= namespace %><%= searchContainer.getOrderByColParam() %>=<%= orderKey %>&<%= namespace %><%= searchContainer.getOrderByTypeParam() %>=<%= HtmlUtil.escapeURL(orderByType) %>">
+							<c:choose>
+								<c:when test="<%= Validator.isNull(orderByJS) %>">
+									<a href="<%= url %>&<%= namespace %><%= searchContainer.getOrderByColParam() %>=<%= orderKey %>&<%= namespace %><%= searchContainer.getOrderByTypeParam() %>=<%= HtmlUtil.escapeURL(orderByType) %>">
+								</c:when>
+								<c:otherwise>
+									<a href="<%= StringUtil.replace(orderByJS, new String[] { "orderKey", "orderByType" }, new String[] { orderKey, orderByType }) %>">
+								</c:otherwise>
+							</c:choose>
 					</c:if>
 
 						<%

@@ -213,6 +213,10 @@ public class SearchContainer<R> {
 		return _orderByComparator;
 	}
 
+	public String getOrderByJS() {
+		return _orderByJS;
+	}
+
 	public String getOrderByType() {
 		return _orderByType;
 	}
@@ -328,6 +332,10 @@ public class SearchContainer<R> {
 		_orderByComparator = orderByComparator;
 	}
 
+	public void setOrderByJS(String orderByJS) {
+		_orderByJS = orderByJS;
+	}
+
 	public void setOrderByType(String orderByType) {
 		_orderByType = orderByType;
 
@@ -389,6 +397,7 @@ public class SearchContainer<R> {
 	private String _orderByCol;
 	private String _orderByColParam = DEFAULT_ORDER_BY_COL_PARAM;
 	private OrderByComparator _orderByComparator;
+	private String _orderByJS;
 	private String _orderByType;
 	private String _orderByTypeParam = DEFAULT_ORDER_BY_TYPE_PARAM;
 	private PortletRequest _portletRequest;

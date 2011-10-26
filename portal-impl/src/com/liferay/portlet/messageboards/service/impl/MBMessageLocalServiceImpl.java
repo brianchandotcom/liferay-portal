@@ -544,7 +544,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int count = mbMessagePersistence.countByT_S(
 			message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
 
-		if ((count == 1) && !message.isDraft()) {
+		if ((count == 1) && !message.isDraft() && !message.isDiscussion()) {
 
 			// Attachments
 
@@ -587,7 +587,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				mbCategoryPersistence.update(category, false);
 			}
 		}
-		else if ((count > 1) || ((count == 1) && !message.isDraft())) {
+		else if ((count > 1) || ((count == 1) && !message.isDraft()) &&
+				 !message.isDiscussion()) {
+
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(
 				message.getThreadId());
 

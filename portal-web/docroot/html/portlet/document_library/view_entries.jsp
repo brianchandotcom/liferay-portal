@@ -262,6 +262,12 @@ for (int i = 0; i < results.size(); i++) {
 					rowURL.setParameter("struts_action", "/document_library/view_file_entry");
 					rowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
 					rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+
+					FileVersion latestFileVersion = fileEntry.getFileVersion();
+
+					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+						latestFileVersion = fileEntry.getLatestFileVersion();
+					}
 					%>
 
 					<liferay-util:buffer var="fileEntryTitle">
@@ -273,6 +279,12 @@ for (int i = 0; i < results.size(); i++) {
 							message="<%= fileEntry.getTitle() %>"
 							url="<%= rowURL.toString() %>"
 						/>
+
+						<c:if test="<%= latestFileVersion.isPending() %>">
+							<span class="workflow-status-pending">
+								(<liferay-ui:message key="pending" />)
+							</span>
+						</c:if>
 					</liferay-util:buffer>
 
 					<%

@@ -281,6 +281,12 @@ public class MBThreadLocalServiceUtil {
 		getService().deleteThreads(groupId, categoryId);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThread fetchThread(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchThread(threadId);
+	}
+
 	public static int getCategoryThreadsCount(long groupId, long categoryId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCategoryThreadsCount(groupId, categoryId, status);

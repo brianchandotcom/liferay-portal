@@ -250,6 +250,11 @@ public interface MBThreadLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.messageboards.model.MBThread fetchThread(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoryThreadsCount(long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

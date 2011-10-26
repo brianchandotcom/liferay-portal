@@ -172,6 +172,7 @@ public class SampleSQLBuilder {
 			_permissionCounter = new SimpleCounter();
 			_resourceCounter = new SimpleCounter();
 			_resourceCodeCounter = new SimpleCounter();
+			_resourcePermissionCounter = new SimpleCounter();
 			_socialActivityCounter = new SimpleCounter();
 
 			_userScreenNameIncrementer = new SimpleCounter();
@@ -179,7 +180,7 @@ public class SampleSQLBuilder {
 			_dataFactory = new DataFactory(
 				baseDir, _maxGroupCount, _maxUserToGroupCount, _counter,
 				_permissionCounter, _resourceCounter, _resourceCodeCounter,
-				_socialActivityCounter);
+				_resourcePermissionCounter, _socialActivityCounter);
 
 			_db = DBFactoryUtil.getDB(_dbType);
 
@@ -349,6 +350,17 @@ public class SampleSQLBuilder {
 		put(context, "mbThread", mbThread);
 
 		processTemplate(_tplMBThread, context);
+	}
+
+	public void insertResourcePermission(String name, long primKey)
+		throws Exception {
+
+		Map<String, Object> context = getContext();
+
+		put(context, "resourceName", name);
+		put(context, "resourcePrimkey", String.valueOf(primKey));
+
+		processTemplate(_tplResourcePermission, context);
 	}
 
 	public void insertSecurity(String name, long primKey) throws Exception {
@@ -675,6 +687,7 @@ public class SampleSQLBuilder {
 	private SimpleCounter _permissionCounter;
 	private SimpleCounter _resourceCodeCounter;
 	private SimpleCounter _resourceCounter;
+	private SimpleCounter _resourcePermissionCounter;
 	private boolean _securityEnabled;
 	private SimpleCounter _socialActivityCounter;
 	private File _tempDir;
@@ -690,6 +703,8 @@ public class SampleSQLBuilder {
 	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";
 	private String _tplMBStatsUser = _TPL_ROOT + "mb_stats_user.ftl";
 	private String _tplMBThread = _TPL_ROOT + "mb_thread.ftl";
+	private String _tplResourcePermission =
+		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private String _tplSecurity = _TPL_ROOT + "security.ftl";
 	private String _tplSocialActivity = _TPL_ROOT + "social_activity.ftl";

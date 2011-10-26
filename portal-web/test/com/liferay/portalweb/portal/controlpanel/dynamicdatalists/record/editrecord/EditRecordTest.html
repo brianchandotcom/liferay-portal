@@ -1,0 +1,263 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>EditRecordTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EditRecordTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Dynamic Data Lists</td>
+	<td>Dynamic Data Lists</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_167_keywords']</td>
+	<td>List Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>List Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>List Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[1]/span/span/label</td>
+	<td>Boolean</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@class='aui-fieldset-content ']/div[1]/span/span/span/input[2]</td>
+	<td>checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[2]/span/span/label</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[2]/span/span/span/input</td>
+	<td>08/09/10</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[3]/span/span/label</td>
+	<td>Decimal</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[3]/span/span/span/input</td>
+	<td>8.910</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[4]/div/label</td>
+	<td>Document Library</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-fieldset-content ']/div[4]/div/span/span/input</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe</td>
+	<td>Select Document</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Select Document</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[4]/td[1]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[4]/td[1]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[4]/td[5]/input</td>
+	<td>Choose</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[4]/td[5]/input</td>
+	<td>Choose</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[5]/span/span/label</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[5]/span/span/span/input</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\controlpanel\dynamicdatalists\dependencies\document.txt</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[6]/span/span/label</td>
+	<td>Integer</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[6]/span/span/span/input</td>
+	<td>8910</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[7]/span/span/label</td>
+	<td>Number</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[7]/span/span/span/input</td>
+	<td>111213</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[8]/div/label</td>
+	<td>Radio</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[8]/div/span[1]/span</td>
+	<td>option 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[8]/div/span[2]/span</td>
+	<td>option 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[8]/div/span[3]/span</td>
+	<td>option 3</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-fieldset-content ']/div[8]/div/span[2]/span/span/input</td>
+	<td>option 3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/span[1]/span/label</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/span[1]/span/span/select/option[1]</td>
+	<td>option 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/span[1]/span/span/select/option[2]</td>
+	<td>option 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/span[1]/span/span/select/option[3]</td>
+	<td>option 3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@class='aui-fieldset-content ']/span[1]/span/span/select</td>
+	<td>label=option 1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[9]/span/span/label</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[9]/span/span/span/input</td>
+	<td>Text Field Edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-fieldset-content ']/div[10]/span/span/label</td>
+	<td>Text Box</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@class='aui-fieldset-content ']/div[10]/span/span/span/textarea</td>
+	<td>Text<br />Box<br />Edited</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -157,21 +157,18 @@ public class ViewDataDefinitionFieldFullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
-		assertEquals(RuntimeVariables.replace("Password"),
-			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
 		selenium.selectFrame("relative=top");
 	}
 }

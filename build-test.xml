@@ -292,6 +292,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="control-panel-categories" />
+			<param name="test.ant.script.suite" value="ControlPanelCategoriesTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-dynamic-data-lists" />
 			<param name="test.ant.script.suite" value="ControlPanelDynamicDataListsTestSuite" />
 		</antcall>

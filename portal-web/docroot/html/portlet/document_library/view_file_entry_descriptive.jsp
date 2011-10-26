@@ -49,6 +49,10 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 		<span class="document-description"><%= fileEntry.getDescription() %></span>
 	</a>
 
+	<%
+	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+	%>
+
 	<liferay-util:include page="/html/portlet/document_library/file_entry_action.jsp" />
 
 	<c:if test="<%= showCheckBox %>">

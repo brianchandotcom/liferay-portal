@@ -35,6 +35,10 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + FileEntry.class.getSimpleName() %>" type="checkbox" value="<%= fileEntry.getFileEntryId() %>" />
 	</c:if>
 
+	<%
+	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+	%>
+
 	<liferay-util:include page="/html/portlet/document_library/file_entry_action.jsp" />
 
 	<a class="document-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(fileEntry.getTitle()) + " - " + HtmlUtil.unescape(fileEntry.getDescription())) %>">

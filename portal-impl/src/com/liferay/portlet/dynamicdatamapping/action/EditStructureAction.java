@@ -71,9 +71,6 @@ public class EditStructureAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				structure = updateStructure(actionRequest);
 			}
-			else if (cmd.equals(Constants.COPY)) {
-				structure = copyStructure(actionRequest);
-			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteStructure(actionRequest);
 			}
@@ -163,18 +160,6 @@ public class EditStructureAction extends PortletAction {
 			getForward(
 				renderRequest,
 				"portlet.dynamic_data_mapping.edit_structure"));
-	}
-
-	protected DDMStructure copyStructure(ActionRequest actionRequest)
-		throws Exception {
-
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), actionRequest);
-
-		return DDMStructureServiceUtil.copyStructure(
-			structureId, serviceContext);
 	}
 
 	protected void deleteStructure(ActionRequest actionRequest)

@@ -27,6 +27,7 @@ import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -113,6 +114,28 @@ public class DDMTemplateLocalServiceImpl
 			template.getCompanyId(), template.getGroupId(),
 			template.getUserId(), DDMTemplate.class.getName(),
 			template.getTemplateId(), groupPermissions, guestPermissions);
+	}
+
+	public List<DDMTemplate> copyTemplates(
+			long userId, long structureId, long newStructureId, String type,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<DDMTemplate> newTemplates = new ArrayList<DDMTemplate>();
+
+		List<DDMTemplate> templates = getTemplates(structureId, type);
+
+		for (DDMTemplate template : templates) {
+			DDMTemplate newTemplate = addTemplate(
+				userId, template.getGroupId(), newStructureId,
+				template.getNameMap(), template.getDescriptionMap(),
+				template.getType(), template.getMode(), template.getLanguage(),
+				template.getScript(), serviceContext);
+
+			newTemplates.add(newTemplate);
+		}
+
+		return newTemplates;
 	}
 
 	public void deleteTemplate(DDMTemplate template)

@@ -37,6 +37,7 @@ import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -48,6 +49,7 @@ import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PermissionImpl;
 import com.liferay.portal.model.impl.ResourceCodeImpl;
 import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -110,6 +112,7 @@ public class DataFactory {
 		String baseDir, int maxGroupsCount, int maxUserToGroupCount,
 		SimpleCounter counter, SimpleCounter permissionCounter,
 		SimpleCounter resourceCounter, SimpleCounter resourceCodeCounter,
+		SimpleCounter resourcePermissionCounter,
 		SimpleCounter socialActivityCounter) {
 
 		try {
@@ -121,6 +124,7 @@ public class DataFactory {
 			_permissionCounter = permissionCounter;
 			_resourceCounter = resourceCounter;
 			_resourceCodeCounter = resourceCodeCounter;
+			_resourcePermissionCounter = resourcePermissionCounter;
 			_socialActivityCounter = socialActivityCounter;
 
 			initClassNames();
@@ -512,6 +516,44 @@ public class DataFactory {
 		return resource;
 	}
 
+	public List<ResourcePermission> addResourcePermission(
+			String name, long companyId, String primKey)
+		throws Exception {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(2);
+
+		ResourcePermission resourcePermission = new ResourcePermissionImpl();
+
+		resourcePermission.setResourcePermissionId(
+			_resourcePermissionCounter.get());
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(name);
+		resourcePermission.setPrimKey(primKey);
+		resourcePermission.setRoleId(_ownerRole.getRoleId());
+		resourcePermission.setActionIds(1);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setOwnerId(_defaultUser.getUserId());
+
+		resourcePermissions.add(resourcePermission);
+
+		resourcePermission = new ResourcePermissionImpl();
+
+		resourcePermission.setResourcePermissionId(
+			_resourcePermissionCounter.get());
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(name);
+		resourcePermission.setPrimKey(primKey);
+		resourcePermission.setRoleId(_guestRole.getRoleId());
+		resourcePermission.setActionIds(1);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setOwnerId(0);
+
+		resourcePermissions.add(resourcePermission);
+
+		return resourcePermissions;
+	}
+
 	public List<KeyValuePair> addRolesPermissions(
 			Resource resource, List<Permission> permissions, Role memberRole)
 		throws Exception {
@@ -857,6 +899,15 @@ public class DataFactory {
 
 		_counters.add(counter);
 
+		// ResourcePermission
+
+		counter = new CounterModelImpl();
+
+		counter.setName(ResourcePermission.class.getName());
+		counter.setCurrentId(_resourcePermissionCounter.get());
+
+		_counters.add(counter);
+
 		// SocialActivity
 
 		counter = new CounterModelImpl();
@@ -1169,6 +1220,7 @@ public class DataFactory {
 	private SimpleCounter _resourceCodeCounter;
 	private List<ResourceCode> _resourceCodes;
 	private SimpleCounter _resourceCounter;
+	private SimpleCounter _resourcePermissionCounter;
 	private ClassName _roleClassName;
 	private List<Role> _roles;
 	private Role _siteAdministratorRole;

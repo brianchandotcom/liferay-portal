@@ -16,8 +16,15 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<iframe id="<portlet:namespace />iframe" src="/c/portal/license?p_p_state=pop_up" scrolling="no" style="border: none; width: 100%;"></iframe>
+<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" onLoad="<portlet:namespace />resizeHeight();" scrolling="no" src="/c/portal/license?p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
 
 <script type="text/javascript">
-	parent.window.document.getElementById("<portlet:namespace />iframe").height = document.body.offsetHeight;
+	function <portlet:namespace />resizeHeight() {
+		var iframe = document.getElementById("<portlet:namespace />iframe");
+
+		var iframeBody = iframe.contentWindow.document.body;
+		var iframeHtml = iframe.contentWindow.document.documentElement;
+
+		iframe.height = Math.max(iframeBody.offsetHeight, iframeBody.scrollHeight, iframeBody.clientHeight, iframeHtml.offsetHeight, iframeHtml.scrollHeight, iframeHtml.clientHeight);
+	}
 </script>

@@ -64,12 +64,12 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 </aui:form>
 
 <aui:script use='<%= "aui-ace-editor-base,aui-ace-editor-mode-" + editorMode + ",aui-dialog,aui-io-request" %>'>
-	var editorType = '<%= editorType %>';
+	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
 	var openerAUI = Liferay.Util.getOpener().AUI();
 
-	var editorContentInputElement = openerAUI.one('<%= editorContentInputElement %>');
-	var editorContentOutputElement = openerAUI.one('<%= editorContentOutputElement %>');
+	var editorContentInputElement = openerAUI.one('<%= HtmlUtil.escapeJS(editorContentInputElement) %>');
+	var editorContentOutputElement = openerAUI.one('<%= HtmlUtil.escapeJS(editorContentOutputElement) %>');
 
 	var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
 

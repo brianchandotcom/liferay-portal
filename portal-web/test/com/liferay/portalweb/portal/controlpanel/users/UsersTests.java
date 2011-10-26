@@ -19,6 +19,7 @@ import com.liferay.portalweb.portal.controlpanel.users.user.UserTests;
 import com.liferay.portalweb.portal.controlpanel.users.useradditionalemailaddress.UserAdditionalEmailAddressTests;
 import com.liferay.portalweb.portal.controlpanel.users.useraddress.UserAddressTests;
 import com.liferay.portalweb.portal.controlpanel.users.userphonenumber.UserPhoneNumberTests;
+import com.liferay.portalweb.portal.controlpanel.users.userroles.UserRolesTests;
 import com.liferay.portalweb.portal.controlpanel.users.userwebsite.UserWebsiteTests;
 
 import junit.framework.Test;
@@ -36,6 +37,7 @@ public class UsersTests extends BaseTests {
 		testSuite.addTest(UserAdditionalEmailAddressTests.suite());
 		testSuite.addTest(UserAddressTests.suite());
 		testSuite.addTest(UserPhoneNumberTests.suite());
+		testSuite.addTest(UserRolesTests.suite());
 		testSuite.addTest(UserWebsiteTests.suite());
 
 		return testSuite;

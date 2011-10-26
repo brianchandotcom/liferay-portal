@@ -97,13 +97,52 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
+		HttpPrincipal httpPrincipal, long structureId, long newStructureId,
+		java.lang.String type,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+					"copyTemplates", _copyTemplatesParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					structureId, newStructureId, type, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void deleteTemplate(HttpPrincipal httpPrincipal,
 		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
-					"deleteTemplate", _deleteTemplateParameterTypes1);
+					"deleteTemplate", _deleteTemplateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					templateId);
@@ -136,7 +175,7 @@ public class DDMTemplateServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
-					"getTemplate", _getTemplateParameterTypes2);
+					"getTemplate", _getTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					templateId);
@@ -173,7 +212,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
-					"getTemplates", _getTemplatesParameterTypes3);
+					"getTemplates", _getTemplatesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					structureId, type, mode);
@@ -211,7 +250,7 @@ public class DDMTemplateServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
-					"updateTemplate", _updateTemplateParameterTypes4);
+					"updateTemplate", _updateTemplateParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					templateId, nameMap, descriptionMap, type, mode, language,
@@ -250,16 +289,20 @@ public class DDMTemplateServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteTemplateParameterTypes1 = new Class[] {
+	private static final Class<?>[] _copyTemplatesParameterTypes1 = new Class[] {
+			long.class, long.class, java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteTemplateParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getTemplateParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getTemplateParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getTemplatesParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getTemplatesParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateTemplateParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateTemplateParameterTypes5 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

@@ -306,11 +306,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
 		long userId, long structureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructureLocalService.copyStructure(userId, structureId,
-			serviceContext);
+			nameMap, descriptionMap, serviceContext);
 	}
 
 	public void deleteStructure(

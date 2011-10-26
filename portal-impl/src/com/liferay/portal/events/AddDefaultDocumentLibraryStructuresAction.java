@@ -101,7 +101,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_VIDEO,
-			"Video Document Type", "Default Videos's Metadata Set",
+			"Video Document Type", "Default Video's Metadata Set",
 			serviceContext);
 	}
 

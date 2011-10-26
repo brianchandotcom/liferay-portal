@@ -134,8 +134,8 @@
 		</root>
 	</structure>
 	<structure>
-		<name><![CDATA[Default Videos's Metadata Set]]></name>
-		<description><![CDATA[Default Videos's Metadata Set]]></description>
+		<name><![CDATA[Default Video's Metadata Set]]></name>
+		<description><![CDATA[Default Video's Metadata Set]]></description>
 		<root available-locales="en_US" default-locale="en_US">
 			<dynamic-element dataType="string" name="author" type="text">
 				<meta-data locale="en_US">

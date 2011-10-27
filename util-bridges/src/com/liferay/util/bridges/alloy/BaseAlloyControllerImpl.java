@@ -119,6 +119,16 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	protected String buildIncludePath(String viewPath) {
+		if (viewPath.equals(_VIEW_PATH_ERROR)) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("/WEB-INF/jsp/");
+			sb.append(portlet.getFriendlyURLMapping());
+			sb.append("/views/error.jsp");
+
+			return sb.toString();
+		}
+
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("/WEB-INF/jsp/");
@@ -360,6 +370,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		viewPath = actionPath;
 	}
 
+	protected void renderError(String message) {
+		renderRequest.setAttribute("message", message);
+
+		render(_VIEW_PATH_ERROR);
+	}
+
 	protected void updateAttachedModel(BaseModel<?> baseModel)
 		throws Exception {
 
@@ -494,5 +510,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected ThemeDisplay themeDisplay;
 	protected String viewPath;
 	protected User user;
+
+	private static final String _VIEW_PATH_ERROR = "VIEW_PATH_ERROR";
 
 }

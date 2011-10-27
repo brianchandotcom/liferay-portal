@@ -152,12 +152,6 @@ public class UserTrackerPathLocalServiceWrapper
 		return _userTrackerPathLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.UserTrackerPath fetchUserTrackerPath(
-		long userTrackerPathId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userTrackerPathLocalService.fetchUserTrackerPath(userTrackerPathId);
-	}
-
 	/**
 	* Returns the user tracker path with the primary key.
 	*

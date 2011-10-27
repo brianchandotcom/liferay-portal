@@ -145,11 +145,6 @@ public interface PluginSettingLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PluginSetting fetchPluginSetting(
-		long pluginSettingId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the plugin setting with the primary key.
 	*

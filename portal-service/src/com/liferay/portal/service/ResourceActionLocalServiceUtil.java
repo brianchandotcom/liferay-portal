@@ -158,12 +158,6 @@ public class ResourceActionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.ResourceAction fetchResourceAction(
-		long resourceActionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchResourceAction(resourceActionId);
-	}
-
 	/**
 	* Returns the resource action with the primary key.
 	*

@@ -158,12 +158,6 @@ public class PluginSettingLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.PluginSetting fetchPluginSetting(
-		long pluginSettingId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPluginSetting(pluginSettingId);
-	}
-
 	/**
 	* Returns the plugin setting with the primary key.
 	*

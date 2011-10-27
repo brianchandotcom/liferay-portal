@@ -158,12 +158,6 @@ public class PasswordTrackerLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.PasswordTracker fetchPasswordTracker(
-		long passwordTrackerId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPasswordTracker(passwordTrackerId);
-	}
-
 	/**
 	* Returns the password tracker with the primary key.
 	*

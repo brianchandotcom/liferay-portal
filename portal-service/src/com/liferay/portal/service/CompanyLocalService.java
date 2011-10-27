@@ -143,10 +143,6 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company fetchCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the company with the primary key.
 	*
@@ -311,6 +307,18 @@ public interface CompanyLocalService extends PersistedModelLocalService {
 	public void deleteLogo(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the company with the primary key.
+	*
+	* @param companyId the primary key of the company
+	* @return the company with the primary key, <code>null</code> if a company
+	with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Company fetchCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the company with the virtual host name.

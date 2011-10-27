@@ -156,11 +156,6 @@ public class PortletLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Portlet fetchPortlet(long id)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPortlet(id);
-	}
-
 	/**
 	* Returns the portlet with the primary key.
 	*

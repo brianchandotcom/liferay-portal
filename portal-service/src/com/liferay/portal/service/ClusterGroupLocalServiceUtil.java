@@ -158,12 +158,6 @@ public class ClusterGroupLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.ClusterGroup fetchClusterGroup(
-		long clusterGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchClusterGroup(clusterGroupId);
-	}
-
 	/**
 	* Returns the cluster group with the primary key.
 	*

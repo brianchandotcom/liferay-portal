@@ -152,12 +152,6 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 		return _workflowInstanceLinkLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(workflowInstanceLinkId);
-	}
-
 	/**
 	* Returns the workflow instance link with the primary key.
 	*

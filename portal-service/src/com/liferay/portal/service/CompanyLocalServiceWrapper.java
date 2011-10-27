@@ -147,11 +147,6 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 		return _companyLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Company fetchCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _companyLocalService.fetchCompany(companyId);
-	}
-
 	/**
 	* Returns the company with the primary key.
 	*
@@ -338,6 +333,19 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_companyLocalService.deleteLogo(companyId);
+	}
+
+	/**
+	* Returns the company with the primary key.
+	*
+	* @param companyId the primary key of the company
+	* @return the company with the primary key, <code>null</code> if a company
+	with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _companyLocalService.fetchCompany(companyId);
 	}
 
 	/**

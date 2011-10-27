@@ -147,11 +147,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 		return _ticketLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Ticket fetchTicket(long ticketId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ticketLocalService.fetchTicket(ticketId);
-	}
-
 	/**
 	* Returns the ticket with the primary key.
 	*

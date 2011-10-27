@@ -152,12 +152,6 @@ public class RepositoryEntryLocalServiceWrapper
 		return _repositoryEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.RepositoryEntry fetchRepositoryEntry(
-		long repositoryEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
-	}
-
 	/**
 	* Returns the repository entry with the primary key.
 	*
@@ -270,6 +264,12 @@ public class RepositoryEntryLocalServiceWrapper
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_repositoryEntryLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	public com.liferay.portal.model.RepositoryEntry fetchRepositoryEntry(
+		long repositoryEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
 	}
 
 	/**

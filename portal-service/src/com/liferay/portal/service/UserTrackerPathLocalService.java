@@ -145,11 +145,6 @@ public interface UserTrackerPathLocalService extends PersistedModelLocalService 
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.UserTrackerPath fetchUserTrackerPath(
-		long userTrackerPathId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the user tracker path with the primary key.
 	*

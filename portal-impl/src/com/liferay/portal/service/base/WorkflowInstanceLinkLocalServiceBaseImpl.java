@@ -401,11 +401,6 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 		return workflowInstanceLinkPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public WorkflowInstanceLink fetchWorkflowInstanceLink(
-		long workflowInstanceLinkId) throws SystemException {
-		return workflowInstanceLinkPersistence.fetchByPrimaryKey(workflowInstanceLinkId);
-	}
-
 	/**
 	 * Returns the workflow instance link with the primary key.
 	 *

@@ -160,13 +160,6 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.ResourceBlockPermission fetchResourceBlockPermission(
-		long resourceBlockPermissionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .fetchResourceBlockPermission(resourceBlockPermissionId);
-	}
-
 	/**
 	* Returns the resource block permission with the primary key.
 	*

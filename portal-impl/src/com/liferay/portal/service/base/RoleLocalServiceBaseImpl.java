@@ -396,10 +396,6 @@ public abstract class RoleLocalServiceBaseImpl implements RoleLocalService,
 		return rolePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Role fetchRole(long roleId) throws SystemException {
-		return rolePersistence.fetchByPrimaryKey(roleId);
-	}
-
 	/**
 	 * Returns the role with the primary key.
 	 *

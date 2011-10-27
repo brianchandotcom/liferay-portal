@@ -152,12 +152,6 @@ public class PortalPreferencesLocalServiceWrapper
 		return _portalPreferencesLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.PortalPreferences fetchPortalPreferences(
-		long portalPreferencesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _portalPreferencesLocalService.fetchPortalPreferences(portalPreferencesId);
-	}
-
 	/**
 	* Returns the portal preferences with the primary key.
 	*

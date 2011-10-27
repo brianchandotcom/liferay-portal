@@ -148,11 +148,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		return _classNameLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.ClassName fetchClassName(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _classNameLocalService.fetchClassName(classNameId);
-	}
-
 	/**
 	* Returns the class name with the primary key.
 	*

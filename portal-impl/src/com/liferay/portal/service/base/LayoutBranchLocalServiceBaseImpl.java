@@ -399,11 +399,6 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		return layoutBranchPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public LayoutBranch fetchLayoutBranch(long LayoutBranchId)
-		throws SystemException {
-		return layoutBranchPersistence.fetchByPrimaryKey(LayoutBranchId);
-	}
-
 	/**
 	 * Returns the layout branch with the primary key.
 	 *

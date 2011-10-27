@@ -158,12 +158,6 @@ public class UserTrackerLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.UserTracker fetchUserTracker(
-		long userTrackerId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchUserTracker(userTrackerId);
-	}
-
 	/**
 	* Returns the user tracker with the primary key.
 	*

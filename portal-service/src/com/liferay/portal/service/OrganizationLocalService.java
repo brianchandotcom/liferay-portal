@@ -147,11 +147,6 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Organization fetchOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the organization with the primary key.
 	*
@@ -327,6 +322,11 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 	public void deleteLogo(long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Organization fetchOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the organizations belonging to the group.

@@ -396,10 +396,6 @@ public abstract class ReleaseLocalServiceBaseImpl implements ReleaseLocalService
 		return releasePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Release fetchRelease(long releaseId) throws SystemException {
-		return releasePersistence.fetchByPrimaryKey(releaseId);
-	}
-
 	/**
 	 * Returns the release with the primary key.
 	 *

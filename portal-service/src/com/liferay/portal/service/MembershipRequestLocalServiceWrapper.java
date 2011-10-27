@@ -152,12 +152,6 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.MembershipRequest fetchMembershipRequest(
-		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _membershipRequestLocalService.fetchMembershipRequest(membershipRequestId);
-	}
-
 	/**
 	* Returns the membership request with the primary key.
 	*

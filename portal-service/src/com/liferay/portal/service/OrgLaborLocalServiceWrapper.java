@@ -148,11 +148,6 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 		return _orgLaborLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.OrgLabor fetchOrgLabor(long orgLaborId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _orgLaborLocalService.fetchOrgLabor(orgLaborId);
-	}
-
 	/**
 	* Returns the org labor with the primary key.
 	*

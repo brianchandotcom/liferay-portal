@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -44,8 +45,10 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -304,8 +307,44 @@ public class PermissionExporter {
 
 		List<Role> roles = layoutCache.getGroupRoles_5(groupId, resourceName);
 
+		List<String> actionIds = null;
+
+		if (portletActions) {
+			actionIds = ResourceActionsUtil.getPortletResourceActions(
+				resourceName);
+		}
+		else {
+			actionIds = ResourceActionsUtil.getModelResourceActions(
+				resourceName);
+		}
+
+		if (actionIds.isEmpty()) {
+			return;
+		}
+
+		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
+		Map<Long, Role> roleIdToRole = new HashMap<Long, Role>();
+
 		for (Role role : roles) {
 			if (role.getName().equals(RoleConstants.ADMINISTRATOR)) {
+				continue;
+			}
+
+			roleIds.add(role.getRoleId());
+			roleIdToRole.put(role.getRoleId(), role);
+		}
+
+		Map<Long, Set<String>> roleIdsToAction =
+			ResourcePermissionLocalServiceUtil.
+				getAvailableResourcePermissionActionIds(
+					companyId, resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
+					roleIds.getArray(), actionIds);
+
+		for (Role role : roleIdToRole.values()) {
+			Set<String> actions = roleIdsToAction.get(role.getRoleId());
+
+			if ((actions == null) || actions.isEmpty()) {
 				continue;
 			}
 
@@ -314,24 +353,6 @@ public class PermissionExporter {
 			roleElement.addAttribute("name", role.getName());
 			roleElement.addAttribute("description", role.getDescription());
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
-
-			List<String> actionIds = null;
-
-			if (portletActions) {
-				actionIds = ResourceActionsUtil.getPortletResourceActions(
-					resourceName);
-			}
-			else {
-				actionIds = ResourceActionsUtil.getModelResourceActions(
-					resourceName);
-			}
-
-			List<String> actions =
-				ResourcePermissionLocalServiceUtil.
-					getAvailableResourcePermissionActionIds(
-						companyId, resourceName,
-						ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
-						role.getRoleId(), actionIds);
 
 			for (String action : actions) {
 				Element actionKeyElement = roleElement.addElement("action-key");

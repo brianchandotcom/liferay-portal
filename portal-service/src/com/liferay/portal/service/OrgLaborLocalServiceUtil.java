@@ -158,12 +158,6 @@ public class OrgLaborLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.OrgLabor fetchOrgLabor(
-		long orgLaborId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchOrgLabor(orgLaborId);
-	}
-
 	/**
 	* Returns the org labor with the primary key.
 	*

@@ -403,11 +403,6 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 		return workflowDefinitionLinkPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-		long workflowDefinitionLinkId) throws SystemException {
-		return workflowDefinitionLinkPersistence.fetchByPrimaryKey(workflowDefinitionLinkId);
-	}
-
 	/**
 	 * Returns the workflow definition link with the primary key.
 	 *

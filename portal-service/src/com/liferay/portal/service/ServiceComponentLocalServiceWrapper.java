@@ -152,12 +152,6 @@ public class ServiceComponentLocalServiceWrapper
 		return _serviceComponentLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.ServiceComponent fetchServiceComponent(
-		long serviceComponentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _serviceComponentLocalService.fetchServiceComponent(serviceComponentId);
-	}
-
 	/**
 	* Returns the service component with the primary key.
 	*

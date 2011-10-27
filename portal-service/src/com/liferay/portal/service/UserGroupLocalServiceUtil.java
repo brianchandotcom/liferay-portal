@@ -160,12 +160,6 @@ public class UserGroupLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.UserGroup fetchUserGroup(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchUserGroup(userGroupId);
-	}
-
 	/**
 	* Returns the user group with the primary key.
 	*

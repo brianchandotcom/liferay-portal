@@ -149,11 +149,6 @@ public class ResourceCodeLocalServiceWrapper implements ResourceCodeLocalService
 		return _resourceCodeLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.ResourceCode fetchResourceCode(long codeId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceCodeLocalService.fetchResourceCode(codeId);
-	}
-
 	/**
 	* Returns the resource code with the primary key.
 	*

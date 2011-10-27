@@ -400,11 +400,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		return userTrackerPathPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public UserTrackerPath fetchUserTrackerPath(long userTrackerPathId)
-		throws SystemException {
-		return userTrackerPathPersistence.fetchByPrimaryKey(userTrackerPathId);
-	}
-
 	/**
 	 * Returns the user tracker path with the primary key.
 	 *

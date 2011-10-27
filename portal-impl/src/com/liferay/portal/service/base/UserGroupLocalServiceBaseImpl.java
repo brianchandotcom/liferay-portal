@@ -400,10 +400,6 @@ public abstract class UserGroupLocalServiceBaseImpl
 		return userGroupPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public UserGroup fetchUserGroup(long userGroupId) throws SystemException {
-		return userGroupPersistence.fetchByPrimaryKey(userGroupId);
-	}
-
 	/**
 	 * Returns the user group with the primary key.
 	 *

@@ -150,12 +150,6 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 		return _userIdMapperLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.UserIdMapper fetchUserIdMapper(
-		long userIdMapperId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userIdMapperLocalService.fetchUserIdMapper(userIdMapperId);
-	}
-
 	/**
 	* Returns the user ID mapper with the primary key.
 	*

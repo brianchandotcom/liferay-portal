@@ -408,11 +408,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 		return organizationPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Organization fetchOrganization(long organizationId)
-		throws SystemException {
-		return organizationPersistence.fetchByPrimaryKey(organizationId);
-	}
-
 	/**
 	 * Returns the organization with the primary key.
 	 *

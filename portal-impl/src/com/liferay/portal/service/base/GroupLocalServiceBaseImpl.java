@@ -465,10 +465,6 @@ public abstract class GroupLocalServiceBaseImpl implements GroupLocalService,
 		return groupPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Group fetchGroup(long groupId) throws SystemException {
-		return groupPersistence.fetchByPrimaryKey(groupId);
-	}
-
 	/**
 	 * Returns the group with the primary key.
 	 *

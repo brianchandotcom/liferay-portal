@@ -398,10 +398,6 @@ public abstract class ClassNameLocalServiceBaseImpl
 		return classNamePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public ClassName fetchClassName(long classNameId) throws SystemException {
-		return classNamePersistence.fetchByPrimaryKey(classNameId);
-	}
-
 	/**
 	 * Returns the class name with the primary key.
 	 *

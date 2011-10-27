@@ -152,12 +152,6 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		return _workflowDefinitionLinkLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-		long workflowDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(workflowDefinitionLinkId);
-	}
-
 	/**
 	* Returns the workflow definition link with the primary key.
 	*

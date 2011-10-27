@@ -148,11 +148,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 		return _resourceLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Resource fetchResource(long resourceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceLocalService.fetchResource(resourceId);
-	}
-
 	/**
 	* Returns the resource with the primary key.
 	*

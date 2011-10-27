@@ -146,11 +146,6 @@ public interface PortalPreferencesLocalService
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortalPreferences fetchPortalPreferences(
-		long portalPreferencesId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the portal preferences with the primary key.
 	*

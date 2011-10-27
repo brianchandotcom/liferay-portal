@@ -148,11 +148,6 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 		return _layoutSetLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.LayoutSet fetchLayoutSet(long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutSetLocalService.fetchLayoutSet(layoutSetId);
-	}
-
 	/**
 	* Returns the layout set with the primary key.
 	*

@@ -143,10 +143,6 @@ public interface ReleaseLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Release fetchRelease(long releaseId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the release with the primary key.
 	*

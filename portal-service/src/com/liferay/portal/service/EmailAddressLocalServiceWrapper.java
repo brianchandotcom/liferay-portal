@@ -150,12 +150,6 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 		return _emailAddressLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.EmailAddress fetchEmailAddress(
-		long emailAddressId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _emailAddressLocalService.fetchEmailAddress(emailAddressId);
-	}
-
 	/**
 	* Returns the email address with the primary key.
 	*

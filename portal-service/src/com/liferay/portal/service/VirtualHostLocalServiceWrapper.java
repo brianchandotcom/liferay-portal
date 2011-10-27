@@ -150,12 +150,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		return _virtualHostLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long virtualHostId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _virtualHostLocalService.fetchVirtualHost(virtualHostId);
-	}
-
 	/**
 	* Returns the virtual host with the primary key.
 	*

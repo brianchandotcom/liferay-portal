@@ -156,11 +156,6 @@ public class AccountLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Account fetchAccount(long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAccount(accountId);
-	}
-
 	/**
 	* Returns the account with the primary key.
 	*

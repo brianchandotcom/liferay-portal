@@ -150,12 +150,6 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 		return _layoutBranchLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.LayoutBranch fetchLayoutBranch(
-		long LayoutBranchId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutBranchLocalService.fetchLayoutBranch(LayoutBranchId);
-	}
-
 	/**
 	* Returns the layout branch with the primary key.
 	*

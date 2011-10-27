@@ -152,12 +152,6 @@ public class UserNotificationEventLocalServiceWrapper
 		return _userNotificationEventLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.UserNotificationEvent fetchUserNotificationEvent(
-		long userNotificationEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationEventLocalService.fetchUserNotificationEvent(userNotificationEventId);
-	}
-
 	/**
 	* Returns the user notification event with the primary key.
 	*

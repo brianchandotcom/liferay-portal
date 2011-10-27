@@ -145,10 +145,6 @@ public interface GroupLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the group with the primary key.
 	*
@@ -355,6 +351,18 @@ public interface GroupLocalService extends PersistedModelLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group fetchFriendlyURLGroup(
 		long companyId, java.lang.String friendlyURL)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the group with the matching primary key.
+	*
+	* @param groupId the primary key of the group
+	* @return the group with the primary key, or <code>null</code> if a group
+	with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group fetchGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

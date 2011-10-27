@@ -399,11 +399,6 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 		return webDAVPropsPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public WebDAVProps fetchWebDAVProps(long webDavPropsId)
-		throws SystemException {
-		return webDAVPropsPersistence.fetchByPrimaryKey(webDavPropsId);
-	}
-
 	/**
 	 * Returns the web d a v props with the primary key.
 	 *

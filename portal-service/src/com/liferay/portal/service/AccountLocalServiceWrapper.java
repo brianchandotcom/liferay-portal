@@ -147,11 +147,6 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 		return _accountLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Account fetchAccount(long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _accountLocalService.fetchAccount(accountId);
-	}
-
 	/**
 	* Returns the account with the primary key.
 	*

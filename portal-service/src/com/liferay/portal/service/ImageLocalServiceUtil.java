@@ -156,11 +156,6 @@ public class ImageLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Image fetchImage(long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchImage(imageId);
-	}
-
 	/**
 	* Returns the image with the primary key.
 	*

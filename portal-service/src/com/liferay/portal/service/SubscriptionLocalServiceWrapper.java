@@ -152,12 +152,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		return _subscriptionLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Subscription fetchSubscription(
-		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _subscriptionLocalService.fetchSubscription(subscriptionId);
-	}
-
 	/**
 	* Returns the subscription with the primary key.
 	*

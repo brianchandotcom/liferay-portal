@@ -158,12 +158,6 @@ public class EmailAddressLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.EmailAddress fetchEmailAddress(
-		long emailAddressId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchEmailAddress(emailAddressId);
-	}
-
 	/**
 	* Returns the email address with the primary key.
 	*

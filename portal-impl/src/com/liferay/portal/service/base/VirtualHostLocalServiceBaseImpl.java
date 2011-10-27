@@ -399,11 +399,6 @@ public abstract class VirtualHostLocalServiceBaseImpl
 		return virtualHostPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public VirtualHost fetchVirtualHost(long virtualHostId)
-		throws SystemException {
-		return virtualHostPersistence.fetchByPrimaryKey(virtualHostId);
-	}
-
 	/**
 	 * Returns the virtual host with the primary key.
 	 *

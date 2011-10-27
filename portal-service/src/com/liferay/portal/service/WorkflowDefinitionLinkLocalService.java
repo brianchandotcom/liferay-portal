@@ -146,11 +146,6 @@ public interface WorkflowDefinitionLinkLocalService
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-		long workflowDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the workflow definition link with the primary key.
 	*

@@ -158,12 +158,6 @@ public class PortletPreferencesLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.PortletPreferences fetchPortletPreferences(
-		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPortletPreferences(portletPreferencesId);
-	}
-
 	/**
 	* Returns the portlet preferences with the primary key.
 	*

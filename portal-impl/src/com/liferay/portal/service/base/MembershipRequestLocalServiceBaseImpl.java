@@ -402,11 +402,6 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 		return membershipRequestPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public MembershipRequest fetchMembershipRequest(long membershipRequestId)
-		throws SystemException {
-		return membershipRequestPersistence.fetchByPrimaryKey(membershipRequestId);
-	}
-
 	/**
 	 * Returns the membership request with the primary key.
 	 *

@@ -149,11 +149,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Role fetchRole(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _roleLocalService.fetchRole(roleId);
-	}
-
 	/**
 	* Returns the role with the primary key.
 	*

@@ -147,11 +147,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		return _phoneLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Phone fetchPhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _phoneLocalService.fetchPhone(phoneId);
-	}
-
 	/**
 	* Returns the phone with the primary key.
 	*

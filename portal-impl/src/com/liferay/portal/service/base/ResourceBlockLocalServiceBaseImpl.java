@@ -399,11 +399,6 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 		return resourceBlockPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public ResourceBlock fetchResourceBlock(long resourceBlockId)
-		throws SystemException {
-		return resourceBlockPersistence.fetchByPrimaryKey(resourceBlockId);
-	}
-
 	/**
 	 * Returns the resource block with the primary key.
 	 *

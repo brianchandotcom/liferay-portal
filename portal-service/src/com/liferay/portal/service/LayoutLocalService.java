@@ -143,10 +143,6 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout fetchLayout(long plid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the layout with the primary key.
 	*
@@ -550,6 +546,18 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the layout with the primary key.
+	*
+	* @param plid the primary key of the layout
+	* @return the layout, or <code>null</code> if a layout with the primary
+	key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Layout fetchLayout(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the layout matching the universally unique identifier and group

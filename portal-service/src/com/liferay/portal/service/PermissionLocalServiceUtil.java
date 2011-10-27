@@ -158,12 +158,6 @@ public class PermissionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Permission fetchPermission(
-		long permissionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPermission(permissionId);
-	}
-
 	/**
 	* Returns the permission with the primary key.
 	*

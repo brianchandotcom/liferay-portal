@@ -403,11 +403,6 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		return userGroupGroupRolePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public UserGroupGroupRole fetchUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK) throws SystemException {
-		return userGroupGroupRolePersistence.fetchByPrimaryKey(userGroupGroupRolePK);
-	}
-
 	/**
 	 * Returns the user group group role with the primary key.
 	 *

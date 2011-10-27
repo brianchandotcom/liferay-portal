@@ -399,11 +399,6 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 		return browserTrackerPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public BrowserTracker fetchBrowserTracker(long browserTrackerId)
-		throws SystemException {
-		return browserTrackerPersistence.fetchByPrimaryKey(browserTrackerId);
-	}
-
 	/**
 	 * Returns the browser tracker with the primary key.
 	 *

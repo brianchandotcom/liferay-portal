@@ -160,12 +160,6 @@ public class PasswordPolicyLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
-		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPasswordPolicy(passwordPolicyId);
-	}
-
 	/**
 	* Returns the password policy with the primary key.
 	*

@@ -147,11 +147,6 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 		return _shardLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Shard fetchShard(long shardId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _shardLocalService.fetchShard(shardId);
-	}
-
 	/**
 	* Returns the shard with the primary key.
 	*

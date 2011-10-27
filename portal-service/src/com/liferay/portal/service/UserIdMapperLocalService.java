@@ -145,11 +145,6 @@ public interface UserIdMapperLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.UserIdMapper fetchUserIdMapper(
-		long userIdMapperId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the user ID mapper with the primary key.
 	*

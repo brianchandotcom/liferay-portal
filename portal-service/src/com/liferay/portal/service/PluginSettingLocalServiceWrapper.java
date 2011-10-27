@@ -151,12 +151,6 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.PluginSetting fetchPluginSetting(
-		long pluginSettingId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _pluginSettingLocalService.fetchPluginSetting(pluginSettingId);
-	}
-
 	/**
 	* Returns the plugin setting with the primary key.
 	*

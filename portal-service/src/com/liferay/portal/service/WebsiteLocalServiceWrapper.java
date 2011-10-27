@@ -147,11 +147,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		return _websiteLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Website fetchWebsite(long websiteId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _websiteLocalService.fetchWebsite(websiteId);
-	}
-
 	/**
 	* Returns the website with the primary key.
 	*

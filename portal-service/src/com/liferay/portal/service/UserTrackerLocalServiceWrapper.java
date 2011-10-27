@@ -150,12 +150,6 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 		return _userTrackerLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.UserTracker fetchUserTracker(
-		long userTrackerId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userTrackerLocalService.fetchUserTracker(userTrackerId);
-	}
-
 	/**
 	* Returns the user tracker with the primary key.
 	*

@@ -160,12 +160,6 @@ public class OrganizationLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Organization fetchOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchOrganization(organizationId);
-	}
-
 	/**
 	* Returns the organization with the primary key.
 	*
@@ -367,6 +361,12 @@ public class OrganizationLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteLogo(organizationId);
+	}
+
+	public static com.liferay.portal.model.Organization fetchOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchOrganization(organizationId);
 	}
 
 	/**

@@ -437,10 +437,6 @@ public abstract class UserLocalServiceBaseImpl implements UserLocalService,
 		return userPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public User fetchUser(long userId) throws SystemException {
-		return userPersistence.fetchByPrimaryKey(userId);
-	}
-
 	/**
 	 * Returns the user with the primary key.
 	 *

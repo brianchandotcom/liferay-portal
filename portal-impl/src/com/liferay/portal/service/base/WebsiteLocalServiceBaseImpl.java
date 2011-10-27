@@ -396,10 +396,6 @@ public abstract class WebsiteLocalServiceBaseImpl implements WebsiteLocalService
 		return websitePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Website fetchWebsite(long websiteId) throws SystemException {
-		return websitePersistence.fetchByPrimaryKey(websiteId);
-	}
-
 	/**
 	 * Returns the website with the primary key.
 	 *

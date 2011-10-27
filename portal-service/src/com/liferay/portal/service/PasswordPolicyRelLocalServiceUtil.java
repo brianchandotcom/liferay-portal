@@ -158,12 +158,6 @@ public class PasswordPolicyRelLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
-		long passwordPolicyRelId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchPasswordPolicyRel(passwordPolicyRelId);
-	}
-
 	/**
 	* Returns the password policy rel with the primary key.
 	*

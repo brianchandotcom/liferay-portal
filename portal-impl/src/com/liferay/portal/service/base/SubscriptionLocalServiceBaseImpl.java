@@ -414,11 +414,6 @@ public abstract class SubscriptionLocalServiceBaseImpl
 		return subscriptionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Subscription fetchSubscription(long subscriptionId)
-		throws SystemException {
-		return subscriptionPersistence.fetchByPrimaryKey(subscriptionId);
-	}
-
 	/**
 	 * Returns the subscription with the primary key.
 	 *

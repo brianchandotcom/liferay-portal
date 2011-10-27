@@ -399,11 +399,6 @@ public abstract class EmailAddressLocalServiceBaseImpl
 		return emailAddressPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public EmailAddress fetchEmailAddress(long emailAddressId)
-		throws SystemException {
-		return emailAddressPersistence.fetchByPrimaryKey(emailAddressId);
-	}
-
 	/**
 	 * Returns the email address with the primary key.
 	 *

@@ -147,11 +147,6 @@ public interface SubscriptionLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Subscription fetchSubscription(
-		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the subscription with the primary key.
 	*

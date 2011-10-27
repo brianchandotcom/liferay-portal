@@ -150,12 +150,6 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 		return _portletItemLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.PortletItem fetchPortletItem(
-		long portletItemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _portletItemLocalService.fetchPortletItem(portletItemId);
-	}
-
 	/**
 	* Returns the portlet item with the primary key.
 	*

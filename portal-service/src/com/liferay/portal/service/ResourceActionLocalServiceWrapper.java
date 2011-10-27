@@ -151,12 +151,6 @@ public class ResourceActionLocalServiceWrapper
 		return _resourceActionLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.ResourceAction fetchResourceAction(
-		long resourceActionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceActionLocalService.fetchResourceAction(resourceActionId);
-	}
-
 	/**
 	* Returns the resource action with the primary key.
 	*

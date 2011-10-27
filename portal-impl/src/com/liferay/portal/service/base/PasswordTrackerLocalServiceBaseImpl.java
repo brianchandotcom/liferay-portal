@@ -400,11 +400,6 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 		return passwordTrackerPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public PasswordTracker fetchPasswordTracker(long passwordTrackerId)
-		throws SystemException {
-		return passwordTrackerPersistence.fetchByPrimaryKey(passwordTrackerId);
-	}
-
 	/**
 	 * Returns the password tracker with the primary key.
 	 *

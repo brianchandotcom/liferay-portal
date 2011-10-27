@@ -158,11 +158,6 @@ public class GroupLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Group fetchGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchGroup(groupId);
-	}
-
 	/**
 	* Returns the group with the primary key.
 	*
@@ -399,6 +394,19 @@ public class GroupLocalServiceUtil {
 		long companyId, java.lang.String friendlyURL)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchFriendlyURLGroup(companyId, friendlyURL);
+	}
+
+	/**
+	* Returns the group with the matching primary key.
+	*
+	* @param groupId the primary key of the group
+	* @return the group with the primary key, or <code>null</code> if a group
+	with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group fetchGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchGroup(groupId);
 	}
 
 	/**

@@ -400,11 +400,6 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 		return portalPreferencesPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public PortalPreferences fetchPortalPreferences(long portalPreferencesId)
-		throws SystemException {
-		return portalPreferencesPersistence.fetchByPrimaryKey(portalPreferencesId);
-	}
-
 	/**
 	 * Returns the portal preferences with the primary key.
 	 *

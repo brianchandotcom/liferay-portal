@@ -158,12 +158,6 @@ public class ResourceBlockLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.ResourceBlock fetchResourceBlock(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchResourceBlock(resourceBlockId);
-	}
-
 	/**
 	* Returns the resource block with the primary key.
 	*

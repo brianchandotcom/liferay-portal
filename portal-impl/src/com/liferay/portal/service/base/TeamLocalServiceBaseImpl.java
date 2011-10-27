@@ -396,10 +396,6 @@ public abstract class TeamLocalServiceBaseImpl implements TeamLocalService,
 		return teamPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Team fetchTeam(long teamId) throws SystemException {
-		return teamPersistence.fetchByPrimaryKey(teamId);
-	}
-
 	/**
 	 * Returns the team with the primary key.
 	 *

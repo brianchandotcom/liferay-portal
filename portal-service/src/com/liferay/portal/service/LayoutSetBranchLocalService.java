@@ -147,11 +147,6 @@ public interface LayoutSetBranchLocalService extends PersistedModelLocalService 
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
-		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the layout set branch with the primary key.
 	*

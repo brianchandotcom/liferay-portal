@@ -400,11 +400,6 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 		return layoutRevisionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public LayoutRevision fetchLayoutRevision(long layoutRevisionId)
-		throws SystemException {
-		return layoutRevisionPersistence.fetchByPrimaryKey(layoutRevisionId);
-	}
-
 	/**
 	 * Returns the layout revision with the primary key.
 	 *

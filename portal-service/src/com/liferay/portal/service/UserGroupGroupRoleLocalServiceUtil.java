@@ -159,12 +159,6 @@ public class UserGroupGroupRoleLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.UserGroupGroupRole fetchUserGroupGroupRole(
-		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchUserGroupGroupRole(userGroupGroupRolePK);
-	}
-
 	/**
 	* Returns the user group group role with the primary key.
 	*

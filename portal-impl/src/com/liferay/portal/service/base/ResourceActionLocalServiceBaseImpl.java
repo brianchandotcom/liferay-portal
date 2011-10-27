@@ -399,11 +399,6 @@ public abstract class ResourceActionLocalServiceBaseImpl
 		return resourceActionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public ResourceAction fetchResourceAction(long resourceActionId)
-		throws SystemException {
-		return resourceActionPersistence.fetchByPrimaryKey(resourceActionId);
-	}
-
 	/**
 	 * Returns the resource action with the primary key.
 	 *

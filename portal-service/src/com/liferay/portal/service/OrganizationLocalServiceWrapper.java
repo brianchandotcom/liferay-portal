@@ -152,12 +152,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Organization fetchOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _organizationLocalService.fetchOrganization(organizationId);
-	}
-
 	/**
 	* Returns the organization with the primary key.
 	*
@@ -357,6 +351,12 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_organizationLocalService.deleteLogo(organizationId);
+	}
+
+	public com.liferay.portal.model.Organization fetchOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.fetchOrganization(organizationId);
 	}
 
 	/**

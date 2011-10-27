@@ -158,12 +158,6 @@ public class WebDAVPropsLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.WebDAVProps fetchWebDAVProps(
-		long webDavPropsId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchWebDAVProps(webDavPropsId);
-	}
-
 	/**
 	* Returns the web d a v props with the primary key.
 	*

@@ -150,12 +150,6 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 		return _webDAVPropsLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.WebDAVProps fetchWebDAVProps(
-		long webDavPropsId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _webDAVPropsLocalService.fetchWebDAVProps(webDavPropsId);
-	}
-
 	/**
 	* Returns the web d a v props with the primary key.
 	*

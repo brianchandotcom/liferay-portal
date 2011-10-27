@@ -147,11 +147,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 		return _addressLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Address fetchAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _addressLocalService.fetchAddress(addressId);
-	}
-
 	/**
 	* Returns the address with the primary key.
 	*

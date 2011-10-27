@@ -146,11 +146,6 @@ public interface MembershipRequestLocalService
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.MembershipRequest fetchMembershipRequest(
-		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the membership request with the primary key.
 	*

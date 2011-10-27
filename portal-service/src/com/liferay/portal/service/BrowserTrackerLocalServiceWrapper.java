@@ -151,12 +151,6 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.BrowserTracker fetchBrowserTracker(
-		long browserTrackerId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _browserTrackerLocalService.fetchBrowserTracker(browserTrackerId);
-	}
-
 	/**
 	* Returns the browser tracker with the primary key.
 	*

@@ -400,11 +400,6 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 		return passwordPolicyRelPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public PasswordPolicyRel fetchPasswordPolicyRel(long passwordPolicyRelId)
-		throws SystemException {
-		return passwordPolicyRelPersistence.fetchByPrimaryKey(passwordPolicyRelId);
-	}
-
 	/**
 	 * Returns the password policy rel with the primary key.
 	 *

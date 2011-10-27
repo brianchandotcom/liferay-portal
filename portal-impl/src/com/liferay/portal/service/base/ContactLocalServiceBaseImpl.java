@@ -396,10 +396,6 @@ public abstract class ContactLocalServiceBaseImpl implements ContactLocalService
 		return contactPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Contact fetchContact(long contactId) throws SystemException {
-		return contactPersistence.fetchByPrimaryKey(contactId);
-	}
-
 	/**
 	 * Returns the contact with the primary key.
 	 *

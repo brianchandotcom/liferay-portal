@@ -160,12 +160,6 @@ public class LayoutSetBranchLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
-		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchLayoutSetBranch(layoutSetBranchId);
-	}
-
 	/**
 	* Returns the layout set branch with the primary key.
 	*

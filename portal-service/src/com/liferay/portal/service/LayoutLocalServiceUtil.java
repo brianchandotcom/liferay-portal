@@ -156,11 +156,6 @@ public class LayoutLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Layout fetchLayout(long plid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchLayout(plid);
-	}
-
 	/**
 	* Returns the layout with the primary key.
 	*
@@ -616,6 +611,19 @@ public class LayoutLocalServiceUtil {
 		return getService()
 				   .exportPortletInfoAsFile(plid, groupId, portletId,
 			parameterMap, startDate, endDate);
+	}
+
+	/**
+	* Returns the layout with the primary key.
+	*
+	* @param plid the primary key of the layout
+	* @return the layout, or <code>null</code> if a layout with the primary
+	key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Layout fetchLayout(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLayout(plid);
 	}
 
 	/**

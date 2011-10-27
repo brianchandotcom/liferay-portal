@@ -401,10 +401,6 @@ public abstract class ImageLocalServiceBaseImpl implements ImageLocalService,
 		return imagePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Image fetchImage(long imageId) throws SystemException {
-		return imagePersistence.fetchByPrimaryKey(imageId);
-	}
-
 	/**
 	 * Returns the image with the primary key.
 	 *

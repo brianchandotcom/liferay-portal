@@ -150,11 +150,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 		return _userGroupLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.UserGroup fetchUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupLocalService.fetchUserGroup(userGroupId);
-	}
-
 	/**
 	* Returns the user group with the primary key.
 	*

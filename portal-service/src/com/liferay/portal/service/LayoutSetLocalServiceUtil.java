@@ -158,12 +158,6 @@ public class LayoutSetLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.LayoutSet fetchLayoutSet(
-		long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchLayoutSet(layoutSetId);
-	}
-
 	/**
 	* Returns the layout set with the primary key.
 	*

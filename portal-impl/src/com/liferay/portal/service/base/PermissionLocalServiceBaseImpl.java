@@ -399,11 +399,6 @@ public abstract class PermissionLocalServiceBaseImpl
 		return permissionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Permission fetchPermission(long permissionId)
-		throws SystemException {
-		return permissionPersistence.fetchByPrimaryKey(permissionId);
-	}
-
 	/**
 	 * Returns the permission with the primary key.
 	 *

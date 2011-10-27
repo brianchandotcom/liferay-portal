@@ -400,11 +400,6 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 		return serviceComponentPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public ServiceComponent fetchServiceComponent(long serviceComponentId)
-		throws SystemException {
-		return serviceComponentPersistence.fetchByPrimaryKey(serviceComponentId);
-	}
-
 	/**
 	 * Returns the service component with the primary key.
 	 *

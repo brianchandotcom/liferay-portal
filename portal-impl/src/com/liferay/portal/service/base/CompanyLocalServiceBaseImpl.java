@@ -396,10 +396,6 @@ public abstract class CompanyLocalServiceBaseImpl implements CompanyLocalService
 		return companyPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Company fetchCompany(long companyId) throws SystemException {
-		return companyPersistence.fetchByPrimaryKey(companyId);
-	}
-
 	/**
 	 * Returns the company with the primary key.
 	 *

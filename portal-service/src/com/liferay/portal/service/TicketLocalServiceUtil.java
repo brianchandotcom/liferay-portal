@@ -156,11 +156,6 @@ public class TicketLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Ticket fetchTicket(long ticketId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchTicket(ticketId);
-	}
-
 	/**
 	* Returns the ticket with the primary key.
 	*

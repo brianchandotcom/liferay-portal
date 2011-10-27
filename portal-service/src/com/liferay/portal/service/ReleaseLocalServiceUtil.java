@@ -156,11 +156,6 @@ public class ReleaseLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.Release fetchRelease(long releaseId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchRelease(releaseId);
-	}
-
 	/**
 	* Returns the release with the primary key.
 	*

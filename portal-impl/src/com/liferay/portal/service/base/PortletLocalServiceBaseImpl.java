@@ -395,10 +395,6 @@ public abstract class PortletLocalServiceBaseImpl implements PortletLocalService
 		return portletPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public Portlet fetchPortlet(long id) throws SystemException {
-		return portletPersistence.fetchByPrimaryKey(id);
-	}
-
 	/**
 	 * Returns the portlet with the primary key.
 	 *

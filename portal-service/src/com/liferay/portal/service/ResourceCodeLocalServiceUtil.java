@@ -158,11 +158,6 @@ public class ResourceCodeLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.ResourceCode fetchResourceCode(
-		long codeId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchResourceCode(codeId);
-	}
-
 	/**
 	* Returns the resource code with the primary key.
 	*

@@ -151,12 +151,6 @@ public class ResourceBlockLocalServiceWrapper
 		return _resourceBlockLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.ResourceBlock fetchResourceBlock(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockLocalService.fetchResourceBlock(resourceBlockId);
-	}
-
 	/**
 	* Returns the resource block with the primary key.
 	*

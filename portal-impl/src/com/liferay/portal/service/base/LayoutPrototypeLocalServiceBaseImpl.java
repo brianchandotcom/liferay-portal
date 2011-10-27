@@ -401,11 +401,6 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 		return layoutPrototypePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
-	public LayoutPrototype fetchLayoutPrototype(long layoutPrototypeId)
-		throws SystemException {
-		return layoutPrototypePersistence.fetchByPrimaryKey(layoutPrototypeId);
-	}
-
 	/**
 	 * Returns the layout prototype with the primary key.
 	 *

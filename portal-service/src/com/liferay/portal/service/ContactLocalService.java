@@ -143,10 +143,6 @@ public interface ContactLocalService extends PersistedModelLocalService {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Contact fetchContact(long contactId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Returns the contact with the primary key.
 	*

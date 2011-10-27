@@ -149,11 +149,6 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.User fetchUser(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userLocalService.fetchUser(userId);
-	}
-
 	/**
 	* Returns the user with the primary key.
 	*

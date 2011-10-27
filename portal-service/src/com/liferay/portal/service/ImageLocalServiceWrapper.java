@@ -147,11 +147,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	public com.liferay.portal.model.Image fetchImage(long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _imageLocalService.fetchImage(imageId);
-	}
-
 	/**
 	* Returns the image with the primary key.
 	*

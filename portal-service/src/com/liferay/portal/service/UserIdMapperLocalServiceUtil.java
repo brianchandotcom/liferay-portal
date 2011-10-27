@@ -158,12 +158,6 @@ public class UserIdMapperLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.model.UserIdMapper fetchUserIdMapper(
-		long userIdMapperId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchUserIdMapper(userIdMapperId);
-	}
-
 	/**
 	* Returns the user ID mapper with the primary key.
 	*

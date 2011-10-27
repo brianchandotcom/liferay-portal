@@ -91,7 +91,8 @@
 }
 
 .lfr-input-text, .aui-form .aui-fieldset .aui-field.lfr-input-text-container input {
-	width: <%= ModelHintsConstants.TEXT_DISPLAY_WIDTH %>px;
+	max-width: <%= ModelHintsConstants.TEXT_DISPLAY_WIDTH %>px;
+	width: 100%;
 }
 
 .lfr-input-text.flexible, .lfr-input-text-container.flexible input {
@@ -100,7 +101,8 @@
 
 .lfr-textarea, .aui-form .aui-fieldset .aui-field.lfr-textarea-container textarea {
 	height: <%= ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT %>px;
-	width: <%= ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH %>px;
+	max-width: <%= ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH %>px;
+	width: 100%;
 }
 
 fieldset, .aui-form fieldset {

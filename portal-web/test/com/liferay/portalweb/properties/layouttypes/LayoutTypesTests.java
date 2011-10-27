@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.managepages.page.savepagetypewebcontent;
+package com.liferay.portalweb.properties.layouttypes;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.properties.layouttypes.managepages.ManagePagesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,16 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SavePageTypeWebContentTests extends BaseTests {
+public class LayoutTypesTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
-		testSuite.addTestSuite(SavePageTypeWebContentTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
-		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTest(ManagePagesTests.suite());
 
 		return testSuite;
 	}

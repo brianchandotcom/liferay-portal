@@ -40,6 +40,7 @@ import com.liferay.portal.velocity.VelocityResourceListener;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -151,7 +152,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public Map<String, ThemeSetting> getConfigurableSettings() {
 		Map<String, ThemeSetting> configurableSettings =
-			new HashMap<String, ThemeSetting>();
+			new LinkedHashMap<String, ThemeSetting>();
 
 		for (Map.Entry<String,ThemeSetting> entry :
 				_themeSettingsMap.entrySet()) {
@@ -628,7 +629,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	private String _rootPath = "/";
 	private String _servletContextName = StringPool.BLANK;
 	private Map<String, ThemeSetting> _themeSettingsMap =
-		new HashMap<String, ThemeSetting>();
+		new LinkedHashMap<String, ThemeSetting>();
 	private Map<String, SpriteImage> _spriteImagesMap =
 		new HashMap<String, SpriteImage>();
 	private String _templateExtension = "vm";

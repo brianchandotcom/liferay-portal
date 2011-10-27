@@ -15,10 +15,14 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.plugins.kaleo.assetpublisher.AssetPublisherTests;
+import com.liferay.portalweb.plugins.kaleo.blogs.BlogsTests;
+import com.liferay.portalweb.plugins.kaleo.messageboards.MessageBoardsTests;
 import com.liferay.portalweb.plugins.kaleo.mysubmissions.MySubmissionsTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.MyWorkflowTasksTests;
+import com.liferay.portalweb.plugins.kaleo.pagecomments.PageCommentsTests;
 import com.liferay.portalweb.plugins.kaleo.webcontent.WebContentTests;
 import com.liferay.portalweb.plugins.kaleo.webcontentdisplay.WebContentDisplayTests;
+import com.liferay.portalweb.plugins.kaleo.wiki.WikiTests;
 import com.liferay.portalweb.plugins.kaleo.workflow.WorkflowTests;
 import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.WorkflowConfigurationTests;
 import com.liferay.portalweb.portal.login.LoginTests;
@@ -36,10 +40,14 @@ public class KaleoTestSuite extends BaseTests {
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(AssetPublisherTests.suite());
+		testSuite.addTest(BlogsTests.suite());
+		testSuite.addTest(MessageBoardsTests.suite());
 		testSuite.addTest(MySubmissionsTests.suite());
 		testSuite.addTest(MyWorkflowTasksTests.suite());
+		testSuite.addTest(PageCommentsTests.suite());
 		testSuite.addTest(WebContentTests.suite());
 		testSuite.addTest(WebContentDisplayTests.suite());
+		testSuite.addTest(WikiTests.suite());
 		testSuite.addTest(WorkflowTests.suite());
 		testSuite.addTest(WorkflowConfigurationTests.suite());
 

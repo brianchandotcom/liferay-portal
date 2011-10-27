@@ -40,10 +40,10 @@ public class BA_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Login as bruno"),
+		assertEquals(RuntimeVariables.replace("Login as Bruno."),
 			selenium.getText("//a[@class='express_login']"));
 		selenium.clickAt("//a[@class='express_login']",
-			RuntimeVariables.replace("Login as bruno"));
+			RuntimeVariables.replace("Login as Bruno."));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='password1']",
 			RuntimeVariables.replace("password"));
@@ -56,6 +56,6 @@ public class BA_SignInTest extends BaseTestCase {
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Bruno Admin."),
-			selenium.getText("//section[@id='portlet_58']/div/div/div"));
+			selenium.getText("//div[@id='p_p_id_58_']/div/div/div[2]"));
 	}
 }

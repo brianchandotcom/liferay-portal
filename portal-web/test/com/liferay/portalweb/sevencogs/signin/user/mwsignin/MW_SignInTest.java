@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.sevencogs.signin.user.jrsignin;
+package com.liferay.portalweb.sevencogs.signin.user.mwsignin;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class JR_SignInTest extends BaseTestCase {
-	public void testJR_SignIn() throws Exception {
+public class MW_SignInTest extends BaseTestCase {
+	public void testMW_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -30,7 +30,7 @@ public class JR_SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("xPath=(//a[@class='express_login'])[4]")) {
+				if (selenium.isVisible("xPath=(//a[@class='express_login'])[3]")) {
 					break;
 				}
 			}
@@ -40,10 +40,10 @@ public class JR_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Login as john"),
-			selenium.getText("xPath=(//a[@class='express_login'])[4]"));
-		selenium.clickAt("xPath=(//a[@class='express_login'])[4]",
-			RuntimeVariables.replace("Login as john"));
+		assertEquals(RuntimeVariables.replace("Login as Michelle."),
+			selenium.getText("xPath=(//a[@class='express_login'])[3]"));
+		selenium.clickAt("xPath=(//a[@class='express_login'])[3]",
+			RuntimeVariables.replace("Login as Michelle."));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='password1']",
 			RuntimeVariables.replace("password"));
@@ -52,10 +52,10 @@ public class JR_SignInTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("John Regular"),
+		assertEquals(RuntimeVariables.replace("Michelle Writer"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
-				"You are signed in as John Regular."),
-			selenium.getText("//section[@id='portlet_58']/div/div/div"));
+				"You are signed in as Michelle Writer."),
+			selenium.getText("//div[@id='p_p_id_58_']/div/div/div"));
 	}
 }

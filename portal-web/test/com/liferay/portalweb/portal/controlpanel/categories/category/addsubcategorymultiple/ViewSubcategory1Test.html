@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewSubcategory1Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewSubcategory1Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Categories</td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li/div/div[4]</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li/div/div[4]</td>
+	<td>Category Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-tree-hitarea']</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-tree-hitarea']</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li/ul/li/div/div[4]</td>
+	<td>Subcategory1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li/ul/li/div/div[4]</td>
+	<td>Subcategory1 Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/ul/li/div/div[4]</td>
+	<td>Subcategory1 Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='view-category']/div/h1/span</td>
+	<td>Subcategory1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='view-category']/div/h1/span</td>
+	<td>Subcategory1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='view-category']/div[2]</td>
+	<td>Description: Subcategory1 Description</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -482,6 +482,23 @@ AUI().add(
 			},
 
 			updateCurrentPortletInfo: function(dragNode) {
+				if(!Layout.options) {
+					var layoutOptions = {
+						disabledDropContainerClass: 'portlet-dropzone-disabled',
+						dragNodes: '#main-content .portlet-boundary',
+						dropContainer: '.portlet-dropzone',
+						dropNodes: '.portlet-column',
+						emptyColumnClass: 'empty',
+						freeForm: true,
+						freeformPlaceholderClass: 'lfr-freeform-layout-drag-indicator',
+						handles: ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
+						nestedPortletId: '_118_INSTANCE',
+						portletBoundary: '.portlet-boundary'
+					};
+
+					Liferay.Layout.init(layoutOptions);
+				}
+
 				var options = Layout.options;
 
 				Layout.curPortletInfo = {

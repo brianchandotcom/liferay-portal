@@ -42,8 +42,11 @@ import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -331,6 +334,49 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		return availableActionIds;
+	}
+
+	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
+			long companyId, String name, int scope, String primKey,
+			long[] roleIds, Collection<String> actionIds)
+		throws PortalException, SystemException {
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_P_R(
+				companyId, name, scope, primKey, roleIds);
+
+		if (resourcePermissions.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Long, Set<String>> roleIdsToActions =
+			new HashMap<Long, Set<String>>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			long roleId = resourcePermission.getRoleId();
+			Set<String> availableActionIds = roleIdsToActions.get(roleId);
+
+			if (availableActionIds != null) {
+				continue;
+			}
+			else {
+				availableActionIds = new HashSet<String>();
+
+				roleIdsToActions.put(roleId, availableActionIds);
+			}
+
+			for (String actionId : actionIds) {
+				ResourceAction resourceAction =
+					resourceActionLocalService.getResourceAction(
+						name, actionId);
+
+				if (hasActionId(resourcePermission, resourceAction)) {
+					availableActionIds.add(actionId);
+				}
+			}
+		}
+
+		return roleIdsToActions;
 	}
 
 	/**

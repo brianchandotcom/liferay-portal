@@ -63,7 +63,8 @@ public class AddPageIGTest extends BaseTestCase {
 
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Image Gallery Test Page"));
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

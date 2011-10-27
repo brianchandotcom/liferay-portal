@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,7 +27,6 @@ import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Jerry Niu
@@ -62,11 +60,7 @@ public class DefaultLogoutPageAction extends Action {
 		}
 
 		if (Validator.isNotNull(path)) {
-			LastPath lastPath = new LastPath(StringPool.BLANK, path);
-
-			HttpSession session = request.getSession();
-
-			session.setAttribute(WebKeys.LAST_PATH, lastPath);
+			request.setAttribute(WebKeys.REFERER, path);
 		}
 
 		// The commented code shows how you can programmaticaly set the user's

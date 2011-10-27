@@ -126,7 +126,7 @@
 }
 
 .taglib-form-navigator .form-section .aui-field-input, .taglib-form-navigator .lfr-change-logo img {
-	max-width: 100% !important;
+	max-width: 100%;
 }
 
 .ie6 .taglib-form-navigator .form-section {

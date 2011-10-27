@@ -41,10 +41,12 @@ public class AddPortletIGTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -52,7 +54,8 @@ public class AddPortletIGTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("layout_configuration_content")) {
+				if (selenium.isElementPresent(
+							"//div[@title='Media Gallery']/p/a")) {
 					break;
 				}
 			}
@@ -62,27 +65,8 @@ public class AddPortletIGTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("i"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@title='Image Gallery']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[@title='Image Gallery']/p/a",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//div[@title='Media Gallery']/p/a",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

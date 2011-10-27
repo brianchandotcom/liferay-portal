@@ -30,7 +30,7 @@ public class DeleteSubfolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,23 @@ public class DeleteSubfolderTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Test1 Subfolder1"));
-		selenium.clickAt("//td[4]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Subfolder Name"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Subfolder Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a",
+			RuntimeVariables.replace("Delete"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,8 +65,8 @@ public class DeleteSubfolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+				if ("Are you sure you want to delete this?".equals(
+							selenium.getConfirmation())) {
 					break;
 				}
 			}
@@ -66,13 +76,22 @@ public class DeleteSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("Test1 Subfolder1"));
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isTextPresent("MG Subfolder Name")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isTextPresent("MG Subfolder Name"));
 	}
 }

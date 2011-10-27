@@ -14,91 +14,95 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='image-title']</td>
-	<td>Test1 Image1</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//img[@alt='Edit']</td>
-	<td></td>
+	<td>//img</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div/div[2]/div</td>
+	<td>MG Folder Image Title - MG Folder Image Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/div[2]/div</td>
+	<td>MG Folder Image Title - MG Folder Image Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//img[@alt='Edit']</td>
-	<td></td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/h1/span</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_name</td>
-	<td>Test1 Image1 Edited1</td>
+	<td>//input[@id='_31_title']</td>
+	<td>MG Folder Image Title Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_description</td>
-	<td>This is Test1 Image1. Edited1.</td>
+	<td>//textarea[@id='_31_description']</td>
+	<td>MG Folder Image Description Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Test1 Image1 Edited1 - This is Test1 Image1. Edited1.']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title Edit</td>
 </tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test1 Image1 Edited1 - This is Test1 Image1. Edited1.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>Test1 Image1 Edited1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Test1 Image1 Edited1</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

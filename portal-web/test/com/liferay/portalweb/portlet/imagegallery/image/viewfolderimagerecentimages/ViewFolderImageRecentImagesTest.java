@@ -30,7 +30,7 @@ public class ViewFolderImageRecentImagesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,10 +41,13 @@ public class ViewFolderImageRecentImagesTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Recent Images", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Recent Images",
+			RuntimeVariables.replace("Recent Images"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Recent Images"),
+			selenium.getText("//div/h1/span"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -52,8 +55,8 @@ public class ViewFolderImageRecentImagesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//img[@alt='Test1 Image1 - This is Test1 Image1.']")) {
+				if (selenium.isVisible(
+							"//img[@alt='MG Folder Image Title - MG Folder Image Description']")) {
 					break;
 				}
 			}
@@ -63,9 +66,9 @@ public class ViewFolderImageRecentImagesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
-		assertEquals(RuntimeVariables.replace("Test1 Image1"),
+		assertTrue(selenium.isVisible(
+				"//img[@alt='MG Folder Image Title - MG Folder Image Description']"));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 	}
 }

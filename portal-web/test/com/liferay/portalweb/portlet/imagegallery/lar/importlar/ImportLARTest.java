@@ -30,7 +30,7 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +41,9 @@ public class ImportLARTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.click("//strong/a");
 
 		for (int second = 0;; second++) {
@@ -61,19 +62,21 @@ public class ImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Export / Import", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Export / Import",
+			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Import", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_86_importFileName",
+		selenium.type("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\imagegallery\\lar\\importlar\\dependencies\\Image_Gallery-Selenium.portlet.lar"));
-		selenium.check("_86_DELETE_PORTLET_DATACheckbox");
-		selenium.check("_86_PORTLET_DATACheckbox");
+		selenium.check("//input[@id='_86_DELETE_PORTLET_DATACheckbox']");
+		selenium.check("//input[@id='_86_PORTLET_DATACheckbox']");
 		selenium.clickAt("//input[@value='Import']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

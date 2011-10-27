@@ -44,12 +44,14 @@ public class SearchFolderImageQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_31_keywords1']",
-			RuntimeVariables.replace("\"Test1 Image1\""));
+			RuntimeVariables.replace("\"MG Folder Image Title\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='image-thumbnail preview']/img"));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
+			selenium.getText("//span[@class='image-title']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -72,11 +74,12 @@ public class SearchFolderImageQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_31_keywords1']",
-			RuntimeVariables.replace("\"Test2 Image2\""));
+			RuntimeVariables.replace("\"Image2\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
+				"//a[@class='image-thumbnail preview']/img"));
+		assertFalse(selenium.isTextPresent("MG Folder Image Title"));
 	}
 }

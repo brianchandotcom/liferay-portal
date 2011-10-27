@@ -14,51 +14,65 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
+	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[4]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_name</td>
-	<td>Test3 Subfolder3</td>
+	<td>//input[@id='_31_name']</td>
+	<td>MG Subfolder3 Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_description</td>
-	<td>This is Test3 Subfolder3.</td>
+	<td>//textarea[@id='_31_description']</td>
+	<td>MG Subfolder3 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Test3 Subfolder3<br />This is Test3 Subfolder3.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='image-title'])[3]</td>
+	<td>MG Subfolder3 Name</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

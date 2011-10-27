@@ -26,7 +26,6 @@ import com.liferay.portalweb.portlet.imagegallery.image.deletefolderimage.Delete
 import com.liferay.portalweb.portlet.imagegallery.image.deletesubfolderimage.DeleteSubfolderImageTests;
 import com.liferay.portalweb.portlet.imagegallery.image.editfolderimage.EditFolderImageTests;
 import com.liferay.portalweb.portlet.imagegallery.image.editsubfolderimage.EditSubfolderImageTests;
-import com.liferay.portalweb.portlet.imagegallery.image.movefolderimagetofolder.MoveFolderImageToFolderTests;
 import com.liferay.portalweb.portlet.imagegallery.image.searchfolderimage.SearchFolderImageTests;
 import com.liferay.portalweb.portlet.imagegallery.image.searchfolderimagefolderdetails.SearchFolderImageFolderDetailsTests;
 import com.liferay.portalweb.portlet.imagegallery.image.viewfolderimageeditingwindow.ViewFolderImageEditingWindowTests;
@@ -56,7 +55,6 @@ public class ImageTests extends BaseTests {
 		testSuite.addTest(DeleteSubfolderImageTests.suite());
 		testSuite.addTest(EditFolderImageTests.suite());
 		testSuite.addTest(EditSubfolderImageTests.suite());
-		testSuite.addTest(MoveFolderImageToFolderTests.suite());
 		testSuite.addTest(SearchFolderImageTests.suite());
 		testSuite.addTest(SearchFolderImageFolderDetailsTests.suite());
 		testSuite.addTest(ViewFolderImageEditingWindowTests.suite());

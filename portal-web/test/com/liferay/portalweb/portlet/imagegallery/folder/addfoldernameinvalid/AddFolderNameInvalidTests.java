@@ -29,6 +29,7 @@ public class AddFolderNameInvalidTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderNameInvalidTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

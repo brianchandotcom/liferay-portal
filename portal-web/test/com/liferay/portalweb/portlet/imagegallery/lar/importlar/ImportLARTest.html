@@ -14,61 +14,65 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//strong/a</td>
-	<td></td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Export / Import</td>
-	<td></td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Export / Import</td>
-	<td></td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Import</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_86_importFileName</td>
+	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\imagegallery\lar\importlar\dependencies\Image_Gallery-Selenium.portlet.lar</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>_86_DELETE_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
+	<td>Delete portlet data before importing.</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>_86_PORTLET_DATACheckbox</td>
-	<td></td>
+	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
+	<td>Data</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Import']</td>
-	<td></td>
+	<td>Import</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

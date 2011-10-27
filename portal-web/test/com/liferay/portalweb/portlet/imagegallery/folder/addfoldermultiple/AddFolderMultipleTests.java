@@ -29,6 +29,7 @@ public class AddFolderMultipleTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolder1Test.class);
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(AddFolder3Test.class);

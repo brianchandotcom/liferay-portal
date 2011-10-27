@@ -29,6 +29,7 @@ public class AddSubfolderNameImageNameTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderImageTest.class);
 		testSuite.addTestSuite(AddSubfolderNameImageNameTest.class);

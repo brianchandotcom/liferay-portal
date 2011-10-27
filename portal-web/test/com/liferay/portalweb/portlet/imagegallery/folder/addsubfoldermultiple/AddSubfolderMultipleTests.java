@@ -29,6 +29,7 @@ public class AddSubfolderMultipleTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolder1Test.class);
 		testSuite.addTestSuite(AddSubfolder2Test.class);

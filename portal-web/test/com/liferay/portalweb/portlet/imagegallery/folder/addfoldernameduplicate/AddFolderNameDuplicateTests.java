@@ -29,6 +29,7 @@ public class AddFolderNameDuplicateTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddFolderNameDuplicateTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);

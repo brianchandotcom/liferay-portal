@@ -30,7 +30,7 @@ public class AddSubfolderNameImageNameTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,19 +41,32 @@ public class AddSubfolderNameImageNameTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/ul/li[4]/a",
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//div/h1/span"));
+		assertTrue(selenium.isVisible(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a",
 			RuntimeVariables.replace("Add Subfolder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_31_name", RuntimeVariables.replace("Test1 Image1.jpg"));
-		selenium.type("_31_description",
-			RuntimeVariables.replace("This is Test1 Subfolder1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_31_name']",
+			RuntimeVariables.replace("MG Folder Image Title"));
+		selenium.type("//textarea[@id='_31_description']",
+			RuntimeVariables.replace("MG Subfolder Description"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a unique folder name."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Please enter a unique folder name."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

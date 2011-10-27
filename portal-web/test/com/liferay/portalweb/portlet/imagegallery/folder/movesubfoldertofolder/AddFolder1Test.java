@@ -30,7 +30,7 @@ public class AddFolder1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,17 +41,24 @@ public class AddFolder1Test extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/ul/li[2]/a", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a",
+			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_31_name", RuntimeVariables.replace("Test1 Folder1"));
-		selenium.type("_31_description",
-			RuntimeVariables.replace("This is Test1 Folder1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_31_name']",
+			RuntimeVariables.replace("MG Folder1 Name"));
+		selenium.type("//textarea[@id='_31_description']",
+			RuntimeVariables.replace("MG Folder1 Description"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isTextPresent("Test1 Folder1"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
+			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 	}
 }

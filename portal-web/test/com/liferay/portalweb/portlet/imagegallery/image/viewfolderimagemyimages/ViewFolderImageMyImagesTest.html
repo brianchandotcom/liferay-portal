@@ -14,36 +14,40 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Images</td>
-	<td></td>
+	<td>My Images</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>My Images</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//img[@alt='MG Folder Image Title - MG Folder Image Description']</td>
+	<td>Image Thumbnail</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@alt='MG Folder Image Title - MG Folder Image Description']</td>
+	<td>Image Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='image-title']</td>
-	<td>Test1 Image1</td>
+	<td>MG Folder Image Title</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -30,7 +30,7 @@ public class AddFolderNameNullTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,16 +41,20 @@ public class AddFolderNameNullTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/ul/li[2]/a", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a",
+			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_31_name", RuntimeVariables.replace(""));
-		selenium.type("_31_description",
-			RuntimeVariables.replace("This is Test1 Folder1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Your request failed to complete."));
-		assertTrue(selenium.isTextPresent("Please enter a valid name."));
+		selenium.type("//input[@id='_31_name']", RuntimeVariables.replace(""));
+		selenium.type("//textarea[@id='_31_description']",
+			RuntimeVariables.replace("MG Folder Description"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText(
+				"xPath=(//div[@class='aui-form-validator-message required'])"));
 	}
 }

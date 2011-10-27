@@ -14,29 +14,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_keywords1</td>
-	<td>Test1 Image1</td>
+	<td>//input[@id='_31_keywords1']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
+	<td>assertVisible</td>
+	<td>//a[@class='image-thumbnail preview']/img</td>
+	<td>Image Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -44,31 +49,35 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_keywords1</td>
-	<td>Test2 Image2</td>
+	<td>//input[@id='_31_keywords1']</td>
+	<td>Image2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
+	<td>//a[@class='image-thumbnail preview']/img</td>
+	<td>Image Thumbnail</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>MG Folder Image Title</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

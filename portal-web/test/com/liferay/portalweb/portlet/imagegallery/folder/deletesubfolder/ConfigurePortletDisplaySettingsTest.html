@@ -1,0 +1,233 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ConfigurePortletDisplaySettingsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ConfigurePortletDisplaySettingsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>Show Actions</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_86_showActionsCheckbox'))</td>
+	<td>showActionsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${showActionsChecked}</td>
+	<td>ShowActionsChecked</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>Show Actions</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>Show Actions</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>Show Actions</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ShowActionsChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_86_showFolderMenuCheckbox'))</td>
+	<td>showFolderMenuChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${showFolderMenuChecked}</td>
+	<td>ShowFolderMenuChecked</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_showFolderMenuCheckbox']</td>
+	<td>Show Folder Menu</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='_86_showFolderMenuCheckbox']</td>
+	<td>Show Folder Menu</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showFolderMenuCheckbox']</td>
+	<td>Show Folder Menu</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ShowFolderMenuChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_86_showTabsCheckbox'))</td>
+	<td>showNavigationLinksChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${showNavigationLinksChecked}</td>
+	<td>ShowNavigationLinksChecked</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_showTabsCheckbox']</td>
+	<td>Show Navigation Links</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='_86_showTabsCheckbox']</td>
+	<td>Show Navigation Links</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showTabsCheckbox']</td>
+	<td>Show Navigation Links</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ShowNavigationLinksChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_86_showFoldersSearchCheckbox'))</td>
+	<td>showSearchChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${showSearchChecked}</td>
+	<td>ShowSearchChecked</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ShowSearchChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_31_keywords1']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='top-links-navigation']</td>
+	<td>Navigation Links</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-asset-summary']</td>
+	<td>Folder Menu</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Add Folder</td>
+</tr>
+</tbody></table>
+</body>
+</html>

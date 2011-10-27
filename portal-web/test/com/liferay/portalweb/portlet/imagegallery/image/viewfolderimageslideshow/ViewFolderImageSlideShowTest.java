@@ -30,7 +30,7 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Image Gallery Test Page")) {
 					break;
 				}
 			}
@@ -41,12 +41,20 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Folder Name"),
+			selenium.getText("//span[@class='image-title']"));
+		selenium.clickAt("//span[@class='image-title']",
+			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.clickAt("//div[2]/ul/li[6]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
+			selenium.getText("//span[@class='image-title']"));
+		assertEquals(RuntimeVariables.replace("View Slide Show"),
+			selenium.getText(
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[9]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[9]/a",
+			RuntimeVariables.replace("View Slide Show"));
 		selenium.waitForPopUp("slideShow", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=slideShow");
 		Thread.sleep(5000);
@@ -57,7 +65,7 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("_31_slideShow")) {
+				if (selenium.isVisible("//img[@name='_31_slideShow']")) {
 					break;
 				}
 			}
@@ -67,7 +75,7 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent("_31_slideShow"));
+		assertTrue(selenium.isVisible("//img[@name='_31_slideShow']"));
 		selenium.close();
 		selenium.selectWindow("null");
 
@@ -77,8 +85,8 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//img[@alt='Test1 Image1 - This is Test1 Image1.']")) {
+				if (selenium.isVisible(
+							"//img[@alt='MG Folder Image Title - MG Folder Image Description']")) {
 					break;
 				}
 			}
@@ -88,7 +96,7 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Test1 Image1 - This is Test1 Image1.']"));
+		assertTrue(selenium.isVisible(
+				"//img[@alt='MG Folder Image Title - MG Folder Image Description']"));
 	}
 }

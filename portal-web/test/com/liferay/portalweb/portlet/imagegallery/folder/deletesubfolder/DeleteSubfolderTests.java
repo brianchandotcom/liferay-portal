@@ -29,6 +29,7 @@ public class DeleteSubfolderTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(DeleteSubfolderTest.class);

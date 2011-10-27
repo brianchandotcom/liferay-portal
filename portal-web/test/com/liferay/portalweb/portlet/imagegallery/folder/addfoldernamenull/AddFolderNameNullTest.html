@@ -14,46 +14,45 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>Add Folder</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_31_name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_name</td>
-	<td></td>
+	<td>//textarea[@id='_31_description']</td>
+	<td>MG Folder Description</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_31_description</td>
-	<td>This is Test1 Folder1.</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Your request failed to complete.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='aui-form-validator-message required'])</td>
+	<td>This field is required.</td>
 </tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Please enter a valid name.</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

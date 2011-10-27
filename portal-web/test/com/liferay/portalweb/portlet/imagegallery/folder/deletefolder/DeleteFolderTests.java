@@ -29,6 +29,7 @@ public class DeleteFolderTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(DeleteFolderTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);

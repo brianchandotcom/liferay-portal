@@ -29,12 +29,12 @@ public class DeleteSubfolderImageTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddSubfolderTest.class);
 		testSuite.addTestSuite(AddSubfolderImageTest.class);
 		testSuite.addTestSuite(DeleteSubfolderImageTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
-		testSuite.addTestSuite(TearDownImageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -16,16 +16,16 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
 	<td>igFolder1Present</td>
 </tr>
 <tr>
@@ -34,22 +34,162 @@
 	<td>IGFolder1NotPresent</td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
+	<td>igFolder2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${igFolder2Present}</td>
+	<td>IGFolder2NotPresent</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
+	<td>igFolder3Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${igFolder3Present}</td>
+	<td>IGFolder3NotPresent</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder3 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
+	<td>igFolder4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${igFolder4Present}</td>
+	<td>IGFolder4NotPresent</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder4 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isElementPresent('//div[2]/a/span'))</td>
+	<td>igFolder5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${igFolder5Present}</td>
+	<td>IGFolder5NotPresent</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/a/span</td>
+	<td>MG Folder5 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to delete this?</td>
 	<td></td>
 </tr>
@@ -59,68 +199,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
-	<td>igFolder2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${igFolder2Present}</td>
-	<td>IGFolder2NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>IGFolder2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
-	<td>igFolder3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${igFolder3Present}</td>
-	<td>IGFolder3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,68 +209,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
-	<td>igFolder4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${igFolder4Present}</td>
-	<td>IGFolder4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>IGFolder4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
-	<td>igFolder5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${igFolder5Present}</td>
-	<td>IGFolder5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,7 +218,6 @@
 	<td>IGFolder5NotPresent</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

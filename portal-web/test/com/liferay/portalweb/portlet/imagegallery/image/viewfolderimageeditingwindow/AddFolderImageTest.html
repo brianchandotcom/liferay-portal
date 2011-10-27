@@ -14,101 +14,120 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[5]/a</td>
-	<td>Add Image</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>windowFocus</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_31_file</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_31_file</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\imagegallery\image\viewfolderimageeditingwindow\dependencies\test_image.jpg</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_31_name</td>
-	<td>Test1 Image1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_31_description</td>
-	<td>This is Test1 Image1.</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Test1 Image1 - This is Test1 Image1.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//span[@class='image-title']</td>
-	<td>Test1 Image1</td>
+	<td>link=Image Gallery Test Page</td>
+	<td>Image Gallery Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='image-title']</td>
-	<td>Test1 Image1</td>
+	<td>MG Folder Name</td>
 </tr>
-
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no media files in this folder.</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a</td>
+	<td>Add Media</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a</td>
+	<td>Add Media</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a</td>
+	<td>Add Media</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a</td>
+	<td>Add Media</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[4]/td/a</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td/a</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[4]/td/a</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_31_file']</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\imagegallery\image\viewfolderimageeditingwindow\dependencies\test_image.jpg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_31_title']</td>
+	<td>MG Folder Image Title</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='_31_description']</td>
+	<td>MG Folder Image Description</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/h1/span</td>
+	<td>MG Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>MG Folder Image Title</td>
+</tr>
 </tbody></table>
 </body>
 </html>

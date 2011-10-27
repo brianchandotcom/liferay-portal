@@ -29,6 +29,7 @@ public class AddFolderTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageIGTest.class);
 		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplaySettingsTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(TearDownIGFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

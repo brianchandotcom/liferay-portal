@@ -235,7 +235,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="8" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2394,6 +2394,12 @@ file.
 								<antcall target="rebuild-database-db2" />
 							</then>
 							<elseif>
+								<equals arg1="${db.type}" arg2="hsql" />
+								<then>
+									<antcall target="rebuild-database-hsql" />
+								</then>
+							</elseif>
+							<elseif>
 								<equals arg1="${db.type}" arg2="mysql" />
 								<then>
 									<antcall target="rebuild-database-mysql" />
@@ -2485,6 +2491,20 @@ file.
 		</exec>
 
 		<delete file="${sql.file}" />
+	</target>
+
+	<target name="rebuild-database-hsql">
+		<delete dir="${app.server.parent.dir}/data" includeemptydirs="true" />
+
+		<if>
+			<not>
+				<isset property="test.database.minimal" />
+			</not>
+			<then>
+				<copy file="sql/${database.name}.properties" tofile="${app.server.parent.dir}/data/hsql/${database.name}.properties" />
+				<copy file="sql/${database.name}.script" tofile="${app.server.parent.dir}/data/hsql/${database.name}.script" />
+			</then>
+		</if>
 	</target>
 
 	<target name="rebuild-database-mysql">

@@ -149,6 +149,7 @@ boolean showSelectListIcon = PortletPermissionUtil.contains(permissionChecker, l
 					image="configuration"
 					message="select-list"
 					method="get"
+					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
 					url="<%= portletDisplay.getURLConfiguration() %>"
 				/>
 			</c:if>

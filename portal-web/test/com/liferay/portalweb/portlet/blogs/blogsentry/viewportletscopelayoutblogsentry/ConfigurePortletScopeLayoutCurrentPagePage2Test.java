@@ -45,6 +45,7 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		selenium.clickAt("link=Blogs2 Test2 Page2",
 			RuntimeVariables.replace("Blogs2 Test2 Page2"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));

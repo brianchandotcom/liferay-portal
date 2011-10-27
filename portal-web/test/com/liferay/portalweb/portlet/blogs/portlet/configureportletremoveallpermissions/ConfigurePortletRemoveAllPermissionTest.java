@@ -44,6 +44,7 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -111,31 +112,31 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 			RuntimeVariables.replace("Guest View"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		assertTrue(selenium.isChecked(
-				"//input[@name='10150_ACTION_ADD_TO_PAGE']"));
-		selenium.clickAt("//input[@name='10150_ACTION_ADD_TO_PAGE']",
+				"//input[@name='10154_ACTION_ADD_TO_PAGE']"));
+		selenium.clickAt("//input[@name='10154_ACTION_ADD_TO_PAGE']",
 			RuntimeVariables.replace("Owner Add to Page"));
 		assertFalse(selenium.isChecked(
-				"//input[@name='10150_ACTION_ADD_TO_PAGE']"));
+				"//input[@name='10154_ACTION_ADD_TO_PAGE']"));
 		assertTrue(selenium.isChecked(
-				"//input[@name='10150_ACTION_CONFIGURATION']"));
-		selenium.clickAt("//input[@name='10150_ACTION_CONFIGURATION']",
+				"//input[@name='10154_ACTION_CONFIGURATION']"));
+		selenium.clickAt("//input[@name='10154_ACTION_CONFIGURATION']",
 			RuntimeVariables.replace("Owner Configuration"));
 		assertFalse(selenium.isChecked(
-				"//input[@name='10150_ACTION_CONFIGURATION']"));
-		assertTrue(selenium.isChecked("//input[@name='10150_ACTION_VIEW']"));
-		selenium.clickAt("//input[@name='10150_ACTION_VIEW']",
+				"//input[@name='10154_ACTION_CONFIGURATION']"));
+		assertTrue(selenium.isChecked("//input[@name='10154_ACTION_VIEW']"));
+		selenium.clickAt("//input[@name='10154_ACTION_VIEW']",
 			RuntimeVariables.replace("Owner View"));
-		assertFalse(selenium.isChecked("//input[@name='10150_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//input[@name='10154_ACTION_VIEW']"));
 		assertTrue(selenium.isChecked(
-				"//input[@name='10150_ACTION_PERMISSIONS']"));
-		selenium.clickAt("//input[@name='10150_ACTION_PERMISSIONS']",
+				"//input[@name='10154_ACTION_PERMISSIONS']"));
+		selenium.clickAt("//input[@name='10154_ACTION_PERMISSIONS']",
 			RuntimeVariables.replace("Owner Permissions"));
 		assertFalse(selenium.isChecked(
-				"//input[@name='10150_ACTION_PERMISSIONS']"));
-		assertTrue(selenium.isChecked("//input[@name='10155_ACTION_VIEW']"));
-		selenium.clickAt("//input[@name='10155_ACTION_VIEW']",
+				"//input[@name='10154_ACTION_PERMISSIONS']"));
+		assertTrue(selenium.isChecked("//input[@name='10159_ACTION_VIEW']"));
+		selenium.clickAt("//input[@name='10159_ACTION_VIEW']",
 			RuntimeVariables.replace("Site Member View"));
-		assertFalse(selenium.isChecked("//input[@name='10155_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//input[@name='10159_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 
@@ -182,6 +183,9 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 
@@ -244,12 +248,12 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		assertFalse(selenium.isChecked(
-				"//input[@name='10150_ACTION_ADD_TO_PAGE']"));
+				"//input[@name='10154_ACTION_ADD_TO_PAGE']"));
 		assertFalse(selenium.isChecked(
-				"//input[@name='10150_ACTION_CONFIGURATION']"));
-		assertFalse(selenium.isChecked("//input[@name='10150_ACTION_VIEW']"));
+				"//input[@name='10154_ACTION_CONFIGURATION']"));
+		assertFalse(selenium.isChecked("//input[@name='10154_ACTION_VIEW']"));
 		assertFalse(selenium.isChecked(
-				"//input[@name='10150_ACTION_PERMISSIONS']"));
-		assertFalse(selenium.isChecked("//input[@name='10155_ACTION_VIEW']"));
+				"//input[@name='10154_ACTION_PERMISSIONS']"));
+		assertFalse(selenium.isChecked("//input[@name='10159_ACTION_VIEW']"));
 	}
 }

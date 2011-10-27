@@ -44,11 +44,11 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Caedmon's Call Concert."),
+		assertEquals(RuntimeVariables.replace("Caedmon's Call Concert!"),
 			selenium.getText("//tr[3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Edited Test Event"),
 			selenium.getText("//tr[4]/td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Off to Yosemite."),
+		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
 			selenium.getText("//tr[5]/td[3]/a"));
 	}
 }

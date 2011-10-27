@@ -69,7 +69,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_86_importFileName",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\bookmarks\\lar\\importlar\\dependencies\\Bookmarks-Selenium.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\bookmarks\\lar\\importlar\\dependencies\\Selenium-Bookmarks.portlet.lar"));
 		selenium.check("_86_DELETE_PORTLET_DATACheckbox");
 		selenium.check("_86_PORTLET_DATACheckbox");
 		selenium.clickAt("//input[@value='Import']",

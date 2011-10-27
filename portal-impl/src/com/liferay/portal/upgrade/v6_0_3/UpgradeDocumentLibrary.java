@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<Long> list = new ArrayList<Long>();
+		List<Long> fileVersionIds = new ArrayList<Long>();
 
 		try {
 			con = DataAccess.getConnection();
@@ -57,10 +58,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				list.add(rs.getLong("fileVersionId"));
+				fileVersionIds.add(rs.getLong("fileVersionId"));
 			}
 
-			return list;
+			return fileVersionIds;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -98,14 +99,19 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				List<Long> fileVersionIds = getFileVersionIds(folderId, name);
 
-				runSQL(
-					"update ExpandoRow set classPK = " + fileVersionIds.get(0) +
-						 " where classPK = " + fileEntryId);
+				long latestFileVersionId = 0;
+
+				if (!fileVersionIds.isEmpty()) {
+					latestFileVersionId = fileVersionIds.get(0);
+				}
 
 				runSQL(
-					"update ExpandoValue set classPK = " +
-						fileVersionIds.get(0) + " where classPK = " +
-						fileEntryId);
+					"update ExpandoRow set classPK = " + latestFileVersionId +
+						" where classPK = " + fileEntryId);
+
+				runSQL(
+					"update ExpandoValue set classPK = " + latestFileVersionId +
+						" where classPK = " + fileEntryId);
 			}
 		}
 		finally {

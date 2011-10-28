@@ -33,7 +33,6 @@ public class AddSitePagesVariationTests extends BaseTests {
 		testSuite.addTestSuite(AddSitePagesVariationTest.class);
 		testSuite.addTestSuite(AddPageSitePagesVariationTest.class);
 		testSuite.addTestSuite(ViewPageSitePagesVariationTest.class);
-		testSuite.addTestSuite(DeactivateStagingTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

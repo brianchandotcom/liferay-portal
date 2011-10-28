@@ -33,7 +33,6 @@ public class AddPageVariationTests extends BaseTests {
 		testSuite.addTestSuite(AddPageVariationTest.class);
 		testSuite.addTestSuite(AddPortletHWPageVariationTest.class);
 		testSuite.addTestSuite(ViewPortletHWPageVariationTest.class);
-		testSuite.addTestSuite(DeactivateStagingTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

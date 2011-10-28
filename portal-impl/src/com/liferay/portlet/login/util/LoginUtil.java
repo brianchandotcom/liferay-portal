@@ -34,6 +34,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil;
 import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -375,6 +376,17 @@ public class LoginUtil {
 
 		int loginMaxAge = PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE;
 
+		String userUUID = userIdString.concat(StringPool.PERIOD).concat(
+			String.valueOf(System.nanoTime()));
+
+		Cookie userUUIDCookie = new Cookie(
+			CookieKeys.USER_UUID,
+			Encryptor.encrypt(company.getKeyObj(), userUUID));
+
+		userUUIDCookie.setPath(StringPool.SLASH);
+
+		session.setAttribute("USER_UUID", userUUID);
+
 		if (PropsValues.SESSION_DISABLED) {
 			rememberMe = true;
 		}
@@ -384,6 +396,7 @@ public class LoginUtil {
 			idCookie.setMaxAge(loginMaxAge);
 			passwordCookie.setMaxAge(loginMaxAge);
 			rememberMeCookie.setMaxAge(loginMaxAge);
+			userUUIDCookie.setMaxAge(loginMaxAge);
 		}
 		else {
 
@@ -397,6 +410,7 @@ public class LoginUtil {
 			idCookie.setMaxAge(-1);
 			passwordCookie.setMaxAge(-1);
 			rememberMeCookie.setMaxAge(0);
+			userUUIDCookie.setMaxAge(-1);
 		}
 
 		Cookie loginCookie = new Cookie(CookieKeys.LOGIN, login);
@@ -432,13 +446,16 @@ public class LoginUtil {
 
 		CookieKeys.addCookie(request, response, companyIdCookie, secure);
 		CookieKeys.addCookie(request, response, idCookie, secure);
+		CookieKeys.addCookie(request, response, userUUIDCookie, secure);
 
 		if (rememberMe) {
+			CookieKeys.addCookie(request, response, loginCookie, secure);
 			CookieKeys.addCookie(request, response, passwordCookie, secure);
 			CookieKeys.addCookie(request, response, rememberMeCookie, secure);
-			CookieKeys.addCookie(request, response, loginCookie, secure);
 			CookieKeys.addCookie(request, response, screenNameCookie, secure);
 		}
+
+		AuthenticatedUserUUIDStoreUtil.register(userUUID);
 	}
 
 	public static void sendPassword(ActionRequest actionRequest)

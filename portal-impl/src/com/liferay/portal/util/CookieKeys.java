@@ -32,29 +32,7 @@ import org.apache.commons.codec.binary.Hex;
  * @author Brian Wing Shun Chan
  * @author Minhchau Dang
  */
-public class CookieKeys {
-
-	public static final String COOKIE_SUPPORT = "COOKIE_SUPPORT";
-
-	public static final String COMPANY_ID = "COMPANY_ID";
-
-	public static final String GUEST_LANGUAGE_ID = "GUEST_LANGUAGE_ID";
-
-	public static final String ID = "ID";
-
-	public static final String JSESSIONID = "jsessionid";
-
-	public static final String LOGIN = "LOGIN";
-
-	public static final String PASSWORD = "PASSWORD";
-
-	public static final String REMEMBER_ME = "REMEMBER_ME";
-
-	public static final String SCREEN_NAME = "SCREEN_NAME";
-
-	public static final int MAX_AGE = 31536000;
-
-	public static final int VERSION = 0;
+public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 
 	public static void addCookie(
 		HttpServletRequest request, HttpServletResponse response,
@@ -228,6 +206,10 @@ public class CookieKeys {
 			}
 		}
 	}
+
+	public static final int MAX_AGE = 31536000;
+
+	public static final int VERSION = 0;
 
 	private static Log _log = LogFactoryUtil.getLog(CookieKeys.class);
 

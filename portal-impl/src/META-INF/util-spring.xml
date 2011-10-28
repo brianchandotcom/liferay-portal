@@ -379,6 +379,11 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil" class="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil">
+		<property name="authenticatedUserUUIDStore">
+			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil">
 		<property name="authToken">
 			<bean class="com.liferay.portal.security.auth.AuthTokenImpl" />

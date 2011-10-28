@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -95,6 +97,12 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 
 				MessageBusUtil.sendMessage(
 					DestinationNames.LIVE_USERS, jsonObject.toString());
+			}
+
+			String userUUID = (String)session.getAttribute("USER_UUID");
+
+			if (Validator.isNotNull(userUUID)) {
+				AuthenticatedUserUUIDStoreUtil.unregister(userUUID);
 			}
 		}
 		catch (IllegalStateException ise) {

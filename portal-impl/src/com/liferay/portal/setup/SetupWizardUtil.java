@@ -150,13 +150,10 @@ public class SetupWizardUtil {
 		UnicodeProperties unicodeProperties =
 			PropertiesParamUtil.getProperties(request, _PROPERTIES_PREFIX);
 
+		boolean databaseConfigured = _isDatabaseConfigured(unicodeProperties);
+
 		_processAdminProperties(request, unicodeProperties);
-		
-		boolean databaseConfigured = _isDatabaseConfigured(
-			request, unicodeProperties);
-		
 		_processDatabaseProperties(request, unicodeProperties);
-		
 
 		updateLanguage(request, response);
 
@@ -189,7 +186,7 @@ public class SetupWizardUtil {
 	}
 
 	private static boolean _isDatabaseConfigured(
-		HttpServletRequest request, UnicodeProperties unicodeProperties) {
+		UnicodeProperties unicodeProperties) {
 		
 		String defaultDriverClassName = unicodeProperties.get(
 			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);

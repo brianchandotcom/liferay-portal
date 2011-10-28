@@ -620,24 +620,17 @@ AUI().add(
 								width = '90%';
 							}
 
-							var dialog = Liferay.Util.getWindow('manageContentDialog');
-
-							if (!dialog) {
-								instance._openWindow(
-									{
-										dialog: {
-											align: Util.Window.ALIGN_CENTER,
-											modal: fullDialog,
-											width: width
-										},
-										id: 'manageContentDialog'
+							instance._openWindow(
+								{
+									dialog: {
+										align: Util.Window.ALIGN_CENTER,
+										modal: fullDialog,
+										width: width
 									},
-									event.currentTarget
-								);
-							}
-							else {
-								dialog.show();
-							}
+									id: 'manageContentDialog'
+								},
+								event.currentTarget
+							);
 						},
 						'.use-dialog a'
 					);

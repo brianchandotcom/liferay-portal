@@ -134,7 +134,13 @@ AUI().add(
 
 						vocabularyList.on('key', instance._onVocabularyListSelect, 'up:13', instance);
 
-						A.one(idPrefix + 'addCategoryButton').on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+						var addCategoryButton = A.one(idPrefix + 'addCategoryButton');
+
+						addCategoryButton.on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+
+						instance._addCategoryButtonWrapper = addCategoryButton.ancestor('.aui-button');
+						instance._addCategoryButton = addCategoryButton;
+
 						A.one(idPrefix + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
 						A.one(idPrefix + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
 						A.one(idPrefix + 'deleteSelectedItems').on(EVENT_CLICK, instance._deleteSelected, instance);
@@ -777,10 +783,20 @@ AUI().add(
 
 								var firstVocabulary = A.one(instance._vocabularyItemSelector);
 
+								var addCategoryButtonAttrAction = 'removeAttribute';
+								var addCategoryButtonClassAction = 'removeClass';
+
 								if (firstVocabulary) {
 									instance._selectedVocabularyName = instance._getVocabularyName(firstVocabulary);
 									instance._selectedVocabularyId = instance._getVocabularyId(firstVocabulary);
 								}
+								else {
+									addCategoryButtonAttrAction = 'setAttribute';
+									addCategoryButtonClassAction = 'addClass';
+								}
+
+								instance._addCategoryButton[addCategoryButtonAttrAction]('disabled', 'disabled');
+								instance._addCategoryButtonWrapper[addCategoryButtonClassAction]('aui-button-disabled');
 
 								if (callback) {
 									callback();

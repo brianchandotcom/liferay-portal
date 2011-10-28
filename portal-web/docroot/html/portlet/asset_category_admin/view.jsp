@@ -23,11 +23,11 @@
 		<div class="lfr-header-row-content">
 			<div class="categories-admin-actions toolbar">
 				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_VOCABULARY) %>">
-					<aui:button cssClass="add-vocabulary-button" name="addVocabularyButton" value="add-vocabulary" />
+					<aui:button name="addVocabularyButton" value="add-vocabulary" />
 				</c:if>
 
 				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
-					<aui:button name="addCategoryButton" value="add-category" />
+					<aui:button cssClass="add-category-button" disabled="disabled" name="addCategoryButton" value="add-category" />
 				</c:if>
 
 				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">

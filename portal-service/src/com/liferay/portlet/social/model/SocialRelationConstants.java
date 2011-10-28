@@ -20,6 +20,8 @@ package com.liferay.portlet.social.model;
  */
 public class SocialRelationConstants {
 
+	public static final int TYPE_BI_CONNECTION = 12;
+
 	public static final int TYPE_BI_COWORKER = 1;
 
 	public static final int TYPE_BI_FRIEND = 2;

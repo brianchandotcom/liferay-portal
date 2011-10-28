@@ -10,4 +10,4 @@ ${sampleSQLBuilder.insertSecurity("com.liferay.portlet.messageboards.model.MBMes
 	<#assign assetEntry = dataFactory.addAssetEntry(mbMessage.groupId, mbMessage.userId, dataFactory.MBMessageClassName.classNameId, mbMessage.messageId, false, "text/html", mbMessage.subject)>
 </#if>
 
-${sampleSQLBuilder.insertAssetEntry(assetEntry)}
+insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifiedDate, classNameId, classPK, visible, mimeType, title) values (${counter.get()}, ${assetEntry.groupId}, ${companyId}, ${assetEntry.userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${assetEntry.classNameId}, ${assetEntry.classPK}, <#if assetEntry.visible>TRUE<#else>FALSE</#if>, '${assetEntry.mimeType}', '${assetEntry.title}');

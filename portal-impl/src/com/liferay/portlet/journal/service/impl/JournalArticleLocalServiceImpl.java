@@ -3229,8 +3229,9 @@ public class JournalArticleLocalServiceImpl
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLocale(content));
 
-		if (titleMap.isEmpty() ||
-			Validator.isNull(titleMap.get(defaultLocale))) {
+		if ((classNameId == 0) &&
+				(titleMap.isEmpty() ||
+				 Validator.isNull(titleMap.get(defaultLocale)))) {
 
 			throw new ArticleTitleException();
 		}

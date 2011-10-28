@@ -71,7 +71,7 @@ public class AddServerInstanceTest extends BaseTestCase {
 		selenium.type("//input[@id='_135_webId']",
 			RuntimeVariables.replace("test.com"));
 		selenium.type("//input[@id='_135_virtualHostname']",
-			RuntimeVariables.replace("guest"));
+			RuntimeVariables.replace("test.com"));
 		selenium.type("//input[@id='_135_mx']",
 			RuntimeVariables.replace("test.com"));
 		selenium.clickAt("//input[@value='Save']",

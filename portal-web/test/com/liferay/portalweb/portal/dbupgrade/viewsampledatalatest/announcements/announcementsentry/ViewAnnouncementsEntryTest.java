@@ -45,9 +45,11 @@ public class ViewAnnouncementsEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Announcements Entry Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Announcements Entry Name"),
-			selenium.getText("//div/h3/a"));
-		assertTrue(selenium.isPartialText("//p", "Announcements Entry Content"));
-		selenium.clickAt("//div/h3/a",
+			selenium.getText("//h3[@class='entry-title']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[contains(@class,'entry-content')]",
+				"Announcements Entry Content"));
+		selenium.clickAt("//h3[@class='entry-title']/a",
 			RuntimeVariables.replace("Announcements Entry Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));

@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/h3/a</td>
+	<td>//h3[@class='entry-title']/a</td>
 	<td>Announcements Entry Name</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//p</td>
+	<td>//div[contains(@class,'entry-content')]</td>
 	<td>Announcements Entry Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/h3/a</td>
+	<td>//h3[@class='entry-title']/a</td>
 	<td>Announcements Entry Name</td>
 </tr>
 <tr>
@@ -43,6 +43,7 @@
 	<td>//img[@alt='Liferay']</td>
 	<td>Liferay Logo</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

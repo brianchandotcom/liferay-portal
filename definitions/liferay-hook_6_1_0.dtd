@@ -102,6 +102,8 @@ users.form.update.main
 users.form.update.miscellaneous
 users.full.name.generator
 users.full.name.validator
+users.image.max.height
+users.image.max.width
 users.screen.name.always.autogenerate
 users.screen.name.generator
 users.screen.name.validator

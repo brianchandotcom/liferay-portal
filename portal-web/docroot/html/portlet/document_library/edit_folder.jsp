@@ -38,6 +38,8 @@ List<WorkflowDefinition> workflowDefinitions = null;
 if (workflowEnabled) {
 	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
 }
+
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(new long[] {scopeGroupId}, folderId, true);
 %>
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
@@ -135,27 +137,18 @@ if (workflowEnabled) {
 			String headerNames = null;
 
 			if (workflowEnabled) {
-				headerNames = "name,default,workflow,null";
+				headerNames = "name,workflow,null";
 			}
 			else {
-				headerNames = "name,default,null";
+				headerNames = "name,null";
 			}
 			%>
 
-			<aui:field-wrapper label="document-type-restrictions" helpMessage="document-type-restrictions-help">
+			<aui:field-wrapper label='<%= workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions" %>' helpMessage="document-type-restrictions-help">
 				<c:if test="<%= !rootFolder %>">
-					<div>
-						<table class="lfr-table">
-						<tr>
-							<td class="lfr-label">
-								<liferay-ui:message key="override-inherited-restrictions" />
-							</td>
-							<td>
-								<liferay-ui:input-checkbox defaultValue="<%= dlFolder.isOverrideFileEntryTypes() %>"  param="overrideFileEntryTypes" />
-							</td>
-						</tr>
-						</table>
-					</div>
+					<aui:input checked="<%= !dlFolder.isOverrideFileEntryTypes() %>" id="useFileEntryTypes" label='<%= workflowEnabled ? "use-document-type-restrictions-and-workflow-of-the-parent-folder" : "use-document-type-restrictions-of-the-parent-folder" %>' name="overrideFileEntryTypes" type="radio" value="<%= false %>" />
+
+					<aui:input checked="<%= dlFolder.isOverrideFileEntryTypes() %>" id="overrideFileEntryTypes" label='<%= workflowEnabled ? "define-specific-document-type-restrictions-and-workflow-for-this-folder" : "define-specific-document-type-restrictions-for-this-folder" %>' name="overrideFileEntryTypes" type="radio" value="<%= true %>" />
 				</c:if>
 
 				<div id="<portlet:namespace />overrideParentSettings">
@@ -182,7 +175,7 @@ if (workflowEnabled) {
 									}
 								%>
 
-									<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected='<%= selected %>' value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
+									<aui:option label='<%= workflowDefinition.getName() + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion()) + ")" %>' selected="<%= selected %>" value="<%= workflowDefinition.getName() + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 								<%
 								}
@@ -212,10 +205,6 @@ if (workflowEnabled) {
 									name="name"
 									value="<%= dlFileEntryType.getName() %>"
 								/>
-
-								<liferay-ui:search-container-column-text name="default">
-									<input class="default-file-entry-type" type="radio" name="defaultFileEntryTypeId" <%= (defaultFileEntryTypeId == dlFileEntryType.getFileEntryTypeId()) ? "checked=\"true\"" : "" %> value="<%= dlFileEntryType.getFileEntryTypeId() %>" />
-								</liferay-ui:search-container-column-text>
 
 								<c:if test="<%= workflowEnabled %>">
 									<liferay-ui:search-container-column-text name="workflow">
@@ -265,6 +254,20 @@ if (workflowEnabled) {
 							message="select-document-type"
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>
+
+						<aui:select cssClass='<%= ((fileEntryTypes != null) && (fileEntryTypes.size() > 1)) ? "default-document-type" : "default-document-type aui-helper-hidden" %>' label="default-document-type" helpMessage="default-document-type-help" name="defaultFileEntryTypeId">
+
+							<%
+							for (DLFileEntryType fileEntryType : fileEntryTypes) {
+							%>
+
+								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= fileEntryType.getName() %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
 					</c:if>
 				</div>
 			</aui:field-wrapper>
@@ -326,13 +329,13 @@ if (workflowEnabled) {
 
 			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fileEntryTypeSearchContainer');
 
-			var fileEntryTypeDefault = '<input class="default-file-entry-type" type="radio" name="defaultFileEntryTypeId" checked="true" value="' + fileEntryTypeId + '" />';
-
 			var fileEntryTypeLink = '<a class="modify-link" data-rowId="' + fileEntryTypeId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeFileEntryTypeIcon) %></a>';
 
 			<c:choose>
 				<c:when test="<%= workflowEnabled %>">
 					var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
+
+					defaultWorkflow.hide();
 
 					<liferay-util:buffer var="workflowDefinitionsBuffer">
 						<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE"><aui:option label="no-workflow" value="" />
@@ -354,22 +357,37 @@ if (workflowEnabled) {
 
 					workflowDefinitions =  workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
 
-					defaultWorkflow.hide();
-
 					documentTypesChanged = true;
 
-					A.one('#<portlet:namespace />fileEntryTypeSearchContainer').all('default-file-entry-type').set('checked', 'false');
-
-					searchContainer.addRow([fileEntryTypeName, fileEntryTypeDefault, workflowDefinitions, fileEntryTypeLink], fileEntryTypeId);
+					searchContainer.addRow([fileEntryTypeName, workflowDefinitions, fileEntryTypeLink], fileEntryTypeId);
 				</c:when>
 				<c:otherwise>
-					A.one('#<portlet:namespace />fileEntryTypeSearchContainer').all('default-file-entry-type').set('checked', 'false');
-
-					searchContainer.addRow([fileEntryTypeName, fileEntryTypeDefault, fileEntryTypeLink], fileEntryTypeId);
+					searchContainer.addRow([fileEntryTypeName, fileEntryTypeLink], fileEntryTypeId);
 				</c:otherwise>
 			</c:choose>
 
 			searchContainer.updateDataStore();
+
+	        var select = A.one('#<portlet:namespace />defaultFileEntryTypeId');
+
+			var selectContainer = A.one('#<portlet:namespace />overrideParentSettings .default-document-type')
+
+			var fileEntryTypesCount = select.get('children').size();
+
+			if (fileEntryTypesCount > 1) {
+				selectContainer.show();
+			}
+			else {
+				selectContainer.hide();
+			}
+
+			var option = A.Node.create('<option id="<portlet:namespace />defaultFileEntryTypeId-' + fileEntryTypeId + '" value="' + fileEntryTypeId + '">' + fileEntryTypeName + '</option>');
+
+			if (fileEntryTypesCount == 0) {
+				opetion.show();
+			}
+
+			select.append(option);
 
 			if (dialog) {
 				dialog.close();
@@ -378,7 +396,8 @@ if (workflowEnabled) {
 		['liferay-search-container']
 	);
 
-	Liferay.Util.toggleBoxes('<portlet:namespace />overrideFileEntryTypesCheckbox', '<portlet:namespace />overrideParentSettings');
+	Liferay.Util.toggleRadio('<portlet:namespace />overrideFileEntryTypes', '<portlet:namespace />overrideParentSettings', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />useFileEntryTypes', '', '<portlet:namespace />overrideParentSettings');
 </aui:script>
 
 <aui:script use="liferay-search-container">
@@ -395,16 +414,28 @@ if (workflowEnabled) {
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
+	        A.one('#<portlet:namespace />defaultFileEntryTypeId-' + link.getAttribute('data-rowId')).remove();
+
 			documentTypesChanged = true;
 
-			var button = A.one('#<portlet:namespace />fileEntryTypeSearchContainer .default-file-entry-type');
+			var select = A.one('#<portlet:namespace />defaultFileEntryTypeId');
 
-			if (button) {
-				button.set('checked', 'true');
+			var selectContainer = A.one('#<portlet:namespace />overrideParentSettings .default-document-type')
+
+			var fileEntryTypesCount = select.get('children').size();
+
+			if (fileEntryTypesCount > 1) {
+				selectContainer.show();
 			}
 			else {
-				var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
+				selectContainer.hide();
+			}
 
+			var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
+
+			alert(fileEntryTypesCount);
+
+			if (defaultWorkflow & (fileEntryTypesCount == 0)) {
 				defaultWorkflow.show();
 			}
 		},

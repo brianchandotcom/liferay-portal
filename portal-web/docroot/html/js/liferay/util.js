@@ -1530,15 +1530,19 @@
 			var radioButton = A.one('#' + radioId);
 			var showBox = A.one('#' + showBoxId);
 
-			if (radioButton && showBox) {
+			if (radioButton) {
 				var checked = radioButton.get('checked');
 
-				showBox.toggle(checked);
+				if (showBox) {
+					showBox.toggle(checked);
+				}
 
 				radioButton.on(
 					'change',
 					function() {
-						showBox.show();
+						if (showBox) {
+							showBox.show();
+						}
 
 						var hideBox;
 
@@ -1549,7 +1553,9 @@
 							hideBox = A.one('#' + hideBoxIds);
 						}
 
-						hideBox.hide();
+						if (hideBox) {
+							hideBox.hide();
+						}
 					}
 				);
 			}

@@ -67,7 +67,7 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//textarea[@id='_15_xsdContent']")) {
+							"//textarea[@id='_15_plainEditorField']")) {
 					break;
 				}
 			}
@@ -77,7 +77,7 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//textarea[@id='_15_xsdContent']",
+		selenium.type("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace(
 				"<root> \n\n <dynamic-element name='page-name' type='text'></dynamic-element> \n\n <dynamic-element name='page-description' type='text'></dynamic-element> \n\n</root>"));
 		selenium.click("//input[@value='Update']");

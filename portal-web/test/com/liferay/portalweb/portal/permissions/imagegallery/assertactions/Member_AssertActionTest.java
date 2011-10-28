@@ -31,7 +31,7 @@ public class Member_AssertActionTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,22 +41,34 @@ public class Member_AssertActionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isElementPresent("link=Configuration"));
 		assertFalse(selenium.isElementPresent("link=Look and Feel"));
+		assertFalse(selenium.isElementPresent("link=Configuration"));
 		assertFalse(selenium.isElementPresent("link=Export / Import"));
 		assertFalse(selenium.isElementPresent("//img[@alt='Remove']"));
-		assertFalse(selenium.isElementPresent("//input[@value='Add Subfolder']"));
-		assertFalse(selenium.isElementPresent("//div[5]/ul/li[1]/a"));
-		assertFalse(selenium.isElementPresent("//div[5]/ul/li[2]/a"));
-		assertFalse(selenium.isElementPresent("//div[5]/ul/li[3]/a"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertFalse(selenium.isElementPresent("link=Add Subfolder"));
+		assertFalse(selenium.isElementPresent("link=Permissions"));
+		assertFalse(selenium.isElementPresent("link=Add Folder"));
+		assertFalse(selenium.isElementPresent("link=Add Repository"));
+		assertFalse(selenium.isElementPresent("link=Add Shortcut"));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Folder"),
+			selenium.getText(
+				"//a[@title='Media Gallery Permissions Test Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isElementPresent("//input[@value='Add Subfolder']"));
-		assertEquals(RuntimeVariables.replace("Add Image"),
-			selenium.getText("//div[2]/ul/li[1]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Subfolder"),
+			selenium.getText(
+				"//a[@title='Media Gallery Permissions Test Subfolder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
+			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
+		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isElementPresent("link=Add Subfolder"));
+		assertTrue(selenium.isElementPresent("link=Add Media"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -66,7 +78,7 @@ public class Member_AssertActionTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -76,13 +88,14 @@ public class Member_AssertActionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Images", RuntimeVariables.replace(""));
+		selenium.clickAt("link=My Images", RuntimeVariables.replace("My Images"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Edited Third Permissions Image"));
-		selenium.clickAt("link=Recent Images", RuntimeVariables.replace(""));
+		assertTrue(selenium.isTextPresent("Permissions Image 3 Test Edited"));
+		selenium.clickAt("link=Recent Images",
+			RuntimeVariables.replace("Recent Images"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -92,7 +105,7 @@ public class Member_AssertActionTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//img[@alt='Second Permissions Image Test - ']")) {
+							"//img[@alt='Permissions Image 2 Test - ']")) {
 					break;
 				}
 			}
@@ -102,7 +115,7 @@ public class Member_AssertActionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isTextPresent("Second Permissions Image Test"));
-		assertTrue(selenium.isTextPresent("Edited Third Permissions Image"));
+		assertTrue(selenium.isTextPresent("Permissions Image 2 Test"));
+		assertTrue(selenium.isTextPresent("Permissions Image 3 Test Edited"));
 	}
 }

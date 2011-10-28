@@ -15,53 +15,73 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Portlet2 Temporary2 Folder2</td>
-	<td></td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Portlet Permissions Image 2 Test Title - ']</td>
+	<td>Portlet Permissions Image 2 Test Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/a/img</td>
-	<td></td>
+	<td>//a[@title='Portlet Permissions Image 2 Test Title - ']</td>
+	<td>Portlet Permissions Image 2 Test Title</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//img[@alt='Permissions']</td>
-	<td></td>
+	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//img[@alt='Permissions']</td>
-	<td></td>
+	<td>Permissions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>assertNotChecked</td>
+	<td>//tr[5]/td[6]/input</td>
+	<td>Media Gallery Update</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[5]/td[6]/input</td>
+	<td>Media Gallery Update</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[5]/td[6]/input</td>
+	<td>Media Gallery Update</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>//tr[5]/td[6]/input</td>
+	<td>Media Gallery Update</td>
 </tr>
 
 </tbody></table>

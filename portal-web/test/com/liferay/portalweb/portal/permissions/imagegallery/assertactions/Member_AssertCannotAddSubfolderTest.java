@@ -31,7 +31,7 @@ public class Member_AssertCannotAddSubfolderTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,11 +41,16 @@ public class Member_AssertCannotAddSubfolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Folder"),
+			selenium.getText(
+				"//a[@title='Media Gallery Permissions Test Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isElementPresent("Add Subfolder"));
+		assertFalse(selenium.isElementPresent("link=Add Subfolder"));
 	}
 }

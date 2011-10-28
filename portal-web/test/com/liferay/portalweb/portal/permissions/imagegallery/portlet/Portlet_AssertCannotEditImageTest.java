@@ -31,7 +31,7 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,14 +41,20 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Portlet2 Temporary2 Folder2",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
+			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@alt='Portlet2 Temporary2 Image2 - ']",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Portlet Permissions Image 2 Test Title"),
+			selenium.getText(
+				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
+		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
+			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -56,7 +62,7 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[3]")) {
+				if (selenium.isVisible("//div/div[2]/div[1]")) {
 					break;
 				}
 			}
@@ -67,23 +73,5 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 		}
 
 		assertFalse(selenium.isElementPresent("//img[@alt='Edit']"));
-		selenium.clickAt("//a[3]", RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//img[@alt='Portlet2 Temporary2 Image2 - ']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
 	}
 }

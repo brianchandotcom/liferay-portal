@@ -31,7 +31,7 @@ public class Portlet_DeleteOwnImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,14 +41,20 @@ public class Portlet_DeleteOwnImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Portlet2 Temporary2 Folder2",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
+			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@alt='Portlet1 Permissions1 Image1 - ']",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Portlet Permissions Image Test Title"),
+			selenium.getText(
+				"//a[@title='Portlet Permissions Image Test Title - ']"));
+		selenium.clickAt("//a[@title='Portlet Permissions Image Test Title - ']",
+			RuntimeVariables.replace("Portlet Permissions Image Test Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,31 +72,18 @@ public class Portlet_DeleteOwnImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+		selenium.clickAt("//img[@alt='Delete']",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
 		assertFalse(selenium.isElementPresent(
-				"//img[@alt='Portlet1 Permissions1 Image1. ']"));
+				"//a[@title='Portlet Permissions Image Test Title - ']"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

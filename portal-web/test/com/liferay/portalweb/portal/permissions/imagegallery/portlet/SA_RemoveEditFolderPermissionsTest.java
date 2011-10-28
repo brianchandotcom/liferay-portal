@@ -31,7 +31,7 @@ public class SA_RemoveEditFolderPermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,38 +41,32 @@ public class SA_RemoveEditFolderPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[4]/span/ul/li/strong/a",
-			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Temporary Folder Edited"),
+			selenium.getText(
+				"//a[@title='Media Gallery Temporary Folder Edited - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder Edited - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder Edited"));
 		selenium.waitForPageToLoad("30000");
-		selenium.uncheck("//tr[7]/td[7]/input");
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a",
+			RuntimeVariables.replace("Permissions"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isChecked("//tr[5]/td[8]/input"));
+		selenium.clickAt("//tr[5]/td[8]/input",
+			RuntimeVariables.replace("Media Gallery Update"));
+		assertFalse(selenium.isChecked("//tr[5]/td[8]/input"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertFalse(selenium.isChecked("//tr[7]/td[7]/input"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isChecked("//tr[5]/td[8]/input"));
 	}
 }

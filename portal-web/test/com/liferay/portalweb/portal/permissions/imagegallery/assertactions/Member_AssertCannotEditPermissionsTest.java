@@ -32,7 +32,7 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -42,12 +42,13 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/a/img", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Permissions Image 2 Test"),
+			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
+		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
+			RuntimeVariables.replace("Permissions Image 2 Test"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +56,7 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//img[@alt='Permissions']")) {
+				if (selenium.isVisible("//div/div[2]/div[1]")) {
 					break;
 				}
 			}
@@ -65,9 +66,6 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("//img[@alt='Permissions']"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"You do not have the required permissions."));
+		assertFalse(selenium.isElementPresent("//img[@alt='Permissions']"));
 	}
 }

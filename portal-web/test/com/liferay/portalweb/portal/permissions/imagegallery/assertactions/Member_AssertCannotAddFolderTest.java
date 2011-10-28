@@ -31,7 +31,7 @@ public class Member_AssertCannotAddFolderTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,9 +41,9 @@ public class Member_AssertCannotAddFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Add Folder"));
+		assertFalse(selenium.isElementPresent("link=Add Folder"));
 	}
 }

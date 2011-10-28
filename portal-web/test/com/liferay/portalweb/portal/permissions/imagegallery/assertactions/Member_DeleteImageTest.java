@@ -31,7 +31,7 @@ public class Member_DeleteImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,20 @@ public class Member_DeleteImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Folder"),
+			selenium.getText(
+				"//a[@title='Media Gallery Permissions Test Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@alt='Edited Third Permissions Image - ']",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Permissions Image 3 Test Edited"),
+			selenium.getText("//a[@title='Permissions Image 3 Test Edited - ']"));
+		selenium.clickAt("//a[@title='Permissions Image 3 Test Edited - ']",
+			RuntimeVariables.replace("Permissions Image 3 Test Edited"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +62,7 @@ public class Member_DeleteImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[5]/a/img")) {
+				if (selenium.isVisible("//img[@alt='Delete']")) {
 					break;
 				}
 			}
@@ -65,8 +72,8 @@ public class Member_DeleteImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("//span[5]/a/img"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//img[@alt='Delete']",
+			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -76,8 +83,7 @@ public class Member_DeleteImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -87,8 +93,9 @@ public class Member_DeleteImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("Edited Second Permissions Image"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Permissions Image 3 Test Edited"));
 	}
 }

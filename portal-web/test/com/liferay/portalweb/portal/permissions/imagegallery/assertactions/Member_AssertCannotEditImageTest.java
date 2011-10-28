@@ -31,7 +31,7 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,15 +41,13 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//img[@alt='Second Permissions Image Test - ']",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Permissions Image 2 Test"),
+			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
+		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
+			RuntimeVariables.replace("Permissions Image 2 Test"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -57,7 +55,7 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[3]")) {
+				if (selenium.isVisible("//div/div[2]/div[1]")) {
 					break;
 				}
 			}
@@ -72,23 +70,5 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent("//img[@alt='Edit']"));
 		assertFalse(selenium.isElementPresent("//img[@alt='Permissions']"));
 		assertFalse(selenium.isElementPresent("//img[@alt='Delete']"));
-		selenium.clickAt("//a[3]", RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//img[@alt='Second Permissions Image Test - ']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
 	}
 }

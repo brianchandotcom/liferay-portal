@@ -15,68 +15,88 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Configuration</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=Look and Feel</td>
-	<td></td>
+	<td>Look and Feel</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>link=Configuration</td>
+	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>link=Export / Import</td>
-	<td></td>
+	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//img[@alt='Remove']</td>
-	<td></td>
+	<td>Remove</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//input[@value='Add Subfolder']</td>
-	<td></td>
+	<td>link=Add Subfolder</td>
+	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[5]/ul/li[1]/a</td>
-	<td></td>
+	<td>link=Permissions</td>
+	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[5]/ul/li[2]/a</td>
-	<td></td>
+	<td>link=Add Folder</td>
+	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[5]/ul/li[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>link=Add Repository</td>
+	<td>Add Repository</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//input[@value='Add Subfolder']</td>
-	<td></td>
+	<td>link=Add Shortcut</td>
+	<td>Add Shortcut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[1]/a</td>
-	<td>Add Image</td>
+	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
+	<td>Media Gallery Permissions Test Subfolder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
+	<td>Media Gallery Permissions Test Subfolder</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>link=Add Subfolder</td>
+	<td>Add Subfolder</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Add Media</td>
+	<td>Add Media</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -85,42 +105,42 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=My Images</td>
-	<td></td>
+	<td>My Images</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Edited Third Permissions Image</td>
+	<td>Permissions Image 3 Test Edited</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Recent Images</td>
-	<td></td>
+	<td>Recent Images</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//img[@alt='Second Permissions Image Test - ']</td>
+	<td>//img[@alt='Permissions Image 2 Test - ']</td>
+	<td>Permissions Image 2 Test</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Permissions Image 2 Test</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Second Permissions Image Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Edited Third Permissions Image</td>
+	<td>Permissions Image 3 Test Edited</td>
 	<td></td>
 </tr>
 

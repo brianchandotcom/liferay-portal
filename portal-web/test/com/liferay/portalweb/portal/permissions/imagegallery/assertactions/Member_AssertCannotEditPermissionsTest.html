@@ -15,38 +15,33 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//a[@title='Permissions Image 2 Test - ']</td>
+	<td>Permissions Image 2 Test</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[2]/a/img</td>
-	<td></td>
+	<td>//a[@title='Permissions Image 2 Test - ']</td>
+	<td>Permissions Image 2 Test</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//img[@alt='Permissions']</td>
-	<td></td>
+	<td>//div/div[2]/div[1]</td>
+	<td>Permissions Image 2 Test -</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>assertElementNotPresent</td>
 	<td>//img[@alt='Permissions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>You do not have the required permissions.</td>
-	<td></td>
+	<td>Permissions</td>
 </tr>
 
 </tbody></table>

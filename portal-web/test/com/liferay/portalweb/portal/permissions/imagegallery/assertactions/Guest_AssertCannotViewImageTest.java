@@ -31,7 +31,7 @@ public class Guest_AssertCannotViewImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,41 +41,29 @@ public class Guest_AssertCannotViewImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Folder 2 Edited"),
+			selenium.getText(
+				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
+			RuntimeVariables.replace(
+				"Media Gallery Permissions Test Folder 2 Edited"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Subfolder 2"),
+			selenium.getText(
+				"//a[@title='Media Gallery Permissions Test Subfolder 2 - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder 2 - ']",
+			RuntimeVariables.replace(
+				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Edited Permissions Image"));
-		selenium.type("_31_keywords1", RuntimeVariables.replace("image"));
-		selenium.click("//input[@value='Search']");
-		assertFalse(selenium.isTextPresent("Edited Permissions Image"));
-		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Recent Images", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Edited Permissions Image"));
+		assertFalse(selenium.isElementPresent(
+				"//a[@title='Permissions Image Test Edited - ']"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

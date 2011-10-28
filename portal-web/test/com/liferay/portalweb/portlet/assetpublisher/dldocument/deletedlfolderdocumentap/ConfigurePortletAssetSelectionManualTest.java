@@ -44,6 +44,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -90,6 +91,11 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 
 		selenium.select("//select[@id='_86_selectionStyle']",
 			RuntimeVariables.replace("label=Manual"));
+		assertEquals("Manual",
+			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -109,11 +115,6 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals("Manual",
-			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals("Manual",
 			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
 		assertEquals(RuntimeVariables.replace(

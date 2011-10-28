@@ -43,6 +43,7 @@ public class ConfigurePortletEnableCommentsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",

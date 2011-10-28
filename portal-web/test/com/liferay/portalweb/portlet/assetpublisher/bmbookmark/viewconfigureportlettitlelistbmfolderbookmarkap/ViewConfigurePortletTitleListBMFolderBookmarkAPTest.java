@@ -60,6 +60,9 @@ public class ViewConfigurePortletTitleListBMFolderBookmarkAPTest
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=exact:http://www.liferay.com",
+			RuntimeVariables.replace("exact:http://www.liferay.com"));
+		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));
 	}
 }

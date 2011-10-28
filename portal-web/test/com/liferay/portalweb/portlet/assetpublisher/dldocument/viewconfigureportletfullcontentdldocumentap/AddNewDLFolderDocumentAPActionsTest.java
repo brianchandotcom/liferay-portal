@@ -22,187 +22,178 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 	public void testAddNewDLFolderDocumentAPActions() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Asset Publisher Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Asset Publisher Test Page",
-					RuntimeVariables.replace("Asset Publisher Test Page"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Add New"),
-					selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
-					RuntimeVariables.replace("Add New"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace(
-						"Document Library Document"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
-					RuntimeVariables.replace("Document Library Document"));
-				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Select']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//input[@value='Select']",
-					RuntimeVariables.replace("Select"));
-				selenium.waitForPopUp("folder",
-					RuntimeVariables.replace("30000"));
-				selenium.selectWindow("name=folder");
-				Thread.sleep(5000);
-
-				boolean choose1Present = selenium.isElementPresent(
-						"//td[4]/input");
-
-				if (choose1Present) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.close();
-				selenium.selectWindow("null");
-
-			case 2:
-
-				boolean choose2Present = selenium.isElementPresent(
-						"//td[4]/input");
-
-				if (!choose2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Choose']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.click("//input[@value='Choose']");
-
-			case 3:
-				selenium.selectWindow("null");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("DM Folder Name")
-												.equals(selenium.getText(
-										"//a[@id='_20_folderName']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("DM Folder Name"),
-					selenium.getText("//a[@id='_20_folderName']"));
-				selenium.type("//input[@id='_20_file']",
-					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\assetpublisher\\dependencies\\DLDocument.txt"));
-				selenium.type("//input[@id='_20_title']",
-					RuntimeVariables.replace("DM Folder Document Title"));
-				selenium.clickAt("//input[@value='Publish']",
-					RuntimeVariables.replace("Publish"));
-				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("DM Folder Document Title")
-												.equals(selenium.getText(
-										"//h3[@class='asset-title']/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace(
-						"DM Folder Document Title"),
-					selenium.getText("//h3[@class='asset-title']/a"));
-				assertEquals(RuntimeVariables.replace(
-						"DM Folder Document Title"),
-					selenium.getText(
-						"//div[@class='asset-resource-info']/span/a/span"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
+			RuntimeVariables.replace("Add New"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Document"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+			RuntimeVariables.replace("Document"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Documents Home")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Documents Home",
+			RuntimeVariables.replace("Documents Home"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//div/a/span[2]"));
+		selenium.clickAt("//div/a/span[2]",
+			RuntimeVariables.replace("DM Folder Name"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
+		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Basic Document")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Basic Document"),
+			selenium.getText("link=Basic Document"));
+		selenium.click(RuntimeVariables.replace("link=Basic Document"));
+		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DM Folder Name")
+										.equals(selenium.getText(
+								"link=DM Folder Name"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("link=DM Folder Name"));
+		selenium.type("//input[@id='_20_file']",
+			RuntimeVariables.replace(
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\assetpublisher\\dependencies\\DLDocument.txt"));
+		selenium.type("//input[@id='_20_title']",
+			RuntimeVariables.replace("DM Folder Document Title"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DM Folder Document Title")
+										.equals(selenium.getText(
+								"//h3[@class='asset-title']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//h3[@class='asset-title']/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
+			selenium.getText("//div[@class='asset-resource-info']/span/a/span"));
 	}
 }

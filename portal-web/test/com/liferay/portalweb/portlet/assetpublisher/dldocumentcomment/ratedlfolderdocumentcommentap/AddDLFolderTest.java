@@ -43,6 +43,7 @@ public class AddDLFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
@@ -80,6 +81,6 @@ public class AddDLFolderTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//span[@class='document-title']"));
+			selenium.getText("//div/a/span[2]"));
 	}
 }

@@ -22,167 +22,109 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddNewIGFolderImageAPActionsTest extends BaseTestCase {
 	public void testAddNewIGFolderImageAPActions() throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Asset Publisher Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Asset Publisher Test Page",
-					RuntimeVariables.replace("Asset Publisher Test Page"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Add New"),
-					selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
-					RuntimeVariables.replace("Add New"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Image Gallery Image"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//input[@value='Select']",
-					RuntimeVariables.replace("Select"));
-				selenium.waitForPopUp("folder",
-					RuntimeVariables.replace("30000"));
-				selenium.selectWindow("name=folder");
-				Thread.sleep(5000);
-
-				boolean choose1Present = selenium.isElementPresent(
-						"//td[4]/input");
-
-				if (choose1Present) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.close();
-				selenium.selectWindow("null");
-
-			case 2:
-
-				boolean choose2Present = selenium.isElementPresent(
-						"//td[4]/input");
-
-				if (!choose2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@value='Choose']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.click("//input[@value='Choose']");
-
-			case 3:
-				selenium.selectWindow("null");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("IG Folder Name")
-												.equals(selenium.getText(
-										"//a[@id='_31_folderName']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("IG Folder Name"),
-					selenium.getText("//a[@id='_31_folderName']"));
-				selenium.type("//input[@id='_31_file']",
-					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\assetpublisher\\dependencies\\IGImage.jpg"));
-				selenium.type("//input[@id='_31_name']",
-					RuntimeVariables.replace("IG Folder Image Name"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("IG Folder Image Name")
-												.equals(selenium.getText(
-										"//h3[@class='asset-title']/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
-					selenium.getText("//h3[@class='asset-title']/a"));
-				assertTrue(selenium.isElementPresent(
-						"//img[@class='asset-small-image']"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		selenium.click("//span[@title='Add New']/ul/li/strong/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
+			RuntimeVariables.replace("Image"));
+		selenium.waitForPageToLoad("30000");
+		selenium.click("//input[@value='Select']");
+		selenium.type("//input[@id='_20_file']",
+			RuntimeVariables.replace(
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\assetpublisher\\dependencies\\IGImage.jpg"));
+		selenium.type("//input[@id='_20_title']",
+			RuntimeVariables.replace("IG Folder Image Name"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("IG Folder Image Name")
+										.equals(selenium.getText(
+								"//h3[@class='asset-title']/a"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
+			selenium.getText("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isElementPresent(
+				"//div[@class='asset-resource-info']/span/a/img"));
+		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
+			selenium.getText("//div[@class='asset-resource-info']/span/a/span"));
 	}
 }

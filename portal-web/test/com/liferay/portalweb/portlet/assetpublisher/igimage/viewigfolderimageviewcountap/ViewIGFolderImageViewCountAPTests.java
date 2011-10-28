@@ -29,8 +29,8 @@ public class ViewIGFolderImageViewCountAPTests extends BaseTests {
 
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
-		testSuite.addTestSuite(AddPageIGTest.class);
-		testSuite.addTestSuite(AddPortletIGTest.class);
+		testSuite.addTestSuite(AddPageDLTest.class);
+		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddIGFolderTest.class);
 		testSuite.addTestSuite(AddNewIGFolderImageAPActionsTest.class);
 		testSuite.addTestSuite(
@@ -38,8 +38,7 @@ public class ViewIGFolderImageViewCountAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ConfigurePortletShowMetadataViewCountTest.class);
 		testSuite.addTestSuite(ViewIGFolderImageViewCountAPTest.class);
-		testSuite.addTestSuite(TearDownIGFolderTest.class);
-		testSuite.addTestSuite(TearDownIGImageTest.class);
+		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

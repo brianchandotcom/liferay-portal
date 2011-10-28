@@ -4,8 +4,6 @@ insert into DLFileEntry values ('${portalUUIDUtil.generate()}', ${dlFileEntry.fi
 
 ${sampleSQLBuilder.insertSecurity("com.liferay.portlet.documentlibrary.model.DLFileEntry", dlFileEntry.fileEntryId)}
 
-update DLFolder set modifiedDate = CURRENT_TIMESTAMP, lastPostDate = CURRENT_TIMESTAMP where folderId = ${dlFileEntry.folderId};
-
 <#assign dlFileRank = dataFactory.addDLFileRank(dlFileEntry.groupId, dlFileEntry.companyId, dlFileEntry.userId, dlFileEntry.fileEntryId)>
 
 insert into DLFileRank values (${dlFileRank.fileRankId}, ${dlFileRank.groupId}, ${dlFileRank.companyId}, ${dlFileRank.userId}, CURRENT_TIMESTAMP, ${dlFileRank.fileEntryId});

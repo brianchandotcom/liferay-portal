@@ -3,9 +3,12 @@
 <#assign mbMessageCounter = dataFactory.newInteger()>
 <#assign wikiPageCounter = dataFactory.newInteger()>
 
+<#assign privateLayouts = []>
+
 <#list dataFactory.groups as group>
-	<#include "groups_guest_private_layouts.ftl">
-	<#include "groups_guest_public_layouts.ftl">
+	<#assign publicLayouts = [
+		dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,")
+	]>
 
 	${sampleSQLBuilder.insertGroup(group, privateLayouts, publicLayouts)}
 </#list>
@@ -15,8 +18,13 @@
 
 	<#assign group = dataFactory.addGroup(groupId, dataFactory.groupClassName.classNameId, groupId, "Community " + groupCount, "/community" + groupCount, true)>
 
-	<#include "groups_group_private_layouts.ftl">
-	<#include "groups_group_public_layouts.ftl">
+	<#assign publicLayouts = [
+		dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,"),
+		dataFactory.addLayout(2, "Blogs", "/blogs", "", "33,")
+		dataFactory.addLayout(3, "Document Library", "/document_library", "", "20,")
+		dataFactory.addLayout(4, "Forums", "/forums", "", "19,")
+		dataFactory.addLayout(5, "Wiki", "/wiki", "", "36,")
+	]>
 
 	${sampleSQLBuilder.insertGroup(group, privateLayouts, publicLayouts)}
 

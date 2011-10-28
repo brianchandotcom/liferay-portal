@@ -39,18 +39,12 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBStatsUser;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.util.SimpleCounter;
@@ -240,30 +234,12 @@ public class SampleSQLBuilder {
 		}
 	}
 
-	public void insertAssetEntry(AssetEntry assetEntry) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "assetEntry", assetEntry);
-
-		processTemplate(_tplAssetEntry, context);
-	}
-
 	public void insertBlogsEntry(BlogsEntry blogsEntry) throws Exception {
 		Map<String, Object> context = getContext();
 
 		put(context, "blogsEntry", blogsEntry);
 
 		processTemplate(_tplBlogsEntry, context);
-	}
-
-	public void insertBlogsStatsUser(BlogsStatsUser blogsStatsUser)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "blogsStatsUser", blogsStatsUser);
-
-		processTemplate(_tplBlogsStatsUser, context);
 	}
 
 	public void insertDLFileEntry(
@@ -324,36 +300,12 @@ public class SampleSQLBuilder {
 		processTemplate(_tplMBCategory, context);
 	}
 
-	public void insertMBDiscussion(MBDiscussion mbDiscussion) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "mbDiscussion", mbDiscussion);
-
-		processTemplate(_tplMBDiscussion, context);
-	}
-
 	public void insertMBMessage(MBMessage mbMessage) throws Exception {
 		Map<String, Object> context = getContext();
 
 		put(context, "mbMessage", mbMessage);
 
 		processTemplate(_tplMBMessage, context);
-	}
-
-	public void insertMBStatsUser(MBStatsUser mbStatsUser) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "mbStatsUser", mbStatsUser);
-
-		processTemplate(_tplMBStatsUser, context);
-	}
-
-	public void insertMBThread(MBThread mbThread) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "mbThread", mbThread);
-
-		processTemplate(_tplMBThread, context);
 	}
 
 	public void insertResourcePermission(String name, long primKey)
@@ -385,16 +337,6 @@ public class SampleSQLBuilder {
 		processTemplate(_tplSecurity, context);
 	}
 
-	public void insertSocialActivity(SocialActivity socialActivity)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "socialActivity", socialActivity);
-
-		processTemplate(_tplSocialActivity, context);
-	}
-
 	public void insertUser(
 			Contact contact, Group group, List<Long> groupIds,
 			List<Long> organizationIds, List<Layout> privateLayouts,
@@ -413,14 +355,6 @@ public class SampleSQLBuilder {
 		put(context, "user", user);
 
 		processTemplate(_tplUser, context);
-	}
-
-	public void insertWikiNode(WikiNode wikiNode) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "wikiNode", wikiNode);
-
-		processTemplate(_tplWikiNode, context);
 	}
 
 	public void insertWikiPage(WikiNode wikiNode, WikiPage wikiPage)
@@ -470,7 +404,7 @@ public class SampleSQLBuilder {
 
 		StringBundler sb = _insertSQLs.get(tableName);
 
-		if (sb == null) {
+		if (sb == null || sb.index() == 0) {
 			sb = new StringBundler();
 
 			_insertSQLs.put(tableName, sb);
@@ -486,6 +420,8 @@ public class SampleSQLBuilder {
 		sb.append(values);
 
 		if (sb.index() >= _OPTIMIZE_BUFFER_SIZE) {
+			sb.append(";\n");
+
 			String sql = _db.buildSQL(sb.toString());
 
 			sb.setIndex(0);
@@ -726,25 +662,18 @@ public class SampleSQLBuilder {
 	private boolean _securityEnabled;
 	private SimpleCounter _socialActivityCounter;
 	private File _tempDir;
-	private String _tplAssetEntry = _TPL_ROOT + "asset_entry.ftl";
 	private String _tplBlogsEntry = _TPL_ROOT + "blogs_entry.ftl";
-	private String _tplBlogsStatsUser = _TPL_ROOT + "blogs_stats_user.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
 	private String _tplDLFolder = _TPL_ROOT + "dl_folder.ftl";
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
 	private String _tplMBCategory = _TPL_ROOT + "mb_category.ftl";
-	private String _tplMBDiscussion = _TPL_ROOT + "mb_discussion.ftl";
-	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";
-	private String _tplMBStatsUser = _TPL_ROOT + "mb_stats_user.ftl";
-	private String _tplMBThread = _TPL_ROOT + "mb_thread.ftl";
+	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =
 		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private String _tplSecurity = _TPL_ROOT + "security.ftl";
-	private String _tplSocialActivity = _TPL_ROOT + "social_activity.ftl";
 	private String _tplUser = _TPL_ROOT + "user.ftl";
-	private String _tplWikiNode = _TPL_ROOT + "wiki_node.ftl";
 	private String _tplWikiPage = _TPL_ROOT + "wiki_page.ftl";
 	private SimpleCounter _userScreenNameIncrementer;
 	private Writer _writerBlogsCSV;

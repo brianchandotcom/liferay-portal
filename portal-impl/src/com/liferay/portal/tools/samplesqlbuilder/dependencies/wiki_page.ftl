@@ -9,5 +9,5 @@ ${sampleSQLBuilder.insertSecurity("com.liferay.portlet.wiki.model.WikiPage", wik
 <#if wikiPage.head>
 	<#assign assetEntry = dataFactory.addAssetEntry(wikiNode.groupId, wikiPage.userId, dataFactory.wikiPageClassName.classNameId, wikiPage.resourcePrimKey, true, "text/html", wikiPage.title)>
 
-	${sampleSQLBuilder.insertAssetEntry(assetEntry)}
+	insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifiedDate, classNameId, classPK, visible, mimeType, title) values (${counter.get()}, ${assetEntry.groupId}, ${companyId}, ${assetEntry.userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${assetEntry.classNameId}, ${assetEntry.classPK}, <#if assetEntry.visible>TRUE<#else>FALSE</#if>, '${assetEntry.mimeType}', '${assetEntry.title}');
 </#if>

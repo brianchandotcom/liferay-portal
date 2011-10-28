@@ -14,12 +14,14 @@
 
 package com.liferay.portal.tools.samplesqlbuilder;
 
+import com.liferay.portal.dao.db.MySQLDB;
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.io.CharPipe;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncTeeWriter;
 import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -28,7 +30,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
@@ -57,7 +58,6 @@ import com.liferay.util.SimpleCounter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -184,13 +184,17 @@ public class SampleSQLBuilder {
 
 			_db = DBFactoryUtil.getDB(_dbType);
 
+			if (_db instanceof MySQLDB) {
+				_db = new SampleMySQLDB();
+			}
+
 			// Generic
 
 			_tempDir = new File(_outputDir, "temp");
 
 			_tempDir.mkdirs();
 
-			final CharPipe charPipe = new CharPipe(1024 * 1024 * 10);
+			final CharPipe charPipe = new CharPipe(_WRITER_BUFFER_SIZE * 4);
 
 			generateSQL(charPipe);
 
@@ -430,6 +434,30 @@ public class SampleSQLBuilder {
 		processTemplate(_tplWikiPage, context);
 	}
 
+	protected Writer createFileWriter(String fileName) throws IOException {
+		return createFileWriter(new File(fileName));
+	}
+
+	protected Writer createFileWriter(File file) throws IOException {
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			fileOutputStream);
+
+		return createUnsyncBufferedWriter(outputStreamWriter);
+	}
+
+	protected Writer createUnsyncBufferedWriter(Writer writer) {
+		return new UnsyncBufferedWriter(
+			writer, _WRITER_BUFFER_SIZE) {
+
+			@Override
+			public void flush() throws IOException {
+				// Disable FreeMarker's flushing call
+			}
+		};
+	}
+
 	protected void compressInsertSQL(String insertSQL) throws IOException {
 		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
 
@@ -486,7 +514,7 @@ public class SampleSQLBuilder {
 	}
 
 	protected void generateSQL(final CharPipe charPipe) {
-		final Writer writer = charPipe.getWriter();
+		final Writer writer = createUnsyncBufferedWriter(charPipe.getWriter());
 
 		Thread thread = new Thread() {
 
@@ -494,7 +522,7 @@ public class SampleSQLBuilder {
 			public void run() {
 				try {
 					_writerSampleSQL = new UnsyncTeeWriter(
-						writer, new FileWriter(_outputDir +  "/sample.sql"));
+						writer, createFileWriter(_outputDir +  "/sample.sql"));
 
 					createSample();
 
@@ -519,16 +547,16 @@ public class SampleSQLBuilder {
 
 				processTemplate(_tplSample, context);
 
-				_writerBlogsCSV.flush();
-				_writerCompanyCSV.flush();
-				_writerDocumentLibraryCSV.flush();
-				_writerMessageBoardsCSV.flush();
-				_writerUsersCSV.flush();
-				_writerWikiCSV.flush();
+				_writerBlogsCSV.close();
+				_writerCompanyCSV.close();
+				_writerDocumentLibraryCSV.close();
+				_writerMessageBoardsCSV.close();
+				_writerUsersCSV.close();
+				_writerWikiCSV.close();
 			}
 
 			protected Writer getWriter(String fileName) throws Exception {
-				return new FileWriter(new File(_outputDir + "/" + fileName));
+				return createFileWriter(new File(_outputDir + "/" + fileName));
 			}
 
 		};
@@ -562,7 +590,7 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
-		put(context, "portalUUIDUtil", PortalUUIDUtil.getPortalUUID());
+		put(context, "portalUUIDUtil", SequentialUUID.getSequentialUUID());
 		put(context, "sampleSQLBuilder", this);
 		put(context, "stringUtil", StringUtil_IW.getInstance());
 		put(context, "userScreenNameIncrementer", _userScreenNameIncrementer);
@@ -614,6 +642,8 @@ public class SampleSQLBuilder {
 				0, insertSQLFileChannel.size(), fileChannel);
 
 			insertSQLFileChannel.close();
+
+			insertSQLFile.delete();
 		}
 
 		Writer writer = new OutputStreamWriter(fileOutputStream);
@@ -646,7 +676,7 @@ public class SampleSQLBuilder {
 		if (writer == null) {
 			File file = getInsertSQLFile(tableName);
 
-			writer = new FileWriter(file);
+			writer = createFileWriter(file);
 
 			_insertSQLWriters.put(tableName, writer);
 		}
@@ -655,6 +685,8 @@ public class SampleSQLBuilder {
 	}
 
 	private static final int _OPTIMIZE_BUFFER_SIZE = 8192;
+
+	private static final int _WRITER_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/samplesqlbuilder/dependencies/";

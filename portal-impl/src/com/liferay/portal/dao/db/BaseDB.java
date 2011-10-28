@@ -915,7 +915,7 @@ public abstract class BaseDB implements DB {
 			return template;
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = null;
 
 		int endIndex = 0;
 
@@ -924,6 +924,10 @@ public abstract class BaseDB implements DB {
 		while (matcher.find()) {
 			int startIndex = matcher.start();
 
+			if (sb == null) {
+				sb = new StringBundler();
+			}
+
 			sb.append(template.substring(endIndex, startIndex));
 
 			endIndex = matcher.end();
@@ -931,6 +935,10 @@ public abstract class BaseDB implements DB {
 			String matched = template.substring(startIndex, endIndex);
 
 			sb.append(_templateMap.get(matched));
+		}
+
+		if (sb == null) {
+			return template;
 		}
 
 		if (template.length() > endIndex) {

@@ -55,29 +55,33 @@ public class ImageProcessor extends DLPreviewableProcessor {
 	public static InputStream getCustom1AsStream(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance._getCustomAsStream(
-			fileVersion, fileVersion.getExtension(), 1);
+		String type = _instance._getImageType(fileVersion);
+
+		return _instance._getCustomAsStream(fileVersion, type, 1);
 	}
 
 	public static long getCustom1FileSize(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance._getCustomFileSize(
-			fileVersion, fileVersion.getExtension(), 1);
+		String type = _instance._getImageType(fileVersion);
+
+		return _instance._getCustomFileSize(fileVersion, type, 1);
 	}
 
 	public static InputStream getCustom2AsStream(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance._getCustomAsStream(
-			fileVersion, fileVersion.getExtension(), 2);
+		String type = _instance._getImageType(fileVersion);
+
+		return _instance._getCustomAsStream(fileVersion, type, 2);
 	}
 
 	public static long getCustom2FileSize(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance._getCustomFileSize(
-			fileVersion, fileVersion.getExtension(), 2);
+		String type = _instance._getImageType(fileVersion);
+
+		return _instance._getCustomFileSize(fileVersion, type, 2);
 	}
 
 	public static Set<String> getImageMimeTypes() {
@@ -87,15 +91,17 @@ public class ImageProcessor extends DLPreviewableProcessor {
 	public static InputStream getThumbnailAsStream(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance.doGetThumbnailAsStream(
-			fileVersion, fileVersion.getExtension());
+		String type = _instance._getImageType(fileVersion);
+
+		return _instance.doGetThumbnailAsStream(fileVersion, type);
 	}
 
 	public static long getThumbnailFileSize(FileVersion fileVersion)
 		throws Exception {
 
-		return _instance.doGetThumbnailFileSize(
-			fileVersion, fileVersion.getExtension());
+		String type = _instance._getImageType(fileVersion);
+
+		return _instance.doGetThumbnailFileSize(fileVersion, type);
 	}
 
 	public static boolean hasImages(FileVersion fileVersion) {
@@ -148,12 +154,12 @@ public class ImageProcessor extends DLPreviewableProcessor {
 				return;
 			}
 
-			String imageType = imageBag.getType();
+			String type = _instance._getImageType(fileVersion);
 
 			_saveThumbnailImage(
 				fileVersion, renderedImage,
 				PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION,
-				getThumbnailFilePath(fileVersion, imageType));
+				getThumbnailFilePath(fileVersion, type));
 
 			if (PrefsPropsUtil.getInteger(
 					PropsKeys.IG_IMAGE_CUSTOM_1_MAX_DIMENSION) > 0) {
@@ -161,7 +167,7 @@ public class ImageProcessor extends DLPreviewableProcessor {
 				_saveThumbnailImage(
 					fileVersion, renderedImage,
 					PropsKeys.IG_IMAGE_CUSTOM_1_MAX_DIMENSION,
-					_getCustom1FilePath(fileVersion, imageType));
+					_getCustom1FilePath(fileVersion, type));
 			}
 
 			if (PrefsPropsUtil.getInteger(
@@ -170,7 +176,7 @@ public class ImageProcessor extends DLPreviewableProcessor {
 				_saveThumbnailImage(
 					fileVersion, renderedImage,
 					PropsKeys.IG_IMAGE_CUSTOM_2_MAX_DIMENSION,
-					_getCustom2FilePath(fileVersion, imageType));
+					_getCustom2FilePath(fileVersion, type));
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -227,9 +233,19 @@ public class ImageProcessor extends DLPreviewableProcessor {
 			_getCustomFilePath(fileVersion, type, index));
 	}
 
+	private String _getImageType(FileVersion fileVersion) {
+		String type = fileVersion.getExtension();
+
+		if (type.equals("jpeg")) {
+			type = "jpg";
+		}
+
+		return type;
+	}
+
 	private boolean _hasCustomImage(FileVersion fileVersion, int index) {
 		try {
-			String type = fileVersion.getExtension();
+			String type = _getImageType(fileVersion);
 
 			return DLStoreUtil.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
@@ -273,9 +289,11 @@ public class ImageProcessor extends DLPreviewableProcessor {
 
 	private boolean _hasThumbnailImage(FileVersion fileVersion) {
 		try {
+			String imageType = _getImageType(fileVersion);
+
 			return DLStoreUtil.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
-				getThumbnailFilePath(fileVersion, fileVersion.getExtension()));
+				getThumbnailFilePath(fileVersion, imageType));
 		}
 		catch (Exception e) {
 			_log.error(e, e);

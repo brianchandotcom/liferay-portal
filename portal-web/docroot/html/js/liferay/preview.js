@@ -5,6 +5,8 @@ AUI().add(
 
 		var ATTR_DATA_IMAGE_INDEX = 'data-imageIndex';
 
+		var BUFFER = [];
+
 		var CSS_IMAGE_SELECTED = 'lfr-preview-file-image-selected';
 
 		var STR_SCROLLER = 'scroller';
@@ -72,6 +74,13 @@ AUI().add(
 						instance._currentPreviewImage = instance.get('currentPreviewImage');
 						instance._previewFileIndexNode = instance.get('previewFileIndexNode');
 						instance._imageListContent = instance.get('imageListContent');
+
+						instance._hideLoadingIndicator = A.debounce(
+							function() {
+								instance._getLoadingIndicator().hide();
+							},
+							250
+						);
 					},
 
 					renderUI: function() {
@@ -131,15 +140,24 @@ AUI().add(
 
 						var imageListContentEl = instance._imageListContent.getDOM();
 
-						if (imageListContentEl.scrollTop >= (imageListContentEl.scrollHeight - 700)) {
+						var maxIndex = instance.get('maxIndex');
+
+						var previewFileCountDown = instance._previewFileCountDown;
+
+						if (previewFileCountDown < maxIndex && imageListContentEl.scrollTop >= (imageListContentEl.scrollHeight - 700)) {
 							var loadingIndicator = instance._getLoadingIndicator();
 
 							if (loadingIndicator.hasClass('aui-helper-hidden')) {
+								var end = Math.min(maxIndex, previewFileCountDown + 10);
+								var start = Math.max(0, previewFileCountDown + 1);
+
+								instance._getLoadingCountNode().html(start + ' - ' + end);
+
 								loadingIndicator.show();
 
 								setTimeout(
 									function() {
-										instance._renderImages();
+										instance._renderImages(maxIndex);
 									},
 									350
 								);
@@ -196,7 +214,7 @@ AUI().add(
 
 							var close = A.Node.create(TPL_MAX_CLOSE);
 
-							var maxPreviewControls = A.Node.create(TPL_MAX_CONTROLS);
+							maxPreviewControls = A.Node.create(TPL_MAX_CONTROLS);
 
 							maxPreviewControls.append(arrowLeft);
 							maxPreviewControls.append(arrowRight);
@@ -296,19 +314,16 @@ AUI().add(
 						}
 					},
 
-					_renderImages: function() {
+					_renderImages: function(maxIndex) {
 						var instance = this;
 
 						var i = 0;
-						var buffer = [];
 						var previewFileCountDown = instance._previewFileCountDown;
 						var displayedIndex;
 
 						var currentIndex = instance.get('currentIndex');
 
-						var maxIndex = instance.get('maxIndex');
-
-						instance._getLoadingCountNode().html((previewFileCountDown + 1) + ' - ' + (previewFileCountDown + 10));
+						maxIndex = maxIndex || instance.get('maxIndex');
 
 						var baseImageURL = instance._baseImageURL;
 
@@ -320,13 +335,13 @@ AUI().add(
 							MAP_IMAGE_DATA.index = previewFileCountDown;
 							MAP_IMAGE_DATA.url = baseImageURL + displayedIndex;
 
-							buffer[buffer.length] = Lang.sub(TPL_IMAGES, MAP_IMAGE_DATA);
+							BUFFER[BUFFER.length] = Lang.sub(TPL_IMAGES, MAP_IMAGE_DATA);
 
 							previewFileCountDown = ++instance._previewFileCountDown;
 						}
 
-						if (buffer.length) {
-							var nodeList = A.NodeList.create(buffer.join(''));
+						if (BUFFER.length) {
+							var nodeList = A.NodeList.create(BUFFER.join(''));
 
 							if (!instance._nodeList) {
 								instance._nodeList = nodeList;
@@ -336,9 +351,11 @@ AUI().add(
 							}
 
 							instance._imageListContent.append(nodeList);
+
+							BUFFER.length = 0;
 						}
 
-						instance._getLoadingIndicator().hide();
+						instance._hideLoadingIndicator();
 					},
 
 					_renderToolbar: function() {
@@ -368,7 +385,7 @@ AUI().add(
 					_setCurrentIndex: function(value) {
 						var instance = this;
 
-						value = parseInt(value);
+						value = parseInt(value, 10);
 
 						if (isNaN(value)) {
 							value = A.Attribute.INVALID_VALUE;

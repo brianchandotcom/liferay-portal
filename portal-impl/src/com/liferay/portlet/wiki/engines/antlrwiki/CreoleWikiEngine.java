@@ -80,7 +80,7 @@ public class CreoleWikiEngine implements WikiEngine {
 					existingLink = true;
 				}
 
-				outgoingLinks.put(title, existingLink);
+				outgoingLinks.put(title.toLowerCase(), existingLink);
 			}
 		}
 		catch (SystemException se) {

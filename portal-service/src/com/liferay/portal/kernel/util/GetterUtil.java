@@ -106,6 +106,9 @@ public class GetterUtil {
 		else if (value.getClass().isAssignableFrom(Double.class)) {
 			return (Double)value;
 		}
+		else if (value instanceof Number) {
+			return ((Number)value).doubleValue();
+		}
 
 		return defaultValue;
 	}
@@ -120,6 +123,9 @@ public class GetterUtil {
 		}
 		else if (value.getClass().isAssignableFrom(Float.class)) {
 			return (Float)value;
+		}
+		else if (value instanceof Number) {
+			return ((Number)value).floatValue();
 		}
 
 		return defaultValue;
@@ -136,6 +142,9 @@ public class GetterUtil {
 		else if (value.getClass().isAssignableFrom(Integer.class)) {
 			return (Integer)value;
 		}
+		else if (value instanceof Number) {
+			return ((Number)value).intValue();
+		}
 
 		return defaultValue;
 	}
@@ -150,6 +159,9 @@ public class GetterUtil {
 		}
 		else if (value.getClass().isAssignableFrom(Long.class)) {
 			return (Long)value;
+		}
+		else if (value instanceof Number) {
+			return ((Number)value).longValue();
 		}
 
 		return defaultValue;
@@ -187,11 +199,11 @@ public class GetterUtil {
 		else if (value.getClass().isAssignableFrom(Long.class)) {
 			return (Long)value;
 		}
-		else if (value.getClass().isAssignableFrom(Number.class)) {
-			return (Number)value;
-		}
 		else if (value.getClass().isAssignableFrom(Short.class)) {
 			return (Short)value;
+		}
+		else if (value instanceof Number) {
+			return (Number)value;
 		}
 
 		return defaultValue;
@@ -207,6 +219,9 @@ public class GetterUtil {
 		}
 		else if (value.getClass().isAssignableFrom(Short.class)) {
 			return (Short)value;
+		}
+		else if (value instanceof Number) {
+			return ((Number)value).shortValue();
 		}
 
 		return defaultValue;
@@ -665,6 +680,15 @@ public class GetterUtil {
 			}
 			else if (componentType.isAssignableFrom(Long.class)) {
 				return (long[])value;
+			}
+			else if (Number.class.isAssignableFrom(componentType)) {
+				long[] values = new long[((Number[])value).length];
+
+				for (int i=0; i < values.length; i++) {
+					values[i] = ((Number[])value)[i].longValue();
+				}
+
+				return values;
 			}
 		}
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
@@ -58,7 +59,7 @@ public class NetvibesServlet extends HttpServlet {
 			else {
 				request.setAttribute(WebKeys.NETVIBES, Boolean.TRUE);
 
-				response.setContentType(ContentTypes.TEXT_XML);
+				response.setContentType(ContentTypes.TEXT_HTML);
 
 				ServletResponseUtil.write(response, content);
 			}
@@ -93,7 +94,7 @@ public class NetvibesServlet extends HttpServlet {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
 
-		String title = portlet.getDisplayName();
+		String title = HtmlUtil.escape(portlet.getDisplayName());
 
 		String portalURL = PortalUtil.getPortalURL(request);
 
@@ -104,20 +105,16 @@ public class NetvibesServlet extends HttpServlet {
 			portalURL + PortalUtil.getPathContext() +
 				"/html/js/liferay/widget.js";
 
-		String widgetURL = request.getRequestURL().toString();
+		String widgetURL = HtmlUtil.escape(request.getRequestURL().toString());
 
 		widgetURL = widgetURL.replaceFirst(
 			PropsValues.NETVIBES_SERVLET_MAPPING,
 			PropsValues.WIDGET_SERVLET_MAPPING);
 
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		sb.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 ");
-		sb.append("Strict//EN\" ");
-		sb.append("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
-		sb.append("<html xmlns=\"http://www.w3.org/1999/xhtml\" ");
-		sb.append("xmlns:widget=\"http://www.netvibes.com/ns/\">");
+		sb.append("<!DOCTYPE html>");
+		sb.append("<html>");
 		sb.append("<head>");
 		sb.append("<link href=\"");
 		sb.append(_NETVIBES_CSS);

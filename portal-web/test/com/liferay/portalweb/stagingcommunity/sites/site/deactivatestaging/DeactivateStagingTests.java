@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.sites;
+package com.liferay.portalweb.stagingcommunity.sites.site.deactivatestaging;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.stagingcommunity.sites.pagevariation.PageVariationTests;
-import com.liferay.portalweb.stagingcommunity.sites.site.SiteTests;
-import com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.SitePagesVariationTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,14 +22,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SitesTests extends BaseTests {
+public class DeactivateStagingTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(PageVariationTests.suite());
-		testSuite.addTest(SiteTests.suite());
-		testSuite.addTest(SitePagesVariationTests.suite());
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(ActivateStagingTest.class);
+		testSuite.addTestSuite(DeactivateStagingTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

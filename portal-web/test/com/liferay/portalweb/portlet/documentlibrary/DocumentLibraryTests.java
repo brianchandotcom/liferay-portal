@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portlet.documentlibrary;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portlet.documentlibrary.breadcrumb.BreadcrumbTests;
 import com.liferay.portalweb.portlet.documentlibrary.comment.CommentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.DocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.folder.FolderTests;
@@ -33,6 +34,7 @@ public class DocumentLibraryTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(BreadcrumbTests.suite());
 		testSuite.addTest(CommentTests.suite());
 		testSuite.addTest(DocumentTests.suite());
 		testSuite.addTest(FolderTests.suite());

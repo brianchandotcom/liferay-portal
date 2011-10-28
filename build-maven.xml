@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-maven" default="deploy-artifacts" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-maven" default="zip-maven" xmlns:antelope="antlib:ise.antelope.tasks">
 	<property name="project.dir" value="." />
 
 	<import file="build-common.xml" />
@@ -19,278 +19,71 @@
 
 	<property name="maven.executable" value="mvn${maven.extension}" />
 
-	<target name="deploy-artifact">
-		<copy file="tools/maven/${artifact.id}.xml" tofile="tools/maven/${artifact.id}.pom">
-			<filterset>
-				<filter token="version" value="${maven.version}" />
-			</filterset>
-		</copy>
-
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="gpg:sign-and-deploy-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=${artifact.id}/${artifact.id}.${packaging}" />
-			<arg value="-Dgpg.executable=${gpg.executable}" />
-			<arg value="-Dgpg.keyname=${gpg.keyname}" />
-			<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
-			<arg value="-DgroupId=com.liferay.portal" />
-			<arg value="-Dpackaging=${packaging}" />
-			<arg value="-DpomFile=tools/maven/${artifact.id}.pom" />
-			<arg value="-DrepositoryId=${maven.repository.id}" />
-			<arg value="-Durl=${maven.url}" />
-			<arg value="-Dversion=${maven.version}" />
-		</exec>
-
+	<target name="deploy-artifacts">
 		<if>
-			<not>
-				<or>
-					<equals arg1="${packaging}" arg2="war" />
-					<antelope:endswith string="${maven.version}" with="SNAPSHOT" />
-				</or>
-			</not>
+			<equals arg1="${gpg.keyname}" arg2="" />
 			<then>
-				<exec dir="." executable="${maven.executable}" failonerror="true">
-					<arg value="gpg:sign-and-deploy-file" />
-					<arg value="-DartifactId=${artifact.id}" />
-					<arg value="-Dclassifier=javadoc" />
-					<arg value="-Dfile=${artifact.id}/${artifact.id}-javadoc.${packaging}" />
-					<arg value="-DgeneratePom=false" />
-					<arg value="-Dgpg.executable=${gpg.executable}" />
-					<arg value="-Dgpg.keyname=${gpg.keyname}" />
-					<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
-					<arg value="-DgroupId=com.liferay.portal" />
-					<arg value="-Dpackaging=jar" />
-					<arg value="-DrepositoryId=${maven.repository.id}" />
-					<arg value="-Durl=${maven.url}" />
-					<arg value="-Dversion=${maven.version}" />
-				</exec>
+				<fail>
+					Set gpg.keyname and gpg.passphrase in release.${user.name}.properties.
 
-				<exec dir="." executable="${maven.executable}" failonerror="true">
-					<arg value="gpg:sign-and-deploy-file" />
-					<arg value="-DartifactId=${artifact.id}" />
-					<arg value="-Dfile=${artifact.id}/${artifact.id}-sources.${packaging}" />
-					<arg value="-Dclassifier=sources" />
-					<arg value="-DgeneratePom=false" />
-					<arg value="-Dgpg.executable=${gpg.executable}" />
-					<arg value="-Dgpg.keyname=${gpg.keyname}" />
-					<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
-					<arg value="-DgroupId=com.liferay.portal" />
-					<arg value="-Dpackaging=jar" />
-					<arg value="-DrepositoryId=${maven.repository.id}" />
-					<arg value="-Durl=${maven.url}" />
-					<arg value="-Dversion=${maven.version}" />
-				</exec>
+					See http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/ for gpg setup instructions.
+				</fail>
 			</then>
 		</if>
+		<tstamp>
+			<format property="work.dir" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
 
-		<delete file="tools/maven/${artifact.id}.pom" />
+		<antcall target="prepare-maven">
+			<param name="work.dir" value="${work.dir}" />
+		</antcall>
+
+		<ant dir="${work.dir}" target="deploy" inheritall="false"/>
+
+		<delete dir="${work.dir}" />
 	</target>
-
-	<target name="deploy-artifacts">
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="portal-client" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="portal-impl" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="portal-service" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="portal-web" />
-			<param name="packaging" value="war" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="support-tomcat" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="util-bridges" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="util-java" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="util-taglib" />
-			<param name="packaging" value="jar" />
-		</antcall>
-	</target>
-
-	<!--<target name="deploy-dependencies">
-		<xmltask source="lib/versions.xml">
-			<call buffer="maven" path="//library/maven" target="deploy-dependency">
-				<param name="artifactId" path="artifactId/text()" />
-				<param name="file" path="../file-name/text()" />
-				<param name="groupId" path="groupId/text()" />
-				<param name="pom" path="pom-file/text()" />
-				<param name="version" path="version/text()" />
-			</call>
-		</xmltask>
-	</target>
-
-	<target name="deploy-dependency">
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="deploy:deploy-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=lib/${file}" />
-			<arg value="-DgeneratePom=true" />
-			<arg value="-DgroupId=${groupId}" />
-			<arg value="-Dpackaging=jar" />
-			<arg value="-DrepositoryId=${maven.repository.id}" />
-			<arg value="-Durl=${maven.url}" />
-			<arg value="-Dversion=${maven.version}" />
-		</exec>
-	</target>-->
 
 	<target name="deploy-release-artifacts">
-		<antcall target="jar-javadoc" />
-
-		<antcall target="jar-sources" />
-
-		<replace
-			dir="support-maven"
-			includes="**/pom.xml"
-			token="${lp.version}-SNAPSHOT"
-			value="${lp.version}"
-		/>
-
 		<antcall target="deploy-artifacts">
-			<param name="maven.repository.id" value="sonatype-staging" />
-			<param name="maven.url" value="http://oss.sonatype.org/service/local/staging/deploy/maven2" />
-			<param name="maven.version" value="${lp.version}" />
+			<param name="lp.maven.repository.id" value="sonatype-staging" />
+			<param name="lp.maven.repository.url" value="http://oss.sonatype.org/service/local/staging/deploy/maven2" />
+			<param name="lp.maven.version" value="${lp.version}" />
 		</antcall>
 	</target>
 
 	<target name="deploy-snapshot-artifacts">
 		<antcall target="deploy-artifacts">
-			<param name="maven.repository.id" value="sonatype-snapshot" />
-			<param name="maven.url" value="http://oss.sonatype.org/content/repositories/snapshots" />
-			<param name="maven.version" value="${lp.version}-SNAPSHOT" />
+			<param name="lp.maven.repository.id" value="sonatype-snapshot" />
+			<param name="lp.maven.repository.url" value="http://oss.sonatype.org/content/repositories/snapshots" />
+			<param name="lp.maven.version" value="${lp.version}-SNAPSHOT" />
 		</antcall>
-	</target>
-
-	<target name="install-artifact">
-		<copy file="tools/maven/${artifact.id}.xml" tofile="tools/maven/${artifact.id}.pom">
-			<filterset>
-				<filter token="version" value="${maven.version}" />
-			</filterset>
-		</copy>
-
-		<if>
-			<equals arg1="${artifact.id}" arg2="portal-web" />
-			<then>
-				<property name="artifact.file" value="dist/liferay-portal-${lp.version}.war" />
-			</then>
-			<else>
-				<property name="artifact.file" value="${artifact.id}/${artifact.id}.${packaging}" />
-			</else>
-		</if>
-
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="install:install-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=${artifact.file}" />
-			<arg value="-DgroupId=com.liferay.portal" />
-			<arg value="-Dpackaging=${packaging}" />
-			<arg value="-DpomFile=tools/maven/${artifact.id}.pom" />
-			<arg value="-Dversion=${maven.version}" />
-		</exec>
-
-		<delete file="tools/maven/${artifact.id}.pom" />
 	</target>
 
 	<target name="install-artifacts">
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="portal-client" />
-			<param name="packaging" value="jar" />
+		<tstamp>
+			<format property="work.dir" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<antcall target="prepare-maven">
+			<param name="lp.maven.repository.id" value="" />
+			<param name="lp.maven.repository.url" value="" />
+			<param name="work.dir" value="${work.dir}" />
 		</antcall>
 
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="portal-impl" />
-			<param name="packaging" value="jar" />
-		</antcall>
+		<ant dir="${work.dir}" target="install" inheritall="false" />
 
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="portal-service" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="portal-web" />
-			<param name="packaging" value="war" />
-		</antcall>
-
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="support-tomcat" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="tunnel-web" />
-			<param name="packaging" value="war" />
-		</antcall>
-
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="util-bridges" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="util-java" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="install-artifact">
-			<param name="artifact.id" value="util-taglib" />
-			<param name="packaging" value="jar" />
-		</antcall>
+		<delete dir="${work.dir}" />
 	</target>
-
-	<!--<target name="install-dependencies">
-		<xmltask source="lib/versions.xml">
-			<call buffer="maven" path="//library/maven" target="install-dependency">
-				<param name="artifactId" path="artifactId/text()" />
-				<param name="file" path="../file-name/text()" />
-				<param name="groupId" path="groupId/text()" />
-				<param name="pom" path="pom-file/text()" />
-				<param name="version" path="version/text()" />
-			</call>
-		</xmltask>
-	</target>
-
-	<target name="install-dependency">
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="install:install-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=lib/${file}" />
-			<arg value="-DgeneratePom=true" />
-			<arg value="-DgroupId=${groupId}" />
-			<arg value="-Dpackaging=jar" />
-			<arg value="-Dversion=${maven.version}" />
-		</exec>
-	</target>-->
 
 	<target name="install-release-artifacts">
 		<antcall target="install-artifacts">
-			<param name="maven.version" value="${lp.version}" />
+			<param name="lp.maven.version" value="${lp.version}" />
 		</antcall>
 	</target>
 
 	<target name="install-snapshot-artifacts">
 		<antcall target="install-artifacts">
-			<param name="maven.version" value="${lp.version}-SNAPSHOT" />
+			<param name="lp.maven.version" value="${lp.version}-SNAPSHOT" />
 		</antcall>
 	</target>
 
@@ -313,4 +106,184 @@
 		<ant dir="util-java" target="jar-sources" inheritAll="false" />
 		<ant dir="util-taglib" target="jar-sources" inheritAll="false" />
 	</target>
+
+	<target name="prepare-maven">
+		<if>
+			<not>
+				<available file="dist/liferay-portal-${lp.version}.war" />
+			</not>
+			<then>
+				<fail>
+					dist/liferay-portal-${lp.version}.war not available. 
+
+					Run first
+					ant all
+					ant -f build-dist.xml zip-portal-war
+				</fail>
+			</then>
+		</if>
+
+		<antcall target="jar-javadoc" />
+		<antcall target="jar-sources" />
+
+		<ant dir="util-taglib" target="taglibdoc" inheritAll="false" />
+
+		<mkdir dir="${work.dir}/dist" />
+		<mkdir dir="${work.dir}/lib" />
+		<mkdir dir="${work.dir}/license" />
+
+		<copy todir="${work.dir}">
+			<fileset
+				dir="tools/maven"
+				includes="build.xml,readme.txt"
+			/>
+		</copy>
+
+		<copy todir="${work.dir}/license">
+			<fileset
+				dir="lib"
+				includes="versions.html"
+			/>
+			<fileset
+				dir="."
+				includes="copyright.txt"
+			/>
+		</copy>
+
+		<copy todir="${work.dir}/lib">
+			<fileset
+				dir="lib/development"
+				includes="ant-contrib.jar,antelope.jar"
+			/>
+		</copy>
+
+		<copy file="tools/maven/build.properties" tofile="${work.dir}/build.properties">
+			<filterset>
+				<filter token="gpg.keyname" value="" />
+				<filter token="gpg.passphrase" value="" />
+				<filter token="repository.id" value="${lp.maven.repository.id}" />
+				<filter token="repository.url" value="${lp.maven.repository.url}" />
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+
+		<copy todir="${work.dir}/dist">
+			<fileset
+				dir="portal-client"
+				includes="portal-client.jar,portal-client-javadoc.jar,portal-client-sources.jar"
+			/>
+			<fileset
+				dir="portal-impl"
+				includes="portal-impl.jar,portal-impl-javadoc.jar,portal-impl-sources.jar"
+			/>
+			<fileset
+				dir="portal-service"
+				includes="portal-service.jar,portal-service-javadoc.jar,portal-service-sources.jar"
+			/>
+			<fileset
+				dir="tunnel-web"
+				includes="tunnel-web.war"
+			/>
+			<fileset
+				dir="support-tomcat"
+				includes="support-tomcat.jar,support-tomcat-javadoc.jar,support-tomcat-sources.jar"
+			/>
+			<fileset
+				dir="util-bridges"
+				includes="util-bridges.jar,util-bridges-javadoc.jar,util-bridges-sources.jar"
+			/>
+			<fileset
+				dir="util-java"
+				includes="util-java.jar,util-java-javadoc.jar,util-java-sources.jar"
+			/>
+			<fileset
+				dir="util-taglib"
+				includes="util-taglib.jar,util-taglib-javadoc.jar,util-taglib-sources.jar"
+			/>
+		</copy>
+
+		<zip destfile="${work.dir}/dist/util-taglib-tlddoc.jar">
+			<zipfileset dir="${doc.dir}/taglibs" />
+		</zip>
+
+		<copy file="dist/liferay-portal-${lp.version}.war" tofile="${work.dir}/dist/portal-web.war" />
+
+		<copy file="tools/maven/portal-client.xml" tofile="${work.dir}/dist/portal-client.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-impl.xml" tofile="${work.dir}/dist/portal-impl.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-parent.xml" tofile="${work.dir}/dist/portal-parent.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-service.xml" tofile="${work.dir}/dist/portal-service.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/portal-web.xml" tofile="${work.dir}/dist/portal-web.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/tunnel-web.xml" tofile="${work.dir}/dist/tunnel-web.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/support-tomcat.xml" tofile="${work.dir}/dist/support-tomcat.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/util-bridges.xml" tofile="${work.dir}/dist/util-bridges.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/util-java.xml" tofile="${work.dir}/dist/util-java.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+		<copy file="tools/maven/util-taglib.xml" tofile="${work.dir}/dist/util-taglib.pom">
+			<filterset>
+				<filter token="version" value="${lp.maven.version}" />
+			</filterset>
+		</copy>
+	</target>
+
+	<target name="zip-maven">
+		<tstamp>
+			<format property="work.dir" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<antcall target="prepare-maven">
+			<param name="gpg.keyname" value="" />
+			<param name="gpg.passphrase" value="" />
+			<param name="lp.maven.repository.id" value="liferay" />
+			<param name="lp.maven.repository.url" value="http://localhost/nexus/content/repositories/liferay-release" />
+			<param name="lp.maven.version" value="${lp.version}" />
+			<param name="work.dir" value="${work.dir}" />
+		</antcall>
+
+		<mkdir dir="dist" />
+
+		<zip destfile="dist/liferay-portal-maven-${lp.version}.zip">
+			<zipfileset
+				dir="${work.dir}"
+				prefix="liferay-portal-maven-${lp.version}"
+			/>
+		</zip>
+
+		<delete dir="${work.dir}" />
+	</target>
+
 </project>

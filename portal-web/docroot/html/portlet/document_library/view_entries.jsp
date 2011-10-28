@@ -98,7 +98,7 @@ OrderByComparator orderByComparator = DLUtil.getRepositoryModelOrderByComparator
 searchContainer.setOrderableHeaders(orderableHeaders);
 searchContainer.setOrderByCol(orderByCol);
 searchContainer.setOrderByComparator(orderByComparator);
-searchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey','orderByType')");
+searchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
 searchContainer.setOrderByType(orderByType);
 
 int entryStart = ParamUtil.getInteger(request, "entryStart", searchContainer.getStart());

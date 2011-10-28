@@ -183,8 +183,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 				value, StringPool.PERCENT, StringPool.BLANK);
 		}
 
-		value = StringUtil.replace(value, StringPool.STAR, StringPool.BLANK);
-
 		try {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, getAnalyzer());

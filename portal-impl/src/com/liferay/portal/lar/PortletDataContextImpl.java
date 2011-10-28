@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -441,6 +441,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(_companyId);
 
+		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
+
 		Map<Long, String> roleIdsToNames = new HashMap<Long, String>();
 
 		for (Role role : roles) {
@@ -454,7 +456,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 				String name = role.getName();
 
-				roleIdsToNames.put(role.getRoleId(), name);
+				long roleId = role.getRoleId();
+
+				roleIds.add(roleId);
+				roleIdsToNames.put(roleId, name);
 			}
 			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
 				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
@@ -463,7 +468,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 					String name =
 						PermissionExporter.ROLE_TEAM_PREFIX + team.getName();
 
-					roleIdsToNames.put(role.getRoleId(), name);
+					long roleId = role.getRoleId();
+
+					roleIds.add(roleId);
+					roleIdsToNames.put(roleId, name);
 				}
 			}
 		}
@@ -488,13 +496,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		}
 		else if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			Set<Long> roleIdsSet = roleIdsToNames.keySet();
-
-			long[] roleIds = ArrayUtil.toArray(
-				roleIdsSet.toArray(new Long[roleIdsSet.size()]));
 
 			Map<Long, Set<String>> roleIdsToActionIds = getActionIds_6(
-				_companyId, roleIds, resourceName,
+				_companyId, roleIds.getArray(), resourceName,
 				String.valueOf(resourcePK), actionIds);
 
 			for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {

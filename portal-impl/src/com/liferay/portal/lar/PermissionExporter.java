@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -322,6 +322,8 @@ public class PermissionExporter {
 			return;
 		}
 
+		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
+
 		Map<Long, Role> roleIdsToRoles = new HashMap<Long, Role>();
 
 		for (Role role : roles) {
@@ -331,19 +333,17 @@ public class PermissionExporter {
 				continue;
 			}
 
+			long roleId = role.getRoleId();
+
+			roleIds.add(roleId);
 			roleIdsToRoles.put(role.getRoleId(), role);
 		}
-
-		Set<Long> roleIdsSet = roleIdsToRoles.keySet();
-
-		long[] roleIds = ArrayUtil.toArray(
-			roleIdsSet.toArray(new Long[roleIdsSet.size()]));
 
 		Map<Long, Set<String>> roleIdsToActionIds =
 			ResourcePermissionLocalServiceUtil.
 				getAvailableResourcePermissionActionIds(
 					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-					resourcePrimKey, roleIds, actionIds);
+					resourcePrimKey, roleIds.getArray(), actionIds);
 
 		for (Role role : roleIdsToRoles.values()) {
 			Set<String> availableActionIds = roleIdsToActionIds.get(

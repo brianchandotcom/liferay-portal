@@ -43,6 +43,9 @@ String videoThumbnailURL = (String)request.getAttribute("view_file_entry.jsp-vid
 					</c:when>
 				</c:choose>
 			},
+			<c:if test="<%= supportedAudio %>">
+				height: 27,
+			</c:if>
 			url: '<%= themeDisplay.getPathJavaScript() %>/misc/video_player/mpw_player.swf',
 			useExpressInstall: true,
 			version: 9

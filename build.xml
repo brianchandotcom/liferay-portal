@@ -845,6 +845,7 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 	<target name="doc">
 		<antcall target="dtddoc" />
 		<antcall target="javadoc" />
+		<antcall target="javadoc-all" />
 		<ant dir="util-taglib" target="taglibdoc" inheritAll="false" />
 	</target>
 
@@ -924,7 +925,7 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 	</target>
 
 	<target name="javadoc-all">
-		<property name="doc.java.dir" value="${doc.dir}/javadocs-all" />
+		<property name="doc.java.dir" value="${doc.dir}/javadocs-internal" />
 
 		<mkdir dir="${doc.java.dir}" />
 

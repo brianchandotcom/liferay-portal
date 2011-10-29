@@ -2,35 +2,14 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.liferay.portal</groupId>
+		<artifactId>portal-parent</artifactId>
+		<version>@version@</version>
+	</parent>
 	<groupId>com.liferay.portal</groupId>
 	<artifactId>support-tomcat</artifactId>
 	<name>Liferay Tomcat Support</name>
 	<version>@version@</version>
 	<description>Contains Tomcat support classes.</description>
-	<url>http://www.liferay.com</url>
-	<developers>
-		<developer>
-			<id>brian.chan</id>
-			<name>Brian Chan</name>
-		</developer>
-		<developer>
-			<id>mika.koivisto</id>
-			<name>Mika Koivisto</name>
-		</developer>
-		<developer>
-			<id>thiago.moreira</id>
-			<name>Thiago Moreira</name>
-		</developer>
-	</developers>
-	<licenses>
-		<license>
-			<name>GNU Lesser General Public License</name>
-			<url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<scm>
-		<connection>scm:svn:svn://svn.liferay.com/repos/public/portal/trunk/support-tomcat</connection>
-		<url>http://guest:guest@svn.liferay.com/repos/public/portal/trunk/support-tomcat</url>
-	</scm>
 </project>

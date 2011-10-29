@@ -52,28 +52,4 @@
 			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<configuration>
-							<target>
-								<ant antfile="${basedir}/build.xml" target="${target}" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-	<properties>
-		<target>install</target>
-	</properties>
 </project>

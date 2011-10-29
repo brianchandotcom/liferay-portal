@@ -112,7 +112,9 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 				else if (causeString.contains("FolderNameException")) {
 					returnValue = "102";
 				}
-				else if (causeString.contains("NoSuchGroupException")) {
+				else if (causeString.contains("NoSuchGroupException") ||
+						 causeString.contains("PrincipalException")) {
+
 					returnValue = "103";
 				}
 				else {

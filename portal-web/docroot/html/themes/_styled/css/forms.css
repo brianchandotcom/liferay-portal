@@ -174,7 +174,7 @@ input, textarea {
 
 .aui-button-disabled {
 	input[type], button {
-		&:hover, &:focus {
+		&, &:hover, &:focus {
 			@include button-disabled;
 		}
 	}

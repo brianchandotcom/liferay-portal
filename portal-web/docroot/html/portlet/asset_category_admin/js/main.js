@@ -134,7 +134,14 @@ AUI().add(
 
 						vocabularyList.on('key', instance._onVocabularyListSelect, 'up:13', instance);
 
-						A.one(idPrefix + 'addCategoryButton').on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+						var addCategoryButton = A.one(idPrefix + 'addCategoryButton');
+
+						addCategoryButton.on(EVENT_CLICK, instance._onShowCategoryPanel, instance, ACTION_ADD);
+
+						instance._addCategoryButton = addCategoryButton;
+
+						instance._addCategoryButtonWrapper = addCategoryButton.ancestor('.aui-button');
+
 						A.one(idPrefix + 'addVocabularyButton').on(EVENT_CLICK, instance._onShowVocabularyPanel, instance, ACTION_ADD);
 						A.one(idPrefix + 'categoryPermissionsButton').on(EVENT_CLICK, instance._onChangePermissions, instance);
 						A.one(idPrefix + 'deleteSelectedItems').on(EVENT_CLICK, instance._deleteSelected, instance);
@@ -781,6 +788,9 @@ AUI().add(
 									instance._selectedVocabularyName = instance._getVocabularyName(firstVocabulary);
 									instance._selectedVocabularyId = instance._getVocabularyId(firstVocabulary);
 								}
+
+								instance._addCategoryButton.attr('disabled', !firstVocabulary);
+								instance._addCategoryButtonWrapper.toggleClass('aui-button-disabled', !firstVocabulary);
 
 								if (callback) {
 									callback();

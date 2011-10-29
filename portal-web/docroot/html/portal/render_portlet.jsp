@@ -1063,8 +1063,8 @@ if (themeDisplay.isStatePopUp()) {
 				'visibleChange',
 				function(event) {
 					if (!event.newVal && event.src !== 'hideLink') {
-						var topWindow = Liferay.Util.getTop();
-						var topA = topWindow.AUI();
+						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+						var topA = refreshWindow.AUI();
 
 						new topA.LoadingMask(
 							{
@@ -1072,7 +1072,7 @@ if (themeDisplay.isStatePopUp()) {
 							}
 						).show();
 
-						topWindow.location.href = '<%= doCloseRedirect %>';
+						refreshWindow.location.href = '<%= doCloseRedirect %>';
 					}
 				}
 			);

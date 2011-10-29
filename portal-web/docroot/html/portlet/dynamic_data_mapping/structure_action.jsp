@@ -67,12 +67,13 @@ DDMStructure structure = (DDMStructure)row.getObject();
 
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE) %>">
 		<portlet:renderURL var="copyURL">
+			<portlet:param name="closeRedirect" value="<%= HttpUtil.encodeURL(currentURL) %>" />
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/copy_structure" />
 			<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:renderURL>
 
 		<%
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());

@@ -15,8 +15,10 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -62,6 +64,16 @@ public class CopyStructureAction extends PortletAction {
 
 			String redirect = getSaveAndContinueRedirect(
 				portletConfig, actionRequest, structure);
+
+			String closeRedirect = ParamUtil.getString(
+				actionRequest, "closeRedirect");
+
+			if (Validator.isNotNull(closeRedirect)) {
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doCloseRedirect",
+					closeRedirect);
+			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}

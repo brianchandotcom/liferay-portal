@@ -24,6 +24,8 @@ long structureId = BeanParamUtil.getLong(structure, request, "structureId");
 boolean copyDetailTemplates = ParamUtil.getBoolean(request, "copyDetailTemplates");
 
 boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
+
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 %>
 
 <portlet:actionURL var="copyStructureURL">
@@ -33,6 +35,7 @@ boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
 <aui:form action="<%= copyStructureURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.COPY %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="structureId" type="hidden" value="<%= String.valueOf(structureId) %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 
@@ -50,5 +53,7 @@ boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
 
 	<aui:button-row>
 		<aui:button type="submit" value="copy" />
+
+		<aui:button onClick="Liferay.Util.getWindow().close();" value="close" />
 	</aui:button-row>
 </aui:form>

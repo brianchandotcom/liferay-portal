@@ -128,24 +128,18 @@ portletURL.setParameter("tabs1", tabs1);
 </liferay-ui:search-container>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />copyStructure',
-		function(uri) {
-			Liferay.Util.openWindow({
+	function <portlet:namespace />copyStructure(uri) {
+		Liferay.Util.openWindow(
+			{
 				dialog: {
 					centered: true,
 					constrain: true,
-					on: {
-						close: function(event) {
-							window.location.reload();
-						}
-					},
-					title: '<liferay-ui:message key="copy" />',
 					width: 600
 				},
+				refreshWindow: window,
+				title: '<liferay-ui:message key="copy-structure" />',
 				uri: uri
-			});
-		}
-	);
+			}
+		);
+	}
 </aui:script>

@@ -507,10 +507,14 @@ AUI().add(
 
 						var items = instance._documentLibraryContainer.all('[data-folder="true"]');
 
-						items.plug(
-							A.Plugin.Drop,
-							{
-								groups: DOCUMENT_LIBRARY_GROUP
+						items.each(
+							function(item, index, collection) {
+								item.plug(
+									A.Plugin.Drop,
+									{
+										groups: DOCUMENT_LIBRARY_GROUP
+									}
+								);
 							}
 						);
 					},

@@ -128,7 +128,11 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
 				<aui:input label="password" name="password1" size="30" type="password" value="" />
 
-				<aui:input label="enter-again" name="password2" size="30" type="password" value="" />
+				<aui:input label="enter-again" name="password2" size="30" type="password" value="">
+					<aui:validator name="equalTo">
+						'#<portlet:namespace />password1'
+					</aui:validator>
+				</aui:input>
 			</c:if>
 
 			<c:choose>

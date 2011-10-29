@@ -118,7 +118,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	protected void addDLFileVersion(
 			long fileVersionId, long groupId, long companyId, long userId,
-			String userName, Date createDate, long repositoryId,
+			String userName, Date createDate, long repositoryId, long folderId,
 			long fileEntryId, String extension, String mimeType, String title,
 			String description, String changeLog, String extraSettings,
 			long fileEntryTypeId, String version, long size, int status,
@@ -135,11 +135,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
 			sb.append("companyId, userId, userName, createDate, ");
-			sb.append("repositoryId, fileEntryId, extension, mimeType, ");
+			sb.append("repositoryId, folderId, fileEntryId, extension, mimeType, ");
 			sb.append("title, description, changeLog, extraSettings, ");
 			sb.append("fileEntryTypeId, version, size_, status, ");
 			sb.append("statusByUserId, statusByUserName, statusDate) values (");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
 			sb.append("?, ?, ?, ?)");
 
 			String sql = sb.toString();
@@ -153,20 +153,21 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setString(5, userName);
 			ps.setDate(6, createDate);
 			ps.setLong(7, repositoryId);
-			ps.setLong(8, fileEntryId);
-			ps.setString(9, extension);
-			ps.setString(10, mimeType);
-			ps.setString(11, title);
-			ps.setString(12, description);
-			ps.setString(13, changeLog);
-			ps.setString(14, extraSettings);
-			ps.setLong(15, fileEntryTypeId);
-			ps.setString(16, version);
-			ps.setLong(17, size);
-			ps.setInt(18, status);
-			ps.setLong(19, statusByUserId);
-			ps.setString(20, statusByUserName);
-			ps.setDate(21, statusDate);
+			ps.setLong(8, folderId);
+			ps.setLong(9, fileEntryId);
+			ps.setString(10, extension);
+			ps.setString(11, mimeType);
+			ps.setString(12, title);
+			ps.setString(13, description);
+			ps.setString(14, changeLog);
+			ps.setString(15, extraSettings);
+			ps.setLong(16, fileEntryTypeId);
+			ps.setString(17, version);
+			ps.setLong(18, size);
+			ps.setInt(19, status);
+			ps.setLong(20, statusByUserId);
+			ps.setString(21, statusByUserName);
+			ps.setDate(22, statusDate);
 
 			ps.executeUpdate();
 		}
@@ -308,7 +309,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			sb.append("select fileVersionId, fileEntry.fileEntryId, ");
 			sb.append("fileEntry.groupId, fileEntry.companyId, ");
-			sb.append("folderId, name, largeImageId, smallImageId, ");
+			sb.append("fileEntry.folderId, name, largeImageId, smallImageId, ");
 			sb.append("custom1ImageId, custom2ImageId from DLFileVersion ");
 			sb.append("fileVersion, DLFileEntry fileEntry where ");
 			sb.append("fileEntry.fileEntryId = fileVersion.fileEntryId and ");
@@ -331,7 +332,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				long fileEntryId = rs.getLong("fileEntry.fileEntryId");
 				long companyId = rs.getLong("fileEntry.companyId");
 				long groupId = rs.getLong("fileEntry.groupId");
-				long folderId = rs.getLong("folderId");
+				long folderId = rs.getLong("fileEntry.folderId");
 				String name = rs.getString("name");
 				long largeImageId = rs.getLong("largeImageId");
 				long custom1ImageId = rs.getLong("custom1ImageId");
@@ -544,7 +545,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 				addDLFileVersion(
 					increment(), groupId, companyId, userId, userName,
-					createDate, groupId, imageId, extension, mimeType,
+					createDate, groupId, folderId, imageId, extension, mimeType,
 					title, description, StringPool.BLANK, StringPool.BLANK, 0,
 					"1.0", size, 0, userId, userName, modifiedDate);
 			}

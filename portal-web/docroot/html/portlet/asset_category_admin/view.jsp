@@ -27,7 +27,7 @@
 				</c:if>
 
 				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.ADD_CATEGORY) %>">
-					<aui:button cssClass="add-category-button" disabled="disabled" name="addCategoryButton" value="add-category" />
+					<aui:button cssClass="add-category-button" disabled="<%= true %>" name="addCategoryButton" value="add-category" />
 				</c:if>
 
 				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getParentGroupId(), ActionKeys.PERMISSIONS) %>">

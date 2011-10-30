@@ -35,7 +35,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator;
@@ -154,7 +154,7 @@ public class GetArticlesAction extends Action {
 			obc = new ArticleDisplayDateComparator(orderByAsc);
 		}
 
-		return JournalArticleLocalServiceUtil.search(
+		return JournalArticleServiceUtil.search(
 			companyId, groupId, 0, articleId, version, title, description,
 			content, type, structureIds, templateIds, displayDateGT,
 			displayDateLT, status, reviewDate, andOperator, start, end, obc);

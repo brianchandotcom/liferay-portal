@@ -433,6 +433,8 @@ public class WebServerServlet extends HttpServlet {
 
 			image.setTextObj(bytes);
 
+			image.setType(fileEntry.getExtension());
+
 			return image;
 		}
 		catch (PortalException pe) {

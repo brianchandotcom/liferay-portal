@@ -539,6 +539,10 @@ public class WebServerServlet extends HttpServlet {
 
 				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
+				if (pathArray.length == 0) {
+					return -1;
+				}
+
 				if (pathArray[0].equals("language")) {
 					return -1;
 				}

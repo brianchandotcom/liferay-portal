@@ -95,7 +95,7 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Update"),
 			selenium.getText("//tr[8]/td[3]"));
 		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("mmm"));
+			RuntimeVariables.replace("mmmm"));
 		selenium.keyPress("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");

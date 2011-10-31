@@ -334,9 +334,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 		IMOperation imOperation = new IMOperation();
 
-		imOperation.background("White");
-
-		imOperation.flatten();
+		imOperation.alpha("off");
 
 		imOperation.density(dpi, dpi);
 

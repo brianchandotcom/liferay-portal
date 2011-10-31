@@ -31,12 +31,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
-import com.xuggle.mediatool.IMediaReader;
-import com.xuggle.mediatool.IMediaWriter;
-import com.xuggle.mediatool.ToolFactory;
-
-import java.awt.image.BufferedImage;
-
 import java.io.File;
 import java.io.InputStream;
 
@@ -139,24 +133,14 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		File thumbnailTempFile = getThumbnailTempFile(tempFileId);
 
 		try {
-			IMediaReader iMediaReader = ToolFactory.makeReader(
-				file.getCanonicalPath());
 
-			iMediaReader.setBufferedImageTypeToGenerate(
-				BufferedImage.TYPE_3BYTE_BGR);
-
-			CaptureFrameListener captureFrameListener =
-				new CaptureFrameListener(
-					thumbnailTempFile, THUMBNAIL_TYPE, height, width);
-
-			iMediaReader.addListener(captureFrameListener);
+			LiferayVideoThumbnailGenerator liferayVideoThumbnailGenerator =
+				new	LiferayVideoThumbnailGenerator(
+					file.getCanonicalPath(), thumbnailTempFile,THUMBNAIL_TYPE,
+					height, width);
 
 			try {
-				while (iMediaReader.readPacket() == null) {
-					if (captureFrameListener.isWritten()) {
-						break;
-					}
-				}
+				liferayVideoThumbnailGenerator.convert();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -261,29 +245,13 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			int width)
 		throws Exception {
 
-		IMediaReader iMediaReader = ToolFactory.makeReader(
-			srcFile.getCanonicalPath());
-
-		VideoResizer videoResizer = new VideoResizer(height, width);
-
-		iMediaReader.addListener(videoResizer);
-
-		AudioListener audioListener = new AudioListener();
-
-		videoResizer.addListener(audioListener);
-
-		IMediaWriter iMediaWriter = ToolFactory.makeWriter(
-			destFile.getCanonicalPath(), iMediaReader);
-
-		audioListener.addListener(iMediaWriter);
-
-		VideoListener videoListener = new VideoListener(height, width);
-
-		iMediaWriter.addListener(videoListener);
-
 		try {
-			while (iMediaReader.readPacket() == null) {
-			}
+			LiferayVideoConverter liferayVideoConverter =
+				new LiferayVideoConverter(
+					srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+					height, width, _SAMPLE_RATE);
+
+			liferayVideoConverter.convert();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -415,9 +383,12 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(VideoProcessor.class);
 
+	private static int _SAMPLE_RATE = 44100;
+
 	private static VideoProcessor _instance = new VideoProcessor();
 
 	private static List<Long> _fileVersionIds = new Vector<Long>();
+
 	private static Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
 

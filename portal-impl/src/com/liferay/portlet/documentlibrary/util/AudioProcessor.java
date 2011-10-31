@@ -30,11 +30,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
-import com.xuggle.mediatool.IMediaReader;
-import com.xuggle.mediatool.IMediaWriter;
-import com.xuggle.mediatool.ToolFactory;
-import com.xuggle.xuggler.ICodec;
-
 import java.io.File;
 import java.io.InputStream;
 
@@ -166,20 +161,13 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 			FileVersion fileVersion, File srcFile, File destFile)
 		throws Exception {
 
-		IMediaReader iMediaReader = ToolFactory.makeReader(
-			srcFile.getCanonicalPath());
-
-		IMediaWriter iMediaWriter = ToolFactory.makeWriter(
-			destFile.getCanonicalPath(), iMediaReader);
-
-		iMediaWriter.addAudioStream(
-			0, 0, ICodec.ID.CODEC_ID_MP3, _CHANNELS, _SAMPLE_RATE);
-
-		iMediaReader.addListener(iMediaWriter);
-
 		try {
-			while (iMediaReader.readPacket() == null) {
-			}
+			LiferayAudioConverter liferayAudioConverter =
+				new LiferayAudioConverter(
+					srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+					_SAMPLE_RATE);
+
+			liferayAudioConverter.convert();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -288,6 +276,7 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 
 	private static Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);
+
 	private static List<Long> _fileVersionIds = new Vector<Long>();
 
 }

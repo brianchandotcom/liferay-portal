@@ -198,7 +198,7 @@ String[][] categorySections = {mainSections};
 										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 										<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 										<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-										<portlet:param name="privateLayout" value="<%= String.valueOf(liveGroupId) %>" />
+										<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 									</portlet:renderURL>

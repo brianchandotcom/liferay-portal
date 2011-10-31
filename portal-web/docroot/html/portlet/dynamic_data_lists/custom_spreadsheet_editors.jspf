@@ -23,6 +23,33 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 <aui:script use="aui-io-request,io-upload-iframe,liferay-portlet-dynamic-data-lists,liferay-portlet-url">
 	var SpreadSheet = Liferay.SpreadSheet;
 
+	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+
+	DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = function(value) {
+		var spreadSheet = window.<portlet:namespace />spreadSheet;
+		var activeColumn = spreadSheet.selection.getActiveColumn();
+		var activeColumnKey = activeColumn.get('key');
+		var activeRecord = spreadSheet.selection.getActiveRecord();
+
+		var valid = true;
+
+		A.Array.each(
+			window.<portlet:namespace />structure,
+			function(item, index, collection) {
+				var fieldName = item.name;
+				var fieldValue = activeRecord.getValue(fieldName);
+
+				if (!fieldValue && (activeColumnKey !== fieldName) && (item.required === 'true')) {
+					valid = false;
+				}
+			}
+		);
+
+		return valid;
+	};
+
+	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = Liferay.Language.get('please-fill-out-all-required-fields');
+
 	var DLFileEntryCellEditor = A.Component.create(
 		{
 			NAME: 'document-library-file-entry-cell-editor',
@@ -130,6 +157,49 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					return instance.get('value');
 				},
 
+				uploadFile: function() {
+					var instance = this;
+
+					var elementName = instance.get('elementName');
+					var record = instance.get('record');
+					var recordData = record.get('data');
+
+					var portletURL = Liferay.PortletURL.createResourceURL();
+
+					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
+					portletURL.setParameter('fieldName', elementName);
+					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+					portletURL.setParameter('recordId', recordData.recordId);
+					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
+
+					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
+
+					portletURL.setWindowState('pop_up');
+
+					var uri = portletURL.toString();
+
+					var form = instance.get('contentBox');
+
+					form.attr('action', uri);
+
+					A.io.request(
+						uri,
+						{
+							dataType: 'json',
+							form: {
+								id: form,
+								upload: true
+							},
+							method: 'POST',
+							on: {
+								complete: function(ioEvent, id, xhr) {
+									instance._onUploadComplete.call(instance, xhr);
+								}
+							}
+						}
+					);
+				},
+
 				_handleException: function(exception) {
 					var instance = this;
 
@@ -186,48 +256,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					}
 				},
 
-				uploadFile: function() {
-					var instance = this;
-
-					var record = instance.get('record');
-					var recordData = record.get('data');
-
-					var portletURL = Liferay.PortletURL.createResourceURL();
-
-					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
-					portletURL.setParameter('fieldName', instance.get('elementName'));
-					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-					portletURL.setParameter('recordId', recordData.recordId);
-					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
-
-					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
-
-					portletURL.setWindowState('pop_up');
-
-					var form = instance.get('contentBox');
-
-					var uri = portletURL.toString();
-
-					form.attr('action', uri);
-
-					A.io.request(
-						uri,
-						{
-							dataType: 'json',
-							form: {
-								id: form,
-								upload: true
-							},
-							method: 'POST',
-							on: {
-								complete: function(ioEvent, id, xhr) {
-									instance._onUploadComplete.call(instance, xhr);
-								}
-							}
-						}
-					);
-				},
-
 				_onUploadComplete: function(xhr) {
 					var instance = this;
 
@@ -258,6 +286,14 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					contentBox.prepend(messageNode);
 
 					setTimeout(A.fn('remove', messageNode, null), 5000);
+				},
+
+				_syncElementsFocus: function() {
+					var instance = this;
+
+					instance.elements.val('');
+
+					instance.validator.resetAllFields();
 				},
 
 				_uiSetValue: function(val) {

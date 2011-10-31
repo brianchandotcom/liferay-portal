@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -43,23 +42,21 @@ public class FileUploadFieldRenderer extends BaseFieldRenderer {
 			return StringPool.BLANK;
 		}
 
-		String fieldValueJSON = GetterUtil.getString(fieldValue);
-
-		JSONObject fieldValueJSONObject = null;
+		JSONObject fieldValueJSON = null;
 
 		try {
-			fieldValueJSONObject = JSONFactoryUtil.createJSONObject(
-				fieldValueJSON);
+			fieldValueJSON = JSONFactoryUtil.createJSONObject(
+				String.valueOf(fieldValue));
 		}
 		catch (JSONException e) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to parse JSON", e);
 			}
 
-			return fieldValueJSON;
+			return StringPool.BLANK;
 		}
 
-		return fieldValueJSONObject.getString("name");
+		return fieldValueJSON.getString("name");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

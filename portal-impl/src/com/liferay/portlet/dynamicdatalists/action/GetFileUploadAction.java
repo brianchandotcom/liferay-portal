@@ -49,43 +49,22 @@ import org.apache.struts.action.ActionMapping;
 public class GetFileUploadAction extends PortletAction {
 
 	@Override
-	public ActionForward strutsExecute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		try {
-			long recordId = ParamUtil.getLong(request, "recordId");
-			String fieldName = ParamUtil.getString(request, "fieldName");
-			String fileName = ParamUtil.getString(request, "fileName");
-
-			getFile(recordId, fieldName, fileName, request, response);
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
-	}
-
-	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping mapping, ActionForm form,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
+		long recordId = ParamUtil.getLong(actionRequest, "recordId");
+		String fieldName = ParamUtil.getString(actionRequest, "fieldName");
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
 		try {
-			long recordId = ParamUtil.getLong(actionRequest, "recordId");
-			String fieldName = ParamUtil.getString(actionRequest, "fieldName");
-			String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
-
 			getFile(recordId, fieldName, fileName, request, response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
@@ -93,6 +72,26 @@ public class GetFileUploadAction extends PortletAction {
 		catch (Exception e) {
 			PortalUtil.sendError(e, actionRequest, actionResponse);
 		}
+	}
+
+	@Override
+	public ActionForward strutsExecute(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		long recordId = ParamUtil.getLong(request, "recordId");
+		String fieldName = ParamUtil.getString(request, "fieldName");
+		String fileName = ParamUtil.getString(request, "fileName");
+
+		try {
+			getFile(recordId, fieldName, fileName, request, response);
+		}
+		catch (Exception e) {
+			PortalUtil.sendError(e, request, response);
+		}
+
+		return null;
 	}
 
 	protected void getFile(
@@ -104,7 +103,7 @@ public class GetFileUploadAction extends PortletAction {
 
 		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(DDLUtil.getRecordFileUploadPath(record));
 		sb.append(StringPool.SLASH);

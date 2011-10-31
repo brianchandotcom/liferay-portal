@@ -21,11 +21,6 @@ AUI().add(
 
 		var STR_EMPTY = '';
 
-		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
-
-		DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = Liferay.Language.get('please-fill-out-all-required-fields');
-		DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = Lang.emptyFn;
-
 		var SpreadSheet = A.Component.create(
 			{
 				ATTRS: {
@@ -352,14 +347,6 @@ AUI().add(
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								if (type === 'ddm-fileupload') {
-									config.after = {
-										recordChange: function(event) {
-											var instance = this;
-
-											DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = A.bind(SpreadSheet.validate, event.newVal, structure, [name]);
-										}
-									};
-
 									config.validator.rules[name] = {
 										acceptFiles: structureField.acceptFiles,
 										requiredFields: true
@@ -449,29 +436,6 @@ AUI().add(
 					);
 
 					return recordModel;
-				},
-
-				validate: function(structure, excludes) {
-					var instance = this;
-
-					var data = instance.get('data');
-					var valid = true;
-
-					AArray.each(
-						structure,
-						function(item, index, collection) {
-							var fieldName = item.name;
-							var fieldValue = data[fieldName];
-
-							if (AArray.indexOf(excludes, fieldName) === -1) {
-								if (item.required == 'true' && !fieldValue) {
-									valid = false;
-								}
-							}
-						}
-					);
-
-					return valid;
 				}
 			}
 		);

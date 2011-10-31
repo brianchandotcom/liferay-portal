@@ -158,4 +158,5 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	</c:if>
 
 	window.<portlet:namespace />spreadSheet = spreadSheet;
+	window.<portlet:namespace />structure = structure;
 </aui:script>

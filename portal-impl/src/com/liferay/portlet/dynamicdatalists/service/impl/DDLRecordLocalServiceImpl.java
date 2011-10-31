@@ -146,12 +146,10 @@ public class DDLRecordLocalServiceImpl
 
 		// File Uploads
 
-		long companyId = record.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = DDLUtil.getRecordFileUploadPath(record);
-
 		try {
-			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
+			DLStoreUtil.deleteDirectory(
+				record.getCompanyId(), CompanyConstants.SYSTEM,
+				DDLUtil.getRecordFileUploadPath(record));
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {

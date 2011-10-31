@@ -253,24 +253,25 @@ public class DDLUtil {
 			DDLRecord record, String fieldName, InputStream inputStream)
 		throws Exception {
 
-		long companyId = record.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-
 		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
 
 		String dirName =
-			getRecordFileUploadPath(record) + "/" + recordVersion.getVersion();
+			getRecordFileUploadPath(record) + StringPool.SLASH +
+			recordVersion.getVersion();
 
 		try {
-			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
+			DLStoreUtil.addDirectory(
+				record.getCompanyId(), CompanyConstants.SYSTEM, dirName);
 		}
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		String fileName = dirName + "/" + fieldName;
+		String fileName = dirName + StringPool.SLASH + fieldName;
 
 		try {
-			DLStoreUtil.addFile(companyId, repositoryId, fileName, inputStream);
+			DLStoreUtil.addFile(
+				record.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+				inputStream);
 		}
 		catch (DuplicateFileException dfe) {
 		}
@@ -283,12 +284,12 @@ public class DDLUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		InputStream inputStream = null;
-
 		DDLRecordSet recordSet = record.getRecordSet();
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		Fields fields = new Fields();
+
+		InputStream inputStream = null;
 
 		for (String fieldName : ddmStructure.getFieldNames()) {
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
@@ -297,15 +298,16 @@ public class DDLUtil {
 				String fileName = uploadPortletRequest.getFileName(fieldName);
 
 				try {
-					inputStream = uploadPortletRequest.getFileAsStream(
-						fieldName, true);
+					Field field = record.getField(fieldName);
 
-					Field oldField = record.getField(fieldName);
 					String fieldValue = StringPool.BLANK;
 
-					if (oldField != null) {
-						fieldValue = String.valueOf(oldField.getValue());
+					if (field != null) {
+						fieldValue = String.valueOf(field.getValue());
 					}
+
+					inputStream = uploadPortletRequest.getFileAsStream(
+						fieldName, true);
 
 					if (inputStream != null) {
 						String filePath = uploadFieldFile(
@@ -322,7 +324,7 @@ public class DDLUtil {
 						fieldValue = recordFileJSONObject.toString();
 					}
 
-					Field field = new Field(
+					field = new Field(
 						ddmStructure.getStructureId(), fieldName, fieldValue);
 
 					fields.put(field);

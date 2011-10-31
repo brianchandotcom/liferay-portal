@@ -52,6 +52,7 @@ import com.liferay.util.SimpleCounter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -79,6 +80,8 @@ public class SampleSQLBuilder {
 
 		String baseDir = arguments.get("sample.sql.base.dir");
 		String outputDir = arguments.get("sample.sql.output.dir");
+		boolean outputMerge = GetterUtil.getBoolean(
+			arguments.get("sample.sql.output.merge"));
 		String dbType = arguments.get("sample.sql.db.type");
 		int maxBlogsEntryCommentCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.blogs.entry.comment.count"));
@@ -114,9 +117,9 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.security.enabled"));
 
 		new SampleSQLBuilder(
-			arguments, baseDir, outputDir, dbType, maxBlogsEntryCommentCount,
-			maxBlogsEntryCount, maxDLFileEntryCount, dlFileEntrySize,
-			maxDLFolderCount, maxDLFolderDepth, maxGroupCount,
+			arguments, baseDir, outputDir, outputMerge, dbType,
+			maxBlogsEntryCommentCount, maxBlogsEntryCount, maxDLFileEntryCount,
+			dlFileEntrySize, maxDLFolderCount, maxDLFolderDepth, maxGroupCount,
 			maxMBCategoryCount, maxMBMessageCount, maxMBThreadCount,
 			maxUserCount, maxUserToGroupCount, maxWikiNodeCount,
 			maxWikiPageCommentCount, maxWikiPageCount, securityEnabled);
@@ -124,16 +127,17 @@ public class SampleSQLBuilder {
 
 	public SampleSQLBuilder(
 		Map<String, String> arguments, String baseDir, String outputDir,
-		String dbType, int maxBlogsEntryCommentCount, int maxBlogsEntryCount,
-		int maxDLFileEntryCount, int dlFileEntrySize, int maxDLFolderCount,
-		int maxDLFolderDepth, int maxGroupCount, int maxMBCategoryCount,
-		int maxMBMessageCount, int maxMBThreadCount, int maxUserCount,
-		int maxUserToGroupCount, int maxWikiNodeCount,
+		boolean outputMerge, String dbType, int maxBlogsEntryCommentCount,
+		int maxBlogsEntryCount, int maxDLFileEntryCount, int dlFileEntrySize,
+		int maxDLFolderCount, int maxDLFolderDepth, int maxGroupCount,
+		int maxMBCategoryCount, int maxMBMessageCount, int maxMBThreadCount,
+		int maxUserCount, int maxUserToGroupCount, int maxWikiNodeCount,
 		int maxWikiPageCommentCount, int maxWikiPageCount,
 		boolean securityEnabled) {
 
 		try {
 			_outputDir = outputDir;
+			_outputMerge = outputMerge;
 			_dbType = dbType;
 			_maxBlogsEntryCommentCount = maxBlogsEntryCommentCount;
 			_maxBlogsEntryCount = maxBlogsEntryCount;
@@ -181,6 +185,10 @@ public class SampleSQLBuilder {
 			if (_db instanceof MySQLDB) {
 				_db = new SampleMySQLDB();
 			}
+
+			// Clean up previous output
+			FileUtil.delete(_outputDir + "/sample-" + _dbType + ".sql");
+			FileUtil.deltree(_outputDir + "/output");
 
 			// Generic
 
@@ -544,14 +552,19 @@ public class SampleSQLBuilder {
 	}
 
 	protected File getInsertSQLFile(String tableName) {
-		return new File(_tempDir, tableName);
+		return new File(_tempDir, tableName + ".sql");
 	}
 
 	protected void mergeSQL() throws IOException {
-		FileOutputStream fileOutputStream = new FileOutputStream(
-			_outputDir + "/sample-" + _dbType + ".sql");
+		File outputFile = new File(_outputDir + "/sample-" + _dbType + ".sql");
 
-		FileChannel fileChannel = fileOutputStream.getChannel();
+		FileOutputStream fileOutputStream = null;
+		FileChannel fileChannel = null;
+
+		if (_outputMerge) {
+			fileOutputStream = new FileOutputStream(outputFile);
+			fileChannel = fileOutputStream.getChannel();
+		}
 
 		Set<Map.Entry<String, StringBundler>> insertSQLs =
 			_insertSQLs.entrySet();
@@ -569,23 +582,32 @@ public class SampleSQLBuilder {
 
 			insertSQLWriter.close();
 
-			File insertSQLFile = getInsertSQLFile(tableName);
+			if (_outputMerge) {
+				File insertSQLFile = getInsertSQLFile(tableName);
 
-			FileInputStream insertSQLFileInputStream = new FileInputStream(
-				insertSQLFile);
+				FileInputStream insertSQLFileInputStream = new FileInputStream(
+					insertSQLFile);
 
-			FileChannel insertSQLFileChannel =
-				insertSQLFileInputStream.getChannel();
+				FileChannel insertSQLFileChannel =
+					insertSQLFileInputStream.getChannel();
 
-			insertSQLFileChannel.transferTo(
-				0, insertSQLFileChannel.size(), fileChannel);
+				insertSQLFileChannel.transferTo(
+					0, insertSQLFileChannel.size(), fileChannel);
 
-			insertSQLFileChannel.close();
+				insertSQLFileChannel.close();
 
-			insertSQLFile.delete();
+				insertSQLFile.delete();
+			}
 		}
 
-		Writer writer = new OutputStreamWriter(fileOutputStream);
+		Writer writer = null;
+
+		if (_outputMerge) {
+			writer = new OutputStreamWriter(fileOutputStream);
+		}
+		else {
+			writer = new FileWriter(getInsertSQLFile("others"));
+		}
 
 		for (String sql : _otherSQLs) {
 			sql = _db.buildSQL(sql);
@@ -595,6 +617,14 @@ public class SampleSQLBuilder {
 		}
 
 		writer.close();
+
+		File outputFolder = new File(_outputDir, "output");
+
+		if ((!_outputMerge) && (!_tempDir.renameTo(outputFolder))) {
+			// This will only happen when temp and output folders belong to
+			// different FileSystem
+			FileUtil.copyDirectory(_tempDir, outputFolder);
+		}
 	}
 
 	protected void processTemplate(String name, Map<String, Object> context)
@@ -655,6 +685,7 @@ public class SampleSQLBuilder {
 	private int _maxWikiPageCount;
 	private List<String> _otherSQLs = new ArrayList<String>();
 	private String _outputDir;
+	private boolean _outputMerge;
 	private SimpleCounter _permissionCounter;
 	private SimpleCounter _resourceCodeCounter;
 	private SimpleCounter _resourceCounter;

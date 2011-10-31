@@ -17,6 +17,7 @@
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="sample.sql.base.dir=${basedir}" />
 			<arg value="sample.sql.output.dir=${sample.sql.output.dir}" />
+			<arg value="sample.sql.output.merge=${sample.sql.output.merge}" />
 			<arg value="sample.sql.db.type=${sample.sql.db.type}" />
 			<arg value="sample.sql.blogs.entry.comment.count=${sample.sql.blogs.entry.comment.count}" />
 			<arg value="sample.sql.blogs.entry.count=${sample.sql.blogs.entry.count}" />

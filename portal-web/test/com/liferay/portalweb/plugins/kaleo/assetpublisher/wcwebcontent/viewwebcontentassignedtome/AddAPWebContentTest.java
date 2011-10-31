@@ -43,6 +43,7 @@ public class AddAPWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Page",
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.clickAt("//div/span/ul/li/strong/a",
 			RuntimeVariables.replace("Add New"));
 

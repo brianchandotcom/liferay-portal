@@ -43,6 +43,7 @@ public class AddAPBlogsEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Page",
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//div/span/ul/li/strong/a"));
 		selenium.clickAt("//div/span/ul/li/strong/a",

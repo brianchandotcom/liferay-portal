@@ -34,6 +34,7 @@ AUI().add(
 		Util._openWindow = function(config) {
 			var openingWindow = config.openingWindow;
 
+			var refreshWindow = config.refreshWindow;
 			var title = config.title;
 			var uri = config.uri;
 
@@ -90,6 +91,7 @@ AUI().add(
 				Window._map[id] = dialog;
 
 				dialog._opener = openingWindow;
+				dialog._refreshWindow = refreshWindow;
 
 				dialog.after(
 					'destroy',

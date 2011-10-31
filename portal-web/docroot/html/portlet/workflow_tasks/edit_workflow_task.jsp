@@ -292,7 +292,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="<%= (workflowLog.getPreviousUserId() == 0) && (curUser != null) %>">
+									<c:when test="<%= (curUser != null) && (workflowLog.getAuditUserId() == curUser.getUserId()) %>">
 										<div>
 											<%= LanguageUtil.format(pageContext, curUser.isMale() ? "x-assigned-the-task-to-himself" : "x-assigned-the-task-to-herself", HtmlUtil.escape(curUser.getFullName())) %>
 										</div>
@@ -300,20 +300,24 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 									<c:otherwise>
 
 										<%
-										String previousActorName = null;
-
 										if (curRole == null) {
-											previousActorName = PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK);
+											String assignerName = PortalUtil.getUserName(workflowLog.getAuditUserId(), StringPool.BLANK);
 										%>
 
 											<div>
-												<%= LanguageUtil.format(pageContext, "task-assigned-to-x.-previous-assignee-was-x", new Object[] {actorName, HtmlUtil.escape(previousActorName)}) %>
+												<%= LanguageUtil.format(pageContext, "x-assigned-the-task-to-x", new Object[] {assignerName, actorName}) %>
+
+												<c:if test="<%= (workflowLog.getPreviousUserId() != 0) %>">
+
+													<%= LanguageUtil.format(pageContext, "previous-assignee-was-x", PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK)) %>
+
+												</c:if>
 											</div>
 
 										<%
 										}
 										else {
-											previousActorName = curRole.getDescriptiveName();
+											String previousActorName = curRole.getDescriptiveName();
 										%>
 
 											<div>

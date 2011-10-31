@@ -129,6 +129,7 @@ public class LoginUsersTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertTrue(selenium.isTextPresent(
 				"You are signed in as Portlet Liferay."));
 

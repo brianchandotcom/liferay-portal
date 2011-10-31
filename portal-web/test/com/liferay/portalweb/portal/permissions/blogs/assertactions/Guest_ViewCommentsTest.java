@@ -46,6 +46,7 @@ public class Guest_ViewCommentsTest extends BaseTestCase {
 		selenium.clickAt("link=Permissions Blogs Test Entry",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"BA Permissions Blogs Test Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));

@@ -54,6 +54,7 @@ public class Portlet_AssertViewEntryTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title Temporary"),
 			selenium.getText("//td[2]/a"));
 	}

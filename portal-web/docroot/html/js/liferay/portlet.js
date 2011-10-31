@@ -130,7 +130,11 @@
 			var beforePortletLoaded = options.beforePortletLoaded;
 			var onComplete = options.onComplete;
 
-			var container = Liferay.Layout.getActiveDropContainer();
+			var container = null;
+
+			if (Liferay.Layout && Liferay.Layout.INITIALIZED) {
+				container = Liferay.Layout.getActiveDropContainer();
+			}
 
 			if (!container) {
 				return;
@@ -248,7 +252,7 @@
 
 				portletBoundary = portletBound;
 
-				if (Liferay.Layout) {
+				if (Liferay.Layout && Liferay.Layout.INITIALIZED) {
 					Liferay.Layout.updateCurrentPortletInfo(portletBoundary);
 
 					if (container) {

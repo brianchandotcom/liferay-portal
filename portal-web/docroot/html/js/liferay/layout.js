@@ -36,6 +36,8 @@ AUI().add(
 		var Layout = {
 			EMPTY_COLUMNS: {},
 
+			INITIALIZED: false,
+
 			OVER_NESTED_PORTLET: false,
 
 			PROXY_NODE: A.Node.create('<div class="lfr-portlet-proxy aui-portal-layout-proxy"></div>'),
@@ -179,6 +181,8 @@ AUI().add(
 
 				Liferay.after('closePortlet', Layout._afterPortletClose);
 				Liferay.on('closePortlet', Layout._onPortletClose);
+
+				Layout.INITIALIZED = true;
 			},
 
 			bindDragDropListeners: function() {
@@ -482,23 +486,6 @@ AUI().add(
 			},
 
 			updateCurrentPortletInfo: function(dragNode) {
-				if(!Layout.options) {
-					var layoutOptions = {
-						disabledDropContainerClass: 'portlet-dropzone-disabled',
-						dragNodes: '#main-content .portlet-boundary',
-						dropContainer: '.portlet-dropzone',
-						dropNodes: '.portlet-column',
-						emptyColumnClass: 'empty',
-						freeForm: true,
-						freeformPlaceholderClass: 'lfr-freeform-layout-drag-indicator',
-						handles: ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
-						nestedPortletId: '_118_INSTANCE',
-						portletBoundary: '.portlet-boundary'
-					};
-
-					Liferay.Layout.init(layoutOptions);
-				}
-
 				var options = Layout.options;
 
 				Layout.curPortletInfo = {
@@ -561,7 +548,7 @@ AUI().add(
 				Layout.updateCurrentPortletInfo(portlet);
 
 				if (portlet.test('.portlet-nested-portlets')) {
-					Layout.closeNestedPortlets(portlet);					
+					Layout.closeNestedPortlets(portlet);
 				}
 
 				event.column = column;

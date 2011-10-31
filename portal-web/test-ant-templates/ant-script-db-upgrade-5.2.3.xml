@@ -67,6 +67,14 @@
 		</antcall>
 
 		<antcall target="run-latest-upgrade-test">
+			<param name="skip.delete-liferay-home" value="true" />
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			<param name="skip.delete-liferay-home" value="true" />
+			<param name="set.permission.algorithm.6" value="true" />
 			${test.ant.script.file.plugin.portlets}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestTestSuite" />
 		</antcall>

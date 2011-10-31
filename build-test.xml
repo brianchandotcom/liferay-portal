@@ -2187,6 +2187,13 @@ message.boards.subscribe.by.default=false</echo>
 auto.deploy.dest.dir=${resource.repositories.root}/websphere-deploy</echo>
 			</then>
 		</if>
+		<if>
+			<isset property="set.permission.algorithm.6" />
+				<then>
+					<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value=""/>
+					<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value=""/>
+				</then>
+		</if>
 	</target>
 
 	<target name="prepare-portal-properties">

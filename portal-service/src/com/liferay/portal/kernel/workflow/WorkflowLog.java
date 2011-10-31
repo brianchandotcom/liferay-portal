@@ -32,6 +32,8 @@ public interface WorkflowLog {
 
 	public static final int TRANSITION = 0;
 
+	public long getAuditUserId();
+
 	public String getComment();
 
 	public Date getCreateDate();

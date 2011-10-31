@@ -25,6 +25,10 @@ import java.util.Date;
  */
 public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 
+	public long getAuditUserId() {
+		return _auditUserId;
+	}
+
 	public String getComment() {
 		return _comment;
 	}
@@ -67,6 +71,10 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 
 	public long getWorkflowTaskId() {
 		return _workflowTaskId;
+	}
+
+	public void setAuditUserId(long auditUserId) {
+		_auditUserId = auditUserId;
 	}
 
 	public void setComment(String comment) {
@@ -113,6 +121,7 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 		_workflowTaskId = workflowTaskId;
 	}
 
+	private long _auditUserId;
 	private String _comment;
 	private Date _createDate;
 	private long _previousRoleId;

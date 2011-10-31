@@ -1064,6 +1064,7 @@ if (themeDisplay.isStatePopUp()) {
 				function(event) {
 					if (!event.newVal && event.src !== 'hideLink') {
 						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+
 						var topA = refreshWindow.AUI();
 
 						new topA.LoadingMask(

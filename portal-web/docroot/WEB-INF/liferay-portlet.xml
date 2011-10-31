@@ -1719,6 +1719,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>167</portlet-name>
+		<icon>/html/icons/default.png</icon>
 		<struts-path>dynamic_data_lists</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>

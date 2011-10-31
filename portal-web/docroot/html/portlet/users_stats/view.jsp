@@ -80,10 +80,8 @@ if (rankingCounters.size() > 0) {
 
 	%>
 
-	<div>
-		<%= LanguageUtil.format(pageContext, "top-users-out-of-x", String.valueOf(total)) %>
-		&nbsp;
-		<%=rankingMessage %>
+	<div class="top-users">
+		<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" /> <%=rankingMessage %>
 	</div>
 
 	<c:if test="<%= total > 0 %>">
@@ -102,7 +100,7 @@ if (rankingCounters.size() > 0) {
 		var searchTopUsers = A.one('#<portlet:namespace />searchTopUsers');
 
 		if (searchTopUsers) {
-			var parent = searchTopUsers.get('parentNode');
+			var parent = searchTopUsers.ancestor();
 
 			parent.plug(
 				A.Plugin.IO,
@@ -114,12 +112,12 @@ if (rankingCounters.size() > 0) {
 			searchTopUsers.all('a').on(
 				'click',
 				function(event) {
+					event.preventDefault();
+
 					var uri = event.currentTarget.get('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
 
 					parent.io.set('uri', uri);
 					parent.io.start();
-
-					event.preventDefault();
 				}
 			);
 		}
@@ -129,9 +127,13 @@ if (rankingCounters.size() > 0) {
 }
 else {
 %>
-	<div class="portlet-msg-error">
-		<%=LanguageUtil.format(pageContext, "no-ranking-selected-please-select-one", false) %>
+
+	<div class="portlet-configuration portlet-msg-info">
+		<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
+			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-ranking-criteria" />
+		</a>
 	</div>
+
 <%
 }
 %>

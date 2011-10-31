@@ -58,20 +58,20 @@ counters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 		<div class="participation-score">
 			<span><liferay-ui:message key='participation-score' />:</span> <%= participation.getCurrentValue() %>
 		</div>
-
 	</c:if>
 </liferay-ui:user-display>
 
 <%
 if (displayAdditionalCounters) {
 %>
-<div style="height: 4px; border-top: 1px dotted;"></div>
+
+<div class="separator"><!-- --></div>
 
 <% for (SocialActivityCounter counter : counters.values()) { %>
 
-<div class="social.counter.<%=counter.getName() %>">
-	<span><liferay-ui:message key='<%="social.counter." + counter.getName() %>' />:</span> <%= counter.getCurrentValue() %>
-</div>
+	<div class="social.counter.<%=counter.getName() %>">
+		<span><liferay-ui:message key='<%="social.counter." + counter.getName() %>' />:</span> <%= counter.getCurrentValue() %>
+	</div>
 
 <% }
 }

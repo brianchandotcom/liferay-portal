@@ -29,15 +29,19 @@ counters.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENT);
 
 <div class="aui-field-row query-row">
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayCounter" + index + "--" %>'>
+
 		<%
 			for (String counter : counters) {
 				if (counter.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) || counter.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
 					continue;
 				}
 		%>
-		<aui:option label='<%="social.counter."+ counter %>' selected="<%=counter.equals(value) %>" value="<%=counter %>" />
+
+			<aui:option label='<%="social.counter."+ counter %>' selected="<%=counter.equals(value) %>" value="<%=counter %>" />
+
 		<%
 			}
 		%>
+
 	</aui:select>
 </div>

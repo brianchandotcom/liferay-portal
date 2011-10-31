@@ -14,29 +14,31 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.lang.reflect.Method;
-
 /**
  * @author Igor Spasic
  */
-public class MethodParameterNamesResolverUtil {
+public class MethodParameter {
 
-	public static MethodParameterNamesResolver
-		getMethodParameterNamesResolver() {
-
-		return _methodParameterNamesResolver;
+	public MethodParameter(String name, String signatures, Class<?> type) {
+		this._name = name;
+		this._signatures = signatures;
+		this._type = type;
 	}
 
-	public static String[] resolveParameterNames(Method method) {
-		return getMethodParameterNamesResolver().resolveParameterNames(method);
+	public String getName() {
+		return _name;
 	}
 
-	public void setMethodParameterNamesResolver(
-		MethodParameterNamesResolver methodParameterNamesResolver) {
-
-		_methodParameterNamesResolver = methodParameterNamesResolver;
+	public String getSignature() {
+		return _signatures;
 	}
 
-	private static MethodParameterNamesResolver _methodParameterNamesResolver;
+	public Class<?> getType() {
+		return _type;
+	}
+
+	private String _name;
+	private String _signatures;
+	private Class<?> _type;
 
 }

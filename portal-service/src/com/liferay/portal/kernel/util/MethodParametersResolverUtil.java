@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.jsonwebservice;
-
-import com.liferay.portal.kernel.util.MethodParameter;
+package com.liferay.portal.kernel.util;
 
 import java.lang.reflect.Method;
 
 /**
  * @author Igor Spasic
  */
-public interface JSONWebServiceActionMapping {
+public class MethodParametersResolverUtil {
 
-	public Class<?> getActionClass();
+	public static MethodParametersResolver getMethodParametersResolver() {
+		return _methodParametersResolver;
+	}
 
-	public Method getActionMethod();
+	public static MethodParameter[] resolveParameters(Method method) {
+		return getMethodParametersResolver().resolveParameters(method);
+	}
 
-	public String getMethod();
+	public void setMethodParametersResolver(
+		MethodParametersResolver methodParametersResolver) {
 
-	public MethodParameter[] getMethodParameters();
+		_methodParametersResolver = methodParametersResolver;
+	}
 
-	public String getPath();
-
-	public String getSignature();
+	private static MethodParametersResolver _methodParametersResolver;
 
 }

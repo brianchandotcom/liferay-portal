@@ -19,8 +19,8 @@ import java.lang.reflect.Method;
 /**
  * @author Igor Spasic
  */
-public interface MethodParameterNamesResolver {
+public interface MethodParametersResolver {
 
-	public String[] resolveParameterNames(Method method);
+	public MethodParameter[] resolveParameters(Method method);
 
 }

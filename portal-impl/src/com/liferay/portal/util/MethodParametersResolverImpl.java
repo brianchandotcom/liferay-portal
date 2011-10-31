@@ -16,7 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MethodParameterNamesResolver;
+import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.MethodParametersResolver;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
@@ -30,15 +31,27 @@ import jodd.paramo.ParamoException;
 /**
  * @author Igor Spasic
  */
-public class MethodParameterNamesResolverImpl
-	implements MethodParameterNamesResolver {
+public class MethodParametersResolverImpl implements MethodParametersResolver {
 
-	public String[] resolveParameterNames(Method method) {
-		String[] parameterNames = _parameterNames.get(method);
+	public MethodParameter[] resolveParameters(Method method) {
+		MethodParameter[] parameters = _methodParameters.get(method);
 
-		if (parameterNames == null) {
+		if (parameters == null) {
 			try {
-				parameterNames = Paramo.resolveParameterNames(method);
+				Class<?>[] methodParameterTypes = method.getParameterTypes();
+
+				jodd.paramo.MethodParameter[] methodParameters =
+					Paramo.resolveParameters(method);
+
+				parameters = new MethodParameter[methodParameters.length];
+
+				for (int i = 0; i < methodParameters.length; i++) {
+					parameters[i] = new MethodParameter(
+						methodParameters[i].getName(),
+						methodParameters[i].getSignature(),
+						methodParameterTypes[i]
+					);
+				}
 			}
 			catch (ParamoException pe) {
 				_log.error(pe, pe);
@@ -46,16 +59,16 @@ public class MethodParameterNamesResolverImpl
 				return null;
 			}
 
-			_parameterNames.put(method, parameterNames);
+			_methodParameters.put(method, parameters);
 		}
 
-		return parameterNames;
+		return parameters;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		MethodParameterNamesResolverImpl.class);
+		MethodParametersResolverImpl.class);
 
-	private Map<AccessibleObject, String[]> _parameterNames =
-		new HashMap<AccessibleObject, String[]>();
+	private Map<AccessibleObject, MethodParameter[]> _methodParameters =
+		new HashMap<AccessibleObject, MethodParameter[]>();
 
 }

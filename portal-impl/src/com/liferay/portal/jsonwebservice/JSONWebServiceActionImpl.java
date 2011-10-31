@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Method;
@@ -90,16 +91,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private Object[] _prepareParameters(Class<?> actionClass) throws Exception {
-		String[] parameterNames =
-			_jsonWebServiceActionConfig.getParameterNames();
+		MethodParameter[] methodParameters =
+			_jsonWebServiceActionConfig.getMethodParameters();
 
-		Class<?>[] parameterTypes =
-			_jsonWebServiceActionConfig.getParameterTypes();
+		Object[] parameters = new Object[methodParameters.length];
 
-		Object[] parameters = new Object[parameterNames.length];
-
-		for (int i = 0; i < parameterNames.length; i++) {
-			String parameterName = parameterNames[i];
+		for (int i = 0; i < methodParameters.length; i++) {
+			String parameterName = methodParameters[i].getName();
 
 			Object value =
 				_jsonWebServiceActionParameters.getParameter(parameterName);
@@ -107,7 +105,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			Object parameterValue = null;
 
 			if (value != null) {
-				Class<?> parameterType = parameterTypes[i];
+				Class<?> parameterType = methodParameters[i].getType();
 
 				if (value.equals(Void.TYPE)) {
 					String parameterTypeName =

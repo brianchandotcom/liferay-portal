@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,13 +29,13 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class FriendlyURLNormalizer {
+public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer{
 
-	public static String normalize(String friendlyURL) {
+	public String normalize(String friendlyURL) {
 		return normalize(friendlyURL, null);
 	}
 
-	public static String normalize(String friendlyURL, char[] replaceChars) {
+	public String normalize(String friendlyURL, char[] replaceChars) {
 		if (Validator.isNull(friendlyURL)) {
 			return friendlyURL;
 		}

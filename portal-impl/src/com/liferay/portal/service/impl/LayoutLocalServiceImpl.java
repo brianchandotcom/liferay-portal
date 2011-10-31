@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -54,7 +55,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
-import com.liferay.portal.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -147,7 +147,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         the corresponding properties defined in {@link
 	 *         com.liferay.portal.util.PropsValues}. To see how the URL is
 	 *         normalized when accessed see {@link
-	 *         com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the replacement
@@ -319,7 +319,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         the corresponding properties defined in {@link
 	 *         com.liferay.portal.util.PropsValues}. To see how the URL is
 	 *         normalized when accessed see {@link
-	 *         com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the universally
@@ -1438,7 +1438,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         the corresponding properties defined in {@link
 	 *         com.liferay.portal.util.PropsValues}. To see how the URL is
 	 *         normalized when accessed see {@link
-	 *         com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  iconImage whether the icon image will be updated
 	 * @param  iconBytes the byte array of the layout's new icon image
@@ -2009,7 +2009,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	protected String getFriendlyURL(String friendlyURL) {
-		return FriendlyURLNormalizer.normalize(friendlyURL);
+		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
 	}
 
 	protected int getNextPriority(

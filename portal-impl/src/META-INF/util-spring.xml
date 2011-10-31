@@ -289,6 +289,11 @@
 			<bean class="com.liferay.portal.util.FileImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" class="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil">
+		<property name="friendlyURLNormalizer">
+			<bean class="com.liferay.portal.util.FriendlyURLNormalizerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.HashCodeFactoryUtil" class="com.liferay.portal.kernel.util.HashCodeFactoryUtil">
 		<property name="hashCodeFactory">
 			<bean class="com.liferay.portal.util.HashCodeFactoryImpl" />

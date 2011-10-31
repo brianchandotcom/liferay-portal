@@ -94,7 +94,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         the corresponding properties defined in {@link
 	 *         com.liferay.portal.util.PropsValues}. To see how the URL is
 	 *         normalized when accessed see {@link
-	 *         com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the replacement
@@ -168,7 +168,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         the corresponding properties defined in {@link
 	 *         com.liferay.portal.util.PropsValues}. To see how the URL is
 	 *         normalized when accessed see {@link
-	 *         com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the replacement
@@ -919,7 +919,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         the corresponding properties defined in {@link
 	 *         com.liferay.portal.util.PropsValues}. To see how the URL is
 	 *         normalized when accessed see {@link
-	 *         com.liferay.portal.util.FriendlyURLNormalizer#normalize(
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  iconImage whether the icon image will be updated
 	 * @param  iconBytes the byte array of the layout's new icon image

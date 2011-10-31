@@ -86,7 +86,7 @@ public class AddCompareCharacterTagTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"One of your fields contains invalid characters."),
+				"Tag names cannot be an empty string or contain characters such as: \n , = > / < [ { % | + # ? \" ; / * ~."),
 			selenium.getText("//div[@id='portletMessages']"));
 		assertFalse(selenium.isElementPresent("link=<test>"));
 	}

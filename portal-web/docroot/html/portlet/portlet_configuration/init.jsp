@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.lar.PortletDataHandlerControl" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portal.kernel.lar.UserIdStrategy" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletModeFactory" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
 page import="com.liferay.portlet.PortletQNameUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %><%@

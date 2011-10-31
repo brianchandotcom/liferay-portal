@@ -245,7 +245,7 @@ if (layout.isTypeControlPanel()) {
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<%= LanguageUtil.format(locale, "the-x-portlet-does-not-have-any-data-that-can-be-exported-or-does-not-include-support-for-it", PortalUtil.getPortletTitle(selPortlet, application, locale)) %>
+		<%= LanguageUtil.format(locale, "the-x-portlet-does-not-have-any-data-that-can-be-exported-or-does-not-include-support-for-it", HtmlUtil.escape(PortalUtil.getPortletTitle(selPortlet, application, locale))) %>
 	</c:otherwise>
 </c:choose>
 

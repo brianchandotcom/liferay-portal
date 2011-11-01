@@ -81,6 +81,11 @@ public class RuntimeVariables {
 			text, "//a[contains(@href, 'brochure_WAR_brochuretheme')]",
 			"//a[contains(@href, '" + ThemeIds.getThemeId() + "')]");
 
+		if (TestPropsValues.TEST_DATABASE_MINIMAL) {
+			text = StringUtil.replace(text, "Joe", "Test");
+			text = StringUtil.replace(text, "Bloggs", "Test");
+		}
+
 		if (Validator.isNotNull(TestPropsValues.CLUSTER_NODE_1)) {
 			text = StringUtil.replace(
 				text, "[$CLUSTER_NODE_1$]", TestPropsValues.CLUSTER_NODE_1);

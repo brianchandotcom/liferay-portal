@@ -59,7 +59,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		dlFileEntryType.setCreateDate(now);
 		dlFileEntryType.setModifiedDate(now);
-		dlFileEntryType.setName("Basic Document");
+		dlFileEntryType.setName(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(
 			dlFileEntryType, false);

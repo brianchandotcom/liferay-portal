@@ -57,7 +57,7 @@ public class TearDownCommunityTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean community1Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community1Present) {
 					label = 2;
@@ -66,8 +66,9 @@ public class TearDownCommunityTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -99,7 +100,7 @@ public class TearDownCommunityTest extends BaseTestCase {
 			case 2:
 
 				boolean community2Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community2Present) {
 					label = 3;
@@ -108,8 +109,9 @@ public class TearDownCommunityTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -141,7 +143,7 @@ public class TearDownCommunityTest extends BaseTestCase {
 			case 3:
 
 				boolean community3Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community3Present) {
 					label = 4;
@@ -150,8 +152,9 @@ public class TearDownCommunityTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -183,7 +186,7 @@ public class TearDownCommunityTest extends BaseTestCase {
 			case 4:
 
 				boolean community4Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community4Present) {
 					label = 5;
@@ -192,8 +195,9 @@ public class TearDownCommunityTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -225,7 +229,7 @@ public class TearDownCommunityTest extends BaseTestCase {
 			case 5:
 
 				boolean community5Present = selenium.isElementPresent(
-						"//td[6]/span/ul/li/strong/a/span");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!community5Present) {
 					label = 6;
@@ -234,8 +238,9 @@ public class TearDownCommunityTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {

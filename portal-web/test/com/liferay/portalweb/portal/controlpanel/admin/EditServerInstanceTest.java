@@ -66,9 +66,9 @@ public class EditServerInstanceTest extends BaseTestCase {
 		selenium.clickAt("link=test.com", RuntimeVariables.replace("test.com"));
 		selenium.waitForPageToLoad("30000");
 		selenium.typeKeys("//input[@id='_135_virtualHostname']",
-			RuntimeVariables.replace("edited"));
+			RuntimeVariables.replace("edited.com"));
 		selenium.type("//input[@id='_135_virtualHostname']",
-			RuntimeVariables.replace("edited"));
+			RuntimeVariables.replace("edited.com"));
 		selenium.type("//input[@id='_135_mx']",
 			RuntimeVariables.replace("Edited.com"));
 		selenium.clickAt("//input[@value='Save']",

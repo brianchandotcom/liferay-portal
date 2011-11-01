@@ -62,7 +62,7 @@ public class CancelStructurePopupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//textarea[@id='_15_xsdContent']")) {
+							"//textarea[@id='_15_plainEditorField']")) {
 					break;
 				}
 			}
@@ -72,7 +72,8 @@ public class CancelStructurePopupTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent("//textarea[@id='_15_xsdContent']"));
+		assertTrue(selenium.isElementPresent(
+				"//textarea[@id='_15_plainEditorField']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -94,6 +95,6 @@ public class CancelStructurePopupTest extends BaseTestCase {
 			RuntimeVariables.replace("Cancel"));
 		Thread.sleep(5000);
 		assertFalse(selenium.isElementPresent(
-				"//textarea[@id='_15_xsdContent']"));
+				"//textarea[@id='_15_plainEditorField']"));
 	}
 }

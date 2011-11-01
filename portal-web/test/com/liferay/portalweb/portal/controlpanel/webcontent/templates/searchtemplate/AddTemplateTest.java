@@ -64,7 +64,7 @@ public class AddTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//textarea[@id='_15_xslContent']")) {
+				if (selenium.isVisible("//textarea[@id='_15_plainEditorField']")) {
 					break;
 				}
 			}
@@ -74,9 +74,10 @@ public class AddTemplateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//textarea[@id='_15_xslContent']",
+		selenium.clickAt("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace(""));
-		selenium.type("//textarea[@id='_15_xslContent']",
+		Thread.sleep(5000);
+		selenium.type("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace(
 				"<h1>$title.getData()</h1>\n\n<a href=\"$ltp.getUrl()\">See Page</a>"));
 

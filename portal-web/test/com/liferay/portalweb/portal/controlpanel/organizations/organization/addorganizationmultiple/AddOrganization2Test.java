@@ -101,7 +101,7 @@ public class AddOrganization2Test extends BaseTestCase {
 		selenium.clickAt("link=View All", RuntimeVariables.replace("View All"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Test"));
+			RuntimeVariables.replace("Test*"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

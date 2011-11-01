@@ -52,7 +52,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -129,7 +129,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -141,7 +141,7 @@ public class TearDownTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -218,7 +218,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -230,7 +230,7 @@ public class TearDownTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -307,7 +307,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -319,7 +319,7 @@ public class TearDownTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -396,7 +396,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -408,7 +408,7 @@ public class TearDownTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
@@ -485,7 +485,7 @@ public class TearDownTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Test"));
+					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");

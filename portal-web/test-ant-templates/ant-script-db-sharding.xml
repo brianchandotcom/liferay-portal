@@ -12,9 +12,12 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			<property name="skip.rebuild-database" value="true" />
+			<property name="test.database.minimal" value="true" />
 			<property name="test.name" value="${test.ant.script.suite}" />
 		</ant>
 	</target>

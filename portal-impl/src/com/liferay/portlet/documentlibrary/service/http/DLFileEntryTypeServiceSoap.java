@@ -112,11 +112,10 @@ public class DLFileEntryTypeServiceSoap {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] getFileEntryTypes(
-		long[] groupIds, int start, int end) throws RemoteException {
+		long[] groupIds) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
-				DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds, start,
-					end);
+				DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
 		}

@@ -44,7 +44,6 @@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %><%@

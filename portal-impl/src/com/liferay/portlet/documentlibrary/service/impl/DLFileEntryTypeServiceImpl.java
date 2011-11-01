@@ -61,12 +61,10 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 		return dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 	}
 
-	public List<DLFileEntryType> getFileEntryTypes(
-			long[] groupIds, int start, int end)
+	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds)
 		throws SystemException {
 
-		return dlFileEntryTypePersistence.filterFindByGroupId(
-			groupIds, start, end);
+		return dlFileEntryTypePersistence.filterFindByGroupId(groupIds);
 	}
 
 	public int getFileEntryTypesCount(long[] groupIds) throws SystemException {

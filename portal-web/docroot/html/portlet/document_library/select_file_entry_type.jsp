@@ -22,6 +22,7 @@
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/document_library/select_file_entry_type" />
+	<portlet:param name="includeBasicFileEntryType" value="true" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -61,12 +62,6 @@
 
 			String rowHREF = sb.toString();
 			%>
-
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="id"
-				value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>"
-			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"

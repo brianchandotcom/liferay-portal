@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
@@ -429,12 +430,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			new ArrayList<ObjectValuePair<Long, String>>();
 
 		if (fileEntryTypeIds.isEmpty()) {
-			fileEntryTypeIds.add(new Long(0));
+			fileEntryTypeIds.add(
+				DLFileEntryTypeConstants.ALL_FILE_ENTRY_TYPES_ID);
 		}
 		else {
 			workflowDefinitions.add(
 				new ObjectValuePair<Long, String>(
-					new Long(0), StringPool.BLANK));
+					DLFileEntryTypeConstants.ALL_FILE_ENTRY_TYPES_ID,
+					StringPool.BLANK));
 		}
 
 		for (long fileEntryTypeId : fileEntryTypeIds) {

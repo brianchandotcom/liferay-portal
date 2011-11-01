@@ -38,8 +38,6 @@ List<WorkflowDefinition> workflowDefinitions = null;
 if (workflowEnabled) {
 	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
 }
-
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(new long[] {scopeGroupId}, folderId, true);
 %>
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
@@ -132,7 +130,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
 			}
 
-			List<DLFileEntryType> folderDLFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(new long[] {scopeGroupId}, folderId, false);
+			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(DLUtil.getGroupIds(themeDisplay), folderId, false);
 
 			String headerNames = null;
 
@@ -144,7 +142,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 			}
 			%>
 
-			<aui:field-wrapper label='<%= workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions" %>' helpMessage="document-type-restrictions-help">
+			<aui:field-wrapper label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>' helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>'>
 				<c:if test="<%= !rootFolder %>">
 					<aui:input checked="<%= !dlFolder.isOverrideFileEntryTypes() %>" id="useFileEntryTypes" label='<%= workflowEnabled ? "use-document-type-restrictions-and-workflow-of-the-parent-folder" : "use-document-type-restrictions-of-the-parent-folder" %>' name="overrideFileEntryTypes" type="radio" value="<%= false %>" />
 
@@ -153,8 +151,8 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 
 				<div id="<portlet:namespace />overrideParentSettings">
 					<c:if test="<%= workflowEnabled %>">
-						<div class='<%= folderDLFileEntryTypes.isEmpty() ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace />defaultWorkflow">
-							<aui:select label="default-workflow-for-all-document-types" name="workflowDefinition0">
+						<div class='<%= (rootFolder || fileEntryTypes.isEmpty()) ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace />defaultWorkflow">
+							<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.ALL_FILE_ENTRY_TYPES_ID %>'>
 
 								<aui:option label="no-workflow" value="" />
 
@@ -162,7 +160,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 								WorkflowDefinitionLink workflowDefinitionLink = null;
 
 								try {
-									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, 0, true);
+									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.ALL_FILE_ENTRY_TYPES_ID, true);
 								}
 								catch (NoSuchWorkflowDefinitionLinkException nswdle) {
 								}
@@ -191,8 +189,8 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 							headerNames="<%= headerNames %>"
 						>
 							<liferay-ui:search-container-results
-								results="<%= folderDLFileEntryTypes %>"
-								total="<%= (folderDLFileEntryTypes != null) ? folderDLFileEntryTypes.size() : 0 %>"
+								results="<%= fileEntryTypes %>"
+								total="<%= fileEntryTypes.size() %>"
 							/>
 
 							<liferay-ui:search-container-row
@@ -255,7 +253,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>
 
-						<aui:select cssClass='<%= ((fileEntryTypes != null) && (fileEntryTypes.size() > 1)) ? "default-document-type" : "default-document-type aui-helper-hidden" %>' label="default-document-type" helpMessage="default-document-type-help" name="defaultFileEntryTypeId">
+						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type aui-helper-hidden" %>' label="default-document-type" helpMessage="default-document-type-help" name="defaultFileEntryTypeId">
 
 							<%
 							for (DLFileEntryType fileEntryType : fileEntryTypes) {
@@ -300,7 +298,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 					width: 680
 				},
 				title: '<liferay-ui:message key="document-types" />',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/select_file_entry_type" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/select_file_entry_type" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="includeBasicFileEntryType" value="true" /></portlet:renderURL>'
 			}
 		);
 	}
@@ -370,22 +368,13 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 
 	        var select = A.one('#<portlet:namespace />defaultFileEntryTypeId');
 
-			var selectContainer = A.one('#<portlet:namespace />overrideParentSettings .default-document-type')
+			var selectContainer = A.one('#<portlet:namespace />overrideParentSettings .default-document-type');
 
-			var fileEntryTypesCount = select.get('children').size();
-
-			if (fileEntryTypesCount > 1) {
-				selectContainer.show();
-			}
-			else {
-				selectContainer.hide();
-			}
+			selectContainer.show();
 
 			var option = A.Node.create('<option id="<portlet:namespace />defaultFileEntryTypeId-' + fileEntryTypeId + '" value="' + fileEntryTypeId + '">' + fileEntryTypeName + '</option>');
 
-			if (fileEntryTypesCount == 0) {
-				opetion.show();
-			}
+			option.show();
 
 			select.append(option);
 
@@ -424,20 +413,17 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 
 			var fileEntryTypesCount = select.get('children').size();
 
-			if (fileEntryTypesCount > 1) {
-				selectContainer.show();
-			}
-			else {
+			if (fileEntryTypesCount == 0) {
 				selectContainer.hide();
-			}
 
-			var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
+				var defaultWorkflow = A.one('#<portlet:namespace />defaultWorkflow');
 
-			alert(fileEntryTypesCount);
-
-			if (defaultWorkflow & (fileEntryTypesCount == 0)) {
 				defaultWorkflow.show();
 			}
+			else {
+				selectContainer.show();
+			}
+
 		},
 		'.modify-link'
 	);

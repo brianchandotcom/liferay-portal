@@ -261,7 +261,15 @@ else if (dlFileEntryType != null) {
 			<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
 				<%
-				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(DLUtil.getGroupIds(themeDisplay), folderId, true);
+				boolean inherited = false;
+
+				if (folder != null) {
+					DLFolder dlFolder = (DLFolder)folder.getModel();
+
+					inherited = !dlFolder.isOverrideFileEntryTypes();
+				}
+
+				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(DLUtil.getGroupIds(themeDisplay), folderId, inherited);
 				%>
 
 				<c:choose>

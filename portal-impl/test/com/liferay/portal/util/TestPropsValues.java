@@ -53,7 +53,7 @@ public class TestPropsValues {
 		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
 			TestPropsValues.COMPANY_WEB_ID);
 
-		_companyId =company.getCompanyId();
+		_companyId = company.getCompanyId();
 
 		return _companyId;
 	}

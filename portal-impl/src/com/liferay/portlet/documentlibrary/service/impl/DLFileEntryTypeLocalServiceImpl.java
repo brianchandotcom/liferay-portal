@@ -34,7 +34,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -191,13 +190,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByG_N(groupId, name);
 	}
 
-	public List<DLFileEntryType> getFileEntryTypes(
-			long groupId, int start, int end)
-		throws SystemException {
-
-		return dlFileEntryTypePersistence.findByGroupId(groupId, start, end);
-	}
-
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds)
 		throws SystemException {
 
@@ -225,26 +217,31 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
 				getFileEntryTypes(groupIds));
 
-			dlFileEntryTypes.add(new DLFileEntryTypeImpl());
+			dlFileEntryTypes.add(
+				0, dlFileEntryTypePersistence.fetchByPrimaryKey(0));
 		}
 
 		return dlFileEntryTypes;
 	}
 
 	public List<DLFileEntryType> search(
-			long companyId, long[] groupIds, String keywords, int start,
-			int end, OrderByComparator orderByComparator)
+			long companyId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType, int start, int end,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return dlFileEntryTypeFinder.findByKeywords(
-			companyId, groupIds, keywords, start, end, orderByComparator);
+			companyId, groupIds, keywords, includeBasicFileEntryType, start,
+			end, orderByComparator);
 	}
 
-	public int searchCount(long companyId, long[] groupIds, String keywords)
+	public int searchCount(
+			long companyId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType)
 		throws SystemException {
 
 		return dlFileEntryTypeFinder.countByKeywords(
-			companyId, groupIds, keywords);
+			companyId, groupIds, keywords, includeBasicFileEntryType);
 	}
 
 	public void updateFileEntryType(
@@ -281,7 +278,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void updateFolderFileEntryTypes(
 			DLFolder dlFolder, List<Long> fileEntryTypeIds,
 			long defaultFileEntryTypeId, ServiceContext serviceContext)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<Long> originalFileEntryTypeIds = getFileEntryTypeIds(
 			dlFolderPersistence.getDLFileEntryTypes(dlFolder.getFolderId()));
@@ -301,6 +298,11 @@ public class DLFileEntryTypeLocalServiceImpl
 			if (!fileEntryTypeIds.contains(originalFileEntryTypeId)) {
 				dlFolderPersistence.removeDLFileEntryType(
 					dlFolder.getFolderId(), originalFileEntryTypeId);
+
+				workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+					dlFolder.getCompanyId(), dlFolder.getGroupId(),
+					DLFolder.class.getName(), dlFolder.getFolderId(),
+					originalFileEntryTypeId);
 			}
 		}
 	}

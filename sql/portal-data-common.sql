@@ -226,6 +226,8 @@ insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active
 insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (226, 'Zambia', 'ZM', 'ZMB', '894', '260', TRUE, TRUE);
 insert into Country (countryId, name, a2, a3, number_, idd_, zipRequired, active_) values (227, 'Zimbabwe', 'ZW', 'ZWE', '716', '263', FALSE, TRUE);
 
+insert into DLFileEntryType (fileEntryTypeId, groupId, companyId, userId, createDate, modifiedDate, name) values (0, 0, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Basic Document');
+
 insert into Region (regionId, countryId, regionCode, name, active_) values (1001, 1, 'AB', 'Alberta', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (1002, 1, 'BC', 'British Columbia', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (1003, 1, 'MB', 'Manitoba', TRUE);

@@ -63,7 +63,7 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 %>
 
 <aui:layout>
-	<aui:column columnWidth="70">
+	<aui:column columnWidth="70" first="<%= true %>">
 		<div class="group-stats-chart" id="groupStatsChart<%=counterIndex %>" style="height: <%=infoBlockHeight - 2 %>px;"></div>
 	</aui:column>
 	<aui:column columnWidth="30">
@@ -111,14 +111,6 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 		);
 	}
 
-	var stylesDef = {
-        series: {
-            values: {
-				color: '#FFB700'
-            }
-        }
-    };
-
 	var tooltip = {
 		styles: {
 			backgroundColor: '#FFF',
@@ -127,51 +119,72 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 			borderWidth: 2,
 			textAlign: 'center'
 		},
-
-		<c:choose>
-		<c:when test='<%=chartType.equals("area") %>'>
-		planarLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
-			return valueItem[0].value;
-		}
-		</c:when>
-
-		<c:otherwise>
 		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
 			return valueItem.value;
 		}
-		</c:otherwise>
-		</c:choose>
 	};
 
-	var chart = new A.Chart(
-		{
-			axes: {
-				category: {
-					styles:
-					{
-						label: {
-							display: 'none'
-						}
-					}
-				},
-				values: {
-					styles: {
-						majorUnit: {
-							count: 6
+	<c:choose>
+		<c:when test='<%=chartType.equals("area") %>'>
+			var chartType = 'combo';
+
+			var customConfig = {
+				showAreaFill: true,
+				showMarkers: true,
+				styles: {
+					series: {
+						values: {
+							area: {
+								color: "#FFB700"
+							},
+							line: {
+								color: "#000000",
+								weight: 2
+							},
+							marker: {
+								fill: {
+									color: "#00f"
+								},
+								height: 6
+							}
 						}
 					}
 				}
+			};
+		</c:when>
+		<c:otherwise>
+			var chartType = '<%=chartType %>';
+			var customConfig = {};
+		</c:otherwise>
+	</c:choose>
+
+	var defaultConfig = {
+		axes: {
+			category: {
+				styles:
+				{
+					label: {
+						display: 'none'
+					}
+				}
 			},
-			dataProvider: data,
-			horizontalGridlines: true,
-			<c:if test='<%=chartType.equals("area") %>'>
-			interactionType: 'planar',
-			</c:if>
-			render: '#groupStatsChart<%=counterIndex %>',
-			tooltip: tooltip,
-			type: '<%=chartType %>',
-			stacked: true,
-			styles: stylesDef
-		}
-	);
+			values: {
+				styles: {
+					majorUnit: {
+						count: 6
+					}
+				}
+			}
+		},
+		dataProvider: data,
+		horizontalGridlines: true,
+		render: '#groupStatsChart<%=counterIndex %>',
+		tooltip: tooltip,
+		type: chartType
+	};
+
+	A.mix(defaultConfig, customConfig);
+
+	var chart = new A.Chart(defaultConfig);
+
 </aui:script>

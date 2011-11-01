@@ -42,7 +42,9 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 
 <aui:layout>
 	<aui:column columnWidth="70">
-		<div class="group-stats-chart" id="groupStatsChart<%=counterIndex %>" style="height: <%=infoBlockHeight - 2 %>px;"></div>
+		<div class="group-stats-chart" style="height: <%=infoBlockHeight - 2 %>px;">
+			<div id="groupStatsChart<%=counterIndex %>"></div>
+		</div>
 	</aui:column>
 	<aui:column columnWidth="30">
 		<div class="group-stats-info">
@@ -84,10 +86,45 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 		);
 	}
 
+	var tooltip = {
+		styles: {
+			backgroundColor: '#FFF',
+			borderColor: '#4572A7',
+			color: "#000",
+			borderWidth: 2,
+			textAlign: 'center'
+		},
+		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
+			return valueItem.value;
+		}
+	};
+
+	var charContainer = A.one('#groupStatsChart<%=counterIndex %>');
+
+	charContainer.setStyles(
+		{
+			height: '<%=infoBlockHeight - 2 %>',
+			margin: 'auto',
+			width: '<%=infoBlockHeight - 2 %>'
+		}
+	);
+
 	var chart = new A.Chart(
 		{
 			dataProvider: data,
-			render: '#groupStatsChart<%=counterIndex %>',
+			render: charContainer,
+			seriesCollection:[
+				{
+					categoryKey: 'category',
+					styles: {
+						fill: {
+							colors: ['<%=StringUtil.merge(colors, "', '") %>']
+						}
+					},
+					valueKey: 'values'
+				}
+			],
+			tooltip: tooltip,
 			type: 'pie'
 		}
 	);

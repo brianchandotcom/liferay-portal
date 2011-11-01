@@ -16,7 +16,8 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.MethodParameterNamesResolverUtil;
+import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Method;
@@ -38,20 +39,18 @@ public class JSONWebServiceActionConfig
 		_path = path;
 		_method = method;
 
-		_parameterNames =
-			MethodParameterNamesResolverUtil.resolveParameterNames(
-				actionMethod);
-		_parameterTypes = actionMethod.getParameterTypes();
+		_parameters =
+			MethodParametersResolverUtil.resolveParameters(actionMethod);
 
-		StringBundler sb = new StringBundler(_parameterNames.length * 2 + 4);
+		StringBundler sb = new StringBundler(_parameters.length * 2 + 4);
 
 		sb.append(_path);
 		sb.append(CharPool.MINUS);
-		sb.append(_parameterNames.length);
+		sb.append(_parameters.length);
 
-		for (String parameterName : _parameterNames) {
+		for (MethodParameter parameter : _parameters) {
 			sb.append(CharPool.MINUS);
-			sb.append(parameterName);
+			sb.append(parameter.getName());
 		}
 
 		_fullPath = sb.toString();
@@ -75,12 +74,8 @@ public class JSONWebServiceActionConfig
 		return _method;
 	}
 
-	public String[] getParameterNames() {
-		return _parameterNames;
-	}
-
-	public Class<?>[] getParameterTypes() {
-		return _parameterTypes;
+	public MethodParameter[] getMethodParameters() {
+		return _parameters;
 	}
 
 	public String getPath() {
@@ -97,7 +92,7 @@ public class JSONWebServiceActionConfig
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{actionClass=");
 		sb.append(_actionClass);
@@ -108,9 +103,7 @@ public class JSONWebServiceActionConfig
 		sb.append(", method=");
 		sb.append(_method);
 		sb.append(", parameterNames=");
-		sb.append(_parameterNames);
-		sb.append(", parameterTypes=");
-		sb.append(_parameterTypes);
+		sb.append(_parameters);
 		sb.append(", path=");
 		sb.append(_path);
 		sb.append("}");
@@ -122,8 +115,7 @@ public class JSONWebServiceActionConfig
 	private Method _actionMethod;
 	private String _fullPath;
 	private String _method;
-	private String[] _parameterNames;
-	private Class<?>[] _parameterTypes;
+	private MethodParameter[] _parameters;
 	private String _path;
 	private String _servletContextName;
 

@@ -19,24 +19,8 @@ import java.lang.reflect.Method;
 /**
  * @author Igor Spasic
  */
-public class MethodParameterNamesResolverUtil {
+public interface MethodParametersResolver {
 
-	public static MethodParameterNamesResolver
-		getMethodParameterNamesResolver() {
-
-		return _methodParameterNamesResolver;
-	}
-
-	public static String[] resolveParameterNames(Method method) {
-		return getMethodParameterNamesResolver().resolveParameterNames(method);
-	}
-
-	public void setMethodParameterNamesResolver(
-		MethodParameterNamesResolver methodParameterNamesResolver) {
-
-		_methodParameterNamesResolver = methodParameterNamesResolver;
-	}
-
-	private static MethodParameterNamesResolver _methodParameterNamesResolver;
+	public MethodParameter[] resolveParameters(Method method);
 
 }

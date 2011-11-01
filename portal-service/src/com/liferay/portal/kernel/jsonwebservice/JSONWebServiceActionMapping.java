@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.jsonwebservice;
 
+import com.liferay.portal.kernel.util.MethodParameter;
+
 import java.lang.reflect.Method;
 
 /**
@@ -27,9 +29,7 @@ public interface JSONWebServiceActionMapping {
 
 	public String getMethod();
 
-	public String[] getParameterNames();
-
-	public Class<?>[] getParameterTypes();
+	public MethodParameter[] getMethodParameters();
 
 	public String getPath();
 

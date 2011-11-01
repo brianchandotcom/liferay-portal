@@ -14,16 +14,22 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import jodd.bean.BeanUtil;
 
@@ -79,6 +85,53 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return parameterType.newInstance();
 	}
 
+	private List _generifyList(List<?> list, Class<?>[] types) {
+		if (types == null) {
+			return list;
+		}
+
+		if (types.length != 1) {
+			return list;
+		}
+
+		List newList = new ArrayList(list.size());
+
+		for (Object entry : list) {
+			if (entry != null) {
+				entry = ReflectUtil.castType(entry, types[0]);
+			}
+
+			newList.add(entry);
+		}
+
+		return newList;
+	}
+
+	private Map _generifyMap(Map<?,?> map, Class<?>[] types) {
+		if (types == null) {
+			return map;
+		}
+
+		if (types.length != 2) {
+			return map;
+		}
+
+		Map newMap = new HashMap(map.size());
+
+		for (Map.Entry entry : map.entrySet()) {
+			Object key = ReflectUtil.castType(entry.getKey(), types[0]);
+
+			Object value = entry.getValue();
+			if (value != null) {
+				value = ReflectUtil.castType(value, types[1]);
+			}
+
+			newMap.put(key, value);
+		}
+
+		return newMap;
+	}
+
 	private Object _invokeActionMethod() throws Exception {
 		Method actionMethod = _jsonWebServiceActionConfig.getActionMethod();
 
@@ -90,16 +143,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private Object[] _prepareParameters(Class<?> actionClass) throws Exception {
-		String[] parameterNames =
-			_jsonWebServiceActionConfig.getParameterNames();
+		MethodParameter[] methodParameters =
+			_jsonWebServiceActionConfig.getMethodParameters();
 
-		Class<?>[] parameterTypes =
-			_jsonWebServiceActionConfig.getParameterTypes();
+		Object[] parameters = new Object[methodParameters.length];
 
-		Object[] parameters = new Object[parameterNames.length];
-
-		for (int i = 0; i < parameterNames.length; i++) {
-			String parameterName = parameterNames[i];
+		for (int i = 0; i < methodParameters.length; i++) {
+			String parameterName = methodParameters[i].getName();
 
 			Object value =
 				_jsonWebServiceActionParameters.getParameter(parameterName);
@@ -107,7 +157,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			Object parameterValue = null;
 
 			if (value != null) {
-				Class<?> parameterType = parameterTypes[i];
+				Class<?> parameterType = methodParameters[i].getType();
 
 				if (value.equals(Void.TYPE)) {
 					String parameterTypeName =
@@ -127,6 +177,32 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				else if (parameterType.equals(Locale.class)) {
 					parameterValue = LocaleUtil.fromLanguageId(
 						value.toString());
+				}
+				else if (parameterType.equals(Map.class)) {
+					Map map = JSONFactoryUtil.looseDeserialize(
+						value.toString(), HashMap.class);
+
+					map = _generifyMap(
+						map, methodParameters[i].getGenericTypes());
+
+					parameterValue = map;
+				}
+				else if (parameterType.equals(List.class)) {
+					List list = JSONFactoryUtil.looseDeserialize(
+						value.toString(), ArrayList.class);
+
+					list = _generifyList(
+						list, methodParameters[i].getGenericTypes());
+
+					parameterValue = list;
+				}
+				else if (parameterType.equals(Calendar.class)) {
+					Calendar calendar = Calendar.getInstance();
+
+					calendar.setTimeInMillis(Long.parseLong(value.toString()));
+					calendar.setLenient(false);
+
+					parameterValue = calendar;
 				}
 				else {
 					parameterValue = ReflectUtil.castType(value, parameterType);

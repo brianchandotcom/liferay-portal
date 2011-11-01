@@ -19,6 +19,8 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "web-content");
 
+String redirect = ParamUtil.getString(request, "redirect");
+
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
@@ -27,9 +29,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view_article_history");
 portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
 portletURL.setParameter("articleId", article.getArticleId());
-portletURL.setParameter("redirect", currentURL);
 %>
 
 <liferay-util:include page="/html/portlet/journal/article_header.jsp" />

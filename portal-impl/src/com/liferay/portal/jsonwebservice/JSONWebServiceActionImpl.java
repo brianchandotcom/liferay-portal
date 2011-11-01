@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,8 +24,11 @@ import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import jodd.bean.BeanUtil;
 
@@ -80,6 +84,53 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return parameterType.newInstance();
 	}
 
+	private List _generifyList(List<?> list, Class<?>[] types) {
+		if (types == null) {
+			return list;
+		}
+
+		if (types.length != 1) {
+			return list;
+		}
+
+		List newList = new ArrayList(list.size());
+
+		for (Object entry : list) {
+			if (entry != null) {
+				entry = ReflectUtil.castType(entry, types[0]);
+			}
+
+			newList.add(entry);
+		}
+
+		return newList;
+	}
+
+	private Map _generifyMap(Map<?,?> map, Class<?>[] types) {
+		if (types == null) {
+			return map;
+		}
+
+		if (types.length != 2) {
+			return map;
+		}
+
+		Map newMap = new HashMap(map.size());
+
+		for (Map.Entry entry : map.entrySet()) {
+			Object key = ReflectUtil.castType(entry.getKey(), types[0]);
+
+			Object value = entry.getValue();
+			if (value != null) {
+				value = ReflectUtil.castType(value, types[1]);
+			}
+
+			newMap.put(key, value);
+		}
+
+		return newMap;
+	}
+
 	private Object _invokeActionMethod() throws Exception {
 		Method actionMethod = _jsonWebServiceActionConfig.getActionMethod();
 
@@ -125,6 +176,24 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				else if (parameterType.equals(Locale.class)) {
 					parameterValue = LocaleUtil.fromLanguageId(
 						value.toString());
+				}
+				else if (parameterType.equals(Map.class)) {
+					Map map = JSONFactoryUtil.looseDeserialize(
+						value.toString(), HashMap.class);
+
+					map = _generifyMap(
+						map, methodParameters[i].getGenericTypes());
+
+					parameterValue = map;
+				}
+				else if (parameterType.equals(List.class)) {
+					List list = JSONFactoryUtil.looseDeserialize(
+						value.toString(), ArrayList.class);
+
+					list = _generifyList(
+						list, methodParameters[i].getGenericTypes());
+
+					parameterValue = list;
 				}
 				else {
 					parameterValue = ReflectUtil.castType(value, parameterType);

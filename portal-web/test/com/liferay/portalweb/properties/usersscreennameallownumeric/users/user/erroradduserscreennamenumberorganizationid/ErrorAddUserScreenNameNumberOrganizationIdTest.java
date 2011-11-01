@@ -48,11 +48,11 @@ public class ErrorAddUserScreenNameNumberOrganizationIdTest extends BaseTestCase
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Test Organization"));
+			RuntimeVariables.replace("Selenium"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Organization"),
+		assertEquals(RuntimeVariables.replace("Selenium"),
 			selenium.getText("//td[2]//strong"));
 		selenium.clickAt("//span[@title='Actions']/ul",
 			RuntimeVariables.replace("Actions"));

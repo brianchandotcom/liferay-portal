@@ -294,11 +294,6 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -310,14 +305,14 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
+		long companyId, long[] groupIds, java.lang.String keywords,
+		boolean includeBasicFileEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords)
+		java.lang.String keywords, boolean includeBasicFileEntryType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
@@ -332,5 +327,6 @@ public interface DLFileEntryTypeLocalService extends PersistedModelLocalService 
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		long defaultFileEntryTypeId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

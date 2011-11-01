@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * @author Sergio González
  * @author Connor McKay
+ * @author Alexander Chow
  */
 public class DLFileEntryTypeFinderImpl
 	extends BasePersistenceImpl<DLFileEntryType>
@@ -47,8 +48,12 @@ public class DLFileEntryTypeFinderImpl
 	public static String FIND_BY_C_G_N_D_S =
 		DLFileEntryTypeFinder.class.getName() + ".findByC_G_N_D_S";
 
+	public static String JOIN_BY_FILE_ENTRY_TYPE =
+		DLFileEntryTypeFinder.class.getName() + ".joinByFileEntryType";
+
 	public int countByKeywords(
-			long companyId, long[] groupIds, String keywords)
+			long companyId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType)
 		throws SystemException {
 
 		String[] names = null;
@@ -64,25 +69,37 @@ public class DLFileEntryTypeFinderImpl
 		}
 
 		return countByC_G_N_D_S(
-			companyId, groupIds, names, descriptions, andOperator);
+			companyId, groupIds, names, descriptions, andOperator,
+			includeBasicFileEntryType);
 	}
 
-	public int countByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			boolean andOperator)
+	public List<DLFileEntryType> findByKeywords(
+			long companyId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType, int start, int end,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		long[] groupIds = new long[] {groupId};
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
 
-		return countByC_G_N_D_S(
-			companyId, groupIds, names, descriptions, andOperator);
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return findByC_G_N_D_S(
+			companyId, groupIds, names, descriptions, andOperator,
+			includeBasicFileEntryType, start, end, orderByComparator);
 	}
 
-	public int countByC_G_N_D_S(
+	protected int countByC_G_N_D_S(
 			long companyId, long[] groupIds, String[] names,
-			String[] descriptions, boolean andOperator)
+			String[] descriptions, boolean andOperator,
+			boolean includeBasicFileEntryType)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
@@ -95,6 +112,8 @@ public class DLFileEntryTypeFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D_S);
 
+			sql = StringUtil.replace(
+				sql, "[$WHERE$]", getWhere(includeBasicFileEntryType));
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
@@ -109,6 +128,11 @@ public class DLFileEntryTypeFinderImpl
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (includeBasicFileEntryType) {
+				qPos.add(names, 2);
+				qPos.add(descriptions, 2);
+			}
 
 			qPos.add(companyId);
 			qPos.add(groupIds);
@@ -135,58 +159,10 @@ public class DLFileEntryTypeFinderImpl
 		}
 	}
 
-	public List<DLFileEntryType> findByKeywords(
-			long companyId, long[] groupIds, String keywords,
-			int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return findByC_G_N_D_S(
-			companyId, groupIds, names, descriptions, andOperator, start, end,
-			orderByComparator);
-	}
-
-	public List<DLFileEntryType> findByC_G_N_D_S(
-			long companyId, long groupId, String name, String description,
-			boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
-
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-
-		return findByC_G_N_D_S(
-			companyId, groupId, names, descriptions, andOperator, start, end,
-			orderByComparator);
-	}
-
-	public List<DLFileEntryType> findByC_G_N_D_S(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
-
-		long[] groupIds = new long[] {groupId};
-
-		return findByC_G_N_D_S(
-			companyId, groupIds, names, descriptions, andOperator, start, end,
-			orderByComparator);
-	}
-
-	public List<DLFileEntryType> findByC_G_N_D_S(
+	protected List<DLFileEntryType> findByC_G_N_D_S(
 			long companyId, long[] groupIds, String[] names,
-			String[] descriptions, boolean andOperator, int start, int end,
+			String[] descriptions, boolean andOperator,
+			boolean includeBasicFileEntryType, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
@@ -201,6 +177,8 @@ public class DLFileEntryTypeFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D_S);
 
 			sql = StringUtil.replace(
+				sql, "[$WHERE$]", getWhere(includeBasicFileEntryType));
+			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, false, names);
@@ -214,7 +192,7 @@ public class DLFileEntryTypeFinderImpl
 					orderByComparator.getOrderByFields(), StringPool.COMMA);
 
 				sql = StringUtil.replace(
-					sql, "fileEntryTypeId DESC", orderByFields.concat(" DESC"));
+					sql, "name ASC", orderByFields.concat(" DESC"));
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -222,6 +200,11 @@ public class DLFileEntryTypeFinderImpl
 			q.addEntity("DLFileEntryType", DLFileEntryTypeImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (includeBasicFileEntryType) {
+				qPos.add(names, 2);
+				qPos.add(descriptions, 2);
+			}
 
 			qPos.add(companyId);
 			qPos.add(groupIds);
@@ -259,6 +242,23 @@ public class DLFileEntryTypeFinderImpl
 		sb.append(") AND");
 
 		return sb.toString();
+	}
+
+	protected String getWhere(boolean includeBasicFileEntryType) {
+		if (includeBasicFileEntryType) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("((companyId = 0) AND (groupId = 0) AND (");
+			sb.append("(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) ");
+			sb.append("[$AND_OR_CONNECTOR$] ");
+			sb.append("(description LIKE ? [$AND_OR_NULL_CHECK$]) ");
+			sb.append(")) OR ");
+
+			return sb.toString();
+		}
+		else {
+			return StringPool.BLANK;
+		}
 	}
 
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 /**
@@ -32,8 +33,9 @@ public class UpgradeWorkflow extends UpgradeProcess {
 
 		runSQL(
 			"update WorkflowDefinitionLink set classNameId = " +
-				folderClassNameId + " where classNameId = " +
-					fileEntryClassNameId);
+				folderClassNameId + ", typePK = " +
+					DLFileEntryTypeConstants.ALL_FILE_ENTRY_TYPES_ID +
+						" where classNameId = " + fileEntryClassNameId);
 	}
 
 }

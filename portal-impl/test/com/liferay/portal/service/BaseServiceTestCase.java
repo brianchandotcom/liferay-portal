@@ -72,15 +72,13 @@ public class BaseServiceTestCase extends BaseTestCase {
 		long[] userGroupIds = null;
 		boolean sendMail = false;
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		return UserLocalServiceUtil.addUser(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			autoPassword, password1, password2, autoScreenName, screenName,
 			emailAddress, facebookId, openId, locale, firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendMail, serviceContext);
+			userGroupIds, sendMail, getServiceContext());
 	}
 
 	protected URL getClassResource(String name) {
@@ -89,6 +87,16 @@ public class BaseServiceTestCase extends BaseTestCase {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		return classLoader.getResource(name);
+	}
+
+	protected ServiceContext getServiceContext() throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		serviceContext.setUserId(TestPropsValues.getUserId());
+		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+
+		return serviceContext;
 	}
 
 }

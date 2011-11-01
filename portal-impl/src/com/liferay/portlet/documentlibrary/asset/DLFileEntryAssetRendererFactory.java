@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.asset;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -91,8 +90,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		Map<Long, String> classTypes = new HashMap<Long, String>();
 
 		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeServiceUtil.getFileEntryTypes(
-				groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds);
 
 		for (DLFileEntryType dlFileEntryType: dlFileEntryTypes) {
 			classTypes.put(

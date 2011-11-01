@@ -333,12 +333,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFileEntryTypes(groupId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFileEntryTypes(groupIds);
@@ -353,19 +347,21 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
+		long companyId, long[] groupIds, java.lang.String keywords,
+		boolean includeBasicFileEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .search(companyId, groupIds, keywords, start, end,
-			orderByComparator);
+				   .search(companyId, groupIds, keywords,
+			includeBasicFileEntryType, start, end, orderByComparator);
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords)
+		java.lang.String keywords, boolean includeBasicFileEntryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().searchCount(companyId, groupIds, keywords);
+		return getService()
+				   .searchCount(companyId, groupIds, keywords,
+			includeBasicFileEntryType);
 	}
 
 	public static void updateFileEntryType(long userId, long fileEntryTypeId,
@@ -384,7 +380,8 @@ public class DLFileEntryTypeLocalServiceUtil {
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		long defaultFileEntryTypeId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.updateFolderFileEntryTypes(dlFolder, fileEntryTypeIds,
 			defaultFileEntryTypeId, serviceContext);

@@ -189,6 +189,10 @@ create table DLFileEntryType (
 	description STRING null
 );
 
+COMMIT_TRANSACTION;
+
+insert into DLFileEntryType (fileEntryTypeId, groupId, companyId, userId, createDate, modifiedDate, name) values (0, 0, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Basic Document');
+
 create table DLFileEntryTypes_DDMStructures (
 	fileEntryTypeId LONG not null,
 	structureId LONG not null,

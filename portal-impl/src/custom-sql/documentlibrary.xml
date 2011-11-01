@@ -105,11 +105,14 @@
 			FROM
 				DLFileEntryType
 			WHERE
-				(companyId = ?) AND
-				[$GROUP_ID$]
+				[$WHERE$]
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$])
+					(companyId = ?) AND
+					[$GROUP_ID$]
+					(
+						(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(description LIKE ? [$AND_OR_NULL_CHECK$])
+					)
 				)
 		]]>
 	</sql>
@@ -120,14 +123,17 @@
 			FROM
 				DLFileEntryType
 			WHERE
-				(companyId = ?) AND
-				[$GROUP_ID$]
+				[$WHERE$]
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$])
+					(companyId = ?) AND
+					[$GROUP_ID$]
+					(
+						(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(description LIKE ? [$AND_OR_NULL_CHECK$])
+					)
 				)
 			ORDER BY
-				DLFileEntryType.fileEntryTypeId DESC
+				name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByStaleRanks">

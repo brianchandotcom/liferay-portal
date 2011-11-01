@@ -247,7 +247,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 							</li>
 
 							<%
-							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay));
 							%>
 
 							<c:if test="<%= !fileEntryTypes.isEmpty() %>">

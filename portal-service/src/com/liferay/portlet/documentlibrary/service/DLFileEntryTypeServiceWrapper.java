@@ -56,9 +56,9 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long[] groupIds, int start, int end)
+		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryTypeService.getFileEntryTypes(groupIds, start, end);
+		return _dlFileEntryTypeService.getFileEntryTypes(groupIds);
 	}
 
 	public int getFileEntryTypesCount(long[] groupIds)

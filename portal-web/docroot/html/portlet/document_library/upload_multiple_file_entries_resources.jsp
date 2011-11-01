@@ -28,7 +28,7 @@ if (repositoryId <= 0) {
 	repositoryId = BeanParamUtil.getLong(fileEntry, request, "groupId");
 }
 
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay));
 
 long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 

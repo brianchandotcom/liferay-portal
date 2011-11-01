@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jodd.paramo.Paramo;
-import jodd.paramo.ParamoException;
 
 /**
  * @author Igor Spasic
@@ -53,8 +52,8 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 					);
 				}
 			}
-			catch (ParamoException pe) {
-				_log.error(pe, pe);
+			catch (Exception e) {
+				_log.error(e, e);
 
 				return null;
 			}

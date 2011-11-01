@@ -30,7 +30,7 @@ public class PortletTests extends BaseTests {
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletTest.class);
 		testSuite.addTestSuite(ConfigureMediaGalleryTest.class);
-        testSuite.addTestSuite(AddUserPortletTest.class);
+		testSuite.addTestSuite(AddUserPortletTest.class);
 		testSuite.addTestSuite(AddPortletRoleTest.class);
 		testSuite.addTestSuite(RemovePortletRolePowerUserTest.class);
 		testSuite.addTestSuite(RemoveGuestViewTest.class);
@@ -38,7 +38,7 @@ public class PortletTests extends BaseTests {
 		testSuite.addTestSuite(AssignUserPortletRolesTest.class);
 		testSuite.addTestSuite(SA_RemoveViewPortletPermissionsTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(Portlet_LoginTest.class); 
+		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotViewPortletTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);

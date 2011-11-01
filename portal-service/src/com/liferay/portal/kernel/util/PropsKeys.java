@@ -837,6 +837,8 @@ public interface PropsKeys {
 
 	public static final String JCR_JACKRABBIT_REPOSITORY_ROOT = "jcr.jackrabbit.repository.root";
 
+	public static final String JCR_LIFERAY_SESSION_DELEGATED = "jcr.liferay.session.delegated";
+
 	public static final String JCR_NODE_DOCUMENTLIBRARY = "jcr.node.documentlibrary";
 
 	public static final String JCR_WORKSPACE_NAME = "jcr.workspace.name";

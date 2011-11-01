@@ -2642,18 +2642,20 @@ public class JournalArticleLocalServiceImpl
 			else if (elType.equals("text_area") || elType.equals("text") ||
 					 elType.equals("text_box")) {
 
-				Element dynamicContentElement = element.element(
+				List<Element> dynamicContentElements = element.elements(
 					"dynamic-content");
 
-				String dynamicContent = dynamicContentElement.getText();
+				for (Element dynamicContentElement : dynamicContentElements) {
+					String dynamicContent = dynamicContentElement.getText();
 
-				if (Validator.isNotNull(dynamicContent)) {
-					dynamicContent = SanitizerUtil.sanitize(
-						user.getCompanyId(), groupId, user.getUserId(),
-						JournalArticle.class.getName(), 0,
-						ContentTypes.TEXT_HTML, dynamicContent);
+					if (Validator.isNotNull(dynamicContent)) {
+						dynamicContent = SanitizerUtil.sanitize(
+							user.getCompanyId(), groupId, user.getUserId(),
+							JournalArticle.class.getName(), 0,
+							ContentTypes.TEXT_HTML, dynamicContent);
 
-					dynamicContentElement.setText(dynamicContent);
+						dynamicContentElement.setText(dynamicContent);
+					}
 				}
 			}
 
@@ -2682,15 +2684,19 @@ public class JournalArticleLocalServiceImpl
 					rootElement, images);
 			}
 			else {
-				Element staticContentElement = rootElement.element(
+				List<Element> staticContentElements = rootElement.elements(
 					"static-content");
 
-				String staticContent = SanitizerUtil.sanitize(
-					user.getCompanyId(), groupId, user.getUserId(),
-					JournalArticle.class.getName(), 0, ContentTypes.TEXT_HTML,
-					staticContentElement.getText());
+				for (Element staticContentElement : staticContentElements) {
+					String staticContent = staticContentElement.getText();
 
-				staticContentElement.setText(staticContent);
+					staticContent = SanitizerUtil.sanitize(
+						user.getCompanyId(), groupId, user.getUserId(),
+						JournalArticle.class.getName(), 0,
+						ContentTypes.TEXT_HTML,	staticContent);
+
+					staticContentElement.setText(staticContent);
+				}
 			}
 
 			content = DDMXMLUtil.formatXML(document);

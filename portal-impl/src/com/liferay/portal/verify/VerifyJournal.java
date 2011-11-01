@@ -58,7 +58,7 @@ public class VerifyJournal extends VerifyProcess {
 			ResourceLocalServiceUtil.addResources(
 				structure.getCompanyId(), 0, 0,
 				JournalStructure.class.getName(), structure.getId(), false,
-				true, true);
+				false, false);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -73,8 +73,8 @@ public class VerifyJournal extends VerifyProcess {
 		for (JournalTemplate template : templates) {
 			ResourceLocalServiceUtil.addResources(
 				template.getCompanyId(), 0, 0,
-				JournalTemplate.class.getName(), template.getId(), false, true,
-				true);
+				JournalTemplate.class.getName(), template.getId(), false, false,
+				false);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -100,7 +100,7 @@ public class VerifyJournal extends VerifyProcess {
 
 			ResourceLocalServiceUtil.addResources(
 				article.getCompanyId(), 0, 0, JournalArticle.class.getName(),
-				article.getResourcePrimKey(), false, true, true);
+				article.getResourcePrimKey(), false, false, false);
 
 			try {
 				AssetEntryLocalServiceUtil.getEntry(

@@ -46,6 +46,7 @@ public class WCA_RemoveMemberWCLConfigurationPermissionsTest
 		selenium.clickAt("link=Web Content List Permissions Page",
 			RuntimeVariables.replace("Web Content List Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -106,7 +107,26 @@ public class WCA_RemoveMemberWCLConfigurationPermissionsTest
 		selenium.uncheck("//tr[4]/td[4]/input");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

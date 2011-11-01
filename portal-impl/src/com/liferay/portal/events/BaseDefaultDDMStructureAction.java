@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
@@ -81,7 +82,8 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 			DDMStructureLocalServiceUtil.addStructure(
 				userId, groupId, classNameId, ddmStructureKey, nameMap,
-				descriptionMap, xsd, "xml", serviceContext);
+				descriptionMap, xsd, "xml", DDMStructureConstants.TYPE_DEFAULT,
+				serviceContext);
 		}
 	}
 

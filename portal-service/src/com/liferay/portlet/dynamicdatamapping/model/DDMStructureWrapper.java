@@ -556,6 +556,24 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.setStorageType(storageType);
 	}
 
+	/**
+	* Returns the type of this d d m structure.
+	*
+	* @return the type of this d d m structure
+	*/
+	public int getType() {
+		return _ddmStructure.getType();
+	}
+
+	/**
+	* Sets the type of this d d m structure.
+	*
+	* @param type the type of this d d m structure
+	*/
+	public void setType(int type) {
+		_ddmStructure.setType(type);
+	}
+
 	public boolean isNew() {
 		return _ddmStructure.isNew();
 	}

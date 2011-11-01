@@ -58,13 +58,14 @@ import java.util.Set;
  * @author Bruno Basto
  * @author Marcellus Tavares
  */
-public class DDMStructureLocalServiceImpl
+public class DDMStructureLocalServiceImpl 
 	extends DDMStructureLocalServiceBaseImpl {
 
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId, String structureKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, String storageType, ServiceContext serviceContext)
+			String xsd, String storageType, int type, 
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Structure
@@ -103,6 +104,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setXsd(xsd);
 		structure.setStorageType(storageType);
+		structure.setType(type);
 
 		ddmStructurePersistence.update(structure, false);
 
@@ -156,7 +158,8 @@ public class DDMStructureLocalServiceImpl
 		return addStructure(
 			 userId, structure.getGroupId(), structure.getClassNameId(), null,
 			 structure.getNameMap(), structure.getDescriptionMap(),
-			 structure.getXsd(), structure.getStorageType(), serviceContext);
+			 structure.getXsd(), structure.getStorageType(), 
+			 structure.getType(), serviceContext);
 	}
 
 	public void deleteStructure(DDMStructure structure)
@@ -294,13 +297,14 @@ public class DDMStructureLocalServiceImpl
 
 	public List<DDMStructure> search(
 			long companyId, long[] groupIds, long[] classNameIds, String name,
-			String description, String storageType, boolean andOperator,
-			int start, int end, OrderByComparator orderByComparator)
+			String description, String storageType, int type, 
+			boolean andOperator, int start, int end, 
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return ddmStructureFinder.findByC_G_C_N_D_S(
+		return ddmStructureFinder.findByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, storageType,
-			andOperator, start, end, orderByComparator);
+			type, andOperator, start, end, orderByComparator);
 	}
 
 	public int searchCount(
@@ -314,12 +318,13 @@ public class DDMStructureLocalServiceImpl
 
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds, String name,
-			String description, String storageType, boolean andOperator)
+			String description, String storageType, int type,
+			boolean andOperator)
 		throws SystemException {
 
-		return ddmStructureFinder.countByC_G_C_N_D_S(
+		return ddmStructureFinder.countByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, storageType,
-			andOperator);
+			type, andOperator);
 	}
 
 	public DDMStructure updateStructure(

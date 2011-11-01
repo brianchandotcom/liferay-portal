@@ -2087,6 +2087,9 @@
 			<basic name="description" />
 			<basic name="xsd" />
 			<basic name="storageType" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
 			<transient name="nameCurrentLanguageId" />

@@ -1560,6 +1560,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="storageType" type="String" />
+		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink">
 		<field name="structureLinkId" type="long" />

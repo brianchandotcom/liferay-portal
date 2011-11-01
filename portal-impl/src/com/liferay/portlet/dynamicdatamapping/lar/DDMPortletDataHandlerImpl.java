@@ -91,7 +91,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 					structure.getClassNameId(), structure.getStructureKey(),
 					structure.getNameMap(), structure.getDescriptionMap(),
 					structure.getXsd(), structure.getStorageType(),
-					serviceContext);
+					structure.getType(), serviceContext);
 			}
 			else {
 				importedStructure =
@@ -106,7 +106,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				userId, portletDataContext.getScopeGroupId(),
 				structure.getClassNameId(), structure.getStructureKey(),
 				structure.getNameMap(), structure.getDescriptionMap(),
-				structure.getXsd(), structure.getStorageType(), serviceContext);
+				structure.getXsd(), structure.getStorageType(),
+				structure.getType(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(

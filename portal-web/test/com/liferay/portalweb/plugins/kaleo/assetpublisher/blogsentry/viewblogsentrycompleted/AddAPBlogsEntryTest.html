@@ -24,6 +24,11 @@
 	<td>Asset Publisher Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div/span/ul/li/strong/a</td>
 	<td>Add New</td>
@@ -99,11 +104,15 @@
 	<td>Submit for Publication</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//p</td>
+	<td>//div[@class='portlet-body']/p</td>
 	<td>There are no results.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

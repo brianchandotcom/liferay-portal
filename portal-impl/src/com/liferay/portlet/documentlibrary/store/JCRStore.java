@@ -36,6 +36,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.jcr.Binary;
 import javax.jcr.Node;
@@ -102,9 +103,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -125,6 +124,15 @@ public class JCRStore extends BaseStore {
 			Node rootNode = getRootNode(session, companyId);
 
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			if (fileName.contains(StringPool.SLASH)) {
+				String path = fileName.substring(
+					0, fileName.lastIndexOf(StringPool.SLASH));
+
+				fileName = fileName.substring(path.length() + 1);
+
+				repositoryNode = getFolderNode(repositoryNode, path);
+			}
 
 			if (repositoryNode.hasNode(fileName)) {
 				throw new DuplicateFileException(fileName);
@@ -164,9 +172,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -185,9 +191,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -225,9 +229,7 @@ public class JCRStore extends BaseStore {
 			}
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -280,9 +282,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 
 		// Delete version tree
@@ -331,9 +331,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 
 		// Delete file
@@ -358,9 +356,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -413,9 +409,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -439,15 +433,19 @@ public class JCRStore extends BaseStore {
 
 			Binary binary = value.getBinary();
 
+			if ((session instanceof Map)) {
+				Map<String,Binary> mapSession = (Map<String,Binary>)session;
+
+				mapSession.put(fileName, binary);
+			}
+
 			return binary.getStream();
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -483,14 +481,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(e);
 		}
 		finally {
-			try {
-				if (session != null) {
-					session.logout();
-				}
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 
 		return fileNames.toArray(new String[0]);
@@ -535,9 +526,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 
 		return fileNames.toArray(new String[fileNames.size()]);
@@ -564,9 +553,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 
 		return size;
@@ -597,9 +584,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -635,9 +620,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -659,6 +642,15 @@ public class JCRStore extends BaseStore {
 			Node rootNode = getRootNode(session, companyId);
 
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			if (fileName.contains(StringPool.SLASH)) {
+				String path = fileName.substring(
+					0, fileName.lastIndexOf(StringPool.SLASH));
+
+				fileName = fileName.substring(path.length() + 1);
+
+				repositoryNode = getFolderNode(repositoryNode, path);
+			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
 
@@ -731,9 +723,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -754,6 +744,15 @@ public class JCRStore extends BaseStore {
 			Node rootNode = getRootNode(session, companyId);
 
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			if (fileName.contains(StringPool.SLASH)) {
+				String path = fileName.substring(
+					0, fileName.lastIndexOf(StringPool.SLASH));
+
+				fileName = fileName.substring(path.length() + 1);
+
+				repositoryNode = getFolderNode(repositoryNode, path);
+			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
 
@@ -818,9 +817,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -842,6 +839,15 @@ public class JCRStore extends BaseStore {
 			Node rootNode = getRootNode(session, companyId);
 
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			if (fileName.contains(StringPool.SLASH)) {
+				String path = fileName.substring(
+					0, fileName.lastIndexOf(StringPool.SLASH));
+
+				fileName = fileName.substring(path.length() + 1);
+
+				repositoryNode = getFolderNode(repositoryNode, path);
+			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
 
@@ -880,9 +886,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -915,9 +919,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			if (session != null) {
-				session.logout();
-			}
+			JCRFactoryUtil.closeSession(session);
 		}
 
 		return contentNode;
@@ -979,6 +981,13 @@ public class JCRStore extends BaseStore {
 
 	protected Node getFolderNode(Node node, String name)
 		throws RepositoryException {
+
+		if (name.contains(StringPool.SLASH)) {
+			String[] nameParts = name.split(StringPool.SLASH, 2);
+
+			node = getFolderNode(node, nameParts[0]);
+			return getFolderNode(node, nameParts[1]);
+		}
 
 		Node folderNode = null;
 

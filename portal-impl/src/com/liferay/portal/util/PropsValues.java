@@ -643,6 +643,8 @@ public class PropsValues {
 
 	public static final boolean JAVASCRIPT_LOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_LOG_ENABLED));
 
+	public static final boolean JCR_LIFERAY_SESSION_DELEGATED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JCR_LIFERAY_SESSION_DELEGATED));
+
 	public static final String JDBC_DEFAULT_DRIVER_CLASS_NAME = PropsUtil.get(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
 
 	public static final String JDBC_DEFAULT_LIFERAY_POOL_PROVIDER = PropsUtil.get(PropsKeys.JDBC_DEFAULT_LIFERAY_POOL_PROVIDER);

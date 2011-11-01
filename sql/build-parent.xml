@@ -161,6 +161,7 @@
 			<arg value="sql.dir=${basedir}" />
 			<arg value="sample.sql.base.dir=${basedir}/../benchmarks" />
 			<arg value="sample.sql.output.dir=${tstamp.value}"/>
+			<arg value="sample.sql.output.merge=true"/>
 			<arg value="sample.sql.db.type=hypersonic" />
 			<arg value="sample.sql.blogs.entry.comment.count=1" />
 			<arg value="sample.sql.blogs.entry.count=1" />

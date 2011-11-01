@@ -183,21 +183,39 @@ String redirect = ParamUtil.getString(request, "redirect");
 	}
 
 	function <portlet:namespace />removeFolder() {
+		var A = AUI();
+
 		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = "<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>";
 
 		var nameEl = document.getElementById("<portlet:namespace />rootFolderName");
 
 		nameEl.href = "";
 		nameEl.innerHTML = "";
+
+		var button = A.one('#<portlet:namespace />removeFolderButton');
+
+		if (button) {
+			button.set('disabled', true);
+			button.ancestor('.aui-button').addClass('aui-button-disabled');
+		}
 	}
 
 	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
+		var A = AUI();
+
 		document.<portlet:namespace />fm.<portlet:namespace />rootFolderId.value = rootFolderId;
 
 		var nameEl = document.getElementById("<portlet:namespace />rootFolderName");
 
 		nameEl.href = "<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= strutsAction + "/view" %>' /></liferay-portlet:renderURL>&<portlet:namespace />folderId=" + rootFolderId;
 		nameEl.innerHTML = rootFolderName + "&nbsp;";
+
+		var button = A.one('#<portlet:namespace />removeFolderButton');
+
+		if (button) {
+			button.set('disabled', false);
+			button.ancestor('.aui-button').removeClass('aui-button-disabled');
+		}
 	}
 
 	Liferay.provide(

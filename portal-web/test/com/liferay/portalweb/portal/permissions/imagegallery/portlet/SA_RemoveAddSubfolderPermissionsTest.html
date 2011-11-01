@@ -15,48 +15,63 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[5]/td[5]/input</td>
+	<td>Media Gallery Add Subfolder</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td>Actions</td>
+	<td>//tr[5]/td[5]/input</td>
+	<td>Media Gallery Add Subfolder</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>uncheck</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>assertNotChecked</td>
+	<td>//tr[5]/td[5]/input</td>
+	<td>Media Gallery Add Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>//tr[5]/td[5]/input</td>
+	<td>Media Gallery Add Subfolder</td>
 </tr>
 
 </tbody></table>

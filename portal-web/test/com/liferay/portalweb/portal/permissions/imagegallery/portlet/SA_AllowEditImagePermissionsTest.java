@@ -31,7 +31,7 @@ public class SA_AllowEditImagePermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,20 @@ public class SA_AllowEditImagePermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Portlet2 Temporary2 Folder2",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
+			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/a/img", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"Portlet Permissions Image 2 Test Title"),
+			selenium.getText(
+				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
+		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
+			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,14 +73,18 @@ public class SA_AllowEditImagePermissionsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//img[@alt='Permissions']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.check("//tr[7]/td[4]/input");
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertFalse(selenium.isChecked("//tr[5]/td[6]/input"));
+		selenium.clickAt("//tr[5]/td[6]/input",
+			RuntimeVariables.replace("Media Gallery Update"));
+		assertTrue(selenium.isChecked("//tr[5]/td[6]/input"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertTrue(selenium.isChecked("//tr[7]/td[4]/input"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isChecked("//tr[5]/td[6]/input"));
 	}
 }

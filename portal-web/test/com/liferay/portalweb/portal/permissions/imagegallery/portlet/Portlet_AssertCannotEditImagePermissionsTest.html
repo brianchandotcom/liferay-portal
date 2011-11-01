@@ -15,43 +15,43 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Portlet2 Temporary2 Folder2</td>
-	<td></td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Portlet Permissions Image 2 Test Title - ']</td>
+	<td>Portlet Permissions Image 2 Test Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//img[@alt='Portlet2 Temporary2 Image2 - ']</td>
-	<td></td>
+	<td>//a[@title='Portlet Permissions Image 2 Test Title - ']</td>
+	<td>Portlet Permissions Image 2 Test Title</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//a[3]</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div/div[2]/div[1]</td>
+	<td>Portlet Permissions Image 2 Test Title -</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//img[@alt='Permissions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Portlet2 Temporary2 Image2 - ']</td>
-	<td></td>
+	<td>Permissions</td>
 </tr>
 
 </tbody></table>

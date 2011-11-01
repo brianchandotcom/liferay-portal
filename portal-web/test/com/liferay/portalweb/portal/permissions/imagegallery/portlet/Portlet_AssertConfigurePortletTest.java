@@ -31,7 +31,7 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,11 +41,13 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Configuration"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		Thread.sleep(5000);
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -64,7 +66,11 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -72,7 +78,7 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Permissions")) {
+				if (selenium.isVisible("link=Setup")) {
 					break;
 				}
 			}
@@ -82,29 +88,32 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent("link=Permissions"));
+		assertTrue(selenium.isElementPresent("link=Setup"));
+		assertTrue(selenium.isElementPresent("link=Communication"));
 		assertTrue(selenium.isElementPresent("link=Sharing"));
 		assertTrue(selenium.isElementPresent("link=Scope"));
 		assertTrue(selenium.isElementPresent("//input[@value='Save']"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div[1]"));
-		selenium.clickAt("link=Sharing", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Any Website"));
-		assertTrue(selenium.isElementPresent("link=Facebook"));
-		assertTrue(selenium.isElementPresent("link=Google Gadget"));
-		assertTrue(selenium.isElementPresent("link=Netvibes"));
-		assertTrue(selenium.isElementPresent("link=Friends"));
-		selenium.clickAt("link=Scope", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//input[@value='Save']"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.clickAt("link=Sharing", RuntimeVariables.replace("Sharing"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementPresent("link=Any Website"));
+		assertTrue(selenium.isElementPresent("link=Facebook"));
+		assertTrue(selenium.isElementPresent("link=OpenSocial Gadget"));
+		assertTrue(selenium.isElementPresent("link=Netvibes"));
+		assertTrue(selenium.isElementPresent("link=Friends"));
+		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementPresent("//input[@value='Save']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"You have successfully updated the setup."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

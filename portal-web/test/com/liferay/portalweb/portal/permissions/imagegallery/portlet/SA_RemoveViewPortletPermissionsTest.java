@@ -31,7 +31,7 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,10 +41,11 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -63,7 +64,11 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,7 +76,8 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("16_ACTION_VIEW")) {
+				if (selenium.isVisible(
+							"//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a")) {
 					break;
 				}
 			}
@@ -81,14 +87,38 @@ public class SA_RemoveViewPortletPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.uncheck("16_ACTION_VIEW");
-		selenium.uncheck("//tr[7]/td[5]/input");
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText(
+				"//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a"));
+		selenium.clickAt("//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a",
+			RuntimeVariables.replace("Permissions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[5]/td[2]/input")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isChecked("//tr[5]/td[2]/input"));
+		selenium.clickAt("//tr[5]/td[2]/input",
+			RuntimeVariables.replace("Media Gallery View"));
+		assertFalse(selenium.isChecked("//tr[5]/td[2]/input"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div[1]"));
-		assertFalse(selenium.isChecked("16_ACTION_VIEW"));
-		assertFalse(selenium.isChecked("//tr[7]/td[5]/input"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isChecked("//tr[5]/td[2]/input"));
 	}
 }

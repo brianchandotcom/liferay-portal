@@ -32,7 +32,7 @@ public class Portlet_AssertCannotDeleteFolderTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -42,8 +42,15 @@ public class Portlet_AssertCannotDeleteFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Temporary Folder Edited"),
+			selenium.getText(
+				"//a[@title='Media Gallery Temporary Folder Edited - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder Edited - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder Edited"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isElementPresent("link=Delete"));
 	}

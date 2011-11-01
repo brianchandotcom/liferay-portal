@@ -15,23 +15,28 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Configuration</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -39,93 +44,103 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>assertText</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Permissions</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Setup</td>
+	<td>Setup</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Permissions</td>
-	<td></td>
+	<td>link=Setup</td>
+	<td>Setup</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Communication</td>
+	<td>Communication</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Sharing</td>
-	<td></td>
+	<td>Sharing</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Scope</td>
-	<td></td>
+	<td>Scope</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div[1]</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sharing</td>
-	<td></td>
+	<td>Sharing</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Any Website</td>
-	<td></td>
+	<td>Any Website</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Facebook</td>
-	<td></td>
+	<td>Facebook</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Google Gadget</td>
-	<td></td>
+	<td>link=OpenSocial Gadget</td>
+	<td>OpenSocial Gadget</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Netvibes</td>
-	<td></td>
+	<td>Netvibes</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>link=Friends</td>
-	<td></td>
+	<td>Friends</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Scope</td>
-	<td></td>
+	<td>Scope</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
 

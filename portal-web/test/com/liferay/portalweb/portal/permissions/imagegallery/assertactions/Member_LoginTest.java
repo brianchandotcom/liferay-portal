@@ -22,7 +22,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_LoginTest extends BaseTestCase {
 	public void testMember_Login() throws Exception {
-		selenium.setTimeout("180000");
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -31,7 +30,7 @@ public class Member_LoginTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_58_login")) {
+				if (selenium.isElementPresent("link=Welcome")) {
 					break;
 				}
 			}
@@ -41,13 +40,53 @@ public class Member_LoginTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("_58_login",
-			RuntimeVariables.replace("member@liferay.com"));
-		selenium.type("_58_password", RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@type='checkbox']",
-			RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//input[@id='_58_login']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//input[@id='_58_login']",
+			RuntimeVariables.replace("member@liferay.com"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
+		selenium.clickAt("//input[@type='checkbox']",
+			RuntimeVariables.replace("Remember Me"));
+		selenium.clickAt("//input[@value='Sign In']",
+			RuntimeVariables.replace("Sign In"));
+		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isTextPresent(
+							"You are signed in as Member Liferay.")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isTextPresent(
+				"You are signed in as Member Liferay."));
 	}
 }

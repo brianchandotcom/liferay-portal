@@ -15,22 +15,27 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='portlet-msg-error']</td>
 	<td>You do not have the roles required to access this portlet.</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/span[1]/span</td>
+	<td>//span[1]/a/span</td>
 	<td>Images Home</td>
 </tr>
 

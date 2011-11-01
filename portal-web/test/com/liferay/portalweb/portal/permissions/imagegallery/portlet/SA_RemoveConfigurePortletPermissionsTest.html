@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -34,34 +34,64 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a</td>
+	<td>Permissions</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[5]/td[4]/input</td>
+	<td>Media Gallery Configuration</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[5]/td[4]/input</td>
+	<td>Media Gallery Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[5]/td[4]/input</td>
+	<td>Media Gallery Configuration</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[5]/td[4]/input</td>
+	<td>Media Gallery Configuration</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[7]/td[4]/input</td>
-	<td></td>
+	<td>//tr[5]/td[4]/input</td>
+	<td>Media Gallery Configuration</td>
 </tr>
 
 </tbody></table>

@@ -15,88 +15,63 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Portlet2 Temporary2 Folder2</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[1]/a</td>
-	<td>Add Image</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[1]/a</td>
-	<td>Add Image</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>Add Media</td>
 </tr>
 <tr>
-	<td>windowFocus</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_31_file</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>Add Media</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_file</td>
+	<td>//input[@id='_31_file']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\permissions\imagegallery\portlet\dependencies\Portlet_TestImage.jpg</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_name</td>
-	<td>Portlet1 Permissions1 Image1</td>
+	<td>//input[@id='_31_title']</td>
+	<td>Portlet Permissions Image Test Title</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//img[@alt='Portlet1 Permissions1 Image1 - ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='Portlet1 Permissions1 Image1 - ']</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//a[@title='Portlet Permissions Image Test Title - ']</td>
+	<td>Portlet Permissions Image Test Title</td>
 </tr>
 
 </tbody></table>

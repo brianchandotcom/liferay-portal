@@ -15,48 +15,53 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Portlet2 Temporary2 Folder2</td>
-	<td></td>
+	<td>//a[@title='Media Gallery Temporary Folder - ']</td>
+	<td>Media Gallery Temporary Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/ul/li[1]/a</td>
-	<td></td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a</td>
+	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_31_name</td>
-	<td>Portlet1 Permissions1 Subfolder1</td>
+	<td>//input[@id='_31_name']</td>
+	<td>Portlet Permissions Subfolder Test</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
-	<td>Portlet1 Permissions1 Subfolder1</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Portlet Permissions Subfolder Test - ']</td>
+	<td>Portlet Permissions Subfolder Test</td>
 </tr>
 
 </tbody></table>

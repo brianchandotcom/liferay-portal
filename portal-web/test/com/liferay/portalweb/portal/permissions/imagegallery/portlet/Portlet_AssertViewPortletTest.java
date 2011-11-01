@@ -31,7 +31,7 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,12 +41,13 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent(
-				"You do not have the roles required to access this portlet."));
+		assertFalse(selenium.isElementPresent(
+				"//div[@class='portlet-msg-error']"));
+		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("Images Home"),
-			selenium.getText("//div[1]/span[1]/span"));
+			selenium.getText("//span[1]/a/span"));
 	}
 }

@@ -15,63 +15,73 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//img[@alt='Third Permissions Image Test - ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[3]/a/img</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//span[3]/a/img</td>
-	<td>Edit</td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_31_folderName</td>
-	<td>Image Permissions Test Subfolder</td>
+	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
+	<td>Media Gallery Permissions Test Subfolder</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@title='Media Gallery Permissions Test Subfolder - ']</td>
+	<td>Media Gallery Permissions Test Subfolder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Permissions Image 3 Test - ']</td>
+	<td>Permissions Image 3 Test</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@title='Permissions Image 3 Test - ']</td>
+	<td>Permissions Image 3 Test</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//img[@alt='View']</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//img[@alt='View']</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[3]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[3]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//button[3]</td>
+	<td>Move</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPopUp</td>
-	<td>folder</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>name=folder</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -79,19 +89,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Images Home</td>
-	<td></td>
+	<td>selectWindow</td>
+	<td>title=Media Gallery</td>
+	<td>Media Gallery</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>waitForVisible</td>
 	<td>link=Images Home</td>
-	<td></td>
+	<td>Images Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Images Home</td>
+	<td>Images Home</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Images Home</td>
+	<td>Images Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[1]/a</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[1]/a</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[2]/span/a</td>
+	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='Choose']</td>
-	<td></td>
+	<td>//input[@value='Choose this Folder']</td>
+	<td>Choose this Folder</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -99,34 +139,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>_31_folderName</td>
-	<td>Image Permissions Test Folder</td>
+	<td>waitForVisible</td>
+	<td>//input[@value='Move']</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Move']</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_31_folderName</td>
-	<td>Image Permissions Test Folder</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>open</td>
@@ -135,23 +165,28 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Permissions Test Page</td>
-	<td></td>
+	<td>link=Media Gallery Permissions Test Page</td>
+	<td>Media Gallery Permissions Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td></td>
+	<td>//a[@title='Media Gallery Permissions Test Folder - ']</td>
+	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Third Permissions Image Test</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//a[@title='Permissions Image 3 Test - ']</td>
+	<td>Permissions Image 3 Test</td>
 </tr>
 
 </tbody></table>

@@ -31,7 +31,7 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"link=Image Gallery Permissions Test Page")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -41,19 +41,20 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Permissions Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Portlet2 Temporary2 Folder2",
-			RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
+			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add Image"),
-			selenium.getText("//div[2]/ul/li[5]/a"));
-		selenium.clickAt("//div[2]/ul/li[5]/a",
-			RuntimeVariables.replace("Add Image"));
-		selenium.waitForPageToLoad("30000");
-		selenium.selectWindow("null");
-		selenium.windowFocus();
+		assertEquals(RuntimeVariables.replace("Add Media"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a",
+			RuntimeVariables.replace("Add Media"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +62,7 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Use the classic uploader.")) {
+				if (selenium.isVisible("//tr[4]/td/a")) {
 					break;
 				}
 			}
@@ -71,7 +72,9 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("link=Use the classic uploader.");
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText("//tr[4]/td/a"));
+		selenium.click("//tr[4]/td/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -79,7 +82,7 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_31_file")) {
+				if (selenium.isVisible("//input[@id='_31_file']")) {
 					break;
 				}
 			}
@@ -89,33 +92,18 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("_31_file",
+		selenium.type("//input[@id='_31_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\permissions\\imagegallery\\portlet\\dependencies\\SA_TestImage.jpg"));
-		selenium.type("_31_name",
-			RuntimeVariables.replace("Portlet2 Temporary2 Image2"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_31_title']",
+			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Your request completed successfully.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -124,7 +112,7 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//img[@alt='Portlet2 Temporary2 Image2 - ']")) {
+							"link=Media Gallery Permissions Test Page")) {
 					break;
 				}
 			}
@@ -134,7 +122,17 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='Portlet2 Temporary2 Image2 - ']"));
+		selenium.clickAt("link=Media Gallery Permissions Test Page",
+			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
+			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
+			RuntimeVariables.replace("Media Gallery Temporary Folder"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Portlet Permissions Image 2 Test Title"),
+			selenium.getText(
+				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
 	}
 }

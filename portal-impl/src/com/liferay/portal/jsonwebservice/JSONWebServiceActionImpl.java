@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -194,6 +195,14 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						list, methodParameters[i].getGenericTypes());
 
 					parameterValue = list;
+				}
+				else if (parameterType.equals(Calendar.class)) {
+					Calendar calendar = Calendar.getInstance();
+
+					calendar.setTimeInMillis(Long.parseLong(value.toString()));
+					calendar.setLenient(false);
+
+					parameterValue = calendar;
 				}
 				else {
 					parameterValue = ReflectUtil.castType(value, parameterType);

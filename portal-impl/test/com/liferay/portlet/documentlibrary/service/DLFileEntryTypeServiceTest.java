@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.events.AddDefaultDocumentLibraryStructuresAction;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -36,6 +38,12 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		SimpleAction action = new AddDefaultDocumentLibraryStructuresAction();
+
+		String companyIdString = String.valueOf(TestPropsValues.getCompanyId());
+
+		action.run(new String[] {companyIdString});
 
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
@@ -64,7 +72,16 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 				_videoDLFileEntryType = dlFileEntryType;
 			}
 		}
+	}
 
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
+	}
+
+	public void testCheckDefaultFileEntryTypes() throws Exception {
 		assertNotNull(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT + " cannot be null",
 			_basicDocumentDLFileEntryType);
@@ -74,13 +91,6 @@ public class DLFileEntryTypeServiceTest extends BaseServiceTestCase {
 		assertNotNull(
 			DLFileEntryTypeConstants.NAME_VIDEO + " cannot be null",
 			_videoDLFileEntryType);
-	}
-
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
 	}
 
 	public void testFileEntryTypeRestrictions() throws Exception {

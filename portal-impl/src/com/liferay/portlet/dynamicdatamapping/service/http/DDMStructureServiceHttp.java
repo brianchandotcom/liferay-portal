@@ -59,7 +59,7 @@ public class DDMStructureServiceHttp {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd, java.lang.String storageType,
+		java.lang.String xsd, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -69,7 +69,7 @@ public class DDMStructureServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, structureKey, nameMap, descriptionMap, xsd,
-					storageType, serviceContext);
+					storageType, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -329,7 +329,7 @@ public class DDMStructureServiceHttp {
 	private static final Class<?>[] _addStructureParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			int.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyStructureParameterTypes1 = new Class[] {
 			long.class, com.liferay.portal.service.ServiceContext.class

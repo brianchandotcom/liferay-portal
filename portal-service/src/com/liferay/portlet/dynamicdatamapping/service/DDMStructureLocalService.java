@@ -256,7 +256,7 @@ public interface DDMStructureLocalService extends PersistedModelLocalService {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd, java.lang.String storageType,
+		java.lang.String xsd, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -367,7 +367,8 @@ public interface DDMStructureLocalService extends PersistedModelLocalService {
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
 		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, boolean andOperator, int start, int end,
+		java.lang.String storageType, int type, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -379,7 +380,7 @@ public interface DDMStructureLocalService extends PersistedModelLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String name,
-		java.lang.String description, java.lang.String storageType,
+		java.lang.String description, java.lang.String storageType, int type,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

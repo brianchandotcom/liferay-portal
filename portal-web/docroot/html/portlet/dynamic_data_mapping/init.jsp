@@ -28,6 +28,7 @@ page import="com.liferay.portlet.dynamicdatamapping.StructureXsdException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.TemplateNameException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.TemplateScriptException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureDisplayTerms" %><%@

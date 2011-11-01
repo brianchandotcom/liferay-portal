@@ -96,6 +96,8 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 
 		newDDMStructure.setStorageType(randomString());
 
+		newDDMStructure.setType(nextInt());
+
 		_persistence.update(newDDMStructure, false);
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
@@ -127,6 +129,7 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingDDMStructure.getXsd(), newDDMStructure.getXsd());
 		assertEquals(existingDDMStructure.getStorageType(),
 			newDDMStructure.getStorageType());
+		assertEquals(existingDDMStructure.getType(), newDDMStructure.getType());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -285,6 +288,8 @@ public class DDMStructurePersistenceTest extends BasePersistenceTestCase {
 		ddmStructure.setXsd(randomString());
 
 		ddmStructure.setStorageType(randomString());
+
+		ddmStructure.setType(nextInt());
 
 		_persistence.update(ddmStructure, false);
 

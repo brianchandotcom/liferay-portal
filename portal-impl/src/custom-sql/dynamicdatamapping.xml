@@ -35,7 +35,7 @@
 				DDMList.listId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT structureId) AS COUNT_VALUE
@@ -49,10 +49,11 @@
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(storageType LIKE ? [$AND_OR_NULL_CHECK$])
-				)
+				) AND
+				(type_ = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
 				{DDMStructure.*}
@@ -66,7 +67,8 @@
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(storageType LIKE ? [$AND_OR_NULL_CHECK$])
-				)
+				) AND
+				(type_ = ?)
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>

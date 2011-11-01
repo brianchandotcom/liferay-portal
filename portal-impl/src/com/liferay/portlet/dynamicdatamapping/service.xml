@@ -83,6 +83,7 @@
 		<column name="description" type="String" localized="true" />
 		<column name="xsd" type="String" />
 		<column name="storageType" type="String" />
+		<column name="type" type="int" />
 
 		<!-- Finder methods -->
 

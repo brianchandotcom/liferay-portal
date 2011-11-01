@@ -127,7 +127,8 @@ create table DDMStructure (
 	name STRING null,
 	description STRING null,
 	xsd TEXT null,
-	storageType VARCHAR(75) null
+	storageType VARCHAR(75) null,
+	type_ INTEGER
 );
 
 create table DDMStructureLink (

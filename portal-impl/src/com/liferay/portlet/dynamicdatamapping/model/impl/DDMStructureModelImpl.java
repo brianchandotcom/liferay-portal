@@ -82,9 +82,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "xsd", Types.CLOB },
-			{ "storageType", Types.VARCHAR }
+			{ "storageType", Types.VARCHAR },
+			{ "type_", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,xsd TEXT null,storageType VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,xsd TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -128,6 +129,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		model.setDescription(soapModel.getDescription());
 		model.setXsd(soapModel.getXsd());
 		model.setStorageType(soapModel.getStorageType());
+		model.setType(soapModel.getType());
 
 		return model;
 	}
@@ -572,6 +574,15 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_storageType = storageType;
 	}
 
+	@JSON
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -620,6 +631,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureImpl.setDescription(getDescription());
 		ddmStructureImpl.setXsd(getXsd());
 		ddmStructureImpl.setStorageType(getStorageType());
+		ddmStructureImpl.setType(getType());
 
 		ddmStructureImpl.resetOriginalValues();
 
@@ -781,12 +793,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			ddmStructureCacheModel.storageType = null;
 		}
 
+		ddmStructureCacheModel.type = getType();
+
 		return ddmStructureCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -816,13 +830,15 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getXsd());
 		sb.append(", storageType=");
 		sb.append(getStorageType());
+		sb.append(", type=");
+		sb.append(getType());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
@@ -884,6 +900,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			"<column><column-name>storageType</column-name><column-value><![CDATA[");
 		sb.append(getStorageType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -919,6 +939,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private String _originalDescription;
 	private String _xsd;
 	private String _storageType;
+	private int _type;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private DDMStructure _escapedModelProxy;

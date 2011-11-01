@@ -30,13 +30,13 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  */
-public class DDMStructureServiceImpl
-	extends DDMStructureServiceBaseImpl {
+public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 	public DDMStructure addStructure(
 			long groupId, long classNameId, String structureKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, String storageType, ServiceContext serviceContext)
+			String xsd, String storageType, int type,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMPermission.check(
@@ -45,7 +45,7 @@ public class DDMStructureServiceImpl
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, storageType, serviceContext);
+			descriptionMap, xsd, storageType, type, serviceContext);
 	}
 
 	public DDMStructure copyStructure(

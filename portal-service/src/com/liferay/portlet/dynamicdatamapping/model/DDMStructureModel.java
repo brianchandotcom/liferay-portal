@@ -457,6 +457,20 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>, GroupedModel
 	 */
 	public void setStorageType(String storageType);
 
+	/**
+	 * Returns the type of this d d m structure.
+	 *
+	 * @return the type of this d d m structure
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this d d m structure.
+	 *
+	 * @param type the type of this d d m structure
+	 */
+	public void setType(int type);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

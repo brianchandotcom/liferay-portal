@@ -282,13 +282,13 @@ public class DDMStructureLocalServiceUtil {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd, java.lang.String storageType,
+		java.lang.String xsd, java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addStructure(userId, groupId, classNameId, structureKey,
-			nameMap, descriptionMap, xsd, storageType, serviceContext);
+			nameMap, descriptionMap, xsd, storageType, type, serviceContext);
 	}
 
 	public static void addStructureResources(
@@ -429,12 +429,14 @@ public class DDMStructureLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
 		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, boolean andOperator, int start, int end,
+		java.lang.String storageType, int type, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .search(companyId, groupIds, classNameIds, name,
-			description, storageType, andOperator, start, end, orderByComparator);
+			description, storageType, type, andOperator, start, end,
+			orderByComparator);
 	}
 
 	public static int searchCount(long companyId, long[] groupIds,
@@ -446,12 +448,12 @@ public class DDMStructureLocalServiceUtil {
 
 	public static int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, java.lang.String name,
-		java.lang.String description, java.lang.String storageType,
+		java.lang.String description, java.lang.String storageType, int type,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, name,
-			description, storageType, andOperator);
+			description, storageType, type, andOperator);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(

@@ -53,7 +53,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 			<p class="float-container">
 				<img alt="<liferay-ui:message key="logo" />" class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(company.getLogoId()) %>" /><br />
 
-				<span class="company-name"><%= company.getName() %></span>
+				<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
 			</p>
 		</div>
 	</liferay-util:buffer>

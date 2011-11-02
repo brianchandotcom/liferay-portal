@@ -17,6 +17,8 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,10 +30,18 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
@@ -143,6 +153,9 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 		updateLayout(layout);
 
+		addResourcePermissions(
+			layout.getCompanyId(), portletId, layout.getPlid());
+
 		return portletId;
 	}
 
@@ -220,5 +233,28 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
+
+    protected void addResourcePermissions(
+			long companyId, String portletId, long plid)
+        throws SystemException, PortalException {
+
+		String resourceName = PortletConstants.getRootPortletId(portletId);
+
+		String primaryKey = PortletPermissionUtil.getPrimaryKey(
+			plid, portletId);
+
+		Role guest = RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST);
+		Role siteMember = RoleLocalServiceUtil.getRole(companyId, RoleConstants.SITE_MEMBER);
+		Role owner = RoleLocalServiceUtil.getRole(companyId, RoleConstants.OWNER);
+
+		long[] roleIds = new long[] {
+			guest.getRoleId(), siteMember.getRoleId(), owner.getRoleId()};
+
+		for (long roleId : roleIds) {
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+				primaryKey, roleId, new String[]{ActionKeys.VIEW});
+		}
+    }
 
 }

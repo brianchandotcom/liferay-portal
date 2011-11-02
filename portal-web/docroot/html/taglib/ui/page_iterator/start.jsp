@@ -361,7 +361,7 @@ private String _getHREF(String formName, String curParam, int cur, String jsCall
 	String href = null;
 
 	if (Validator.isNotNull(url)) {
-		href = url + curParam + "=" + cur + urlAnchor;
+		href = HtmlUtil.escape(url + curParam + "=" + cur + urlAnchor);
 	}
 	else {
 		href = "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;

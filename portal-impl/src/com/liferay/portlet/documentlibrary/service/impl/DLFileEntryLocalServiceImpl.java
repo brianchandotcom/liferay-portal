@@ -1400,6 +1400,17 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
+		// FileVersion
+
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionPersistence.findByFileEntryId(fileEntryId);
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			dlFileVersion.setFolderId(newFolderId);
+
+			dlFileVersionPersistence.update(dlFileVersion, false);
+		}
+
 		// File
 
 		DLStoreUtil.updateFile(

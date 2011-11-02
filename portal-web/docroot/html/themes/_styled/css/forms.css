@@ -88,6 +88,10 @@ fieldset {
 	overflow: hidden;
 }
 
+.aui-text-placeholder {
+	color: #777;
+}
+
 legend {
 	font-weight: bold;
 	padding: 0 6px;

@@ -2,6 +2,7 @@ AUI().add(
 	'liferay-form',
 	function(A) {
 		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+		var PLACEHOLDER_TEXT_CLASS = 'aui-text-placeholder';
 
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
 
@@ -96,6 +97,24 @@ AUI().add(
 
 							instance._bindForm();
 						}
+
+						//if placeholder is not supported
+						instance._supportPlaceholders = A.Object.owns(document.createElement('input'), 'placeholder');
+
+						if (!instance._supportPlaceholders) {
+							var placeHolderInputs = formNode.all('input[placeholder],textarea[placeholder]');
+
+							if (!placeHolderInputs.isEmpty()) {
+								placeHolderInputs.each(
+									function(item, index, collection) {
+										if (!item.val()) {
+											item.addClass(PLACEHOLDER_TEXT_CLASS);
+											item.val(item.attr('placeholder'));
+										}
+									}
+								);
+							}
+						}
 					},
 
 					_bindForm: function() {
@@ -103,6 +122,10 @@ AUI().add(
 
 						var formNode = instance.formNode;
 						var formValidator = instance.formValidator;
+
+						if (!instance._supportPlaceholders) {
+							formValidator.on('submit', instance._removePlaceholdersBeforeSubmit, instance);
+						}
 
 						formValidator.on('submit', instance._onValidatorSubmit, instance);
 
@@ -121,10 +144,28 @@ AUI().add(
 					_onFieldFocusChange: function(event) {
 						var instance = this;
 
-						var row = event.currentTarget.ancestor('.aui-field');
+						var currentTarget = event.currentTarget;
+
+						var row = currentTarget.ancestor('.aui-field');
 
 						if (row) {
 							row.toggleClass('aui-field-focused', (event.type == 'focus'));
+						}
+
+						if (!instance._supportPlaceholders && currentTarget.attr('placeholder')) {
+							if (event.type == 'focus') {
+								if (currentTarget.val() == currentTarget.attr('placeholder')) {
+									currentTarget.val('');
+									currentTarget.removeClass(PLACEHOLDER_TEXT_CLASS);
+
+								}
+							}
+							else if (event.type == 'blur') {
+								if (!currentTarget.val()) {
+									currentTarget.val(currentTarget.attr('placeholder'));
+									currentTarget.addClass(PLACEHOLDER_TEXT_CLASS);
+								}
+							}
 						}
 					},
 
@@ -189,6 +230,23 @@ AUI().add(
 							}
 
 							fieldStrings[validatorName] = errorMessage;
+						}
+					},
+
+					_removePlaceholdersBeforeSubmit: function() {
+						var instance = this;
+
+						var formNode = instance.formNode;
+						var placeHolderInputs = formNode.all('input[placeholder],textarea[placeholder]');
+
+						if (placeHolderInputs.size() > 0) {
+							placeHolderInputs.each(
+								function(item, index, collection) {
+									if (item.val() == item.attr('placeholder')) {
+										item.val('');
+									}
+								}
+							);
 						}
 					}
 				},

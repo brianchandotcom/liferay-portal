@@ -58,6 +58,7 @@ boolean multiple = GetterUtil.getBoolean(String.valueOf(request.getAttribute("au
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:name"));
 java.lang.String onChange = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:onChange"));
 java.lang.String onClick = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:onClick"));
+java.lang.String placeholder = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:placeholder"));
 java.lang.String prefix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:prefix"));
 java.lang.String suffix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:suffix"));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:title"));
@@ -90,6 +91,7 @@ _updateOptions(_options, "multiple", multiple);
 _updateOptions(_options, "name", name);
 _updateOptions(_options, "onChange", onChange);
 _updateOptions(_options, "onClick", onClick);
+_updateOptions(_options, "placeholder", placeholder);
 _updateOptions(_options, "prefix", prefix);
 _updateOptions(_options, "suffix", suffix);
 _updateOptions(_options, "title", title);

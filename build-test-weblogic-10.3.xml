@@ -39,13 +39,7 @@
 			</then>
 		</if>
 
-		<echo file="execute-remote-command.bat">
-			if not exist C:\Java\jdk-1.6.0_23 ${unzip.executable} -oq ${java.jdk.zip} -d C:\Java
-			${setx.executable} /m JAVA_HOME C:\Java\jdk-1.6.0_23
-			if not %PATH:~0,7%==C:\Java ${setx.executable} /m PATH "C:\Java\jdk-1.6.0_23\bin;%PATH%"
-		</echo>
-
-		<antcall target="execute-remote-command" />
+		<antcall target="install-vm-java" />
 
 		<exec executable="${pscp.executable}">
 			<arg line="-pw ${vm.password} ${tstamp.value}\*.jar ${vm.username}@${vm.host}:/oracle/middleware/user_projects/domains/base_domain/lib" />

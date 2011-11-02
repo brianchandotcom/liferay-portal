@@ -1560,7 +1560,7 @@
 	</library>
 	<library>
 		<file-name>portal/daisydiff.jar</file-name>
-		<version>1.0</version>
+		<version>1.2</version>
 		<project-name>DaisyDiff</project-name>
 		<project-url>http://code.google.com/p/daisydiff</project-url>
 		<licenses>

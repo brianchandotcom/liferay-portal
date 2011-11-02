@@ -98,7 +98,6 @@ AUI().add(
 							instance._bindForm();
 						}
 
-						//if placeholder is not supported
 						instance._supportPlaceholders = A.Object.owns(document.createElement('input'), 'placeholder');
 
 						if (!instance._supportPlaceholders) {

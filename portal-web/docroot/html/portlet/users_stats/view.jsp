@@ -75,13 +75,10 @@ if (rankingCounters.size() > 0) {
 			rankingCountersMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingCountersMessage, rankingCounters.get(i)});
 		}
 	}
-
-	String rankingMessage = LanguageUtil.format(pageContext,"ranking-is-based-on-x", rankingCountersMessage);
-
 	%>
 
 	<div class="top-users">
-		<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" /> <%=rankingMessage %>
+		<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext,"ranking-is-based-on-x", rankingCountersMessage) %>
 	</div>
 
 	<c:if test="<%= total > 0 %>">

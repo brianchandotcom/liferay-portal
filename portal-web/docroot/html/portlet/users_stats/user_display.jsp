@@ -69,8 +69,8 @@ if (displayAdditionalCounters) {
 
 <% for (SocialActivityCounter counter : counters.values()) { %>
 
-	<div class="social.counter.<%=counter.getName() %>">
-		<span><liferay-ui:message key='<%="social.counter." + counter.getName() %>' />:</span> <%= counter.getCurrentValue() %>
+	<div class="social.counter.<%= counter.getName() %>">
+		<span><liferay-ui:message key='<%= "social.counter." + counter.getName() %>' />:</span> <%= counter.getCurrentValue() %>
 	</div>
 
 <% }

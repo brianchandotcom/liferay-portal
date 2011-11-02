@@ -45,7 +45,7 @@ for (int i = 0; i < results.size(); i++) {
 %>
 
 <div class="top-users">
-	<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" /> <%=rankingMessage %>
+	<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" />
 </div>
 
 <c:if test="<%= total > 0 %>">

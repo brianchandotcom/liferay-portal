@@ -20,6 +20,8 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/social_activity_admin/view");
+
+Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute("social-activity-setting-mapping");
 %>
 
 <portlet:actionURL var="saveActivitySettingsURL">
@@ -35,31 +37,29 @@ portletURL.setParameter("struts_action", "/social_activity_admin/view");
 		<liferay-ui:message key="enable-social-activity-for" />:
 	</h4>
 
-	<div class="social-activity social-activity-settings" id="<%= renderResponse.getNamespace() %>settings">
-		<div class="social-activity-items">
-		<%
-		Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute("social-activity-setting-mapping");
+	<aui:layout cssClass="social-activity social-activity-settings" id='<%= renderResponse.getNamespace() + "settings" %>'>
+		<aui:column columnWidth="20" cssClass="social-activity-items">
+			<%
+			for (String className : activitySettingsMap.keySet()) {
+				String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
 
-		for (String className : activitySettingsMap.keySet()) {
-			String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
+				boolean enabled = activitySettingsMap.get(className);
+			%>
 
-			boolean enabled = activitySettingsMap.get(className);
-		%>
+				<h4 class="social-activity-item" data-modelName="<%= className %>" title="<liferay-ui:message key="<%= localizedClassName %>" />">
+					<div class="social-activity-item-content">
+						<aui:input inline="<%= true %>" label="" name='<%= className + ".enabled" %>' type="checkbox" value="<%= enabled %>" title="" />
 
-			<h4 class="social-activity-item" data-modelName="<%= className %>">
-				<aui:input inline="<%= true %>" label="" name='<%= className + ".enabled" %>' type="checkbox" value="<%= enabled %>" title="" />
+						<a class="settings-label" href="javascript:;"><liferay-ui:message key="<%= localizedClassName %>" /></a>
+					</div>
+				</h4>
 
-				<a class="settings-label" href="javascript:;"><liferay-ui:message key="<%= localizedClassName %>" /></a>
-			</h4>
-
-		<%
-		}
-		%>
-		</div>
-		<div class="social-activity-item-content">
-
-		</div>
-	</div>
+			<%
+			}
+			%>
+		</aui:column>
+		<aui:column columnWidth="80" cssClass="social-activity-details" />
+	</aui:layout>
 
 	<%
 		String[] strings = new String[activitySettingsMap.size()];
@@ -74,9 +74,9 @@ portletURL.setParameter("struts_action", "/social_activity_admin/view");
 			for (int i=0; i<activityDefinitions.size(); i++) {
 				SocialActivityDefinition activityDefinition = activityDefinitions.get(i);
 
-				String languageKey = "social.activity.admin".concat(modelName.replace("com.liferay.portlet", ""));
+				String languageKey = "social.activity.admin".concat(modelName.replace("com.liferay.portlet", "")) + StringPool.PERIOD + activityDefinition.getLanguageKey();
 
-				activities[i] = activityDefinition.getLanguageKey().concat(": '").concat(LanguageUtil.get(pageContext, languageKey)).concat(StringPool.PERIOD).concat(activityDefinition.getLanguageKey()).concat(StringPool.APOSTROPHE);
+				activities[i] = activityDefinition.getLanguageKey() + ": " + StringPool.APOSTROPHE + LanguageUtil.get(pageContext, languageKey) + StringPool.APOSTROPHE;
 			}
 
 			strings[index] = StringUtil.quote(modelName, StringPool.APOSTROPHE).concat(": {").concat(StringUtil.merge(activities)).concat("}");
@@ -84,18 +84,21 @@ portletURL.setParameter("struts_action", "/social_activity_admin/view");
 			index++;
 		}
 	%>
+
 	<aui:script use="liferay-social-activity-admin">
 		new Liferay.Portlet.SocialActivity.Admin(
 			{
+				counterSettings: {
+					contributionLimitValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES) %>],
+					contributionValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_CONTRIBUTION_VALUES) %>],
+					participationLimitValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES) %>],
+					participationValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_PARTICIPATION_VALUES) %>]
+				},
 				namespace: '<portlet:namespace />',
 				portletId: '<%= portletDisplay.getId() %>',
-				counterSettings: {
-					participationLimitValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES) %>],
-					participationValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_PARTICIPATION_VALUES) %>],
-					contributionLimitValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES) %>],
-					contributionValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_CONTRIBUTION_VALUES) %>]
-				},
-				strings: {<%=StringUtil.merge(strings) %>}
+				strings: {
+					<%= StringUtil.merge(strings) %>
+				}
 			}
 		);
 	</aui:script>

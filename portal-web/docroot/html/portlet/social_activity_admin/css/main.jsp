@@ -22,17 +22,9 @@
 }
 
 .social-activity-items {
-	float: left;
-	width: 220px;
-
 	h4 {
 		font-size: 1.1em;
 		margin-bottom: 0px;
-
-		.field-input-choice {
-			margin-right: 0.7em;
-			margin-top: 0.2em;
-		}
 	}
 
 	.aui-field-choice {
@@ -44,13 +36,15 @@
 		padding: 6px 0px 6px 3px;
 		position: relative;
 
+		.social-activity-item-content {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
 		a {
 			color: #000;
 			text-decoration:none;
-		}
-
-		.settings-label {
-			padding: 7px 12px;
 		}
 	}
 
@@ -62,168 +56,143 @@
 		background-color: #83BFFA;
 	}
 
-	.social-activity-item.selected a:after {
-		border: 15px solid #83BFFA;
+	.social-activity-item.selected:after {
+		border: 14px solid #83BFFA;
 		border-color: transparent transparent transparent #83BFFA;
-		content: "";
+		content: '';
 		display: block;
-		margin-top: -15px;
+		left: 100%;
+		margin-top: -14px;
 		position: absolute;
-		right: -30px;
 		top: 50%;
 		z-index: 2;
 	}
 }
 
-.social-activity-item-content {
-	float: left;
-	width: 80%;
+.social-activity-details {
+	.aui-settings-display .aui-settings-display-content {
+		background-color: #FFF;
+		border: 1px solid #CCC;
+		margin: 0px 15px 5px 0px;
+		padding: 0px 15px;
 
-	.settings-container {
-		.aui-settings-container-content {
-			background-color: #FFF;
-			border: 1px solid #CCC;
-			margin: 0px 15px 5px 0px;
-			padding: 0px 15px;
+		.aui-settings-field {
+			font-weight: bold;
+			list-style: none;
 
-			.aui-settings-field {
-				font-weight: bold;
-				list-style: none;
+			.aui-settings-field-content {
+				position: relative;
 
-				.aui-settings-field-content {
-					.field-values {
-						display: inline-block;
-						width: 750px;
-					}
-
-					select {
-						margin: 0px 4px;
-						padding: 3px;
-					}
-				}
-
-				.field-text {
-					font-weight: normal;
+				select {
+					margin: 0px 4px;
+					padding: 3px;
 				}
 			}
 
-			.container-drop-box {
-				margin: 0;
-				min-height: 130px;
-
-				.content-field {
-					border-bottom: 1px solid #ccc;
-					padding: 8px 10px;
-				}
+			.field-text {
+				font-weight: normal;
+				margin-bottom: 3px;
 			}
 
-			.settings-button-holder {
-				padding: 5px 10px;
+			.field-contribution-text {
+				color: #333;
+				display: block;
+				font-size: 0.95em;
+				margin-top: 3px;
 			}
 
-			.settings-header-holder {
+			.settings-controls {
+				display: none;
+			}
+		}
+		.container-drop-box {
+			margin: 0;
+			min-height: 130px;
+
+			.content-field {
 				border-bottom: 1px solid #ccc;
+				padding: 8px 0 8px 10px;
 
-				.complementary-element {
-					float: left;
-					font-weight: bold;
-					list-style: none;
-
-					div {
-						padding: 10px 0;
-					}
+				.settings-controls {
+					display: block;
 				}
 
-				.settings-header {
-					display: inline-block;
-					height: 36px;
-					margin: 0px;
-
-					.action-field {
-						-moz-border-radius: 5px;
-						-webkit-border-radius: 5px;
-						background-color: #D9D9D9;
-						border-radius: 5px;
-						cursor: pointer;
-						float: left;
-						margin: 5px;
-						padding: 5px 5px;
-					}
-				}
-
-				.settings-header-label {
-					float: left;
-					font-weight: bold;
-					padding: 10px;
-				}
-			}
-
-			.settings-field-buttons {
-				display: inline-block;
-				height: 5px;
-
-				.settings-button {
-					float: left;
-				}
-
-				.settings-icon-minimize {
-					background-image: url(<%= themeImagesPath %>/portlet/minimize.png);
-					background-repeat: no-repeat;
-					clip: rect(0pt, 0pt, 0pt, 0pt);
-					height: 16px;
-					margin-top: -8px;
-					padding: 0;
-					right: 0;
-					width: 16px;
-				}
-
-				.settings-icon-close {
-					background-image: url(<%= themeImagesPath %>/portlet/close.png);
-					background-repeat: no-repeat;
-					clip: rect(0pt, 0pt, 0pt, 0pt);
-					height: 16px;
-					margin-top: -8px;
-					padding: 0;
-					right: 0;
-					width: 16px;
-				}
-
-				.settings-icon-maximize {
-					background-image: url(<%= themeImagesPath %>/portlet/maximize.png);
-					background-repeat: no-repeat;
-					clip: rect(0pt, 0pt, 0pt, 0pt);
-					height: 16px;
-					margin-top: -8px;
-					padding: 0;
-					right: 0;
-					width: 16px;
-				}
-			}
-
-			.settings-limit {
-				margin-left: 170px;
-				margin-top: 5px;
-
-				.settings-limit-field {
-					font-weight: normal;
-					list-style: none;
-
-					td {
-						padding: 1px;
-					}
-
-					.field-text {
-						display: table-cell;
-					}
+				.settings-label {
+					display: block;
+					margin-bottom: 0.5em;
 				}
 			}
 		}
 
-		.settings-label {
+		.aui-button-row {
+			padding: 5px 0;
+		}
+
+		.settings-header {
+			border-bottom: 1px solid #ccc;
+			padding: 10px 0;
+
+			.actions-conjunction {
+				display: inline-block;
+				font-weight: bold;
+				list-style: none;
+				padding: 10px 5px;
+			}
+
+			.settings-actions {
+				display: inline-block;
+				margin: 0px;
+			}
+
+			.settings-header-label {
+				display: inline-block;
+				font-weight: bold;
+				padding: 0 5px;
+			}
+		}
+
+		.settings-field-buttons {
 			display: inline-block;
-			padding-right: 3px;
-			text-align: right;
-			width: 190px;
+			position: absolute;
+			right: 0;
+			top: 0;
+
+			.settings-button {
+				float: left;
+			}
+
+			.settings-icon {
+				background: none no-repeat 0 50%;
+				display: block;
+				height: 16px;
+				padding: 0;
+				right: 0;
+				width: 16px;
+			}
+
+			.settings-icon-close {
+				background-image: url(<%= themeImagesPath %>/portlet/close.png);
+			}
+
+			.settings-icon-toggle {
+				background-image: url(<%= themeImagesPath %>/arrows/05_right.png);
+				font-size: 0.9em;
+				font-weight: normal;
+				padding: 0 16px 0 12px;
+				width: auto;
+			}
+
+			.settings-icon-expanded {
+				background-image: url(<%= themeImagesPath %>/arrows/05_down.png);
+			}
+		}
+
+		.settings-limit {
+			margin-left: 12px;
+
+			.settings-limit-row {
+				margin: 5px 0;
+			}
 		}
 	}
 }

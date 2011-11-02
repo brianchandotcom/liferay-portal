@@ -37,7 +37,7 @@ counters.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENT);
 				}
 		%>
 
-			<aui:option label='<%="social.counter."+ counter %>' selected="<%=counter.equals(value) %>" value="<%=counter %>" />
+			<aui:option label='<%= "social.counter."+ counter %>' selected="<%= counter.equals(value) %>" value="<%= counter %>" />
 
 		<%
 			}

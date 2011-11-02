@@ -522,6 +522,13 @@
 				<description></description>
 			</attribute>
 			<attribute>
+				<name>placeholder</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue></defaultValue>
+				<description></description>
+			</attribute>
+			<attribute>
 				<name>prefix</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

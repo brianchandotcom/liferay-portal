@@ -65,6 +65,10 @@ public class InputFieldTag extends IncludeTag {
 		_model = model;
 	}
 
+	public void setPlaceholder(String placeholder) {
+		_placeholder = placeholder;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_bean = null;
@@ -77,6 +81,7 @@ public class InputFieldTag extends IncludeTag {
 		_formName = "fm";
 		_languageId = null;
 		_model = null;
+		_placeholder = null;
 	}
 
 	@Override
@@ -98,6 +103,8 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-field:formName", _formName);
 		request.setAttribute("liferay-ui:input-field:languageId", _languageId);
 		request.setAttribute("liferay-ui:input-field:model", _model.getName());
+		request.setAttribute(
+			"liferay-ui:input-field:placeholder", _placeholder);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_field/page.jsp";
@@ -112,5 +119,6 @@ public class InputFieldTag extends IncludeTag {
 	private String _formName = "fm";
 	private String _languageId;
 	private Class<?> _model;
+	private String _placeholder;
 
 }

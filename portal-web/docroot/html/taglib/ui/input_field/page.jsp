@@ -27,6 +27,7 @@ String fieldParam = GetterUtil.getString((String)request.getAttribute("liferay-u
 Object defaultValue = request.getAttribute("liferay-ui:input-field:defaultValue");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:disabled"));
 Format format = (Format)request.getAttribute("liferay-ui:input-field:format");
+String placeholder = (String)request.getAttribute("liferay-ui:input-field:placeholder");
 
 String type = ModelHintsUtil.getType(model, field);
 Map<String, String> hints = ModelHintsUtil.getHints(model, field);
@@ -371,7 +372,7 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 							<liferay-ui:input-localized cssClass='<%= cssClass + " lfr-input-text" %>' disabled="<%= disabled %>" formName="<%= formName %>" languageId="<%= languageId %>" name="<%= fieldParam %>" style='<%= "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") + "; " + (upperCase ? "text-transform: uppercase;" : "" ) %>' xml="<%= BeanPropertiesUtil.getString(bean, field) %>" />
 						</c:when>
 						<c:otherwise>
-							<input <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-input-text\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= fieldParam %>" name="<%= namespace %><%= fieldParam %>" style="max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>; <%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
+							<input <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-input-text\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= fieldParam %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>; <%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -381,7 +382,7 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 							<liferay-ui:input-localized cssClass='<%= cssClass + " lfr-input-text" %>' disabled="<%= disabled %>" formName="<%= formName %>" languageId="<%= languageId %>" name="<%= fieldParam %>" onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>' style='<%= "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : "" ) + "; " + "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") +";" %>' type="textarea" wrap="soft" xml="<%= BeanPropertiesUtil.getString(bean, field) %>" />
 						</c:when>
 						<c:otherwise>
-							<textarea <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-textarea\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= fieldParam %>" name="<%= namespace %><%= fieldParam %>" style="height: <%= displayHeight %><%= Validator.isDigit(displayHeight) ? "px" : "" %>; max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + " lfr-textarea\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= fieldParam %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="height: <%= displayHeight %><%= Validator.isDigit(displayHeight) ? "px" : "" %>; max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

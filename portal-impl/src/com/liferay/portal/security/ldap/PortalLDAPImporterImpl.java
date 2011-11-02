@@ -443,8 +443,6 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			long companyId, LDAPUser ldapUser, String password)
 		throws Exception {
 
-		User user = null;
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Adding user " + ldapUser.getEmailAddress());
 		}
@@ -476,7 +474,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
 
-		user =  UserLocalServiceUtil.addUser(
+		User user =  UserLocalServiceUtil.addUser(
 			ldapUser.getCreatorUserId(), companyId, autoPassword, password,
 			password, ldapUser.isAutoScreenName(), ldapUser.getScreenName(),
 			ldapUser.getEmailAddress(), 0, StringPool.BLANK,
@@ -488,11 +486,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ldapUser.getUserGroupIds(), ldapUser.isSendEmail(),
 			ldapUser.getServiceContext());
 
-		if (ldapUser.isUpdatePortrait()) {
-			if (Validator.isNotNull(ldapUser.getPortraitBytes())) {
+		if (ldapUser.isUpdatePortrait() &&
+			Validator.isNotNull(ldapUser.getPortraitBytes())) {
 				UserLocalServiceUtil.updatePortrait(
 					user.getUserId(), ldapUser.getPortraitBytes());
-			}
 		}
 
 		return user;

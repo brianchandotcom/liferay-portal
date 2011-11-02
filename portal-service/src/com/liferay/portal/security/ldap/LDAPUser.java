@@ -123,6 +123,10 @@ public class LDAPUser {
 		return _organizationIds;
 	}
 
+	public byte[] getPortraitBytes() {
+		return _portraitBytes;
+	}
+
 	public int getPrefixId() {
 		return _contact.getPrefixId();
 	}
@@ -213,10 +217,6 @@ public class LDAPUser {
 
 	public boolean isUpdatePassword() {
 		return _updatePassword;
-	}
-
-	public byte[] getPortraitBytes() {
-		return _portraitBytes;
 	}
 
 	public boolean isUpdatePortrait() {
@@ -329,6 +329,10 @@ public class LDAPUser {
 		_passwordReset = passwordReset;
 	}
 
+	public void setPortraitBytes(byte[] portraitBytes) {
+		_portraitBytes = portraitBytes;
+	}
+
 	public void setPrefixId(int prefixId) {
 		_contact.setPrefixId(prefixId);
 	}
@@ -381,6 +385,10 @@ public class LDAPUser {
 		_updatePassword = updatePassword;
 	}
 
+	public void setUpdatePortrait(boolean updatePortrait) {
+		_updatePortrait = updatePortrait;
+	}
+
 	public void setUser(User user) {
 		_user = user;
 	}
@@ -403,14 +411,6 @@ public class LDAPUser {
 		_contact.setYmSn(ymSn);
 	}
 
-	public void setPortraitBytes(byte[] portraitBytes) {
-		_portraitBytes = portraitBytes;
-	}
-
-	public void setUpdatePortrait(boolean updatePortrait) {
-		_updatePortrait = updatePortrait;
-	}
-
 	private boolean _autoPassword;
 	private boolean _autoScreenName;
 	private Contact _contact;
@@ -419,15 +419,15 @@ public class LDAPUser {
 	private long[] _groupIds;
 	private long[] _organizationIds;
 	private boolean _passwordReset;
+	private byte[] _portraitBytes;
 	private long[] _roleIds;
 	private boolean _sendEmail;
 	private ServiceContext _serviceContext;
 	private boolean _updatePassword;
+	private boolean _updatePortrait;
 	private User _user;
 	private Map<String, String> _userExpandoAttributes;
 	private long[] _userGroupIds;
 	private List<UserGroupRole> _userGroupRoles;
-	private byte[] _portraitBytes;
-	private boolean _updatePortrait;
 
 }

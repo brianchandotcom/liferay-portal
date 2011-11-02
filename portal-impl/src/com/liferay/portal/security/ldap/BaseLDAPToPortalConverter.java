@@ -215,10 +215,10 @@ public class BaseLDAPToPortalConverter implements LDAPToPortalConverter {
 			defaultPortrait);
 
 		if (defaultPortrait.equals(portrait)) {
-			ldapUser.setUpdatePortrait(false);
+			ldapUser.setUpdatePortrait(Boolean.FALSE);
 		}
 		else {
-			ldapUser.setUpdatePortrait(true);
+			ldapUser.setUpdatePortrait(Boolean.TRUE);
 
 			if (Validator.isNotNull(portrait)) {
 				ldapUser.setPortraitBytes((byte[])portrait);

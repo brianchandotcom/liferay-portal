@@ -353,9 +353,7 @@ public class BasePortalToLDAPConverter implements PortalToLDAPConverter {
 	protected void addAttributeMapping(
 		String attributeName, Object attributeValue, Attributes attributes) {
 
-		if (Validator.isNotNull(attributeName) &&
-			Validator.isNotNull(attributeValue)) {
-
+		if (Validator.isNotNull(attributeName) && attributeValue != null) {
 			attributes.put(attributeName, attributeValue);
 		}
 	}
@@ -433,6 +431,10 @@ public class BasePortalToLDAPConverter implements PortalToLDAPConverter {
 				}
 			}
 			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to get the portrait for user " +
+						user.getUserId(), e);
+				}
 			}
 		}
 

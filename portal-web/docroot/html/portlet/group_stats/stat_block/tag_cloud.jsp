@@ -36,32 +36,44 @@ if (maxValue != minValue) {
 	multiplier = (double)5 / (maxValue - minValue);
 }
 %>
-<ul class="tag-items tag-cloud">
-<%
-for (int i=0; i < tags.size(); i++) {
-	AssetTag tag = tags.get(i);
 
-	int popularity = (int)(1 + ((maxValue - (maxValue - (tag.getAssetCount() - minValue))) * multiplier));
-%>
-	<li class="tag-popularity-<%=popularity %>">
-		<span>
-			<%
-				if (tag.getName().equals(selectedTag)) {
-					portletURL.setParameter("tag", "");
-			%>
-				<a class="tag-selected" href="<%=portletURL %>">
-			<%
-				}
-				else {
-					portletURL.setParameter("tag", tag.getName());
-			%>
-				<a href="<%=portletURL %>">
-			<%
-				}
-			%>
-			<strong><%=tag.getName() %></strong></a></span>
-	</li>
-<%
-}
-%>
-</ul><br style="clear: both;" />
+<ul class="tag-items tag-cloud">
+
+	<%
+	for (int i=0; i < tags.size(); i++) {
+		AssetTag tag = tags.get(i);
+
+		int popularity = (int)(1 + ((maxValue - (maxValue - (tag.getAssetCount() - minValue))) * multiplier));
+	%>
+
+		<li class="tag-popularity-<%=popularity %>">
+			<span>
+
+				<%
+					if (tag.getName().equals(selectedTag)) {
+						portletURL.setParameter("tag", "");
+				%>
+
+					<a class="tag-selected" href="<%=portletURL %>">
+
+				<%
+					}
+					else {
+						portletURL.setParameter("tag", tag.getName());
+				%>
+
+					<a href="<%=portletURL %>">
+
+				<%
+					}
+				%>
+
+				<strong><%=tag.getName() %></strong></a>
+			</span>
+		</li>
+
+	<%
+	}
+	%>
+
+</ul>

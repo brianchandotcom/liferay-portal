@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/group_stats/init.jsp" %>
 
 <%
-
 for (int displayCounterIndex : displayCounterIndexes) {
 	String counter = PrefsParamUtil.getString(preferences, request, "displayCounter" + displayCounterIndex);
 	String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + displayCounterIndex, "area");
@@ -63,8 +62,6 @@ for (int displayCounterIndex : displayCounterIndexes) {
 
 	request.setAttribute("group-statistics:counters", stats);
 
-
-
 	int infoBlockHeight = 0;
 
 	if (chartType.equals("pie")) {
@@ -80,21 +77,26 @@ for (int displayCounterIndex : displayCounterIndexes) {
 
 <div class="group-stats-container">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="<%=title %>">
+
 	<div class="group-stats-body" style="height: <%=infoBlockHeight %>px;">
 		<c:choose>
 			<c:when test='<%=chartType.equals("tagCloud") %>'>
 				<liferay-util:include page="/html/portlet/group_stats/stat_block/tag_cloud.jsp" />
 			</c:when>
+
 			<c:when test='<%=chartType.equals("pie") %>'>
 				<liferay-util:include page="/html/portlet/group_stats/stat_block/activity_distribution.jsp" />
 			</c:when>
+
 			<c:otherwise>
 				<liferay-util:include page="/html/portlet/group_stats/stat_block/counter_chart.jsp" />
 			</c:otherwise>
 		</c:choose>
 	</div>
+
 	</liferay-ui:panel>
 </div>
+
 <%
 }
 %>

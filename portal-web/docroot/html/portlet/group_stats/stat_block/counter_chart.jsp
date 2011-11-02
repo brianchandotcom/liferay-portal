@@ -64,45 +64,57 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 
 <aui:layout>
 	<aui:column columnWidth="70" first="<%= true %>">
-		<div class="group-stats-chart" id="groupStatsChart<%=counterIndex %>" style="height: <%=infoBlockHeight - 2 %>px;"></div>
+		<div class="group-stats-chart" id="groupStatsChart<%= counterIndex %>" style="height: <%= infoBlockHeight - 2 %>px;"></div>
 	</aui:column>
+
 	<aui:column columnWidth="30">
 		<div class="group-stats-info">
-			<liferay-ui:message key="current-value" />: <%=currentValue %><br />
-			<liferay-ui:message key="average-activity-per-day" />: <%=Math.round(total / totalDays * 100) / 100 %><br />
-			<liferay-ui:message key="highest-activity-period" />: <span class="group-stats-activity-period"><strong>
-				<%=df.format(SocialCounterPeriodUtil.getDate(highestActivity.getStartPeriod())) %>
-					-
-				<c:if test="<%=highestActivity.getEndPeriod() != -1 %>">
-					<%=df.format(SocialCounterPeriodUtil.getDate(highestActivity.getEndPeriod())) %>
-				</c:if>
-				<c:if test="<%=highestActivity.getEndPeriod() == -1 %>">
-					<%=df.format(new Date()) %>
-				</c:if>
+			<liferay-ui:message key="current-value" />: <%= currentValue %><br />
+
+			<liferay-ui:message key="average-activity-per-day" />: <%= Math.round(total / totalDays * 100) / 100 %><br />
+
+			<liferay-ui:message key="highest-activity-period" />: <span class="group-stats-activity-period">
+				<strong>
+					<%= df.format(SocialCounterPeriodUtil.getDate(highestActivity.getStartPeriod())) %>
+						-
+					<c:if test="<%= highestActivity.getEndPeriod() != -1 %>">
+						<%= df.format(SocialCounterPeriodUtil.getDate(highestActivity.getEndPeriod())) %>
+					</c:if>
+
+					<c:if test="<%= highestActivity.getEndPeriod() == -1 %>">
+						<%= df.format(new Date()) %>
+					</c:if>
 				</strong>
-			</span> (<%=highestActivity.getCurrentValue() %>)<br />
-			<liferay-ui:message key="lowest-activity-period" />: <span class="group-stats-activity-period"><strong>
-				<%=df.format(SocialCounterPeriodUtil.getDate(lowestActivity.getStartPeriod())) %>
-					-
-				<c:if test="<%=lowestActivity.getEndPeriod() != -1 %>">
-					<%=df.format(SocialCounterPeriodUtil.getDate(lowestActivity.getEndPeriod())) %>
-				</c:if>
-				<c:if test="<%=lowestActivity.getEndPeriod() == -1 %>">
-					<%=df.format(new Date()) %>
-				</c:if>
+			</span>
+
+			(<%= highestActivity.getCurrentValue() %>)<br />
+
+			<liferay-ui:message key="lowest-activity-period" />: <span class="group-stats-activity-period">
+				<strong>
+					<%= df.format(SocialCounterPeriodUtil.getDate(lowestActivity.getStartPeriod())) %>
+						-
+					<c:if test="<%= lowestActivity.getEndPeriod() != -1 %>">
+						<%= df.format(SocialCounterPeriodUtil.getDate(lowestActivity.getEndPeriod())) %>
+					</c:if>
+
+					<c:if test="<%= lowestActivity.getEndPeriod() == -1 %>">
+						<%= df.format(new Date()) %>
+					</c:if>
 				</strong>
-			</span> (<%=lowestActivity.getCurrentValue() %>)<br />
+			</span>
+
+			(<%= lowestActivity.getCurrentValue() %>)<br />
 		</div>
 	</aui:column>
 </aui:layout>
 
 <aui:script use="charts">
-	var categories = [<%=StringUtil.merge(categories) %>];
-	var values = [<%=StringUtil.merge(values) %>];
+	var categories = [<%= StringUtil.merge(categories) %>];
+	var values = [<%= StringUtil.merge(values) %>];
 
 	var data = [];
 
-	for(var i = 0, len = categories.length; i < len; i++) {
+	for(var i = 0; i < categories.length; i++) {
 		data.push(
 			{
 				category: categories[i],
@@ -112,20 +124,21 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 	}
 
 	var tooltip = {
+		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
+			return valueItem.value;
+		},
+
 		styles: {
 			backgroundColor: '#FFF',
 			borderColor: '#4572A7',
-			color: "#000",
 			borderWidth: 2,
+			color: "#000",
 			textAlign: 'center'
-		},
-		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
-			return valueItem.value;
 		}
 	};
 
 	<c:choose>
-		<c:when test='<%=chartType.equals("area") %>'>
+		<c:when test='<%= chartType.equals("area") %>'>
 			var chartType = 'combo';
 
 			var customConfig = {
@@ -135,15 +148,15 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 					series: {
 						values: {
 							area: {
-								color: "#FFB700"
+								color: '#FFB700'
 							},
 							line: {
-								color: "#000000",
+								color: '#000000',
 								weight: 2
 							},
 							marker: {
 								fill: {
-									color: "#00f"
+									color: '#00f'
 								},
 								height: 6
 							}
@@ -153,7 +166,8 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 			};
 		</c:when>
 		<c:otherwise>
-			var chartType = '<%=chartType %>';
+			var chartType = '<%= chartType %>';
+
 			var customConfig = {};
 		</c:otherwise>
 	</c:choose>
@@ -178,13 +192,11 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 		},
 		dataProvider: data,
 		horizontalGridlines: true,
-		render: '#groupStatsChart<%=counterIndex %>',
 		tooltip: tooltip,
 		type: chartType
 	};
 
 	A.mix(defaultConfig, customConfig);
 
-	var chart = new A.Chart(defaultConfig);
-
+	var chart = new A.Chart(defaultConfig).render('#groupStatsChart<%= counterIndex %>');
 </aui:script>

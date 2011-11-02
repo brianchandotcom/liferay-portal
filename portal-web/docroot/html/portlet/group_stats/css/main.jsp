@@ -17,22 +17,6 @@
 <%@ include file="/html/portlet/css_init.jsp" %>
 
 .portlet-group-stats {
-	.group-stats-header {
-		background-color: #202020;
-		font-size: 1.1em;
-		font-weight: bold;
-		height: 26px;
-		position: relative;
-	}
-
-	.group-stats-title {
-		color: orange;
-		float: none;
-		margin: 0;
-		min-width: 50%;
-		padding: 5px;
-	}
-
 	.group-stats-body {
 		border-collapse: collapse;
 		border-spacing: 0;
@@ -47,7 +31,8 @@
 	}
 
 	.group-stats-info {
-		padding: 10px 0 10px 10px;
+		padding: 10px;
+		padding-right: 0;
 
 		table {
 			margin-left: 10px;
@@ -65,7 +50,7 @@
 	}
 
 	.aui-field-row .inline-text {
-		margin: 1px 3px 0px 0px;
+		margin: 1px 3px 0 0;
 		padding: 1px;
 	}
 }

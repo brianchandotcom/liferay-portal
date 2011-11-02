@@ -33,29 +33,43 @@ String labelArg = LanguageUtil.format(pageContext, "assets", StringPool.BLANK);
 %>
 
 <div class="aui-field-row">
-	<span class="aui-field aui-field-inline inline-text"><liferay-ui:message key="show" /></span>
+	<span class="aui-field aui-field-inline inline-text">
+		<liferay-ui:message key="show" />
+	</span>
+
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayCounter" + index + "--" %>'>
+
 		<%
 			for (String counter : counters) {
 				if (counter.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) || counter.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
 					continue;
 				}
 		%>
-		<aui:option label='<%=LanguageUtil.format(pageContext, "social.counter."+ counter, new Object[] {labelArg}) %>' selected="<%=counter.equals(selectedCounter) %>" value="<%=counter %>" />
+
+		<aui:option label='<%= LanguageUtil.format(pageContext, "social.counter."+ counter, new Object[] {labelArg}) %>' selected="<%= counter.equals(selectedCounter) %>" value="<%= counter %>" />
+
 		<%
 			}
 		%>
 	</aui:select>
-	<span class="aui-field aui-field-inline inline-text"><liferay-ui:message key="as" /></span>
+
+	<span class="aui-field aui-field-inline inline-text">
+		<liferay-ui:message key="as" />
+	</span>
+
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>'>
-		<aui:option label='area-diagram' selected='<%="area".equals(selectedChartType) %>' value='area' />
-		<aui:option label='column-diagram' selected='<%="column".equals(selectedChartType) %>' value='column' />
-		<aui:option label='activity-distribution' selected='<%="pie".equals(selectedChartType) %>' value='pie' />
-		<aui:option label='tag-cloud' selected='<%="tagCloud".equals(selectedChartType) %>' value='tagCloud' />
+		<aui:option label="area-diagram" selected='<%= "area".equals(selectedChartType) %>' value="area" />
+		<aui:option label="column-diagram" selected='<%= "column".equals(selectedChartType) %>' value="column" />
+		<aui:option label="activity-distribution" selected='<%= "pie".equals(selectedChartType) %>' value="pie" />
+		<aui:option label="tag-cloud" selected='<%= "tagCloud".equals(selectedChartType) %>' value="tagCloud" />
 	</aui:select>
-	<span class="aui-field aui-field-inline inline-text"><liferay-ui:message key="in" /></span>
+
+	<span class="aui-field aui-field-inline inline-text">
+		<liferay-ui:message key="in" />
+	</span>
+
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>'>
-		<aui:option label='this-year' selected='<%="year".equals(selectedDataRange) %>' value='year' />
-		<aui:option label='last-12-months' selected='<%="12months".equals(selectedDataRange) %>' value='12months' />
+		<aui:option label="this-year" selected='<%= "year".equals(selectedDataRange) %>' value="year" />
+		<aui:option label="last-12-months" selected='<%= "12months".equals(selectedDataRange) %>' value="12months" />
 	</aui:select>
 </div>

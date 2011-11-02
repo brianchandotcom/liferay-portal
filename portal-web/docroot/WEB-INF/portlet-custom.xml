@@ -2706,7 +2706,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>200</portlet-name>
-		<display-name>Users statistics</display-name>
+		<display-name>Users Statistics</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>view-jsp</name>
@@ -2751,7 +2751,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>201</portlet-name>
-		<display-name>Group statistics</display-name>
+		<display-name>Group Statistics</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>view-jsp</name>

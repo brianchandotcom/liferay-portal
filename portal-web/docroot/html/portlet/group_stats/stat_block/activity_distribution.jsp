@@ -42,42 +42,57 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 
 <aui:layout>
 	<aui:column columnWidth="70">
-		<div class="group-stats-chart" style="height: <%=infoBlockHeight - 2 %>px;">
-			<div id="groupStatsChart<%=counterIndex %>"></div>
+		<div class="group-stats-chart" style="height: <%= infoBlockHeight - 2 %>px;">
+			<div id="groupStatsChart<%= counterIndex %>"></div>
 		</div>
 	</aui:column>
+
 	<aui:column columnWidth="30">
 		<div class="group-stats-info">
 			<strong><liferay-ui:message key="activities-by-area" />:</strong>
+
 			<table>
+
 			<%
-				for (int i=0; i<counters.size(); i++) {
+				for (int i=0; i < counters.size(); i++) {
 					String model = "model.resource." + PortalUtil.getClassName(counters.get(i).getClassNameId());
 					double percentage = 0;
-					
+
 					if (total > 0) {
 						percentage = (double)counters.get(i).getCurrentValue() / (double)total;
 					}
 			%>
+
 				<tr>
-					<td><div class="group-stats-color-marker" style="background-color: <%=colors[i % colors.length] %>"></div></td>
-					<td><liferay-ui:message key="<%=model %>" /></td>
+					<td>
+						<div class="group-stats-color-marker" style="background-color: <%= colors[i % colors.length] %>"></div>
+					</td>
+
+					<td>
+						<liferay-ui:message key="<%= model %>" />
+					</td>
+
 					<td>:</td>
-					<td align="right"><%=formatter.format(percentage) %></td>
+
+					<td align="right">
+						<%= formatter.format(percentage) %>
+					</td>
 				</tr>
 
 			<% } %>
+
 			</table>
 		</div>
 	</aui:column>
 </aui:layout>
+
 <aui:script use="charts">
-	var categories = [<%=StringUtil.merge(categories) %>];
-	var values = [<%=StringUtil.merge(values) %>];
+	var categories = [<%= StringUtil.merge(categories) %>];
+	var values = [<%= StringUtil.merge(values) %>];
 
 	var data = [];
 
-	for(var i = 0, len = categories.length; i < len; i++) {
+	for(var i = 0; i < categories.length; i++) {
 		data.push(
 			{
 				category: categories[i],
@@ -87,38 +102,38 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 	}
 
 	var tooltip = {
+		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
+			return valueItem.value;
+		},
+
 		styles: {
 			backgroundColor: '#FFF',
 			borderColor: '#4572A7',
-			color: "#000",
 			borderWidth: 2,
+			color: "#000",
 			textAlign: 'center'
-		},
-		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
-			return valueItem.value;
 		}
 	};
 
-	var charContainer = A.one('#groupStatsChart<%=counterIndex %>');
+	var chartContainer = A.one('#groupStatsChart<%= counterIndex %>');
 
-	charContainer.setStyles(
+	chartContainer.setStyles(
 		{
-			height: '<%=infoBlockHeight - 2 %>',
+			height: <%= infoBlockHeight - 2 %>,
 			margin: 'auto',
-			width: '<%=infoBlockHeight - 2 %>'
+			width: <%= infoBlockHeight - 2 %>
 		}
 	);
 
 	var chart = new A.Chart(
 		{
 			dataProvider: data,
-			render: charContainer,
-			seriesCollection:[
+			seriesCollection: [
 				{
 					categoryKey: 'category',
 					styles: {
 						fill: {
-							colors: ['<%=StringUtil.merge(colors, "', '") %>']
+							colors: ['<%= StringUtil.merge(colors, "', '") %>']
 						}
 					},
 					valueKey: 'values'
@@ -127,5 +142,5 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 			tooltip: tooltip,
 			type: 'pie'
 		}
-	);
+	).render(chartContainer);
 </aui:script>

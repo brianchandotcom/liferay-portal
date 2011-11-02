@@ -209,7 +209,6 @@ public class EditLayoutSetAction extends EditLayoutsAction {
                 inputStream = new ByteArrayFileInputStream(file, 1024);
             }
 
-
             if (inputStream != null) {
 				inputStream.mark(0);
 			}

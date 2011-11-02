@@ -83,6 +83,8 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static final boolean _FILTER_SEARCH = false;
 
+	private static final boolean _INDEXER_ENABLED = true;
+
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			SearchEngineUtil.deleteDocument(companyId, uid);
@@ -245,6 +247,10 @@ public abstract class BaseIndexer implements Indexer {
 		return _FILTER_SEARCH;
 	}
 
+	public boolean isIndexerEnabled() {
+		return _INDEXER_ENABLED;
+	}
+
 	public boolean isStagingAware() {
 		return _stagingAware;
 	}
@@ -273,7 +279,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	public void reindex(Object obj) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
 				return;
 			}
 
@@ -289,7 +295,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
 				return;
 			}
 
@@ -310,7 +316,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	public void reindex(String[] ids) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
 				return;
 			}
 

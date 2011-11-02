@@ -4374,8 +4374,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			portraitId = counterLocalService.increment();
 
 			user.setPortraitId(portraitId);
-
-			userPersistence.update(user, false);
 		}
 
 		try {
@@ -4401,7 +4399,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new ImageSizeException(ioe);
 		}
 
-		return user;
+		return userPersistence.update(user, false);
 	}
 
 	/**

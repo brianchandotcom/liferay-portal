@@ -64,6 +64,22 @@ public class Modifications {
 		return addItem(DirContext.REPLACE_ATTRIBUTE, id, value);
 	}
 
+	public ModificationItem addItem(
+		int modificationOp, String id, Object value) {
+
+		BasicAttribute basicAttribute = new BasicAttribute(id);
+
+		if (Validator.isNotNull(value)) {
+			basicAttribute.add(value);
+		}
+
+		return addItem(modificationOp, basicAttribute);
+	}
+
+	public ModificationItem addItem(String id, Object value) {
+		return addItem(DirContext.REPLACE_ATTRIBUTE, id, value);
+	}
+
 	public ModificationItem[] getItems() {
 		return _items.toArray(new ModificationItem[_items.size()]);
 	}

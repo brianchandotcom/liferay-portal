@@ -83,6 +83,8 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static final boolean _FILTER_SEARCH = false;
 
+	private static final boolean _INDEXER_ENABLED = true;
+
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			SearchEngineUtil.deleteDocument(companyId, uid);
@@ -246,7 +248,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	public boolean isIndexerEnabled() {
-		return _indexerEnabled;
+		return _INDEXER_ENABLED;
 	}
 
 	public boolean isStagingAware() {
@@ -926,8 +928,6 @@ public abstract class BaseIndexer implements Indexer {
 
 	private IndexerPostProcessor[] _indexerPostProcessors =
 		new IndexerPostProcessor[0];
-	private boolean _indexerEnabled = GetterUtil.getBoolean(
-		PropsUtil.get(getClass().getName()), true);
 	private boolean _stagingAware = true;
 
 }

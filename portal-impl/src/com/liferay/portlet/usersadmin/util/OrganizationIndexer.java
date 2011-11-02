@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +61,11 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	public String getPortletId() {
 		return PORTLET_ID;
+	}
+
+	@Override
+	public boolean isIndexerEnabled() {
+		return PropsValues.ORGANIZATIONS_INDEXER_ENABLED;
 	}
 
 	@Override

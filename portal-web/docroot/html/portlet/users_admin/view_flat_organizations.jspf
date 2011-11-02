@@ -58,12 +58,12 @@
 		keyProperty="organizationId"
 		modelVar="organization"
 	>
-		<portlet:renderURL var="rowURL">
+		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="struts_action" value="/users_admin/view" />
 			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<%
 		if (!OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.UPDATE)) {

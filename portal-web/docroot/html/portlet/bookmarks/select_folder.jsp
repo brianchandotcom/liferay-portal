@@ -28,7 +28,7 @@ if (folder != null) {
 
 <aui:form method="post" name="fm">
 	<liferay-ui:header
-		title="bookmarks-home"
+		title="home"
 	/>
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />

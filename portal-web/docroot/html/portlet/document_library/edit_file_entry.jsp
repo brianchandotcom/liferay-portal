@@ -228,7 +228,7 @@ else if (dlFileEntryType != null) {
 			folderName = folder.getName();
 		}
 		else {
-			folderName = LanguageUtil.get(pageContext, "documents-home");
+			folderName = LanguageUtil.get(pageContext, "home");
 		}
 		%>
 

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "documents-home");
+String navigation = ParamUtil.getString(request, "navigation", "home");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 

@@ -22,7 +22,7 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 
 <c:choose>
 	<c:when test="<%= fileRanks.isEmpty() %>">
-		<liferay-ui:message key="there-are-no-recent-documents" />
+		<liferay-ui:message key="there-are-no-recent-downloads" />
 	</c:when>
 	<c:otherwise>
 		<table class="lfr-table">

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "bookmarks-home");
+String topLink = ParamUtil.getString(request, "topLink", "home");
 
 BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS_FOLDER);
 
@@ -100,7 +100,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("bookmarks-home") %>'>
+	<c:when test='<%= topLink.equals("home") %>'>
 		<aui:layout>
 			<c:if test="<%= folder != null %>">
 				<liferay-ui:header
@@ -185,11 +185,11 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					<liferay-ui:icon
 						cssClass="lfr-asset-avatar"
 						image='<%= "../file_system/large/" + (((foldersCount + entriesCount) > 0) ? "folder_full_bookmark" : "folder_empty") %>'
-						message='<%= (folder != null) ? HtmlUtil.escapeAttribute(folder.getName()) : "bookmarks-home" %>'
+						message='<%= (folder != null) ? HtmlUtil.escapeAttribute(folder.getName()) : "home" %>'
 					/>
 
 					<div class="lfr-asset-name">
-						<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "bookmarks-home") %></h4>
+						<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "home") %></h4>
 					</div>
 				</div>
 
@@ -213,7 +213,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("my-entries") || topLink.equals("recent-entries") %>'>
+	<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 		<aui:layout>
 			<liferay-ui:header
 				title="<%= topLink %>"
@@ -229,7 +229,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				<%
 				long groupEntriesUserId = 0;
 
-				if (topLink.equals("my-entries") && themeDisplay.isSignedIn()) {
+				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 					groupEntriesUserId = user.getUserId();
 				}
 				%>

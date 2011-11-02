@@ -87,7 +87,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 			<c:choose>
 				<c:when test="<%= ((folderId != rootFolderId) && (parentFolderId == rootFolderId)) || !showRootFolder %>">
 					<span>
-						<liferay-ui:message key="documents-home" />
+						<liferay-ui:message key="home" />
 					</span>
 				</c:when>
 				<c:when test="<%= (folderId != rootFolderId) && (parentFolderId != rootFolderId) %>">
@@ -151,13 +151,13 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						</liferay-portlet:resourceURL>
 
 						<%
-						String navigation = ParamUtil.getString(request, "navigation", "documents-home");
+						String navigation = ParamUtil.getString(request, "navigation", "home");
 
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(repositoryId));
 						%>
 
-						<li class="folder <%= (navigation.equals("documents-home") && (fileEntryTypeId == -1)) ? "selected" : StringPool.BLANK %>">
+						<li class="folder <%= (navigation.equals("home") && (fileEntryTypeId == -1)) ? "selected" : StringPool.BLANK %>">
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 							<c:if test="<%= (foldersCount > 0) %>">
@@ -166,11 +166,11 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								</a>
 							</c:if>
 
-							<a class="browse-folder" data-folder-id="<%= folderId %>" data-navigation="documents-home" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeEntriesURL.toString() %>" data-show-siblings="<%= ((folderId == rootFolderId) && (showRootFolder)) ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
+							<a class="browse-folder" data-folder-id="<%= folderId %>" data-navigation="home" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewDocumentsHomeEntriesURL.toString() %>" data-show-siblings="<%= ((folderId == rootFolderId) && (showRootFolder)) ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
 								<liferay-ui:icon image="../aui/home" message="" />
 
 								<span class="entry-title">
-									<%= LanguageUtil.get(pageContext, "documents-home") %>
+									<%= LanguageUtil.get(pageContext, "home") %>
 								</span>
 							</a>
 						</li>
@@ -178,7 +178,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 						<c:if test="<%= rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 							<liferay-portlet:renderURL varImpl="viewRecentDocumentsURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="recent-documents" />
+								<portlet:param name="navigation" value="recent" />
 								<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -188,7 +188,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewRecentDocumentsEntriesURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="recent-documents" />
+								<portlet:param name="navigation" value="recent" />
 								<portlet:param name="viewAddButton" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewBreadcrumb" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
@@ -201,19 +201,19 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:resourceURL>
 
-							<li class="folder <%= navigation.equals("recent-documents") ? "selected" : StringPool.BLANK %>">
-								<a class="browse-folder" data-navigation="recent-documents" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewRecentDocumentsEntriesURL.toString() %>" href="<%= viewRecentDocumentsURL.toString() %>">
+							<li class="folder <%= navigation.equals("recent") ? "selected" : StringPool.BLANK %>">
+								<a class="browse-folder" data-navigation="recent" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewRecentDocumentsEntriesURL.toString() %>" href="<%= viewRecentDocumentsURL.toString() %>">
 									<liferay-ui:icon image="../aui/clock" message="" />
 
 									<span class="entry-title">
-										<%= LanguageUtil.get(pageContext, "recent-documents") %>
+										<%= LanguageUtil.get(pageContext, "recent") %>
 									</span>
 								</a>
 							</li>
 
 							<liferay-portlet:renderURL varImpl="viewMyDocumentsURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="my-documents" />
+								<portlet:param name="navigation" value="mine" />
 								<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -223,7 +223,7 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewMyDocumentsEntriesURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="my-documents" />
+								<portlet:param name="navigation" value="mine" />
 								<portlet:param name="viewAddButton" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewBreadcrumb" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
@@ -236,12 +236,12 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:resourceURL>
 
-							<li class="folder <%= navigation.equals("my-documents") ? "selected" : StringPool.BLANK %>">
-								<a class="browse-folder" data-navigation="my-documents" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewMyDocumentsEntriesURL.toString() %>" href="<%= viewMyDocumentsURL.toString() %>">
+							<li class="folder <%= navigation.equals("mine") ? "selected" : StringPool.BLANK %>">
+								<a class="browse-folder" data-navigation="mine" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewMyDocumentsEntriesURL.toString() %>" href="<%= viewMyDocumentsURL.toString() %>">
 									<liferay-ui:icon image="../aui/person" message="" />
 
 									<span class="entry-title">
-										<%= LanguageUtil.get(pageContext, "my-documents") %>
+										<%= LanguageUtil.get(pageContext, "mine") %>
 									</span>
 								</a>
 							</li>

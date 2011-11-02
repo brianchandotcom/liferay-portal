@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "documents-home");
+String topLink = ParamUtil.getString(request, "topLink", "home");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -116,7 +116,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("documents-home") %>'>
+	<c:when test='<%= topLink.equals("home") %>'>
 		<aui:layout>
 			<c:if test="<%= (folder != null) %>">
 				<liferay-ui:header
@@ -209,7 +209,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 						/>
 
 						<div class="lfr-asset-name">
-							<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "documents-home") %></h4>
+							<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %></h4>
 						</div>
 					</div>
 
@@ -232,7 +232,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("my-documents") || topLink.equals("recent-documents") %>'>
+	<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 		<aui:layout>
 			<liferay-ui:header
 				backURL="<%= redirect %>"
@@ -249,7 +249,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				<%
 				long groupFileEntriesUserId = 0;
 
-				if (topLink.equals("my-documents") && themeDisplay.isSignedIn()) {
+				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 					groupFileEntriesUserId = user.getUserId();
 				}
 				%>

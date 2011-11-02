@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "documents-home");
+String navigation = ParamUtil.getString(request, "navigation", "home");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -152,7 +152,7 @@ if (fileEntryTypeId >= 0) {
 	total = results.size();
 }
 else {
-	if (navigation.equals("documents-home")) {
+	if (navigation.equals("home")) {
 		if (useAssetEntryQuery) {
 			long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
@@ -168,10 +168,10 @@ else {
 			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
 		}
 	}
-	else if (navigation.equals("my-documents") || navigation.equals("recent-documents")) {
+	else if (navigation.equals("mine") || navigation.equals("recent")) {
 		long groupFileEntriesUserId = 0;
 
-		if (navigation.equals("my-documents") && themeDisplay.isSignedIn()) {
+		if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
 			groupFileEntriesUserId = user.getUserId();
 		}
 

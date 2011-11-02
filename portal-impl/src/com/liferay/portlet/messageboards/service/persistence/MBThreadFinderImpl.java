@@ -86,7 +86,7 @@ public class MBThreadFinderImpl
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (currentMessage.status = ?)");
+					sql, "AND (MBMessage.status = ?)");
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -141,7 +141,7 @@ public class MBThreadFinderImpl
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (currentMessage.status = ?)");
+					sql, "AND (MBMessage.status = ?)");
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -340,7 +340,7 @@ public class MBThreadFinderImpl
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (currentMessage.status = ?)");
+					sql, "AND (MBMessage.status = ?)");
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -387,7 +387,7 @@ public class MBThreadFinderImpl
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (currentMessage.status = ?)");
+					sql, "AND (MBMessage.status = ?)");
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);

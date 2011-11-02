@@ -155,7 +155,7 @@ AUI().add(
 							'</select>',
 							'<select id="{parent.languageKey}_{type}LimitPeriod" class="settings-field-node">',
 								'<tpl for="limitPeriods">',
-									'<option {[ (values == parent.limitPeriod) ? "selected" : "" ]} title="{.}" value="{$index}">{.}</option>',
+									'<option {[ ($index == parent.limitPeriod) ? "selected" : "" ]} title="{.}" value="{$index}">{.}</option>',
 								'</tpl>',
 							'</select>',
 						'</div>',

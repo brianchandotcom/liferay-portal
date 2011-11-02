@@ -12,21 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dao.orm;
+package com.liferay.portal.service.persistence;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LockModeImpl implements LockMode {
-
-	public LockModeImpl(String name) {
-		_name = name;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	private String _name;
-
+public interface LockFinder {
+	public com.liferay.portal.model.Lock fetchByC_K(
+		java.lang.String className, java.lang.String key,
+		com.liferay.portal.kernel.dao.orm.LockMode lockMode)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

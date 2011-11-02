@@ -32,6 +32,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
+import javax.persistence.LockModeType;
 import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
@@ -184,11 +185,12 @@ public class SessionImpl implements Session {
 		String queryString, Map<Integer, Object> positionalParameterMap,
 		Map<String, Object> namedParameterMap, boolean strictName,
 		int firstResult, int maxResults, FlushModeType flushMode,
-		boolean sqlQuery, Class<?> entityClass) {
+		LockModeType lockModeType, boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = _getExecutableQuery(
 			queryString, positionalParameterMap, namedParameterMap, strictName,
-			firstResult, maxResults, flushMode, sqlQuery, entityClass);
+			firstResult, maxResults, flushMode, lockModeType, sqlQuery,
+			entityClass);
 
 		return query.executeUpdate();
 	}
@@ -197,11 +199,12 @@ public class SessionImpl implements Session {
 		String queryString, Map<Integer, Object> positionalParameterMap,
 		Map<String, Object> namedParameterMap, boolean strictName,
 		int firstResult, int maxResults, FlushModeType flushMode,
-		boolean sqlQuery, Class<?> entityClass) {
+		LockModeType lockModeType, boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = _getExecutableQuery(
 			queryString, positionalParameterMap, namedParameterMap, strictName,
-			firstResult, maxResults, flushMode, sqlQuery, entityClass);
+			firstResult, maxResults, flushMode, lockModeType, sqlQuery,
+			entityClass);
 
 		return query.getResultList();
 	}
@@ -210,11 +213,12 @@ public class SessionImpl implements Session {
 		String queryString, Map<Integer, Object> positionalParameterMap,
 		Map<String, Object> namedParameterMap, boolean strictName,
 		int firstResult, int maxResults, FlushModeType flushMode,
-		boolean sqlQuery, Class<?> entityClass) {
+		LockModeType lockModeType, boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = _getExecutableQuery(
 			queryString, positionalParameterMap, namedParameterMap, strictName,
-			firstResult, maxResults, flushMode, sqlQuery, entityClass);
+			firstResult, maxResults, flushMode, lockModeType, sqlQuery,
+			entityClass);
 
 		return query.getSingleResult();
 
@@ -224,7 +228,7 @@ public class SessionImpl implements Session {
 		String queryString, Map<Integer, Object> positionalParameterMap,
 		Map<String, Object> namedParameterMap, boolean strictName,
 		int firstResult, int maxResults, FlushModeType flushMode,
-		boolean sqlQuery, Class<?> entityClass) {
+		LockModeType lockModeType, boolean sqlQuery, Class<?> entityClass) {
 
 		javax.persistence.Query query = null;
 
@@ -254,6 +258,10 @@ public class SessionImpl implements Session {
 
 		if (flushMode != null) {
 			query.setFlushMode(flushMode);
+		}
+
+		if (lockModeType != null) {
+			query.setLockMode(lockModeType);
 		}
 
 		return query;

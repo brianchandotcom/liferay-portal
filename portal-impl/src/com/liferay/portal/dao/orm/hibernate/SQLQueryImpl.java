@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.CacheMode;
+import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -204,6 +205,12 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 
 		_sqlQuery.setInteger(name, value);
+
+		return this;
+	}
+
+	public Query setLockMode(String alias, LockMode lockMode) {
+		_sqlQuery.setLockMode(alias, LockModeTranslator.translate(lockMode));
 
 		return this;
 	}

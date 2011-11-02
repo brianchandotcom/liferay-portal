@@ -61,6 +61,7 @@
 	<bean id="com.liferay.portal.service.persistence.ListTypePersistence" class="com.liferay.portal.service.persistence.ListTypePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.LockLocalService" class="com.liferay.portal.service.impl.LockLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LockPersistence" class="com.liferay.portal.service.persistence.LockPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.LockFinder" class="com.liferay.portal.service.persistence.LockFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.MembershipRequestLocalService" class="com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.MembershipRequestService" class="com.liferay.portal.service.impl.MembershipRequestServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.MembershipRequestPersistence" class="com.liferay.portal.service.persistence.MembershipRequestPersistenceImpl" parent="basePersistence" />

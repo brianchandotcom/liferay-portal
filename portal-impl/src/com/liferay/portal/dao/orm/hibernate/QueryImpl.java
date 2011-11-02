@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.CacheMode;
+import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.ScrollableResults;
@@ -28,6 +29,8 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import org.hibernate.LockOptions;
 
 /**
  * @author Brian Wing Shun Chan
@@ -189,6 +192,19 @@ public class QueryImpl implements Query {
 		}
 
 		_query.setInteger(name, value);
+
+		return this;
+	}
+
+	public Query setLockMode(String alias, LockMode lockMode) {
+		org.hibernate.LockMode realLockMode = LockModeTranslator.translate(
+			lockMode);
+
+		LockOptions lockOptions = new LockOptions(realLockMode);
+
+		lockOptions.setAliasSpecificLockMode(alias, realLockMode);
+
+		_query.setLockOptions(lockOptions);
 
 		return this;
 	}

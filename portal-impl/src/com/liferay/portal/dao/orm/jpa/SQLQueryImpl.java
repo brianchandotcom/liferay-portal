@@ -125,8 +125,8 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 		try {
 			List<?> list = sessionImpl.list(
 				queryString, positionalParameterMap, namedParameterMap,
-				strictName, firstResult, maxResults, flushModeType, sqlQuery,
-				entityClass);
+				strictName, firstResult, maxResults, flushModeType,
+				lockModeType, sqlQuery, entityClass);
 
 			if ((entityClass == null) && !list.isEmpty()) {
 				list = _transformList(list);
@@ -151,8 +151,8 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 		try {
 			Object object =  sessionImpl.uniqueResult(
 				queryString, positionalParameterMap, namedParameterMap,
-				strictName, firstResult, maxResults, flushModeType, sqlQuery,
-				entityClass);
+				strictName, firstResult, maxResults, flushModeType,
+				lockModeType, sqlQuery, entityClass);
 
 			if (object instanceof Collection<?>) {
 				Collection<Object> collection = (Collection<Object>)object;

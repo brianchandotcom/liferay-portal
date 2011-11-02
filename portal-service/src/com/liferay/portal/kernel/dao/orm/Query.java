@@ -70,6 +70,8 @@ public interface Query {
 
 	public Query setInteger(String name, int value);
 
+	public Query setLockMode(String alias, LockMode lockMode);
+
 	public Query setLong(int pos, long value);
 
 	public Query setLong(String name, long value);

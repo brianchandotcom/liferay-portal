@@ -144,6 +144,9 @@ public class MethodParameter {
 			}
 			else if (c == 'L') {
 				className = className.substring(1, className.length() - 1);
+				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
+
+				types[i] = contextClassLoader.loadClass(className);
 			}
 			else if (c == 'S') {
 				types[i] = short.class;
@@ -156,9 +159,12 @@ public class MethodParameter {
 			}
 			else if (c == CharPool.OPEN_BRACKET) {
 				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
-			}
 
-			types[i] = contextClassLoader.loadClass(className);
+				types[i] = contextClassLoader.loadClass(className);
+			}
+			else {
+				throw new ClassNotFoundException(className);
+			}
 		}
 
 		return types;

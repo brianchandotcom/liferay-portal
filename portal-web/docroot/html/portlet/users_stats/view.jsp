@@ -78,7 +78,12 @@ if (rankingCounters.size() > 0) {
 	%>
 
 	<div class="top-users">
-		<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext,"ranking-is-based-on-x", rankingCountersMessage) %>
+		<c:if test="<%= total > 0 %>">
+			<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext,"ranking-is-based-on-x", rankingCountersMessage) %>
+		</c:if>
+		<c:if test="<%= total == 0 %>">
+			<liferay-ui:message key="no-active-users-this-period" />
+		</c:if>
 	</div>
 
 	<c:if test="<%= total > 0 %>">

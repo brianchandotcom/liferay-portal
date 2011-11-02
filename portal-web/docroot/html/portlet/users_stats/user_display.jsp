@@ -33,9 +33,17 @@ if (contribution == null) {
 	contribution.setName(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 }
 
+if (!contribution.isActivePeriod()) {
+	contribution.setCurrentValue(0);
+}
+
 if (participation == null) {
 	participation = new SocialActivityCounterImpl();
 	participation.setName(SocialActivityCounterConstants.NAME_PARTICIPATION);
+}
+
+if (!participation.isActivePeriod()) {
+	participation.setCurrentValue(0);
 }
 
 counters.remove(SocialActivityCounterConstants.NAME_CONTRIBUTION);
@@ -52,11 +60,11 @@ counters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 		</div>
 
 		<div class="contribution-score">
-			<span><liferay-ui:message key='contribution-score' />:</span> <%= contribution.getCurrentValue() %>
+			<span><liferay-ui:message key='contribution-score' />:</span> <%= contribution.getCurrentValue() %> (<span><liferay-ui:message key='total' />: <%= contribution.getTotalValue() %>)
 		</div>
 
 		<div class="participation-score">
-			<span><liferay-ui:message key='participation-score' />:</span> <%= participation.getCurrentValue() %>
+			<span><liferay-ui:message key='participation-score' />:</span> <%= participation.getCurrentValue() %> (<span><liferay-ui:message key='total' />: <%= participation.getTotalValue() %>)
 		</div>
 	</c:if>
 </liferay-ui:user-display>
@@ -67,10 +75,14 @@ if (displayAdditionalCounters) {
 
 <div class="separator"><!-- --></div>
 
-<% for (SocialActivityCounter counter : counters.values()) { %>
+<% for (SocialActivityCounter counter : counters.values()) {
+	if (!counter.isActivePeriod()) {
+		counter.setCurrentValue(0);
+	}
+%>
 
 	<div class="social.counter.<%= counter.getName() %>">
-		<span><liferay-ui:message key='<%= "social.counter." + counter.getName() %>' />:</span> <%= counter.getCurrentValue() %>
+		<span><liferay-ui:message key='<%= "social.counter." + counter.getName() %>' />:</span> <%= counter.getCurrentValue() %> (<span><liferay-ui:message key='total' />: <%= counter.getTotalValue() %>)
 	</div>
 
 <% }

@@ -39,7 +39,7 @@ String defaultControlPanelThemeId = PrefsPropsUtil.getString(company.getCompanyI
 <h3><liferay-ui:message key="language-and-time-zone" /></h3>
 
 <aui:fieldset>
-	<h3><liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" /></h3>
+	<liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" />
 
 	<aui:select label="default-language" name="languageId">
 

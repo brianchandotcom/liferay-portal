@@ -1544,18 +1544,7 @@
 							showBox.show();
 						}
 
-						var hideBox;
-
-						if (isArray(hideBoxIds)) {
-							hideBox = A.all('#' + hideBoxIds.join(',#'));
-						}
-						else {
-							hideBox = A.one('#' + hideBoxIds);
-						}
-
-						if (hideBox) {
-							hideBox.hide();
-						}
+						A.all('#' + hideBoxIds.join(',#')).hide();
 					}
 				);
 			}

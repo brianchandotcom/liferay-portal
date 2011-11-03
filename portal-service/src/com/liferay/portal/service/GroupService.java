@@ -141,8 +141,8 @@ public interface GroupService {
 	*
 	* @param groupId the primary key of the group
 	* @return the group with the primary key
-	* @throws PortalException if a group with the primary key could not be
-	found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -156,7 +156,8 @@ public interface GroupService {
 	* @param companyId the primary key of the company
 	* @param name the group's name
 	* @return the group with the name
-	* @throws PortalException if a matching group could not be found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -188,10 +189,14 @@ public interface GroupService {
 	*
 	* @param organizations the organizations
 	* @return the groups associated with the organizations
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getOrganizationsGroups(
-		java.util.List<com.liferay.portal.model.Organization> organizations);
+		java.util.List<com.liferay.portal.model.Organization> organizations)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the group associated with the user.
@@ -199,7 +204,8 @@ public interface GroupService {
 	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
 	* @return the group associated with the user
-	* @throws PortalException if a matching group could not be found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -374,13 +380,15 @@ public interface GroupService {
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
 	* @return the matching groups ordered by name
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> search(
 		long companyId, java.lang.String name, java.lang.String description,
 		java.lang.String[] params, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the number of groups and organization groups that match the name

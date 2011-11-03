@@ -306,6 +306,7 @@
 				<action-key>PUBLISH_STAGING</action-key>
 				<action-key>PUBLISH_TO_REMOTE</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 				<action-key>VIEW_MEMBERS</action-key>
 				<action-key>VIEW_STAGING</action-key>
 			</supports>
@@ -329,6 +330,7 @@
 				<action-key>PUBLISH_STAGING</action-key>
 				<action-key>PUBLISH_TO_REMOTE</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 				<action-key>VIEW_MEMBERS</action-key>
 				<action-key>VIEW_STAGING</action-key>
 			</guest-unsupported>

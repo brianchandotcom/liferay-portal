@@ -39,6 +39,7 @@ import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -174,12 +175,15 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the group with the primary key
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found
+	 * @throws PortalException if the user did not have permission to view the
+	 *         group or if a group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group getGroup(long groupId)
 		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return groupLocalService.getGroup(groupId);
 	}
@@ -190,13 +194,19 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  name the group's name
 	 * @return the group with the name
-	 * @throws PortalException if a matching group could not be found
+	 * @throws PortalException if the user did not have permission to view the
+	 *         group or if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group getGroup(long companyId, String name)
 		throws PortalException, SystemException {
 
-		return groupLocalService.getGroup(companyId, name);
+		Group group = groupLocalService.getGroup(companyId, name);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group.getGroupId(), ActionKeys.VIEW);
+
+		return group;
 	}
 
 	/**
@@ -256,11 +266,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  organizations the organizations
 	 * @return the groups associated with the organizations
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Group> getOrganizationsGroups(
-		List<Organization> organizations) {
+	public List<Group> getOrganizationsGroups(List<Organization> organizations)
+		throws PortalException, SystemException {
 
-		return groupLocalService.getOrganizationsGroups(organizations);
+		List<Group> groups = groupLocalService.getOrganizationsGroups(
+			organizations);
+
+		return filterGroups(groups);
 	}
 
 	/**
@@ -269,13 +284,19 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  userId the primary key of the user
 	 * @return the group associated with the user
-	 * @throws PortalException if a matching group could not be found
+	 * @throws PortalException if the user did not have permission to view the
+	 *         group or if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group getUserGroup(long companyId, long userId)
 		throws PortalException, SystemException {
 
-		return groupLocalService.getUserGroup(companyId, userId);
+		Group group = groupLocalService.getUserGroup(companyId, userId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group.getGroupId(), ActionKeys.VIEW);
+
+		return group;
 	}
 
 	/**
@@ -290,7 +311,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public List<Group> getUserGroupsGroups(List<UserGroup> userGroups)
 		throws PortalException, SystemException {
 
-		return groupLocalService.getUserGroupsGroups(userGroups);
+		List<Group> groups = groupLocalService.getUserGroupsGroups(userGroups);
+
+		return filterGroups(groups);
 	}
 
 	/**
@@ -322,7 +345,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long userId, int start, int end)
 		throws PortalException, SystemException {
 
-		return groupLocalService.getUserOrganizationsGroups(userId, start, end);
+		List<Group> groups = groupLocalService.getUserOrganizationsGroups(
+			userId, start, end);
+
+		return filterGroups(groups);
 	}
 
 	/**
@@ -537,18 +563,21 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  end the upper bound of the range of groups to return (not
 	 *         inclusive)
 	 * @return the matching groups ordered by name
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Group> search(
 			long companyId, String name, String description, String[] params,
 			int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		LinkedHashMap<String, Object> paramsObj = MapUtil.toLinkedHashMap(
 			params);
 
-		return groupLocalService.search(
+		List<Group> groups = groupLocalService.search(
 			companyId, name, description, paramsObj, start, end);
+
+		return filterGroups(groups);
 	}
 
 	/**
@@ -690,6 +719,23 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return groupLocalService.updateGroup(
 			groupId, name, description, type, friendlyURL, active,
 			serviceContext);
+	}
+
+	protected List<Group> filterGroups(List<Group> groups)
+		throws PortalException, SystemException {
+
+		List<Group> filteredGroups = new ArrayList<Group>();
+
+		for (Group group : groups) {
+			if (GroupPermissionUtil.contains(
+					getPermissionChecker(), group.getGroupId(),
+					ActionKeys.VIEW)) {
+
+				filteredGroups.add(group);
+			}
+		}
+
+		return filteredGroups;
 	}
 
 }

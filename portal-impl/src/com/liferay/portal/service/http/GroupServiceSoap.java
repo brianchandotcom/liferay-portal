@@ -199,8 +199,8 @@ public class GroupServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the group with the primary key
-	* @throws PortalException if a group with the primary key could not be
-	found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getGroup(long groupId)
@@ -223,7 +223,8 @@ public class GroupServiceSoap {
 	* @param companyId the primary key of the company
 	* @param name the group's name
 	* @return the group with the name
-	* @throws PortalException if a matching group could not be found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getGroup(long companyId,
@@ -274,6 +275,8 @@ public class GroupServiceSoap {
 	*
 	* @param organizations the organizations
 	* @return the groups associated with the organizations
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getOrganizationsGroups(
 		com.liferay.portal.model.OrganizationSoap[] organizations)
@@ -297,7 +300,8 @@ public class GroupServiceSoap {
 	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
 	* @return the group associated with the user
-	* @throws PortalException if a matching group could not be found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getUserGroup(
@@ -538,6 +542,7 @@ public class GroupServiceSoap {
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
 	* @return the matching groups ordered by name
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] search(long companyId,

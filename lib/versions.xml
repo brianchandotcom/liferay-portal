@@ -1841,7 +1841,7 @@
 	</library>
 	<library>
 		<file-name>portal/im4java.jar</file-name>
-		<version>1.1.0</version>
+		<version>1.2.0</version>
 		<project-name>im4java</project-name>
 		<project-url>http://im4java.sourceforge.net</project-url>
 		<licenses>

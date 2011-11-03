@@ -43,13 +43,13 @@ if (!rankingNamesList.isEmpty()) {
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
-	String[] selectedNames = selectedNamesList.toArray(new String[selectedNamesList.size()]);
-
 	if (displayAdditionalCounters) {
 		for (int displayCounterNameIndex : displayCounterNameIndexes) {
 			selectedNamesList.add(PrefsParamUtil.getString(preferences, request, "displayCounterName" + displayCounterNameIndex));
 		}
 	}
+
+	String[] selectedNames = selectedNamesList.toArray(new String[selectedNamesList.size()]);
 
 	List<Tuple> results = SocialActivityCounterLocalServiceUtil.getUserActivityCounters(scopeGroupId, rankingNames, selectedNames, searchContainer.getStart(), searchContainer.getEnd());
 

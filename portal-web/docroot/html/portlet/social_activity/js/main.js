@@ -61,6 +61,8 @@ AUI().add(
 
 		var STR_PARTICIPATION_LIMIT_VALUE = 'participationLimitValue';
 
+		var STR_SAVE = Liferay.Language.get('save');
+
 		var STR_SELECTED = 'selected';
 
 		var STR_SETTINGS = 'settings';
@@ -105,7 +107,7 @@ AUI().add(
 
 		var TPL_BUTTON_HOLDER = '<div class="' + [STR_SETTINGS_BUTTON_HOLDER].join(STR_SPACE) + ' aui-button aui-button-submit">' +
 				'<span class="aui-button-content">' +
-					'<input class="aui-button-input aui-button-input-submit" type="submit" value="' + Liferay.Language.get('save') + '" />' +
+					'<input class="aui-button-input aui-button-input-submit" type="submit" value="' + STR_SAVE + '" />' +
 				'</span>' +
 			'</div>';
 
@@ -409,7 +411,7 @@ AUI().add(
 							{
 								conjunctionText: Liferay.Language.get('or').toLowerCase(),
 								headerText: Liferay.Language.get('social-activity-setting-header-label'),
-								saveText: Liferay.Language.get('save')
+								saveText: STR_SAVE
 							}
 						);
 
@@ -797,7 +799,7 @@ AUI().add(
 						boundingBox.toggleClass(CSS_TOKEN, value);
 					},
 
-					_uiSetContributionValue: function(value, src) {
+					_uiSetContributionIncrement: function(value, src) {
 						var instance = this;
 
 						var contributionIncrementNode = instance.get(STR_CONTENT_BOX).one('.contribution-increment');

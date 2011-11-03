@@ -18,6 +18,10 @@
 
 <%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
+<%
+SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, renderResponse);
+%>
+
 <c:choose>
 	<c:when test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
 		<c:if test="<%= portletName.equals(PortletKeys.COMMUNITIES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
@@ -75,14 +79,6 @@
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<%
-if ((selLayout != null) && !group.isLayoutPrototype()) {
-	redirectURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
-
-	PortalUtil.addPortletBreadcrumbEntry(request, selLayout.getName(locale), redirectURL.toString());
-}
-%>
 
 <aui:layout cssClass="manage-view lfr-app-column-view">
 	<c:if test="<%= !group.isLayoutPrototype() %>">

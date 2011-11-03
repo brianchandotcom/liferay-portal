@@ -21,6 +21,8 @@
 <%
 boolean viewTree = ParamUtil.getBoolean(request, "viewTree");
 boolean viewLayout = ParamUtil.getBoolean(request, "viewLayout");
+
+SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, renderResponse);
 %>
 
 <c:if test="<%= viewTree %>">

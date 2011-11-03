@@ -17,6 +17,7 @@ package com.liferay.portlet.sites.util;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,9 +42,11 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutSettings;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.File;
@@ -52,10 +55,12 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -68,6 +73,45 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class SitesUtil {
+
+	public static void addPortletBreadcrumbEntries(
+			Group group, String pagesName, PortletURL redirectURL,
+			HttpServletRequest request, RenderResponse renderResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if ((renderResponse != null) &&
+			!portletName.equals(PortletKeys.GROUP_PAGES) &&
+			!portletName.equals(PortletKeys.MY_PAGES)) {
+
+			if (group.isLayoutPrototype()) {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, LanguageUtil.get(locale, "page-template"), null);
+
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, group.getDescriptiveName(),
+					redirectURL.toString());
+			}
+			else {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, group.getDescriptiveName(), null);
+			}
+
+			if (!group.isLayoutPrototype()) {
+				PortalUtil.addPortletBreadcrumbEntry(
+					request, LanguageUtil.get(locale, pagesName),
+					redirectURL.toString());
+			}
+		}
+	}
 
 	public static void applyLayoutSetPrototypes(
 			Group group, long publicLayoutSetPrototypeId,

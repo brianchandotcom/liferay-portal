@@ -19,8 +19,12 @@
 <aui:script position="inline">
 	Liferay.Util.addInputFocus();
 
+	<%
+	String controlPanelCategory = ParamUtil.getString(request, "controlPanelCategory");
+	%>
+
 	<c:choose>
-		<c:when test="<%= themeDisplay.isStatePopUp() %>">
+		<c:when test="<%= themeDisplay.isStatePopUp() || Validator.isNotNull(controlPanelCategory) %>">
 			Liferay.Util.getTop().Liferay.fire(
 				'popupReady',
 				{

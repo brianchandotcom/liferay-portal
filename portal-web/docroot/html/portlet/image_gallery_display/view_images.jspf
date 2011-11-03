@@ -38,85 +38,83 @@
 
 		<c:choose>
 			<c:when test="<%= fileEntry != null %>">
-				<c:choose>
-					<c:when test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
-						<%
-						FileVersion fileVersion = fileEntry.getFileVersion();
+					<%
+					FileVersion fileVersion = fileEntry.getFileVersion();
 
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileVersion.getMimeType());
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileVersion.getMimeType());
+					boolean supportedAudio = AudioProcessor.isSupportedAudio(fileVersion.getMimeType());
+					boolean supportedVideo = VideoProcessor.isSupportedVideo(fileVersion.getMimeType());
 
-						String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-						String src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
+					String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
+					String src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 
-						int playerHeight = 500;
+					int playerHeight = 500;
 
-						if (AudioProcessor.hasAudio(fileVersion)) {
-							href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1", false);
+					if (AudioProcessor.hasAudio(fileVersion)) {
+						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1", false);
 
-							playerHeight = 43;
-						}
-						else if (ImageProcessor.hasImages(fileVersion)) {
-							href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
-							src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
-						}
-						else if (PDFProcessor.hasImages(fileVersion)) {
-							href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
-							src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
-						}
-						else if (VideoProcessor.hasVideo(fileVersion)) {
-							href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&videoPreview=1") + "&supportedVideo=1&mediaGallery=1", false);
-							src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
-						}
-						%>
+						playerHeight = 43;
+					}
+					else if (ImageProcessor.hasImages(fileVersion)) {
+						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
+					}
+					else if (PDFProcessor.hasImages(fileVersion)) {
+						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
+						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
+					}
+					else if (VideoProcessor.hasVideo(fileVersion)) {
+						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&videoPreview=1") + "&supportedVideo=1&mediaGallery=1", false);
+						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
+					}
+					%>
 
-						<a class="image-thumbnail preview" <%= (supportedAudio || supportedVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
-							<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" />
+					<a class="image-thumbnail preview" <%= (supportedAudio || supportedVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+						<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>px;" />
 
-							<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
+						<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
 
-							<c:if test="<%= scores != null %>">
-								<span class="image-score">
+						<c:if test="<%= scores != null %>">
+							<span class="image-score">
 
-									<%
-									double score = ((Double)scores.get(i)).doubleValue();
+								<%
+								double score = ((Double)scores.get(i)).doubleValue();
 
-									score = MathUtils.round((score * 10) / 2, 1, BigDecimal.ROUND_HALF_UP);
-									%>
+								score = MathUtils.round((score * 10) / 2, 1, BigDecimal.ROUND_HALF_UP);
+								%>
 
-									<liferay-ui:ratings-score score="<%= score %>" />
-								</span>
-							</c:if>
-						</a>
-
-						<c:if test="<%= showActions %>">
-							<div class="aui-helper-hidden" id="<portlet:namespace />buttonsContainer_<%= fileEntry.getFileEntryId() %>">
-								<div class="buttons-container float-container" id="<portlet:namespace />buttons_<%= fileEntry.getFileEntryId() %>">
-									<%@ include file="/html/portlet/image_gallery_display/image_action.jspf" %>
-								</div>
-							</div>
-						</c:if>
-
-						<%
-						List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-						%>
-
-						<div id="<portlet:namespace />categorizationContainer_<%= fileEntry.getFileEntryId() %>" style="display: none;">
-							<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
-								<liferay-ui:asset-categories-summary
-									className="<%= DLFileEntryConstants.getClassName() %>"
-									classPK="<%= fileEntry.getFileEntryId() %>"
-								/>
+								<liferay-ui:ratings-score score="<%= score %>" />
 							</span>
+						</c:if>
+					</a>
 
-							<liferay-ui:asset-tags-summary
+					<c:if test="<%= showActions %>">
+						<div class="aui-helper-hidden" id="<portlet:namespace />buttonsContainer_<%= fileEntry.getFileEntryId() %>">
+							<div class="buttons-container float-container" id="<portlet:namespace />buttons_<%= fileEntry.getFileEntryId() %>">
+								<%@ include file="/html/portlet/image_gallery_display/image_action.jspf" %>
+							</div>
+						</div>
+					</c:if>
+
+					<%
+					List assetTags = AssetTagServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+					%>
+
+					<div id="<portlet:namespace />categorizationContainer_<%= fileEntry.getFileEntryId() %>" style="display: none;">
+						<span <%= !assetTags.isEmpty() ? "class=\"has-tags\"" : "" %>>
+							<liferay-ui:asset-categories-summary
 								className="<%= DLFileEntryConstants.getClassName() %>"
 								classPK="<%= fileEntry.getFileEntryId() %>"
 							/>
-						</div>
-					</c:when>
-				</c:choose>
+						</span>
+
+						<liferay-ui:asset-tags-summary
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= fileEntry.getFileEntryId() %>"
+						/>
+					</div>
+				</c:if>
 			</c:when>
 
 			<c:when test="<%= curFolder != null %>">
@@ -142,7 +140,7 @@
 					}
 					%>
 
-					<img alt="" border="no" src="<%= folderImageSrc %>" style="height: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>; width: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>;" />
+					<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>px;" />
 
 					<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
 				</a>

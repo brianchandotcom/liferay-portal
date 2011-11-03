@@ -34,6 +34,11 @@
 		<echo>Deploying artifacts to ${lp.maven.repository.url}.</echo>
 
 		<antcall target="deploy-artifact">
+			<param name="artifact.id" value="portal-parent" />
+			<param name="packaging" value="pom" />
+		</antcall>
+		
+		<antcall target="deploy-artifact">
 			<param name="artifact.id" value="portal-client" />
 			<param name="packaging" value="jar" />
 		</antcall>
@@ -102,7 +107,10 @@
 
 				<if>
 					<not>
-						<equals arg1="${packaging}" arg2="war" />
+						<and>
+							<equals arg1="${packaging}" arg2="war" />
+							<equals arg1="${packaging}" arg2="pom" />
+						</and>
 					</not>
 					<then>
 						<exec dir="." executable="${maven.executable}" failonerror="true">
@@ -178,7 +186,10 @@
 
 				<if>
 					<not>
-						<equals arg1="${packaging}" arg2="war" />
+						<and>
+							<equals arg1="${packaging}" arg2="war" />
+							<equals arg1="${packaging}" arg2="pom" />
+						</and>
 					</not>
 					<then>
 						<exec dir="." executable="${maven.executable}" failonerror="true">
@@ -232,6 +243,11 @@
 
 	<target name="install">
 		<echo>Installing artifacts to local repository.</echo>
+
+		<antcall target="install-artifact">
+			<param name="artifact.id" value="portal-parent" />
+			<param name="packaging" value="pom" />
+		</antcall>
 
 		<antcall target="install-artifact">
 			<param name="artifact.id" value="portal-client" />
@@ -292,7 +308,10 @@
 
 		<if>
 			<not>
-				<equals arg1="${packaging}" arg2="war" />
+				<and>
+					<equals arg1="${packaging}" arg2="war" />
+					<equals arg1="${packaging}" arg2="pom" />
+				</and>
 			</not>
 			<then>
 				<exec dir="." executable="${maven.executable}" failonerror="true">

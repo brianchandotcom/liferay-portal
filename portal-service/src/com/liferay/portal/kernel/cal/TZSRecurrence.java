@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.cal;
 
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
@@ -41,7 +42,7 @@ public class TZSRecurrence extends Recurrence {
 	}
 
 	public void setTimeZone(TimeZone timeZone) {
-		_timeZone = timeZone;
+		_timeZone = TimeZoneUtil.getTimeZone(timeZone.getID());
 	}
 
 	protected boolean matchesByField(
@@ -54,6 +55,13 @@ public class TZSRecurrence extends Recurrence {
 			adjustedCandidate = CalendarFactoryUtil.getCalendar(timeZone);
 
 			adjustedCandidate.setTime(candidate.getTime());
+
+			long DSTDelta = adjustedCandidate.getTimeZone().getRawOffset()
+							- adjustedCandidate.getTimeZone().getOffset(
+								dtStart.getTimeInMillis());
+
+			adjustedCandidate.setTimeInMillis(
+				adjustedCandidate.getTime().getTime() - DSTDelta);
 		}
 
 		return matchesByField(array, field, adjustedCandidate, allowNegative);
@@ -69,6 +77,13 @@ public class TZSRecurrence extends Recurrence {
 			adjustedCandidate = CalendarFactoryUtil.getCalendar(_timeZone);
 
 			adjustedCandidate.setTime(candidate.getTime());
+
+			long DSTDelta = adjustedCandidate.getTimeZone().getRawOffset()
+							- adjustedCandidate.getTimeZone().getOffset(
+								dtStart.getTimeInMillis());
+
+			adjustedCandidate.setTimeInMillis(
+				adjustedCandidate.getTime().getTime() - DSTDelta);
 		}
 
 		return super.matchesIndividualByDay(adjustedCandidate, pos);

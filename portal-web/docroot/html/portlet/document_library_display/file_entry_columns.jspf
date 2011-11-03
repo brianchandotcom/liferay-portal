@@ -72,13 +72,13 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
 					if (ImageProcessor.hasImages(fileVersion)) {
-						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&imageThumbnail=1");
+						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
 					}
 					else if (PDFProcessor.hasImages(fileVersion)) {
-						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&documentThumbnail=1");
+						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
 					}
 					else if (VideoProcessor.hasVideo(fileVersion)) {
-						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1");
+						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 					}
 				}
 				%>

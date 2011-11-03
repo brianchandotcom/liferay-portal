@@ -219,7 +219,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 
 						if (Validator.isNotNull(thumbnailQueryString)) {
-							thumbnailSrc = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, thumbnailQueryString);
+							thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, thumbnailQueryString);
 						}
 
 						if (layoutAssetEntry != null) {
@@ -307,11 +307,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						else if (hasVideo) {
 							previewQueryString = "&videoPreview=1";
 
-							videoThumbnailURL = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1");
+							videoThumbnailURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 						}
 
 						if (Validator.isNotNull(previewQueryString)) {
-							previewFileURL = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, previewQueryString);
+							previewFileURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 
 							if (!hasPDFImages) {
 								previewFileCount = 1;

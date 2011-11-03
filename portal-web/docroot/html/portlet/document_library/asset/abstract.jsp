@@ -36,14 +36,14 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 		<c:choose>
 			<c:when test="<%= showThumbnail && PDFProcessor.hasImages(fileVersion) %>">
 				<div>
-					<img src="<%= _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&documentThumbnail=1") %>" />
+					<img src="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
 
 					<%= fileVersion.getTitle() %>
 				</div>
 			</c:when>
 			<c:when test="<%= showThumbnail && VideoProcessor.hasVideo(fileVersion) %>">
 				<div>
-					<img src="<%= _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, "&videoThumbnail=1") %>" />
+					<img src="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
 
 					<%= fileVersion.getTitle() %>
 				</div>

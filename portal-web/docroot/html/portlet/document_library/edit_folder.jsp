@@ -64,7 +64,7 @@ if (workflowEnabled) {
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? (rootFolder ? "documents-home" : "new-folder") : folder.getName() %>'
+		title='<%= (folder == null) ? (rootFolder ? "home" : "new-folder") : folder.getName() %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />
@@ -77,7 +77,7 @@ if (workflowEnabled) {
 		<c:if test="<%= !rootFolder %>">
 
 			<%
-			String parentFolderName = LanguageUtil.get(pageContext, "documents-home");
+			String parentFolderName = LanguageUtil.get(pageContext, "home");
 
 			try {
 				if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

@@ -247,7 +247,7 @@
 					},
 					value: {
 						folderId: <%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>,
-						folderName: '<liferay-ui:message key="documents-home" />'
+						folderName: '<liferay-ui:message key="home" />'
 					}
 				},
 				tip: {

@@ -147,8 +147,8 @@ public class DLUtil {
 		data.put("refresh-folders", Boolean.TRUE.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, themeDisplay.translate("documents-home"),
-			portletURL.toString(), data);
+			request, themeDisplay.translate("home"), portletURL.toString(),
+			data);
 
 		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
 	}
@@ -249,16 +249,9 @@ public class DLUtil {
 			data.put("folder-id", _getDefaultFolderId(request));
 			data.put("refresh-folders", Boolean.TRUE.toString());
 
-			if (strutsAction.equals("/image_gallery_display/select_folder")) {
-				PortalUtil.addPortletBreadcrumbEntry(
-					request, themeDisplay.translate("images-home"),
-					portletURL.toString(), data);
-			}
-			else {
-				PortalUtil.addPortletBreadcrumbEntry(
-					request, themeDisplay.translate("documents-home"),
-					portletURL.toString(), data);
-			}
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, themeDisplay.translate("home"), portletURL.toString(),
+				data);
 		}
 		else {
 			portletURL.setParameter("struts_action", "/document_library/view");

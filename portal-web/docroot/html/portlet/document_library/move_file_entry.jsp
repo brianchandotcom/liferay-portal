@@ -107,7 +107,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 			folderName = folder.getName();
 		}
 		else {
-			folderName = LanguageUtil.get(pageContext, "documents-home");
+			folderName = LanguageUtil.get(pageContext, "home");
 		}
 
 		%>

@@ -100,7 +100,7 @@ public class BookmarksUtil {
 				"struts_action", "/bookmarks/select_folder");
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("bookmarks-home"),
+				request, themeDisplay.translate("home"),
 				portletURL.toString());
 		}
 		else {

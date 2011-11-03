@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "bookmarks-home");
+String topLink = ParamUtil.getString(request, "topLink", "home");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
@@ -36,41 +36,41 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		<div class="top-links-navigation">
 
 			<%
-			portletURL.setParameter("topLink", "bookmarks-home");
+			portletURL.setParameter("topLink", "home");
 			%>
 
 			<liferay-ui:icon
 				cssClass="top-link"
 				image="../aui/home"
 				label="<%= true %>"
-				message="bookmarks-home"
-				url='<%= (topLink.equals("bookmarks-home") && folderId == 0 && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+				message="home"
+				url='<%= (topLink.equals("home") && folderId == 0 && viewFolder && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 			/>
 
 			<%
-			portletURL.setParameter("topLink", "recent-entries");
+			portletURL.setParameter("topLink", "recent");
 			%>
 
 			<liferay-ui:icon
 				cssClass='<%= "top-link" + (themeDisplay.isSignedIn() ? StringPool.BLANK : " last") %>'
 				image="../aui/clock"
 				label="<%= true %>"
-				message="recent-entries"
-				url='<%= (topLink.equals("recent-entries") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+				message="recent"
+				url='<%= (topLink.equals("recent") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 			/>
 
 			<c:if test="<%= themeDisplay.isSignedIn() %>">
 
 				<%
-				portletURL.setParameter("topLink", "my-entries");
+				portletURL.setParameter("topLink", "mine");
 				%>
 
 				<liferay-ui:icon
 					cssClass="top-link last"
 					image="../aui/person"
 					label="<%= true %>"
-					message="my-entries"
-					url='<%= (topLink.equals("my-entries") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
+					message="mine"
+					url='<%= (topLink.equals("mine") && !useAssetEntryQuery) ? StringPool.BLANK : portletURL.toString() %>'
 				/>
 			</c:if>
 		</div>

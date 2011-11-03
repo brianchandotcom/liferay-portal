@@ -290,6 +290,9 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			expression = _parseExpression(condition);
 		}
 
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
+
 		for (long expandoRowId : expandoRowIds) {
 			List<ExpandoValue> expandoValues =
 				ExpandoValueLocalServiceUtil.getRowValues(expandoRowId);
@@ -306,9 +309,10 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 					String fieldName = column.getName();
 					Serializable fieldValue = expandoValue.getSerializable();
 
-					if ((fieldNames == null) ||
+					if (ddmStructure.hasField(fieldName) &&
+						((fieldNames == null) ||
 						((fieldNames != null) &&
-						 fieldNames.contains(fieldName))) {
+							fieldNames.contains(fieldName)))) {
 
 						fields.put(
 							new Field(ddmStructureId, fieldName, fieldValue));

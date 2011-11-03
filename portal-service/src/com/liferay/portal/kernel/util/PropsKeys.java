@@ -537,6 +537,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES = "dl.file.entry.preview.video.mime.types";
 
+	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE = "dl.file.entry.preview.video.thumbnail.percentage";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH = "dl.file.entry.preview.video.width";
 
 	public static final String DL_FILE_ENTRY_PROCESSORS = "dl.file.entry.processors";

@@ -250,16 +250,18 @@ public abstract class LiferayConverter {
 			return DECODE_VIDEO_THUMBNAIL;
 		}
 
-		IVideoPicture outputIVideoPicture = null;
+		if (outputIStreamCoder != null && outputIContainer != null) {
+			IVideoPicture outputIVideoPicture = null;
 
-		outputIVideoPicture = resampleVideo(
-			iVideoResampler, inputIVideoPicture, resampledIVideoPicture);
+			outputIVideoPicture = resampleVideo(
+				iVideoResampler, inputIVideoPicture, resampledIVideoPicture);
 
-		outputIVideoPicture.setQuality(0);
+			outputIVideoPicture.setQuality(0);
 
-		encodeVideo(
-			outputIStreamCoder, outputIVideoPicture, outputIPacket,
-			outputIContainer);
+			encodeVideo(
+				outputIStreamCoder, outputIVideoPicture, outputIPacket,
+				outputIContainer);
+		}
 
 		return 1;
 	}
@@ -332,6 +334,46 @@ public abstract class LiferayConverter {
 				outputIContainer.writePacket(iPacket, true);
 			}
 		}
+	}
+
+	abstract protected IContainer getInputIContainer();
+
+	protected long getSeekTimeStamp(int percentage) throws Exception {
+		IContainer inputIContainer = getInputIContainer();
+
+		long seekTimeStamp = VIDEO_THUMBNAIL_NOT_FOUND;
+
+		long videoMicroseconds = inputIContainer.getDuration();
+
+		long videoSeconds = videoMicroseconds / 1000000L;
+
+		long seekSeconds = ((videoSeconds * percentage) / 100L);
+
+		for (int i = 0; i < inputIContainer.getNumStreams(); i++) {
+			IStream inputIStream = inputIContainer.getStream(i);
+
+			IStreamCoder inputIStreamCoder = inputIStream.getStreamCoder();
+
+			ICodec.Type codecType = inputIStreamCoder.getCodecType();
+
+			if (codecType != ICodec.Type.CODEC_TYPE_VIDEO) {
+				continue;
+			}
+
+			IRational timeBase = inputIStream.getTimeBase();
+
+			long denominator = timeBase.getDenominator();
+
+			long numerator = timeBase.getNumerator();
+
+			long timeStampOffset = (denominator / numerator) * seekSeconds;
+
+			seekTimeStamp = inputIContainer.getStartTime() + timeStampOffset;
+
+			break;
+		}
+
+		return seekTimeStamp;
 	}
 
 	protected long getStreamTimeStampOffset(IStream iStream) {
@@ -495,6 +537,100 @@ public abstract class LiferayConverter {
 		return resampledIVideoPicture;
 	}
 
+	protected void rewind() throws Exception {
+		IContainer inputIContainer = getInputIContainer();
+
+		if (inputIContainer == null) {
+			return;
+		}
+
+		int value = 0;
+
+		for (int i = 0; i < inputIContainer.getNumStreams(); i++) {
+			IStream inputIStream = inputIContainer.getStream(i);
+
+			IStreamCoder inputIStreamCoder = inputIStream.getStreamCoder();
+
+			ICodec.Type codecType = inputIStreamCoder.getCodecType();
+
+			if (codecType != ICodec.Type.CODEC_TYPE_VIDEO) {
+				continue;
+			}
+
+			value = rewind(i);
+
+			if (value < 0) {
+				throw new RuntimeException("Error while seeking file");
+			}
+
+			break;
+		}
+	}
+
+	protected int rewind(int index) throws Exception {
+		IContainer inputIContainer = getInputIContainer();
+
+		if (inputIContainer == null) {
+			return -1;
+		}
+
+		int value = inputIContainer.seekKeyFrame(index, -1, 0);
+
+		if (value < 0) {
+			throw new RuntimeException("Error while seeking file");
+		}
+
+		return value;
+	}
+
+	protected int seek(int index, long timeStamp) throws Exception {
+		IContainer inputIContainer = getInputIContainer();
+
+		if (inputIContainer == null) {
+			return -1;
+		}
+
+		int value = inputIContainer.seekKeyFrame(index, timeStamp, 0);
+
+		if (value < 0) {
+			throw new RuntimeException("Error while seeking file");
+		}
+
+		return value;
+	}
+
+	protected long seek(long timeStamp) throws Exception {
+		IContainer inputIContainer = getInputIContainer();
+
+		if (inputIContainer == null) {
+			return -1;
+		}
+
+		int value = 0;
+
+		for (int i = 0; i < inputIContainer.getNumStreams(); i++) {
+			IStream inputIStream = inputIContainer.getStream(i);
+
+			IStreamCoder inputIStreamCoder = inputIStream.getStreamCoder();
+
+			ICodec.Type codecType = inputIStreamCoder.getCodecType();
+
+			if (codecType != ICodec.Type.CODEC_TYPE_VIDEO) {
+				continue;
+			}
+
+			value = seek(i, timeStamp);
+
+			if (value < 0) {
+				throw new RuntimeException("Error while seeking file");
+			}
+
+			break;
+		}
+
+		return value;
+	}
+
 	protected void updateAudioTimeStamp(
 		IAudioSamples inputAudioSample, long timeStampOffset) {
 
@@ -515,9 +651,12 @@ public abstract class LiferayConverter {
 
 	protected static final int DECODE_VIDEO_THUMBNAIL = 2;
 
+	protected static final int VIDEO_THUMBNAIL_NOT_FOUND = -1;
+
 	private static Log _log = LogFactoryUtil.getLog(LiferayConverter.class);
 
 	private ConverterFactory.Type _converterFactoryType;
+
 	private IConverter _videoIConverter;
 
 }

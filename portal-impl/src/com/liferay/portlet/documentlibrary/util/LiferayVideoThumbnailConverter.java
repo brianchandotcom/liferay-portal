@@ -37,11 +37,19 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 		String inputURL, File outputFile, String extension, int height,
 		int width) {
 
+		this(inputURL,outputFile, extension, height, width, -1);
+	}
+
+	public LiferayVideoThumbnailConverter(
+		String inputURL, File outputFile, String extension, int height,
+		int width, int percentage) {
+
 		_inputURL = inputURL;
 		_outputFile = outputFile;
 		_extension = extension;
 		_height = height;
 		_width = width;
+		_percentage = percentage;
 	}
 
 	public void convert() throws Exception {
@@ -60,6 +68,12 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 		openContainer(_inputIContainer, _inputURL, false);
 
+		long seekTimeStamp = VIDEO_THUMBNAIL_NOT_FOUND;
+
+		if (_percentage > 0 && _percentage <= 100) {
+			seekTimeStamp = getSeekTimeStamp(_percentage);
+		}
+
 		int inputStreamsCount = _inputIContainer.getNumStreams();
 
 		if (inputStreamsCount < 0) {
@@ -76,24 +90,57 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 			IStreamCoder inputIStreamCoder = inputIStream.getStreamCoder();
 
-			ICodec.Type inputICodecType = inputIStreamCoder.getCodecType();
-
 			inputIStreamCoders[i] = inputIStreamCoder;
 
-			if (inputICodecType == ICodec.Type.CODEC_TYPE_VIDEO) {
+			ICodec.Type codecType = inputIStreamCoder.getCodecType();
+
+			if (codecType == ICodec.Type.CODEC_TYPE_VIDEO) {
 				inputIVideoPictures[i] = IVideoPicture.make(
 					inputIStreamCoder.getPixelType(),
 					inputIStreamCoder.getWidth(),
 					inputIStreamCoder.getHeight());
 			}
 
-			if ((inputIStreamCoder != null) &&
-				(inputIStreamCoder.open() < 0)) {
-
+			if ((inputIStreamCoder != null) && (inputIStreamCoder.open() < 0)) {
 				throw new RuntimeException("Unable to open input coder");
 			}
 		}
 
+		if (seekTimeStamp != VIDEO_THUMBNAIL_NOT_FOUND) {
+			rewind();
+
+			seek(seekTimeStamp);
+		}
+
+		boolean thumbnailGenerated = false;
+
+		try {
+			thumbnailGenerated = generateThumbnail(
+				inputIStreamCoders, inputIVideoPictures);
+		}
+		catch (Exception e) {
+		}
+
+		if (!thumbnailGenerated) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to create thumbnail from specified frame. Will " +
+						"generate thumbnail from the beginning");
+			}
+
+			rewind();
+
+			generateThumbnail(inputIStreamCoders, inputIVideoPictures);
+		}
+
+	}
+
+	protected boolean generateThumbnail(
+			IStreamCoder[] inputIStreamCoders,
+			IVideoPicture[] inputIVideoPictures)
+		throws Exception {
+
+		boolean sucess = false;
 		boolean keyPacketFound = false;
 		int nonKeyAfterKeyCount = 0;
 		boolean onlyDecodeKeyPackets = false;
@@ -109,9 +156,9 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 			IStreamCoder inputIStreamCoder = inputIStreamCoders[streamIndex];
 
-			if (inputIStreamCoder.getCodecType() !=
-					ICodec.Type.CODEC_TYPE_VIDEO) {
+			ICodec.Type codecType = inputIStreamCoder.getCodecType();
 
+			if (codecType != ICodec.Type.CODEC_TYPE_VIDEO) {
 				continue;
 			}
 
@@ -144,6 +191,8 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 					continue;
 				}
 				else if (value == DECODE_VIDEO_THUMBNAIL) {
+					sucess = true;
+
 					break;
 				}
 			}
@@ -153,6 +202,13 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 				}
 			}
 		}
+
+		return sucess;
+	}
+
+	@Override
+	protected IContainer getInputIContainer() {
+		return _inputIContainer;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -164,5 +220,6 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 	private String _inputURL;
 	private File _outputFile;
 	private int _width = 320;
+	private int _percentage = -1;
 
 }

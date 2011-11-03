@@ -52,10 +52,10 @@ create database lportal character set utf8;</echo>
 			<param name="vm.host" value="${vm.host.db}" />
 		</antcall>
 
-		<echo file="create-oracle.sql">drop user &1 cascade;
+		<echo file="create-oracle.sql"><![CDATA[drop user &1 cascade;
 create user &1 identified by &2
 grant connect,resource to &1;
-exit;</echo>
+exit;]]></echo>
 
 		<antcall target="prepare-db-oracle-common">
 			<param name="skip.prepare-bundle" value="true" />

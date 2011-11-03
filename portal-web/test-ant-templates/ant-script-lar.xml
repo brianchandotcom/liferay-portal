@@ -49,29 +49,6 @@
 		</ant>
 	</target>
 
-	<target name="test-${test.ant.script.command}-jetty-mysql-firefox">
-		<antcall target="prepare-mysql">
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
-		</ant>
-
-		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
-		</ant>
-	</target>
-
 	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
@@ -86,6 +63,29 @@
 		</ant>
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-jetty-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.plugin.themes}

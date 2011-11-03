@@ -771,7 +771,8 @@ public class ClusterSchedulerEngine
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to lock memory scheduler cluster. Retrying.");
+						"Unable to obtain memory scheduler cluster lock. " +
+						"Retrying.");
 				}
 			}
 		}

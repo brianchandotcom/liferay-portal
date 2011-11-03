@@ -1108,6 +1108,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setUserId(versionUserId);
 		dlFileVersion.setUserName(versionUserName);
 		dlFileVersion.setCreateDate(modifiedDate);
+		dlFileVersion.setModifiedDate(modifiedDate);
 		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
 		dlFileVersion.setFolderId(dlFileEntry.getFolderId());
 		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
@@ -1589,6 +1590,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.setMimeType(mimeType);
 		}
 
+		dlFileVersion.setModifiedDate(statusDate);
 		dlFileVersion.setTitle(title);
 		dlFileVersion.setDescription(description);
 		dlFileVersion.setChangeLog(changeLog);

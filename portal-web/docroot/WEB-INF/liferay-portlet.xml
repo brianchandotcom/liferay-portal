@@ -1875,6 +1875,33 @@
 		<header-portlet-css>/html/portlet/mobile_device_rules/css/main.jsp</header-portlet-css>
 		<css-class-wrapper>mobile-device-rules</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>179</portlet-name>
+		<icon>/html/icons/social_activity.png</icon>
+		<struts-path>social_activity</struts-path>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<control-panel-entry-category>content</control-panel-entry-category>
+		<control-panel-entry-weight>23.0</control-panel-entry-weight>
+		<control-panel-entry-class>com.liferay.portlet.socialactivity.SocialActivityAdminControlPanelEntry</control-panel-entry-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<header-portlet-css>/html/portlet/social_activity/css/main.jsp</header-portlet-css>
+		<header-portlet-javascript>/html/portlet/social_activity/js/main.js</header-portlet-javascript>
+		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
+		<css-class-wrapper>portlet-social-activity</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>180</portlet-name>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>true</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<header-portlet-css>/html/portlet/user_statistics/css/main.css</header-portlet-css>
+		<css-class-wrapper>portlet-user-statistics</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

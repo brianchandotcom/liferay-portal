@@ -41,14 +41,6 @@ import javax.servlet.jsp.JspException;
 public class InputTag extends BaseInputTag {
 
 	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_forLabel = null;
-		_validators = null;
-	}
-
-	@Override
 	public int doEndTag() throws JspException {
 		updateFormValidators();
 
@@ -111,6 +103,14 @@ public class InputTag extends BaseInputTag {
 		}
 
 		_validators.put(validatorName, validatorTag);
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_forLabel = null;
+		_validators = null;
 	}
 
 	@Override

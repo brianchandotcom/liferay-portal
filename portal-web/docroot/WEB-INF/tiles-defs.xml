@@ -1470,6 +1470,14 @@
 		<put name="portlet_content" value="/portlet/shopping/view_item.jsp" />
 	</definition>
 
+	<!-- Social Activity -->
+
+	<definition name="portlet.social_activity" extends="portlet" />
+
+	<definition name="portlet.social_activity.view" extends="portlet.social_activity">
+		<put name="portlet_content" value="/portlet/social_activity/view.jsp" />
+	</definition>
+
 	<!-- Social Equity Admin -->
 
 	<definition name="portlet.social_equity_admin" extends="portlet" />
@@ -1528,6 +1536,12 @@
 
 	<definition name="portlet.user_groups_admin.view" extends="portlet.user_groups_admin">
 		<put name="portlet_content" value="/portlet/user_groups_admin/view.jsp" />
+	</definition>
+
+	<!-- User Statistics -->
+
+	<definition name="portlet.user_statistics.edit_display_counters" extends="portlet">
+		<put name="portlet_content" value="/portlet/user_statistics/edit_display_counter.jsp" />
 	</definition>
 
 	<!-- Users Admin -->

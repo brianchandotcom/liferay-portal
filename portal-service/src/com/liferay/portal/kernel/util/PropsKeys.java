@@ -1817,7 +1817,15 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 
+	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
+
+	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES = "social.activity.contribution.limit.values";
+
 	public static final String SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH = "social.activity.counter.period.length";
+
+	public static final String SOCIAL_ACTIVITY_PARTICIPATION_INCREMENTS = "social.activity.participation.increments";
+
+	public static final String SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES = "social.activity.participation.limit.values";
 
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
 

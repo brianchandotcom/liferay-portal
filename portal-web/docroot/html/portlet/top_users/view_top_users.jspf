@@ -44,8 +44,8 @@ for (int i = 0; i < results.size(); i++) {
 }
 %>
 
-<div>
-	<%= LanguageUtil.format(pageContext, "top-users-out-of-x", String.valueOf(total)) %>
+<div class="top-users">
+	<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" />
 </div>
 
 <c:if test="<%= total > 0 %>">
@@ -64,7 +64,7 @@ for (int i = 0; i < results.size(); i++) {
 	var searchTopUsers = A.one('#<portlet:namespace />searchTopUsers');
 
 	if (searchTopUsers) {
-		var parent = searchTopUsers.get('parentNode');
+		var parent = searchTopUsers.ancestor();
 
 		parent.plug(
 			A.Plugin.IO,
@@ -76,12 +76,12 @@ for (int i = 0; i < results.size(); i++) {
 		searchTopUsers.all('a').on(
 			'click',
 			function(event) {
+				event.preventDefault();
+
 				var uri = event.currentTarget.get('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
 
 				parent.io.set('uri', uri);
 				parent.io.start();
-
-				event.preventDefault();
 			}
 		);
 	}

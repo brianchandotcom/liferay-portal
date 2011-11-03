@@ -1484,6 +1484,8 @@
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
 		</action>
 
+		<action path="/portlet_configuration/edit_user_statistics_display_counters" forward="portlet.user_statistics.edit_display_counters" />
+
 		<action path="/portlet_configuration/export_import" type="com.liferay.portlet.portletconfiguration.action.ExportImportAction">
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
 			<forward name="portlet.portlet_configuration.export_import" path="portlet.portlet_configuration.export_import" />
@@ -1730,6 +1732,12 @@
 		</action>
 
 		<action path="/sites_admin/view_teams" forward="portlet.sites_admin.view_teams" />
+
+		<!-- Social Activity -->
+
+		<action path="/social_activity/view" type="com.liferay.portlet.socialactivity.action.ViewAction">
+			<forward name="portlet.social_activity.view" path="portlet.social_activity.view" />
+		</action>
 
 		<!-- Social Equity Admin -->
 

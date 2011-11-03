@@ -2704,6 +2704,68 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	<portlet>
+		<portlet-name>179</portlet-name>
+		<display-name>Social Activity</display-name>
+		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<init-param>
+			<name>view-action</name>
+			<value>/social_activity/view</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>180</portlet-name>
+		<display-name>User Statistics</display-name>
+		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<init-param>
+			<name>view-jsp</name>
+			<value>/html/portlet/user_statistics/view.jsp</value>
+		</init-param>
+		<init-param>
+			<name>config-jsp</name>
+			<value>/html/portlet/user_statistics/configuration.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<portlet-preferences>
+			<preference>
+				<name>displayCounterIndexes</name>
+				<value>0</value>
+			</preference>
+			<preference>
+				<name>displayCounter0</name>
+				<value>user.achievements</value>
+			</preference>
+			<preference>
+				<name>rankOnParticipation</name>
+				<value>true</value>
+			</preference>
+			<preference>
+				<name>rankOnContribution</name>
+				<value>true</value>
+			</preference>
+		</portlet-preferences>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
 	<custom-portlet-mode>
 		<portlet-mode>edit_guest</portlet-mode>
 		<portal-managed>true</portal-managed>

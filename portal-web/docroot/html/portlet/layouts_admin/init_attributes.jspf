@@ -156,14 +156,16 @@ LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, private
 
 LayoutLister layoutLister = new LayoutLister();
 
-String pagesName = "public-pages";
-
-if (privateLayout) {
-	pagesName = "private-pages";
-}
+String pagesName = null;
 
 if (portletName.equals(PortletKeys.LAYOUT_SET_PROTOTYPE)) {
 	pagesName = "pages";
+}
+else if (privateLayout) {
+	pagesName = "private-pages";
+}
+else {
+	pagesName = "public-pages";
 }
 
 String rootNodeName = LanguageUtil.get(pageContext, pagesName);

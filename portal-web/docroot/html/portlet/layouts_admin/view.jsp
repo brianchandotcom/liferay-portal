@@ -19,20 +19,7 @@
 <%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
 <%
-if ((renderResponse != null) && !portletName.equals(PortletKeys.GROUP_PAGES) && !portletName.equals(PortletKeys.MY_PAGES)) {
-	if (group.isLayoutPrototype()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "page-template"), null);
-
-		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), redirectURL.toString());
-	}
-	else {
-		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), null);
-	}
-
-	if (!group.isLayoutPrototype()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, pagesName), redirectURL.toString());
-	}
-}
+SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, renderResponse);
 %>
 
 <c:choose>

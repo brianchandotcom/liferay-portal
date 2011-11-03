@@ -117,3 +117,32 @@ td.lfr-middle {
 .popup-alert-notice input, .popup-alert-warning input {
 	vertical-align: middle;
 }
+
+.lfr-token {
+	background-color: #B3DAEF;
+	border: 1px solid #5FA8FF;
+	color: #444;
+	cursor: pointer;
+	display: inline-block;
+	padding: 0.3em 0.5em 0.3em;
+	margin: 0 0.2em;
+	text-decoration: none;
+}
+
+.lfr-token-primary {
+	border-width: 0;
+	font-weight: bold;
+}
+
+.lfr-token:hover {
+	background-color: #D1E5EF;
+}
+
+.lfr-token-primary, .lfr-token-primary:hover {
+	background-color: #B3DAEF;
+	cursor: auto;
+}
+
+.lfr-token img {
+	margin-right: 0.3em;
+}

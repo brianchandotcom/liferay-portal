@@ -71,7 +71,7 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	@include border-top-right-radius(0);
 }
 
-.portlet-journal .journal-article-default-translation, .portlet-journal .journal-article-translation, .layout-customizable-controls, .lfr-translation-manager-delete-translation {
+.lfr-token, .layout-customizable-controls, .lfr-translation-manager-delete-translation {
 	@include border-radius(8px);
 }
 

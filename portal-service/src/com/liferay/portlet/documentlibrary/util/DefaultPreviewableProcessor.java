@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.File;
@@ -24,6 +25,14 @@ import java.io.InputStream;
  */
 public abstract class DefaultPreviewableProcessor
 	extends DLPreviewableProcessor {
+
+	public void cleanup(FileEntry fileEntry) {
+		deleteFiles(fileEntry, getThumbnailType());
+	}
+
+	public void cleanup(FileVersion fileVersion) {
+		deleteFiles(fileVersion, getThumbnailType());
+	}
 
 	protected InputStream doGetPreviewAsStream(FileVersion fileVersion)
 		throws Exception {

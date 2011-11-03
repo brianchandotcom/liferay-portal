@@ -69,20 +69,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
-	public static void deleteFiles(FileEntry fileEntry) {
+	public static void deleteFiles(FileEntry fileEntry, String thumbnailType) {
 		deleteFiles(
 			fileEntry.getCompanyId(), fileEntry.getRepositoryId(),
-			fileEntry.getFileEntryId(), -1);
+			fileEntry.getFileEntryId(), -1, thumbnailType);
 	}
 
-	public static void deleteFiles(FileVersion fileVersion) {
+	public static void deleteFiles(FileVersion fileVersion, String thumbnailType) {
 		deleteFiles(
 			fileVersion.getCompanyId(), fileVersion.getRepositoryId(),
-			fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+			thumbnailType);
 	}
 
 	protected static void deleteFiles(
-		long companyId, long groupId, long fileEntryId, long fileVersionId) {
+		long companyId, long groupId, long fileEntryId, long fileVersionId,
+		String thumbnailType) {
 
 		try {
 			DLStoreUtil.deleteDirectory(
@@ -93,9 +95,16 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		try {
+			String directoryPath =
+				getPathSegment(groupId, fileEntryId, fileVersionId, false);
+
+			if (fileVersionId > 0) {
+				directoryPath = directoryPath.concat(StringPool.PERIOD);
+				directoryPath = directoryPath.concat(thumbnailType);
+			}
+
 			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID,
-				getPathSegment(groupId, fileEntryId, fileVersionId, false));
+				companyId, REPOSITORY_ID, directoryPath);
 		}
 		catch (Exception e) {
 		}

@@ -123,7 +123,29 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 
 		addPortletURL.setParameter("referringPortletResource", portletDisplay.getId());
 
-		addPortletURL.setParameter("assetCategoryIds", StringUtil.merge(allAssetCategoryIds));
+		Map<Long, String> vocabularyMap = new HashMap<Long, String>();
+
+		for (long assetCategoryId : allAssetCategoryIds) {
+			AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
+
+			long vocabularyId = assetCategory.getVocabularyId();
+
+			if (vocabularyMap.containsKey(vocabularyId)) {
+				vocabularyMap.put(vocabularyId, vocabularyMap.get(vocabularyId) + "," + String.valueOf(assetCategoryId));
+			}
+			else {
+				vocabularyMap.put(vocabularyId, String.valueOf(assetCategoryId));
+			}
+		}
+
+		Iterator itr = vocabularyMap.entrySet().iterator();
+
+		while (itr.hasNext()) {
+			Map.Entry e = (Map.Entry)itr.next();
+
+			addPortletURL.setParameter("assetCategoryIds" + StringPool.UNDERLINE + e.getKey(), (String) e.getValue());
+		}
+
 		addPortletURL.setParameter("assetTagNames", StringUtil.merge(allAssetTagNames));
 
 		if (classTypeId > 0) {

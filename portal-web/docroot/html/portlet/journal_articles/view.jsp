@@ -171,7 +171,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 			rowTextEntry = (TextSearchEntry)rowTextEntry.clone();
 
-			rowTextEntry.setName(HtmlUtil.escape(article.getTitle(locale)));
+			rowTextEntry.setName(article.getTitle(locale));
 
 			row.addText(rowTextEntry);
 

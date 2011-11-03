@@ -318,7 +318,9 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 				String fieldValue = dynamicElementElement.elementText(
 					"dynamic-content");
 
-				if ((fieldNames != null) && !fieldNames.contains(fieldName)) {
+				if (!ddmStructure.hasField(fieldName) ||
+					((fieldNames != null) && !fieldNames.contains(fieldName))) {
+
 					continue;
 				}
 

@@ -260,8 +260,6 @@ public class SocialActivityCounterFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(PortalUtil.getClassNameId(User.class.getName()));
-			qPos.add(SocialCounterPeriodUtil.getPeriodLength());
-			qPos.add(SocialCounterPeriodUtil.getActivityDay());
 
 			q.addEntity(
 				"SocialActivityCounter", SocialActivityCounterImpl.class);
@@ -300,8 +298,7 @@ public class SocialActivityCounterFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(PortalUtil.getClassNameId(User.class.getName()));
-			qPos.add(SocialCounterPeriodUtil.getPeriodLength());
-			qPos.add(SocialCounterPeriodUtil.getActivityDay());
+			qPos.add(SocialCounterPeriodUtil.getStartPeriod());
 
 			return (List<Long>)QueryUtil.list(
 				q, getDialect(), start, end);

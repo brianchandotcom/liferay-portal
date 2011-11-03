@@ -322,7 +322,6 @@
 				(classNameId = ?) AND
 				(classPK IN ([$CLASS_PK$])) AND
 				(name IN ([$NAME$])) AND
-				(startPeriod + ? >= ?) AND
 				(endPeriod = -1)
 			ORDER BY
 				classPK
@@ -338,12 +337,12 @@
 				(groupId = ?) AND
 				(classNameId = ?) AND
 				(name IN ([$NAME$])) AND
-				(startPeriod + ? >= ?) AND
+				(startPeriod >= ?) AND
 				(endPeriod = -1)
 			GROUP BY
 				classPK
 			ORDER BY
-				SUM(currentValue)
+				SUM(currentValue) DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByGroupId">

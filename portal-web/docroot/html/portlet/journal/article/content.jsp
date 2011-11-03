@@ -351,7 +351,7 @@ if (Validator.isNotNull(content)) {
 							<label for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="web-content-default-language" /></label>:
 
 							<span class="lfr-translation-manager-selector nobr">
-								<span class="article-default-language journal-article-default-translation" id="<portlet:namespace />textLanguageId">
+								<span class="article-default-language lfr-token lfr-token-primary" id="<portlet:namespace />textLanguageId">
 									<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + defaultLanguageId + ".png" %>' />
 
 									<%= LocaleUtil.fromLanguageId(defaultLanguageId).getDisplayName(locale) %>
@@ -454,7 +454,7 @@ if (Validator.isNotNull(content)) {
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<a class="journal-article-translation journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({id: '<portlet:namespace /><%= translations[i] %>', title: '<%= LanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
+										<a class="lfr-token journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({id: '<portlet:namespace /><%= translations[i] %>', title: '<%= LanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>
@@ -618,7 +618,7 @@ if (Validator.isNotNull(content)) {
 				translationLink.hide();
 			}
 			else if (!translationLink) {
-				var TPL_TRANSLATION = '<a class="journal-article-translation journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
+				var TPL_TRANSLATION = '<a class="lfr-token journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
 
 				translationLinkTpl = A.Lang.sub(
 					TPL_TRANSLATION,

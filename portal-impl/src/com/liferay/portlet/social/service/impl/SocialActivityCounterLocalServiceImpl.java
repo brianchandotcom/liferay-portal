@@ -37,9 +37,8 @@ import com.liferay.portlet.social.service.base.SocialActivityCounterLocalService
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinderUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -305,7 +304,7 @@ public class SocialActivityCounterLocalServiceImpl
 			return Collections.emptyList();
 		}
 
-		List<Tuple> userActivityCounters = new ArrayList<Tuple>();
+		Tuple[] userActivityCounters = new Tuple[userIds.size()];
 
 		List<SocialActivityCounter> activityCounters =
 			SocialActivityCounterFinderUtil.findAC_By_G_C_C_N_S_E(
@@ -324,13 +323,21 @@ public class SocialActivityCounterLocalServiceImpl
 				Tuple userActivityCounter = new Tuple(
 					userId, activityCountersMap);
 
-				userActivityCounters.add(userActivityCounter);
+				for (int i = 0; i < userIds.size(); i++) {
+					Number number = (Number)userIds.get(i);
+
+					if (number.longValue() == userId) {
+						userActivityCounters[i] = userActivityCounter;
+
+						break;
+					}
+				}
 			}
 
 			activityCountersMap.put(activityCounter.getName(), activityCounter);
 		}
 
-		return userActivityCounters;
+		return Arrays.asList(userActivityCounters);
 	}
 
 	public void incrementUserAchievementCounter(long userId, long groupId)

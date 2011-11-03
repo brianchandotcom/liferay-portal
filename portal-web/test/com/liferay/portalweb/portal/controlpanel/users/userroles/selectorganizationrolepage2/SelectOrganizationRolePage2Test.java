@@ -113,7 +113,44 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']"));
 		assertFalse(selenium.isTextPresent("No roles were found."));
-		selenium.close();
+		selenium.click("link=Organization Owner");
 		selenium.selectWindow("null");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Organization Owner")
+										.equals(selenium.getText(
+								"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Organization Owner"),
+			selenium.getText(
+				"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]"));
+		assertEquals(RuntimeVariables.replace("Organization 21"),
+			selenium.getText(
+				"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[2]"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Organization Owner"),
+			selenium.getText(
+				"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tbody/tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Organization 21"),
+			selenium.getText(
+				"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tbody/tr[3]/td[2]"));
 	}
 }

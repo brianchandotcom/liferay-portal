@@ -29,9 +29,49 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>selectAndWait</td>
-	<td>//select[@id='_125_itemsPerPage']</td>
-	<td>value=75</td>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>organization1Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${organization1Present}</td>
+	<td>Organization1NotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -44,16 +84,200 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
-	<td>select all</td>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>organization2Present</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>gotoIf</td>
+	<td>!${organization2Present}</td>
+	<td>Organization2NotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
-
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>organization3Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${organization3Present}</td>
+	<td>Organization3NotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>organization4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${organization4Present}</td>
+	<td>Organization4NotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td>organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>organization5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${organization5Present}</td>
+	<td>Organization5NotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>Select All</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization5NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization2NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Organization1NotPresent</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

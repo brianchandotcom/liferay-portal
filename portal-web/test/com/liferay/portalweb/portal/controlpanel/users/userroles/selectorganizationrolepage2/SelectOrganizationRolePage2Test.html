@@ -119,16 +119,50 @@
 	<td></td>
 </tr>
 <tr>
-	<td>close</td>
-	<td></td>
-	<td></td>
+	<td>click</td>
+	<td>link=Organization Owner</td>
+	<td>Organization Owner</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>waitForText</td>
+	<td>//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]</td>
+	<td>Organization Owner</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]</td>
+	<td>Organization Owner</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[2]</td>
+	<td>Organization 21</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tbody/tr[3]/td[1]</td>
+	<td>Organization Owner</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tbody/tr[3]/td[2]</td>
+	<td>Organization 21</td>
+</tr>
 </tbody></table>
 </body>
 </html>

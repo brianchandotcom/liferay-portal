@@ -63,7 +63,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 >
 	<c:if test='<%= !tabs1.equals("summary") %>'>
 		<liferay-ui:search-form
-			page="/html/portlet/users_admin/user_group_search.jsp"
+			page="/html/portlet/user_groups_admin/user_group_search.jsp"
 		/>
 
 		<div class="separator"><!-- --></div>

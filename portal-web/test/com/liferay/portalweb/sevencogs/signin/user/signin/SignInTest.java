@@ -75,9 +75,10 @@ public class SignInTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Test"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
-		assertEquals(RuntimeVariables.replace("You are signed in as Test Test."),
+		assertEquals(RuntimeVariables.replace(
+				"You are signed in as Joe Bloggs."),
 			selenium.getText("//div[@id='p_p_id_58_']/div/div/div[2]"));
 	}
 }

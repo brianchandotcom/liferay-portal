@@ -46,7 +46,7 @@ if (maxValue != minValue) {
 		int popularity = (int)(1 + ((maxValue - (maxValue - (tag.getAssetCount() - minValue))) * multiplier));
 	%>
 
-		<li class="tag-popularity-<%=popularity %>">
+		<li class="tag-popularity-<%= popularity %>">
 			<span>
 
 				<%
@@ -54,7 +54,7 @@ if (maxValue != minValue) {
 						portletURL.setParameter("tag", "");
 				%>
 
-					<a class="tag-selected" href="<%=portletURL %>">
+					<a class="tag-selected" href="<%= portletURL %>">
 
 				<%
 					}
@@ -62,13 +62,14 @@ if (maxValue != minValue) {
 						portletURL.setParameter("tag", tag.getName());
 				%>
 
-					<a href="<%=portletURL %>">
+					<a href="<%= portletURL %>">
 
 				<%
 					}
 				%>
 
-				<strong><%=tag.getName() %></strong></a>
+						<strong><%= tag.getName() %></strong>
+					</a>
 			</span>
 		</li>
 

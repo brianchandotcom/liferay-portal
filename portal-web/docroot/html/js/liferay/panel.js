@@ -125,14 +125,12 @@ AUI().add(
 					_defCollapseFn: function(event) {
 						var instance = this;
 
-						var el = event.panelTitle;
+						var panel = event.panel;
 
-						var currentContainer = el.ancestor('.lfr-panel');
-
-						currentContainer.toggleClass('lfr-collapsed');
+						panel.toggleClass('lfr-collapsed');
 
 						if (instance._accordion) {
-							var siblings = currentContainer.siblings('.lfr-panel');
+							var siblings = panel.siblings('.lfr-panel');
 
 							siblings.each(
 								function(item, index, collection) {
@@ -147,25 +145,38 @@ AUI().add(
 							);
 						}
 
-						var panelId = currentContainer.attr('id');
+						var panelId = event.panelId;
 						var state = 'open';
 
-						if (currentContainer.hasClass('lfr-collapsed')) {
+						if (panel.hasClass('lfr-collapsed')) {
 							state = 'closed';
 						}
 
 						instance._saveState(panelId, state);
 
-						instance.fire('titleClick');
+						instance.fire(
+							'titleClick',
+							{
+								panel: panel,
+								panelId: panelId,
+								panelTitle: event.panelTitle
+							}
+						);
 					},
 
 					_onTitleClick: function(event) {
 						var instance = this;
 
+						var currentTarget = event.currentTarget;
+
+						var panel = currentTarget.ancestor('.lfr-panel');
+
 						instance.fire(
 							'collapse',
 							{
-								panelTitle: event.currentTarget
+								panel: panel,
+								panelTitle: currentTarget,
+								panelId: panel.attr('id')
 							}
 						);
 					},

@@ -76,24 +76,22 @@ for (int displayCounterNameIndex : displayCounterNameIndexes) {
 %>
 
 <div class="group-statistics-container">
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="<%=title %>">
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "groupStatisticsPanel" + displayCounterNameIndex %>' persistState="<%= true %>" title="<%= title %>">
+		<div class="group-statistics-body" style="height: <%= infoBlockHeight %>px;">
+			<c:choose>
+				<c:when test='<%= chartType.equals("tagCloud") %>'>
+					<liferay-util:include page="/html/portlet/group_statistics/display/tag_cloud.jsp" />
+				</c:when>
 
-	<div class="group-statistics-body" style="height: <%=infoBlockHeight %>px;">
-		<c:choose>
-			<c:when test='<%=chartType.equals("tagCloud") %>'>
-				<liferay-util:include page="/html/portlet/group_statistics/display/tag_cloud.jsp" />
-			</c:when>
+				<c:when test='<%= chartType.equals("pie") %>'>
+					<liferay-util:include page="/html/portlet/group_statistics/display/activity_distribution.jsp" />
+				</c:when>
 
-			<c:when test='<%=chartType.equals("pie") %>'>
-				<liferay-util:include page="/html/portlet/group_statistics/display/activity_distribution.jsp" />
-			</c:when>
-
-			<c:otherwise>
-				<liferay-util:include page="/html/portlet/group_statistics/display/counter_chart.jsp" />
-			</c:otherwise>
-		</c:choose>
-	</div>
-
+				<c:otherwise>
+					<liferay-util:include page="/html/portlet/group_statistics/display/counter_chart.jsp" />
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</liferay-ui:panel>
 </div>
 

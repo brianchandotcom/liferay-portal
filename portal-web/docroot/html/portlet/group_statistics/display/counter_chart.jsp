@@ -131,9 +131,10 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 		styles: {
 			backgroundColor: '#FFF',
 			borderColor: '#4572A7',
-			borderWidth: 2,
-			color: "#000",
-			textAlign: 'center'
+			borderWidth: 1,
+			color: '#000',
+			textAlign: 'center',
+			width: 30
 		}
 	};
 
@@ -148,15 +149,16 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 					series: {
 						values: {
 							area: {
-								color: '#FFB700'
+								color: '#5CC0FF',
+								alpha: 0.4
 							},
 							line: {
-								color: '#000000',
+								color: '#4572A7',
 								weight: 2
 							},
 							marker: {
 								fill: {
-									color: '#00f'
+									color: '#3CCFFF'
 								},
 								height: 6
 							}
@@ -168,9 +170,14 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 		<c:otherwise>
 			var chartType = '<%= chartType %>';
 
-			var customConfig = {};
+			var customConfig = {
+				showAreaFill: true,
+				showMarkers: true
+			};
 		</c:otherwise>
 	</c:choose>
+
+	var chartContainer = A.one('#groupStatisticsChart<%= counterIndex %>');
 
 	var defaultConfig = {
 		axes: {
@@ -191,12 +198,27 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 			}
 		},
 		dataProvider: data,
+		height: <%= infoBlockHeight - 2 %>,
 		horizontalGridlines: true,
 		tooltip: tooltip,
-		type: chartType
+		type: chartType,
+		width: chartContainer.width()
 	};
 
 	A.mix(defaultConfig, customConfig);
 
-	var chart = new A.Chart(defaultConfig).render('#groupStatisticsChart<%= counterIndex %>');
+	var chart = new A.Chart(defaultConfig).render(chartContainer);
+
+	Liferay.after(
+		['portletMoved', 'liferaypanel:collapse'],
+		function(event) {
+			var width = chartContainer.width();
+
+			if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
+				(event.type == 'liferaypanel:collapse' && event.panelId  == 'groupStatisticsPanel<%= counterIndex %>')) {
+
+				chart.set('width', width);
+			}
+		}
+	);
 </aui:script>

@@ -244,10 +244,10 @@ AUI().add(
 				var portletBoundary = Layout.options.portletBoundary;
 				var portlets = dropColumn.all('>' + portletBoundary);
 				var firstPortlet = portlets.item(0);
+				var referencePortlet = null;
 
 				if (firstPortlet) {
 					var lastStatic = null;
-					var referencePortlet = null;
 					var firstPortletStatic = firstPortlet.isStatic;
 
 					if (!firstPortletStatic || (firstPortletStatic == 'end')) {
@@ -409,6 +409,15 @@ AUI().add(
 				var position = Layout.findIndex(portletNode);
 
 				if (Layout.hasMoved(portletNode)) {
+					Liferay.fire(
+						'portletMoved',
+						{
+							portlet: portletNode,
+							portletId: portletId,
+							position: position
+						}
+					);
+
 					Layout.saveLayout(
 						{
 							cmd: 'move',

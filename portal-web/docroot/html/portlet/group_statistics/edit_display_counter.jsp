@@ -46,11 +46,12 @@ String assetsLocalized = LanguageUtil.format(pageContext, "assets", StringPool.B
 				}
 		%>
 
-		<aui:option label='<%= LanguageUtil.format(pageContext, "social.counter."+ activityCounterName, new Object[] {assetsLocalized}) %>' selected="<%= activityCounterName.equals(currentCounterName) %>" value="<%= activityCounterName %>" />
+			<aui:option label='<%= LanguageUtil.format(pageContext, "social.counter."+ activityCounterName, new Object[] {assetsLocalized}) %>' selected="<%= activityCounterName.equals(currentCounterName) %>" value="<%= activityCounterName %>" />
 
 		<%
 			}
 		%>
+
 	</aui:select>
 
 	<span class="aui-field aui-field-inline inline-text">

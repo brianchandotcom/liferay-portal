@@ -42,7 +42,7 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 
 <aui:layout>
 	<aui:column columnWidth="70">
-		<div class="group-statistics-chart" style="height: <%= infoBlockHeight - 2 %>px;">
+		<div class="group-statistics-chart" style="height: <%= infoBlockHeight - 2 %>px; width: <%= infoBlockHeight - 2 %>px;">
 			<div id="groupStatisticsChart<%= counterIndex %>"></div>
 		</div>
 	</aui:column>
@@ -109,21 +109,14 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 		styles: {
 			backgroundColor: '#FFF',
 			borderColor: '#4572A7',
-			borderWidth: 2,
-			color: "#000",
-			textAlign: 'center'
+			borderWidth: 1,
+			color: '#000',
+			textAlign: 'center',
+			width: 30
 		}
 	};
 
 	var chartContainer = A.one('#groupStatisticsChart<%= counterIndex %>');
-
-	chartContainer.setStyles(
-		{
-			height: <%= infoBlockHeight - 2 %>,
-			margin: 'auto',
-			width: <%= infoBlockHeight - 2 %>
-		}
-	);
 
 	var chart = new A.Chart(
 		{
@@ -134,13 +127,33 @@ int infoBlockHeight = (Integer)request.getAttribute("group-statistics:info-block
 					styles: {
 						fill: {
 							colors: ['<%= StringUtil.merge(colors, "', '") %>']
+						},
+						border: {
+							alpha: 0.8,
+							colors: new Array(9).join('#333,').split(','),
+							weight: 1
 						}
 					},
 					valueKey: 'values'
 				}
 			],
+			height: <%= infoBlockHeight - 2 %>,
 			tooltip: tooltip,
-			type: 'pie'
+			type: 'pie',
+			width: <%= infoBlockHeight - 2 %>
 		}
 	).render(chartContainer);
+
+	Liferay.after(
+		['portletMoved', 'liferaypanel:collapse'],
+		function(event) {
+			var width = chartContainer.width();
+
+			if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
+				(event.type == 'liferaypanel:collapse' && event.panelId  == 'groupStatisticsPanel<%= counterIndex %>')) {
+
+				chart.set('width', width);
+			}
+		}
+	);
 </aui:script>

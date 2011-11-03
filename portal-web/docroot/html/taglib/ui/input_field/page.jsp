@@ -319,7 +319,7 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				}
 			}
 			else {
-				value = BeanParamUtil.getString(bean, request, field, defaultString);
+				value = BeanPropertiesUtil.getString(bean, field, defaultString);
 
 				String httpValue = request.getParameter(fieldParam);
 

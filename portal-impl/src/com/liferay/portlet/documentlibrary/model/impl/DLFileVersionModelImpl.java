@@ -71,6 +71,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "repositoryId", Types.BIGINT },
 			{ "folderId", Types.BIGINT },
 			{ "fileEntryId", Types.BIGINT },
@@ -88,7 +89,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -125,6 +126,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setRepositoryId(soapModel.getRepositoryId());
 		model.setFolderId(soapModel.getFolderId());
 		model.setFileEntryId(soapModel.getFileEntryId());
@@ -268,6 +270,15 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	@JSON
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -592,6 +603,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setUserId(getUserId());
 		dlFileVersionImpl.setUserName(getUserName());
 		dlFileVersionImpl.setCreateDate(getCreateDate());
+		dlFileVersionImpl.setModifiedDate(getModifiedDate());
 		dlFileVersionImpl.setRepositoryId(getRepositoryId());
 		dlFileVersionImpl.setFolderId(getFolderId());
 		dlFileVersionImpl.setFileEntryId(getFileEntryId());
@@ -729,6 +741,15 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			dlFileVersionCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			dlFileVersionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			dlFileVersionCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
 		dlFileVersionCacheModel.repositoryId = getRepositoryId();
 
 		dlFileVersionCacheModel.folderId = getFolderId();
@@ -821,7 +842,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{fileVersionId=");
 		sb.append(getFileVersionId());
@@ -835,6 +856,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", repositoryId=");
 		sb.append(getRepositoryId());
 		sb.append(", folderId=");
@@ -873,7 +896,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileVersion");
@@ -902,6 +925,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
@@ -986,6 +1013,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
+	private Date _modifiedDate;
 	private long _repositoryId;
 	private long _folderId;
 	private long _originalFolderId;

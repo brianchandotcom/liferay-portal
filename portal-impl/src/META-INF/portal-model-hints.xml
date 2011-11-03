@@ -1397,6 +1397,7 @@
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="repositoryId" type="long" />
 		<field name="folderId" type="long" />
 		<field name="fileEntryId" type="long" />

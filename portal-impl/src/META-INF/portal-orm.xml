@@ -1862,6 +1862,9 @@
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="repositoryId" />
 			<basic name="folderId" />
 			<basic name="fileEntryId" />

@@ -618,6 +618,7 @@ create table DLFileVersion (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
+	modifiedDate DATE null,
 	repositoryId LONG,
 	folderId LONG,
 	fileEntryId LONG,

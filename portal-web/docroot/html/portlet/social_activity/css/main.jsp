@@ -145,9 +145,15 @@
 			}
 
 			.settings-header-label {
-				display: inline-block;
 				font-weight: bold;
 				padding: 0 5px;
+			}
+
+			.action-field {
+				background-image: url(<%= themeImagesPath %>/common/add.png);
+				background-position: 5px 50%;
+				background-repeat: no-repeat;
+				padding-left: 25px;
 			}
 		}
 

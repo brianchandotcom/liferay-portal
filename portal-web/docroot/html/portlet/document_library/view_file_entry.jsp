@@ -231,7 +231,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 						%>
 
-						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" />
+						<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT %>; width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
 					</span>
 
 					<span class="user-date">

@@ -110,6 +110,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -1184,6 +1184,27 @@
 
 	Liferay.provide(
 		Util,
+		'removeFolderSelection',
+		function(folderIdString, folderNameString, namespace) {
+			A.one('#' + namespace + folderIdString).val(0);
+
+			var nameEl = A.one('#' + namespace + folderNameString);
+
+			nameEl.attr('href', '');
+			nameEl.empty();
+
+			var button = A.one('#' + namespace + 'removeFolderButton');
+
+			if (button) {
+				button.attr('disabled', true);
+				button.ancestor('.aui-button').addClass('aui-button-disabled');
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
 		'removeItem',
 		function(box, value) {
 			box = A.one(box);
@@ -1373,6 +1394,27 @@
 			);
 		},
 		['aui-io']
+	);
+
+	Liferay.provide(
+		Util,
+		'selectFolder',
+		function(folderData, folderHref, namespace) {
+			A.one('#' + namespace + folderData['idString']).val(folderData['idValue']);
+
+			var nameEl = A.one('#' + namespace + folderData['nameString']);
+
+			nameEl.attr('href', folderHref + '&' + namespace + 'folderId=' + folderData['idValue']);
+			nameEl.setContent(folderData['nameValue'] + '&nbsp;');
+
+			var button = A.one('#' + namespace + 'removeFolderButton');
+
+			if (button) {
+				button.set('disabled', false);
+				button.ancestor('.aui-button').removeClass('aui-button-disabled');
+			}
+		},
+		['aui-base']
 	);
 
 	Liferay.provide(

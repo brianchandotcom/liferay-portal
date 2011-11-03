@@ -20,6 +20,7 @@
 String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
 String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -103,18 +104,10 @@ else if (layoutSetPrototype != null) {
 %>
 
 <liferay-ui:header
-	backURL="<%= redirect %>"
+	backURL="<%= backURL %>"
 	localizeTitle="<%= localizeTitle %>"
 	title="<%= title %>"
 />
-
-<liferay-portlet:renderURL varImpl="redirectURL">
-	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-    <aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-   	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-   	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-</liferay-portlet:renderURL>
 
 <portlet:actionURL var="editSiteURL">
 	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
@@ -122,8 +115,9 @@ else if (layoutSetPrototype != null) {
 
 <aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
@@ -158,6 +152,12 @@ else if (layoutSetPrototype != null) {
 <aui:script>
 	function <portlet:namespace />saveGroup() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (group == null) ? Constants.ADD : Constants.UPDATE %>";
+
+		var redirect = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="backURL" value="<%= backURL %>"></portlet:param></portlet:renderURL>";
+
+		redirect += Liferay.Util.getHistoryParam('<portlet:namespace />');
+
+		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = redirect;
 
 		var ok = true;
 

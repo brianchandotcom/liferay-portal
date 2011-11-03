@@ -33,12 +33,20 @@ if (contributionActivityCounter == null) {
 	contributionActivityCounter.setName(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 }
 
+if (!contributionActivityCounter.isActivePeriod()) {
+	contributionActivityCounter.setCurrentValue(0);
+}
+
 SocialActivityCounter participationActivityCounter = activityCounters.get(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
 if (participationActivityCounter == null) {
 	participationActivityCounter = new SocialActivityCounterImpl();
 
 	participationActivityCounter.setName(SocialActivityCounterConstants.NAME_PARTICIPATION);
+}
+
+if (!participationActivityCounter.isActivePeriod()) {
+	participationActivityCounter.setCurrentValue(0);
 }
 
 activityCounters.remove(SocialActivityCounterConstants.NAME_CONTRIBUTION);
@@ -55,11 +63,11 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 		</div>
 
 		<div class="contribution-score">
-			<span><liferay-ui:message key='contribution-score' />:</span> <%= contributionActivityCounter.getCurrentValue() %>
+			<span><liferay-ui:message key='contribution-score' />:</span> <%= contributionActivityCounter.getCurrentValue() %> (<span><liferay-ui:message key='total' />: <%= contributionActivityCounter.getTotalValue() %>)
 		</div>
 
 		<div class="participation-score">
-			<span><liferay-ui:message key='participation-score' />:</span> <%= participationActivityCounter.getCurrentValue() %>
+			<span><liferay-ui:message key='participation-score' />:</span> <%= participationActivityCounter.getCurrentValue() %> (<span><liferay-ui:message key='total' />: <%= participationActivityCounter.getTotalValue() %>)
 		</div>
 	</c:if>
 </liferay-ui:user-display>
@@ -69,10 +77,13 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
 	<%
 	for (SocialActivityCounter activityCounter : activityCounters.values()) {
+		if (!activityCounter.isActivePeriod()) {
+			activityCounter.setCurrentValue(0);
+		}
 	%>
 
 		<div class="social.counter.<%= activityCounter.getName() %>">
-			<span><liferay-ui:message key='<%= "social.counter." + activityCounter.getName() %>' />:</span> <%= activityCounter.getCurrentValue() %>
+			<span><liferay-ui:message key='<%= "social.counter." + activityCounter.getName() %>' />:</span> <%= activityCounter.getCurrentValue() %> (<span><liferay-ui:message key='total' />: <%= activityCounter.getTotalValue() %>)
 		</div>
 
 	<%

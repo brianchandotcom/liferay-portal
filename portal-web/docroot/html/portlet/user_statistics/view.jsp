@@ -79,7 +79,12 @@ if (!rankingNamesList.isEmpty()) {
 	%>
 
 	<div class="top-users">
-		<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %>
+		<c:if test="<%= total > 0 %>">
+			<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %>
+		</c:if>
+		<c:if test="<%= total == 0 %>">
+			<liferay-ui:message key="no-active-users-this-period" />
+		</c:if>
 	</div>
 
 	<c:if test="<%= total > 0 %>">

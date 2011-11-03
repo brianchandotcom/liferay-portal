@@ -104,7 +104,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	<aui:input label="<%= taglibLabel %>" name="friendlyURL" />
 
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
-		<aui:input bean="<%= stagingGroup %>" label="staging-friendly-url" model="<%= Group.class %>" field="friendlyURL" fieldParam="stagingFriendlyURL" name="stagingFriendlyURL" />
+		<aui:input bean="<%= stagingGroup %>" field="friendlyURL" fieldParam="stagingFriendlyURL" label="staging-friendly-url" model="<%= Group.class %>" name="stagingFriendlyURL" />
 	</c:if>
 </aui:fieldset>
 

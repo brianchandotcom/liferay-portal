@@ -65,7 +65,6 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -244,9 +243,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 		catch (NoSuchFileException nsfe) {
 		}
-
-		DLPreviewableProcessor.deleteFiles(
-			new LiferayFileVersion(dlFileVersion));
 
 		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
 	}

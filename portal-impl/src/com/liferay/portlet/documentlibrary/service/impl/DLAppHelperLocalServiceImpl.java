@@ -42,7 +42,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
-import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.Serializable;
@@ -110,7 +109,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// File previews
 
-		DLPreviewableProcessor.deleteFiles(fileEntry);
+		DLProcessorRegistryUtil.cleanup(fileEntry);
 
 		// File ranks
 

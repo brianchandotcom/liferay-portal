@@ -29,6 +29,8 @@ try {
 	if (Validator.isNotNull(articleId)) {
 		article = JournalArticleLocalServiceUtil.getLatestArticle(groupId, articleId);
 
+		article = article.toEscapedModel();
+
 		groupId = article.getGroupId();
 		type = article.getType();
 	}
@@ -55,7 +57,7 @@ type = ParamUtil.getString(request, "type", type);
 		</span>
 
 		<span class="displaying-article-id-holder <%= article == null ? "aui-helper-hidden" : StringPool.BLANK %>">
-			<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? HtmlUtil.escape(article.getTitle(locale)) : StringPool.BLANK %></span>
+			<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? article.getTitle(locale) : StringPool.BLANK %></span>
 		</span>
 	</div>
 
@@ -184,7 +186,7 @@ type = ParamUtil.getString(request, "type", type);
 
 		// Title
 
-		row.addText(HtmlUtil.escape(curArticle.getTitle(locale)), rowHREF);
+		row.addText(curArticle.getTitle(locale), rowHREF);
 
 		// Modified date
 

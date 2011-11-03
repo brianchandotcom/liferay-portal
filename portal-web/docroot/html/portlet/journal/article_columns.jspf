@@ -22,7 +22,7 @@ row.addText(article.getArticleId(), rowURL);
 
 // Title
 
-row.addText(HtmlUtil.escape(article.getTitle(locale)), rowURL);
+row.addText(article.getTitle(locale), rowURL);
 
 // Status
 

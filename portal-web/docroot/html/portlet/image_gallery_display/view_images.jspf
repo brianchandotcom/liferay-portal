@@ -27,7 +27,7 @@
 	</c:otherwise>
 </c:choose>
 
-<div>
+<div id="<portlet:namespace />imageGalleryAssetInfo">
 
 	<%
 	for (int i = 0; i < results.size(); i++) {
@@ -127,7 +127,7 @@
 				viewFolderURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 				%>
 
-				<a class="image-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+				<a class="folder-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
 
 					<%
 					int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());

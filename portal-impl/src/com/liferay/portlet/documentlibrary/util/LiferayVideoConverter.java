@@ -283,6 +283,11 @@ public class LiferayVideoConverter extends LiferayConverter {
 		cleanUp(inputIStreamCoders, outputIStreamCoders);
 	}
 
+	@Override
+	protected IContainer getInputIContainer() {
+		return _inputIContainer;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		LiferayVideoConverter.class);
 

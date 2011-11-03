@@ -43,13 +43,13 @@ if (!rankingNamesList.isEmpty()) {
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
-	String[] selectedNames = selectedNamesList.toArray(new String[selectedNamesList.size()]);
-
 	if (displayAdditionalCounters) {
 		for (int displayCounterNameIndex : displayCounterNameIndexes) {
 			selectedNamesList.add(PrefsParamUtil.getString(preferences, request, "displayCounterName" + displayCounterNameIndex));
 		}
 	}
+
+	String[] selectedNames = selectedNamesList.toArray(new String[selectedNamesList.size()]);
 
 	List<Tuple> results = SocialActivityCounterLocalServiceUtil.getUserActivityCounters(scopeGroupId, rankingNames, selectedNames, searchContainer.getStart(), searchContainer.getEnd());
 
@@ -79,7 +79,12 @@ if (!rankingNamesList.isEmpty()) {
 	%>
 
 	<div class="top-users">
-		<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %>
+		<c:if test="<%= total > 0 %>">
+			<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %>
+		</c:if>
+		<c:if test="<%= total == 0 %>">
+			<liferay-ui:message key="no-active-users-this-period" />
+		</c:if>
 	</div>
 
 	<c:if test="<%= total > 0 %>">

@@ -703,6 +703,8 @@ AUI().add(
 								uri = Liferay.Util.addParams('controlPanelCategory=' + controlPanelCategory, uri) || uri;
 							}
 
+							uri = uri.replace(/p_p_state=maximized/g, 'p_p_state=pop_up');
+
 							instance._openWindow(
 								{
 									dialog: {

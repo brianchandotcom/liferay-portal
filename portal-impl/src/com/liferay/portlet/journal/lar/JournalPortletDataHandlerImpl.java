@@ -484,6 +484,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
+		long structureClassPK = 0;
+
 		if (Validator.isNotNull(article.getStructureId())) {
 			String structureUuid = articleElement.attributeValue(
 				"structure-uuid");
@@ -530,6 +532,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 
 			parentStructureId = existingStructure.getStructureId();
+
+			structureClassPK = existingStructure.getPrimaryKey();
 		}
 
 		if (Validator.isNotNull(article.getTemplateId())) {
@@ -689,19 +693,20 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if (existingArticle == null) {
 				importedArticle = JournalArticleLocalServiceUtil.addArticle(
-					userId, portletDataContext.getScopeGroupId(), 0, 0,
-					articleId, autoArticleId, article.getVersion(),
-					article.getTitleMap(), article.getDescriptionMap(),
-					article.getContent(), article.getType(), parentStructureId,
-					parentTemplateId, article.getLayoutUuid(), displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, reviewDateMonth,
-					reviewDateDay, reviewDateYear, reviewDateHour,
-					reviewDateMinute, neverReview, article.isIndexable(),
-					article.isSmallImage(), article.getSmallImageURL(),
-					smallFile, images, articleURL, serviceContext);
+					userId, portletDataContext.getScopeGroupId(),
+					article.getClassNameId(), structureClassPK, articleId,
+					autoArticleId, article.getVersion(), article.getTitleMap(),
+					article.getDescriptionMap(), article.getContent(),
+					article.getType(), parentStructureId, parentTemplateId,
+					article.getLayoutUuid(), displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour,	expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview,
+					article.isIndexable(), article.isSmallImage(),
+					article.getSmallImageURL(), smallFile, images, articleURL,
+					serviceContext);
 			}
 			else {
 				importedArticle = JournalArticleLocalServiceUtil.updateArticle(
@@ -723,7 +728,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		else {
 			importedArticle = JournalArticleLocalServiceUtil.addArticle(
-				userId, portletDataContext.getScopeGroupId(), 0, 0, articleId,
+				userId, portletDataContext.getScopeGroupId(),
+				article.getClassNameId(), structureClassPK, articleId,
 				autoArticleId, article.getVersion(), article.getTitleMap(),
 				article.getDescriptionMap(), article.getContent(),
 				article.getType(), parentStructureId, parentTemplateId,

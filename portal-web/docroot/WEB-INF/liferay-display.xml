@@ -106,6 +106,7 @@
 		<portlet id="121" />
 		<portlet id="159" />
 		<portlet id="180" />
+		<portlet id="181" />
 	</category>
 	<category name="category.tools">
 		<portlet id="2" />

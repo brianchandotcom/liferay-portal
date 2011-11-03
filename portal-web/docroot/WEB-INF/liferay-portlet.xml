@@ -1902,6 +1902,17 @@
 		<header-portlet-css>/html/portlet/user_statistics/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-user-statistics</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>181</portlet-name>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>true</use-default-template>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<header-portlet-css>/html/portlet/group_statistics/css/main.jsp</header-portlet-css>
+		<header-portlet-javascript>/html/portlet/group_statistics/js/main.js</header-portlet-javascript>
+		<css-class-wrapper>portlet-group-statistics</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

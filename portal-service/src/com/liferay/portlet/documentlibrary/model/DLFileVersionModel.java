@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -41,7 +42,7 @@ import java.util.Date;
  * @generated
  */
 public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
-	WorkflowedModel {
+	GroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -161,6 +162,20 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	 * @param createDate the create date of this document library file version
 	 */
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this document library file version.
+	 *
+	 * @return the modified date of this document library file version
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this document library file version.
+	 *
+	 * @param modifiedDate the modified date of this document library file version
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the repository ID of this document library file version.

@@ -37,6 +37,7 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setFolderId(model.getFolderId());
 		soapModel.setFileEntryId(model.getFileEntryId());
@@ -151,6 +152,14 @@ public class DLFileVersionSoap implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getRepositoryId() {
@@ -287,6 +296,7 @@ public class DLFileVersionSoap implements Serializable {
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
+	private Date _modifiedDate;
 	private long _repositoryId;
 	private long _folderId;
 	private long _fileEntryId;

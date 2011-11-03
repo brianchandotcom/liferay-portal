@@ -32,7 +32,7 @@ if (fileShortcut == null) {
 	}
 
 	if (Validator.isNotNull(thumbnailQueryString)) {
-		thumbnailSrc = _getPreviewURL(fileEntry, fileVersion.getVersion(), themeDisplay, thumbnailQueryString);
+		thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, thumbnailQueryString);
 	}
 }
 %>

@@ -186,6 +186,24 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	/**
+	* Returns the modified date of this document library file version.
+	*
+	* @return the modified date of this document library file version
+	*/
+	public java.util.Date getModifiedDate() {
+		return _dlFileVersion.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this document library file version.
+	*
+	* @param modifiedDate the modified date of this document library file version
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_dlFileVersion.setModifiedDate(modifiedDate);
+	}
+
+	/**
 	* Returns the repository ID of this document library file version.
 	*
 	* @return the repository ID of this document library file version

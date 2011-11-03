@@ -403,7 +403,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(0, fileEntryId, 0);
 
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		DLProcessorRegistryUtil.cleanup(
+			fileEntry.getLatestFileVersion());
+
 		repository.cancelCheckOut(fileEntryId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		dlAppHelperLocalService.updateFileEntry(
+			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
 	}
 
 	/**
@@ -2161,6 +2173,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
+		DLProcessorRegistryUtil.cleanup(fileEntry.getLatestFileVersion());
+
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
 
@@ -2224,6 +2238,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
+		if (is != null) {
+			DLProcessorRegistryUtil.cleanup(
+				fileEntry.getLatestFileVersion());
+		}
+
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
 
@@ -2248,6 +2267,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
+		DLProcessorRegistryUtil.cleanup(fileEntry.getLatestFileVersion());
+
 		repository.checkInFileEntry(
 			fileEntryId, majorVersion, changeLog, serviceContext);
 
@@ -2269,6 +2290,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+
+		if (is != null) {
+			DLProcessorRegistryUtil.cleanup(
+				fileEntry.getLatestFileVersion());
+		}
 
 		repository.checkInFileEntry(
 			fileEntryId, majorVersion, changeLog, serviceContext);

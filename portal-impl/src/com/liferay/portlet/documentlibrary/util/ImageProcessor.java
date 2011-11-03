@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -47,6 +48,16 @@ import java.util.Vector;
  * @author Alexander Chow
  */
 public class ImageProcessor extends DLPreviewableProcessor {
+
+	public void cleanup(FileEntry fileEntry) {
+		deleteFiles(fileEntry, null);
+	}
+
+	public void cleanup(FileVersion fileVersion) {
+		String type = _instance._getImageType(fileVersion);
+
+		deleteFiles(fileVersion, type);
+	}
 
 	public static void generateImages(FileVersion fileVersion) {
 		_instance._generateImages(fileVersion);

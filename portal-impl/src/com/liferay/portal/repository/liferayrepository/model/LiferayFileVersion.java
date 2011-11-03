@@ -134,7 +134,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	public Date getModifiedDate() {
-		return getCreateDate();
+		return _dlFileVersion.getModifiedDate();
 	}
 
 	@Override

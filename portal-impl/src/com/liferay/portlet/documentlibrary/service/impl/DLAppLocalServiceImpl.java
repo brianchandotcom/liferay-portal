@@ -36,6 +36,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -1441,6 +1442,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
+		DLProcessorRegistryUtil.cleanup(fileEntry.getLatestFileVersion());
+
 		dlAppHelperLocalService.updateFileEntry(
 			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
 
@@ -1505,6 +1508,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+
+		if (is != null) {
+			DLProcessorRegistryUtil.cleanup(fileEntry.getLatestFileVersion());
+		}
 
 		dlAppHelperLocalService.updateFileEntry(
 			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);

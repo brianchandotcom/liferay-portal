@@ -35,7 +35,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{fileVersionId=");
 		sb.append(fileVersionId);
@@ -49,6 +49,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", folderId=");
@@ -106,6 +108,13 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		}
 		else {
 			dlFileVersionImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setModifiedDate(null);
+		}
+		else {
+			dlFileVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		dlFileVersionImpl.setRepositoryId(repositoryId);
@@ -192,6 +201,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public long userId;
 	public String userName;
 	public long createDate;
+	public long modifiedDate;
 	public long repositoryId;
 	public long folderId;
 	public long fileEntryId;

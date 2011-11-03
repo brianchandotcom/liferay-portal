@@ -216,12 +216,14 @@ COMMIT_TRANSACTION;
 
 update DLFileShortcut set repositoryId = groupId;
 
+alter table DLFileVersion add modifiedDate DATE null;
 alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add folderId LONG;
 alter table DLFileVersion add fileEntryTypeId LONG;
 
 COMMIT_TRANSACTION;
 
+update DLFileVersion set modifiedDate = statusDate;
 update DLFileVersion set repositoryId = groupId;
 
 alter table DLFolder add repositoryId LONG;

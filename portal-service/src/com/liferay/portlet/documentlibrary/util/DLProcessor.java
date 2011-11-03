@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 /**
@@ -30,6 +31,10 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  * @see    VideoProcessor
  */
 public interface DLProcessor {
+
+	public void cleanup(FileEntry fileEntry);
+
+	public void cleanup(FileVersion fileVersion);
 
 	/**
 	 * Launches the processor's work with respect to the given file version.

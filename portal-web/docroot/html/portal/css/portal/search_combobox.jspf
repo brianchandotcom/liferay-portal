@@ -26,6 +26,10 @@
 	vertical-align: top;
 }
 
+.lfr-search-combobox .aui-button {
+	margin-left: 0.5em;
+}
+
 .lfr-search-combobox:after {
 	clear: both;
 	content: "";
@@ -39,4 +43,10 @@
 
 .lfr-search-combobox .aui-button-input {
 	padding: 4px;
+}
+
+.ie6 {
+	.lfr-search-combobox {
+		position: relative;
+	}
 }

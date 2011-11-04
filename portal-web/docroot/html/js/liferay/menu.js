@@ -65,6 +65,8 @@ AUI().add(
 
 		var SELECTOR_SEARCH_CONTAINER = '.lfr-menu-list-search-container';
 
+		var SELECTOR_SEARCH_INPUT = '.lfr-menu-list-search';
+
 		var STR_BLANK = '';
 
 		var TPL_MENU = '<div class="lfr-component lfr-menu-list" />';

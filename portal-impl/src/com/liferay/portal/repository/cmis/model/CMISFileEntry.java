@@ -202,8 +202,17 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		}
 
 		try {
+			List<org.apache.chemistry.opencmis.client.api.Folder> parents =
+				_document.getParents();
+
+			if (parents.isEmpty()) {
+				_document = _document.getObjectOfLatestVersion(false);
+
+				parents = _document.getParents();
+			}
+
 			parentFolder = CMISRepositoryLocalServiceUtil.toFolder(
-				getRepositoryId(), _document.getParents().get(0));
+				getRepositoryId(), parents.get(0));
 
 			setParentFolder(parentFolder);
 		}

@@ -149,6 +149,17 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryTypePersistence.remove(fileEntryTypeId);
 	}
 
+	public void deleteAll(long groupId)
+		throws PortalException, SystemException {
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			dlFileEntryTypePersistence.findByGroupId(groupId);
+
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			deleteFileEntryType(dlFileEntryType.getFileEntryTypeId());
+		}
+	}
+
 	public void deleteFileEntryTypes(long folderId) throws SystemException {
 		List<DLFileEntryType> dlFileEntryTypes =
 			dlFolderPersistence.getDLFileEntryTypes(folderId);

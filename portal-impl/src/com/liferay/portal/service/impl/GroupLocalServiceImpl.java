@@ -653,6 +653,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Document library
 
+		dlFileEntryTypeLocalService.deleteAll(group.getGroupId());
 		repositoryService.unmountRepositories(group.getGroupId());
 
 		// Journal

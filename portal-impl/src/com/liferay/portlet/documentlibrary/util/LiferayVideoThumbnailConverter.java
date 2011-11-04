@@ -99,15 +99,15 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 			}
 		}
 
-		if (seekTimeStamp != -1) {
-			rewind();
-
-			seek(seekTimeStamp);
-		}
-
 		boolean thumbnailGenerated = false;
 
 		try {
+			if (seekTimeStamp != -1) {
+				rewind();
+
+				seek(seekTimeStamp);
+			}
+
 			thumbnailGenerated = generateThumbnail(
 				inputIStreamCoders, inputIVideoPictures);
 		}

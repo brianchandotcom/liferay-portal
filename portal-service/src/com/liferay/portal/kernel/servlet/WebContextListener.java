@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -24,28 +25,36 @@ import javax.servlet.ServletContextListener;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebContextListener implements ServletContextListener {
+public class WebContextListener
+	extends BasePortalLifecycle implements ServletContextListener {
+
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		portalDestroy();
+	}
 
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext = servletContextEvent.getServletContext();
+		_servletContext = servletContextEvent.getServletContext();
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		_webClassLoader = currentThread.getContextClassLoader();
 
+		registerPortalLifecycle();
+	}
+
+	@Override
+	protected void doPortalInit() {
 		HotDeployUtil.fireDeployEvent(
-			new HotDeployEvent(servletContext, contextClassLoader));
+			new HotDeployEvent(_servletContext, _webClassLoader));
 	}
 
-	public void contextDestroyed(ServletContextEvent event) {
-		ServletContext servletContext = event.getServletContext();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
+	@Override
+	protected void doPortalDestroy() {
 		HotDeployUtil.fireUndeployEvent(
-			new HotDeployEvent(servletContext, contextClassLoader));
+			new HotDeployEvent(_servletContext, _webClassLoader));
 	}
+
+	private ServletContext _servletContext;
+	private ClassLoader _webClassLoader;
 
 }

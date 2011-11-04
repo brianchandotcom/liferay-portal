@@ -1260,9 +1260,9 @@
 					(Role_.companyId = ?) AND
 					(
 						(Role_.name = 'Administrator') OR
-						(Role_.name = 'Community Administrator') OR
-						(Role_.name = 'Community Member') OR
-						(Role_.name = 'Community Owner') OR
+						(Role_.name = 'Site Administrator') OR
+						(Role_.name = 'Site Member') OR
+						(Role_.name = 'Site Owner') OR
 						(Role_.name = 'Guest') OR
 						(Role_.name = 'Organization Administrator') OR
 						(Role_.name = 'Organization Member') OR

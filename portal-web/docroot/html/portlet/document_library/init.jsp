@@ -136,12 +136,14 @@ boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActio
 boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
+boolean showPrevAndNextNavigation = PrefsParamUtil.getBoolean(preferences, request, "showPrevAndNextNavigation", PropsValues.IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED);
 
 if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showActions = true;
 	showAddFolderButton = true;
 	showFolderMenu = true;
 	showTabs = true;
+	showPrevAndNextNavigation = false;
 }
 
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);

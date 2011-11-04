@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/css_init.jsp" %>
 
-.portlet-document-library, .portlet-document-library-display {
+.portlet-document-library, .portlet-document-library-display, .portlet-image-gallery-display {
 	.file-entry-list-description {
 		font-style: italic;
 		margin-left: 10px;
@@ -423,6 +423,35 @@
 			background-repeat: no-repeat;
 		}
 
+		.prev-next-navigation {
+			float: right;
+
+			.left-arrow, .right-arrow {
+				display: inline-block;
+				height: 25px;
+				margin: 0;
+				opacity: 0.5;
+				width: 30px;
+
+				&:hover {
+				  opacity: 1;
+				}
+			}
+
+			.left-arrow {
+				background: url(<%= themeImagesPath %>/document_library/preview_left.png) no-repeat 0 50%;
+			}
+
+			.right-arrow {
+				background: url(<%= themeImagesPath %>/document_library/preview_right.png) no-repeat 0 50%;
+			}
+
+			.disabled, .disabled:hover {
+				cursor: auto;
+				opacity: 0.1;
+			}
+		}
+
 		.aui-icon-display-list {
 			background-position: 0 100%;
 		}
@@ -508,6 +537,7 @@
 
 		.edit-toolbar {
 			margin: 0;
+			float: left;
 		}
 
 		.parent-folder-title {

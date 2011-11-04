@@ -39,6 +39,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= showTabs %>" />
 
+				<aui:input label="show-previous-and-next-navigation" name="preferences--showPrevAndNextNavigation--" type="checkbox" value="<%= showPrevAndNextNavigation %>" />
+
 				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
 
 				<aui:field-wrapper label="show-media-type">

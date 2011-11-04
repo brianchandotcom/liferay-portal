@@ -951,6 +951,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the file entries before and after the current file entry in the
+	 * ordered set
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  obc Comparator used to sort the file entries
+	 * @return the previous, current, and next file entries
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		return repository.getFileEntriesPrevAndNext(fileEntryId, obc);
+	}
+
+	/**
 	 * Returns the file entry with the primary key.
 	 *
 	 * @param  fileEntryId the primary key of the file entry

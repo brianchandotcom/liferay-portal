@@ -213,6 +213,13 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.getFileEntriesCount(folderId, documentTypeId);
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return _baseRepository.getFileEntriesPrevAndNext(fileEntryId, obc);
+	}
+
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 

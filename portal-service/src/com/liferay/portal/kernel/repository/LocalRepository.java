@@ -68,6 +68,10 @@ public interface LocalRepository {
 	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
 		throws SystemException;
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException;
+
 	public int getFileEntriesCount(long folderId)
 		throws SystemException;
 

@@ -120,6 +120,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
+		searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
+
 		long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
@@ -189,6 +191,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
+				searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
+
 				String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
 
 				int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, false);
@@ -251,6 +255,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		}
 
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+		searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
 
 		int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId);
 

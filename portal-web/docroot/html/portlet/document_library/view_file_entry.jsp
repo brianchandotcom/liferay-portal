@@ -119,13 +119,7 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
-boolean showPrevAndNextControls = false;
-
 OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc");
-
-if (portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && showPrevAndNextNavigation) {
-	showPrevAndNextControls = true;
-}
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -164,10 +158,11 @@ if (portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && showPrevAndNextNaviga
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
 					<c:if test='<%= showActions %>'>
-						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>'/>
+						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 					</c:if>
 
-					<c:if test="<%= showPrevAndNextControls %>">
+					<c:if test="<%= showPrevAndNextNavigation %>">
+
 						<%
 						FileEntry[] prevAndNext = DLAppServiceUtil.getFileEntriesPrevAndNext(fileEntry.getFileEntryId(), obc);
 
@@ -200,6 +195,7 @@ if (portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && showPrevAndNextNaviga
 										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="fileEntryId" value="<%= String.valueOf(nextEntry.getFileEntryId()) %>" />
 									</portlet:renderURL>
+
 									<aui:a href="<%= nextEntryURL %>">
 										<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
 									</aui:a>
@@ -976,6 +972,7 @@ if (portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && showPrevAndNextNaviga
 		).render();
 
 		buttonRow.setData('fileEntryToolbar', fileEntryToolbar);
+
 	</c:if>
 
 	<portlet:namespace />initRowsChecked();

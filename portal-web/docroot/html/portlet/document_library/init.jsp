@@ -135,14 +135,17 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActions");
 boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
-boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 boolean showPrevAndNextNavigation = PrefsParamUtil.getBoolean(preferences, request, "showPrevAndNextNavigation", PropsValues.IG_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED);
+boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
 if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showActions = true;
 	showAddFolderButton = true;
 	showFolderMenu = true;
 	showTabs = true;
+}
+
+if (!portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 	showPrevAndNextNavigation = false;
 }
 

@@ -451,13 +451,13 @@ public class CMISRepository extends BaseCmisRepository {
 			}
 		}
 
-		if (i - 1 >= 0) {
+		if ((i - 1) >= 0) {
 			fileEntries[0] = siblingFileEntries.get(i - 1);
 		}
 
 		fileEntries[1] = fileEntry;
 
-		if (i + 1 < siblingFileEntries.size()) {
+		if ((i + 1) < siblingFileEntries.size()) {
 			fileEntries[2] = siblingFileEntries.get(i + 1);
 		}
 

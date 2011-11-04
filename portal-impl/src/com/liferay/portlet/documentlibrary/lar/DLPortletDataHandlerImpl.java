@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -35,7 +37,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -629,17 +633,23 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
 				folder.getFolderId());
 
-		String deaultFileEntryTypeUuid = StringPool.BLANK;
+		String defaultFileEntryTypeUuid = StringPool.BLANK;
 
 		for (int i = 0; i < dlFileEntryTypes.size(); i++) {
 			DLFileEntryType dlFileEntryType = dlFileEntryTypes.get(i);
+
+			if (!isFileEntryTypeExportable(
+					portletDataContext.getCompanyId(), dlFileEntryType)) {
+
+				continue;
+			}
 
 			fileEntryTypeUuids[i] = dlFileEntryType.getUuid();
 
 			if (defaultFileEntryTypeId ==
 					dlFileEntryType.getFileEntryTypeId()) {
 
-				deaultFileEntryTypeUuid = dlFileEntryType.getUuid();
+				defaultFileEntryTypeUuid = dlFileEntryType.getUuid();
 			}
 
 			exportFileEntryType(
@@ -649,7 +659,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		folderElement.addAttribute(
 			"fileEntryTypeUuids", StringUtil.merge(fileEntryTypeUuids));
 		folderElement.addAttribute(
-			"defaultFileEntryTypeUuid", deaultFileEntryTypeUuid);
+			"defaultFileEntryTypeUuid", defaultFileEntryTypeUuid);
 	}
 
 	protected static void exportMetaData(
@@ -673,6 +683,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				fileEntryTypeId);
 
 		if (dlFileEntryType == null) {
+			return;
+		}
+
+		if (!isFileEntryTypeExportable(
+				portletDataContext.getCompanyId(), dlFileEntryType)) {
+
 			return;
 		}
 
@@ -1307,6 +1323,23 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 	}
 
+	protected static boolean isFileEntryTypeExportable(
+			long companyId, DLFileEntryType dlFileEntryType)
+		throws PortalException, SystemException {
+
+		if (dlFileEntryType.getFileEntryTypeId() == 0) {
+			return false;
+		}
+
+		Group global = GroupLocalServiceUtil.getCompanyGroup(companyId);
+
+		if (dlFileEntryType.getGroupId() == global.getGroupId()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
@@ -1360,6 +1393,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				new long[] {portletDataContext.getScopeGroupId()});
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			if (!isFileEntryTypeExportable(
+					portletDataContext.getCompanyId(), dlFileEntryType)) {
+
+				continue;
+			}
+
 			exportFileEntryType(
 				portletDataContext, fileEntryTypesElement, dlFileEntryType);
 		}

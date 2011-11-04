@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.JspFactorySwapper;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.security.lang.PortalSecurityManager;
@@ -92,10 +93,18 @@ public class StartupAction extends SimpleAction {
 
 		// Security manager
 
-		if ((System.getSecurityManager() == null) &&
-			(PropsValues.PORTAL_SECURITY_MANAGER_ENABLE)) {
-
-			System.setSecurityManager(new PortalSecurityManager());
+		if (PropsValues.PORTAL_SECURITY_MANAGER_ENABLE.equals("liferay")) {
+			if (System.getSecurityManager() == null) {
+				System.setSecurityManager(new PortalSecurityManager());
+			}
+		}
+		else if (PropsValues.PORTAL_SECURITY_MANAGER_ENABLE.equals("none")) {
+			System.setSecurityManager(null);
+		}
+		else if (PropsValues.PORTAL_SECURITY_MANAGER_ENABLE.equals("smart")) {
+			if (ServerDetector.isWebSphere()) {
+				System.setSecurityManager(null);
+			}
 		}
 
 		// FreeMarker

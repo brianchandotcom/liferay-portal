@@ -110,6 +110,24 @@ public class ConfigurePortlet1BlogsScopeDefaultTest extends BaseTestCase {
 
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//label[@for='scopeType']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Scope"),
 			selenium.getText("//label[@for='scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",

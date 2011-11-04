@@ -53,27 +53,43 @@ showSearch = showSearch && !results.isEmpty();
 	</div>
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
-	<h1 class="entry-title">
-		<%= LanguageUtil.format(pageContext, "entries-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
-	</h1>
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(categoryTitle) && Validator.isNotNull(tagName) %>">
+		<h1 class="entry-title">
+			<%= LanguageUtil.format(pageContext, "entries-with-x-x-and-tag-x", new String[] {vocabularyTitle, categoryTitle, tagName}) %>
+		</h1>
 
-	<%
-	AssetUtil.addPortletBreadcrumbEntries(categoryId, request, portletURL);
-	%>
+		<%
+		AssetUtil.addPortletBreadcrumbEntries(categoryId, request, portletURL);
 
-</c:if>
+		PortalUtil.addPortletBreadcrumbEntry(request, tagName, currentURL);
+		%>
 
-<c:if test="<%= Validator.isNotNull(tagName) %>">
-	<h1 class="entry-title">
-		<%= LanguageUtil.format(pageContext, "entries-with-tag-x", HtmlUtil.escape(tagName)) %>
-	</h1>
+	</c:when>
+	<c:otherwise>
+		<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
+			<h1 class="entry-title">
+				<%= LanguageUtil.format(pageContext, "entries-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
+			</h1>
 
-	<%
-	PortalUtil.addPortletBreadcrumbEntry(request, tagName, currentURL);
-	%>
+			<%
+			AssetUtil.addPortletBreadcrumbEntries(categoryId, request, portletURL);
+			%>
 
-</c:if>
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(tagName) %>">
+			<h1 class="entry-title">
+				<%= LanguageUtil.format(pageContext, "entries-with-tag-x", HtmlUtil.escape(tagName)) %>
+			</h1>
+
+			<%
+			PortalUtil.addPortletBreadcrumbEntry(request, tagName, currentURL);
+			%>
+
+		</c:if>
+	</c:otherwise>
+</c:choose>
 
 <%
 for (Object result : results) {

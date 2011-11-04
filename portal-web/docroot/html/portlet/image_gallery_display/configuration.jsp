@@ -66,8 +66,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 							rightList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
 						}
 					}
-
-					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 					%>
 
 					<liferay-ui:input-move-boxes

@@ -634,9 +634,15 @@ public class EditFileEntryAction extends PortletAction {
 				String portletResource = ParamUtil.getString(
 					actionRequest, "portletResource");
 
-				PortletPreferences portletPreferences =
+				PortletPreferences portletPreferences = null;
+
+				if (Validator.isNotNull(portletResource)) {
 					PortletPreferencesFactoryUtil.getPortletSetup(
 						actionRequest, portletResource);
+				}
+				else {
+					portletPreferences = actionRequest.getPreferences();
+				}
 
 				String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
 					portletPreferences, actionRequest);

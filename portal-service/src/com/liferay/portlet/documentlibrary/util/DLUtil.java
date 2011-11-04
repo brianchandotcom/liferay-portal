@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -535,7 +536,7 @@ public class DLUtil {
 
 	private static DLUtil _instance = new DLUtil();
 
-	private Set<String> _allMediaGalleryMimeTypes = new HashSet<String>();
+	private Set<String> _allMediaGalleryMimeTypes = new TreeSet<String>();
 	private String _allMediaGalleryMimeTypesString;
 	private Set<String> _fileIcons = new HashSet<String>();
 	private Map<String, String> _genericNames = new HashMap<String, String>();

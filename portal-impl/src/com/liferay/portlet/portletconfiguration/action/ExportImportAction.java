@@ -95,10 +95,10 @@ public class ExportImportAction extends EditConfigurationAction {
 
 				sendRedirect(actionRequest, actionResponse);
 			}
-			else if (cmd.equals("export")) {
+			else if (cmd.equals(Constants.EXPORT)) {
 				exportData(actionRequest, actionResponse, portlet);
 			}
-			else if (cmd.equals("import")) {
+			else if (cmd.equals(Constants.IMPORT)) {
 				importData(actionRequest, actionResponse, portlet);
 
 				sendRedirect(actionRequest, actionResponse);

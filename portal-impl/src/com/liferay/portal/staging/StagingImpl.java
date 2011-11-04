@@ -1160,57 +1160,59 @@ public class StagingImpl implements Staging {
 
 		String cmd = MapUtil.getString(parameterMap, "cmd");
 
-		if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-			UnicodeProperties typeSettingsProperties =
-				layout.getTypeSettingsProperties();
-
-			typeSettingsProperties.setProperty(
-				"last-import-date", String.valueOf(System.currentTimeMillis()));
-
-			String layoutRevisionId = GetterUtil.getString(
-				layoutElement.attributeValue("layout-revision-id"));
-
-			typeSettingsProperties.setProperty(
-				"last-import-layout-revision-id", layoutRevisionId);
-
-			String layoutSetBranchId = MapUtil.getString(
-				parameterMap, "layoutSetBranchId");
-
-			typeSettingsProperties.setProperty(
-				"last-import-layout-set-branch-id", layoutSetBranchId);
-
-			String layoutSetBranchName = MapUtil.getString(
-				parameterMap, "layoutSetBranchName");
-
-			typeSettingsProperties.setProperty(
-				"last-import-layout-set-branch-name", layoutSetBranchName);
-
-			String lastImportUserName = MapUtil.getString(
-				parameterMap, "lastImportUserName");
-
-			typeSettingsProperties.setProperty(
-				"last-import-user-name", lastImportUserName);
-
-			String lastImportUserUuid = MapUtil.getString(
-				parameterMap, "lastImportUserUuid");
-
-			typeSettingsProperties.setProperty(
-				"last-import-user-uuid", lastImportUserUuid);
-
-			String layoutBranchId = GetterUtil.getString(
-				layoutElement.attributeValue("layout-branch-id"));
-
-			typeSettingsProperties.setProperty(
-				"last-import-layout-branch-id", layoutBranchId);
-
-			String layoutBranchName = GetterUtil.getString(
-				layoutElement.attributeValue("layout-branch-name"));
-
-			typeSettingsProperties.setProperty(
-				"last-import-layout-branch-name", layoutBranchName);
-
-			layout.setTypeSettingsProperties(typeSettingsProperties);
+		if (!cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+			return;
 		}
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"last-import-date", String.valueOf(System.currentTimeMillis()));
+
+		String layoutRevisionId = GetterUtil.getString(
+			layoutElement.attributeValue("layout-revision-id"));
+
+		typeSettingsProperties.setProperty(
+			"last-import-layout-revision-id", layoutRevisionId);
+
+		String layoutSetBranchId = MapUtil.getString(
+			parameterMap, "layoutSetBranchId");
+
+		typeSettingsProperties.setProperty(
+			"last-import-layout-set-branch-id", layoutSetBranchId);
+
+		String layoutSetBranchName = MapUtil.getString(
+			parameterMap, "layoutSetBranchName");
+
+		typeSettingsProperties.setProperty(
+			"last-import-layout-set-branch-name", layoutSetBranchName);
+
+		String lastImportUserName = MapUtil.getString(
+			parameterMap, "lastImportUserName");
+
+		typeSettingsProperties.setProperty(
+			"last-import-user-name", lastImportUserName);
+
+		String lastImportUserUuid = MapUtil.getString(
+			parameterMap, "lastImportUserUuid");
+
+		typeSettingsProperties.setProperty(
+			"last-import-user-uuid", lastImportUserUuid);
+
+		String layoutBranchId = GetterUtil.getString(
+			layoutElement.attributeValue("layout-branch-id"));
+
+		typeSettingsProperties.setProperty(
+			"last-import-layout-branch-id", layoutBranchId);
+
+		String layoutBranchName = GetterUtil.getString(
+			layoutElement.attributeValue("layout-branch-name"));
+
+		typeSettingsProperties.setProperty(
+			"last-import-layout-branch-name", layoutBranchName);
+
+		layout.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	public void updateStaging(PortletRequest portletRequest, Group liveGroup)

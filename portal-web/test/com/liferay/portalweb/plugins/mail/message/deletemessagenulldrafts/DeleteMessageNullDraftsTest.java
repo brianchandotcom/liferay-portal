@@ -54,9 +54,7 @@ public class DeleteMessageNullDraftsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[3]/div/div/div/div/div/div/div/div/a",
-							"Drafts")) {
+				if (selenium.isVisible("//a[contains(.,'Drafts')]")) {
 					break;
 				}
 			}
@@ -66,9 +64,8 @@ public class DeleteMessageNullDraftsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//div[3]/div/div/div/div/div/div/div/div/a", "Drafts"));
-		selenium.clickAt("//div[3]/div/div/div/div/div/div/div/div/a",
+		assertTrue(selenium.isPartialText("//a[contains(.,'Drafts')]", "Drafts"));
+		selenium.clickAt("//a[contains(.,'Drafts')]",
 			RuntimeVariables.replace("Drafts"));
 		Thread.sleep(5000);
 

@@ -37,11 +37,13 @@ particiaption-limit-period?, counter*, achievement*)>
 	period (day|lifetime|period) #REQUIRED
 >
 
-<!ELEMENT counter (name, owner-type, increment?)>
+<!ELEMENT counter (name, owner-type, enabled?, increment?)>
 
 <!ELEMENT name (#PCDATA)>
 
 <!ELEMENT owner-type (#PCDATA)>
+
+<!ELEMENT enabled (#PCDATA)>
 
 <!ELEMENT increment (#PCDATA)>
 

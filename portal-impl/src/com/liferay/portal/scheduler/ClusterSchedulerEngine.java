@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scheduler;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -582,6 +583,15 @@ public class ClusterSchedulerEngine
 
 		Address address = (Address)getDeserializedObject(lock.getOwner());
 
+		if (ClusterExecutorUtil.getLocalClusterNodeAddress().equals(address)) {
+			if (methodKey == _getScheduledJobsMethodKey3) {
+				return methodHandler.invoke(false);
+			}
+			else {
+				return methodHandler.invoke(schedulerEngine);
+			}
+		}
+
 		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 			methodHandler, address);
 
@@ -900,6 +910,10 @@ public class ClusterSchedulerEngine
 	private static MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
 		SchedulerEngineUtil.class.getName(), "getScheduledJobs",
 		StorageType.class);
+
+	@BeanReference(
+		name="com.liferay.portal.scheduler.ClusterSchedulerEngineService")
+	protected SchedulerEngine schedulerEngine;
 
 	private String _beanIdentifier;
 	private ClusterEventListener _clusterEventListener;

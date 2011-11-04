@@ -301,6 +301,12 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().deleteFileEntryType(fileEntryTypeId);
 	}
 
+	public static void deleteAll(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteAll(groupId);
+	}
+
 	public static void deleteFileEntryTypes(long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFileEntryTypes(folderId);

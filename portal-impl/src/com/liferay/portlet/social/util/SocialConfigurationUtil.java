@@ -393,25 +393,21 @@ public class SocialConfigurationUtil {
 		SocialActivityCounterDefinition activityCounterDefinition =
 			new SocialActivityCounterDefinition();
 
-		String name = GetterUtil.getString(counterElement.elementText("name"));
-
-		activityCounterDefinition.setName(name);
-
-		String ownerType = GetterUtil.getString(
-			counterElement.elementText("owner-type"));
-
-		activityCounterDefinition.setOwnerType(ownerType);
-
-		int increment = GetterUtil.getInteger(
-			counterElement.elementText("increment"), 1);
-
-		activityCounterDefinition.setIncrement(increment);
+		activityCounterDefinition.setIncrement(
+			GetterUtil.getInteger(counterElement.elementText("increment"), 1));
+		activityCounterDefinition.setEnabled(
+			GetterUtil.getBoolean(counterElement.elementText("enabled"), true));
+		activityCounterDefinition.setName(
+			GetterUtil.getString(counterElement.elementText("name")));
+		activityCounterDefinition.setOwnerType(
+			GetterUtil.getString(counterElement.elementText("owner-type")));
 
 		if (activityCounterDefinition.getOwnerType() == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Invalid owner type " + ownerType + " for  model " +
-						activityDefinition.getModelName());
+					"Invalid owner type " +
+						counterElement.elementText("owner-type") +
+						" for  model " + activityDefinition.getModelName());
 			}
 
 			return;

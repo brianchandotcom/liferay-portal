@@ -75,6 +75,18 @@ public class SocialCounterPeriodUtil {
 		return getEndPeriod() - offset * getPeriodLength();
 	}
 
+	public static int getEndPeriod(long time) {
+		int activityDay = getActivityDay(time);
+
+		int offset = 0;
+
+		while (getStartPeriod(offset) > activityDay) {
+			offset--;
+		}
+
+		return getEndPeriod(offset);
+	}
+
 	public static int getFirstActivityDayOfYear() {
 		Calendar calendar = new GregorianCalendar();
 
@@ -142,6 +154,7 @@ public class SocialCounterPeriodUtil {
 
 		return _startPeriod;
 	}
+
 	public static int getStartPeriod(int offset) {
 		if (_isMonthlyPeriod()) {
 			Calendar calendar = new GregorianCalendar();
@@ -160,6 +173,19 @@ public class SocialCounterPeriodUtil {
 
 		return getStartPeriod() - offset * getPeriodLength();
 	}
+
+	public static int getStartPeriod(long time) {
+		int activityDay = getActivityDay(time);
+
+		int offset = 0;
+
+		while (getStartPeriod(offset) > activityDay) {
+			offset--;
+		}
+
+		return getStartPeriod(offset);
+	}
+
 	private static boolean _isMonthlyPeriod() {
 		if (PropsValues.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month")) {
 			return true;

@@ -1,5 +1,7 @@
 <#setting number_format = "0">
 
+insert into DLFileEntryType (fileEntryTypeId, groupId, companyId, userId, createDate, modifiedDate, name) values (0, 0, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Basic Document');
+
 <#if (maxDLFolderCount > 0)>
 	<#assign ddmStructure = dataFactory.addDDMStructure(groupId, companyId, firstUserId, dataFactory.DLFileEntryClassName.classNameId)>
 

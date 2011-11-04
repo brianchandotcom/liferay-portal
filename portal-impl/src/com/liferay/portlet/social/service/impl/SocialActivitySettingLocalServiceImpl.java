@@ -145,9 +145,9 @@ public class SocialActivitySettingLocalServiceImpl
 		socialActivitySettingPersistence.update(activitySetting, false);
 	}
 
-	public void updateActivitySettings(
+	public void updateActivitySetting(
 			long groupId, String className, int activityType,
-			List<SocialActivityCounterDefinition> activityCounterDefinitions)
+			SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -156,53 +156,63 @@ public class SocialActivitySettingLocalServiceImpl
 			SocialConfigurationUtil.getActivityDefinition(
 				className, activityType);
 
-		for (SocialActivityCounterDefinition activityCounterDefinition :
-				activityCounterDefinitions) {
+		SocialActivityCounterDefinition defaultActivityCounterDefinition =
+			defaultActivityDefinition.getActivityCounterDefinition(
+				activityCounterDefinition.getName());
 
-			SocialActivitySetting activitySetting =
-				socialActivitySettingPersistence.fetchByG_C_A_N(
-					groupId, classNameId, activityType,
-					activityCounterDefinition.getName());
+		SocialActivitySetting activitySetting =
+			socialActivitySettingPersistence.fetchByG_C_A_N(
+				groupId, classNameId, activityType,
+				activityCounterDefinition.getName());
+
+		if ((defaultActivityCounterDefinition != null) &&
+			(defaultActivityCounterDefinition.equals(
+				activityCounterDefinition))) {
 
 			if (activitySetting != null) {
-				SocialActivityCounterDefinition
-					defaultActivityCounterDefinition =
-						defaultActivityDefinition.getActivityCounterDefinition(
-							activityCounterDefinition.getName());
-
-				if ((defaultActivityCounterDefinition != null) &&
-					(defaultActivityCounterDefinition.equals(
-						activityCounterDefinition))) {
-
-					socialActivitySettingPersistence.remove(activitySetting);
-
-					continue;
-				}
-
-				activitySetting.setValue(toJSON(activityCounterDefinition));
-			}
-			else {
-				Group group = groupLocalService.getGroup(groupId);
-
-				long activitySettingId = counterLocalService.increment();
-
-				activitySetting = socialActivitySettingPersistence.create(
-					activitySettingId);
-
-				activitySetting.setGroupId(groupId);
-				activitySetting.setCompanyId(group.getCompanyId());
-				activitySetting.setClassNameId(classNameId);
-				activitySetting.setActivityType(activityType);
-				activitySetting.setName(activityCounterDefinition.getName());
-				activitySetting.setValue(toJSON(activityCounterDefinition));
+				socialActivitySettingPersistence.remove(activitySetting);
 			}
 
-			socialActivitySettingPersistence.update(activitySetting, false);
+			return;
 		}
+
+		if (activitySetting != null) {
+			activitySetting.setValue(toJSON(activityCounterDefinition));
+		}
+		else {
+			Group group = groupLocalService.getGroup(groupId);
+
+			long activitySettingId = counterLocalService.increment();
+
+			activitySetting = socialActivitySettingPersistence.create(
+				activitySettingId);
+
+			activitySetting.setGroupId(groupId);
+			activitySetting.setCompanyId(group.getCompanyId());
+			activitySetting.setClassNameId(classNameId);
+			activitySetting.setActivityType(activityType);
+			activitySetting.setName(activityCounterDefinition.getName());
+			activitySetting.setValue(toJSON(activityCounterDefinition));
+		}
+
+		socialActivitySettingPersistence.update(activitySetting, false);
 
 		String key = encodeKey(groupId, className, activityType);
 
 		_activityDefinitions.remove(key);
+	}
+
+	public void updateActivitySettings(
+			long groupId, String className, int activityType,
+			List<SocialActivityCounterDefinition> activityCounterDefinitions)
+		throws PortalException, SystemException {
+
+		for (SocialActivityCounterDefinition activityCounterDefinition :
+				activityCounterDefinitions) {
+
+			updateActivitySetting(groupId, className, activityType,
+				activityCounterDefinition);
+		}
 	}
 
 	protected String encodeKey(
@@ -234,12 +244,12 @@ public class SocialActivitySettingLocalServiceImpl
 			String name = activitySetting.getName();
 
 			if (name.equals(
-					SocialActivitySettingConstants.NAME_COUNTER_ENABLED)) {
+					SocialActivitySettingConstants.NAME_ENABLED)) {
 
-				activityDefinition.setCounterEnabled(
+				activityDefinition.setEnabled(
 					GetterUtil.getBoolean(
 						activitySetting.getValue(),
-						defaultActivityDefinition.isCounterEnabled()));
+						defaultActivityDefinition.isEnabled()));
 			}
 			else if (name.equals(
 						SocialActivitySettingConstants.NAME_LOG_ENABLED)) {
@@ -272,6 +282,8 @@ public class SocialActivitySettingLocalServiceImpl
 					activityDefinition.addCounter(activityCounterDefinition);
 				}
 
+				activityCounterDefinition.setEnabled(
+					jsonObject.getBoolean("enabled"));
 				activityCounterDefinition.setIncrement(
 					jsonObject.getInt("value"));
 				activityCounterDefinition.setLimitPeriod(
@@ -304,6 +316,7 @@ public class SocialActivitySettingLocalServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("enabled", activityCounterDefinition.isEnabled());
 		jsonObject.put(
 			"limitPeriod", activityCounterDefinition.getLimitPeriod());
 		jsonObject.put("limitValue", activityCounterDefinition.getLimitValue());

@@ -293,6 +293,16 @@ public class SocialActivitySettingLocalServiceUtil {
 		getService().updateActivitySetting(groupId, className, enabled);
 	}
 
+	public static void updateActivitySetting(long groupId,
+		java.lang.String className, int activityType,
+		com.liferay.portlet.social.model.SocialActivityCounterDefinition activityCounterDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateActivitySetting(groupId, className, activityType,
+			activityCounterDefinition);
+	}
+
 	public static void updateActivitySettings(long groupId,
 		java.lang.String className, int activityType,
 		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> activityCounterDefinitions)

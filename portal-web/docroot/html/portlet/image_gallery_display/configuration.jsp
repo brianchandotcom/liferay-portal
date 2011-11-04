@@ -18,6 +18,10 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+
+String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
+
+Set<String> allMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -49,9 +53,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					List leftList = new ArrayList();
 
-					for (int i = 0; i < mimeTypes.length; i++) {
-						String mimeType = mimeTypes[i];
-
+					for (String mimeType : mimeTypes) {
 						leftList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
 					}
 
@@ -59,13 +61,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					List rightList = new ArrayList();
 
-					Arrays.sort(mimeTypes);
-
-					Iterator itr = _allMimeTypes.iterator();
-
-					while (itr.hasNext()) {
-						String mimeType = (String)itr.next();
-
+					for (String mimeType : allMimeTypes) {
 						if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
 							rightList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
 						}

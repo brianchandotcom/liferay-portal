@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,14 +50,17 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameCo
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -307,6 +312,16 @@ public class DLUtil {
 		return 0;
 	}
 
+	public static Set<String> getAllMediaGalleryMimeTypes() {
+		Set<String> allMimeTypes = new TreeSet<String>();
+
+		allMimeTypes.addAll(_AUDIO_MIME_TYPES);
+		allMimeTypes.addAll(_VIDEO_MIME_TYPES);
+		allMimeTypes.addAll(_IMAGE_MIME_TYPES);
+
+		return allMimeTypes;
+	}
+
 	public static String getDividedPath(long id) {
 		StringBundler sb = new StringBundler(16);
 
@@ -355,6 +370,23 @@ public class DLUtil {
 		throws PortalException, SystemException {
 
 		return getGroupIds(themeDisplay.getScopeGroupId());
+	}
+
+	public static String[] getMediaGalleryMimeTypes(
+		PortletPreferences portletPreferences, PortletRequest portletRequest) {
+
+		Set<String> allMimeTypes = getAllMediaGalleryMimeTypes();
+
+		String defaultMimeTypes = StringUtil.merge(allMimeTypes);
+
+		String mimeTypes = PrefsParamUtil.getString(
+			portletPreferences, portletRequest, "mimeTypes", defaultMimeTypes);
+
+		String[] mimeTypesArray = StringUtil.split(mimeTypes);
+
+		Arrays.sort(mimeTypesArray);
+
+		return mimeTypesArray;
 	}
 
 	public static OrderByComparator getRepositoryModelOrderByComparator(
@@ -488,11 +520,23 @@ public class DLUtil {
 		}
 	}
 
+	private static final Set<String> _AUDIO_MIME_TYPES =
+		SetUtil.fromArray(PropsUtil.getArray(
+			PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES));
+
 	private static final String _DEFAULT_FILE_ICON = "page";
 
 	private static final String _DEFAULT_GENERIC_NAME = "default";
 
 	private static final long _DIVISOR = 256;
+
+	private static final Set<String> _IMAGE_MIME_TYPES =
+		SetUtil.fromArray(PropsUtil.getArray(
+			PropsKeys.IG_IMAGE_THUMBNAIL_MIME_TYPES));
+
+	private static final Set<String> _VIDEO_MIME_TYPES =
+		SetUtil.fromArray(PropsUtil.getArray(
+			PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES));
 
 	private static Log _log = LogFactoryUtil.getLog(DLUtil.class);
 

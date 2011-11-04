@@ -555,6 +555,7 @@
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>
 		<exception>FileExtension</exception>
+		<exception>FileMimeType</exception>
 		<exception>FileName</exception>
 		<exception>FileShortcutPermission</exception>
 		<exception>FileSize</exception>

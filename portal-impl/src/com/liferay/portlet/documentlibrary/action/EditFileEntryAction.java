@@ -44,14 +44,17 @@ import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
+import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -59,17 +62,20 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -115,7 +121,7 @@ public class EditFileEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)
 				|| cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
-				updateFileEntry(actionRequest, actionResponse);
+				updateFileEntry(portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				addMultipleFileEntries(actionRequest, actionResponse);
@@ -186,6 +192,7 @@ public class EditFileEntryAction extends PortletAction {
 			else if (e instanceof DuplicateFileException ||
 					 e instanceof DuplicateFolderNameException ||
 					 e instanceof FileExtensionException ||
+					 e instanceof FileMimeTypeException ||
 					 e instanceof FileNameException ||
 					 e instanceof FileSizeException ||
 					 e instanceof NoSuchFolderException ||
@@ -584,7 +591,8 @@ public class EditFileEntryAction extends PortletAction {
 	}
 
 	protected void updateFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -615,6 +623,24 @@ public class EditFileEntryAction extends PortletAction {
 			String contentType = uploadPortletRequest.getContentType("file");
 
 			long size = uploadPortletRequest.getSize("file");
+
+			if (portletConfig.getPortletName().equals(
+					PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+
+				String portletResource = ParamUtil.getString(
+					actionRequest, "portletResource");
+
+				PortletPreferences portletPreferences =
+					PortletPreferencesFactoryUtil.getPortletSetup(
+						actionRequest, portletResource);
+
+				String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
+					portletPreferences, actionRequest);
+
+				if (Arrays.binarySearch(mimeTypes, contentType) < 0) {
+					throw new FileMimeTypeException(contentType);
+				}
+			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);

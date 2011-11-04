@@ -85,26 +85,7 @@ boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
-String[] mimeTypes = StringUtil.split(PrefsParamUtil.getString(preferences, request, "mimeTypes", _defaultMimeTypes));
-
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
-%>
-
-<%!
-public void jspInit() {
-	super.jspInit();
-
-	_allMimeTypes = new LinkedHashSet<String>();
-
-	_allMimeTypes.addAll(VideoProcessor.getVideoMimeTypes());
-	_allMimeTypes.addAll(ImageProcessor.getImageMimeTypes());
-	_allMimeTypes.addAll(AudioProcessor.getAudioMimeTypes());
-
-	_defaultMimeTypes = StringUtil.merge(_allMimeTypes.toArray(new String[_allMimeTypes.size()]));
-}
-
-private Set<String> _allMimeTypes;
-private String _defaultMimeTypes;
 %>
 
 <%@ include file="/html/portlet/document_library/util.jspf" %>

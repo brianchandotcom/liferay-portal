@@ -77,8 +77,8 @@ public class ViewAction extends WebContentAction {
 		String xmlRequest = PortletRequestUtil.toXML(
 			renderRequest, renderResponse);
 
-		JournalArticleDisplay articleDisplay = null;
 		JournalArticle article = null;
+		JournalArticleDisplay articleDisplay = null;
 
 		if ((groupId > 0) && Validator.isNotNull(articleId)) {
 			try {
@@ -101,8 +101,7 @@ public class ViewAction extends WebContentAction {
 		}
 
 		if (article != null) {
-			renderRequest.setAttribute(
-			WebKeys.JOURNAL_ARTICLE, article);
+			renderRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
 		}
 
 		if (articleDisplay != null) {

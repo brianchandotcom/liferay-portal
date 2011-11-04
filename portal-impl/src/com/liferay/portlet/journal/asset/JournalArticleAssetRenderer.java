@@ -81,6 +81,14 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 		}
 	}
 
+	public Date getDisplayDate() {
+		return _article.getDisplayDate();
+	}
+
+	public Date getExpirationDate() {
+		return _article.getExpirationDate();
+	}
+
 	public long getGroupId() {
 		return _article.getGroupId();
 	}
@@ -201,14 +209,6 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public boolean isPrintable() {
 		return true;
-	}
-
-	public Date getDisplayDate() {
-		return _article.getDisplayDate();
-	}
-
-	public Date getExpirationDate() {
-		return _article.getExpirationDate();
 	}
 
 	public String render(

@@ -1420,9 +1420,7 @@ public class JournalArticleLocalServiceImpl
 
 		Date now = new Date();
 
-		for (int i = 0; i < articles.size(); i++) {
-			JournalArticle article = articles.get(i);
-
+		for (JournalArticle article : articles) {
 			Date expirationDate = article.getExpirationDate();
 
 			if (article.getDisplayDate().before(now) &&
@@ -1432,7 +1430,10 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		return articles.get(0);
+		throw new NoSuchArticleException(
+			"All JournalArticles with the key {groupId=" + groupId +
+				", urlTitle=" + urlTitle + ", status=" + status + "}" +
+					" have a future displayDate");
 	}
 
 	public double getLatestVersion(long groupId, String articleId)

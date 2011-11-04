@@ -33,7 +33,8 @@ for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex+
 		JournalArticleAssetRenderer jAssetRenderer = (JournalArticleAssetRenderer)assetRenderer;
 
 		Date now = new Date();
-		if (((jAssetRenderer.getDisplayDate() != null) && (jAssetRenderer.getDisplayDate().after(now))) || ((jAssetRenderer.getExpirationDate() != null) && (jAssetRenderer.getExpirationDate().before(now)))) {
+
+		if (((jAssetRenderer.getDisplayDate() != null) && jAssetRenderer.getDisplayDate().after(now)) || ((jAssetRenderer.getExpirationDate() != null) && jAssetRenderer.getExpirationDate().before(now))) {
 			continue;
 		}
 	}

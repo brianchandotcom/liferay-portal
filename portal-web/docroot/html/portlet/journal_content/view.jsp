@@ -17,8 +17,8 @@
 <%@ include file="/html/portlet/journal_content/init.jsp" %>
 
 <%
-JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
@@ -28,30 +28,30 @@ String title = StringPool.BLANK;
 boolean approved = false;
 boolean expired = true;
 %>
+
 <c:choose>
-	<c:when test="<%= Validator.isNull(article) %>">
+	<c:when test="<%= article == null %>">
 		<div class="portlet-msg-error">
 			<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
 		</div>
 	</c:when>
 	<c:otherwise>
+
 		<%
-		if (Validator.isNotNull(article)) {
-			hasViewPermission = JournalArticlePermission.contains(permissionChecker, article.getGroupId(), article.getArticleId(), ActionKeys.VIEW);
+		hasViewPermission = JournalArticlePermission.contains(permissionChecker, article.getGroupId(), article.getArticleId(), ActionKeys.VIEW);
 
-			title = article.getTitle(locale);
-			approved = article.isApproved();
-			expired = article.isExpired();
+		title = article.getTitle(locale);
+		approved = article.isApproved();
+		expired = article.isExpired();
 
-			if (!expired) {
-				Date expirationDate = article.getExpirationDate();
+		if (!expired) {
+			Date expirationDate = article.getExpirationDate();
 
-				if ((expirationDate != null) && expirationDate.before(new Date())) {
-					expired = true;
-				}
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
+				expired = true;
 			}
 		}
-		%>
+	%>
 
 		<c:choose>
 			<c:when test="<%= (articleDisplay != null) && !expired && hasViewPermission %>">
@@ -80,19 +80,19 @@ boolean expired = true;
 				PortletURL portletURL = renderResponse.createRenderURL();
 				%>
 
-			<c:if test="<%= enableConversions || enablePrint || (showAvailableLocales && (articleDisplay.getAvailableLocales().length > 1)) %>">
-				<div class="user-actions">
-					<c:if test="<%= enablePrint %>">
-						<c:choose>
-							<c:when test="<%= print %>">
-								<div class="print-action">
-									<liferay-ui:icon
-										image="print"
-										label="<%= true %>"
-										message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle()}) %>'
-										url="javascript:print();"
-									/>
-								</div>
+				<c:if test="<%= enableConversions || enablePrint || (showAvailableLocales && (articleDisplay.getAvailableLocales().length > 1)) %>">
+					<div class="user-actions">
+						<c:if test="<%= enablePrint %>">
+							<c:choose>
+								<c:when test="<%= print %>">
+									<div class="print-action">
+										<liferay-ui:icon
+											image="print"
+											label="<%= true %>"
+											message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle()}) %>'
+											url="javascript:print();"
+										/>
+									</div>
 
 									<aui:script>
 										print();

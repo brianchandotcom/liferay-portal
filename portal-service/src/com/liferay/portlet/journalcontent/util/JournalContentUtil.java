@@ -73,6 +73,16 @@ public class JournalContentUtil {
 	}
 
 	public static JournalArticleDisplay getDisplay(
+			long groupId, String articleId, double version, String templateId,
+			String viewMode, String languageId, ThemeDisplay themeDisplay,
+			int page, String xmlRequest) {
+
+		return getJournalContent().getDisplay(
+			groupId, articleId, version, templateId, viewMode, languageId,
+			themeDisplay, page, xmlRequest);
+	}
+
+	public static JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String templateId, String viewMode,
 		String languageId, String xmlRequest) {
 
@@ -84,15 +94,6 @@ public class JournalContentUtil {
 		long groupId, String articleId, String templateId, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, int page,
 		String xmlRequest) {
-
-		return getJournalContent().getDisplay(groupId, articleId, 0.0D,
-			templateId, viewMode, languageId, themeDisplay, page, xmlRequest);
-	}
-
-	public static JournalArticleDisplay getDisplay(
-			long groupId, String articleId, double version, String templateId,
-			String viewMode, String languageId, ThemeDisplay themeDisplay,
-			int page, String xmlRequest) {
 
 		return getJournalContent().getDisplay(
 			groupId, articleId, templateId, viewMode, languageId, themeDisplay,

@@ -44,6 +44,7 @@ public class ConfigurePortletDisplayStyleUserNameTest extends BaseTestCase {
 		selenium.clickAt("link=Recent Bloggers Test Page",
 			RuntimeVariables.replace("Recent Bloggers Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));

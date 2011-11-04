@@ -54,9 +54,7 @@ public class DeleteMessageNullInboxTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//div[3]/div/div/div[1]/div/div/div/div[1]/div/a",
-							"INBOX")) {
+				if (selenium.isVisible("//a[contains(.,'INBOX')]")) {
 					break;
 				}
 			}
@@ -66,9 +64,8 @@ public class DeleteMessageNullInboxTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//div[3]/div/div/div[1]/div/div/div/div[1]/div/a", "INBOX"));
-		selenium.clickAt("//div[3]/div/div/div[1]/div/div/div/div[1]/div/a",
+		assertTrue(selenium.isPartialText("//a[contains(.,'INBOX')]", "INBOX"));
+		selenium.clickAt("//a[contains(.,'INBOX')]",
 			RuntimeVariables.replace("INBOX"));
 		Thread.sleep(5000);
 

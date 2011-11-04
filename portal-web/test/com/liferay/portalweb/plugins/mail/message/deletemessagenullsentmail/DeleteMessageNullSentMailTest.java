@@ -54,7 +54,7 @@ public class DeleteMessageNullSentMailTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText("//div[3]/div/a", "Sent Mail")) {
+				if (selenium.isVisible("//a[contains(.,'Sent Mail')]")) {
 					break;
 				}
 			}
@@ -64,8 +64,10 @@ public class DeleteMessageNullSentMailTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText("//div[3]/div/a", "Sent Mail"));
-		selenium.clickAt("//div[3]/div/a", RuntimeVariables.replace("Sent Mail"));
+		assertTrue(selenium.isPartialText("//a[contains(.,'Sent Mail')]",
+				"Sent Mail"));
+		selenium.clickAt("//a[contains(.,'Sent Mail')]",
+			RuntimeVariables.replace("Sent Mail"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {

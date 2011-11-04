@@ -42,7 +42,23 @@ public class AssertGoogleMapTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//form/div/div[5]/div[1]/div")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Map"),
 			selenium.getText("//form/div/div[5]/div[1]/div"));
 		assertEquals(RuntimeVariables.replace("Satellite"),

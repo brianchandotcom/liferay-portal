@@ -111,6 +111,7 @@ public class ConfigurePortlet2BlogsScopeLayoutCurrentPageTest
 
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -132,6 +133,23 @@ public class ConfigurePortlet2BlogsScopeLayoutCurrentPageTest
 			selenium.getText("//label[@for='scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Layout"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//label[@for='scopeLayoutUuid']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Scope Layout"),
 			selenium.getText("//label[@for='scopeLayoutUuid']"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",

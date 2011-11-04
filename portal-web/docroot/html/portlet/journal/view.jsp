@@ -95,8 +95,6 @@ portletURL.setParameter("tabs1", tabs1);
 			for (int i = 0; i < results.size(); i++) {
 				JournalArticle article = results.get(i);
 
-				article = article.toEscapedModel();
-
 				ResultRow row = new ResultRow(article, article.getArticleId(), i);
 
 				PortletURL rowURL = renderResponse.createRenderURL();

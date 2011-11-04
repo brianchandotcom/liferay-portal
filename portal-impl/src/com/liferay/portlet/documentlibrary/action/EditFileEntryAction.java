@@ -191,6 +191,14 @@ public class EditFileEntryAction extends PortletAction {
 					 e instanceof NoSuchFolderException ||
 					 e instanceof SourceFileNameException) {
 
+				if (!cmd.equals(Constants.ADD_MULTIPLE) &&
+					!cmd.equals(Constants.ADD_TEMP)) {
+
+					SessionErrors.add(actionRequest, e.getClass().getName());
+
+					return;
+				}
+
 				if (e instanceof DuplicateFileException) {
 					HttpServletResponse response =
 						PortalUtil.getHttpServletResponse(actionResponse);

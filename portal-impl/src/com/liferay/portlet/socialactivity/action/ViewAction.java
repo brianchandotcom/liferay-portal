@@ -29,6 +29,7 @@ import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 
 import java.util.ArrayList;
@@ -148,12 +149,14 @@ public class ViewAction extends PortletAction {
 				SocialActivityCounterConstants.TYPE_ASSET);
 
 			activityCounterName =
-					SocialActivityCounterConstants.NAME_CONTRIBUTION;
+				SocialActivityCounterConstants.NAME_CONTRIBUTION;
 		}
 		else {
 			throw new IllegalArgumentException();
 		}
 
+		activityCounterDefinition.setEnabled(
+			actionJSONObject.getBoolean("active"));
 		activityCounterDefinition.setIncrement(
 			actionJSONObject.getInt(activityCounterName + "Increment"));
 		activityCounterDefinition.setLimitPeriod(
@@ -212,7 +215,7 @@ public class ViewAction extends PortletAction {
 					actionJSONObject, activityDefinition,
 					SocialActivityCounterConstants.NAME_POPULARITY));
 
-			SocialActivitySettingLocalServiceUtil.updateActivitySettings(
+			SocialActivitySettingServiceUtil.updateActivitySettings(
 				themeDisplay.getScopeGroupIdOrLiveGroupId(), modelName,
 				activityType, activityCounterDefinitions);
 		}

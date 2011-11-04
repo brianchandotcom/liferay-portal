@@ -126,6 +126,21 @@ public class SocialActivitySettingServiceSoap {
 		}
 	}
 
+	public static void updateActivitySetting(long groupId,
+		java.lang.String className, int activityType,
+		com.liferay.portlet.social.model.SocialActivityCounterDefinition activityCounterDefinition)
+		throws RemoteException {
+		try {
+			SocialActivitySettingServiceUtil.updateActivitySetting(groupId,
+				className, activityType, activityCounterDefinition);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void updateActivitySettings(long groupId,
 		java.lang.String className, int activityType,
 		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> counters)

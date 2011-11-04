@@ -203,6 +203,41 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
+	public static void updateActivitySetting(HttpPrincipal httpPrincipal,
+		long groupId, java.lang.String className, int activityType,
+		com.liferay.portlet.social.model.SocialActivityCounterDefinition activityCounterDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+					"updateActivitySetting",
+					_updateActivitySettingParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					className, activityType, activityCounterDefinition);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void updateActivitySettings(HttpPrincipal httpPrincipal,
 		long groupId, java.lang.String className, int activityType,
 		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> counters)
@@ -211,7 +246,7 @@ public class SocialActivitySettingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
 					"updateActivitySettings",
-					_updateActivitySettingsParameterTypes4);
+					_updateActivitySettingsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					className, activityType, counters);
@@ -251,7 +286,11 @@ public class SocialActivitySettingServiceHttp {
 	private static final Class<?>[] _updateActivitySettingParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, boolean.class
 		};
-	private static final Class<?>[] _updateActivitySettingsParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateActivitySettingParameterTypes4 = new Class[] {
+			long.class, java.lang.String.class, int.class,
+			com.liferay.portlet.social.model.SocialActivityCounterDefinition.class
+		};
+	private static final Class<?>[] _updateActivitySettingsParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, int.class, java.util.List.class
 		};
 }

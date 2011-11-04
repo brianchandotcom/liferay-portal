@@ -544,6 +544,8 @@ AUI().add(
 
 						field.set('collapsed', collapsed, SRC_UI);
 
+						field.set(STR_ACTIVE, !collapsed);
+
 						instance._handleConjunction();
 					},
 
@@ -572,8 +574,6 @@ AUI().add(
 			{
 				ATTRS: {
 					active: {
-						getter: '_getActive',
-						setter: A.DataType.Boolean.parse,
 						value: false
 					},
 
@@ -663,6 +663,10 @@ AUI().add(
 							attrs[incrementKey] = action.increment;
 							attrs[limitValueKey] = action.limitValue;
 							attrs[limitPeriodKey] = action.limitPeriod;
+
+							if (action.enabled) {
+								attrs[STR_ACTIVE] = true;
+							}
 						}
 
 						instance.setAttrs(attrs);
@@ -726,12 +730,6 @@ AUI().add(
 						contentBox.append(limitNode);
 					},
 
-					bindUI: function() {
-						var instance = this;
-
-						instance.after('collapsedChange', instance._afterCollapsedChange);
-					},
-
 					syncUI: function() {
 						var instance = this;
 
@@ -743,6 +741,7 @@ AUI().add(
 
 						return instance.getAttrs(
 							[
+							 	STR_ACTIVE,
 								STR_ACTIVITY_TYPE,
 								STR_CONTRIBUTION_INCREMENT,
 								STR_CONTRIBUTION_LIMIT_PERIOD,
@@ -753,20 +752,6 @@ AUI().add(
 								STR_PARTICIPATION_LIMIT_VALUE
 							]
 						);
-					},
-
-					_afterCollapsedChange: function(event) {
-						var instance = this;
-
-						if (event.newVal && event.src == STR_UI) {
-							instance._setToDefaultValue();
-						}
-					},
-
-					_getActive: function() {
-						var instance = this;
-
-						return (instance.get(STR_CONTRIBUTION_INCREMENT) > 0 || instance.get(STR_PARTICIPATION_INCREMENT) > 0);
 					},
 
 					_selectOnChange: function(event) {

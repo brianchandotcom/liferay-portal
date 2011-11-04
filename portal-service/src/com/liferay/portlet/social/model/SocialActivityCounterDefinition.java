@@ -47,15 +47,18 @@ public class SocialActivityCounterDefinition implements Serializable {
 	public boolean equals(
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
-		if (Validator.equals(
-				_increment, activityCounterDefinition._increment) &&
-			Validator.equals(
-				_limitValue, activityCounterDefinition._limitValue) &&
-			Validator.equals(
-				_limitPeriod, activityCounterDefinition._limitPeriod) &&
-			Validator.equals(_name, activityCounterDefinition._name) &&
-			Validator.equals(
-				_ownerType, activityCounterDefinition._ownerType)) {
+		if ((Validator.isNotNull(activityCounterDefinition)) &&
+			(Validator.equals(
+				_enabled, activityCounterDefinition._enabled)) &&
+			(Validator.equals(
+				_increment, activityCounterDefinition._increment)) &&
+			(Validator.equals(
+				_limitValue, activityCounterDefinition._limitValue)) &&
+			(Validator.equals(
+				_limitPeriod, activityCounterDefinition._limitPeriod)) &&
+			(Validator.equals(_name, activityCounterDefinition._name)) &&
+			(Validator.equals(
+				_ownerType, activityCounterDefinition._ownerType))) {
 
 			return true;
 		}
@@ -86,6 +89,14 @@ public class SocialActivityCounterDefinition implements Serializable {
 
 	public int getOwnerType() {
 		return _ownerType;
+	}
+
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
 	}
 
 	public void setIncrement(int increment) {
@@ -132,6 +143,7 @@ public class SocialActivityCounterDefinition implements Serializable {
 		}
 	}
 
+	private boolean _enabled = true;
 	private int _increment;
 	private int _limitPeriod;
 	private int _limitValue;

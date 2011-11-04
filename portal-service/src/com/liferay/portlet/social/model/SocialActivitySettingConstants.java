@@ -20,8 +20,6 @@ package com.liferay.portlet.social.model;
  */
 public class SocialActivitySettingConstants {
 
-	public static final String NAME_COUNTER_ENABLED = "counterEnabled";
-
 	public static final String NAME_ENABLED = "enabled";
 
 	public static final String NAME_LOG_ENABLED = "logEnabled";

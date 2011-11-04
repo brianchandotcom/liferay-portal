@@ -100,7 +100,7 @@ public class SocialActivityCounterLocalServiceImpl
 				activity.getType());
 
 		if ((activityDefinition == null) ||
-			!activityDefinition.isCounterEnabled()) {
+			!activityDefinition.isEnabled()) {
 
 			return;
 		}
@@ -115,7 +115,8 @@ public class SocialActivityCounterLocalServiceImpl
 		for (SocialActivityCounterDefinition activityCounterDefinition :
 				activityDefinition.getActivityCounterDefinitions()) {
 
-			if ((activityCounterDefinition.getIncrement() != 0) &&
+			if (activityCounterDefinition.isEnabled() &&
+				(activityCounterDefinition.getIncrement() != 0) &&
 				checkActivityLimit(
 					user, activity, activityCounterDefinition)) {
 

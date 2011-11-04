@@ -113,6 +113,7 @@ public class RoleServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the roles associated with the group
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.RoleSoap[] getGroupRoles(
@@ -190,6 +191,7 @@ public class RoleServiceSoap {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.RoleSoap[] getUserGroupGroupRoles(
@@ -213,6 +215,7 @@ public class RoleServiceSoap {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the user group
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.RoleSoap[] getUserGroupRoles(
@@ -236,6 +239,7 @@ public class RoleServiceSoap {
 	* @param userId the primary key of the user
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.RoleSoap[] getUserRelatedRoles(
@@ -260,6 +264,7 @@ public class RoleServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the roles associated with the user
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.RoleSoap[] getUserRoles(long userId)

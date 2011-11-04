@@ -24,6 +24,7 @@ import com.liferay.portal.service.base.RoleServiceBaseImpl;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -108,10 +109,15 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the roles associated with the group
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Role> getGroupRoles(long groupId) throws SystemException {
-		return roleLocalService.getGroupRoles(groupId);
+	public List<Role> getGroupRoles(long groupId)
+		throws PortalException, SystemException {
+
+		List<Role> roles = roleLocalService.getGroupRoles(groupId);
+
+		return filterRoles(roles);
 	}
 
 	/**
@@ -166,12 +172,16 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
 	 * @return the user's roles within the user group
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getUserGroupGroupRoles(long userId, long groupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return roleLocalService.getUserGroupGroupRoles(userId, groupId);
+		List<Role> roles = roleLocalService.getUserGroupGroupRoles(
+			userId, groupId);
+
+		return filterRoles(roles);
 	}
 
 	/**
@@ -180,12 +190,15 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
 	 * @return the user's roles within the user group
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getUserGroupRoles(long userId, long groupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return roleLocalService.getUserGroupRoles(userId, groupId);
+		List<Role> roles = roleLocalService.getUserGroupRoles(userId, groupId);
+
+		return filterRoles(roles);
 	}
 
 	/**
@@ -194,12 +207,15 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  groups the groups (optionally <code>null</code>)
 	 * @return the union of all the user's roles within the groups
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return roleLocalService.getUserRelatedRoles(userId, groups);
+		List<Role> roles = roleLocalService.getUserRelatedRoles(userId, groups);
+
+		return filterRoles(roles);
 	}
 
 	/**
@@ -207,10 +223,15 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the roles associated with the user
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Role> getUserRoles(long userId) throws SystemException {
-		return roleLocalService.getUserRoles(userId);
+	public List<Role> getUserRoles(long userId)
+		throws PortalException, SystemException {
+
+		List<Role> roles = roleLocalService.getUserRoles(userId);
+
+		return filterRoles(roles);
 	}
 
 	/**
@@ -315,6 +336,21 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 			RolePermissionUtil.check(
 				getPermissionChecker(), roleIds[i], ActionKeys.ASSIGN_MEMBERS);
 		}
+	}
+
+	protected List<Role> filterRoles(List<Role> roles) throws PortalException {
+		List<Role> filteredRoles = new ArrayList<Role>();
+
+		for (Role role : roles) {
+			if (RolePermissionUtil.contains(
+					getPermissionChecker(), role.getRoleId(),
+					ActionKeys.VIEW)) {
+
+				filteredRoles.add(role);
+			}
+		}
+
+		return filteredRoles;
 	}
 
 }

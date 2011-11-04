@@ -256,6 +256,22 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap[] getFileEntriesPrevAndNext(
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLFileEntry[] returnValue = DLFileEntryServiceUtil.getFileEntriesPrevAndNext(fileEntryId,
+					obc);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap getFileEntry(
 		long fileEntryId) throws RemoteException {
 		try {

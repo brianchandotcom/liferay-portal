@@ -169,7 +169,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || sho
 				<liferay-ui:icon
 					cssClass="portlet-configuration"
 					image="configuration"
-					message="select-web-content"
+					message="select-question"
 					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
 					url="<%= portletDisplay.getURLConfiguration() %>"

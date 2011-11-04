@@ -298,6 +298,12 @@ public class DLFileEntryTypeLocalServiceWrapper
 		_dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
 	}
 
+	public void deleteAll(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryTypeLocalService.deleteAll(groupId);
+	}
+
 	public void deleteFileEntryTypes(long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_dlFileEntryTypeLocalService.deleteFileEntryTypes(folderId);

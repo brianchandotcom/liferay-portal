@@ -397,6 +397,7 @@
 		<reference package-path="com.liferay.portlet.bookmarks" entity="BookmarksFolder" />
 		<reference package-path="com.liferay.portlet.calendar" entity="CalEvent" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
+		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalStructure" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalTemplate" />

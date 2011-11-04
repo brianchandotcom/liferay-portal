@@ -178,7 +178,7 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
 			}
-			else if (cmd.equals("publish_to_live")) {
+			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 				StagingUtil.publishToLive(actionRequest);
 			}
 			else if (cmd.equals("publish_to_remote")) {
@@ -430,7 +430,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		boolean hasPermission = true;
 
-		if (cmd.equals("publish_to_live")) {
+		if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 			if (group.isSite()) {
 				boolean publishToLive = GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(),

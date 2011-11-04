@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -1154,6 +1155,15 @@ public class StagingImpl implements Staging {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		String cmd = MapUtil.getString(parameterMap, "cmd");
+
+		if (!cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+			return;
+		}
+
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
@@ -1165,9 +1175,6 @@ public class StagingImpl implements Staging {
 
 		typeSettingsProperties.setProperty(
 			"last-import-layout-revision-id", layoutRevisionId);
-
-		Map<String, String[]> parameterMap =
-			portletDataContext.getParameterMap();
 
 		String layoutSetBranchId = MapUtil.getString(
 			parameterMap, "layoutSetBranchId");

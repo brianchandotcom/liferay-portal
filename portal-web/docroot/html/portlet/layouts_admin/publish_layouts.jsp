@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, "cmd", "publish_to_live");
+String cmd = ParamUtil.getString(request, "cmd", Constants.PUBLISH_TO_LIVE);
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 

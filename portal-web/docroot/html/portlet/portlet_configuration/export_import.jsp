@@ -276,7 +276,7 @@ if (layout.isTypeControlPanel()) {
 
 	function <portlet:namespace />publishToLive() {
 		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-publish-to-live-and-update-the-existing-portlet-data") %>')) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "publish_to_live";
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.PUBLISH_TO_LIVE %>";
 
 			submitForm(document.<portlet:namespace />fm);
 		}

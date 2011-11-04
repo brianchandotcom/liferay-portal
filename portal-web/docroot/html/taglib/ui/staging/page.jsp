@@ -111,7 +111,7 @@ else {
 					publishToLiveURL.setPortletMode(PortletMode.VIEW);
 
 					publishToLiveURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-					publishToLiveURL.setParameter(Constants.CMD, "publish_to_live");
+					publishToLiveURL.setParameter(Constants.CMD, Constants.PUBLISH_TO_LIVE);
 					publishToLiveURL.setParameter("pagesRedirect", currentURL);
 					publishToLiveURL.setParameter("groupId", String.valueOf(groupId));
 					publishToLiveURL.setParameter("selPlid", String.valueOf(selPlid));

@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portlet.documentlibrary;
 
-import java.io.File;
-import java.io.InputStream;
-
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public interface MimeTypes {
+public class FileMimeTypeException extends PortalException {
 
-	public String getContentType(File file);
+	public FileMimeTypeException() {
+		super();
+	}
 
-	public String getContentType(File file, String title);
+	public FileMimeTypeException(String msg) {
+		super(msg);
+	}
 
-	public String getContentType(InputStream inputStream, String fileName);
+	public FileMimeTypeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public String getContentType(String fileName);
-
-	public Set<String> getExtensions(String contentType);
+	public FileMimeTypeException(Throwable cause) {
+		super(cause);
+	}
 
 }

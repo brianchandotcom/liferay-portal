@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Set;
+
 /**
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
@@ -56,6 +58,17 @@ public class MimeTypesUtil {
 	 */
 	public static String getContentType(String fileName) {
 		return getMimeTypes().getContentType(fileName);
+	}
+
+	/**
+	 * Determine the possible file extensions for a given content type.
+	 *
+	 * @param  contentType content type of file (e.g., "image/jpeg")
+	 * @return set of extensions if it is a known content type or an empty set
+	 *         if it is an unknown content type
+	 */
+	public static Set<String> getExtensions(String contentType) {
+		return getMimeTypes().getExtensions(contentType);
 	}
 
 	public static MimeTypes getMimeTypes() {

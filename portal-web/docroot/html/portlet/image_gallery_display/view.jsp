@@ -181,6 +181,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<%
 					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
+					String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
+
 					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mimeTypes, false);
 
 					searchContainer.setTotal(total);

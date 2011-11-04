@@ -96,17 +96,26 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
-		<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
-			<h1 class="entry-title">
-				<%= LanguageUtil.format(pageContext, "images-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
-			</h1>
-		</c:if>
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(categoryTitle) && Validator.isNotNull(tagName) %>">
+				<h1 class="entry-title">
+					<%= LanguageUtil.format(pageContext, "images-with-x-x-and-tag-x", new String[] {vocabularyTitle, categoryTitle, tagName}) %>
+				</h1>
+			</c:when>
+			<c:otherwise>
+				<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
+					<h1 class="entry-title">
+						<%= LanguageUtil.format(pageContext, "images-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
+					</h1>
+				</c:if>
 
-		<c:if test="<%= Validator.isNotNull(tagName) %>">
-			<h1 class="entry-title">
-				<%= LanguageUtil.format(pageContext, "images-with-tag-x", HtmlUtil.escape(tagName)) %>
-			</h1>
-		</c:if>
+				<c:if test="<%= Validator.isNotNull(tagName) %>">
+					<h1 class="entry-title">
+						<%= LanguageUtil.format(pageContext, "images-with-tag-x", HtmlUtil.escape(tagName)) %>
+					</h1>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
 
 		<%
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);

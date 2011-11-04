@@ -78,17 +78,26 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
-		<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
-			<h1 class="entry-title">
-				<%= LanguageUtil.format(pageContext, "bookmarks-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
-			</h1>
-		</c:if>
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(categoryTitle) && Validator.isNotNull(tagName) %>">
+				<h1 class="entry-title">
+					<%= LanguageUtil.format(pageContext, "bookmarks-with-x-x-and-tag-x", new String[] {vocabularyTitle, categoryTitle, tagName}) %>
+				</h1>
+			</c:when>
+			<c:otherwise>
+				<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
+					<h1 class="entry-title">
+						<%= LanguageUtil.format(pageContext, "bookmarks-with-x-x", new String[] {vocabularyTitle, categoryTitle}) %>
+					</h1>
+				</c:if>
 
-		<c:if test="<%= Validator.isNotNull(tagName) %>">
-			<h1 class="entry-title">
-				<%= LanguageUtil.format(pageContext, "bookmarks-with-tag-x", tagName) %>
-			</h1>
-		</c:if>
+				<c:if test="<%= Validator.isNotNull(tagName) %>">
+					<h1 class="entry-title">
+						<%= LanguageUtil.format(pageContext, "bookmarks-with-tag-x", tagName) %>
+					</h1>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
 
 		<%@ include file="/html/portlet/bookmarks/view_entries.jspf" %>
 

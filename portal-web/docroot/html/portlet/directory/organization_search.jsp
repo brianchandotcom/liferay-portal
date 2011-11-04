@@ -35,7 +35,7 @@ String type = displayTerms.getType();
 		<aui:input name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
 		<aui:select name="<%= displayTerms.TYPE %>">
-			<aui:option label="any" selected="<%= (displayTerms.getType() == null) %>" value="" />
+			<aui:option value=""></aui:option>
 
 			<%
 			for (String curType : PropsValues.ORGANIZATIONS_TYPES) {

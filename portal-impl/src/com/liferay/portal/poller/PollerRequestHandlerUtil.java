@@ -15,6 +15,7 @@
 package com.liferay.portal.poller;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.poller.PollerHeader;
 
 /**
  * @author Edward Han
@@ -23,6 +24,13 @@ public class PollerRequestHandlerUtil {
 
 	public static PollerRequestHandler getPollerRequestHandler() {
 		return _pollerRequestHandler;
+	}
+
+	public static PollerHeader getPollerRequestHeader(
+		String pollerRequestString) {
+
+		return getPollerRequestHandler().getPollerRequestHeader(
+			pollerRequestString);
 	}
 
 	public static JSONObject processRequest(

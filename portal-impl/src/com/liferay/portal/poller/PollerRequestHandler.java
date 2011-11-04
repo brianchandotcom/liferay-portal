@@ -15,11 +15,14 @@
 package com.liferay.portal.poller;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.poller.PollerHeader;
 
 /**
  * @author Edward Han
  */
 public interface PollerRequestHandler {
+
+	public PollerHeader getPollerRequestHeader(String pollerRequestString);
 
 	public JSONObject processRequest(String path, String pollerRequestString)
 		throws Exception;

@@ -100,6 +100,17 @@ public class PollerRequestHandlerImpl
 		}
 	}
 
+	public PollerHeader getPollerRequestHeader(String pollerRequestString) {
+		if (Validator.isNull(pollerRequestString)) {
+			return null;
+		}
+
+		Map<String, Object>[] pollerRequestChunks =
+			parsePollerRequestParameters(pollerRequestString);
+
+		return parsePollerRequestHeader(pollerRequestChunks);
+	}
+
 	public void receive(Message message) {
 		Object messagePayload = message.getPayload();
 

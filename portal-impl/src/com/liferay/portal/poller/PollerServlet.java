@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.poller.PollerHeader;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -70,8 +71,24 @@ public class PollerServlet extends HttpServlet {
 		long companyId = PortalUtil.getCompanyId(request);
 		long userId = PortalUtil.getUserId(request);
 
+		if (userId == 0) {
+			return StringPool.BLANK;
+		}
+
 		String pollerRequestString = ParamUtil.getString(
 			request, "pollerRequest");
+
+		PollerHeader pollerHeader =
+			PollerRequestHandlerUtil.getPollerRequestHeader(
+				pollerRequestString);
+
+		if (pollerHeader == null) {
+			return StringPool.BLANK;
+		}
+
+		if (userId != pollerHeader.getUserId()) {
+			return StringPool.BLANK;
+		}
 
 		JSONObject pollerResponseHeaderJSONObject =
 			PollerRequestHandlerUtil.processRequest(

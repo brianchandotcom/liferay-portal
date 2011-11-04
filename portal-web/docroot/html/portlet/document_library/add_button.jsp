@@ -25,7 +25,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
 
-if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) || (folder.getModel() instanceof DLFolder)) {
+if ((folder == null) || folder.isSupportsMetadata()) {
 	fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(DLUtil.getGroupIds(themeDisplay), folderId, true);
 }
 %>

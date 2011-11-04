@@ -47,6 +47,7 @@ public class DiscardDraftWikiPageDraftPagesActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Draft Pages",
 			RuntimeVariables.replace("Draft&nbsp;&nbsp;Pages"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Draft"),

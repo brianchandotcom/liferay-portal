@@ -1169,8 +1169,6 @@ public class PropsValues {
 
 	public static final String REDIRECT_URL_SECURITY_MODE = PropsUtil.get(PropsKeys.REDIRECT_URL_SECURITY_MODE);
 
-	public static String[] RESERVED_REFRESH_URL_PARAMETERS = PropsUtil.getArray(PropsKeys.RESERVED_REFRESH_URL_PARAMETERS);
-
 	public static final boolean REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP));
 
 	public static final String[] REQUEST_SHARED_ATTRIBUTES = PropsUtil.getArray(PropsKeys.REQUEST_SHARED_ATTRIBUTES);

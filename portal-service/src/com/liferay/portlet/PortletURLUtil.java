@@ -215,13 +215,13 @@ public class PortletURLUtil {
 
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
-		String[] reservedRefreshURLParameters = 
-			PropsUtil.getArray(PropsKeys.RESERVED_REFRESH_URL_PARAMETERS);
-
 		if (ppid.equals(portletId)) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);
 
 			Map<String, String[]> parameters = request.getParameterMap();
+
+			String[] reservedRefreshURLParameters = PropsUtil.getArray(
+				PropsKeys.RESERVED_REFRESH_URL_PARAMETERS);
 
 			for (String parameter : reservedRefreshURLParameters) {
 				parameters.remove(namespace.concat(parameter));

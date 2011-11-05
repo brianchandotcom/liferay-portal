@@ -51,7 +51,6 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
-page import="com.liferay.portlet.journal.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@

@@ -34,6 +34,13 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 <c:if test="<%= fileVersion.isApproved() %>">
 	<div class="asset-resource-info">
 		<c:choose>
+            <c:when test="<%= showThumbnail && ImageProcessor.hasImages(fileVersion) %>">
+                <div>
+                    <img src="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
+
+                    <%= fileVersion.getTitle() %>
+                </div>
+            </c:when>
 			<c:when test="<%= showThumbnail && PDFProcessor.hasImages(fileVersion) %>">
 				<div>
 					<img src="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />

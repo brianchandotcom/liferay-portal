@@ -191,6 +191,53 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component name="Component">
+		<attributes>
+			<attribute>
+				<name>defineVar</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>excludeAttributes</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>javaScriptAttributes</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>tagPageContext</name>
+				<inputType>javax.servlet.jsp.JspContext</inputType>
+				<outputType>javax.servlet.jsp.JspContext</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>var</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>module</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>name</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultType></defaultType>
+			</attribute>
+			<attribute>
+				<name>options</name>
+				<inputType>java.util.Map</inputType>
+				<outputType>java.util.Map</outputType>
+			</attribute>
+		</attributes>
+	</component>
 	<component name="Fieldset" bodyContent="true">
 		<attributes>
 			<attribute>

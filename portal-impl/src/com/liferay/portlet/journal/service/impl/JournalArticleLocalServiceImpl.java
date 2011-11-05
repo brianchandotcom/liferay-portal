@@ -1403,13 +1403,11 @@ public class JournalArticleLocalServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			articles = journalArticlePersistence.findByG_UT(
-				groupId, urlTitle, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				orderByComparator);
+				groupId, urlTitle, 0, 1, orderByComparator);
 		}
 		else {
 			articles = journalArticlePersistence.findByG_UT_ST(
-				groupId, urlTitle, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				orderByComparator);
+				groupId, urlTitle, status, 0, 1, orderByComparator);
 		}
 
 		if (articles.isEmpty()) {
@@ -1418,22 +1416,7 @@ public class JournalArticleLocalServiceImpl
 					", urlTitle=" + urlTitle + ", status=" + status + "}");
 		}
 
-		Date now = new Date();
-
-		for (JournalArticle article : articles) {
-			Date expirationDate = article.getExpirationDate();
-
-			if (article.getDisplayDate().before(now) &&
-				((expirationDate == null) || expirationDate.after(now))) {
-
-				return article;
-			}
-		}
-
-		throw new NoSuchArticleException(
-			"All JournalArticles with the key {groupId=" + groupId +
-				", urlTitle=" + urlTitle + ", status=" + status + "}" +
-					" have a future displayDate");
+		return articles.get(0);
 	}
 
 	public double getLatestVersion(long groupId, String articleId)

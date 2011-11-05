@@ -36,6 +36,7 @@ showSearch = showSearch && !results.isEmpty();
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 				</portlet:renderURL>
+
 				<aui:button href="<%= editEntryURL %>" name="addEntryButton" value="add-blog-entry" />
 			</c:if>
 

@@ -75,16 +75,17 @@ public class JournalArticleAssetRendererFactory
 				JournalArticleResourceLocalServiceUtil.getArticleResource(
 					classPK);
 
-			int status = WorkflowConstants.STATUS_ANY;
-
 			if (type == TYPE_LATEST_APPROVED) {
-				status = WorkflowConstants.STATUS_APPROVED;
-			}
-
-			article =
-				JournalArticleLocalServiceUtil.getLatestArticle(
+				article = JournalArticleLocalServiceUtil.getDisplayArticle(
 					articleResource.getGroupId(),
-					articleResource.getArticleId(), status);
+					articleResource.getArticleId());
+			}
+			else {
+				article = JournalArticleLocalServiceUtil.getLatestArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId(),
+					WorkflowConstants.STATUS_ANY);
+			}
 		}
 
 		return new JournalArticleAssetRenderer(article);

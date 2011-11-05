@@ -57,6 +57,16 @@ for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex+
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
+	if (assetRenderer instanceof JournalArticleAssetRenderer) {
+		JournalArticleAssetRenderer journalArticleAssetRenderer = (JournalArticleAssetRenderer)assetRenderer;
+
+		Date now = new Date();
+
+		if (((journalArticleAssetRenderer.getDisplayDate() != null) && journalArticleAssetRenderer.getDisplayDate().after(now)) || ((journalArticleAssetRenderer.getExpirationDate() != null) && journalArticleAssetRenderer.getExpirationDate().before(now))) {
+			continue;
+		}
+	}
+
 	String title = assetRenderer.getTitle(locale);
 
 	boolean show = true;

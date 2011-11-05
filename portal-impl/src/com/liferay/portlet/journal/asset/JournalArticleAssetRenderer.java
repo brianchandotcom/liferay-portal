@@ -31,6 +31,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -78,6 +79,14 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 		else {
 			return null;
 		}
+	}
+
+	public Date getDisplayDate() {
+		return _article.getDisplayDate();
+	}
+
+	public Date getExpirationDate() {
+		return _article.getExpirationDate();
 	}
 
 	public long getGroupId() {

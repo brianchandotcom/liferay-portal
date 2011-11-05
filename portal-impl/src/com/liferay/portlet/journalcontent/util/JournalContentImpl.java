@@ -110,6 +110,83 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, double version, String templateId,
+		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
+		String xmlRequest) {
+
+		StopWatch stopWatch = null;
+
+		if (_log.isDebugEnabled()) {
+			stopWatch = new StopWatch();
+
+			stopWatch.start();
+		}
+
+		articleId = GetterUtil.getString(articleId).toUpperCase();
+		templateId = GetterUtil.getString(templateId).toUpperCase();
+
+		long layoutSetId = 0;
+		boolean secure = false;
+
+		if (themeDisplay != null) {
+			try {
+				Layout layout = themeDisplay.getLayout();
+
+				LayoutSet layoutSet = layout.getLayoutSet();
+
+				layoutSetId = layoutSet.getLayoutSetId();
+			}
+			catch (Exception e) {
+			}
+
+			secure = themeDisplay.isSecure();
+		}
+
+		String key = encodeKey(
+			groupId, articleId, version, templateId, layoutSetId, viewMode,
+			languageId, page, secure);
+
+		JournalArticleDisplay articleDisplay =
+			(JournalArticleDisplay)portalCache.get(key);
+
+		boolean lifecycleRender = isLifecycleRender(themeDisplay, xmlRequest);
+
+		if ((articleDisplay == null) || !lifecycleRender) {
+			articleDisplay = getArticleDisplay(
+				groupId, articleId, templateId, viewMode, languageId, page,
+				xmlRequest, themeDisplay);
+
+			if ((articleDisplay != null) && (articleDisplay.isCacheable()) &&
+				(lifecycleRender)) {
+
+				portalCache.put(key, articleDisplay);
+			}
+		}
+
+		try {
+			if ((PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED) &&
+				(articleDisplay != null) && (themeDisplay != null) &&
+				(!JournalArticlePermission.contains(
+					themeDisplay.getPermissionChecker(), groupId, articleId,
+					ActionKeys.VIEW))) {
+
+				articleDisplay = null;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"getDisplay for {" + groupId + ", " + articleId + ", " +
+					templateId + ", " + viewMode + ", " + languageId + ", " +
+						page + "} takes " + stopWatch.getTime() + " ms");
+		}
+
+		return articleDisplay;
+	}
+
+	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest) {
 
@@ -158,81 +235,15 @@ public class JournalContentImpl implements JournalContent {
 		String languageId, ThemeDisplay themeDisplay, int page,
 		String xmlRequest) {
 
-		StopWatch stopWatch = null;
-
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
-
-		articleId = GetterUtil.getString(articleId).toUpperCase();
-		templateId = GetterUtil.getString(templateId).toUpperCase();
-
-		long layoutSetId = 0;
-		boolean secure = false;
-
-		if (themeDisplay != null) {
-			try {
-				Layout layout = themeDisplay.getLayout();
-
-				LayoutSet layoutSet = layout.getLayoutSet();
-
-				layoutSetId = layoutSet.getLayoutSetId();
-			}
-			catch (Exception e) {
-			}
-
-			secure = themeDisplay.isSecure();
-		}
-
-		String key = encodeKey(
-			groupId, articleId, templateId, layoutSetId, viewMode, languageId,
-			page, secure);
-
-		JournalArticleDisplay articleDisplay =
-			(JournalArticleDisplay)portalCache.get(key);
-
-		boolean lifecycleRender = isLifecycleRender(themeDisplay, xmlRequest);
-
-		if ((articleDisplay == null) || !lifecycleRender) {
-			articleDisplay = getArticleDisplay(
-				groupId, articleId, templateId, viewMode, languageId, page,
-				xmlRequest, themeDisplay);
-
-			if ((articleDisplay != null) && (articleDisplay.isCacheable()) &&
-				(lifecycleRender)) {
-
-				portalCache.put(key, articleDisplay);
-			}
-		}
-
-		try {
-			if ((PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED) &&
-				(articleDisplay != null) && (themeDisplay != null) &&
-				(!JournalArticlePermission.contains(
-					themeDisplay.getPermissionChecker(), groupId, articleId,
-					ActionKeys.VIEW))) {
-
-				articleDisplay = null;
-			}
-		}
-		catch (Exception e) {
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"getDisplay for {" + groupId + ", " + articleId + ", " +
-					templateId + ", " + viewMode + ", " + languageId + ", " +
-						page + "} takes " + stopWatch.getTime() + " ms");
-		}
-
-		return articleDisplay;
+		return getDisplay(
+			groupId, articleId, 0, templateId, viewMode, languageId,
+			themeDisplay, 1, null);
 	}
 
 	protected String encodeKey(
-		long groupId, String articleId, String templateId, long layoutSetId,
-		String viewMode, String languageId, int page, boolean secure) {
+		long groupId, String articleId, double version, String templateId,
+		long layoutSetId, String viewMode, String languageId, int page,
+		boolean secure) {
 
 		StringBundler sb = new StringBundler();
 
@@ -241,6 +252,8 @@ public class JournalContentImpl implements JournalContent {
 		sb.append(StringUtil.toHexString(groupId));
 		sb.append(ARTICLE_SEPARATOR);
 		sb.append(articleId);
+		sb.append(VERSION_SEPARATOR);
+		sb.append(version);
 		sb.append(TEMPLATE_SEPARATOR);
 		sb.append(templateId);
 

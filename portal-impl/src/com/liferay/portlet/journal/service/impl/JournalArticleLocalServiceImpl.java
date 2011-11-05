@@ -422,6 +422,8 @@ public class JournalArticleLocalServiceImpl
 				indexer.delete(article);
 			}
 
+			updatePreviousApprovedArticle(article);
+
 			JournalContentUtil.clearCache(
 				article.getGroupId(), article.getArticleId(),
 				article.getTemplateId());

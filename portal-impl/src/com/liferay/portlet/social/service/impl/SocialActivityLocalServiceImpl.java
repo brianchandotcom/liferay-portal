@@ -340,6 +340,22 @@ public class SocialActivityLocalServiceImpl
 	}
 
 	/**
+	 * Removes stored activities for the asset identified by the class name and
+	 * class primary key.
+	 *
+	 * @param  className the target asset's class name
+	 * @param  classPK the primary key of the target asset
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteActivities(String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		socialActivityPersistence.removeByC_C(classNameId, classPK);
+	}
+
+	/**
 	 * Removes the stored activity from the database.
 	 *
 	 * @param  activityId the primary key of the stored activity

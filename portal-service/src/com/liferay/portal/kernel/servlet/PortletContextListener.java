@@ -75,16 +75,16 @@ public class PortletContextListener
 
 			try {
 				context.lookup(_JNDI_JDBC_LIFERAY_POOL);
+				context.unbind(_JNDI_JDBC_LIFERAY_POOL);
 			}
 			catch (NamingException ne) {
-				context.unbind(_JNDI_JDBC_LIFERAY_POOL);
 			}
 
 			try {
 				context.lookup(_JNDI_JDBC);
+				context.destroySubcontext(_JNDI_JDBC);
 			}
 			catch (NamingException ne) {
-				context.destroySubcontext(_JNDI_JDBC);
 			}
 		}
 		catch (Exception e) {

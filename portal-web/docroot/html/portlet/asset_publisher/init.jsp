@@ -232,6 +232,8 @@ boolean groupByClass = (assetVocabularyId == -1);
 boolean allowEmptyResults = false;
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+
+Map<String, PortletURL> addPortletURLs = null;
 %>
 
 <%@ include file="/html/portlet/asset_publisher/init-ext.jsp" %>

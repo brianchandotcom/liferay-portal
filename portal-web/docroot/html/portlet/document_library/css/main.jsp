@@ -849,3 +849,24 @@
 		}
 	}
 }
+
+.ie7, .ie8 {
+	.lfr-header-row {
+		.prev-next-navigation {
+			.left-arrow, .right-arrow {
+				-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+				filter: alpha(opacity=50);
+
+				&:hover {
+					-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+					filter: alpha(opacity=100);
+				}
+			}
+
+			.disabled, .disabled:hover {
+				-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
+				filter: alpha(opacity=10);
+			}
+		}
+	}
+}

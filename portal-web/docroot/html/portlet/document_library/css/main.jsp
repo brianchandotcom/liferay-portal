@@ -518,21 +518,18 @@
 		}
 	}
 
-	.view {
-		border: 1px solid #7B7B7B;
-
+	.lfr-app-column-view {
 		.portlet-msg-info, .portlet-msg-success {
 			border-width: 0 0 1px;
 			margin: 0 auto;
 		}
 
-		.view-content {
+		.lfr-app-column-view-content {
 			background-color: #FAFAFA;
 		}
 	}
 
 	.context-pane-content {
-		border-left: 1px solid #7B7B7B;
 		position: relative;
 	}
 
@@ -547,7 +544,7 @@
 		text-align: center;
 	}
 
-	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .view .taglib-search-iterator-page-iterator-bottom {
+	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .lfr-app-column-view .taglib-search-iterator-page-iterator-bottom {
 		bottom: 0;
 		left: 0;
 		position: absolute;

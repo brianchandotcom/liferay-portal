@@ -72,7 +72,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 %>
 
 <div id="<portlet:namespace />documentLibraryContainer">
-	<aui:layout cssClass="view">
+	<aui:layout cssClass="lfr-app-column-view">
 		<aui:column columnWidth="<%= 20 %>" cssClass="navigation-pane" first="<%= true %>">
 			<liferay-util:include page="/html/portlet/document_library/view_folders.jsp" />
 

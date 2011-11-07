@@ -17,7 +17,6 @@ package com.liferay.portalweb.portal;
 import com.liferay.portalweb.portal.login.LoginTests;
 import com.liferay.portalweb.stagingcommunity.assetpublisher.AssetPublisherTests;
 import com.liferay.portalweb.stagingcommunity.blogs.BlogsTests;
-import com.liferay.portalweb.stagingcommunity.controlpanel.ControlPanelTests;
 import com.liferay.portalweb.stagingcommunity.documentlibrary.DocumentLibraryTests;
 import com.liferay.portalweb.stagingcommunity.sites.SitesTests;
 import com.liferay.portalweb.stagingcommunity.webcontentdisplay.WebContentDisplayTests;
@@ -34,7 +33,6 @@ public class StagingCommunityTestSuite extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(ControlPanelTests.suite());
 		testSuite.addTest(AssetPublisherTests.suite());
 		testSuite.addTest(BlogsTests.suite());
 		testSuite.addTest(DocumentLibraryTests.suite());

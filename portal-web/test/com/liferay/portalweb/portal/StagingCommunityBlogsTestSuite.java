@@ -16,7 +16,6 @@ package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
 import com.liferay.portalweb.stagingcommunity.blogs.BlogsTests;
-import com.liferay.portalweb.stagingcommunity.controlpanel.ControlPanelTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +29,6 @@ public class StagingCommunityBlogsTestSuite extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(ControlPanelTests.suite());
 		testSuite.addTest(BlogsTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);

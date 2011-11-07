@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_Wiki_WikiPageService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://model.wiki.portlet.liferay.com" qname="ns:ArrayOf_tns4_WikiPageSoap" type="java:com.liferay.portlet.wiki.model.WikiPageSoap[]" innerType="cmp-ns:WikiPageSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://model.wiki.portlet.liferay.com" qname="ns:ArrayOf_tns2_WikiPageSoap" type="java:com.liferay.portlet.wiki.model.WikiPageSoap[]" innerType="cmp-ns:WikiPageSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -72,7 +72,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="feedURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryURL" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" xmlns:rtns="urn:http.service.wiki.portlet.liferay.com" xmlns:tns2="http://model.wiki.portlet.liferay.com" name="getNodePages" qname="operNS:getNodePages" returnQName="getNodePagesReturn" returnType="rtns:ArrayOf_tns4_WikiPageSoap" returnItemType="tns2:WikiPageSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" xmlns:rtns="urn:http.service.wiki.portlet.liferay.com" xmlns:tns2="http://model.wiki.portlet.liferay.com" name="getNodePages" qname="operNS:getNodePages" returnQName="getNodePagesReturn" returnType="rtns:ArrayOf_tns2_WikiPageSoap" returnItemType="tns2:WikiPageSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="max" type="tns:int"></parameter>
 		</operation>

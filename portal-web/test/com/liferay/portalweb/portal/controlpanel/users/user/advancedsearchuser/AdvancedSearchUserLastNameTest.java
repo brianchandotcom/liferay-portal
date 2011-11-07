@@ -57,10 +57,10 @@ public class AdvancedSearchUserLastNameTest extends BaseTestCase {
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean AdvancedPresent = selenium.isVisible(
+				boolean advanced1Present = selenium.isVisible(
 						"link=Advanced \u00bb");
 
-				if (!AdvancedPresent) {
+				if (!advanced1Present) {
 					label = 2;
 
 					continue;
@@ -85,11 +85,11 @@ public class AdvancedSearchUserLastNameTest extends BaseTestCase {
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean AdvancedPresent = selenium.isVisible(
+				boolean advanced2Present = selenium.isVisible(
 						"link=Advanced \u00bb");
 
-				if (!AdvancedPresent) {
-					label = 2;
+				if (!advanced2Present) {
+					label = 3;
 
 					continue;
 				}
@@ -97,7 +97,7 @@ public class AdvancedSearchUserLastNameTest extends BaseTestCase {
 				selenium.clickAt("link=Advanced \u00bb",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
-			case 2:
+			case 3:
 				selenium.type("//input[@id='_125_lastName']",
 					RuntimeVariables.replace("nium1"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",

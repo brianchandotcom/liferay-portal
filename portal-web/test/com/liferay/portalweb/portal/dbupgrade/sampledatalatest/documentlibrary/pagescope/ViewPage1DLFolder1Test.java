@@ -94,7 +94,7 @@ public class ViewPage1DLFolder1Test extends BaseTestCase {
 			selenium.getText("//a[@class='browse-folder']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
-		assertEquals(RuntimeVariables.replace("Documents Home"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));

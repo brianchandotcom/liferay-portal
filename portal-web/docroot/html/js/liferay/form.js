@@ -2,7 +2,10 @@ AUI().add(
 	'liferay-form',
 	function(A) {
 		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+
 		var PLACEHOLDER_TEXT_CLASS = 'aui-text-placeholder';
+
+		var SUPPORT_PLACEHOLDERS = A.Object.owns(document.createElement('input'), 'placeholder');
 
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
 
@@ -98,16 +101,15 @@ AUI().add(
 							instance._bindForm();
 						}
 
-						instance._supportPlaceholders = A.Object.owns(document.createElement('input'), 'placeholder');
+						if (!SUPPORT_PLACEHOLDERS) {
+							var placeholderInputs = formNode.all('input[placeholder],textarea[placeholder]');
 
-						if (!instance._supportPlaceholders) {
-							var placeHolderInputs = formNode.all('input[placeholder],textarea[placeholder]');
-
-							if (!placeHolderInputs.isEmpty()) {
-								placeHolderInputs.each(
+							if (placeholderInputs.size()) {
+								placeholderInputs.each(
 									function(item, index, collection) {
 										if (!item.val()) {
 											item.addClass(PLACEHOLDER_TEXT_CLASS);
+
 											item.val(item.attr('placeholder'));
 										}
 									}
@@ -122,7 +124,7 @@ AUI().add(
 						var formNode = instance.formNode;
 						var formValidator = instance.formValidator;
 
-						if (!instance._supportPlaceholders) {
+						if (!SUPPORT_PLACEHOLDERS) {
 							formValidator.on('submit', instance._removePlaceholdersBeforeSubmit, instance);
 						}
 
@@ -151,17 +153,19 @@ AUI().add(
 							row.toggleClass('aui-field-focused', (event.type == 'focus'));
 						}
 
-						if (!instance._supportPlaceholders && currentTarget.attr('placeholder')) {
+						if (!SUPPORT_PLACEHOLDERS && currentTarget.attr('placeholder')) {
 							if (event.type == 'focus') {
 								if (currentTarget.val() == currentTarget.attr('placeholder')) {
 									currentTarget.val('');
+
 									currentTarget.removeClass(PLACEHOLDER_TEXT_CLASS);
 
 								}
 							}
-							else if (event.type == 'blur') {
+							else {
 								if (!currentTarget.val()) {
 									currentTarget.val(currentTarget.attr('placeholder'));
+
 									currentTarget.addClass(PLACEHOLDER_TEXT_CLASS);
 								}
 							}
@@ -236,10 +240,11 @@ AUI().add(
 						var instance = this;
 
 						var formNode = instance.formNode;
-						var placeHolderInputs = formNode.all('input[placeholder],textarea[placeholder]');
 
-						if (placeHolderInputs.size() > 0) {
-							placeHolderInputs.each(
+						var placeholderInputs = formNode.all('input[placeholder],textarea[placeholder]');
+
+						if (placeholderInputs.size()) {
+							placeholderInputs.each(
 								function(item, index, collection) {
 									if (item.val() == item.attr('placeholder')) {
 										item.val('');

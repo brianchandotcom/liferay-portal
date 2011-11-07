@@ -1058,7 +1058,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		if (resourcePermission == null) {
 			if (((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
-				(operator == ResourcePermissionConstants.OPERATOR_SET)) &&
+				 (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
 				(actionIds.length == 0)) {
 
 				return;

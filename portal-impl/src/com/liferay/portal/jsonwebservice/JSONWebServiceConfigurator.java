@@ -59,7 +59,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 	public JSONWebServiceConfigurator(String servletContextName) {
 		setIncludedJars(
 			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar",
-			"*-portlet-service.jar");
+			"*-portlet-service*.jar");
 
 		_servletContextName = servletContextName;
 	}
@@ -124,7 +124,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 
 			classPathFiles[0] = classPathFile;
 
-			FindFile findFile = new WildcardFindFile("*-portlet-service.jar");
+			FindFile findFile = new WildcardFindFile("*-portlet-service*.jar");
 
 			findFile.searchPath(libDir);
 

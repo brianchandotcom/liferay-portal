@@ -500,7 +500,252 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 		return ${entity.varName};
 	}
+	
+	<#if entity.isHierarchicalTree()>
+	public void testMove() throws Exception {
+		long groupId = nextLong();
 
+		${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+		
+		long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
+		long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
+		
+		${entity.name} child${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		
+		assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(previousRootRight${pkColumn.methodName} + 2, root${entity.name}.getRight${pkColumn.methodName}());		
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
+	}
+	
+	public void testMoveTreeFromRight() throws Exception {
+		long groupId = nextLong();
+
+		${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+		
+		long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
+		long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
+		
+		${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+		
+		${entity.name} child${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+		
+		parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
+		
+		parent${entity.name}.setParent${pkColumn.methodName}(root${entity.name}.get${pkColumn.methodName}());
+		
+		_persistence.update(parent${entity.name}, false);
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		child${entity.name} = _persistence.fetchByPrimaryKey(child${entity.name}.getPrimaryKey());
+		
+		assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(previousRootRight${pkColumn.methodName} + 4, root${entity.name}.getRight${pkColumn.methodName}());		
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() + -1, parent${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() + -1, child${entity.name}.getRight${pkColumn.methodName}());
+	}
+	
+	public void testMoveTreeFromLeft() throws Exception {
+		long groupId = nextLong();
+		
+		${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+		
+		${entity.name} child${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+		
+		parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
+		
+		${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+		
+		long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
+		long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
+		
+		parent${entity.name}.setParent${pkColumn.methodName}(root${entity.name}.get${pkColumn.methodName}());
+		
+		_persistence.update(parent${entity.name}, false);
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		child${entity.name} = _persistence.fetchByPrimaryKey(child${entity.name}.getPrimaryKey());
+		
+		assertEquals(previousRootLeft${pkColumn.methodName} - 4, root${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(previousRootRight${pkColumn.methodName}, root${entity.name}.getRight${pkColumn.methodName}());		
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() -1 , parent${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, child${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, child${entity.name}.getRight${pkColumn.methodName}());
+	}
+	
+	public void testMoveTreeIntoTreeFromRight() throws Exception {
+		long groupId = nextLong();
+
+		${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+		
+		${entity.name} leftRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		
+		${entity.name} rightRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		
+		long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
+		long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
+		
+		${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+		
+		${entity.name} parentChild${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+		
+		parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
+		
+		parent${entity.name}.setParent${pkColumn.methodName}(leftRootChild${entity.name}.get${pkColumn.methodName}());
+		
+		_persistence.update(parent${entity.name}, false);
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		leftRootChild${entity.name} = _persistence.fetchByPrimaryKey(leftRootChild${entity.name}.getPrimaryKey());
+		rightRootChild${entity.name} = _persistence.fetchByPrimaryKey(rightRootChild${entity.name}.getPrimaryKey());
+		parentChild${entity.name} = _persistence.fetchByPrimaryKey(parentChild${entity.name}.getPrimaryKey());
+		
+		assertEquals(previousRootLeft${pkColumn.methodName}, root${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(previousRootRight${pkColumn.methodName} + 4, root${entity.name}.getRight${pkColumn.methodName}());		
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, leftRootChild${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 3, leftRootChild${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 7, rightRootChild${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, rightRootChild${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(leftRootChild${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(leftRootChild${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, parentChild${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
+	}
+	
+	public void testMoveTreeIntoTreeFromLeft() throws Exception {
+		long groupId = nextLong();
+	
+		${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+		
+		${entity.name} parentChild${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+		
+		parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
+		
+		${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+		
+		${entity.name} leftRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		
+		${entity.name} rightRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		
+		long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
+		long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
+		
+		parent${entity.name}.setParent${pkColumn.methodName}(rightRootChild${entity.name}.get${pkColumn.methodName}());
+		
+		_persistence.update(parent${entity.name}, false);
+		
+		root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
+		leftRootChild${entity.name} = _persistence.fetchByPrimaryKey(leftRootChild${entity.name}.getPrimaryKey());
+		rightRootChild${entity.name} = _persistence.fetchByPrimaryKey(rightRootChild${entity.name}.getPrimaryKey());
+		parentChild${entity.name} = _persistence.fetchByPrimaryKey(parentChild${entity.name}.getPrimaryKey());
+		
+		assertEquals(previousRootLeft${pkColumn.methodName} - 4, root${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(previousRootRight${pkColumn.methodName}, root${entity.name}.getRight${pkColumn.methodName}());		
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 1, leftRootChild${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 7, leftRootChild${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getLeft${pkColumn.methodName}() + 3, rightRootChild${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(root${entity.name}.getRight${pkColumn.methodName}() - 1, rightRootChild${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(rightRootChild${entity.name}.getLeft${pkColumn.methodName}() + 1, parent${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(rightRootChild${entity.name}.getRight${pkColumn.methodName}() - 1, parent${entity.name}.getRight${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getLeft${pkColumn.methodName}() + 1, parentChild${entity.name}.getLeft${pkColumn.methodName}());
+		assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
+	}
+	
+	protected ${entity.name} add${entity.name}(long groupId, Long parent${pkColumn.methodName}) throws Exception {
+		<#if entity.hasCompoundPK()>
+			${entity.PKClassName} pk = new ${entity.PKClassName}(
+
+			<#list entity.PKList as column>
+				<#if column.type == "int">
+					nextInt()
+				<#elseif column.type == "long">
+					nextLong()
+				<#elseif column.type == "String">
+					randomString()
+				</#if>
+
+				<#if column_has_next>
+					,
+				</#if>
+			</#list>
+
+			);
+		<#else>
+			<#assign column = entity.PKList[0]>
+
+			${column.type} pk =
+
+			<#if column.type == "int">
+				nextInt()
+			<#elseif column.type == "long">
+				nextLong()
+			<#elseif column.type == "String">
+				randomString()
+			</#if>
+
+			;
+		</#if>
+
+		${entity.name} ${entity.varName} = _persistence.create(pk);
+
+		<#list entity.regularColList as column>
+			<#if !column.primary && ((parentPKColumn == "") || (parentPKColumn.name != column.name))>
+				<#if column.name ="groupId">
+					
+					${entity.varName}.set${column.methodName}(groupId);
+				<#else>
+					<#if column.type == "Blob">
+						byte[] ${column.name}Bytes = randomString().getBytes(StringPool.UTF8);
+	
+						Blob ${column.name}Blob = new OutputBlob(new UnsyncByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
+					</#if>
+	
+					${entity.varName}.set${column.methodName}(
+	
+					<#if column.type == "boolean">
+						randomBoolean()
+					<#elseif column.type == "double">
+						nextDouble()
+					<#elseif column.type == "int">
+						nextInt()
+					<#elseif column.type == "long">
+						nextLong()
+					<#elseif column.type == "Blob">
+						${column.name}Blob
+					<#elseif column.type == "Date">
+						nextDate()
+					<#elseif column.type == "String">
+						randomString()
+					</#if>
+	
+					);
+				</#if>
+			</#if>
+		</#list>
+		
+		if (parent${pkColumn.methodName} != null){
+			${entity.varName}.setParent${pkColumn.methodName}(parent${pkColumn.methodName});
+		}
+		
+		_persistence.update(${entity.varName}, false);
+
+		return ${entity.varName};
+	}
+	</#if>
+	
 	private ${entity.name}Persistence _persistence;
 
 }

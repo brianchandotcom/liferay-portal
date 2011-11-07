@@ -101,7 +101,7 @@ public class StartupAction extends SimpleAction {
 				portalSecurityManagerStrategy = "none";
 			}
 			else {
-				portalSecurityManagerStrategy = "liferay";
+				portalSecurityManagerStrategy = "default";
 			}
 		}
 

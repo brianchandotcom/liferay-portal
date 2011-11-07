@@ -304,17 +304,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>development/jass.jar</file-name>
-		<version></version>
-		<project-name>Jass</project-name>
-		<project-url>http://csd.informatik.uni-oldenburg.de/~jass</project-url>
-		<licenses>
-			<license>
-				<license-name>GPL 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>development/jalopy.jar</file-name>
 		<version>1.5 RC3</version>
 		<project-name>Jalopy</project-name>
@@ -873,7 +862,7 @@
 		</comments>
 	</library>
 	<library>
-		<file-name>global/annotations.jar</file-name>
+		<file-name>development/annotations.jar</file-name>
 		<version>1.0</version>
 		<project-name>Common Annotations</project-name>
 		<project-url>http://jsr250.dev.java.net</project-url>
@@ -1218,7 +1207,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/ccpi.jar</file-name>
+		<file-name>portal/ccpp.jar</file-name>
 		<version>1.0</version>
 		<project-name>CC/PP Processing</project-name>
 		<project-url>http://java.sun.com/j2ee/ccpp</project-url>
@@ -1229,7 +1218,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/ccpi-ri.jar</file-name>
+		<file-name>portal/ccpp-ri.jar</file-name>
 		<version>1.0</version>
 		<project-name>CC/PP Processing</project-name>
 		<project-url>http://java.sun.com/j2ee/ccpp</project-url>
@@ -1309,7 +1298,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/chemistry-opencmis-commons-impl.jar </file-name>
+		<file-name>portal/chemistry-opencmis-commons-impl.jar</file-name>
 		<version>0.5.0</version>
 		<project-name>OpenCMIS</project-name>
 		<project-url>http://chemistry.apache.org/java/opencmis.html</project-url>

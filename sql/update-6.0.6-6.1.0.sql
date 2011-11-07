@@ -230,7 +230,7 @@ update DLFileShortcut set repositoryId = groupId;
 drop index IX_B413F1EC on DLFileVersion;
 drop index IX_94E784D2 on DLFileVersion;
 drop index IX_2F8FED9C on DLFileVersion;
-alert table DLFileVersion add modifiedDate DATE null;
+alter table DLFileVersion add modifiedDate DATE null;
 alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add fileEntryId LONG;
 alter table DLFileVersion add mimeType VARCHAR(75) null;
@@ -611,8 +611,6 @@ create table UserNotificationEvent (
 	payload TEXT null,
 	archived BOOLEAN
 );
-
-alter table UserNotificationEvent add archived BOOLEAN;
 
 create table VirtualHost (
 	virtualHostId LONG not null primary key,

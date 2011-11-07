@@ -154,11 +154,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		clearFilteredPropertyDescriptorsCache(autowireCapableBeanFactory);
 
-		try {
-			OSGiServiceUtil.registerContext(applicationContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (PropsValues.OSGI_ENABLED) {
+			try {
+				OSGiServiceUtil.registerContext(applicationContext);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 	}
 

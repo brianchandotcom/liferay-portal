@@ -106,7 +106,7 @@ public class MoveEntryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Bookmarks Home")) {
+				if (selenium.isElementPresent("link=Home")) {
 					break;
 				}
 			}
@@ -116,8 +116,7 @@ public class MoveEntryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Bookmarks Home",
-			RuntimeVariables.replace("Bookmarks Home"));
+		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");

@@ -2,8 +2,22 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_MDR_MDRActionService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<typeMapping xmlns:ns="http://model.mobiledevicerules.portlet.liferay.com" qname="ns:MDRActionSoap" type="java:com.liferay.portlet.mobiledevicerules.model.MDRActionSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteAction" qname="operNS:deleteAction" soapAction="">
+			<parameter xmlns:tns="http://model.mobiledevicerules.portlet.liferay.com" qname="action" type="tns:MDRActionSoap"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteAction" qname="operNS:deleteAction" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="actionId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="fetchAction" qname="operNS:fetchAction" returnQName="fetchActionReturn" returnType="rtns:MDRActionSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="actionId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="getAction" qname="operNS:getAction" returnQName="getActionReturn" returnType="rtns:MDRActionSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="actionId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="deleteAction fetchAction getAction" />
 		<parameter name="className" value="com.liferay.portlet.mobiledevicerules.service.http.MDRActionServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.mobiledevicerules.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="MDRActionServiceSoap" />
 		<parameter name="wsdlServiceElement" value="MDRActionServiceSoapService" />

@@ -2,8 +2,8 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_Cal_CalEventService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://cal.kernel.portal.liferay.com" qname="ns:ArrayOf_tns3_DayAndPosition" type="java:com.liferay.portal.kernel.cal.DayAndPosition[]" innerType="cmp-ns:DayAndPosition" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://model.calendar.portlet.liferay.com" qname="ns:ArrayOf_tns2_CalEventSoap" type="java:com.liferay.portlet.calendar.model.CalEventSoap[]" innerType="cmp-ns:CalEventSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://cal.kernel.portal.liferay.com" qname="ns:ArrayOf_tns2_DayAndPosition" type="java:com.liferay.portal.kernel.cal.DayAndPosition[]" innerType="cmp-ns:DayAndPosition" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://model.calendar.portlet.liferay.com" qname="ns:ArrayOf_tns6_CalEventSoap" type="java:com.liferay.portlet.calendar.model.CalEventSoap[]" innerType="cmp-ns:CalEventSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_int" type="java:int[]" innerType="cmp-ns:int" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.calendar.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -53,23 +53,23 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns2_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns6_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.calendar.portlet.liferay.com" qname="types" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns2_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns6_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="cal" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="urn:http.service.calendar.portlet.liferay.com" qname="types" type="tns:ArrayOf_xsd_string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns2_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns6_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="cal" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns2_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.calendar.portlet.liferay.com" xmlns:rtns="urn:http.service.calendar.portlet.liferay.com" xmlns:tns2="http://model.calendar.portlet.liferay.com" name="getEvents" qname="operNS:getEvents" returnQName="getEventsReturn" returnType="rtns:ArrayOf_tns6_CalEventSoap" returnItemType="tns2:CalEventSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>

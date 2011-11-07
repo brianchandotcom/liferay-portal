@@ -2,8 +2,36 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_MDR_MDRRuleGroupService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<arrayMapping xmlns:ns="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.mobiledevicerules.portlet.liferay.com" qname="ns:MDRRuleGroupSoap" type="java:com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="copyRuleGroup" qname="operNS:copyRuleGroup" returnQName="copyRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://model.mobiledevicerules.portlet.liferay.com" qname="ruleGroup" type="tns:MDRRuleGroupSoap"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="copyRuleGroup" qname="operNS:copyRuleGroup" returnQName="copyRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteRuleGroup" qname="operNS:deleteRuleGroup" soapAction="">
+			<parameter xmlns:tns="http://model.mobiledevicerules.portlet.liferay.com" qname="ruleGroup" type="tns:MDRRuleGroupSoap"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteRuleGroup" qname="operNS:deleteRuleGroup" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="fetchRuleGroup" qname="operNS:fetchRuleGroup" returnQName="fetchRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="getRuleGroup" qname="operNS:getRuleGroup" returnQName="getRuleGroupReturn" returnType="rtns:MDRRuleGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleGroupId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="copyRuleGroup deleteRuleGroup fetchRuleGroup getRuleGroup" />
 		<parameter name="className" value="com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.mobiledevicerules.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.mobiledevicerules.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="MDRRuleGroupServiceSoap" />
 		<parameter name="wsdlServiceElement" value="MDRRuleGroupServiceSoapService" />

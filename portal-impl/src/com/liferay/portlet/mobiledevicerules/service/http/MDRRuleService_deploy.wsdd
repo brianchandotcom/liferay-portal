@@ -2,8 +2,22 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_MDR_MDRRuleService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<typeMapping xmlns:ns="http://model.mobiledevicerules.portlet.liferay.com" qname="ns:MDRRuleSoap" type="java:com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteRule" qname="operNS:deleteRule" soapAction="">
+			<parameter xmlns:tns="http://model.mobiledevicerules.portlet.liferay.com" qname="rule" type="tns:MDRRuleSoap"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" name="deleteRule" qname="operNS:deleteRule" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="fetchRule" qname="operNS:fetchRule" returnQName="fetchRuleReturn" returnType="rtns:MDRRuleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.mobiledevicerules.portlet.liferay.com" xmlns:rtns="http://model.mobiledevicerules.portlet.liferay.com" name="getRule" qname="operNS:getRule" returnQName="getRuleReturn" returnType="rtns:MDRRuleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ruleId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="deleteRule fetchRule getRule" />
 		<parameter name="className" value="com.liferay.portlet.mobiledevicerules.service.http.MDRRuleServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.mobiledevicerules.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="MDRRuleServiceSoap" />
 		<parameter name="wsdlServiceElement" value="MDRRuleServiceSoapService" />

@@ -44,6 +44,7 @@ import com.liferay.portal.osgi.service.OSGiServiceUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.velocity.LiferayResourceCacheUtil;
 import com.liferay.portlet.PortletContextBagPool;
@@ -94,13 +95,15 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortletContextBagPool.clear();
 		WebAppPool.clear();
 
-		try {
-			OSGiServiceUtil.init();
+		if (PropsValues.OSGI_ENABLED) {
+			try {
+				OSGiServiceUtil.init();
 
-			OSGiServiceUtil.start();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				OSGiServiceUtil.start();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
 		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
@@ -151,11 +154,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		clearFilteredPropertyDescriptorsCache(autowireCapableBeanFactory);
 
-		try {
-			OSGiServiceUtil.registerContext(applicationContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (PropsValues.OSGI_ENABLED) {
+			try {
+				OSGiServiceUtil.registerContext(applicationContext);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 	}
 

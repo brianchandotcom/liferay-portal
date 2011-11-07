@@ -628,33 +628,39 @@ public class EditFileEntryAction extends PortletAction {
 		try {
 			String contentType = uploadPortletRequest.getContentType("file");
 
-			String portletName = portletConfig.getPortletName();
+			long size = uploadPortletRequest.getSize("file");
 
-			if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-				String portletResource = ParamUtil.getString(
-					actionRequest, "portletResource");
+			if (cmd.equals(Constants.ADD) && (size == 0)) {
+				contentType = MimeTypesUtil.getContentType(title);
+			}
 
-				PortletPreferences portletPreferences = null;
+			if (cmd.equals(Constants.ADD) || (size > 0)) {
+				String portletName = portletConfig.getPortletName();
 
-				if (Validator.isNotNull(portletResource)) {
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						actionRequest, portletResource);
-				}
-				else {
-					portletPreferences = actionRequest.getPreferences();
-				}
+				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+					String portletResource = ParamUtil.getString(
+						actionRequest, "portletResource");
 
-				String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
-					portletPreferences, actionRequest);
+					PortletPreferences portletPreferences = null;
 
-				if (Arrays.binarySearch(mimeTypes, contentType) < 0) {
-					throw new FileMimeTypeException(contentType);
+					if (Validator.isNotNull(portletResource)) {
+						PortletPreferencesFactoryUtil.getPortletSetup(
+							actionRequest, portletResource);
+					}
+					else {
+						portletPreferences = actionRequest.getPreferences();
+					}
+
+					String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
+						portletPreferences, actionRequest);
+
+					if (Arrays.binarySearch(mimeTypes, contentType) < 0) {
+						throw new FileMimeTypeException(contentType);
+					}
 				}
 			}
 
 			inputStream = uploadPortletRequest.getFileAsStream("file");
-
-			long size = uploadPortletRequest.getSize("file");
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);

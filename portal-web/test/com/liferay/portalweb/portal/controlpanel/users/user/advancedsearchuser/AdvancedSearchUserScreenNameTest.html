@@ -29,34 +29,24 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isVisible('link=Advanced »'))</td>
-	<td>AdvancedPresent</td>
+	<td>advanced1Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${AdvancedPresent}</td>
-	<td>advancedNotPresent</td>
+	<td>!${advanced1Present}</td>
+	<td>Advanced1NotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -65,13 +55,13 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>advancedNotPresent</td>
+	<td>Advanced1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_screenName']</td>
-	<td>selenium</td>
+	<td>selenium*</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -84,24 +74,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>link=Users and Organizations</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>advanced2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${advanced2Present}</td>
+	<td>Advanced2NotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=Advanced »</td>
+	<td>Advanced »</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Advanced2NotPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -120,35 +125,9 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=View</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>All Users</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='_125_screenName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAt</td>
 	<td>link=« Basic</td>
 	<td>« Basic</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

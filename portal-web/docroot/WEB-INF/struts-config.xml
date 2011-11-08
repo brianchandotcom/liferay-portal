@@ -1924,6 +1924,8 @@
 
 		<action path="/users_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
+        <action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
+
 		<action path="/users_admin/view" forward="portlet.users_admin.view" />
 
 		<action path="/users_admin/view_teams" forward="portlet.sites_admin.view_teams" />

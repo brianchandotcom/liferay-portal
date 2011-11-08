@@ -154,6 +154,8 @@ AUI().add(
 
 					var inputSearch = A.Node.create(searchBoxContent);
 
+					inputSearch.swallowEvent('click');
+
 					menu.prepend(inputSearch);
 
 					var options = {

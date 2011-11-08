@@ -1,0 +1,154 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DefinePermissionsBlogsManagePagesPowerUserTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DefinePermissionsBlogsManagePagesPowerUserTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Roles</td>
+	<td>Roles</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_128_keywords']</td>
+	<td>Power</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Power User</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a</td>
+	<td>Power User</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Define Permissions</td>
+	<td>Define Permissions</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>Add Entry</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>Add Entry</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>User Personal Site</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xPath=(//a[@class='permission-scope-delete'])[1]</td>
+	<td>x</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>The role permissions were updated.</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Define Permissions</td>
+	<td>Define Permissions</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[13]/td[2]</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[13]/td[2]</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>User Personal Site</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xPath=(//a[@class='permission-scope-delete'])[1]</td>
+	<td>x</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>The role permissions were updated.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -12,28 +12,16 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.stagingcommunity.blogs;
 
-import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.stagingcommunity.blogs.BlogsTests;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class StagingCommunityBlogsTestSuite extends BaseTests {
-
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(BlogsTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
-
-		return testSuite;
+public class Guest_AssertNoPagePrePublishTest extends BaseTestCase {
+	public void testGuest_AssertNoPagePrePublish() throws Exception {
+		selenium.open("/web/guest/home/");
+		assertFalse(selenium.isElementPresent("link=Blogs Test Page"));
 	}
-
 }

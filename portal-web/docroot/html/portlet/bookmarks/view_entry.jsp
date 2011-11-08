@@ -93,8 +93,7 @@ request.setAttribute("view_entry.jsp-entry", entry);
 		<c:if test="<%= enableRelatedAssets %>">
 			<div class="entry-links">
 				<liferay-ui:asset-links
-					className="<%= BookmarksEntry.class.getName() %>"
-					classPK="<%= entryId %>"
+					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 				/>
 			</div>
 		</c:if>

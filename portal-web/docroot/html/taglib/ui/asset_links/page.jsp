@@ -17,25 +17,16 @@
 <%@ include file="/html/taglib/ui/asset_links/init.jsp" %>
 
 <%
-String className = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-links:className"));
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-links:classPK"));
+long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-links:assetEntryId"));
 
-AssetEntry assetEntry = null;
+List<AssetLink> assetLinks = null;
 
-List<AssetLink> assetLinks = new ArrayList<AssetLink>();
-
-if (classPK > 0) {
-	try {
-		assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
-
-		assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
-	}
-	catch (NoSuchEntryException nsee) {
-	}
+if (assetEntryId > 0) {
+	assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntryId);
 }
 %>
 
-<c:if test="<%= !assetLinks.isEmpty() %>">
+<c:if test="<%= (assetLinks != null) && !assetLinks.isEmpty() %>">
 	<div class="taglib-asset-links">
 		<h2 class="asset-links-title"><liferay-ui:message key="related-assets" />:</h2>
 
@@ -45,7 +36,7 @@ if (classPK > 0) {
 			for (AssetLink assetLink : assetLinks) {
 				AssetEntry assetLinkEntry = null;
 
-				if (assetLink.getEntryId1() == assetEntry.getEntryId()) {
+				if (assetLink.getEntryId1() == assetEntryId) {
 					assetLinkEntry = AssetEntryServiceUtil.getEntry(assetLink.getEntryId2());
 				}
 				else {

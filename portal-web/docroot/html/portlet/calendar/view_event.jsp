@@ -223,8 +223,7 @@ request.setAttribute("view_event.jsp-event", event);
 		<c:if test="<%= enableRelatedAssets %>">
 			<div class="entry-links">
 				<liferay-ui:asset-links
-					className="<%= CalEvent.class.getName() %>"
-					classPK="<%= event.getEventId() %>"
+					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 				/>
 			</div>
 		</c:if>

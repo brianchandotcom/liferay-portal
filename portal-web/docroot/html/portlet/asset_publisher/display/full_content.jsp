@@ -181,8 +181,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 			<c:if test="<%= enableRelatedAssets %>">
 				<liferay-ui:asset-links
-					className="<%= assetEntry.getClassName() %>"
-					classPK="<%= assetEntry.getClassPK() %>"
+					assetEntryId="<%= assetEntry.getEntryId() %>"
 				/>
 			</c:if>
 

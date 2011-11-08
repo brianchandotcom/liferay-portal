@@ -73,11 +73,11 @@ while (parentPlid > 0) {
 	try {
 		parentLayout = LayoutLocalServiceUtil.getLayout(parentPlid);
 
-		if (parentLayout.getParentPlid() > 0) {
-			parentPlids.add(parentLayout.getParentPlid());
-		}
-
 		parentPlid = parentLayout.getParentPlid();
+
+		if (parentPlid > 0) {
+			parentPlids.add(parentPlid);
+		}
 	}
 	catch (Exception e) {
 		parentPlid = -1;

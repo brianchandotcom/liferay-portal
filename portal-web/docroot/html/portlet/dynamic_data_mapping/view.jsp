@@ -81,6 +81,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-column-text
 			href="<%= rowHREF %>"
 			name="name"
+			value="<%= structure.getName(locale) %>"
 		/>
 
 		<c:if test="<%= Validator.isNull(storageTypeValue) %>">

@@ -63,6 +63,26 @@ if (!group.isUser() && selLayout.isTypePortlet()) {
 }
 
 String[][] categorySections = {mainSections};
+
+long parentPlid = refererPlid;
+
+Set<Long> parentPlids = new HashSet<Long>();
+Layout parentLayout = null;
+
+while (parentPlid > 0) {
+	try {
+		parentLayout = LayoutLocalServiceUtil.getLayout(parentPlid);
+
+		parentPlid = parentLayout.getParentPlid();
+
+		if (parentPlid > 0) {
+			parentPlids.add(parentPlid);
+		}
+	}
+	catch (Exception e) {
+		parentPlid = -1;
+	}
+}
 %>
 
 <div class="lfr-header-row title">
@@ -302,7 +322,7 @@ String[][] categorySections = {mainSections};
 
 			if (action == '<%= Constants.DELETE %>') {
 				<c:choose>
-					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) %>">
+					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) || parentPlids.contains(selPlid) %>">
 						alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
 
 						return false;

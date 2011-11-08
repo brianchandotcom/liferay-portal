@@ -527,9 +527,9 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI = "dl.file.entry.preview.document.dpi";
 
-	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT = "dl.file.entry.preview.document.height";
+	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT = "dl.file.entry.preview.document.max.height";
 
-	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH = "dl.file.entry.preview.document.width";
+	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH = "dl.file.entry.preview.document.max.width";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_ENABLED = "dl.file.entry.preview.enabled";
 
@@ -538,8 +538,6 @@ public interface PropsKeys {
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT = "dl.file.entry.preview.video.height";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES = "dl.file.entry.preview.video.mime.types";
-
-	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE = "dl.file.entry.preview.video.thumbnail.percentage";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH = "dl.file.entry.preview.video.width";
 
@@ -555,15 +553,17 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH = "dl.file.entry.thumbnail.custom2.max.width";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_DEPTH = "dl.file.entry.thumbnail.depth";
+	public static final String DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH = "dl.file.entry.thumbnail.document.depth";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_DPI = "dl.file.entry.thumbnail.dpi";
+	public static final String DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI = "dl.file.entry.thumbnail.document.dpi";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_ENABLED = "dl.file.entry.thumbnail.enabled";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT = "dl.file.entry.thumbnail.max.height";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH = "dl.file.entry.thumbnail.max.width";
+
+	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = "dl.file.entry.thumbnail.video.frame.percentage";
 
 	public static final String DL_FILE_EXTENSIONS = "dl.file.extensions";
 

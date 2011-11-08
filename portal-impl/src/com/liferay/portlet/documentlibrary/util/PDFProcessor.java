@@ -293,8 +293,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				fileVersion, file,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false);
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH, false);
 
 			if (_log.isInfoEnabled()) {
 				int previewFileCount = getPreviewFileCount(fileVersion);
@@ -309,8 +309,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		if (_isGenerateThumbnail(fileVersion)) {
 			_generateImagesIM(
 				fileVersion, file,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DEPTH,
-				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH,
+				PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI,
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT),
 				PrefsPropsUtil.getInteger(
@@ -447,7 +447,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				if (generateThumbnail && (i == 0)) {
 					_generateImagesPB(
 						fileVersion, pdPage,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI,
+						PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI,
 						PrefsPropsUtil.getInteger(
 							PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT),
 						PrefsPropsUtil.getInteger(
@@ -468,8 +468,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				_generateImagesPB(
 					fileVersion, pdPage,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH, false,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH, false,
 					i + 1);
 			}
 
@@ -497,7 +497,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 		RenderedImage renderedImage = pdPage.convertToImage(
 			BufferedImage.TYPE_INT_RGB,
-			PropsValues.DL_FILE_ENTRY_THUMBNAIL_DPI);
+			PropsValues.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI);
 
 		if (height != 0) {
 			renderedImage = ImageProcessorUtil.scale(

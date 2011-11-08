@@ -439,9 +439,9 @@ public class PropsValues {
 
 	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI));
 
-	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT));
+	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT));
 
-	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH));
+	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH));
 
 	public static final boolean DL_FILE_ENTRY_PREVIEW_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_ENABLED));
 
@@ -450,8 +450,6 @@ public class PropsValues {
 	public static final int DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT));
 
 	public static final String[] DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
-
-	public static final int DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE));
 
 	public static final int DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH));
 
@@ -465,15 +463,17 @@ public class PropsValues {
 
 	public static final int DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH));
 
-	public static final int DL_FILE_ENTRY_THUMBNAIL_DEPTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_DEPTH));
+	public static final int DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH));
 
-	public static final int DL_FILE_ENTRY_THUMBNAIL_DPI = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_DPI));
+	public static final int DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI));
 
 	public static final boolean DL_FILE_ENTRY_THUMBNAIL_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_ENABLED));
 
 	public static final int DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
 
 	public static final int DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH));
+
+	public static final int DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE));
 
 	public static final String[] DL_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.DL_FILE_EXTENSIONS);
 

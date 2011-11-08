@@ -63,9 +63,9 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								<li class="last common-items">
 									<div class="aui-menugroup">
 										<div class="aui-menugroup-content">
-											<span class="aui-menu-label"><liferay-ui:message key="applications" /></span>
-
 											<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
+												<span class="aui-menu-label"><liferay-ui:message key="applications" /></span>
+
 												<ul>
 
 													<%

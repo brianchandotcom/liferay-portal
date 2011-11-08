@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
 public class PortletURLUtil {
 
@@ -220,17 +221,12 @@ public class PortletURLUtil {
 
 			Map<String, String[]> parameters = request.getParameterMap();
 
-			for (String parameter :
-					_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS) {
-
-				parameters.remove(namespace.concat(parameter));
-			}
-
 			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 				String name = entry.getKey();
 
 				if (!PortalUtil.isReservedParameter(name) &&
-					!name.equals("currentURL")) {
+					!name.equals("currentURL") &&
+					!isReservedParamInUrlRefresh(name, namespace)) {
 
 					String[] values = entry.getValue();
 
@@ -254,6 +250,32 @@ public class PortletURLUtil {
 		}
 
 		return sb.toString();
+	}
+
+	protected static boolean isReservedParamInUrlRefresh(
+		String parameter, String namespace) {
+
+		if ((_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS == null) ||
+			(_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS.length == 0) ||
+			(_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS == null)) {
+
+			return false;
+		}
+		else {
+			for (int i = 0;
+				 i < _PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS.length;
+				 i++) {
+
+				String reservedParam = namespace.concat(
+					_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS[i]);
+
+				if (parameter.equals(reservedParam)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 
 	private static final int _CURRENT_URL_PARAMETER_THRESHOLD = 32768;

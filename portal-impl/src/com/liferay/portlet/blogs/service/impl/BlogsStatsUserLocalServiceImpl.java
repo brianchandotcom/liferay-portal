@@ -174,8 +174,10 @@ public class BlogsStatsUserLocalServiceImpl
 	public void updateStatsUser(long groupId, long userId, Date displayDate)
 		throws PortalException, SystemException {
 
-		int entryCount = blogsEntryPersistence.countByG_U_S(
-			groupId, userId, WorkflowConstants.STATUS_APPROVED);
+		Date now = new Date();
+
+		int entryCount = blogsEntryPersistence.countByG_U_LtD_S(
+			groupId, userId, now, WorkflowConstants.STATUS_APPROVED);
 
 		if (entryCount == 0) {
 			try {
@@ -191,15 +193,15 @@ public class BlogsStatsUserLocalServiceImpl
 
 		statsUser.setEntryCount(entryCount);
 
-		BlogsEntry blogsEntry = blogsEntryPersistence.findByG_U_S_First(
-			groupId, userId, WorkflowConstants.STATUS_APPROVED,
+		BlogsEntry blogsEntry = blogsEntryPersistence.findByG_U_LtD_S_First(
+			groupId, userId, now, WorkflowConstants.STATUS_APPROVED,
 			new EntryDisplayDateComparator());
 
 		Date lastDisplayDate = blogsEntry.getDisplayDate();
 
 		Date lastPostDate = statsUser.getLastPostDate();
 
-		if (displayDate != null) {
+		if (displayDate != null && displayDate.before(now)) {
 			if (lastPostDate == null) {
 				statsUser.setLastPostDate(displayDate);
 			}

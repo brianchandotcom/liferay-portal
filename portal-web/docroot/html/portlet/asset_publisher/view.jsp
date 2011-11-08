@@ -102,7 +102,20 @@ Group group = themeDisplay.getScopeGroup();
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, delta, portletURL, null, null);
+SearchContainer searchContainer = null;
+
+if (((assetCategoryId > 0) && (assetCategoryId != filterCategoryId)) || (Validator.isNotNull(assetTagName) && !assetTagName.equals(filterTagName))){
+	filterCategoryId = assetCategoryId;
+	filterTagName = assetTagName;
+
+	searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 1, delta, portletURL, null, null);
+}
+else {
+	searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, delta, portletURL, null, null);
+}
+
+portletURL.setParameter("filterCategoryId", String.valueOf(filterCategoryId));
+portletURL.setParameter("filterTagName", filterTagName);
 
 if (!paginationType.equals("none")) {
 	searchContainer.setDelta(delta);

@@ -540,15 +540,17 @@ public class SitesUtil {
 			lastCopyDate = new Date(GetterUtil.getLong(lastCopyDateString));
 		}
 
-		if (isLayoutLocked(layout)) {
-			if ((lastCopyDate == null) ||
-				lastCopyDate.before(templateLayout.getModifiedDate())) {
+		if ((lastCopyDate != null) &&
+				lastCopyDate.after(templateLayout.getModifiedDate())) {
+			return false;
+		}
 
+		if (isLayoutLocked(layout)) {
 				return true;
-			}
 		}
 		else if ((layoutModifiedDate == null) ||
-				 !layoutModifiedDate.after(templateLayout.getModifiedDate())) {
+				((lastCopyDate != null) &&
+					layoutModifiedDate.before(lastCopyDate))) {
 
 			return true;
 		}

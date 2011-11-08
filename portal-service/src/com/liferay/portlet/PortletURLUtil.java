@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,6 +31,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.MimeResponse;
@@ -218,13 +220,8 @@ public class PortletURLUtil {
 		if (ppid.equals(portletId)) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);
 
-			Map<String, String[]> parameters = request.getParameterMap();
-
-			for (String parameter :
-					_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS) {
-
-				parameters.remove(namespace.concat(parameter));
-			}
+			Map<String, String[]> parameters = removeReservedParameters(
+				request, namespace);
 
 			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 				String name = entry.getKey();
@@ -254,6 +251,28 @@ public class PortletURLUtil {
 		}
 
 		return sb.toString();
+	}
+
+	protected static boolean isReservedParameter(String parameter) {
+		return ArrayUtil.contains(
+			_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS, parameter);
+	}
+
+	protected static Map<String, String[]> removeReservedParameters(
+		HttpServletRequest request, String namespace) {
+
+		Map<String, String[]> parameters = request.getParameterMap();
+
+		Map<String, String[]> filteredParameters =
+			new HashMap<String, String[]>(parameters.size());
+
+		for (String parameter : parameters.keySet()) {
+			if (!isReservedParameter(namespace.concat(parameter))) {
+				filteredParameters.put(parameter, parameters.get(parameter));
+			}
+		}
+
+		return filteredParameters;
 	}
 
 	private static final int _CURRENT_URL_PARAMETER_THRESHOLD = 32768;

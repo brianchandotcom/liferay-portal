@@ -45,15 +45,13 @@ public class AssertEntriesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Entries",
-			RuntimeVariables.replace("My Entries"));
+		selenium.clickAt("link=Mine", RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("exact:http://www.digg.com"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("exact:http://www.liferay.com"),
 			selenium.getText("//tr[4]/td[2]/a"));
-		selenium.clickAt("link=Recent Entries",
-			RuntimeVariables.replace("Recent Entries"));
+		selenium.clickAt("link=Recent", RuntimeVariables.replace("Recent"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("exact:http://www.digg.com"),
 			selenium.getText("//td[2]/a"));

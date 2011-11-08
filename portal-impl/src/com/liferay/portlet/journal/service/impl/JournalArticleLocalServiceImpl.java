@@ -518,14 +518,7 @@ public class JournalArticleLocalServiceImpl
 			newArticleId = String.valueOf(counterLocalService.increment());
 		}
 		else {
-			validate(newArticleId);
-
-			JournalArticle newArticle = journalArticlePersistence.fetchByG_A_V(
-				groupId, newArticleId, version);
-
-			if (newArticle != null) {
-				throw new DuplicateArticleIdException();
-			}
+			validate(newArticleId, groupId);
 		}
 
 		long id = counterLocalService.increment();
@@ -3329,14 +3322,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (!autoArticleId) {
-			validate(articleId);
-
-			JournalArticle article = journalArticlePersistence.fetchByG_A_V(
-				groupId, articleId, version);
-
-			if (article != null) {
-				throw new DuplicateArticleIdException();
-			}
+			validate(articleId, groupId);
 		}
 
 		validate(
@@ -3345,12 +3331,18 @@ public class JournalArticleLocalServiceImpl
 			smallImageBytes);
 	}
 
-	protected void validate(String articleId) throws PortalException {
+	protected void validate(String articleId, long groupId) 
+		throws PortalException, SystemException {
+		
 		if ((Validator.isNull(articleId)) ||
 			(articleId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new ArticleIdException();
 		}
+
+        if (journalArticlePersistence.countByG_A(groupId, articleId) > 0) {
+            throw new DuplicateArticleIdException();
+        }
 	}
 
 	protected void validateContent(String content) throws PortalException {

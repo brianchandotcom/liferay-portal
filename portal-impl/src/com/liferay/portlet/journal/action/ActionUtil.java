@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,9 +48,11 @@ public class ActionUtil {
 		String articleId = ParamUtil.getString(request, "articleId");
 		String structureId = ParamUtil.getString(request, "structureId");
 
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
 		JournalArticle article = null;
 
-		if (Validator.isNotNull(articleId)) {
+		if (!cmd.equals(Constants.ADD) && Validator.isNotNull(articleId)) {
 			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, articleId, WorkflowConstants.STATUS_ANY);
 		}

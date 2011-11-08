@@ -426,7 +426,7 @@
 		.prev-next-navigation {
 			float: right;
 
-			.left-arrow, .right-arrow {
+			.next, .previous {
 				display: inline-block;
 				height: 25px;
 				margin: 0;
@@ -438,12 +438,12 @@
 				}
 			}
 
-			.left-arrow {
-				background: url(<%= themeImagesPath %>/document_library/preview_left.png) no-repeat 0 50%;
+			.next {
+				background: url(<%= themeImagesPath %>/document_library/preview_right.png) no-repeat 0 50%;
 			}
 
-			.right-arrow {
-				background: url(<%= themeImagesPath %>/document_library/preview_right.png) no-repeat 0 50%;
+			.previous {
+				background: url(<%= themeImagesPath %>/document_library/preview_left.png) no-repeat 0 50%;
 			}
 
 			.disabled, .disabled:hover {
@@ -853,7 +853,7 @@
 .ie7, .ie8 {
 	.lfr-header-row {
 		.prev-next-navigation {
-			.left-arrow, .right-arrow {
+			.previous, .next {
 				-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 				filter: alpha(opacity=50);
 

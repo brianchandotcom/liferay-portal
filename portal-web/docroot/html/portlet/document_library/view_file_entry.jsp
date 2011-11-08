@@ -152,7 +152,7 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 	/>
 </c:if>
 
-<div class="view">
+<div class="lfr-app-column-view">
 	<aui:layout>
 		<aui:column columnWidth="<%= 65 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
 			<div class="lfr-header-row">
@@ -180,12 +180,11 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 									</portlet:renderURL>
 
 									<aui:a href="<%= previousEntryURL %>">
-										<span class="left-arrow <%= previousEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+										<span class="<%= previousEntry == null ? "disabled" : StringPool.BLANK %> previous"></span>
 									</aui:a>
 								</c:when>
-
 								<c:otherwise>
-									<span class="left-arrow <%= previousEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									<span class="<%= previousEntry == null ? "disabled" : StringPool.BLANK %> previous"></span>
 								</c:otherwise>
 							</c:choose>
 							<c:choose>
@@ -197,11 +196,11 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 									</portlet:renderURL>
 
 									<aui:a href="<%= nextEntryURL %>">
-										<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+										<span class="<%= nextEntry == null ? "disabled" : StringPool.BLANK %> next"></span>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<span class="right-arrow <%= nextEntry == null ? "disabled" : StringPool.BLANK %>"></span>
+									<span class="<%= nextEntry == null ? "disabled" : StringPool.BLANK %> next"></span>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -423,7 +422,11 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= previewFileURL %>" />
+												<div class="lfr-preview-file-image-current-column">
+													<div class="lfr-preview-file-image-container">
+														<img class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL %>" />
+													</div>
+												</div>
 											</div>
 										</div>
 									</c:when>
@@ -855,8 +858,7 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 		);
 	}
 
-	<c:if test='<%= showActions %>'>
-
+	<c:if test="<%= showActions %>">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryToolbar = new A.Toolbar(
@@ -866,7 +868,6 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 				children: [
 
 					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
-
 						{
 							handler: function(event) {
 								location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>';
@@ -874,7 +875,6 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 							icon: 'download',
 							label: '<liferay-ui:message key="download" />'
 						},
-
 					</c:if>
 
 					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
@@ -909,7 +909,6 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 						},
 
 						<c:if test="<%= !fileEntry.isCheckedOut() %>">
-
 							{
 
 								handler: function(event) {
@@ -919,11 +918,9 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 								icon: 'lock',
 								label: '<liferay-ui:message key="checkout" />'
 							},
-
 						</c:if>
 
 						<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
-
 							{
 
 								handler: function(event) {
@@ -933,7 +930,6 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 								icon: 'undo',
 								label: '<liferay-ui:message key="cancel-checkout" />'
 							},
-
 							{
 
 								handler: function(event) {
@@ -943,12 +939,10 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 								icon: 'unlock',
 								label: '<liferay-ui:message key="checkin" />'
 							},
-
 						</c:if>
 					</c:if>
 
 					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
-
 						{
 
 							<liferay-security:permissionsURL
@@ -964,7 +958,6 @@ OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate
 							icon: 'permissions',
 							label: '<liferay-ui:message key="permissions" />'
 						}
-
 					</c:if>
 
 				]

@@ -3,10 +3,6 @@ AUI().add(
 	function(A) {
 		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
-		var PLACEHOLDER_TEXT_CLASS = 'aui-text-placeholder';
-
-		var SUPPORT_PLACEHOLDERS = A.Object.owns(document.createElement('input'), 'placeholder');
-
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
 
 		var acceptFiles = function(val, node, ruleValue) {
@@ -100,22 +96,6 @@ AUI().add(
 
 							instance._bindForm();
 						}
-
-						if (!SUPPORT_PLACEHOLDERS) {
-							var placeholderInputs = formNode.all('input[placeholder],textarea[placeholder]');
-
-							if (placeholderInputs.size()) {
-								placeholderInputs.each(
-									function(item, index, collection) {
-										if (!item.val()) {
-											item.addClass(PLACEHOLDER_TEXT_CLASS);
-
-											item.val(item.attr('placeholder'));
-										}
-									}
-								);
-							}
-						}
 					},
 
 					_bindForm: function() {
@@ -124,14 +104,9 @@ AUI().add(
 						var formNode = instance.formNode;
 						var formValidator = instance.formValidator;
 
-						if (!SUPPORT_PLACEHOLDERS) {
-							formValidator.on('submit', instance._removePlaceholdersBeforeSubmit, instance);
-						}
+						formValidator.on('submit', A.bind('_onValidatorSubmit', instance));
 
-						formValidator.on('submit', instance._onValidatorSubmit, instance);
-
-						formNode.delegate('blur', instance._onFieldFocusChange, 'button,input,select,textarea', instance);
-						formNode.delegate('focus', instance._onFieldFocusChange, 'button,input,select,textarea', instance);
+						formNode.delegate(['blur', 'focus'], A.bind('_onFieldFocusChange', instance), 'button,input,select,textarea');
 					},
 
 					_defaultSubmitFn: function(event) {
@@ -145,30 +120,10 @@ AUI().add(
 					_onFieldFocusChange: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
-
-						var row = currentTarget.ancestor('.aui-field');
+						var row = event.currentTarget.ancestor('.aui-field');
 
 						if (row) {
 							row.toggleClass('aui-field-focused', (event.type == 'focus'));
-						}
-
-						if (!SUPPORT_PLACEHOLDERS && currentTarget.attr('placeholder')) {
-							if (event.type == 'focus') {
-								if (currentTarget.val() == currentTarget.attr('placeholder')) {
-									currentTarget.val('');
-
-									currentTarget.removeClass(PLACEHOLDER_TEXT_CLASS);
-
-								}
-							}
-							else {
-								if (!currentTarget.val()) {
-									currentTarget.val(currentTarget.attr('placeholder'));
-
-									currentTarget.addClass(PLACEHOLDER_TEXT_CLASS);
-								}
-							}
 						}
 					},
 
@@ -233,24 +188,6 @@ AUI().add(
 							}
 
 							fieldStrings[validatorName] = errorMessage;
-						}
-					},
-
-					_removePlaceholdersBeforeSubmit: function() {
-						var instance = this;
-
-						var formNode = instance.formNode;
-
-						var placeholderInputs = formNode.all('input[placeholder],textarea[placeholder]');
-
-						if (placeholderInputs.size()) {
-							placeholderInputs.each(
-								function(item, index, collection) {
-									if (item.val() == item.attr('placeholder')) {
-										item.val('');
-									}
-								}
-							);
 						}
 					}
 				},

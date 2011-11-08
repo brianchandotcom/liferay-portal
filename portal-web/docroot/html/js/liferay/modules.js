@@ -50,6 +50,7 @@
 			'dockbar': ['aui-button-item', 'aui-io-plugin', 'aui-io-request', 'aui-overlay-context', 'aui-overlay-manager', 'event-touch', 'node-focusmanager'],
 			'dynamic-select': ['aui-base'],
 			'form': ['aui-base', 'aui-form-validator'],
+			'form-placeholders': ['liferay-form'],
 			'form-navigator': ['aui-base'],
 			'history': getHistoryRequirements(),
 			'history-html5': ['liferay-history', 'history-html5', 'querystring-stringify-simple'],
@@ -161,6 +162,16 @@
 			}
 		}
 	};
+
+	addPlugin(
+		{
+			name: 'liferay-form-placeholders',
+			test: function(A) {
+				return !A.Object.owns(document.createElement('input'), 'placeholder');
+			},
+			trigger: 'liferay-form'
+		}
+	);
 
 	addPlugin(
 		{

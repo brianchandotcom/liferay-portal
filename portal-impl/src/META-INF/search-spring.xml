@@ -135,6 +135,7 @@
 						</constructor-arg>
 					</bean>
 				</entry>-->
+				<entry key="path" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="status" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="structureId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="tag" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />

@@ -1471,6 +1471,8 @@ public interface PropsKeys {
 
 	public static final String OSGI_FRAMEWORK_BEGINNING_START_LEVEL = "osgi.framework.beginning.start.level";
 
+	public static final String OSGI_FRAMEWORK_RUNTIME_START_LEVEL = "osgi.framework.runtime.start.level";
+
 	public static final String OSGI_FRAMEWORK_STORAGE = "osgi.framework.storage";
 
 	public static final String OSGI_REGISTER_LIFERAY_SERVICES = "osgi.register.liferay.services";

@@ -17,7 +17,6 @@ package com.liferay.portal.osgi;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.service.OSGiServiceUtil;
@@ -35,7 +34,6 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.launch.Framework;
 
@@ -177,10 +175,8 @@ public class OSGiServlet extends HttpServlet {
 	protected void registerServletConfig(ServletConfig servletConfig) {
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put(
-			OSGiConstants.PORTAL_SERVICE_BEAN_NAME,
-			ServletConfig.class.getName());
-		properties.put(Constants.SERVICE_VENDOR, ReleaseInfo.getVendor());
+		properties.put(OSGiConstants.BEAN_ID, ServletConfig.class.getName());
+		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
 
 		_bundleContext.registerService(
 			new String[] {ServletConfig.class.getName()}, servletConfig,

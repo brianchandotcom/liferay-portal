@@ -98,8 +98,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		if (PropsValues.OSGI_ENABLED) {
 			try {
 				OSGiServiceUtil.init();
-
-				OSGiServiceUtil.start();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -157,6 +155,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		if (PropsValues.OSGI_ENABLED) {
 			try {
 				OSGiServiceUtil.registerContext(applicationContext);
+
+				OSGiServiceUtil.start();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -167,13 +167,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
-
-		try {
-			OSGiServiceUtil.stop();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 
 		ThreadLocalCacheManager.destroy();
 
@@ -199,7 +192,21 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
+			OSGiServiceUtil.stopRuntime();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
 			super.contextDestroyed(event);
+
+			try {
+				OSGiServiceUtil.stopFramework();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 		finally {
 			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);

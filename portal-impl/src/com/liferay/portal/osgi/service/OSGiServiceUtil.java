@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.BundleListener;
 import com.liferay.portal.osgi.FrameworkListener;
+import com.liferay.portal.osgi.OSGiConstants;
 import com.liferay.portal.osgi.OSGiException;
 import com.liferay.portal.osgi.ServiceListener;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -56,11 +57,10 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
+import org.osgi.framework.startlevel.FrameworkStartLevel;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -116,8 +116,12 @@ public class OSGiServiceUtil {
 		_instance._startBundle(bundleId, options);
 	}
 
-	public static void stop() throws Exception {
-		_instance._stop();
+	public static void stopFramework() throws Exception {
+		_instance._stopFramework();
+	}
+
+	public static void stopRuntime() throws Exception {
+		_instance._stopRuntime();
 	}
 
 	public static void stopBundle(long bundleId) throws PortalException {
@@ -363,10 +367,11 @@ public class OSGiServiceUtil {
 
 		bundleContext.addFrameworkListener(frameworkListener);
 
-		ServiceListener serviceListener = new ServiceListener(bundleContext);
+		ServiceListener serviceListener = new ServiceListener();
 
-		bundleContext.addServiceListener(
-			serviceListener, _PORTAL_SERVICE_FILTER);
+		bundleContext.addServiceListener(serviceListener);
+
+		_framework.start();
 	}
 
 	private void _registerContext(Object context) {
@@ -398,7 +403,7 @@ public class OSGiServiceUtil {
 		}
 	}
 
-	private ServiceReference<?> _registerService(
+	private void _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
 		Set<Class<?>> interfaces = _getInterfaces(bean);
@@ -410,18 +415,16 @@ public class OSGiServiceUtil {
 		}
 
 		if (names.isEmpty()) {
-			return null;
+			return;
 		}
 
 		Hashtable<String,Object> properties = new Hashtable<String, Object>();
 
-		properties.put("bean.name", beanName);
-		properties.put("original.bean", Boolean.TRUE);
+		properties.put(OSGiConstants.BEAN_ID, beanName);
+		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
 
-		ServiceRegistration<?> registerService = bundleContext.registerService(
+		bundleContext.registerService(
 			names.toArray(new String[names.size()]), bean, properties);
-
-		return registerService.getReference();
 	}
 
 	private void _setBundleStartLevel(long bundleId, int startLevel)
@@ -435,14 +438,20 @@ public class OSGiServiceUtil {
 			throw new OSGiException("No bundle with ID " + bundleId);
 		}
 
-		BundleStartLevel bundleStartLevel = (BundleStartLevel)bundle;
+		BundleStartLevel bundleStartLevel = bundle.adapt(
+			BundleStartLevel.class);
 
 		bundleStartLevel.setStartLevel(startLevel);
 	}
 
 	private void _start() throws Exception {
 		if (_framework != null) {
-			_framework.start();
+			FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+				FrameworkStartLevel.class);
+
+			frameworkStartLevel.setStartLevel(
+				PropsValues.OSGI_FRAMEWORK_RUNTIME_START_LEVEL,
+				(FrameworkListener[])null);
 		}
 	}
 
@@ -486,9 +495,20 @@ public class OSGiServiceUtil {
 		}
 	}
 
-	private void _stop() throws Exception {
+	private void _stopFramework() throws Exception {
 		if (_framework != null) {
 			_framework.stop();
+		}
+	}
+
+	private void _stopRuntime() throws Exception {
+		if (_framework != null) {
+			FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+				FrameworkStartLevel.class);
+
+			frameworkStartLevel.setStartLevel(
+				PropsValues.OSGI_FRAMEWORK_BEGINNING_START_LEVEL,
+				(FrameworkListener[])null);
 		}
 	}
 
@@ -590,10 +610,6 @@ public class OSGiServiceUtil {
 			throw new OSGiException(be);
 		}
 	}
-
-	private static final String _PORTAL_SERVICE_FILTER =
-		"(&(portal.service=*)(!(portal.service.core=*))" +
-			"(!(portal.service.previous=*)))";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OSGiServiceUtil.class);

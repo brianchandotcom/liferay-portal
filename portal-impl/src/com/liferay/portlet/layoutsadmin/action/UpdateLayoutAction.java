@@ -176,6 +176,8 @@ public class UpdateLayoutAction extends JSONAction {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layoutPrototypeLayout.getTypeSettings());
 
+			ActionUtil.copyLookAndFeel(layout, layoutPrototypeLayout);
+
 			ActionUtil.copyPortletPermissions(
 				request, layout, layoutPrototypeLayout);
 

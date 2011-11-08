@@ -14,55 +14,18 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.taglib.util.IncludeTag;
-
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Juan Fernández
+ * @author Shuyang Zhou
  */
-public class InputAssetLinksTag extends IncludeTag {
-
-	public String getClassName() {
-		return _className;
-	}
-
-	public long getClassPK() {
-		return _classPK;
-	}
+public class InputAssetLinksTag extends AssetLinksTag {
 
 	@Override
 	protected String getPage() {
 		return _PAGE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:input-asset-links:className", _className);
-		request.setAttribute(
-			"liferay-ui:input-asset-links:classPK", String.valueOf(_classPK));
-	}
-
-	public void setClassName(String className) {
-		_className = className;
-	}
-
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
-	@Override
-	protected void cleanUp() {
-		_className = StringPool.BLANK;
-		_classPK = 0;
-	}
-
 	private static final String _PAGE =
 		"/html/taglib/ui/input_asset_links/page.jsp";
-
-	private String _className = StringPool.BLANK;
-	private long _classPK;
 
 }

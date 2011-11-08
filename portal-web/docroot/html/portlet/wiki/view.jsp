@@ -307,8 +307,7 @@ if (wikiPage != null) {
 	<c:if test="<%= enableRelatedAssets %>">
 		<div class="entry-links">
 			<liferay-ui:asset-links
-				className="<%= WikiPage.class.getName() %>"
-				classPK="<%= wikiPage.getResourcePrimKey() %>"
+				assetEntryId="<%= assetEntry.getEntryId() %>"
 			/>
 		</div>
 	</c:if>

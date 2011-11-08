@@ -250,8 +250,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<c:if test="<%= enableRelatedAssets %>">
 						<div class="entry-links">
 							<liferay-ui:asset-links
-								className="<%= DLFileEntryConstants.getClassName() %>"
-								classPK="<%= assetClassPK %>"
+								assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 							/>
 						</div>
 					</c:if>

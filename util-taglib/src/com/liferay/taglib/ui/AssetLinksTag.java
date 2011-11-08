@@ -14,15 +14,23 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Juan Fernández
+ * @author Shuyang Zhou
  */
 public class AssetLinksTag extends IncludeTag {
+
+	public long getAssetEntryId() {
+		return _assetEntryId;
+	}
 
 	public String getClassName() {
 		return _className;
@@ -39,9 +47,26 @@ public class AssetLinksTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:asset-links:className", _className);
+		if ((_assetEntryId <= 0) && (_classPK > 0)) {
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry
+					(_className, _classPK);
+
+				if (assetEntry != null) {
+					_assetEntryId = assetEntry.getEntryId();
+				}
+			}
+			catch (SystemException se) {
+			}
+		}
+
 		request.setAttribute(
-			"liferay-ui:asset-links:classPK", String.valueOf(_classPK));
+			"liferay-ui:asset-links:assetEntryId",
+			String.valueOf(_assetEntryId));
+	}
+
+	public void setAssetEntryId(long assetEntryId) {
+		_assetEntryId = assetEntryId;
 	}
 
 	public void setClassName(String className) {
@@ -54,6 +79,7 @@ public class AssetLinksTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_assetEntryId = 0;
 		_className = StringPool.BLANK;
 		_classPK = 0;
 	}
@@ -61,6 +87,7 @@ public class AssetLinksTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_links/page.jsp";
 
+	private long _assetEntryId;
 	private String _className = StringPool.BLANK;
 	private long _classPK;
 

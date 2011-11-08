@@ -75,7 +75,7 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[@class='task-activity task-type-1']/div[3]"));
 		assertEquals(RuntimeVariables.replace(
-				"userfn userln assigned the task to himself."),
+				"Joe Bloggs assigned the task to userfn userln."),
 			selenium.getText(
 				"//div[@class='task-activity task-type-1'][2]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Be the first."),

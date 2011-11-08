@@ -34,7 +34,7 @@ else if (group.isUser()) {
 	activities = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), start, end);
 }
 
-ResourceURL rssURL =  new PortletURLImpl(request, PortletKeys.ACTIVITIES, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
+ResourceURL rssURL = new PortletURLImpl(request, PortletKeys.ACTIVITIES, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
 
 rssURL.setCacheability(ResourceURL.FULL);
 rssURL.setParameter("struts_action", "/activities/rss");

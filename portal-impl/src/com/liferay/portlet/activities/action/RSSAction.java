@@ -57,9 +57,11 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Vilmos Papp
  */
 public class RSSAction extends PortletAction {
 
+	@Override
 	public void serveResource(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -89,14 +91,14 @@ public class RSSAction extends PortletAction {
 
 		List<SocialActivity> activities = null;
 
-		if (group.isCommunity()) {
-			activities = SocialActivityLocalServiceUtil.getGroupActivities(
-				group.getGroupId(), start, end);
-		}
-		else if (group.isOrganization()) {
+		if (group.isOrganization()) {
 			activities =
 				SocialActivityLocalServiceUtil.getOrganizationActivities(
 					group.getOrganizationId(), start, end);
+		}
+		else if (group.isRegularSite()) {
+			activities = SocialActivityLocalServiceUtil.getGroupActivities(
+				group.getGroupId(), start, end);
 		}
 		else if (group.isUser()) {
 			activities = SocialActivityLocalServiceUtil.getUserActivities(
@@ -104,7 +106,7 @@ public class RSSAction extends PortletAction {
 		}
 
 		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
-		String feedLink =  PortalUtil.getLayoutFullURL(themeDisplay) +
+		String feedLink = PortalUtil.getLayoutFullURL(themeDisplay) +
 			Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
 
 		if (activities == null) {
@@ -115,13 +117,13 @@ public class RSSAction extends PortletAction {
 		SyndFeed syndFeed = new SyndFeedImpl();
 
 		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
-		syndFeed.setLink(feedLink);
 		syndFeed.setTitle(feedTitle);
+		syndFeed.setLink(feedLink);
 		syndFeed.setDescription(feedTitle);
 
-		List<SyndEntry> entries = new ArrayList<SyndEntry>();
+		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 
-		syndFeed.setEntries(entries);
+		syndFeed.setEntries(syndEntries);
 
 		for (SocialActivity activity : activities) {
 			SocialActivityFeedEntry activityFeedEntry =
@@ -134,8 +136,8 @@ public class RSSAction extends PortletAction {
 
 			SyndEntry syndEntry = new SyndEntryImpl();
 
-			syndEntry.setTitle(HtmlUtil.extractText(
-				activityFeedEntry.getTitle()));
+			syndEntry.setTitle(
+				HtmlUtil.extractText(activityFeedEntry.getTitle()));
 
 			if (Validator.isNotNull(activityFeedEntry.getLink())) {
 				syndEntry.setLink(activityFeedEntry.getLink());
@@ -150,7 +152,7 @@ public class RSSAction extends PortletAction {
 
 			syndEntry.setDescription(syndContent);
 
-			entries.add(syndEntry);
+			syndEntries.add(syndEntry);
 		}
 
 		String rss = StringPool.BLANK;

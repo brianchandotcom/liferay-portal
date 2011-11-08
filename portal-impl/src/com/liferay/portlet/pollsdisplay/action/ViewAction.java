@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.polls.NoSuchQuestionException;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.PollsQuestionServiceUtil;
 
@@ -54,8 +55,9 @@ public class ViewAction extends PortletAction {
 
 				renderRequest.setAttribute(WebKeys.POLLS_QUESTION, question);
 			}
-		}
-		catch (Exception e) {
+		}catch(NoSuchQuestionException e) {
+             renderRequest.setAttribute("view.jsp-question_missing", Boolean.TRUE);
+        }catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass().getName());
 
 			return mapping.findForward("portlet.polls_display.error");

@@ -25,11 +25,17 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 
 		<%
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-		%>
+
+        String msgKey = "please-configure-this-portlet-to-make-it-visible-to-all-users";
+
+        if(GetterUtil.get(request.getAttribute("view.jsp-question_missing"), Boolean.FALSE)){
+            msgKey = "polls-current-question-deleted-or-expired";
+        }
+        %>
 
 		<div class="portlet-configuration portlet-msg-info">
 			<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
-				<liferay-ui:message key="please-configure-this-portlet-to-make-it-visible-to-all-users" />
+				<liferay-ui:message key="<%= msgKey %>" />
 			</a>
 		</div>
 	</c:when>

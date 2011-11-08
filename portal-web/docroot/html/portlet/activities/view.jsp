@@ -34,9 +34,10 @@ else if (group.isUser()) {
 	activities = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), start, end);
 }
 
-PortletURL rssURL = renderResponse.createRenderURL();
+ResourceURL rssURL = new PortletURLImpl(request, PortletKeys.ACTIVITIES, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
 
-rssURL.setParameter("rss", "1");
+rssURL.setCacheability(ResourceURL.FULL);
+rssURL.setParameter("struts_action", "/activities/rss");
 
 String taglibFeedTitle = LanguageUtil.format(pageContext, "subscribe-to-x's-activities", group.getDescriptiveName());
 String taglibFeedLinkMessage = LanguageUtil.format(pageContext, "subscribe-to-x's-activities", group.getDescriptiveName());

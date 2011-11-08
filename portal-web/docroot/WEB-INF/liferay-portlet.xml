@@ -1049,7 +1049,7 @@
 		<struts-path>activities</struts-path>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>activities</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portal/kernel/portlet/rss-friendly-url-routes.xml</friendly-url-routes>
+		<friendly-url-routes>com/liferay/portlet/activities/activities-friendly-url-routes.xml</friendly-url-routes>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>

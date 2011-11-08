@@ -87,9 +87,28 @@ public class AddWebContentTaskCommentAssignedToMeTest extends BaseTestCase {
 			RuntimeVariables.replace("Workflow Task Comment"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-message-response portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"Your request processed successfully."),
+			selenium.getText(
+				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Workflow Task Comment"),
 			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),

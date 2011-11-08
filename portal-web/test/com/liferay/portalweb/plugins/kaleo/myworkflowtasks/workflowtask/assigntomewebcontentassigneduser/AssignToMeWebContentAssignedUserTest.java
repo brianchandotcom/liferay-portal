@@ -96,7 +96,7 @@ public class AssignToMeWebContentAssignedUserTest extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='task-activity task-type-1'])[2]/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				"Task assigned to Joe Bloggs. Previous assignee was userfn userln."),
+				"Joe Bloggs assigned the task to himself."),
 			selenium.getText(
 				"xPath=(//div[@class='task-activity task-type-1'])[3]/div[2]"));
 	}

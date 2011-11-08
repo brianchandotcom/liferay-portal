@@ -59,7 +59,6 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -412,68 +411,64 @@ public class ServicePreAction extends Action {
 		}
 
 		if (layout != null) {
-			try {
-				Group group = layout.getGroup();
+			Group group = layout.getGroup();
 
-				if (!signedIn && PropsValues.AUTH_FORWARD_BY_REDIRECT) {
-					request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
-				}
-
-				boolean isViewableGroup = LayoutPermissionUtil.contains(
-					permissionChecker, layout, controlPanelCategory,
-					ActionKeys.VIEW);
-				boolean isViewableStaging = GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(),
-					ActionKeys.VIEW_STAGING);
-
-				if (isViewableStaging) {
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						layout.getGroupId(), layout.isPrivateLayout(),
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-				}
-				else if (!isViewableGroup && group.isStagingGroup()) {
-					layout = null;
-				}
-				else if (!isViewableGroup) {
-					sb = new StringBundler(6);
-
-					sb.append("User ");
-					sb.append(user.getUserId());
-					sb.append(" is not allowed to access the ");
-					sb.append(layout.isPrivateLayout() ? "private": "public");
-					sb.append(" pages of group ");
-					sb.append(layout.getGroupId());
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(sb.toString());
-					}
-
-					throw new PrincipalException(sb.toString());
-				}
-				else if (isViewableGroup &&
-						!LayoutPermissionUtil.contains(
-							permissionChecker, layout, ActionKeys.VIEW)) {
-
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						layout.getGroupId(), layout.isPrivateLayout(),
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					layout = null;
-				}
-				else if (group.isLayoutPrototype()) {
-					layouts = new ArrayList<Layout>();
-				}
-				else {
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						layout.getGroupId(), layout.isPrivateLayout(),
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (!group.isControlPanel()) {
-						doAsGroupId = 0;
-					}
-				}
+			if (!signedIn && PropsValues.AUTH_FORWARD_BY_REDIRECT) {
+				request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
 			}
-			catch (NoSuchLayoutException nsle) {
+
+			boolean isViewableGroup = LayoutPermissionUtil.contains(
+				permissionChecker, layout, controlPanelCategory,
+				ActionKeys.VIEW);
+			boolean isViewableStaging = GroupPermissionUtil.contains(
+				permissionChecker, group.getGroupId(),
+				ActionKeys.VIEW_STAGING);
+
+			if (isViewableStaging) {
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+			else if (!isViewableGroup && group.isStagingGroup()) {
+				layout = null;
+			}
+			else if (!isViewableGroup) {
+				sb = new StringBundler(6);
+
+				sb.append("User ");
+				sb.append(user.getUserId());
+				sb.append(" is not allowed to access the ");
+				sb.append(layout.isPrivateLayout() ? "private": "public");
+				sb.append(" pages of group ");
+				sb.append(layout.getGroupId());
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(sb.toString());
+				}
+
+				throw new NoSuchLayoutException(sb.toString());
+			}
+			else if (isViewableGroup &&
+					!LayoutPermissionUtil.contains(
+						permissionChecker, layout, ActionKeys.VIEW)) {
+
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				layout = null;
+			}
+			else if (group.isLayoutPrototype()) {
+				layouts = new ArrayList<Layout>();
+			}
+			else {
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!group.isControlPanel()) {
+					doAsGroupId = 0;
+				}
 			}
 		}
 
@@ -1598,7 +1593,7 @@ public class ServicePreAction extends Action {
 
 			if (!curLayout.isHidden() &&
 				(LayoutPermissionUtil.contains(
-					permissionChecker, curLayout, ActionKeys.VIEW) ||
+					permissionChecker, curLayout, true, ActionKeys.VIEW) ||
 				 hasViewStagingPermission)) {
 
 				if (accessibleLayouts.isEmpty() && !hasUpdateLayoutPermission) {

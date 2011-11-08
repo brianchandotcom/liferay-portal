@@ -179,7 +179,7 @@ request.setAttribute("view_event.jsp-event", event);
 					<liferay-ui:message key="location" />:
 				</dt>
 				<dd>
-					<span class="location"><%= event.getLocation() %></span>
+					<span class="location"><%= HtmlUtil.escape(event.getLocation()) %></span>
 				</dd>
 			</c:if>
 		</dl>

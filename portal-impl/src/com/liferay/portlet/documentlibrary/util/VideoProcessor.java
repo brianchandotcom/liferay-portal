@@ -221,8 +221,10 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 				try {
 					_generateThumbnailXuggler(
 						fileVersion, file,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT,
-						PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH);
+						PrefsPropsUtil.getInteger(
+							PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT),
+						PrefsPropsUtil.getInteger(
+							PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH));
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -383,7 +385,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	private static int _SAMPLE_RATE = 44100;
 
 	private static int _THUMBNAIL_PERCENTAGE =
-		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE;
+		PropsValues.DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE;
 
 	private static Log _log = LogFactoryUtil.getLog(VideoProcessor.class);
 

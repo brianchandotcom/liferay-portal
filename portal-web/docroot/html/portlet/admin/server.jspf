@@ -451,17 +451,11 @@ numberFormat.setMinimumIntegerDigits(2);
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminDocumentLibraryPanel" persistState="<%= true %>" title="document-library">
 							<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="dlFileMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>" />
 
+							<aui:input cssClass="lfr-input-text-container" label="maximum-thumbnail-height" name="dlFileEntryThumbnailMaxHeight" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>" />
+
+							<aui:input cssClass="lfr-input-text-container" label="maximum-thumbnail-width" name="dlFileEntryThumbnailMaxWidth" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>" />
+
 							<aui:input cssClass="lfr-input-text-container" label="allowed-file-extensions" name="dlFileExtensions" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.DL_FILE_EXTENSIONS) %>" />
-						</liferay-ui:panel>
-					</liferay-ui:panel-container>
-
-					<liferay-ui:panel-container extended="<%= true %>" id="adminImageGalleryPanelContainer" persistState="<%= true %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminImageGalleryPanel" persistState="<%= true %>" title="image-gallery">
-							<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="igImageMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.IG_IMAGE_MAX_SIZE) %>" />
-
-							<aui:input cssClass="lfr-input-text-container" label="allowed-file-extensions" name="igImageExtensions" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.IG_IMAGE_EXTENSIONS) %>" />
-
-							<aui:input cssClass="lfr-input-text-container" label="maximum-thumbnail-dimensions" name="igImageThumbnailMaxDimensions" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION) %>" />
 						</liferay-ui:panel>
 					</liferay-ui:panel-container>
 

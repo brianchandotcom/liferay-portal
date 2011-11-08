@@ -527,17 +527,17 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI = "dl.file.entry.preview.document.dpi";
 
-	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_HEIGHT = "dl.file.entry.preview.document.height";
+	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT = "dl.file.entry.preview.document.max.height";
 
-	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_WIDTH = "dl.file.entry.preview.document.width";
+	public static final String DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH = "dl.file.entry.preview.document.max.width";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_ENABLED = "dl.file.entry.preview.enabled";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES = "dl.file.entry.preview.image.mime.types";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT = "dl.file.entry.preview.video.height";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES = "dl.file.entry.preview.video.mime.types";
-
-	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_THUMBNAIL_PERCENTAGE = "dl.file.entry.preview.video.thumbnail.percentage";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH = "dl.file.entry.preview.video.width";
 
@@ -545,15 +545,25 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_READ_COUNT_ENABLED = "dl.file.entry.read.count.enabled";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_DEPTH = "dl.file.entry.thumbnail.depth";
+	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT = "dl.file.entry.thumbnail.custom1.max.height";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_DPI = "dl.file.entry.thumbnail.dpi";
+	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH = "dl.file.entry.thumbnail.custom1.max.width";
+
+	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT = "dl.file.entry.thumbnail.custom2.max.height";
+
+	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH = "dl.file.entry.thumbnail.custom2.max.width";
+
+	public static final String DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH = "dl.file.entry.thumbnail.document.depth";
+
+	public static final String DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI = "dl.file.entry.thumbnail.document.dpi";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_ENABLED = "dl.file.entry.thumbnail.enabled";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_HEIGHT = "dl.file.entry.thumbnail.height";
+	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT = "dl.file.entry.thumbnail.max.height";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_WIDTH = "dl.file.entry.thumbnail.width";
+	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH = "dl.file.entry.thumbnail.max.width";
+
+	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = "dl.file.entry.thumbnail.video.frame.percentage";
 
 	public static final String DL_FILE_EXTENSIONS = "dl.file.extensions";
 
@@ -742,20 +752,6 @@ public interface PropsKeys {
 	public static final String ICQ_PASSWORD = "icq.password";
 
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = "iframe.password.token.role";
-
-	public static final String IG_IMAGE_CUSTOM_1_MAX_DIMENSION = "ig.image.custom1.max.dimension";
-
-	public static final String IG_IMAGE_CUSTOM_2_MAX_DIMENSION = "ig.image.custom2.max.dimension";
-
-	public static final String IG_IMAGE_EXTENSIONS = "ig.image.extensions";
-
-	public static final String IG_IMAGE_MAX_SIZE = "ig.image.max.size";
-
-	public static final String IG_IMAGE_THUMBNAIL_MAX_DIMENSION = "ig.image.thumbnail.max.dimension";
-
-	public static final String IG_IMAGE_THUMBNAIL_MIME_TYPES = "ig.image.thumbnail.mime.types";
-
-	public static final String IG_PUBLISH_TO_LIVE_BY_DEFAULT = "ig.publish.to.live.by.default";
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";
 

@@ -16,7 +16,7 @@
 
 <%
 String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-String thumbnailStyle = "max-height: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_HEIGHT + "px; max-width: " + PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH + "px;";
+String thumbnailStyle = "max-height: " + PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) + "px; max-width: " + PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) + "px;";
 
 if (fileShortcut == null) {
 	String thumbnailQueryString = null;

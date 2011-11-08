@@ -46,8 +46,10 @@ String thumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext(
 String custom1URL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=2&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 String custom2URL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=3&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
 
-int custom1MaxDimension = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_CUSTOM_1_MAX_DIMENSION);
-int custom2MaxDimension = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_CUSTOM_2_MAX_DIMENSION);
+int custom1MaxHeight = PrefsPropsUtil.getInteger(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT);
+int custom1MaxWidth = PrefsPropsUtil.getInteger(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH);
+int custom2MaxHeight = PrefsPropsUtil.getInteger(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT);
+int custom2MaxWidth = PrefsPropsUtil.getInteger(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH);
 %>
 
 <table class="lfr-table">
@@ -59,14 +61,14 @@ int custom2MaxDimension = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_CUSTOM_2_
 	</td>
 </tr>
 
-<c:if test="<%= (custom1MaxDimension > 0) || (custom2MaxDimension > 0) %>">
+<c:if test="<%= (custom1MaxHeight > 0) || (custom1MaxWidth > 0) || (custom2MaxHeight > 0) || (custom2MaxWidth > 0) %>">
 	<tr>
 		<td>
 			<aui:a href='<%= largeURL %>' target="_blank">
 				<liferay-ui:message key="original" />
 			</aui:a>
 
-			<c:if test="<%= custom1MaxDimension > 0 %>">
+			<c:if test="<%= (custom1MaxHeight > 0) || (custom1MaxWidth > 0) %>">
 				|
 
 				<aui:a href='<%= custom1URL %>' target="_blank">
@@ -74,7 +76,7 @@ int custom2MaxDimension = PrefsPropsUtil.getInteger(PropsKeys.IG_IMAGE_CUSTOM_2_
 				</aui:a>
 			</c:if>
 
-			<c:if test="<%= custom2MaxDimension > 0 %>">
+			<c:if test="<%= (custom2MaxHeight > 0) || (custom2MaxWidth > 0) %>">
 				|
 
 				<aui:a href='<%= custom2URL %>' target="_blank">

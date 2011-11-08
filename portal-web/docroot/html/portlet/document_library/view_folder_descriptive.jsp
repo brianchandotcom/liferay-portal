@@ -30,7 +30,7 @@ boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, Ac
 <div class="document-display-style descriptive <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
 	<a class="document-link" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= folder.getFolderId() %>" data-refresh-folders="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewEntriesURL.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escape(folder.getName()) + " - " + HtmlUtil.escape(folder.getDescription()) %>">
 		<span class="document-thumbnail">
-			<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" style="width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_WIDTH %>;" />
+			<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" style="width: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>;" />
 		</span>
 
 		<span class="entry-title"><%= HtmlUtil.escape(folder.getName()) %></span>

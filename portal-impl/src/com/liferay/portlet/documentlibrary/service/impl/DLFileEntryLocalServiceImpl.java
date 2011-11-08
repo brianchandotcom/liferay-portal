@@ -910,11 +910,13 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			if (renderedImage != null) {
-				int dimension = PrefsPropsUtil.getInteger(
-					PropsKeys.IG_IMAGE_THUMBNAIL_MAX_DIMENSION);
+				int height = PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT);
+				int width = PrefsPropsUtil.getInteger(
+					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH);
 
 				RenderedImage thumbnail = ImageProcessorUtil.scale(
-					renderedImage, dimension, dimension);
+					renderedImage, height, width);
 
 				imageLocalService.updateImage(
 					smallImageId,

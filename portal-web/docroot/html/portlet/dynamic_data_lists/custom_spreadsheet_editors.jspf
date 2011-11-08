@@ -162,6 +162,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					var elementName = instance.get('elementName');
 					var record = instance.get('record');
+
 					var recordData = record.get('data');
 
 					var portletURL = Liferay.PortletURL.createResourceURL();
@@ -216,6 +217,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var instance = this;
 
 					var record = instance.get('record');
+
 					var recordData = record.get('data');
 
 					if (!recordData.recordId) {
@@ -263,6 +265,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					if (responseText) {
 						var data = A.JSON.parse(responseText);
+
 						var exception = data.exception;
 
 						if (!exception) {

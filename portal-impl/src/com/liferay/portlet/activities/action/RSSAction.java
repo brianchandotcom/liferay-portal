@@ -89,7 +89,7 @@ public class RSSAction extends PortletAction {
 		int start = 0;
 		int end = 10;
 
-		List<SocialActivity> activities = null;
+		List<SocialActivity> activities = new ArrayList<SocialActivity>();
 
 		if (group.isOrganization()) {
 			activities =
@@ -108,11 +108,6 @@ public class RSSAction extends PortletAction {
 		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
 		String feedLink = PortalUtil.getLayoutFullURL(themeDisplay) +
 			Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
-
-		if (activities == null) {
-			activities = SocialActivityLocalServiceUtil.getActivities(
-				0, StringPool.BLANK, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 

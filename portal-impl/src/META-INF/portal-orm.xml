@@ -3159,107 +3159,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquityAssetEntryModelImpl">
-		<attributes>
-			<id name="equityAssetEntryId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="assetEntryId" />
-			<basic name="informationK" />
-			<basic name="informationB" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquityGroupSettingModelImpl">
-		<attributes>
-			<id name="equityGroupSettingId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="classNameId" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="enabled" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquityHistoryModelImpl">
-		<attributes>
-			<id name="equityHistoryId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="personalEquity" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquityLogModelImpl">
-		<attributes>
-			<id name="equityLogId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="assetEntryId" />
-			<basic name="actionId" />
-			<basic name="actionDate" />
-			<basic name="active">
-				<column name="ACTIVE_" />
-			</basic>
-			<basic name="expiration" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="value" />
-			<basic name="extraData" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquitySettingModelImpl">
-		<attributes>
-			<id name="equitySettingId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="classNameId" />
-			<basic name="actionId" />
-			<basic name="dailyLimit" />
-			<basic name="lifespan" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="uniqueEntry" />
-			<basic name="value" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialEquityUserModelImpl">
-		<attributes>
-			<id name="equityUserId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="contributionK" />
-			<basic name="contributionB" />
-			<basic name="participationK" />
-			<basic name="participationB" />
-			<basic name="rank" />
-			<transient name="equityUserUuid" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialRelationModelImpl">
 		<attributes>
 			<id name="relationId" />
@@ -4216,30 +4115,6 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivitySettingImpl" name="SocialActivitySetting">
 		<table name="SocialActivitySetting" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.social.model.impl.SocialEquityAssetEntryImpl" name="SocialEquityAssetEntry">
-		<table name="SocialEquityAssetEntry" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.social.model.impl.SocialEquityGroupSettingImpl" name="SocialEquityGroupSetting">
-		<table name="SocialEquityGroupSetting" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.social.model.impl.SocialEquityHistoryImpl" name="SocialEquityHistory">
-		<table name="SocialEquityHistory" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.social.model.impl.SocialEquityLogImpl" name="SocialEquityLog">
-		<table name="SocialEquityLog" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.social.model.impl.SocialEquitySettingImpl" name="SocialEquitySetting">
-		<table name="SocialEquitySetting" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.social.model.impl.SocialEquityUserImpl" name="SocialEquityUser">
-		<table name="SocialEquityUser" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialRelationImpl" name="SocialRelation">

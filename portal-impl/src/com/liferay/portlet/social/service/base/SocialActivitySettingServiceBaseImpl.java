@@ -43,11 +43,6 @@ import com.liferay.portlet.social.service.SocialActivityLimitLocalService;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalService;
 import com.liferay.portlet.social.service.SocialActivitySettingService;
-import com.liferay.portlet.social.service.SocialEquityGroupSettingLocalService;
-import com.liferay.portlet.social.service.SocialEquityHistoryLocalService;
-import com.liferay.portlet.social.service.SocialEquityLogLocalService;
-import com.liferay.portlet.social.service.SocialEquitySettingLocalService;
-import com.liferay.portlet.social.service.SocialEquityUserLocalService;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.portlet.social.service.SocialRequestInterpreterLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
@@ -58,12 +53,6 @@ import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityAssetEntryPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityGroupSettingPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityHistoryPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquitySettingPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityUserPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
 
@@ -353,215 +342,6 @@ public abstract class SocialActivitySettingServiceBaseImpl extends PrincipalBean
 	public void setSocialActivitySettingPersistence(
 		SocialActivitySettingPersistence socialActivitySettingPersistence) {
 		this.socialActivitySettingPersistence = socialActivitySettingPersistence;
-	}
-
-	/**
-	 * Returns the social equity asset entry persistence.
-	 *
-	 * @return the social equity asset entry persistence
-	 */
-	public SocialEquityAssetEntryPersistence getSocialEquityAssetEntryPersistence() {
-		return socialEquityAssetEntryPersistence;
-	}
-
-	/**
-	 * Sets the social equity asset entry persistence.
-	 *
-	 * @param socialEquityAssetEntryPersistence the social equity asset entry persistence
-	 */
-	public void setSocialEquityAssetEntryPersistence(
-		SocialEquityAssetEntryPersistence socialEquityAssetEntryPersistence) {
-		this.socialEquityAssetEntryPersistence = socialEquityAssetEntryPersistence;
-	}
-
-	/**
-	 * Returns the social equity group setting local service.
-	 *
-	 * @return the social equity group setting local service
-	 */
-	public SocialEquityGroupSettingLocalService getSocialEquityGroupSettingLocalService() {
-		return socialEquityGroupSettingLocalService;
-	}
-
-	/**
-	 * Sets the social equity group setting local service.
-	 *
-	 * @param socialEquityGroupSettingLocalService the social equity group setting local service
-	 */
-	public void setSocialEquityGroupSettingLocalService(
-		SocialEquityGroupSettingLocalService socialEquityGroupSettingLocalService) {
-		this.socialEquityGroupSettingLocalService = socialEquityGroupSettingLocalService;
-	}
-
-	/**
-	 * Returns the social equity group setting persistence.
-	 *
-	 * @return the social equity group setting persistence
-	 */
-	public SocialEquityGroupSettingPersistence getSocialEquityGroupSettingPersistence() {
-		return socialEquityGroupSettingPersistence;
-	}
-
-	/**
-	 * Sets the social equity group setting persistence.
-	 *
-	 * @param socialEquityGroupSettingPersistence the social equity group setting persistence
-	 */
-	public void setSocialEquityGroupSettingPersistence(
-		SocialEquityGroupSettingPersistence socialEquityGroupSettingPersistence) {
-		this.socialEquityGroupSettingPersistence = socialEquityGroupSettingPersistence;
-	}
-
-	/**
-	 * Returns the social equity history local service.
-	 *
-	 * @return the social equity history local service
-	 */
-	public SocialEquityHistoryLocalService getSocialEquityHistoryLocalService() {
-		return socialEquityHistoryLocalService;
-	}
-
-	/**
-	 * Sets the social equity history local service.
-	 *
-	 * @param socialEquityHistoryLocalService the social equity history local service
-	 */
-	public void setSocialEquityHistoryLocalService(
-		SocialEquityHistoryLocalService socialEquityHistoryLocalService) {
-		this.socialEquityHistoryLocalService = socialEquityHistoryLocalService;
-	}
-
-	/**
-	 * Returns the social equity history persistence.
-	 *
-	 * @return the social equity history persistence
-	 */
-	public SocialEquityHistoryPersistence getSocialEquityHistoryPersistence() {
-		return socialEquityHistoryPersistence;
-	}
-
-	/**
-	 * Sets the social equity history persistence.
-	 *
-	 * @param socialEquityHistoryPersistence the social equity history persistence
-	 */
-	public void setSocialEquityHistoryPersistence(
-		SocialEquityHistoryPersistence socialEquityHistoryPersistence) {
-		this.socialEquityHistoryPersistence = socialEquityHistoryPersistence;
-	}
-
-	/**
-	 * Returns the social equity log local service.
-	 *
-	 * @return the social equity log local service
-	 */
-	public SocialEquityLogLocalService getSocialEquityLogLocalService() {
-		return socialEquityLogLocalService;
-	}
-
-	/**
-	 * Sets the social equity log local service.
-	 *
-	 * @param socialEquityLogLocalService the social equity log local service
-	 */
-	public void setSocialEquityLogLocalService(
-		SocialEquityLogLocalService socialEquityLogLocalService) {
-		this.socialEquityLogLocalService = socialEquityLogLocalService;
-	}
-
-	/**
-	 * Returns the social equity log persistence.
-	 *
-	 * @return the social equity log persistence
-	 */
-	public SocialEquityLogPersistence getSocialEquityLogPersistence() {
-		return socialEquityLogPersistence;
-	}
-
-	/**
-	 * Sets the social equity log persistence.
-	 *
-	 * @param socialEquityLogPersistence the social equity log persistence
-	 */
-	public void setSocialEquityLogPersistence(
-		SocialEquityLogPersistence socialEquityLogPersistence) {
-		this.socialEquityLogPersistence = socialEquityLogPersistence;
-	}
-
-	/**
-	 * Returns the social equity setting local service.
-	 *
-	 * @return the social equity setting local service
-	 */
-	public SocialEquitySettingLocalService getSocialEquitySettingLocalService() {
-		return socialEquitySettingLocalService;
-	}
-
-	/**
-	 * Sets the social equity setting local service.
-	 *
-	 * @param socialEquitySettingLocalService the social equity setting local service
-	 */
-	public void setSocialEquitySettingLocalService(
-		SocialEquitySettingLocalService socialEquitySettingLocalService) {
-		this.socialEquitySettingLocalService = socialEquitySettingLocalService;
-	}
-
-	/**
-	 * Returns the social equity setting persistence.
-	 *
-	 * @return the social equity setting persistence
-	 */
-	public SocialEquitySettingPersistence getSocialEquitySettingPersistence() {
-		return socialEquitySettingPersistence;
-	}
-
-	/**
-	 * Sets the social equity setting persistence.
-	 *
-	 * @param socialEquitySettingPersistence the social equity setting persistence
-	 */
-	public void setSocialEquitySettingPersistence(
-		SocialEquitySettingPersistence socialEquitySettingPersistence) {
-		this.socialEquitySettingPersistence = socialEquitySettingPersistence;
-	}
-
-	/**
-	 * Returns the social equity user local service.
-	 *
-	 * @return the social equity user local service
-	 */
-	public SocialEquityUserLocalService getSocialEquityUserLocalService() {
-		return socialEquityUserLocalService;
-	}
-
-	/**
-	 * Sets the social equity user local service.
-	 *
-	 * @param socialEquityUserLocalService the social equity user local service
-	 */
-	public void setSocialEquityUserLocalService(
-		SocialEquityUserLocalService socialEquityUserLocalService) {
-		this.socialEquityUserLocalService = socialEquityUserLocalService;
-	}
-
-	/**
-	 * Returns the social equity user persistence.
-	 *
-	 * @return the social equity user persistence
-	 */
-	public SocialEquityUserPersistence getSocialEquityUserPersistence() {
-		return socialEquityUserPersistence;
-	}
-
-	/**
-	 * Sets the social equity user persistence.
-	 *
-	 * @param socialEquityUserPersistence the social equity user persistence
-	 */
-	public void setSocialEquityUserPersistence(
-		SocialEquityUserPersistence socialEquityUserPersistence) {
-		this.socialEquityUserPersistence = socialEquityUserPersistence;
 	}
 
 	/**
@@ -973,28 +753,6 @@ public abstract class SocialActivitySettingServiceBaseImpl extends PrincipalBean
 	protected SocialActivitySettingService socialActivitySettingService;
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
-	@BeanReference(type = SocialEquityAssetEntryPersistence.class)
-	protected SocialEquityAssetEntryPersistence socialEquityAssetEntryPersistence;
-	@BeanReference(type = SocialEquityGroupSettingLocalService.class)
-	protected SocialEquityGroupSettingLocalService socialEquityGroupSettingLocalService;
-	@BeanReference(type = SocialEquityGroupSettingPersistence.class)
-	protected SocialEquityGroupSettingPersistence socialEquityGroupSettingPersistence;
-	@BeanReference(type = SocialEquityHistoryLocalService.class)
-	protected SocialEquityHistoryLocalService socialEquityHistoryLocalService;
-	@BeanReference(type = SocialEquityHistoryPersistence.class)
-	protected SocialEquityHistoryPersistence socialEquityHistoryPersistence;
-	@BeanReference(type = SocialEquityLogLocalService.class)
-	protected SocialEquityLogLocalService socialEquityLogLocalService;
-	@BeanReference(type = SocialEquityLogPersistence.class)
-	protected SocialEquityLogPersistence socialEquityLogPersistence;
-	@BeanReference(type = SocialEquitySettingLocalService.class)
-	protected SocialEquitySettingLocalService socialEquitySettingLocalService;
-	@BeanReference(type = SocialEquitySettingPersistence.class)
-	protected SocialEquitySettingPersistence socialEquitySettingPersistence;
-	@BeanReference(type = SocialEquityUserLocalService.class)
-	protected SocialEquityUserLocalService socialEquityUserLocalService;
-	@BeanReference(type = SocialEquityUserPersistence.class)
-	protected SocialEquityUserPersistence socialEquityUserPersistence;
 	@BeanReference(type = SocialRelationLocalService.class)
 	protected SocialRelationLocalService socialRelationLocalService;
 	@BeanReference(type = SocialRelationPersistence.class)

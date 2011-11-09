@@ -576,7 +576,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.portlet.social.service.impl.SocialEquitySettingLocalServiceImpl"
+		name="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

@@ -377,6 +377,15 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().unsetFolderFileEntryTypes(folderId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntryFileEntryType(
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFileEntryFileEntryType(dlFileEntry, serviceContext);
+	}
+
 	public static void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,

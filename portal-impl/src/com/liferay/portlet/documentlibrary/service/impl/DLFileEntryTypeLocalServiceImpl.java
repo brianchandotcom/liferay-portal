@@ -269,6 +269,42 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
+	public DLFileEntry updateFileEntryFileEntryType(
+			DLFileEntry dlFileEntry, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
+			dlFileEntry.getFolderId());
+
+		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
+			new long[] {dlFolder.getGroupId()}, dlFolder.getFolderId(), true);
+
+		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
+
+		if (fileEntryTypeIds.contains(dlFileEntry.getFileEntryTypeId())) {
+			return dlFileEntry;
+		}
+
+		long defaultFileEntryTypeId = getDefaultFileEntryTypeId(
+			dlFolder.getFolderId());
+
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(
+				dlFileEntry.getFileEntryId(), true);
+
+		if (dlFileVersion.isPending()) {
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+				dlFileVersion.getCompanyId(), dlFileEntry.getGroupId(),
+				DLFileEntry.class.getName(),
+				dlFileVersion.getFileVersionId());
+		}
+
+		return dlFileEntryLocalService.updateFileEntry(
+			serviceContext.getUserId(), dlFileEntry.getFileEntryId(), null,
+			null, null, null, null, false, defaultFileEntryTypeId, null, null,
+			null, 0, serviceContext);
+	}
+
 	public void updateFileEntryType(
 			long userId, long fileEntryTypeId, String name, String description,
 			long[] ddmStructureIds, ServiceContext serviceContext)

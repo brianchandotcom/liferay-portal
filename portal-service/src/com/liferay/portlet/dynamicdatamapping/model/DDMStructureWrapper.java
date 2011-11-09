@@ -656,6 +656,10 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getDefaultLocale();
 	}
 
+	public com.liferay.portal.kernel.xml.Document getDocument() {
+		return _ddmStructure.getDocument();
+	}
+
 	public java.lang.String getFieldDataType(java.lang.String fieldName) {
 		return _ddmStructure.getFieldDataType(fieldName);
 	}
@@ -720,6 +724,15 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	public boolean hasField(java.lang.String fieldName) {
 		return _ddmStructure.hasField(fieldName);
+	}
+
+	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
+		_ddmStructure.setDocument(document);
+	}
+
+	public void setFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> fieldsMap) {
+		_ddmStructure.setFieldsMap(fieldsMap);
 	}
 
 	/**

@@ -2095,6 +2095,8 @@
 			</basic>
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
+			<transient name="document" />
+			<transient name="fieldsMap" />
 			<transient name="nameCurrentLanguageId" />
 			<transient name="nameMap" />
 			<transient name="primaryKey" />
@@ -4001,7 +4003,10 @@
 	</entity>
 	<entity class="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl" name="DDMStructure">
 		<table name="DDMStructure" />
-		<attributes />
+		<attributes>
+			<transient name="document" />
+			<transient name="fieldsMap" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl" name="DDMStructureLink">
 		<table name="DDMStructureLink" />

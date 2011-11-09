@@ -98,8 +98,6 @@ import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistenc
 import com.liferay.portlet.ratings.service.RatingsStatsLocalService;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
-import com.liferay.portlet.social.service.SocialEquityLogLocalService;
-import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
 
 import javax.sql.DataSource;
 
@@ -1498,44 +1496,6 @@ public abstract class JournalArticleServiceBaseImpl extends PrincipalBean
 		this.ratingsStatsFinder = ratingsStatsFinder;
 	}
 
-	/**
-	 * Returns the social equity log local service.
-	 *
-	 * @return the social equity log local service
-	 */
-	public SocialEquityLogLocalService getSocialEquityLogLocalService() {
-		return socialEquityLogLocalService;
-	}
-
-	/**
-	 * Sets the social equity log local service.
-	 *
-	 * @param socialEquityLogLocalService the social equity log local service
-	 */
-	public void setSocialEquityLogLocalService(
-		SocialEquityLogLocalService socialEquityLogLocalService) {
-		this.socialEquityLogLocalService = socialEquityLogLocalService;
-	}
-
-	/**
-	 * Returns the social equity log persistence.
-	 *
-	 * @return the social equity log persistence
-	 */
-	public SocialEquityLogPersistence getSocialEquityLogPersistence() {
-		return socialEquityLogPersistence;
-	}
-
-	/**
-	 * Sets the social equity log persistence.
-	 *
-	 * @param socialEquityLogPersistence the social equity log persistence
-	 */
-	public void setSocialEquityLogPersistence(
-		SocialEquityLogPersistence socialEquityLogPersistence) {
-		this.socialEquityLogPersistence = socialEquityLogPersistence;
-	}
-
 	public void afterPropertiesSet() {
 	}
 
@@ -1735,9 +1695,5 @@ public abstract class JournalArticleServiceBaseImpl extends PrincipalBean
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
-	@BeanReference(type = SocialEquityLogLocalService.class)
-	protected SocialEquityLogLocalService socialEquityLogLocalService;
-	@BeanReference(type = SocialEquityLogPersistence.class)
-	protected SocialEquityLogPersistence socialEquityLogPersistence;
 	private String _beanIdentifier;
 }

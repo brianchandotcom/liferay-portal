@@ -107,8 +107,18 @@ catch (NoSuchLayoutException nsle) {
 
 if (selLayout != null) {
 	try {
-		if (processLayoutSetPrototype(user, selLayout)) {
-			selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+		if (SitesUtil.isLayoutToBeUpdatedFromTemplate(selLayout)) {
+			Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(selLayout);
+
+			SitesUtil.copyLayout(user.getUserId(), templateLayout, selLayout, new ServiceContext());
+
+			selLayout = LayoutLocalServiceUtil.getLayout(selLayout.getPlid());
+
+			UnicodeProperties typeSettings = selLayout.getTypeSettingsProperties();
+
+			typeSettings.put("layoutSetPrototypeLastCopyDate", String.valueOf((new Date()).getTime()));
+
+			LayoutLocalServiceUtil.updateLayout(selLayout);
 		}
 	}
 	catch (Exception e) {
@@ -241,30 +251,5 @@ request.setAttribute("edit_pages.jsp-redirectURL", redirectURL);
 %>
 
 <%!
-private boolean processLayoutSetPrototype(User user, Layout layout)
-	throws Exception {
-
-	if (SitesUtil.isLayoutToBeUpdatedFromTemplate(layout)) {
-		Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
-			layout);
-
-		SitesUtil.copyLayout(user.getUserId(), templateLayout, layout, new ServiceContext());
-
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-
-		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
-
-		typeSettings.put(
-			"layoutSetPrototypeLastCopyDate",
-				String.valueOf((new Date()).getTime()));
-
-			LayoutLocalServiceUtil.updateLayout(layout);
-
-			return true;
-		}
-
-	return false;
-}
-
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.layout_admin.init_attributes_jsp");
 %>

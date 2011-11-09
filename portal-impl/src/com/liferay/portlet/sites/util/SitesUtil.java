@@ -541,12 +541,13 @@ public class SitesUtil {
 		}
 
 		if ((lastCopyDate != null) &&
-				lastCopyDate.after(templateLayout.getModifiedDate())) {
+			lastCopyDate.after(templateLayout.getModifiedDate())) {
+
 			return false;
 		}
 
 		if (isLayoutLocked(layout)) {
-				return true;
+			return true;
 		}
 		else if ((layoutModifiedDate == null) ||
 				((lastCopyDate != null) &&

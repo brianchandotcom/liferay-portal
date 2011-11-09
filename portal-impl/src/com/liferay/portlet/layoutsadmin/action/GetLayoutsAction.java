@@ -72,6 +72,7 @@ public class GetLayoutsAction extends JSONAction {
 
 		for (Layout layout : layouts) {
 			String layoutName = layout.getName(themeDisplay.getLocale());
+
 			if (SitesUtil.isLayoutToBeUpdatedFromTemplate(layout)) {
 				Layout templateLayout =
 					LayoutTypePortletImpl.getTemplateLayout(layout);

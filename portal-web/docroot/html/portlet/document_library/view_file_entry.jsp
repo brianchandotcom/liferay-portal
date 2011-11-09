@@ -122,12 +122,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 <portlet:actionURL var="editFileEntry">
 	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 </aui:form>
 
 <c:if test="<%= folder != null %>">
@@ -911,6 +911,28 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						},
 						icon: 'permissions',
 						label: '<liferay-ui:message key="permissions" />'
+					},
+
+				</c:if>
+
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
+
+					{
+
+						<portlet:renderURL var="viewFolderURL">
+							<portlet:param name="struts_action" value="/document_library/view" />
+							<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+						</portlet:renderURL>
+
+						handler: function(event) {
+							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this-entry") %>')) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
+								document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
+								submitForm(document.<portlet:namespace />fm);
+							}
+						},
+						icon: 'delete',
+						label: '<liferay-ui:message key="delete" />'
 					}
 
 				</c:if>

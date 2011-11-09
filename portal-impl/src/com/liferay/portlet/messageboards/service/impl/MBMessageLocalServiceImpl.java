@@ -44,7 +44,6 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
@@ -1052,10 +1051,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 					thread.getRootMessageId());
 
-				socialEquityLogLocalService.addEquityLogs(
-					userId, MBMessage.class.getName(),
-					rootMessage.getMessageId(), ActionKeys.VIEW,
-					StringPool.BLANK);
+				socialActivityLocalService.addActivity(
+					userId, rootMessage.getGroupId(), MBMessage.class.getName(),
+					rootMessage.getMessageId(),
+					SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
 			}
 		}
 
@@ -1582,8 +1581,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					if (!message.isAnonymous() && !user.isDefaultUser()) {
 						long receiverUserId = 0;
-						MBMessage socialEquityLogMessage = message;
-						String actionId = ActionKeys.ADD_MESSAGE;
 
 						MBMessage parentMessage =
 							mbMessagePersistence.fetchByPrimaryKey(
@@ -1591,11 +1588,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 						if (parentMessage != null) {
 							receiverUserId = parentMessage.getUserId();
-
-							if (receiverUserId != userId) {
-								socialEquityLogMessage = parentMessage;
-								actionId = ActionKeys.REPLY_TO_MESSAGE;
-							}
 						}
 
 						socialActivityLocalService.addActivity(
@@ -1614,27 +1606,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								MBActivityKeys.REPLY_MESSAGE, StringPool.BLANK,
 								0);
 						}
-
-						socialEquityLogLocalService.addEquityLogs(
-							userId, MBMessage.class.getName(),
-							socialEquityLogMessage.getMessageId(), actionId,
-							StringPool.BLANK);
 					}
 				}
 				else {
+
+					// Social
+
 					String className = (String)serviceContext.getAttribute(
 						"className");
 					long classPK = GetterUtil.getLong(
 						(String)serviceContext.getAttribute("classPK"));
-
-					// Social
-
-					if (!message.isRoot()) {
-						socialEquityLogLocalService.addEquityLogs(
-							userId, className, classPK,
-							ActionKeys.ADD_DISCUSSION, StringPool.BLANK);
-					}
-
 					long parentMessageId = message.getParentMessageId();
 
 					if (parentMessageId !=

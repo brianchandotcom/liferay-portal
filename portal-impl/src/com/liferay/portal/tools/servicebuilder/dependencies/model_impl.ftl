@@ -554,7 +554,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#list cacheFields as cacheField>
 		<#assign variableName = serviceBuilder.getVariableName(cacheField)>
 		<#assign methodName = textFormatter.format(variableName, 6)>
-		<#assign typeName = cacheField.getType().getFullyQualifiedName()>
+		<#assign typeName = cacheField.getType().getGenericValue()>
 
 		public ${typeName} get${methodName}() {
 			<#if cacheField.getType().isPrimitive()>

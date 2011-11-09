@@ -83,12 +83,5 @@ public class AddSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Site name"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//td[1]/a"));
 	}
 }

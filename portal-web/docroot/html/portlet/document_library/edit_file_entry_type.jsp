@@ -146,6 +146,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 					width:680
 				},
 				saveCallback: '<%= renderResponse.getNamespace() + "selectDDMStructure" %>',
+				showGlobalScope: true,
 				showManageTemplates: false,
 				showToolbar: true,
 				storageType: 'xml',

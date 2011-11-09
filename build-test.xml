@@ -275,7 +275,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -995,6 +995,12 @@
 			<param name="test.ant.script.command" value="plugins-ruby-console" />
 			<param name="test.ant.script.plugin.portlets" value="ruby-console-portlet" />
 			<param name="test.ant.script.suite" value="PluginsRubyConsoleTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="plugins-sample-application-adapter" />
+			<param name="test.ant.script.plugin.hooks" value="sample-application-adapter-hook" />
+			<param name="test.ant.script.suite" value="PluginsSampleApplicationAdapterTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

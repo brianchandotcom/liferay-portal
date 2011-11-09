@@ -1923,7 +1923,6 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialEquityLog" />
 	</entity>
 	<entity name="Team" local-service="true" remote-service="true">
 
@@ -2114,8 +2113,6 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThreadFlag" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialEquityLog" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialEquityUser" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />
 	</entity>
 	<entity name="UserGroup" local-service="true" remote-service="true">

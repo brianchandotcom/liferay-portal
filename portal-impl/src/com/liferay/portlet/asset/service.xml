@@ -198,7 +198,6 @@
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticleResource" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialEquityLog" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPageResource" />
 	</entity>

@@ -231,7 +231,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</span>
 
 				<c:if test='<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") %>'>
-					<c:if test="<%= enableRelatedAssets %>">
+					<c:if test="<%= (assetEntry != null) && enableRelatedAssets %>">
 						<div class="entry-links">
 							<liferay-ui:asset-links
 								assetEntryId="<%= (assetEntry != null) ? assetEntry.getEntryId() : 0 %>"

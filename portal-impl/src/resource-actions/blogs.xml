@@ -92,43 +92,5 @@
 				<action-key>UPDATE_DISCUSSION</action-key>
 			</guest-unsupported>
 		</permissions>
-		<social-equity>
-			<social-equity-mapping>
-				<action-key>ADD_DISCUSSION</action-key>
-				<information-value>2</information-value>
-				<information-lifespan>10</information-lifespan>
-				<participation-value>2</participation-value>
-				<participation-lifespan>10</participation-lifespan>
-			</social-equity-mapping>
-			<social-equity-mapping>
-				<action-key>ADD_ENTRY</action-key>
-				<information-value>10</information-value>
-				<information-lifespan>30</information-lifespan>
-				<participation-value>5</participation-value>
-				<participation-lifespan>30</participation-lifespan>
-			</social-equity-mapping>
-			<social-equity-mapping>
-				<action-key>ADD_VOTE</action-key>
-				<information-value>5</information-value>
-				<information-lifespan>30</information-lifespan>
-			</social-equity-mapping>
-			<social-equity-mapping>
-				<action-key>SUBSCRIBE</action-key>
-				<participation-value>2</participation-value>
-				<participation-lifespan>36500</participation-lifespan>
-			</social-equity-mapping>
-			<!--<social-equity-mapping>
-				<action-key>UPDATE</action-key>
-				<participation-value>2</participation-value>
-				<participation-lifespan>10</participation-lifespan>
-			</social-equity-mapping>-->
-			<social-equity-mapping>
-				<action-key>VIEW</action-key>
-				<information-value>1</information-value>
-				<information-lifespan>5</information-lifespan>
-				<participation-value>1</participation-value>
-				<participation-lifespan>5</participation-lifespan>
-			</social-equity-mapping>
-		</social-equity>
 	</model-resource>
 </resource-action-mapping>

@@ -97,32 +97,6 @@
 				<action-key>UPDATE_DISCUSSION</action-key>
 			</guest-unsupported>
 		</permissions>
-		<social-equity>
-			<social-equity-mapping>
-				<action-key>ADD_ARTICLE</action-key>
-				<participation-value>0</participation-value>
-				<participation-lifespan>0</participation-lifespan>
-			</social-equity-mapping>
-			<social-equity-mapping>
-				<action-key>ADD_DISCUSSION</action-key>
-				<information-value>2</information-value>
-				<information-lifespan>10</information-lifespan>
-				<participation-value>2</participation-value>
-				<participation-lifespan>10</participation-lifespan>
-			</social-equity-mapping>
-			<!--<social-equity-mapping>
-				<action-key>UPDATE</action-key>
-				<participation-value>0</participation-value>
-				<participation-lifespan>0</participation-lifespan>
-			</social-equity-mapping>-->
-			<social-equity-mapping>
-				<action-key>VIEW</action-key>
-				<information-value>1</information-value>
-				<information-lifespan>5</information-lifespan>
-				<participation-value>1</participation-value>
-				<participation-lifespan>5</participation-lifespan>
-			</social-equity-mapping>
-		</social-equity>
 	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portlet.journal.model.JournalFeed</model-name>

@@ -468,7 +468,7 @@
 			}
 		}
 
-		.aui-icon-delete, .aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-unlock {
+		.aui-icon-delete, .aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-undo, .aui-icon-unlock {
 			background: url() no-repeat 0 0;
 		}
 
@@ -494,6 +494,10 @@
 
 		.aui-icon-permissions {
 			background-image: url(<%= themeImagesPath %>/common/permissions.png);
+		}
+
+		.aui-icon-undo {
+			background-image: url(<%= themeImagesPath %>/common/undo.png);
 		}
 
 		.aui-icon-unlock {

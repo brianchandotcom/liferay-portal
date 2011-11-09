@@ -1837,10 +1837,6 @@ public interface PropsKeys {
 
 	public static final String SOCIAL_BOOKMARK_TYPES = "social.bookmark.types";
 
-	public static final String SOCIAL_EQUITY_EQUITY_LOG_CHECK_INTERVAL = "social.equity.equity.log.check.interval";
-
-	public static final String SOCIAL_EQUITY_EQUITY_LOG_ENABLED = "social.equity.equity.log.enabled";
-
 	public static final String SOURCE_FORGE_MIRRORS = "source.forge.mirrors";
 
 	public static final String SPRING_CONFIGS = "spring.configs";

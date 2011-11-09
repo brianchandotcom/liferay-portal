@@ -1083,30 +1083,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getRoles();
 	}
 
-	public double getSocialContributionEquity() {
-		return _user.getSocialContributionEquity();
-	}
-
-	public double getSocialContributionEquity(long groupId) {
-		return _user.getSocialContributionEquity(groupId);
-	}
-
-	public double getSocialParticipationEquity() {
-		return _user.getSocialParticipationEquity();
-	}
-
-	public double getSocialParticipationEquity(long groupId) {
-		return _user.getSocialParticipationEquity(groupId);
-	}
-
-	public double getSocialPersonalEquity() {
-		return _user.getSocialPersonalEquity();
-	}
-
-	public double getSocialPersonalEquity(long groupId) {
-		return _user.getSocialPersonalEquity(groupId);
-	}
-
 	public long[] getTeamIds()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getTeamIds();
@@ -1197,14 +1173,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 	public void setPasswordUnencrypted(java.lang.String passwordUnencrypted) {
 		_user.setPasswordUnencrypted(passwordUnencrypted);
-	}
-
-	public void updateSocialContributionEquity(long groupId, double value) {
-		_user.updateSocialContributionEquity(groupId, value);
-	}
-
-	public void updateSocialParticipationEquity(long groupId, double value) {
-		_user.updateSocialParticipationEquity(groupId, value);
 	}
 
 	public java.util.List<com.liferay.portal.model.Website> getWebsites()

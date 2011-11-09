@@ -65,18 +65,13 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.social.model.SocialEquityValue;
-import com.liferay.portlet.social.service.SocialEquityUserLocalServiceUtil;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -430,71 +425,6 @@ public class UserImpl extends UserBaseImpl {
 		return RoleLocalServiceUtil.getUserRoles(getUserId());
 	}
 
-	public double getSocialContributionEquity() {
-		return getSocialContributionEquity(0);
-	}
-
-	public double getSocialContributionEquity(long groupId) {
-		AtomicReference<Double> socialContributionEquity =
-			_socialContributionEquities.get(groupId);
-
-		if (socialContributionEquity == null) {
-			try {
-				SocialEquityValue socialEquityValue =
-					SocialEquityUserLocalServiceUtil.getContributionEquity(
-						getUserId(), groupId);
-
-				socialContributionEquity = new AtomicReference<Double>(
-					socialEquityValue.getValue());
-
-				_socialContributionEquities.put(
-					groupId, socialContributionEquity);
-			}
-			catch (SystemException se) {
-				return 0;
-			}
-		}
-
-		return socialContributionEquity.get();
-	}
-
-	public double getSocialParticipationEquity() {
-		return getSocialParticipationEquity(0);
-	}
-
-	public double getSocialParticipationEquity(long groupId) {
-		AtomicReference<Double> socialParticipationEquity =
-			_socialParticipationEquities.get(groupId);
-
-		if (socialParticipationEquity == null) {
-			try {
-				SocialEquityValue socialEquityValue =
-					SocialEquityUserLocalServiceUtil.getParticipationEquity(
-						getUserId(), groupId);
-
-				socialParticipationEquity = new AtomicReference<Double>(
-					socialEquityValue.getValue());
-
-				_socialParticipationEquities.put(
-					groupId, socialParticipationEquity);
-			}
-			catch (SystemException se) {
-				return 0;
-			}
-		}
-
-		return socialParticipationEquity.get();
-	}
-
-	public double getSocialPersonalEquity() {
-		return getSocialContributionEquity() + getSocialParticipationEquity();
-	}
-
-	public double getSocialPersonalEquity(long groupId) {
-		return getSocialContributionEquity(groupId) +
-			getSocialParticipationEquity(groupId);
-	}
-
 	public long[] getTeamIds() throws SystemException {
 		List<Team> teams = getTeams();
 
@@ -652,45 +582,6 @@ public class UserImpl extends UserBaseImpl {
 		super.setTimeZoneId(timeZoneId);
 	}
 
-	public void updateSocialContributionEquity(long groupId, double value) {
-		double currentValue = 0;
-		double newValue = 0;
-
-		AtomicReference<Double> socialContributionEquity =
-			_socialContributionEquities.get(groupId);
-
-		if (socialContributionEquity == null) {
-			return;
-		}
-
-		do {
-			currentValue = socialContributionEquity.get();
-
-			newValue = currentValue + value;
-		}
-		while (!socialContributionEquity.compareAndSet(currentValue, newValue));
-	}
-
-	public void updateSocialParticipationEquity(long groupId, double value) {
-		double currentValue = 0;
-		double newValue = 0;
-
-		AtomicReference<Double> socialParticipationEquity =
-			_socialParticipationEquities.get(groupId);
-
-		if (socialParticipationEquity == null) {
-			return;
-		}
-
-		do {
-			currentValue = socialParticipationEquity.get();
-
-			newValue = currentValue + value;
-		}
-		while (!socialParticipationEquity.compareAndSet(
-					currentValue, newValue));
-	}
-
 	public List<Website> getWebsites() throws SystemException {
 		return WebsiteLocalServiceUtil.getWebsites(
 			getCompanyId(), Contact.class.getName(), getContactId());
@@ -700,10 +591,6 @@ public class UserImpl extends UserBaseImpl {
 	private boolean _passwordModified;
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
-	private Map<Long, AtomicReference<Double>> _socialContributionEquities =
-		new HashMap<Long, AtomicReference<Double>>();
-	private Map<Long, AtomicReference<Double>> _socialParticipationEquities =
-		new HashMap<Long, AtomicReference<Double>>();
 	private TimeZone _timeZone;
 
 }

@@ -919,13 +919,19 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		List<Portlet> portlets = new ArrayList<Portlet>();
 
+		String servletContextNameSuffix = servletContextName;
+
+		if (Validator.isNotNull(servletContextName)) {
+			servletContextNameSuffix = PortalUtil.getJsSafePortletId(
+				PortletConstants.WAR_SEPARATOR.concat(servletContextName));
+		}
+
 		for (Map.Entry<String, Portlet> entry : portletsPool.entrySet()) {
 			String portletId = entry.getKey();
 			Portlet portlet = entry.getValue();
 
-			if (Validator.isNotNull(servletContextName)) {
-				if (portletId.endsWith(
-						PortletConstants.WAR_SEPARATOR + servletContextName)) {
+			if (Validator.isNotNull(servletContextNameSuffix)) {
+				if (portletId.endsWith(servletContextNameSuffix)) {
 
 					portlets.add(portlet);
 				}

@@ -815,8 +815,11 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		try {
-			return moveFileEntryImpl(
+			DLFileEntry dlFileEntry = moveFileEntryImpl(
 				userId, fileEntryId, newFolderId, serviceContext);
+			
+			return dlFileEntryTypeLocalService.updateFileEntryFileEntryType(
+				dlFileEntry, serviceContext);
 		}
 		finally {
 			if (!isFileEntryCheckedOut(fileEntryId)) {

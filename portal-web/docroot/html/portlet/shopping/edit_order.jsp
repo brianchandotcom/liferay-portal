@@ -153,7 +153,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 			</tr>
 			<tr>
 				<td>
-					<liferay-ui:message key="zip" />:
+					<liferay-ui:message key="postal-code" />:
 				</td>
 				<td>
 					<%= order.getBillingZip() %>
@@ -241,7 +241,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 			</tr>
 			<tr>
 				<td>
-					<liferay-ui:message key="zip" />:
+					<liferay-ui:message key="postal-code" />:
 				</td>
 				<td>
 					<%= order.getShippingZip() %>

@@ -134,7 +134,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 			</tr>
 			<tr>
 				<td>
-					<liferay-ui:message key="zip" />:
+					<liferay-ui:message key="postal-code" />:
 				</td>
 				<td>
 					<%= HtmlUtil.escape(order.getBillingZip()) %>
@@ -222,7 +222,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 			</tr>
 			<tr>
 				<td>
-					<liferay-ui:message key="zip" />:
+					<liferay-ui:message key="postal-code" />:
 				</td>
 				<td>
 					<%= HtmlUtil.escape(order.getShippingZip()) %>

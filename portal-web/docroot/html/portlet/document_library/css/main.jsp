@@ -468,8 +468,12 @@
 			}
 		}
 
-		.aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-unlock {
+		.aui-icon-delete, .aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-unlock {
 			background: url() no-repeat 0 0;
+		}
+
+		.aui-icon-delete {
+			background-image: url(<%= themeImagesPath %>/common/delete.png);
 		}
 
 		.aui-icon-download {

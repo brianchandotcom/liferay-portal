@@ -1478,14 +1478,6 @@
 		<put name="portlet_content" value="/portlet/social_activity/view.jsp" />
 	</definition>
 
-	<!-- Social Equity Admin -->
-
-	<definition name="portlet.social_equity_admin" extends="portlet" />
-
-	<definition name="portlet.social_equity_admin.view" extends="portlet.social_equity_admin">
-		<put name="portlet_content" value="/portlet/social_equity_admin/view.jsp" />
-	</definition>
-
 	<!-- Staging Bar -->
 
 	<definition name="portlet.staging_bar.edit_layout_branch" path="/portlet/staging_bar/edit_layout_branch.jsp" />

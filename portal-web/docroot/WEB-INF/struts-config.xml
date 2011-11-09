@@ -1745,12 +1745,6 @@
 			<forward name="portlet.social_activity.view" path="portlet.social_activity.view" />
 		</action>
 
-		<!-- Social Equity Admin -->
-
-		<action path="/social_equity_admin/view" type="com.liferay.portlet.socialequityadmin.action.ViewAction">
-			<forward name="portlet.social_equity_admin.view" path="portlet.social_equity_admin.view" />
-		</action>
-
 		<!-- Software Catalog -->
 
 		<action path="/software_catalog/edit_framework_version" type="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionAction">

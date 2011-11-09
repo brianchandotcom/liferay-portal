@@ -72,7 +72,6 @@
 		<portlet id="152" />
 		<portlet id="153" />
 		<portlet id="154" />
-		<portlet id="155" />
 		<portlet id="157" />
 		<portlet id="158" />
 		<portlet id="161" />
@@ -104,7 +103,6 @@
 	<category name="category.social">
 		<portlet id="116" />
 		<portlet id="121" />
-		<portlet id="159" />
 		<portlet id="180" />
 	</category>
 	<category name="category.tools">

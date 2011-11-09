@@ -1547,22 +1547,6 @@
 		<css-class-wrapper>portlet-wiki</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>155</portlet-name>
-		<icon>/html/icons/social_equity_admin.png</icon>
-		<struts-path>social_equity_admin</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>content</control-panel-entry-category>
-		<control-panel-entry-weight>23.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.socialequityadmin.SocialEquityAdminControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/social_equity_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-social-equity-admin</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>156</portlet-name>
 		<icon>/html/icons/group_pages.png</icon>
 		<struts-path>group_pages</struts-path>
@@ -1610,15 +1594,6 @@
 		<header-portlet-css>/html/portlet/users_admin/css/main.jsp</header-portlet-css>
 		<header-portlet-css>/html/portlet/workflow_definitions/css/main.jsp</header-portlet-css>
 		<css-class-wrapper>portlet-workflow-instances</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>159</portlet-name>
-		<preferences-owned-by-group>false</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/top_users/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-top-users</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>160</portlet-name>

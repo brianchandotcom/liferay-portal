@@ -106,6 +106,28 @@ catch (NoSuchLayoutException nsle) {
 }
 
 if (selLayout != null) {
+	try {
+		if (SitesUtil.isLayoutToBeUpdatedFromTemplate(selLayout)) {
+			Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(selLayout);
+
+			SitesUtil.copyLayout(user.getUserId(), templateLayout, selLayout, new ServiceContext());
+
+			selLayout = LayoutLocalServiceUtil.getLayout(selLayout.getPlid());
+
+			UnicodeProperties typeSettings = selLayout.getTypeSettingsProperties();
+
+			typeSettings.put("layoutSetPrototypeLastCopyDate", String.valueOf((new Date()).getTime()));
+
+			LayoutLocalServiceUtil.updateLayout(selLayout);
+		}
+	}
+	catch (Exception e) {
+		if (_log.isWarnEnabled()) {
+			_log.warn("Failed to process dynamic site templates: " +
+				e.getMessage());
+		}
+	}
+
 	layoutId = selLayout.getLayoutId();
 }
 
@@ -226,4 +248,8 @@ request.setAttribute("edit_pages.jsp-layoutList", layoutList);
 
 request.setAttribute("edit_pages.jsp-portletURL", portletURL);
 request.setAttribute("edit_pages.jsp-redirectURL", redirectURL);
+%>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.layout_admin.init_attributes_jsp");
 %>

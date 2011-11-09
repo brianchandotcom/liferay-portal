@@ -127,12 +127,13 @@ public class UpgradeSocial extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into SocialActivityCounter (activityCounterId, ");
 			sb.append("groupId, companyId, classNameId, classPK, name, ");
 			sb.append("ownerType, currentValue, totalValue, graceValue, ");
-			sb.append("startPeriod, endPeriod) values (?, ?, ?, ?, ?, ?, ?)");
+			sb.append("startPeriod, endPeriod) values (?, ?, ?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?)");
 
 			ps = con.prepareStatement(sb.toString());
 
@@ -212,6 +213,17 @@ public class UpgradeSocial extends UpgradeProcess {
 		migrateEquityGroupSettings();
 		migrateEquitySettings();
 		migrateEquityLogs();
+
+		dropEquityTables();
+	}
+
+	protected void dropEquityTables() throws Exception {
+		runSQL("drop table SocialEquityAssetEntry");
+		runSQL("drop table SocialEquityGroupSetting");
+		runSQL("drop table SocialEquityHistory");
+		runSQL("drop table SocialEquityLog");
+		runSQL("drop table SocialEquitySetting");
+		runSQL("drop table SocialEquityUser");
 	}
 
 	protected String encodeEquityToActivityKey(
@@ -345,7 +357,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(12);
 
-		sb.append("update SocialActivitySetting set value = TRUE where ");
+		sb.append("update SocialActivitySetting set value = 'true' where ");
 		sb.append("classNameId = ");
 
 		long mbMessageClassNameId = PortalUtil.getClassNameId(MBMessage.class);

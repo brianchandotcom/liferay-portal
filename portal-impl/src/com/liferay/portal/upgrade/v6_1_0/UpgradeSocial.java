@@ -213,6 +213,17 @@ public class UpgradeSocial extends UpgradeProcess {
 		migrateEquityGroupSettings();
 		migrateEquitySettings();
 		migrateEquityLogs();
+
+		dropEquityTables();
+	}
+
+	protected void dropEquityTables() throws Exception {
+		runSQL("drop table SocialEquityAssetEntry");
+		runSQL("drop table SocialEquityGroupSetting");
+		runSQL("drop table SocialEquityHistory");
+		runSQL("drop table SocialEquityLog");
+		runSQL("drop table SocialEquitySetting");
+		runSQL("drop table SocialEquityUser");
 	}
 
 	protected String encodeEquityToActivityKey(

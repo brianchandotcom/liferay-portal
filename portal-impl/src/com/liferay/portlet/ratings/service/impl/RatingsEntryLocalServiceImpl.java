@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -75,12 +74,6 @@ public class RatingsEntryLocalServiceImpl
 		stats.setAverageScore(averageScore);
 
 		ratingsStatsPersistence.update(stats, false);
-
-		// Social
-
-		socialEquityLogLocalService.deactivateEquityLogs(
-			userId, className, classPK, ActionKeys.ADD_VOTE,
-			StringPool.BLANK);
 	}
 
 	public RatingsEntry fetchEntry(long userId, String className, long classPK)
@@ -246,9 +239,6 @@ public class RatingsEntryLocalServiceImpl
 				userId, assetEntry.getGroupId(), className, classPK,
 				SocialActivityConstants.TYPE_ADD_VOTE, StringPool.BLANK, 0);
 		}
-
-		socialEquityLogLocalService.addEquityLogs(
-			userId, className, classPK, ActionKeys.ADD_VOTE, StringPool.BLANK);
 
 		return entry;
 	}

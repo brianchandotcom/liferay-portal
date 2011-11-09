@@ -464,7 +464,7 @@ public class SitesUtil {
 				if (Validator.isNotNull(locked)) {
 					return GetterUtil.getBoolean(locked);
 				}
-				else {
+				else if (Validator.isNotNull(layout.getTemplateLayoutUuid())) {
 					return isLayoutSetLocked(layoutSet);
 				}
 			}

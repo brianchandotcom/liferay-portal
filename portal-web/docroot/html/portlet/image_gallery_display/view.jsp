@@ -120,6 +120,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
+		searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
+
 		long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
@@ -157,55 +159,55 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</c:if>
 
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-				<div id="<portlet:namespace />imageGalleryAssetInfo">
-					<c:if test="<%= folder != null %>">
-						<div class="lfr-asset-description">
-							<%= HtmlUtil.escape(folder.getDescription()) %>
+				<c:if test="<%= folder != null %>">
+					<div class="lfr-asset-description">
+						<%= HtmlUtil.escape(folder.getDescription()) %>
+					</div>
+
+					<div class="lfr-asset-metadata">
+						<div class="lfr-asset-icon lfr-asset-date">
+							<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
 						</div>
 
-						<div class="lfr-asset-metadata">
-							<div class="lfr-asset-icon lfr-asset-date">
-								<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate())) %>
-							</div>
-
-							<div class="lfr-asset-icon lfr-asset-subfolders">
-								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
-							</div>
-
-							<div class="lfr-asset-icon lfr-asset-items last">
-								<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
-							</div>
+						<div class="lfr-asset-icon lfr-asset-subfolders">
+							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 						</div>
 
-						<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-							<liferay-ui:custom-attribute-list
-								className="<%= DLFolderConstants.getClassName() %>"
-								classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-								editable="<%= false %>"
-								label="<%= true %>"
-							/>
-						</liferay-ui:custom-attributes-available>
-					</c:if>
+						<div class="lfr-asset-icon lfr-asset-items last">
+							<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
+						</div>
+					</div>
 
-					<%
-					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+					<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= DLFolderConstants.getClassName() %>"
+							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+				</c:if>
 
-					String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
+				<%
+				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, false);
+				searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
 
-					searchContainer.setTotal(total);
+				String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
 
-					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, false);
 
-					searchContainer.setResults(results);
+				searchContainer.setTotal(total);
 
-					List scores = null;
-					%>
+				List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-					<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+				searchContainer.setResults(results);
 
-				</div>
+				List scores = null;
+				%>
+
+				<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+
 			</aui:column>
 
 			<c:if test="<%= showFolderMenu %>">
@@ -253,6 +255,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		}
 
 		SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+		searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc"));
 
 		int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId);
 

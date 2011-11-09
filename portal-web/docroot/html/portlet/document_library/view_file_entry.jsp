@@ -118,6 +118,8 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
+
+OrderByComparator obc = DLUtil.getRepositoryModelOrderByComparator("creationDate", "desc");
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -150,12 +152,59 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	/>
 </c:if>
 
-<div class="view">
+<div class="lfr-app-column-view">
 	<aui:layout>
 		<aui:column columnWidth="<%= 65 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
-					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
+					<c:if test='<%= showActions %>'>
+						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
+					</c:if>
+
+					<c:if test="<%= showPrevAndNextNavigation %>">
+
+						<%
+						FileEntry[] prevAndNext = DLAppServiceUtil.getFileEntriesPrevAndNext(fileEntry.getFileEntryId(), obc);
+
+						FileEntry previousEntry = prevAndNext[0];
+						FileEntry nextEntry = prevAndNext[2];
+						%>
+
+						<div class="prev-next-navigation">
+							<c:choose>
+								<c:when test="<%= (previousEntry != null) %>">
+									<portlet:renderURL var="previousEntryURL">
+										<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="fileEntryId" value="<%= String.valueOf(previousEntry.getFileEntryId()) %>" />
+									</portlet:renderURL>
+
+									<aui:a href="<%= previousEntryURL %>">
+										<span class="<%= previousEntry == null ? "disabled" : StringPool.BLANK %> previous"></span>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<span class="<%= previousEntry == null ? "disabled" : StringPool.BLANK %> previous"></span>
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="<%= (nextEntry != null) %>">
+									<portlet:renderURL var="nextEntryURL">
+										<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="fileEntryId" value="<%= String.valueOf(nextEntry.getFileEntryId()) %>" />
+									</portlet:renderURL>
+
+									<aui:a href="<%= nextEntryURL %>">
+										<span class="<%= nextEntry == null ? "disabled" : StringPool.BLANK %> next"></span>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<span class="<%= nextEntry == null ? "disabled" : StringPool.BLANK %> next"></span>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:if>
 				</div>
 			</div>
 
@@ -373,7 +422,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= previewFileURL %>" />
+												<div class="lfr-preview-file-image-current-column">
+													<div class="lfr-preview-file-image-container">
+														<img class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL %>" />
+													</div>
+												</div>
 											</div>
 										</div>
 									</c:when>
@@ -805,121 +858,115 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		);
 	}
 
-	var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
+	<c:if test="<%= showActions %>">
+		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
-	var fileEntryToolbar = new A.Toolbar(
-		{
-			activeState: false,
-			boundingBox: buttonRow,
-			children: [
+		var fileEntryToolbar = new A.Toolbar(
+			{
+				activeState: false,
+				boundingBox: buttonRow,
+				children: [
 
-				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
-
-					{
-						handler: function(event) {
-							location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>';
-						},
-						icon: 'download',
-						label: '<liferay-ui:message key="download" />'
-					},
-
-				</c:if>
-
-				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
-					{
-
-						<portlet:renderURL var="editURL">
-							<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="backURL" value="<%= currentURL %>" />
-							<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-						</portlet:renderURL>
-
-						handler: function(event) {
-							location.href = '<%= editURL.toString() %>';
-						},
-						icon: 'edit',
-						label: '<liferay-ui:message key="edit" />'
-					},
-					{
-
-						<portlet:renderURL var="moveURL">
-							<portlet:param name="struts_action" value="/document_library/move_file_entry" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-						</portlet:renderURL>
-
-						handler: function(event) {
-							location.href = '<%= moveURL.toString() %>';
-						},
-						icon: 'move',
-						label: '<liferay-ui:message key="move" />'
-					},
-
-					<c:if test="<%= !fileEntry.isCheckedOut() %>">
-
+					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 						{
-
 							handler: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-								submitForm(document.<portlet:namespace />fm);
+								location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>';
 							},
-							icon: 'lock',
-							label: '<liferay-ui:message key="checkout" />'
+							icon: 'download',
+							label: '<liferay-ui:message key="download" />'
 						},
-
 					</c:if>
 
-					<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
-
+					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
 						{
 
-							handler: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
-								submitForm(document.<portlet:namespace />fm);
-							},
-							icon: 'undo',
-							label: '<liferay-ui:message key="cancel-checkout" />'
-						},
+							<portlet:renderURL var="editURL">
+								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="backURL" value="<%= currentURL %>" />
+								<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+							</portlet:renderURL>
 
+							handler: function(event) {
+								location.href = '<%= editURL.toString() %>';
+							},
+							icon: 'edit',
+							label: '<liferay-ui:message key="edit" />'
+						},
 						{
 
+							<portlet:renderURL var="moveURL">
+								<portlet:param name="struts_action" value="/document_library/move_file_entry" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+							</portlet:renderURL>
+
 							handler: function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
-								submitForm(document.<portlet:namespace />fm);
+								location.href = '<%= moveURL.toString() %>';
 							},
-							icon: 'unlock',
-							label: '<liferay-ui:message key="checkin" />'
+							icon: 'move',
+							label: '<liferay-ui:message key="move" />'
 						},
 
+						<c:if test="<%= !fileEntry.isCheckedOut() %>">
+							{
+
+								handler: function(event) {
+									document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
+									submitForm(document.<portlet:namespace />fm);
+								},
+								icon: 'lock',
+								label: '<liferay-ui:message key="checkout" />'
+							},
+						</c:if>
+
+						<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
+							{
+
+								handler: function(event) {
+									document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
+									submitForm(document.<portlet:namespace />fm);
+								},
+								icon: 'undo',
+								label: '<liferay-ui:message key="cancel-checkout" />'
+							},
+							{
+
+								handler: function(event) {
+									document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
+									submitForm(document.<portlet:namespace />fm);
+								},
+								icon: 'unlock',
+								label: '<liferay-ui:message key="checkin" />'
+							},
+						</c:if>
 					</c:if>
-				</c:if>
 
-				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+					<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
+						{
 
-					{
+							<liferay-security:permissionsURL
+								modelResource="<%= DLFileEntryConstants.getClassName() %>"
+								modelResourceDescription="<%= fileEntry.getTitle() %>"
+								resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+								var="permissionsURL"
+							/>
 
-						<liferay-security:permissionsURL
-							modelResource="<%= DLFileEntryConstants.getClassName() %>"
-							modelResourceDescription="<%= fileEntry.getTitle() %>"
-							resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
-							var="permissionsURL"
-						/>
+							handler: function(event) {
+								location.href = '<%= permissionsURL.toString() %>';
+							},
+							icon: 'permissions',
+							label: '<liferay-ui:message key="permissions" />'
+						}
+					</c:if>
 
-						handler: function(event) {
-							location.href = '<%= permissionsURL.toString() %>';
-						},
-						icon: 'permissions',
-						label: '<liferay-ui:message key="permissions" />'
-					}
+				]
+			}
+		).render();
 
-				</c:if>
+		buttonRow.setData('fileEntryToolbar', fileEntryToolbar);
 
-			]
-		}
-	).render();
-
-	buttonRow.setData('fileEntryToolbar', fileEntryToolbar);
+	</c:if>
 
 	<portlet:namespace />initRowsChecked();
 

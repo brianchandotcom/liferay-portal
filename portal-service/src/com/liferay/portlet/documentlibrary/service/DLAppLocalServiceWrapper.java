@@ -540,6 +540,13 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		return _dlAppLocalService.getFileEntriesCount(repositoryId, folderId);
 	}
 
+	public com.liferay.portal.kernel.repository.model.FileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.getFileEntriesPrevAndNext(fileEntryId, obc);
+	}
+
 	/**
 	* Returns the file entry with the primary key.
 	*

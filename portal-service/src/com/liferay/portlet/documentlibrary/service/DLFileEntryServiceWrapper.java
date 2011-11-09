@@ -154,6 +154,13 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 			fileEntryTypeId);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry[] getFileEntriesPrevAndNext(
+		long fileEntryId, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryService.getFileEntriesPrevAndNext(fileEntryId, obc);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -418,6 +418,52 @@ public class CMISRepository extends BaseCmisRepository {
 		return new ArrayList<FileEntry>();
 	}
 
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		List<FileEntry> siblingFileEntries =
+			getFileEntries(fileEntry.getFolderId());
+
+		if (obc != null) {
+			if (obc instanceof RepositoryModelCreateDateComparator ||
+				obc instanceof RepositoryModelModifiedDateComparator ||
+				obc instanceof RepositoryModelSizeComparator) {
+
+				siblingFileEntries = ListUtil.sort(siblingFileEntries, obc);
+			}
+			else if (obc instanceof RepositoryModelNameComparator) {
+				if (!obc.isAscending()) {
+					siblingFileEntries = ListUtil.sort(siblingFileEntries, obc);
+				}
+			}
+		}
+
+		FileEntry[] fileEntries = new FileEntry[3];
+
+		int i = 0;
+
+		for (i = 0; i < siblingFileEntries.size(); i++) {
+			if (siblingFileEntries.get(i).getFileEntryId() == fileEntryId) {
+				break;
+			}
+		}
+
+		if ((i - 1) >= 0) {
+			fileEntries[0] = siblingFileEntries.get(i - 1);
+		}
+
+		fileEntries[1] = fileEntry;
+
+		if ((i + 1) < siblingFileEntries.size()) {
+			fileEntries[2] = siblingFileEntries.get(i + 1);
+		}
+
+		return fileEntries;
+	}
+
 	public int getFileEntriesCount(long folderId) throws SystemException {
 		List<FileEntry> fileEntries = getFileEntries(folderId);
 

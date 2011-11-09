@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -273,6 +274,19 @@ public class LiferayRepository
 
 		return dlFolderService.getFileEntriesAndFileShortcutsCount(
 			getGroupId(), toFolderId(folderId), status);
+	}
+
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		DLFileEntry[] dlFileEntries =
+			dlFileEntryService.getFileEntriesPrevAndNext(fileEntryId, obc);
+
+		List<FileEntry> fileEntries =
+			toFileEntries(ListUtil.fromArray(dlFileEntries));
+
+		return fileEntries.toArray(new FileEntry[fileEntries.size()]);
 	}
 
 	public int getFileEntriesCount(long folderId) throws SystemException {

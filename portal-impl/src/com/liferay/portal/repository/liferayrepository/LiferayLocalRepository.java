@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -201,6 +202,19 @@ public class LiferayLocalRepository
 	public int getFileEntriesCount(long folderId) throws SystemException {
 		return dlFileEntryLocalService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId));
+	}
+
+	public FileEntry[] getFileEntriesPrevAndNext(
+			long fileEntryId, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		DLFileEntry[] dlFileEntries =
+			dlFileEntryLocalService.getFileEntriesPrevAndNext(fileEntryId, obc);
+
+		List<FileEntry> fileEntries =
+			toFileEntries(ListUtil.fromArray(dlFileEntries));
+
+		return fileEntries.toArray(new FileEntry[fileEntries.size()]);
 	}
 
 	public FileEntry getFileEntry(long fileEntryId)

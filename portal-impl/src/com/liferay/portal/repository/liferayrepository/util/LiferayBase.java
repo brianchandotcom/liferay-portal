@@ -38,7 +38,11 @@ public abstract class LiferayBase {
 			dlFileEntries.size());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+			FileEntry fileEntry = null;
+
+			if (dlFileEntry != null) {
+				fileEntry = new LiferayFileEntry(dlFileEntry);
+			}
 
 			fileEntries.add(fileEntry);
 		}

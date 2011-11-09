@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,7 +49,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletResourceBundles;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.social.model.SocialEquityActionMapping;
 import com.liferay.util.UniqueList;
 
 import java.io.InputStream;
@@ -107,8 +105,6 @@ public class ResourceActionsImpl implements ResourceActions {
 			new HashMap<String, List<String>>();
 		_modelResourceOwnerDefaultActions =
 			new HashMap<String, List<String>>();
-		_socialEquityActionMappings =
-			new HashMap<String, Map<String, SocialEquityActionMapping>>();
 
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();
@@ -527,47 +523,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		return roles;
-	}
-
-	public SocialEquityActionMapping getSocialEquityActionMapping(
-		String name, String actionId) {
-
-		Map<String, SocialEquityActionMapping> socialEquityActionMappings =
-			_socialEquityActionMappings.get(name);
-
-		if (socialEquityActionMappings == null) {
-			return null;
-		}
-
-		return socialEquityActionMappings.get(actionId);
-	}
-
-	public List<SocialEquityActionMapping> getSocialEquityActionMappings(
-		String name) {
-
-		Map<String, SocialEquityActionMapping> socialEquityActionMappings =
-			_socialEquityActionMappings.get(name);
-
-		if (socialEquityActionMappings == null) {
-			return Collections.emptyList();
-		}
-
-		List<SocialEquityActionMapping> socialEquityActionMappingList =
-			new ArrayList<SocialEquityActionMapping>();
-
-		for (Map.Entry<String, SocialEquityActionMapping> entry :
-				socialEquityActionMappings.entrySet()) {
-
-			socialEquityActionMappingList.add(entry.getValue());
-		}
-
-		return socialEquityActionMappingList;
-	}
-
-	public String[] getSocialEquityClassNames() {
-		Set<String> classNames = _socialEquityActionMappings.keySet();
-
-		return classNames.toArray(new String[classNames.size()]);
 	}
 
 	public boolean hasModelResourceActions(String name) {
@@ -1024,8 +979,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		readOwnerDefaultActions(
 			modelResourceElement, _modelResourceOwnerDefaultActions, name);
-
-		readSocialEquity(modelResourceElement, name);
 	}
 
 	protected void readOwnerDefaultActions(
@@ -1087,81 +1040,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		readLayoutManagerActions(
 			portletResourceElement, _portletResourceLayoutManagerActions, name,
 			supportsActions);
-	}
-
-	protected void readSocialEquity(Element parentElement, String name) {
-		Element socialEquityElement = parentElement.element("social-equity");
-
-		if (socialEquityElement == null) {
-			return;
-		}
-
-		for (Element socialEquityMappingElement :
-				socialEquityElement.elements("social-equity-mapping")) {
-
-			readSocialEquityMapping(socialEquityMappingElement, name);
-		}
-	}
-
-	protected void readSocialEquityMapping(
-		Element socialEquityMappingElement, String name) {
-
-		Element actionKeyElement =
-			socialEquityMappingElement.element("action-key");
-
-		if (actionKeyElement == null) {
-			return;
-		}
-
-		String actionKey = actionKeyElement.getTextTrim();
-
-		if (Validator.isNull(actionKey)) {
-			return;
-		}
-
-		int informationDailyLimit = GetterUtil.getInteger(
-			socialEquityMappingElement.elementText("information-daily-limit"));
-		int informationLifespan = GetterUtil.getInteger(
-			socialEquityMappingElement.elementText("information-lifespan"));
-		int informationValue = GetterUtil.getInteger(
-			socialEquityMappingElement.elementText("information-value"));
-		int participationDailyLimit = GetterUtil.getInteger(
-			socialEquityMappingElement.elementText(
-				"participation-daily-limit"));
-		int participationLifespan = GetterUtil.getInteger(
-			socialEquityMappingElement.elementText("participation-lifespan"));
-		int participationValue = GetterUtil.getInteger(
-			socialEquityMappingElement.elementText("participation-value"));
-		boolean unique = GetterUtil.getBoolean(
-			actionKeyElement.attributeValue("unique"));
-
-		SocialEquityActionMapping socialEquityActionMapping =
-			new SocialEquityActionMapping();
-
-		socialEquityActionMapping.setActionId(actionKey);
-		socialEquityActionMapping.setClassName(name);
-		socialEquityActionMapping.setInformationDailyLimit(
-			informationDailyLimit);
-		socialEquityActionMapping.setInformationLifespan(informationLifespan);
-		socialEquityActionMapping.setInformationValue(informationValue);
-		socialEquityActionMapping.setParticipationDailyLimit(
-			participationDailyLimit);
-		socialEquityActionMapping.setParticipationLifespan(
-			participationLifespan);
-		socialEquityActionMapping.setParticipationValue(participationValue);
-		socialEquityActionMapping.setUnique(unique);
-
-		Map<String, SocialEquityActionMapping> socialEquityActionMappings =
-			_socialEquityActionMappings.get(name);
-
-		if (socialEquityActionMappings == null) {
-			socialEquityActionMappings =
-				new HashMap<String, SocialEquityActionMapping>();
-
-			_socialEquityActionMappings.put(name, socialEquityActionMappings);
-		}
-
-		socialEquityActionMappings.put(actionKey, socialEquityActionMapping);
 	}
 
 	protected List<String> readSupportsActions(
@@ -1229,7 +1107,5 @@ public class ResourceActionsImpl implements ResourceActions {
 	private Map<String, List<String>> _portletResourceGuestDefaultActions;
 	private Map<String, List<String>> _portletResourceGuestUnsupportedActions;
 	private Map<String, List<String>> _portletResourceLayoutManagerActions;
-	private Map<String, Map<String, SocialEquityActionMapping>>
-		_socialEquityActionMappings;
 
 }

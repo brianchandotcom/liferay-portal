@@ -32,10 +32,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.social.model.SocialEquityActionMapping;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -1047,34 +1045,6 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getSiteLoginURL(themeDisplay);
-	}
-
-	/**
-	 * @deprecated {@link
-	 *             ResourceActionsUtil#getSocialEquityActionMapping(String,
-	 *             String)}
-	 */
-	public static SocialEquityActionMapping getSocialEquityActionMapping(
-		String name, String actionId) {
-
-		return ResourceActionsUtil.getSocialEquityActionMapping(name, actionId);
-	}
-
-	/**
-	 * @deprecated {@link
-	 *             ResourceActionsUtil#getSocialEquityActionMappings(String)}
-	 */
-	public static List<SocialEquityActionMapping> getSocialEquityActionMappings(
-		String name) {
-
-		return ResourceActionsUtil.getSocialEquityActionMappings(name);
-	}
-
-	/**
-	 * @deprecated {@link ResourceActionsUtil#getSocialEquityClassNames}
-	 */
-	public static String[] getSocialEquityClassNames() {
-		return ResourceActionsUtil.getSocialEquityClassNames();
 	}
 
 	public static String getStaticResourceURL(

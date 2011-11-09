@@ -2983,18 +2983,6 @@ public class SocialActivityAchievementPersistenceImpl
 	protected SocialActivityLimitPersistence socialActivityLimitPersistence;
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
-	@BeanReference(type = SocialEquityAssetEntryPersistence.class)
-	protected SocialEquityAssetEntryPersistence socialEquityAssetEntryPersistence;
-	@BeanReference(type = SocialEquityGroupSettingPersistence.class)
-	protected SocialEquityGroupSettingPersistence socialEquityGroupSettingPersistence;
-	@BeanReference(type = SocialEquityHistoryPersistence.class)
-	protected SocialEquityHistoryPersistence socialEquityHistoryPersistence;
-	@BeanReference(type = SocialEquityLogPersistence.class)
-	protected SocialEquityLogPersistence socialEquityLogPersistence;
-	@BeanReference(type = SocialEquitySettingPersistence.class)
-	protected SocialEquitySettingPersistence socialEquitySettingPersistence;
-	@BeanReference(type = SocialEquityUserPersistence.class)
-	protected SocialEquityUserPersistence socialEquityUserPersistence;
 	@BeanReference(type = SocialRelationPersistence.class)
 	protected SocialRelationPersistence socialRelationPersistence;
 	@BeanReference(type = SocialRequestPersistence.class)

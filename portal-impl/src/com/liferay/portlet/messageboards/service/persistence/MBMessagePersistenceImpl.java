@@ -66,7 +66,6 @@ import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
 import com.liferay.portlet.wiki.service.persistence.WikiPagePersistence;
 
 import java.io.Serializable;
@@ -17429,8 +17428,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
-	@BeanReference(type = SocialEquityLogPersistence.class)
-	protected SocialEquityLogPersistence socialEquityLogPersistence;
 	@BeanReference(type = WikiPagePersistence.class)
 	protected WikiPagePersistence wikiPagePersistence;
 	private static final String _SQL_SELECT_MBMESSAGE = "SELECT mbMessage FROM MBMessage mbMessage";

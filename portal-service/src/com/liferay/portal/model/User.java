@@ -148,18 +148,6 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.List<com.liferay.portal.model.Role> getRoles()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public double getSocialContributionEquity();
-
-	public double getSocialContributionEquity(long groupId);
-
-	public double getSocialParticipationEquity();
-
-	public double getSocialParticipationEquity(long groupId);
-
-	public double getSocialPersonalEquity();
-
-	public double getSocialPersonalEquity(long groupId);
-
 	public long[] getTeamIds()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -219,10 +207,6 @@ public interface User extends UserModel, PersistedModel {
 	public void setPasswordUnencrypted(java.lang.String passwordUnencrypted);
 
 	public void setTimeZoneId(java.lang.String timeZoneId);
-
-	public void updateSocialContributionEquity(long groupId, double value);
-
-	public void updateSocialParticipationEquity(long groupId, double value);
 
 	public java.util.List<com.liferay.portal.model.Website> getWebsites()
 		throws com.liferay.portal.kernel.exception.SystemException;

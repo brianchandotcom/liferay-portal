@@ -106,10 +106,8 @@ import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
 import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
-import com.liferay.portlet.social.service.SocialEquityLogLocalService;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
 import com.liferay.portlet.wiki.service.WikiPageLocalService;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalService;
 import com.liferay.portlet.wiki.service.WikiPageService;
@@ -1801,44 +1799,6 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the social equity log local service.
-	 *
-	 * @return the social equity log local service
-	 */
-	public SocialEquityLogLocalService getSocialEquityLogLocalService() {
-		return socialEquityLogLocalService;
-	}
-
-	/**
-	 * Sets the social equity log local service.
-	 *
-	 * @param socialEquityLogLocalService the social equity log local service
-	 */
-	public void setSocialEquityLogLocalService(
-		SocialEquityLogLocalService socialEquityLogLocalService) {
-		this.socialEquityLogLocalService = socialEquityLogLocalService;
-	}
-
-	/**
-	 * Returns the social equity log persistence.
-	 *
-	 * @return the social equity log persistence
-	 */
-	public SocialEquityLogPersistence getSocialEquityLogPersistence() {
-		return socialEquityLogPersistence;
-	}
-
-	/**
-	 * Sets the social equity log persistence.
-	 *
-	 * @param socialEquityLogPersistence the social equity log persistence
-	 */
-	public void setSocialEquityLogPersistence(
-		SocialEquityLogPersistence socialEquityLogPersistence) {
-		this.socialEquityLogPersistence = socialEquityLogPersistence;
-	}
-
-	/**
 	 * Returns the wiki page local service.
 	 *
 	 * @return the wiki page local service
@@ -2156,10 +2116,6 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialActivityFinder.class)
 	protected SocialActivityFinder socialActivityFinder;
-	@BeanReference(type = SocialEquityLogLocalService.class)
-	protected SocialEquityLogLocalService socialEquityLogLocalService;
-	@BeanReference(type = SocialEquityLogPersistence.class)
-	protected SocialEquityLogPersistence socialEquityLogPersistence;
 	@BeanReference(type = WikiPageLocalService.class)
 	protected WikiPageLocalService wikiPageLocalService;
 	@BeanReference(type = WikiPageService.class)

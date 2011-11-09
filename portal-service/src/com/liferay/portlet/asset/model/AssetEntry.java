@@ -37,13 +37,9 @@ public interface AssetEntry extends AssetEntryModel, PersistedModel {
 	public long[] getCategoryIds()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public double getSocialInformationEquity();
-
 	public java.lang.String[] getTagNames()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void updateSocialInformationEquity(double value);
 }

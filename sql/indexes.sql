@@ -694,27 +694,6 @@ create index IX_384788CD on SocialActivitySetting (groupId, activityType);
 create index IX_1E9CF33B on SocialActivitySetting (groupId, classNameId, activityType);
 create index IX_D984AABA on SocialActivitySetting (groupId, classNameId, activityType, name);
 
-create unique index IX_22F6B5CB on SocialEquityAssetEntry (assetEntryId);
-
-create unique index IX_E4F84168 on SocialEquityGroupSetting (groupId, classNameId, type_);
-
-create index IX_AC18D8F8 on SocialEquityLog (assetEntryId, actionId, actionDate, active_, type_, extraData);
-create index IX_541BDA0F on SocialEquityLog (assetEntryId, actionId, active_, extraData);
-create index IX_E8DA181D on SocialEquityLog (assetEntryId, type_, active_);
-create index IX_3C8A04B2 on SocialEquityLog (userId);
-create index IX_18F55CAF on SocialEquityLog (userId, actionId, actionDate, active_, type_, extraData);
-create unique index IX_A0FA597E on SocialEquityLog (userId, assetEntryId, actionId, actionDate, active_, type_, extraData);
-create index IX_DAE54B49 on SocialEquityLog (userId, assetEntryId, actionId, active_, extraData);
-
-create index IX_F3AAD60D on SocialEquitySetting (groupId, classNameId, actionId);
-create unique index IX_903C1B28 on SocialEquitySetting (groupId, classNameId, actionId, type_);
-
-create index IX_6B42B3E7 on SocialEquityUser (groupId);
-create index IX_945E27C7 on SocialEquityUser (groupId, rank);
-create unique index IX_D65D3521 on SocialEquityUser (groupId, userId);
-create index IX_166A8F03 on SocialEquityUser (rank);
-create index IX_6ECBD5D on SocialEquityUser (userId);
-
 create index IX_61171E99 on SocialRelation (companyId);
 create index IX_95135D1C on SocialRelation (companyId, type_);
 create index IX_C31A64C6 on SocialRelation (type_);

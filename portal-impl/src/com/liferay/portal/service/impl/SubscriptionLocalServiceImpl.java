@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -118,10 +117,6 @@ public class SubscriptionLocalServiceImpl
 					SocialActivityConstants.TYPE_SUBSCRIBE, StringPool.BLANK,
 					0);
 			}
-
-			socialEquityLogLocalService.addEquityLogs(
-				userId, className, classPK, ActionKeys.SUBSCRIBE,
-				StringPool.BLANK);
 		}
 
 		return subscription;
@@ -171,10 +166,6 @@ public class SubscriptionLocalServiceImpl
 				subscription.getUserId(), assetEntry.getGroupId(), className,
 				subscription.getClassPK(),
 				SocialActivityConstants.TYPE_UNSUBSCRIBE, StringPool.BLANK, 0);
-
-			socialEquityLogLocalService.deactivateEquityLogs(
-				subscription.getUserId(), className, subscription.getClassPK(),
-				ActionKeys.SUBSCRIBE, StringPool.BLANK);
 		}
 	}
 

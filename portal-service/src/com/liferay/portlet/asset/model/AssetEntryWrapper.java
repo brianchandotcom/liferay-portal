@@ -753,10 +753,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		return _assetEntry.getCategoryIds();
 	}
 
-	public double getSocialInformationEquity() {
-		return _assetEntry.getSocialInformationEquity();
-	}
-
 	public java.lang.String[] getTagNames()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetEntry.getTagNames();
@@ -765,10 +761,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetEntry.getTags();
-	}
-
-	public void updateSocialInformationEquity(double value) {
-		_assetEntry.updateSocialInformationEquity(value);
 	}
 
 	/**

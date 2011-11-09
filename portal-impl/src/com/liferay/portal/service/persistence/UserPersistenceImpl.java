@@ -61,8 +61,6 @@ import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersiste
 import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence;
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistence;
-import com.liferay.portlet.social.service.persistence.SocialEquityUserPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
 
 import java.io.Serializable;
@@ -7693,10 +7691,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	protected ShoppingCartPersistence shoppingCartPersistence;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
-	@BeanReference(type = SocialEquityLogPersistence.class)
-	protected SocialEquityLogPersistence socialEquityLogPersistence;
-	@BeanReference(type = SocialEquityUserPersistence.class)
-	protected SocialEquityUserPersistence socialEquityUserPersistence;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;
 	protected ContainsGroup containsGroup;

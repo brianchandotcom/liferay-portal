@@ -26,12 +26,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
@@ -93,7 +87,6 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletURLListenerFactory;
-import com.liferay.portlet.social.messaging.CheckEquityLogMessageListener;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.DynamicServletRequest;
@@ -277,19 +270,6 @@ public class MainServlet extends ActionServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-
-		if (PropsValues.SOCIAL_EQUITY_EQUITY_LOG_ENABLED) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Initialize social equity log scheduler");
-			}
-
-			try {
-				initSocialEquityLogScheduler();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -996,21 +976,6 @@ public class MainServlet extends ActionServlet {
 		};
 
 		SocialConfigurationUtil.read(classLoader, xmls);
-	}
-
-	protected void initSocialEquityLogScheduler() throws Exception {
-		SchedulerEntry socialEquityLogSchedulerEntry = new SchedulerEntryImpl();
-
-		socialEquityLogSchedulerEntry.setEventListenerClass(
-			CheckEquityLogMessageListener.class.getName());
-		socialEquityLogSchedulerEntry.setTimeUnit(TimeUnit.MINUTE);
-		socialEquityLogSchedulerEntry.setTriggerType(TriggerType.SIMPLE);
-		socialEquityLogSchedulerEntry.setTriggerValue(
-			PropsValues.SOCIAL_EQUITY_EQUITY_LOG_CHECK_INTERVAL);
-
-		SchedulerEngineUtil.schedule(
-			socialEquityLogSchedulerEntry, StorageType.MEMORY_CLUSTERED,
-			PortalClassLoaderUtil.getClassLoader(), 0);
 	}
 
 	protected void initThemes(

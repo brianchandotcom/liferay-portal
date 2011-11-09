@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.increment;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.social.model.SocialEquityIncrementPayload;
 
 import java.lang.reflect.Constructor;
 
@@ -33,12 +32,6 @@ public class IncrementFactory {
 			(value instanceof Number)) {
 
 			return new NumberIncrement((Number)value);
-		}
-		else if ((counterClass == SocialEquityIncrement.class) &&
-				 (value instanceof SocialEquityIncrementPayload)) {
-
-			return new SocialEquityIncrement(
-				(SocialEquityIncrementPayload)value);
 		}
 
 		try {

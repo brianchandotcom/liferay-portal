@@ -89,12 +89,6 @@ import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersi
 import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistenceTest;
-import com.liferay.portlet.social.service.persistence.SocialEquityAssetEntryPersistenceTest;
-import com.liferay.portlet.social.service.persistence.SocialEquityGroupSettingPersistenceTest;
-import com.liferay.portlet.social.service.persistence.SocialEquityHistoryPersistenceTest;
-import com.liferay.portlet.social.service.persistence.SocialEquityLogPersistenceTest;
-import com.liferay.portlet.social.service.persistence.SocialEquitySettingPersistenceTest;
-import com.liferay.portlet.social.service.persistence.SocialEquityUserPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialRelationPersistenceTest;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistenceTest;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCFrameworkVersionPersistenceTest;
@@ -274,12 +268,6 @@ public class PersistenceTestSuite extends TestSuite {
 		testSuite.addTestSuite(SocialActivityLimitPersistenceTest.class);
 		testSuite.addTestSuite(SocialActivityPersistenceTest.class);
 		testSuite.addTestSuite(SocialActivitySettingPersistenceTest.class);
-		testSuite.addTestSuite(SocialEquityAssetEntryPersistenceTest.class);
-		testSuite.addTestSuite(SocialEquityGroupSettingPersistenceTest.class);
-		testSuite.addTestSuite(SocialEquityHistoryPersistenceTest.class);
-		testSuite.addTestSuite(SocialEquityLogPersistenceTest.class);
-		testSuite.addTestSuite(SocialEquitySettingPersistenceTest.class);
-		testSuite.addTestSuite(SocialEquityUserPersistenceTest.class);
 		testSuite.addTestSuite(SocialRelationPersistenceTest.class);
 		testSuite.addTestSuite(SocialRequestPersistenceTest.class);
 

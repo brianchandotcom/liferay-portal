@@ -25,7 +25,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.social.model.SocialEquityActionMapping;
 
 import java.io.InputStream;
 
@@ -249,23 +248,6 @@ public class ResourceActionsUtil {
 
 		return getResourceActions().getRoles(
 			companyId, group, modelResource, roleTypes);
-	}
-
-	public static SocialEquityActionMapping getSocialEquityActionMapping(
-		String name, String actionId) {
-
-		return getResourceActions().getSocialEquityActionMapping(
-			name, actionId);
-	}
-
-	public static List<SocialEquityActionMapping> getSocialEquityActionMappings(
-		String name) {
-
-		return getResourceActions().getSocialEquityActionMappings(name);
-	}
-
-	public static String[] getSocialEquityClassNames() {
-		return getResourceActions().getSocialEquityClassNames();
 	}
 
 	public static boolean hasModelResourceActions(String name) {

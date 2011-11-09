@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
@@ -250,10 +249,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		socialEquityLogLocalService.addEquityLogs(
-			userId, WikiPage.class.getName(), page.getResourcePrimKey(),
-			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
-
 		DLStoreUtil.addFile(
 			companyId, repositoryId, dirName + "/" + fileName, file);
 	}
@@ -282,10 +277,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		catch (DuplicateDirectoryException dde) {
 		}
-
-		socialEquityLogLocalService.addEquityLogs(
-			userId, WikiPage.class.getName(), page.getResourcePrimKey(),
-			ActionKeys.ADD_ATTACHMENT, dirName + "/" + fileName);
 
 		DLStoreUtil.addFile(
 			companyId, repositoryId, dirName + "/" + fileName, inputStream);
@@ -557,10 +548,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		WikiPage page = getPage(nodeId, title);
-
-		socialEquityLogLocalService.deactivateEquityLogs(
-			WikiPage.class.getName(), page.getResourcePrimKey(),
-			ActionKeys.ADD_ATTACHMENT, fileName.substring(1));
 
 		long companyId = page.getCompanyId();
 		long repositoryId = CompanyConstants.SYSTEM;
@@ -1413,20 +1400,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			// Social
 
 			int activity = WikiActivityKeys.ADD_PAGE;
-			String actionId = ActionKeys.ADD_PAGE;
 
 			if (page.getVersion() > 1.1) {
 				activity = WikiActivityKeys.UPDATE_PAGE;
-				actionId = ActionKeys.UPDATE;
 			}
 
 			socialActivityLocalService.addActivity(
 				userId, page.getGroupId(), WikiPage.class.getName(),
 				page.getResourcePrimKey(), activity, StringPool.BLANK, 0);
-
-			socialEquityLogLocalService.addEquityLogs(
-				userId, WikiPage.class.getName(), page.getResourcePrimKey(),
-				actionId, StringPool.BLANK);
 
 			// Subscriptions
 

@@ -1687,6 +1687,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-organization-blogs" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="StagingOrganizationBlogsTestSuite" />
 		</antcall>
 

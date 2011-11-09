@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LogoutTest extends BaseTestCase {
-	public void testLogout() throws Exception {
+public class OU_LogoutTest extends BaseTestCase {
+	public void testOU_Logout() throws Exception {
 		for (int second = 0;; second++) {
 			if (second >= 90) {
 				fail("timeout");

@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddOrganizationTest extends BaseTestCase {
-	public void testAddOrganization() throws Exception {
+public class DeactivateStagingOrganizationSiteTest extends BaseTestCase {
+	public void testDeactivateStagingOrganizationSite()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -43,10 +44,16 @@ public class AddOrganizationTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Selenium"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -55,7 +62,7 @@ public class AddOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -65,19 +72,16 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Regular Organization"),
+		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+			RuntimeVariables.replace("Edit Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("Selenium"));
-		selenium.select("//select[@id='_125_type']",
-			RuntimeVariables.replace("label=Regular Organization"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",
+				"Staging"));
+		selenium.clickAt("//a[@id='_165_stagingLink']",
+			RuntimeVariables.replace("Staging"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -85,7 +89,7 @@ public class AddOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (selenium.isVisible("//input[@id='_165_none']")) {
 					break;
 				}
 			}
@@ -95,17 +99,13 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.clickAt("//input[@id='_165_none']",
+			RuntimeVariables.replace("None"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
+				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=View All", RuntimeVariables.replace("View All"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Selenium"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Selenium"),
-			selenium.getText("//a[2]/strong"));
 	}
 }

@@ -15,46 +15,15 @@
 package com.liferay.portalweb.stagingorganization.blogs;
 
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LogoutTest extends BaseTestCase {
-	public void testLogout() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click(RuntimeVariables.replace("link=Sign Out"));
-		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
+public class Guest_AssertNoPagePrePublishOrganizationSiteTest
+	extends BaseTestCase {
+	public void testGuest_AssertNoPagePrePublishOrganizationSite()
+		throws Exception {
+		selenium.open("/web/selenium/home/");
+		assertFalse(selenium.isElementPresent("link=Blogs Test Page"));
 	}
 }

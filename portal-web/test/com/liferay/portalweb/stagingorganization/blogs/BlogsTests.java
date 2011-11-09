@@ -27,50 +27,58 @@ public class BlogsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddRoleContentAdministratorTest.class);
-		testSuite.addTestSuite(AddRoleContentCreatorTest.class);
-		testSuite.addTestSuite(AddRoleContentPublisherTest.class);
-		testSuite.addTestSuite(DefinePermissionsRoleCAOrganizationTest.class);
-		testSuite.addTestSuite(DefinePermissionsRoleCCBlogsTest.class);
-		testSuite.addTestSuite(DefinePermissionsRoleCCOrganizationTest.class);
-		testSuite.addTestSuite(DefinePermissionsRoleCPOrganizationTest.class);
-		testSuite.addTestSuite(AddUserContentAdministratorTest.class);
-		testSuite.addTestSuite(AddUserContentCreatorTest.class);
-		testSuite.addTestSuite(AddUserContentPublisherTest.class);
+		testSuite.addTestSuite(
+			DefinePermissionsBlogsManagePagesOrganizationUserTest.class);
 		testSuite.addTestSuite(AddOrganizationTest.class);
-		testSuite.addTestSuite(AssignMembersTest.class);
-		testSuite.addTestSuite(LoginUsersTest.class);
+		testSuite.addTestSuite(AddOrganizationSiteTest.class);
+		testSuite.addTestSuite(AddUserOrganizationUserTest.class);
+		testSuite.addTestSuite(AddUserOrganizationContentReviewerTest.class);
+		testSuite.addTestSuite(AddUserOrganizationAdministratorTest.class);
+		testSuite.addTestSuite(ActivateStagingOrganizationSiteTest.class);
+		testSuite.addTestSuite(
+			ConfigureBlogsEntrySingleApproverOrganizationSiteTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(OU_LoginTest.class);
+		testSuite.addTestSuite(OU_AddStagedPageOrganizationSiteTest.class);
+		testSuite.addTestSuite(OU_AddStagedPortletOrganizationSiteTest.class);
+		testSuite.addTestSuite(OU_LogoutTest.class);
+		testSuite.addTestSuite(
+			Guest_AssertNoPagePrePublishOrganizationSiteTest.class);
+		testSuite.addTestSuite(OA_LoginTest.class);
+		testSuite.addTestSuite(
+			OA_PublishToLiveStagedPageOrganizationSiteTest.class);
+		testSuite.addTestSuite(OA_LogoutTest.class);
+		testSuite.addTestSuite(
+			Guest_AssertPagePresentOrganizationSiteTest.class);
+		testSuite.addTestSuite(OU_LoginTest.class);
+		testSuite.addTestSuite(
+			OU_AddStagedBlogsEntryOrganizationSiteTest.class);
+		testSuite.addTestSuite(OU_LogoutTest.class);
+		testSuite.addTestSuite(
+			Guest_AssertNoBlogsEntryPreApprovalOrganizationSiteTest.class);
+		testSuite.addTestSuite(OCR_LoginTest.class);
+		testSuite.addTestSuite(
+			OCR_AssignToMeStagedBlogsEntryOrganizationSiteActionsTest.class);
+		testSuite.addTestSuite(
+			OCR_ApproveStagedBlogsEntryOrganizationSiteActionsTest.class);
+		testSuite.addTestSuite(OCR_LogoutTest.class);
+		testSuite.addTestSuite(
+			Guest_AssertNoBlogsEntryPrePublishOrganizationSiteTest.class);
+		testSuite.addTestSuite(OA_LoginTest.class);
+		testSuite.addTestSuite(
+			OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest.class);
+		testSuite.addTestSuite(OA_LogoutTest.class);
+		testSuite.addTestSuite(
+			Guest_AssertBlogsEntryOrganizationSiteTest.class);
 		testSuite.addTestSuite(LoginTest.class);
-		testSuite.addTestSuite(AddPageBlogsTest.class);
-		testSuite.addTestSuite(ActivateStagingOrganizationTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(CC_LoginTest.class);
-		testSuite.addTestSuite(CC_AddStagedPortletTest.class);
-		testSuite.addTestSuite(CC_LogoutTest.class);
-		testSuite.addTestSuite(Guest_AssertNoPortletPreApprovalTest.class);
-		testSuite.addTestSuite(CP_LoginTest.class);
-		testSuite.addTestSuite(CP_LogoutTest.class);
-		testSuite.addTestSuite(CA_LoginTest.class);
-		testSuite.addTestSuite(CA_LogoutTest.class);
-		testSuite.addTestSuite(Guest_AssertNoPortletPrePublishTest.class);
-		testSuite.addTestSuite(CP_LoginTest.class);
-		testSuite.addTestSuite(CP_LogoutTest.class);
-		testSuite.addTestSuite(Guest_AssertPortletPresentTest.class);
-		testSuite.addTestSuite(CC_LoginTest.class);
-		testSuite.addTestSuite(CC_AddStagedContentTest.class);
-		testSuite.addTestSuite(CC_LogoutTest.class);
-		testSuite.addTestSuite(Guest_AssertNoContentPreApprovalTest.class);
-		testSuite.addTestSuite(CA_LoginTest.class);
-		testSuite.addTestSuite(CA_LogoutTest.class);
-		testSuite.addTestSuite(Guest_AssertNoContentPrePublishTest.class);
-		testSuite.addTestSuite(CP_LoginTest.class);
-		testSuite.addTestSuite(CP_LogoutTest.class);
-		testSuite.addTestSuite(Guest_AssertContentPresentTest.class);
-		testSuite.addTestSuite(LoginTest.class);
-		testSuite.addTestSuite(TearDownOrganizationTest.class);
-		testSuite.addTestSuite(TearDownRoleTest.class);
+		testSuite.addTestSuite(DeactivateStagingOrganizationSiteTest.class);
+		testSuite.addTestSuite(
+			TearDownWorkflowConfigurationOrganizationSiteTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryOrganizationSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownPermissionsTest.class);
+		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

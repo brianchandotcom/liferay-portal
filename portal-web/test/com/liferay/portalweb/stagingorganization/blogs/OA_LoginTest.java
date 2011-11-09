@@ -20,34 +20,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LoginTest extends BaseTestCase {
-	public void testLogin() throws Exception {
+public class OA_LoginTest extends BaseTestCase {
+	public void testOA_Login() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/web/guest/home");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Sign In")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Sign In",
-					RuntimeVariables.replace("Sign In"));
-				selenium.waitForPageToLoad("30000");
+				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -66,7 +46,8 @@ public class LoginTest extends BaseTestCase {
 				}
 
 				selenium.type("//input[@id='_58_login']",
-					RuntimeVariables.replace("test@liferay.com"));
+					RuntimeVariables.replace(
+						"organizationadministrator@selenium.com"));
 				selenium.type("//input[@id='_58_password']",
 					RuntimeVariables.replace("test"));
 

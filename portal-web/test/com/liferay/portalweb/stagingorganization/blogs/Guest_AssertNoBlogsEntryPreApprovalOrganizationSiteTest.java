@@ -20,15 +20,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LogoutTest extends BaseTestCase {
-	public void testLogout() throws Exception {
+public class Guest_AssertNoBlogsEntryPreApprovalOrganizationSiteTest
+	extends BaseTestCase {
+	public void testGuest_AssertNoBlogsEntryPreApprovalOrganizationSite()
+		throws Exception {
+		selenium.open("/web/selenium/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
+				if (selenium.isVisible("link=Blogs Test Page")) {
 					break;
 				}
 			}
@@ -38,23 +42,12 @@ public class LogoutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("link=Sign Out"));
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
+		assertTrue(selenium.isVisible("//section"));
+		assertFalse(selenium.isTextPresent("Pending Approval"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}
 }

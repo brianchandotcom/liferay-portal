@@ -36,6 +36,10 @@ public interface DLProcessor {
 
 	public void cleanUp(FileVersion fileVersion);
 
+	public boolean isSupported(FileVersion fileVersion);
+
+	public boolean isSupported(String mimeType);
+
 	/**
 	 * Launches the processor's work with respect to the given file version.
 	 *

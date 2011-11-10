@@ -102,11 +102,15 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
 				dlProcessorClassName);
 
-			dlProcessor.trigger(latestFileVersion);
+			if (dlProcessor.isSupported(latestFileVersion)) {
+				dlProcessor.trigger(latestFileVersion);
+			}
 		}
 
 		for (DLProcessor dlProcessor : _dlProcessors) {
-			dlProcessor.trigger(latestFileVersion);
+			if (dlProcessor.isSupported(latestFileVersion)) {
+				dlProcessor.trigger(latestFileVersion);
+			}
 		}
 	}
 

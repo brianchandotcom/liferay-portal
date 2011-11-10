@@ -54,9 +54,11 @@ import java.util.Map;
  */
 public class RawMetadataProcessor implements DLProcessor {
 
+	@Override
 	public void cleanUp(FileEntry fileEntry) {
 	}
 
+	@Override
 	public void cleanUp(FileVersion fileVersion) {
 	}
 
@@ -79,6 +81,16 @@ public class RawMetadataProcessor implements DLProcessor {
 		if (fileEntryMetadataCount == 0) {
 			_instance.trigger(fileVersion);
 		}
+	}
+
+	@Override
+	public boolean isSupported(FileVersion fileVersion) {
+		return true;
+	}
+
+	@Override
+	public boolean isSupported(String mimeType) {
+		return true;
 	}
 
 	/**

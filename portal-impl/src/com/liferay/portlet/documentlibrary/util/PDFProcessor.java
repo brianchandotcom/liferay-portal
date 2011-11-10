@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -42,7 +44,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -142,7 +146,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		try {
 			hasImages = _instance._hasImages(fileVersion);
 
-			if (!hasImages) {
+			if (!hasImages && _instance.isSupported(fileVersion)) {
 				_instance._queueGeneration(fileVersion);
 			}
 		}
@@ -197,6 +201,31 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		catch (Exception e) {
 			_log.warn(e, e);
 		}
+	}
+
+	@Override
+	public boolean isSupported(String mimeType) {
+		if (mimeType.equals(ContentTypes.APPLICATION_PDF) ||
+			mimeType.equals(ContentTypes.APPLICATION_X_PDF)) {
+
+			return true;
+		}
+		else if (DocumentConversionUtil.isEnabled()) {
+			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+			for (String extension : extensions) {
+				extension = extension.substring(1);
+				
+				String[] targetExtensions =
+					DocumentConversionUtil.getConversions(extension);
+
+				if (Arrays.binarySearch(targetExtensions, "pdf") >= 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public void trigger(FileVersion fileVersion) {

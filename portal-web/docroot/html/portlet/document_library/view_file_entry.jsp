@@ -283,9 +283,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<div>
 
 						<%
-						boolean supportedAudio = AudioProcessor.isSupportedAudio(fileVersion.getMimeType());
-						boolean supportedVideo = VideoProcessor.isSupportedVideo(fileVersion.getMimeType());
-
 						int previewFileCount = 0;
 						String previewFileURL = null;
 						String videoThumbnailURL = null;
@@ -317,8 +314,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 						}
 
-						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(supportedAudio));
-						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(supportedVideo));
+						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
+						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
 
 						request.setAttribute("view_file_entry.jsp-previewFileURL", previewFileURL);
 						request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
@@ -332,7 +329,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test ="<%= !hasImages && !supportedAudio && !supportedVideo %>">
+									<c:when test ="<%= !hasImages && !hasAudio && !hasVideo %>">
 										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
@@ -377,7 +374,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 											</div>
 										</div>
 									</c:when>
-									<c:when test="<%= supportedAudio || supportedVideo %>">
+									<c:when test="<%= hasAudio || hasVideo %>">
 										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
 										</div>

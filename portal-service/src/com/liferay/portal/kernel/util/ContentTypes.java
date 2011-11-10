@@ -28,6 +28,8 @@ public interface ContentTypes {
 	public static final String APPLICATION_OCTET_STREAM =
 		"application/octet-stream";
 
+	public static final String APPLICATION_PDF = "application/pdf";
+
 	public static final String APPLICATION_TEXT = "application/text";
 
 	public static final String APPLICATION_VND_MS_EXCEL =
@@ -38,6 +40,8 @@ public interface ContentTypes {
 
 	public static final String APPLICATION_X_JAVA_SERIALIZED_OBJECT =
 		"application/x-java-serialized-object";
+
+	public static final String APPLICATION_X_PDF = "application/x-pdf";
 
 	public static final String APPLICATION_X_WWW_FORM_URLENCODED =
 		"application/x-www-form-urlencoded";

@@ -54,6 +54,10 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		return _audioMimeTypes;
 	}
 
+	public static DLProcessor getInstance() {
+		return _instance;
+	}
+
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
@@ -72,7 +76,7 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		try {
 			hasAudio = _instance._hasAudio(fileVersion);
 
-			if (!hasAudio) {
+			if (!hasAudio && _instance.isSupported(fileVersion)) {
 				_instance._queueGeneration(fileVersion);
 			}
 		}
@@ -83,12 +87,13 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		return hasAudio;
 	}
 
-	public static boolean isSupportedAudio(String mimeType) {
-		return _instance._isSupportedAudio(mimeType);
-	}
-
 	public AudioProcessor() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+	}
+
+	@Override
+	public boolean isSupported(String mimeType) {
+		return _audioMimeTypes.contains(mimeType);
 	}
 
 	public void trigger(FileVersion fileVersion) {
@@ -210,7 +215,7 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	}
 
 	private boolean _hasAudio(FileVersion fileVersion) throws Exception {
-		if (!_isSupportedAudio(fileVersion)) {
+		if (!isSupported(fileVersion)) {
 			return false;
 		}
 
@@ -241,21 +246,9 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		}
 	}
 
-	private boolean _isSupportedAudio(FileVersion fileVersion) {
-		if (fileVersion == null) {
-			return false;
-		}
-
-		return _isSupportedAudio(fileVersion.getMimeType());
-	}
-
-	private boolean _isSupportedAudio(String mimeType) {
-		return _audioMimeTypes.contains(mimeType);
-	}
-
 	private void _queueGeneration(FileVersion fileVersion) {
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
-			!_isSupportedAudio(fileVersion)) {
+			!isSupported(fileVersion)) {
 
 			return;
 		}

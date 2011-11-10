@@ -144,8 +144,8 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 	protected boolean isSupported(String mimeType) throws SystemException {
 		if (PrefsPropsUtil.getBoolean(
 				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) &&
-			(AudioProcessor.isSupportedAudio(mimeType) ||
-			 VideoProcessor.isSupportedVideo(mimeType))) {
+			(AudioProcessor.getInstance().isSupported(mimeType) ||
+			 VideoProcessor.getInstance().isSupported(mimeType))) {
 
 			return true;
 		}

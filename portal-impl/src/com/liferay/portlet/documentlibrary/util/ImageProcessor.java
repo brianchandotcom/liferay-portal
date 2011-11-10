@@ -125,7 +125,7 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		try {
 			hasImages = _instance._hasImages(fileVersion);
 
-			if (!hasImages) {
+			if (!hasImages && _instance.isSupported(fileVersion)) {
 				_instance._queueGeneration(fileVersion);
 			}
 		}
@@ -149,6 +149,11 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		_instance._storeThumbnail(
 			companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
 			custom2ImageId, is, type);
+	}
+
+	@Override
+	public boolean isSupported(String mimeType) {
+		return _imageMimeTypes.contains(mimeType);
 	}
 
 	public void trigger(FileVersion fileVersion) {
@@ -340,17 +345,9 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		return false;
 	}
 
-	private boolean _isSupportedImage(FileVersion fileVersion) {
-		if (fileVersion == null) {
-			return false;
-		}
-
-		return _imageMimeTypes.contains(fileVersion.getMimeType());
-	}
-
 	private void _queueGeneration(FileVersion fileVersion) {
 		if (!_fileVersionIds.contains(fileVersion.getFileVersionId()) &&
-			_isSupportedImage(fileVersion) && !_hasImages(fileVersion)) {
+			isSupported(fileVersion) && !_hasImages(fileVersion)) {
 			_fileVersionIds.add(fileVersion.getFileVersionId());
 
 			MessageBusUtil.sendMessage(

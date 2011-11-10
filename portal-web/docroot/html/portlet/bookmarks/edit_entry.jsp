@@ -152,10 +152,10 @@ long folderId = BeanParamUtil.getLong(entry, request, "folderId");
 
 	function <portlet:namespace />selectFolder(folderId, folderName) {
 		var folderData = {
-			nameString: 'folderName',
-			nameValue: folderName,
 			idString: 'folderId',
-			idValue: folderId
+			idValue: folderId,
+			nameString: 'folderName',
+			nameValue: folderName
 		};
 
 		Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/bookmarks/view" /></portlet:renderURL>', '<portlet:namespace />');

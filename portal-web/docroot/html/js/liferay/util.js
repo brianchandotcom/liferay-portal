@@ -1186,14 +1186,14 @@
 		Util,
 		'removeFolderSelection',
 		function(folderIdString, folderNameString, namespace) {
-			A.one('#' + namespace + folderIdString).val(0);
+			A.byIdNS(namespace, folderIdString).val(0);
 
-			var nameEl = A.one('#' + namespace + folderNameString);
+			var nameEl = A.byIdNS(namespace, folderNameString);
 
 			nameEl.attr('href', '');
 			nameEl.empty();
 
-			var button = A.one('#' + namespace + 'removeFolderButton');
+			var button = A.byIdNS(namespace, 'removeFolderButton');
 
 			if (button) {
 				button.attr('disabled', true);
@@ -1400,14 +1400,16 @@
 		Util,
 		'selectFolder',
 		function(folderData, folderHref, namespace) {
-			A.one('#' + namespace + folderData['idString']).val(folderData['idValue']);
+			A.byIdNS(namespace, folderData['idString']).val(folderData['idValue']);
 
-			var nameEl = A.one('#' + namespace + folderData['nameString']);
+			var nameEl = A.byIdNS(namespace, folderData['nameString']);
 
-			nameEl.attr('href', folderHref + '&' + namespace + 'folderId=' + folderData['idValue']);
+			Liferay.Util.addParams(namespace + 'folderId=' + folderData['idValue'], folderHref);
+
+			nameEl.attr('href', folderHref);
 			nameEl.setContent(folderData['nameValue'] + '&nbsp;');
 
-			var button = A.one('#' + namespace + 'removeFolderButton');
+			var button = A.byIdNS(namespace, 'removeFolderButton');
 
 			if (button) {
 				button.set('disabled', false);

@@ -187,11 +187,14 @@ public abstract class BasePropMethodImpl implements Method {
 			if (lock != null) {
 				long now = System.currentTimeMillis();
 
-				long timeRemaining =
-					(lock.getExpirationDate().getTime() - now) / Time.SECOND;
+				long timeRemaining = 0;
 
-				if (timeRemaining <= 0) {
-					timeRemaining = 1;
+				if (lock.getExpirationDate() != null) {
+					timeRemaining = (lock.getExpirationDate().getTime() - now) / Time.SECOND;
+
+					if (timeRemaining <= 0) {
+						timeRemaining = 1;
+					}
 				}
 
 				Element lockDiscoveryElement = DocUtil.add(
@@ -217,9 +220,16 @@ public abstract class BasePropMethodImpl implements Method {
 
 				DocUtil.add(
 					activeLockElement, createQName("owner"), lock.getOwner());
-				DocUtil.add(
-					activeLockElement, createQName("timeout"),
-					"Second-" + timeRemaining);
+
+				if (timeRemaining > 0) {
+					DocUtil.add(
+						activeLockElement, createQName("timeout"),
+						"Second-" + timeRemaining);
+				}
+				else {
+					DocUtil.add(
+						activeLockElement, createQName("timeout"), "Infinite");
+				}
 
 				if (webDavRequest.getUserId() == lock.getUserId()) {
 					Element lockTokenElement = DocUtil.add(

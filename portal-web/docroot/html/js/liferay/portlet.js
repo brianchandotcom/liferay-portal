@@ -541,7 +541,7 @@
 
 						delete params.dataType;
 
-					    url = urlPieces[0];
+						url = urlPieces[0];
 					}
 
 					instance.addHTML(

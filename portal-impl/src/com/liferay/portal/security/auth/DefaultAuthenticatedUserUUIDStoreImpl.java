@@ -14,7 +14,8 @@
 
 package com.liferay.portal.security.auth;
 
-import java.util.HashSet;
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+
 import java.util.Set;
 
 /**
@@ -35,6 +36,6 @@ public class DefaultAuthenticatedUserUUIDStoreImpl
 		return _userUUIDStore.remove(userUUID);
 	}
 
-	private Set<String> _userUUIDStore = new HashSet<String>();
+	private Set<String> _userUUIDStore = new ConcurrentHashSet<String>();
 
 }

@@ -161,7 +161,7 @@ if (total == 0) {
 	}
 %>
 
-	<p>
+	<div class="portlet-msg-info">
 		<c:choose>
 			<c:when test="<%= !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 				<liferay-ui:message key="there-are-no-results" />
@@ -170,7 +170,7 @@ if (total == 0) {
 				<liferay-ui:message key="there-are-no-related-assets" />
 			</c:otherwise>
 		</c:choose>
-	</p>
+	</div>
 
 <%
 }

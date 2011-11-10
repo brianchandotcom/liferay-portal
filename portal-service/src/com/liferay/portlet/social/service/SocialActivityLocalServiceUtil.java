@@ -415,6 +415,19 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
+	* Removes stored activities for the asset identified by the class name and
+	* class primary key.
+	*
+	* @param className the target asset's class name
+	* @param classPK the primary key of the target asset
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteActivities(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActivities(className, classPK);
+	}
+
+	/**
 	* Removes the stored activity from the database.
 	*
 	* @param activityId the primary key of the stored activity

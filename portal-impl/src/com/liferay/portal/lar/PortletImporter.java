@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -64,6 +66,7 @@ import com.liferay.portal.service.persistence.PortletPreferencesUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.NoSuchCategoryException;
@@ -458,6 +461,15 @@ public class PortletImporter {
 			_permissionImporter.importPortletPermissions(
 				layoutCache, layout.getCompanyId(), groupId, userId, layout,
 				portletElement, portletId, importUserPermissions);
+
+			if ((userId > 0) &&
+				((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
+				 (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6))) {
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+
+				indexer.reindex(userId);
+			}
 		}
 
 		// Asset links

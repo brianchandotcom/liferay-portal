@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -580,6 +582,17 @@ public class LayoutImporter {
 				null, portletElement, importPortletSetup,
 				importPortletArchivedSetups, importPortletUserPreferences,
 				false);
+		}
+
+		if (importPermissions) {
+			if ((userId > 0) &&
+				((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
+				 (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6))) {
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+
+				indexer.reindex(userId);
+			}
 		}
 
 		// Asset links

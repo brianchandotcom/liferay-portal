@@ -18,8 +18,6 @@ import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -224,15 +222,6 @@ public class PermissionImporter {
 					layoutCache, companyId, groupId, guestGroup, layout,
 					resourceName, resourcePrimKey, permissionsElement,
 					importUserPermissions);
-			}
-
-			if ((userId > 0) &&
-				((PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) ||
-				 (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6))) {
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
-
-				indexer.reindex(userId);
 			}
 		}
 

@@ -973,6 +973,16 @@ var defaultTypes = []]>
 			nowarn="on"
 			srcdir="${jspc.classes.dir}"
 		/>
+
+		<java
+			classname="com.liferay.portal.tools.jspc.common.BatchTimestampFixer"
+			classpathref="jspc.classpath"
+			fork="true"
+			newenvironment="true"
+			jvm="${jspc.java.home}/bin/java"
+		>
+			<arg line="${jspc.classes.dir}" />
+		</java>
 	</target>
 
 	<target name="compile-jonas">
@@ -1098,7 +1108,7 @@ Please set the property "jdk.6.home" in build.properties.
 					<then>
 						<antcall target="compile-jonas" />
 
-						<copy todir="${app.server.dir}/work/jonas/localhost/_">
+						<copy todir="${app.server.dir}/work/jonas/localhost/_" preservelastmodified="true">
 							<fileset dir="classes/${app.server.type}">
 								<exclude name="**/*.jspc_error" />
 								<exclude name="**/*.java" />
@@ -1110,7 +1120,7 @@ Please set the property "jdk.6.home" in build.properties.
 						<then>
 							<antcall target="compile-resin" />
 
-							<copy todir="${app.server.portal.dir}/WEB-INF/work">
+							<copy todir="${app.server.portal.dir}/WEB-INF/work" preservelastmodified="true">
 								<fileset dir="classes/${app.server.type}">
 									<exclude name="**/*.jspc_error" />
 									<exclude name="**/*.java" />
@@ -1123,7 +1133,7 @@ Please set the property "jdk.6.home" in build.properties.
 						<then>
 							<antcall target="compile-tomcat" />
 
-							<copy todir="${app.server.dir}/work/Catalina/localhost/_">
+							<copy todir="${app.server.dir}/work/Catalina/localhost/_" preservelastmodified="true">
 								<fileset dir="classes/${app.server.type}">
 									<exclude name="**/*.jspc_error" />
 									<exclude name="**/*.java" />

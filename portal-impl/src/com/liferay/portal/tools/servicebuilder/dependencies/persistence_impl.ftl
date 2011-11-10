@@ -3589,8 +3589,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			this.rebuildTreeEnabled = rebuildTreeEnabled;
 		}
 
-		protected String buildSqlInClause(List<Long> ${entity.varNames}Ids){
-			if  (${entity.varNames}Ids.size() == 0){
+		protected String buildSqlInClause(List<Long> ${entity.varNames}Ids) {
+			if (${entity.varNames}Ids.size() == 0) {
 				return StringPool.BLANK;
 			}
 			

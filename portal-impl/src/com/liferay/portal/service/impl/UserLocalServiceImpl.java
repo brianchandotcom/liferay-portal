@@ -3309,6 +3309,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			User user, String emailAddress, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (user.getEmailAddress().equalsIgnoreCase(emailAddress) &&
+			user.getEmailAddressVerified()) {
+
+			return;
+		}
+
 		Ticket ticket = ticketLocalService.addTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_EMAIL_ADDRESS, emailAddress, null,

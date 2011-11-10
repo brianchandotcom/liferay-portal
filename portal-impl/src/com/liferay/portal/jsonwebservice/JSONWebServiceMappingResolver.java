@@ -123,7 +123,7 @@ public class JSONWebServiceMappingResolver {
 	}
 
 	private static final String[] _GET_PREFIXES = new String[] {
-		"get", "is",
+		"get", "has", "is",
 	};
 
 }

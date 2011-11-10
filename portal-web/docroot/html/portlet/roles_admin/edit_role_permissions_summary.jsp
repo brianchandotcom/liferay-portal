@@ -42,19 +42,19 @@ headerNames.add(StringPool.BLANK);
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, permissionsSummaryURL, headerNames, "this-role-does-not-have-any-permissions");
 
+int[] scopes = new int[0];
+
+if (role.getType() == RoleConstants.TYPE_REGULAR) {
+	scopes = new int[] {ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP};
+}
+else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) || (role.getType() == RoleConstants.TYPE_PROVIDER) || (role.getType() == RoleConstants.TYPE_SITE)) {
+	scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
+}
+
 List<Permission> permissions = null;
 
 if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 	permissions = new ArrayList<Permission>();
-
-	int[] scopes = new int[0];
-
-	if (role.getType() == RoleConstants.TYPE_REGULAR) {
-		scopes = new int[] {ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP};
-	}
-	else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) || (role.getType() == RoleConstants.TYPE_PROVIDER) || (role.getType() == RoleConstants.TYPE_SITE)) {
-		scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
-	}
 
 	List<ResourcePermission> resourcePermissions = ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(role.getRoleId(), scopes, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -105,7 +105,7 @@ if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 	}
 }
 else {
-	permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId());
+	permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), scopes);
 }
 
 List<PermissionDisplay> permissionsDisplay = new ArrayList<PermissionDisplay>(permissions.size());
@@ -122,19 +122,9 @@ for (int i = 0; i < permissions.size(); i++) {
 		resource.setName(permission.getName());
 		resource.setScope(permission.getScope());
 		resource.setPrimKey(permission.getPrimKey());
-
-		if (permission.getScope() == ResourceConstants.SCOPE_INDIVIDUAL) {
-			continue;
-		}
 	}
 	else {
 		resource = ResourceLocalServiceUtil.getResource(permission.getResourceId());
-
-		ResourceCode resourceCode = ResourceCodeLocalServiceUtil.getResourceCode(resource.getCodeId());
-
-		if (resourceCode.getScope() == ResourceConstants.SCOPE_INDIVIDUAL) {
-			continue;
-		}
 	}
 
 	String curPortletName = null;

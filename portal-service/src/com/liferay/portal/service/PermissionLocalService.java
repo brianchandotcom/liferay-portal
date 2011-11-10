@@ -432,6 +432,11 @@ public interface PermissionLocalService extends PersistedModelLocalService {
 		long roleId, long resourceId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Permission> getRolePermissions(
+		long roleId, int[] scopes)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns all the user's permissions.
 	*

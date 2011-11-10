@@ -108,6 +108,12 @@ public class PermissionFinderUtil {
 		return getFinder().findByR_R(roleId, resourceId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Permission> findByR_S(
+		long roleId, int[] scopes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByR_S(roleId, scopes);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Permission> findByU_R(
 		long userId, long resourceId)
 		throws com.liferay.portal.kernel.exception.SystemException {

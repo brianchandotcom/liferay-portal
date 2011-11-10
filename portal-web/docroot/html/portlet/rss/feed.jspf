@@ -18,7 +18,7 @@
 SyndFeed feed = null;
 
 try {
-	ObjectValuePair ovp = RSSUtil.getFeed(url);
+	ObjectValuePair ovp = RSSUtil.getFeed(HtmlUtil.escape(url));
 
 	feed = (SyndFeed)ovp.getValue();
 

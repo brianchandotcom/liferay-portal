@@ -1056,7 +1056,7 @@ if (themeDisplay.isStatePopUp()) {
 	if ((doCloseRedirect = (String)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doCloseRedirect")) != null) {
 %>
 
-		<aui:script use="aui-base,aui-loading-mask">
+		<aui:script use="aui-base">
 			var dialog = Liferay.Util.getWindow();
 
 			dialog.on(
@@ -1067,11 +1067,16 @@ if (themeDisplay.isStatePopUp()) {
 
 						var topA = refreshWindow.AUI();
 
-						new topA.LoadingMask(
-							{
-								target: topA.getBody()
+						topA.use(
+							'aui-loading-mask',
+							function(A) {
+								new A.LoadingMask(
+									{
+										target: A.getBody()
+									}
+								).show();
 							}
-						).show();
+						);
 
 						refreshWindow.location.href = '<%= doCloseRedirect %>';
 					}

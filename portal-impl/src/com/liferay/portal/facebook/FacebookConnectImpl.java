@@ -16,10 +16,12 @@ package com.liferay.portal.facebook;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
+import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -29,6 +31,8 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
+import java.io.IOException;
+
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +40,59 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Wilson Man
+ * @author Mika Koivisto
  */
 public class FacebookConnectImpl implements FacebookConnect {
+
+	public String getAccessToken(long companyId, String redirect, String code)
+		throws SystemException {
+
+		String url = HttpUtil.addParameter(
+			getAccessTokenURL(companyId), "client_id", getAppId(companyId));
+
+		url = HttpUtil.addParameter(url, "redirect_uri",
+			FacebookConnectUtil.getRedirectURL(companyId));
+
+		String facebookConnectRedirectURL = getRedirectURL(companyId);
+
+		facebookConnectRedirectURL = HttpUtil.addParameter(
+			facebookConnectRedirectURL, "redirect", redirect);
+
+		url = HttpUtil.addParameter(
+			url, "redirect_uri", facebookConnectRedirectURL);
+		url = HttpUtil.addParameter(
+			url, "client_secret", getAppSecret(companyId));
+		url = HttpUtil.addParameter(url, "code", code);
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation(url);
+		options.setPost(true);
+
+		try {
+			String content = HttpUtil.URLtoString(options);
+
+			if (Validator.isNotNull(content)) {
+				int x = content.indexOf("access_token=");
+
+				if (x >= 0) {
+					int y = content.indexOf(CharPool.AMPERSAND, x);
+
+					if (y < x) {
+						y = content.length();
+					}
+
+					return content.substring(x + 13, y);
+				}
+			}
+		}
+		catch (IOException e) {
+			throw new SystemException(
+				"Unable to retrieve Facebook access token", e);
+		}
+
+		return null;
+	}
 
 	public String getAccessTokenURL(long companyId) throws SystemException {
 		return PrefsPropsUtil.getString(
@@ -68,7 +123,8 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 		try {
 			String url = HttpUtil.addParameter(
-				getGraphURL(companyId) + path, "access_token", accessToken);
+				getGraphURL(companyId).concat(path), "access_token",
+				accessToken);
 
 			if (Validator.isNotNull(fields)) {
 				url = HttpUtil.addParameter(url, "fields", fields);

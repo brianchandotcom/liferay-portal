@@ -4658,6 +4658,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
+		user.setFacebookId(facebookId);
 		user.setOpenId(openId);
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);

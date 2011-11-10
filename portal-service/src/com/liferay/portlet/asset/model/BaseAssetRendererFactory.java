@@ -100,6 +100,10 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return _PERMISSION;
 	}
 
+	public boolean isCategorizable() {
+		return true;
+	}
+
 	public boolean isLinkable() {
 		return _LINKABLE;
 	}

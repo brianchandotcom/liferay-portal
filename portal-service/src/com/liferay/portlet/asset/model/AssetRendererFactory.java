@@ -74,6 +74,8 @@ public interface AssetRendererFactory {
 			String actionId)
 		throws Exception;
 
+	public boolean isCategorizable();
+
 	public boolean isLinkable();
 
 	public boolean isSelectable();

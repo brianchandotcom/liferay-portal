@@ -64,6 +64,10 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, category, actionId);
 	}
 
+	public boolean isCategorizable() {
+		return false;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";

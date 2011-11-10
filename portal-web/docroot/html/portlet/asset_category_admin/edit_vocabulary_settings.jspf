@@ -17,7 +17,13 @@
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds();
+List<Long> availableClassNameIds = new ArrayList<Long>();
+
+for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
+	if (assetRendererFactory.isCategorizable()) {
+		availableClassNameIds.add(assetRendererFactory.getClassNameId());
+	}
+}
 
 boolean required = false;
 
@@ -96,8 +102,8 @@ if ((requiredClassNameIds == null) || (requiredClassNameIds.length == 0)) {
 							<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 							<%
-							for (int i = 0; i < availableClassNameIds.length; i++) {
-								long availableClassNameId = availableClassNameIds[i];
+							for (int i = 0; i < availableClassNameIds.size(); i++) {
+								long availableClassNameId = availableClassNameIds.get(i);
 
 								boolean selected = false;
 

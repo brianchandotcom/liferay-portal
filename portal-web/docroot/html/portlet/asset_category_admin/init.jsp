@@ -20,6 +20,7 @@
 page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategoryProperty" %><%@
+page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryPropertyServiceUtil" %><%@

@@ -61,6 +61,10 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, classPK, actionId);
 	}
 
+	public boolean isCategorizable() {
+		return false;
+	}
+
 	@Override
 	public boolean isLinkable() {
 		return _LINKABLE;

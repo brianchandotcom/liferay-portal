@@ -73,6 +73,10 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, record.getRecordSet(), actionId);
 	}
 
+	public boolean isCategorizable() {
+		return false;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";

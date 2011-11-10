@@ -64,11 +64,14 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLSync;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -241,14 +244,13 @@ public class DataFactory {
 		return ddmStructure;
 	}
 
-	public DDMStructureLink addDDMStructureLink(
-			long classNameId, long classPK, long structureId)
+	public DDMStructureLink addDDMStructureLink(long classPK, long structureId)
 		throws Exception {
 
 		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
 
 		ddmStructureLink.setStructureLinkId(_counter.get());
-		ddmStructureLink.setClassNameId(classNameId);
+		ddmStructureLink.setClassNameId(_dlFileEntryClassName.getClassNameId());
 		ddmStructureLink.setClassPK(classPK);
 		ddmStructureLink.setStructureId(structureId);
 
@@ -348,6 +350,29 @@ public class DataFactory {
 		dlFolder.setDescription(description);
 
 		return dlFolder;
+	}
+
+	public DLSync addDLSync(
+			long companyId, long fileId, long repositoryId, long parentFolderId,
+			boolean isFolder)
+		throws Exception {
+
+		DLSync dlSync = new DLSyncImpl();
+
+		dlSync.setSyncId(_counter.get());
+		dlSync.setCompanyId(companyId);
+		dlSync.setFileId(fileId);
+		dlSync.setRepositoryId(repositoryId);
+		dlSync.setParentFolderId(parentFolderId);
+		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
+		if (isFolder) {
+			dlSync.setType(DLSyncConstants.TYPE_FOLDER);
+		}
+		else {
+			dlSync.setType(DLSyncConstants.TYPE_FILE);
+		}
+
+		return dlSync;
 	}
 
 	public Group addGroup(

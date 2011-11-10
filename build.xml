@@ -231,8 +231,12 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 	<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
 	<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
 	<jvm-options>-Duser.timezone=GMT</jvm-options>
-	<jvm-options>-Xmx1024m</jvm-options>
-	<jvm-options>-XX:MaxPermSize=256m</jvm-options>]]></replacevalue>
+	<jvm-options>-Xmx1024m</jvm-options>]]></replacevalue>
+						</replace>
+
+						<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
+							<replacetoken><![CDATA[<jvm-options>-XX:MaxPermSize=192m</jvm-options>]]></replacetoken>
+							<replacevalue><![CDATA[<jvm-options>-XX:MaxPermSize=256m</jvm-options>]]></replacevalue>
 						</replace>
 					</then>
 				</if>

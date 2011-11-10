@@ -1425,6 +1425,12 @@
 			<forward name="portlet.polls_display.view" path="portlet.polls_display.view" />
 		</action>
 
+        <action path="/polls_display/vote_question" type="com.liferay.portlet.polls.action.ViewQuestionAction" >
+            <forward name="portlet.polls.edit_question" path="portlet.polls_display.view" />
+            <forward name="portlet.polls.error" path="portlet.polls_display.error" />
+            <forward name="portlet.polls_display.view" path="portlet.polls_display.view" />
+		</action>
+
 		<!-- Portal Settings -->
 
 		<action path="/portal_settings/edit_company" type="com.liferay.portlet.portalsettings.action.EditCompanyAction">

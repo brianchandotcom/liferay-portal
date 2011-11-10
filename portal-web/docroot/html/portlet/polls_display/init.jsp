@@ -19,13 +19,11 @@
 <%@ page import="com.liferay.portlet.polls.DuplicateVoteException" %><%@
 page import="com.liferay.portlet.polls.NoSuchChoiceException" %><%@
 page import="com.liferay.portlet.polls.NoSuchQuestionException" %><%@
-page import="com.liferay.portlet.polls.QuestionExpiredException" %><%@
 page import="com.liferay.portlet.polls.model.PollsChoice" %><%@
 page import="com.liferay.portlet.polls.model.PollsQuestion" %><%@
 page import="com.liferay.portlet.polls.model.PollsVote" %><%@
 page import="com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil" %><%@
 page import="com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil" %><%@
-page import="com.liferay.portlet.polls.service.PollsVoteServiceUtil" %><%@
 page import="com.liferay.portlet.polls.service.permission.PollsPermission" %><%@
 page import="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" %><%@
 page import="com.liferay.portlet.polls.util.PollsUtil" %>

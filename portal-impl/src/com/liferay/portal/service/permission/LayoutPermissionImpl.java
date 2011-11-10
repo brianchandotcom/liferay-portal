@@ -411,17 +411,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		// or by users who can update the site
 
 		if (group.isSite()) {
-			if (GroupLocalServiceUtil.hasUserGroup(
-					permissionChecker.getUserId(), group.getGroupId())) {
-
-				return true;
-			}
-			else if (GroupPermissionUtil.contains(
-						permissionChecker, group.getGroupId(),
-						ActionKeys.MANAGE_LAYOUTS) ||
-					 GroupPermissionUtil.contains(
-						permissionChecker, group.getGroupId(),
-						ActionKeys.UPDATE)) {
+            if (GroupPermissionUtil.contains(
+                    permissionChecker, group.getGroupId(),
+                    ActionKeys.MANAGE_LAYOUTS) ||
+                 GroupPermissionUtil.contains(
+                    permissionChecker, group.getGroupId(),
+                    ActionKeys.UPDATE)) {
 
 				return true;
 			}

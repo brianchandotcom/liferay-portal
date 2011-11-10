@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.serveradministration.executegeneratecustomroles;
 
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.login.LoginTests;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.serveradministration.viewnogeneratecustomroles.ViewNoGenerateCustomRolesTests;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.webcontent.WebContent523LatestTests;
+import com.liferay.portalweb.portal.BaseTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,16 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DBUpgradeWebContent523LatestTestSuite extends BaseTests {
+public class ExecuteGenerateCustomRolesTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(WebContent523LatestTests.suite());
-		testSuite.addTest(ViewNoGenerateCustomRolesTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(ExecuteGenerateCustomRolesTest.class);
 
 		return testSuite;
 	}

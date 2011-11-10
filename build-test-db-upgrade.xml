@@ -135,8 +135,6 @@
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat" inheritAll="false">
 			<property name="skip.rebuild-database" value="true" />
 		</ant>
-
-		<antcall target="clean-up-bundles" />
 	</target>
 
 	<target name="run-smoke-test">

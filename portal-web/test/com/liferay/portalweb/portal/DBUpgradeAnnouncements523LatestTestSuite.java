@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.announcements.Announcements523LatestTests;
 import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.login.LoginTests;
+import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.serveradministration.viewnogeneratecustomroles.ViewNoGenerateCustomRolesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,6 +31,7 @@ public class DBUpgradeAnnouncements523LatestTestSuite extends BaseTests {
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(Announcements523LatestTests.suite());
+		testSuite.addTest(ViewNoGenerateCustomRolesTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

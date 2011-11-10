@@ -5,7 +5,7 @@
 
 	<target name="test-${test.ant.script.command}-5.2.3-tomcat-db2-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
-	
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -28,6 +28,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-db2-common">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.3" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-db2-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.3" />
@@ -61,6 +73,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-mysql-common">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.3" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-mysql-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.3" />
@@ -104,6 +128,18 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-oracle-common">
+			<param name="set.permission.algorithm.6" value="true" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.3" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestTestSuite" />
 		</antcall>
 
@@ -114,7 +150,7 @@
 
 	<target name="test-${test.ant.script.command}-5.2.3-tomcat-postgresql-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
-	
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -144,6 +180,18 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-postgresql-common">
+			<param name="set.permission.algorithm.6" value="true" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.3" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestTestSuite" />
 		</antcall>
 
@@ -154,7 +202,7 @@
 
 	<target name="test-${test.ant.script.command}-5.2.3-tomcat-sql-server-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
-	
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -184,6 +232,18 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-sql-server-common">
+			<param name="set.permission.algorithm.6" value="true" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.3" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestTestSuite" />
 		</antcall>
 
@@ -194,7 +254,7 @@
 
 	<target name="test-${test.ant.script.command}-5.2.3-tomcat-sybase-firefox">
 		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
-	
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -217,6 +277,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-sybase-common">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.3" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}523LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-sybase-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.3" />

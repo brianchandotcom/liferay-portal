@@ -235,7 +235,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="2" />
+		<property name="build-test-ant-scripts.version" value="3" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2097,7 +2097,13 @@ wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
 
 users.last.name.required=true
 
+portal.security.manager.strategy=liferay
+
+layout.types=portlet,panel,embedded,article,url,link_to_layout
+
 editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+setup.wizard.enabled=false
 
 discussion.subscribe.by.default=false
 
@@ -2147,7 +2153,13 @@ wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)
 
 users.last.name.required=true
 
+portal.security.manager.strategy=liferay
+
+layout.types=portlet,panel,embedded,article,url,link_to_layout
+
 editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+setup.wizard.enabled=false
 
 discussion.subscribe.by.default=false
 
@@ -2158,6 +2170,7 @@ message.boards.subscribe.by.default=false</echo>
 				<or>
 					<equals arg1="${sql.version}" arg2="6.0.5" />
 					<equals arg1="${sql.version}" arg2="6.0.6" />
+					<equals arg1="${sql.version}" arg2="6.0.12" />
 				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
@@ -2168,7 +2181,13 @@ message.boards.subscribe.by.default=false</echo>
 
 users.last.name.required=true
 
+portal.security.manager.strategy=liferay
+
+layout.types=portlet,panel,embedded,article,url,link_to_layout
+
 editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
+
+setup.wizard.enabled=false
 
 discussion.subscribe.by.default=false
 
@@ -2176,6 +2195,17 @@ message.boards.subscribe.by.default=false</echo>
 				</then>
 			</elseif>
 		</if>
+
+		<if>
+			<equals arg1="${sql.version}" arg2="6.0.12" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=\
+	com.liferay.portal.upgrade.UpgradeProcess_6_0_12_to_6_1_0</echo>
+			</then>
+		</if>
+
 		<if>
 			<or>
 				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-6.1.0.27" />
@@ -2187,12 +2217,13 @@ message.boards.subscribe.by.default=false</echo>
 auto.deploy.dest.dir=${resource.repositories.root}/websphere-deploy</echo>
 			</then>
 		</if>
+
 		<if>
 			<isset property="set.permission.algorithm.6" />
-				<then>
-					<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value=""/>
-					<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value=""/>
-				</then>
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value=""/>
+				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value=""/>
+			</then>
 		</if>
 	</target>
 

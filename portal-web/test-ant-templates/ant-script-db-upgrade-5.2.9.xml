@@ -19,7 +19,7 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="5.2.9" />
 			${test.ant.script.file.plugin.portlets.ee}
@@ -28,7 +28,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-db2-common">
-			<param name="custom.properties" value="upgrade.processes=\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_6_1_0" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.9" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-db2-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.9" />
@@ -53,7 +64,7 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="5.2.9" />
 			${test.ant.script.file.plugin.portlets.ee}
@@ -62,7 +73,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-mysql-common">
-			<param name="custom.properties" value="upgrade.processes=\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_6_1_0" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.9" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-mysql-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.9" />
@@ -90,7 +112,7 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="5.2.9" />
 			${test.ant.script.file.plugin.portlets.ee}
@@ -99,7 +121,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-oracle-common">
-			<param name="custom.properties" value="upgrade.processes=\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_6_1_0" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.9" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-oracle-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.9" />
@@ -131,7 +164,7 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="5.2.9" />
 			${test.ant.script.file.plugin.portlets.ee}
@@ -140,7 +173,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-common">
-			<param name="custom.properties" value="upgrade.processes=\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_6_1_0" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.9" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-postgresql-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.9" />
@@ -172,7 +216,7 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="5.2.9" />
 			${test.ant.script.file.plugin.portlets.ee}
@@ -181,7 +225,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-common">
-			<param name="custom.properties" value="upgrade.processes=\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_6_1_0" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.9" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-sql-server-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.9" />
@@ -213,7 +268,7 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="liferay-portal-tomcat-5.2-ee-sp5.zip" />
+			<param name="file.name" value="liferay-portal-tomcat-6.0.29-5.2-ee-sp5.zip" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="5.2.9" />
 			${test.ant.script.file.plugin.portlets.ee}
@@ -222,7 +277,18 @@
 		</antcall>
 
 		<antcall target="prepare-db-sybase-common">
-			<param name="custom.properties" value="upgrade.processes=\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_5_2_9_to_6_0_11,\$${line.separator}com.liferay.portal.upgrade.UpgradeProcess_6_1_0" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="5.2.9" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.plugin.portlets}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}529LatestConvertTestSuite" />
+		</antcall>
+
+		<antcall target="prepare-db-sybase-common">
+			<param name="set.permission.algorithm.6" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="5.2.9" />

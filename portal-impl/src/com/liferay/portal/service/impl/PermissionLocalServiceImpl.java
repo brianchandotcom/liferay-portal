@@ -411,11 +411,10 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		return permissionFinder.findByR_R(roleId, resourceId);
 	}
 
-	public List<Permission> getRolePermissions(
-			long roleId, int[] scopes, int start, int end)
+	public List<Permission> getRolePermissions(long roleId, int[] scopes)
 		throws SystemException {
 
-		return permissionFinder.findByR_S(roleId, scopes, start, end);
+		return permissionFinder.findByR_S(roleId, scopes);
 	}
 
 	/**

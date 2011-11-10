@@ -938,16 +938,16 @@
 				Permission_
 			INNER JOIN
 				Roles_Permissions ON
-					(Roles_Permissions.permissionId = Permission_.permissionId )
+					(Roles_Permissions.permissionId = Permission_.permissionId)
 			INNER JOIN
 				Resource_ ON
-					(Permission_.resourceId = Resource_.resourceId)
+					(Resource_.resourceId = Permission_.resourceId)
 			INNER JOIN
 				ResourceCode ON
 					(ResourceCode.codeId = Resource_.codeId)
 			WHERE
 				(Roles_Permissions.roleId = ?) AND
-				([$SCOPE$])
+				[$SCOPE$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.PermissionFinder.findByU_C_N_S_P">

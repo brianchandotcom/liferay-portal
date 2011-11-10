@@ -105,7 +105,7 @@ if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 	}
 }
 else {
-	permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), scopes, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	permissions = PermissionLocalServiceUtil.getRolePermissions(role.getRoleId(), scopes);
 }
 
 List<PermissionDisplay> permissionsDisplay = new ArrayList<PermissionDisplay>(permissions.size());

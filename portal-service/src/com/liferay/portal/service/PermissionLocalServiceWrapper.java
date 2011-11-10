@@ -475,10 +475,9 @@ public class PermissionLocalServiceWrapper implements PermissionLocalService,
 	}
 
 	public java.util.List<com.liferay.portal.model.Permission> getRolePermissions(
-		long roleId, int[] scopes, int start, int end)
+		long roleId, int[] scopes)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _permissionLocalService.getRolePermissions(roleId, scopes,
-		start, end);
+		return _permissionLocalService.getRolePermissions(roleId, scopes);
 	}
 
 	/**

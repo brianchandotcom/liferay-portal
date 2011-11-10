@@ -109,9 +109,9 @@ public class PermissionFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Permission> findByR_S(
-		long roleId, int[] scopes, int start, int end)
+		long roleId, int[] scopes)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByR_S(roleId, scopes, start, end);
+		return getFinder().findByR_S(roleId, scopes);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Permission> findByU_R(

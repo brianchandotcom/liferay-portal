@@ -18,7 +18,7 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
-String tabs3 = ParamUtil.getString(request, "tabs3", "current");
+String tabs2 = ParamUtil.getString(request, "tabs2", "current");
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
@@ -30,19 +30,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/users_admin/edit_organization_assignments");
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs3", tabs3);
+portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("organizationId", String.valueOf(organization.getOrganizationId()));
-
-request.setAttribute("edit_organization_assignments.jsp-tabs3", tabs3);
-
-request.setAttribute("edit_organization_assignments.jsp-cur", cur);
-
-request.setAttribute("edit_organization_assignments.jsp-redirect", redirect);
-
-request.setAttribute("edit_organization_assignments.jsp-organization", organization);
-
-request.setAttribute("edit_organization_assignments.jsp-portletURL", portletURL);
 %>
 
 <liferay-ui:header
@@ -59,11 +49,73 @@ request.setAttribute("edit_organization_assignments.jsp-portletURL", portletURL)
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
+	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
 
-	<liferay-util:include page="/html/portlet/users_admin/edit_organization_assignments_users.jsp" />
+	<liferay-ui:tabs
+		names="current,available"
+		param="tabs2"
+		url="<%= portletURL.toString() %>"
+	/>
+
+	<aui:input name="addUserIds" type="hidden" />
+	<aui:input name="removeUserIds" type="hidden" />
+	
+	<liferay-ui:search-container
+		rowChecker="<%= new UserOrganizationChecker(renderResponse, organization) %>"
+		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+	>
+		<liferay-ui:search-form
+			page="/html/portlet/users_admin/user_search.jsp"
+		/>
+	
+		<%
+		UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
+	
+		LinkedHashMap userParams = new LinkedHashMap();
+	
+		if (tabs2.equals("current")) {
+			userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
+		}
+		else if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin()) {
+			userParams.put("usersOrgsTree", user.getOrganizations());
+		}
+		%>
+	
+		<liferay-ui:search-container-results>
+			<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
+		</liferay-ui:search-container-results>
+	
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.User"
+			escapedModel="<%= true %>"
+			keyProperty="userId"
+			modelVar="user2"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+				property="fullName"
+			/>
+	
+			<liferay-ui:search-container-column-text
+				name="screen-name"
+				property="screenName"
+			/>
+		</liferay-ui:search-container-row>
+	
+		<div class="separator"><!-- --></div>
+	
+		<%
+		String taglibOnClick = renderResponse.getNamespace() + "updateOrganizationUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+		%>
+	
+		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+	
+		<br /><br />
+	
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script>

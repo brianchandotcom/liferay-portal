@@ -901,12 +901,13 @@ public class UserServiceUtil {
 	*/
 	public static com.liferay.portal.model.User updateEmailAddress(
 		long userId, java.lang.String password, java.lang.String emailAddress1,
-		java.lang.String emailAddress2)
+		java.lang.String emailAddress2,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateEmailAddress(userId, password, emailAddress1,
-			emailAddress2);
+			emailAddress2, serviceContext);
 	}
 
 	/**

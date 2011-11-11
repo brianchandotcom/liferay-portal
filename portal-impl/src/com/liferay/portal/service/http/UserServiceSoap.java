@@ -1194,10 +1194,12 @@ public class UserServiceSoap {
 	*/
 	public static com.liferay.portal.model.UserSoap updateEmailAddress(
 		long userId, java.lang.String password, java.lang.String emailAddress1,
-		java.lang.String emailAddress2) throws RemoteException {
+		java.lang.String emailAddress2,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			com.liferay.portal.model.User returnValue = UserServiceUtil.updateEmailAddress(userId,
-					password, emailAddress1, emailAddress2);
+					password, emailAddress1, emailAddress2, serviceContext);
 
 			return com.liferay.portal.model.UserSoap.toSoapModel(returnValue);
 		}

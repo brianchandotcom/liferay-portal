@@ -2413,6 +2413,29 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Updates the user's email address or sends verification email.
+	*
+	* @param userId the primary key of the user
+	* @param password the user's password
+	* @param emailAddress1 the user's new email address
+	* @param emailAddress2 the user's new email address confirmation
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.User updateEmailAddress(
+		long userId, java.lang.String password, java.lang.String emailAddress1,
+		java.lang.String emailAddress2,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateEmailAddress(userId, password, emailAddress1,
+			emailAddress2, serviceContext);
+	}
+
+	/**
 	* Updates whether the user has verified email address.
 	*
 	* @param userId the primary key of the user

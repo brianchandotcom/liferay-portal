@@ -1359,7 +1359,8 @@ public class UserServiceHttp {
 
 	public static com.liferay.portal.model.User updateEmailAddress(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String password,
-		java.lang.String emailAddress1, java.lang.String emailAddress2)
+		java.lang.String emailAddress1, java.lang.String emailAddress2,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1367,7 +1368,7 @@ public class UserServiceHttp {
 					"updateEmailAddress", _updateEmailAddressParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					password, emailAddress1, emailAddress2);
+					password, emailAddress1, emailAddress2, serviceContext);
 
 			Object returnObj = null;
 
@@ -1973,7 +1974,8 @@ public class UserServiceHttp {
 		};
 	private static final Class<?>[] _updateEmailAddressParameterTypes35 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class
+			java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLockoutByIdParameterTypes36 = new Class[] {
 			long.class, boolean.class

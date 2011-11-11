@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -249,7 +248,7 @@ public class DDLUtil {
 			template.getScript(), template.getLanguage());
 	}
 
-	public static String uploadFieldFile(
+	protected static String storeRecordFieldFile(
 			DDLRecord record, String fieldName, InputStream inputStream)
 		throws Exception {
 
@@ -279,8 +278,9 @@ public class DDLUtil {
 		return fileName;
 	}
 
-	public static void uploadRecordFiles(
-			DDLRecord record, UploadPortletRequest uploadPortletRequest,
+	public static void uploadRecordFieldFile(
+			DDLRecord record, String fieldName, InputStream inputStream,
+			UploadPortletRequest uploadPortletRequest,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -289,52 +289,34 @@ public class DDLUtil {
 
 		Fields fields = new Fields();
 
-		InputStream inputStream = null;
+		String fileName = uploadPortletRequest.getFileName(fieldName);
 
-		for (String fieldName : ddmStructure.getFieldNames()) {
-			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+		Field oldField = record.getField(fieldName);
+		String fieldValue = StringPool.BLANK;
 
-			if (!fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
-				continue;
-			}
-
-			String fileName = uploadPortletRequest.getFileName(fieldName);
-
-			try {
-				Field field = record.getField(fieldName);
-
-				String fieldValue = StringPool.BLANK;
-
-				if (field != null) {
-					fieldValue = String.valueOf(field.getValue());
-				}
-
-				inputStream = uploadPortletRequest.getFileAsStream(
-					fieldName, true);
-
-				if (inputStream != null) {
-					String filePath = uploadFieldFile(
-						record, fieldName, inputStream);
-
-					JSONObject recordFileJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					recordFileJSONObject.put("name", fileName);
-					recordFileJSONObject.put("path", filePath);
-					recordFileJSONObject.put("recordId", record.getRecordId());
-
-					fieldValue = recordFileJSONObject.toString();
-				}
-
-				field = new Field(
-					ddmStructure.getStructureId(), fieldName, fieldValue);
-
-				fields.put(field);
-			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
-			}
+		if (oldField != null) {
+			fieldValue = String.valueOf(oldField.getValue());
 		}
+
+		if (inputStream != null) {
+			String filePath = storeRecordFieldFile(
+				record, fieldName, inputStream);
+
+			JSONObject recordFileJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			recordFileJSONObject.put("name", fileName);
+			recordFileJSONObject.put("path", filePath);
+			recordFileJSONObject.put(
+				"recordId", record.getRecordId());
+
+			fieldValue = recordFileJSONObject.toString();
+		}
+
+		Field field = new Field(
+			ddmStructure.getStructureId(), fieldName, fieldValue);
+
+		fields.put(field);
 
 		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
 

@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -60,6 +63,12 @@ public class VerifyEmailAddressAction extends Action {
 			return mapping.findForward("portal.verify_email_address");
 		}
 
+		if (cmd.equals(Constants.NEW) && themeDisplay.isSignedIn()) {
+			sendNewVerificationCode(request, response, themeDisplay);
+
+			return mapping.findForward("portal.verify_email_address");
+		}
+
 		try {
 			verifyEmailAddress(request, response, themeDisplay);
 
@@ -90,6 +99,20 @@ public class VerifyEmailAddressAction extends Action {
 				return null;
 			}
 		}
+	}
+
+	protected void sendNewVerificationCode(
+			HttpServletRequest request, HttpServletResponse response,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		User user = themeDisplay.getUser();
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
+		UserLocalServiceUtil.sendEmailAddressVerification(
+			user, user.getEmailAddress(), serviceContext);
 	}
 
 	protected void verifyEmailAddress(

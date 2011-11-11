@@ -750,7 +750,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			}
 
 			if ((user != null) && !user.isEmailAddressVerified() &&
-				emailAddressVerificationRequired) {
+				emailAddressVerificationRequired &&
+				!path.equals(_PATH_PORTAL_UPDATE_EMAIL_ADDRESS)) {
 
 				return _PATH_PORTAL_VERIFY_EMAIL_ADDRESS;
 			}

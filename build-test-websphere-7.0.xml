@@ -210,6 +210,125 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-tunnel-web')<
 
 		<antcall target="revert-test-properties" />
 
+		<if>
+			<or>
+				<not>
+					<available file="${selenium.nanny.executable}" />
+				</not>
+				<uptodate
+					srcfile="${selenium.nanny.executable}"
+					targetfile="${selenium.executable.zip}"
+				/>
+			</or>
+			<then>
+				<delete>
+					<fileset
+						dir="${project.dir}/tools/selenium"
+						includes="*.exe"
+					/>
+				</delete>
+
+				<unzip
+					dest="${project.dir}/tools/selenium"
+					src="${selenium.executable.zip}"
+				/>
+
+				<touch file="${selenium.nanny.executable}" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="selenium.output.dir" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="output.dir=H:\\selenium-output\\"
+					value="output.dir=${selenium.output.dir}"
+				/>
+			</then>
+			<else>
+				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset property="skip.delete-selenium-output" />
+			</not>
+			<then>
+				<delete dir="${selenium.output.dir}" />
+
+				<mkdir dir="${selenium.output.dir}" />
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.browser" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="browser.type=*chrome"
+					value="browser.type=*${test.browser}"
+				/>
+			</then>
+			<else>
+				<property name="test.browser" value="chrome" />
+			</else>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${test.browser}" arg2="chrome" />
+				<equals arg1="${test.browser}" arg2="firefox" />
+			</or>
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#selenium.executable.dir="
+					value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
+				/>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#selenium.download.file.executable="
+					value="selenium.download.file.executable=selenium_download_file_ff.exe"
+				/>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#selenium.set.browser.option.executable="
+					value="selenium.set.browser.option.executable=selenium_set_browser_option_ff.exe"
+				/>
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="${test.browser}" arg2="iehta" />
+					<equals arg1="${test.browser}" arg2="iexplorer" />
+				</or>
+				<then>
+					<replace
+						file="portal-web/test/test-portal-web.properties"
+						token="#selenium.executable.dir="
+						value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
+					/>
+					<replace
+						file="portal-web/test/test-portal-web.properties"
+						token="#selenium.download.file.executable="
+						value="selenium.download.file.executable=selenium_download_file_ie.exe"
+					/>
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<isset property="test.database.minimal" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="test.database.minimal=false"
+					value="test.database.minimal=true"
+				/>
+			</then>
+		</if>
+
 		<replace
 			file="portal-impl/test/test-portal-impl.properties"
 			token="localhost:8080"
@@ -247,5 +366,13 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-tunnel-web')<
 		<exec executable="${plink.executable}">
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
 		</exec>
+
+		<exec executable="${pscp.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:Progra~1/IBM/WebSphere/AppServer/profiles/AppSrv01/logs/server1/SystemOut.log log" />
+		</exec>
+
+		<antcall target="evaluate-logs">
+			<param name="print.logs" value="true" />
+		</antcall>
 	</target>
 </project>

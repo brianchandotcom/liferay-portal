@@ -37,6 +37,7 @@ java.lang.String action = GetterUtil.getString((java.lang.String)request.getAttr
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:cssClass"));
 boolean escapeXml = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:escapeXml")), true);
 boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:inlineLabels")));
+String method = GetterUtil.getString((String)request.getAttribute("aui:form:method"), "post");
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:name"), "fm");
 java.lang.String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:onSubmit"));
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:useNamespace")), true);

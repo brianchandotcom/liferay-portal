@@ -49,6 +49,10 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		return _inlineLabels;
 	}
 
+	public String getMethod() {
+		return _method;
+	}
+
 	public java.lang.String getName() {
 		return _name;
 	}
@@ -85,6 +89,10 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("inlineLabels", inlineLabels);
 	}
 
+	public void setMethod(String method) {
+		_method = method;
+	}
+
 	public void setName(java.lang.String name) {
 		_name = name;
 
@@ -109,6 +117,7 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		_cssClass = null;
 		_escapeXml = true;
 		_inlineLabels = false;
+		_method = null;
 		_name = "fm";
 		_onSubmit = null;
 		_useNamespace = true;
@@ -130,6 +139,7 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "escapeXml", _escapeXml);
 		setNamespacedAttribute(request, "inlineLabels", _inlineLabels);
+		setNamespacedAttribute(request, "method", _method);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onSubmit", _onSubmit);
 		setNamespacedAttribute(request, "useNamespace", _useNamespace);
@@ -147,6 +157,7 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _cssClass = null;
 	private boolean _escapeXml = true;
 	private boolean _inlineLabels = false;
+	private java.lang.String _method = null;
 	private java.lang.String _name = "fm";
 	private java.lang.String _onSubmit = null;
 	private boolean _useNamespace = true;

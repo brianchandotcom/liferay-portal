@@ -71,7 +71,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= socialBookmarksDisplayStyle %>"
 					target="_blank"
-					title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+					title="<%= entry.getTitle() %>"
 					url="<%= bookmarkURL.toString() %>"
 				/>
 			</c:if>

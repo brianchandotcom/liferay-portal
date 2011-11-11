@@ -20,6 +20,14 @@
 PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 String ticketKey = ParamUtil.getString(request, "ticketKey");
+
+String currentURL = PortalUtil.getCurrentURL(request);
+
+String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
+
+if (referer.equals(themeDisplay.getPathMain() + "/portal/update_email_address")) {
+	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
+}
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/verify_email_address" %>' method="post" name="fm">
@@ -27,7 +35,7 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value='<%= themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId() %>' />
+	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value='<%= referer %>' />
 
 	<div class="portlet-msg-info">
 		<liferay-ui:message key="please-enter-your-verification-code" />
@@ -61,7 +69,12 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 	<aui:input class="lfr-input-text-container" label="email-verification-code" name="ticketKey" type="text" value="<%= ticketKey %>" size="36" />
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button type="submit" value="verify" />
+
+		<c:if test="<%= themeDisplay.isSignedIn() && !user.isEmailAddressVerified() %>">
+			<aui:button type="button" value="send-new-verification-code" href='<%= themeDisplay.getPathMain() + "/portal/verify_email_address?cmd=new&referer=" + HttpUtil.encodeURL(referer) %>' />
+			<aui:button type="button" value="change-email-address" href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?referer=" + HttpUtil.encodeURL(referer) %>' />
+		</c:if>
 	</aui:button-row>
 </aui:form>
 

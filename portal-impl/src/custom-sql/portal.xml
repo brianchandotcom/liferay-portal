@@ -616,21 +616,6 @@
 				(Groups_Roles.roleId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.joinByOrganizationsUserGroups">
-		<![CDATA[
-			INNER JOIN
-				Group_ ON
-					(Group_.classPK = Organization_.organizationId)
-			INNER JOIN
-				Groups_UserGroups ON
-					(Groups_UserGroups.groupId = Group_.groupId)
-			INNER JOIN
-				Users_UserGroups ON
-					(Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId)
-			WHERE
-				(Users_UserGroups.userId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.joinByOrganizationsUsers">
 		<![CDATA[
 			INNER JOIN

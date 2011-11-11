@@ -55,7 +55,7 @@ public class AnnouncementsUtil {
 		List<Group> groupsList = new ArrayList<Group>();
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getUserOrganizations(userId, true);
+			OrganizationLocalServiceUtil.getUserOrganizations(userId);
 
 		if (!organizations.isEmpty()) {
 			List<Organization> organizationsList =

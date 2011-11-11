@@ -452,7 +452,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			long organizationId = group.getOrganizationId();
 
 			if (OrganizationLocalServiceUtil.hasUserOrganization(
-					permissionChecker.getUserId(), organizationId, false, true,
+					permissionChecker.getUserId(), organizationId, false,
 					false)) {
 
 				return true;
@@ -466,7 +466,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
 				List<Organization> userOrgs =
 					OrganizationLocalServiceUtil.getUserOrganizations(
-						permissionChecker.getUserId(), true);
+						permissionChecker.getUserId());
 
 				for (Organization organization : userOrgs) {
 					for (Organization ancestorOrganization :

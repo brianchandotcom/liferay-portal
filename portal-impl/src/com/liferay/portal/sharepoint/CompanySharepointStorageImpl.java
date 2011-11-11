@@ -54,7 +54,7 @@ public class CompanySharepointStorageImpl extends BaseSharepointStorageImpl {
 
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(
-				sharepointRequest.getUserId(), true);
+				sharepointRequest.getUserId());
 
 		for (Organization organization : organizations) {
 			groups.add(organization.getGroup());

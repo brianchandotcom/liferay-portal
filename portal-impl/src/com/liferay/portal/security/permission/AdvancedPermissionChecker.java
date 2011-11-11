@@ -827,7 +827,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	 */
 	protected List<Organization> getUserOrgs(long userId) throws Exception {
 		List<Organization> userOrgs =
-			OrganizationLocalServiceUtil.getUserOrganizations(userId, true);
+			OrganizationLocalServiceUtil.getUserOrganizations(userId);
 
 		if (userOrgs.size() == 0) {
 			return userOrgs;

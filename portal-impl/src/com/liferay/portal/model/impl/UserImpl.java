@@ -371,8 +371,7 @@ public class UserImpl extends UserBaseImpl {
 		Set<String> questions = new TreeSet<String>();
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getUserOrganizations(
-				getUserId(), true);
+			OrganizationLocalServiceUtil.getUserOrganizations(getUserId());
 
 		for (Organization organization : organizations) {
 			Set<String> organizationQuestions =

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -69,9 +68,6 @@ public class OrganizationFinderImpl
 
 	public static String JOIN_BY_ORGANIZATIONS_GROUPS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
-
-	public static String JOIN_BY_ORGANIZATIONS_USER_GROUPS =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsUserGroups";
 
 	public static String JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES =
 		OrganizationFinder.class.getName() +
@@ -126,22 +122,12 @@ public class OrganizationFinderImpl
 
 		params1.put("usersOrgs", userId);
 
-		LinkedHashMap<String, Object> params2 =
-			new LinkedHashMap<String, Object>();
-
-		params2.put("organizationsUserGroups", userId);
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			int count = countByOrganizationId(session, organizationId, params1);
-
-			if (PropsValues.ORGANIZATIONS_USER_GROUP_MEMBERSHIP_ENABLED) {
-				count += countByOrganizationId(
-					session, organizationId, params2);
-			}
 
 			return count;
 		}
@@ -308,40 +294,17 @@ public class OrganizationFinderImpl
 			params = new LinkedHashMap<String, Object>();
 		}
 
-		Long userId = (Long)params.get("usersOrgs");
-
-		LinkedHashMap<String, Object> params1 = params;
-
-		LinkedHashMap<String, Object> params2 =
-			new LinkedHashMap<String, Object>(params1);
-
-		if (userId != null) {
-			params2.remove("usersOrgs");
-			params2.put("organizationsUserGroups", userId);
-		}
-
 		StringBundler sb = new StringBundler();
 
 		sb.append("(");
 
 		String sql = CustomSQLUtil.get(FIND_BY_COMPANY_ID);
 
-		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params1));
-		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params1));
+		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
+		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 
 		sb.append(sql);
 		sb.append(")");
-
-		if (Validator.isNotNull(userId)) {
-			sql = CustomSQLUtil.get(FIND_BY_COMPANY_ID);
-
-			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params2));
-			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params2));
-
-			sb.append(" UNION (");
-			sb.append(sql);
-			sb.append(")");
-		}
 
 		sql = sb.toString();
 
@@ -359,15 +322,9 @@ public class OrganizationFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			setJoin(qPos, params1);
+			setJoin(qPos, params);
 
 			qPos.add(companyId);
-
-			if (Validator.isNotNull(userId)) {
-				setJoin(qPos, params2);
-
-				qPos.add(companyId);
-			}
 
 			List<Organization> organizations = new ArrayList<Organization>();
 
@@ -473,20 +430,6 @@ public class OrganizationFinderImpl
 			params = new LinkedHashMap<String, Object>();
 		}
 
-		Long userId = (Long)params.get("usersOrgs");
-
-		LinkedHashMap<String, Object> params1 = params;
-
-		LinkedHashMap<String, Object> params2 =
-			new LinkedHashMap<String, Object>();
-
-		params2.putAll(params1);
-
-		if (userId != null) {
-			params2.remove("usersOrgs");
-			params2.put("organizationsUserGroups", userId);
-		}
-
 		StringBundler sb = new StringBundler();
 
 		sb.append("(");
@@ -500,36 +443,10 @@ public class OrganizationFinderImpl
 
 		String sql = sb.toString();
 
-		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params1));
-		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params1));
+		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
+		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 
-		sb.setIndex(0);
-
-		sb.append(sql);
-		sb.append(")");
-
-		if (Validator.isNotNull(userId)) {
-			sb.append(" UNION (");
-
-			if (Validator.isNotNull(type)) {
-				sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_L_S_C_Z_R_C));
-			}
-			else {
-				sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_S_C_Z_R_C));
-			}
-
-			sql = sb.toString();
-
-			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params2));
-			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params2));
-
-			sb.setIndex(0);
-
-			sb.append(sql);
-			sb.append(")");
-		}
-
-		sql = sb.toString();
+		sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
 
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(Organization_.name)", StringPool.LIKE, false,
@@ -575,7 +492,7 @@ public class OrganizationFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			setJoin(qPos, params1);
+			setJoin(qPos, params);
 
 			qPos.add(companyId);
 			qPos.add(parentOrganizationId);
@@ -599,33 +516,6 @@ public class OrganizationFinderImpl
 
 			qPos.add(cities, 2);
 			qPos.add(zips, 2);
-
-			if (Validator.isNotNull(userId)) {
-				setJoin(qPos, params2);
-
-				qPos.add(companyId);
-				qPos.add(parentOrganizationId);
-
-				if (Validator.isNotNull(type)) {
-					qPos.add(type);
-				}
-
-				qPos.add(names, 2);
-				qPos.add(streets, 6);
-
-				if (regionId != null) {
-					qPos.add(regionId);
-					qPos.add(regionId);
-				}
-
-				if (countryId != null) {
-					qPos.add(countryId);
-					qPos.add(countryId);
-				}
-
-				qPos.add(cities, 2);
-				qPos.add(zips, 2);
-			}
 
 			List<Organization> organizations = new ArrayList<Organization>();
 
@@ -1057,9 +947,6 @@ public class OrganizationFinderImpl
 		else if (key.equals("organizationsRoles")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_ROLES);
 		}
-		else if (key.equals("organizationsUserGroups")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USER_GROUPS);
-		}
 		else if (key.equals("organizationsUsers")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USERS);
 		}
@@ -1175,9 +1062,6 @@ public class OrganizationFinderImpl
 
 				join = sb.toString();
 			}
-		}
-		else if (key.equals("organizationsUserGroups")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USER_GROUPS);
 		}
 		else if (key.equals("organizationsUsers")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USERS);

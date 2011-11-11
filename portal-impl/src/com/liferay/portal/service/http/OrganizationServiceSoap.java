@@ -456,33 +456,6 @@ public class OrganizationServiceSoap {
 	}
 
 	/**
-	* Returns all the organizations associated with the user, optionally
-	* including the organizations associated with the user groups to which the
-	* user belongs.
-	*
-	* @param userId the primary key of the user
-	* @param inheritUserGroups whether to include organizations associated
-	with the user groups to which the user belongs
-	* @return the organizations associated with the user
-	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.OrganizationSoap[] getUserOrganizations(
-		long userId, boolean inheritUserGroups) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.model.Organization> returnValue = OrganizationServiceUtil.getUserOrganizations(userId,
-					inheritUserGroups);
-
-			return com.liferay.portal.model.OrganizationSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Sets the organizations in the group, removing and adding organizations to
 	* the group as necessary.
 	*

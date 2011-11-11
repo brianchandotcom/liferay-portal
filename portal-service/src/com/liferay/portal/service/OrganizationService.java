@@ -301,24 +301,6 @@ public interface OrganizationService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the organizations associated with the user, optionally
-	* including the organizations associated with the user groups to which the
-	* user belongs.
-	*
-	* @param userId the primary key of the user
-	* @param inheritUserGroups whether to include organizations associated
-	with the user groups to which the user belongs
-	* @return the organizations associated with the user
-	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, boolean inheritUserGroups)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Sets the organizations in the group, removing and adding organizations to
 	* the group as necessary.
 	*

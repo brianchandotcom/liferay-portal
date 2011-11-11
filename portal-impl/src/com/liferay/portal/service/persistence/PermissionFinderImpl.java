@@ -1096,6 +1096,9 @@ public class PermissionFinderImpl
 		return sb.toString();
 	}
 
+	/**
+	 * @see {@link ResourcePermissionFinderImpl#getScopes(int[])}
+	 */
 	protected String getScopes(int[] scopes) {
 		if (scopes.length == 0) {
 			return StringPool.BLANK;

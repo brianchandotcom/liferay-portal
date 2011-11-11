@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
@@ -262,24 +263,27 @@ public class ResourcePermissionFinderImpl
 		}
 	}
 
+	/**
+	 * @see {@link PermissionFinderImpl#getScopes(int[])}
+	 */
 	protected String getScopes(int[] scopes) {
-		StringBuilder sb = new StringBuilder();
-
-		if (scopes.length > 0) {
-			sb.append("(");
+		if (scopes.length == 0) {
+			return StringPool.BLANK;
 		}
 
+		StringBundler sb = new StringBundler(scopes.length * 2 + 1);
+
+		sb.append("(");
+
 		for (int i = 0; i < scopes.length; i++) {
-			sb.append("scope = ? ");
+			sb.append("ResourceCode.scope = ? ");
 
 			if ((i + 1) != scopes.length) {
 				sb.append("OR ");
 			}
 		}
 
-		if (scopes.length > 0) {
-			sb.append(")");
-		}
+		sb.append(")");
 
 		return sb.toString();
 	}

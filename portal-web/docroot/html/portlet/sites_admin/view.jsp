@@ -197,17 +197,18 @@ pageContext.setAttribute("portletURL", portletURL);
 			if (organizationUser || userGroupUser) {
                 StringBundler namesString = new StringBundler();
                 
-                for(int j = 0; j < names.size() - 1; j++){
+                for (int j = 0; j < (names.size() - 1); j++) {
                     namesString.append(names.get(j));
 
-                    if(j < names.size() - 2){
+                    if (j < (names.size() - 2)) {
                         namesString.append(StringPool.COMMA);
                     }
                 }
 
-                if(names.size() == 1){
+                if (names.size() == 1) {
                     iconHelpMessage = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[]{HtmlUtil.escape(group.getDescriptiveName()), names.get(0)});
-                }else{
+                }
+				else {
                     iconHelpMessage = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName()), namesString, names.get(names.size() - 1)});
                 }
 			}

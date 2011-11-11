@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.util.PortalUtil;
@@ -92,8 +94,11 @@ public class UpdateEmailAddressAction extends Action {
 		String emailAddress1 = ParamUtil.getString(request, "emailAddress1");
 		String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
 		UserServiceUtil.updateEmailAddress(
-			userId, password, emailAddress1, emailAddress2);
+			userId, password, emailAddress1, emailAddress2, serviceContext);
 	}
 
 }

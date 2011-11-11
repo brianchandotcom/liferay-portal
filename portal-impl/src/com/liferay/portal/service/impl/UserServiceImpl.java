@@ -1142,14 +1142,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 */
 	public User updateEmailAddress(
 			long userId, String password, String emailAddress1,
-			String emailAddress2)
+			String emailAddress2, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
 		return userLocalService.updateEmailAddress(
-			userId, password, emailAddress1, emailAddress2);
+			userId, password, emailAddress1, emailAddress2, serviceContext);
 	}
 
 	/**

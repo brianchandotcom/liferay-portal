@@ -38,7 +38,7 @@ public class JDataStoreDB extends FirebirdDB {
 		template = reword(template);
 		template = StringUtil.replace(
 			template,
-			new String[] {"\\'", "\\\"", "\\\\",  "\\n", "\\r"},
+			new String[] {"\\'", "\\\"", "\\\\", "\\n", "\\r"},
 			new String[] {"''", "\"", "\\", "\n", "\r"});
 
 		return template;

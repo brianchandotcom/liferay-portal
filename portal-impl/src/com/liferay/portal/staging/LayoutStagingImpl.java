@@ -90,7 +90,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 
 		if (group.isStaged() && branchingEnabled) {
-			if (!group.isStagedRemotely() &&  !isStagingGroup) {
+			if (!group.isStagedRemotely() && !isStagingGroup) {
 				return false;
 			}
 

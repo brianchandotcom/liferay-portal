@@ -58,7 +58,7 @@ public class MBMessagePermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		MBMessage message =  MBMessageLocalServiceUtil.getMessage(messageId);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
 
 		return contains(permissionChecker, message, actionId);
 	}

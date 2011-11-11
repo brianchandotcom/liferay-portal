@@ -139,7 +139,7 @@ public class JournalArticleAtomCollectionProvider
 		OrderByComparator obc = new ArticleVersionComparator();
 
 		int count = JournalArticleLocalServiceUtil.searchCount(
-			companyId, groupId, classNameId, keywords,  version, type,
+			companyId, groupId, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
 
@@ -148,7 +148,7 @@ public class JournalArticleAtomCollectionProvider
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
 		journalArticles = JournalArticleLocalServiceUtil.search(
-			companyId, groupId, classNameId, keywords,  version, type,
+			companyId, groupId, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, atomPager.getStart(), atomPager.getEnd() + 1, obc);
 

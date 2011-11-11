@@ -35,7 +35,7 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		</portlet:renderURL>
 
 		<%
-		String taglibURL = "javascript:Liferay.StagingBar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) +  "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-site-pages-variation") + "'});";
+		String taglibURL = "javascript:Liferay.StagingBar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) + "', dialogTitle: '" + UnicodeLanguageUtil.get(pageContext, "update-site-pages-variation") + "'});";
 		%>
 
 		<liferay-ui:icon

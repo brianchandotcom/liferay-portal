@@ -198,7 +198,7 @@ public abstract class AbstractMessagingConfigurator
 	private List<Destination> _destinations = new ArrayList<Destination>();
 	private List<DestinationEventListener> _globalDestinationEventListeners =
 		new ArrayList<DestinationEventListener>();
-	private Map<String, List<MessageListener>> _messageListeners  =
+	private Map<String, List<MessageListener>> _messageListeners =
 		new HashMap<String, List<MessageListener>>();
 	private List<Destination> _replacementDestinations =
 		new ArrayList<Destination>();

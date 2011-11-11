@@ -166,7 +166,7 @@ public class PortletKeys {
 
 	public static final int PREFS_OWNER_TYPE_LAYOUT = 3;
 
-	public static final int PREFS_OWNER_TYPE_ORGANIZATION  = 6;
+	public static final int PREFS_OWNER_TYPE_ORGANIZATION = 6;
 
 	public static final int PREFS_OWNER_TYPE_USER = 4;
 

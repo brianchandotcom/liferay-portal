@@ -90,7 +90,7 @@ public class RemotingServlet extends DispatcherServlet {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"User id is not provided. An exception will be " +
-							"thrown  if a protected method is accessed.");
+							"thrown if a protected method is accessed.");
 				}
 			}
 

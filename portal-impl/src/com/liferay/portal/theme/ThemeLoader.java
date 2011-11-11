@@ -59,7 +59,7 @@ public class ThemeLoader {
 		if (files == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"There are no directories to process for  " + _fileStorage);
+					"There are no directories to process for " + _fileStorage);
 			}
 
 			return;

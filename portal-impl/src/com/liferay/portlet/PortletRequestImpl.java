@@ -602,7 +602,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
-		boolean windowStateRestoreCurrentView =  ParamUtil.getBoolean(
+		boolean windowStateRestoreCurrentView = ParamUtil.getBoolean(
 			request, "p_p_state_rcv");
 
 		if (_portletName.equals(ppid) &&

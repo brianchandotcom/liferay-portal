@@ -245,7 +245,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"update DLFileVersion set extension = ?, title = ?, " +
-					"description = ?,  extraSettings = ? where fileVersionId " +
+					"description = ?, extraSettings = ? where fileVersionId " +
 						"= ?");
 
 			ps.setString(1, extension);

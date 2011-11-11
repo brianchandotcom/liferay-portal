@@ -149,7 +149,7 @@ public class LDAPAuth implements Authenticator {
 
 				// Get LDAP bind results
 
-				Control[] responseControls =  innerCtx.getResponseControls();
+				Control[] responseControls = innerCtx.getResponseControls();
 
 				ldapAuthResult.setAuthenticated(true);
 				ldapAuthResult.setResponseControl(responseControls);

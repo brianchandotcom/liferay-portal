@@ -306,7 +306,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		Element metadataElement =
 			(Element)dynamicElementElement.selectSingleNode(
-				"meta-data[@locale='" + languageId  + "']");
+				"meta-data[@locale='" + languageId + "']");
 
 		Map<String, Object> field = new HashMap<String, Object>();
 

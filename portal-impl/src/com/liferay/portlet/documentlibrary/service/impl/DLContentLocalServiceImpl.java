@@ -103,7 +103,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, path, version);
 	}
 
-	public void deleteContents(long companyId,  long repositoryId, String path)
+	public void deleteContents(long companyId, long repositoryId, String path)
 		throws SystemException {
 
 		dlContentPersistence.removeByC_R_P(companyId, repositoryId, path);

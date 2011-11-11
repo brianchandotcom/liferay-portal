@@ -119,7 +119,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 					_printWriter, getCharacterEncoding(), true));
 		}
 
-		return  _servletOutputStream;
+		return _servletOutputStream;
 	}
 
 	@Override

@@ -304,7 +304,7 @@ if (workflowEnabled) {
 	}
 
 	function <portlet:namespace />savePage() {
-		var message = '<%= LanguageUtil.get(pageContext, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message")  %>';
+		var message = '<%= LanguageUtil.get(pageContext, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
 
 		var submit = true;
 
@@ -353,7 +353,7 @@ if (workflowEnabled) {
 
 					var workflowDefinitions = '<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 
-					workflowDefinitions =  workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
+					workflowDefinitions = workflowDefinitions.replace(/LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE/g, "workflowDefinition" + fileEntryTypeId);
 
 					documentTypesChanged = true;
 

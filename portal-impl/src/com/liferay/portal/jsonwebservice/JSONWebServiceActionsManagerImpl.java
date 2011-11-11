@@ -261,7 +261,7 @@ public class JSONWebServiceActionsManagerImpl
 	private SortedArrayList<JSONWebServiceActionConfig>
 		_jsonWebServiceActionConfigs =
 			new SortedArrayList<JSONWebServiceActionConfig>();
-	private BinarySearch<String> _pathBinarySearch  = new PathBinarySearch();
+	private BinarySearch<String> _pathBinarySearch = new PathBinarySearch();
 
 	private class PathBinarySearch extends BinarySearch<String> {
 

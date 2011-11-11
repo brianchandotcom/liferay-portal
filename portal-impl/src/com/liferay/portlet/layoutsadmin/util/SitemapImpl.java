@@ -172,7 +172,7 @@ public class SitemapImpl implements Sitemap {
 		throws PortalException, SystemException {
 
 		for (Layout layout : layouts) {
-			visitLayout(element, layout,  themeDisplay);
+			visitLayout(element, layout, themeDisplay);
 		}
 	}
 

@@ -74,7 +74,7 @@ public class PortalClientBuilder {
 					serviceName.startsWith("Portlet_")) {
 
 					Wsdl2JavaTask.generateJava(
-						url + "/" +  serviceName + "?wsdl", outputDir,
+						url + "/" + serviceName + "?wsdl", outputDir,
 						mappingFile);
 				}
 			}

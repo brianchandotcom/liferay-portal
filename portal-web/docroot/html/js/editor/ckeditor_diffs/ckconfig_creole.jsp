@@ -27,7 +27,7 @@ String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix")
 String linkButtonBar = "['Link', 'Unlink']";
 
 if (wikiPageResourcePrimKey > 0) {
-	linkButtonBar =  "['Link', 'Unlink', 'Image']";
+	linkButtonBar = "['Link', 'Unlink', 'Image']";
 }
 %>
 

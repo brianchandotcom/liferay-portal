@@ -70,7 +70,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	public Map<Long, String> getClassTypes(long[] groupId) throws Exception {
-		return  null;
+		return null;
 	}
 
 	public String getIconPath(PortletRequest portletRequest) {

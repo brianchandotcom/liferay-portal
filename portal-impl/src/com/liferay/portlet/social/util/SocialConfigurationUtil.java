@@ -415,7 +415,7 @@ public class SocialConfigurationUtil {
 		if (activityCounterDefinition.getOwnerType() == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Invalid owner type " + ownerType + " for  model " +
+					"Invalid owner type " + ownerType + " for model " +
 						activityDefinition.getModelName());
 			}
 

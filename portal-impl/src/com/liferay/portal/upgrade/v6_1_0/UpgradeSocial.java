@@ -254,7 +254,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			sb.append("select activityCounterId, totalValue from ");
 			sb.append("SocialActivityCounter where groupId = ? and ");
-			sb.append("classNameId = ? and classPK = ? and  name = ? and ");
+			sb.append("classNameId = ? and classPK = ? and name = ? and ");
 			sb.append("ownerType = ? and startPeriod = ? and endPeriod = ?");
 
 			ps = con.prepareStatement(sb.toString());
@@ -299,7 +299,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			sb.append("select max(totalValue) as totalValue from ");
 			sb.append("SocialActivityCounter where groupId = ? and ");
-			sb.append("classNameId = ? and classPK = ? and  name = ? and ");
+			sb.append("classNameId = ? and classPK = ? and name = ? and ");
 			sb.append("ownerType = ? and startPeriod < ?");
 
 			ps = con.prepareStatement(sb.toString());

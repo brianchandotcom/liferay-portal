@@ -30,7 +30,7 @@ public class MessageTag extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			String value =  StringPool.BLANK;
+			String value = StringPool.BLANK;
 
 			if (_arguments == null) {
 				value = LanguageUtil.get(pageContext, _key);

@@ -22,7 +22,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class StagingPermissionUtil {
 
-	public static  Boolean hasPermission(
+	public static Boolean hasPermission(
 		PermissionChecker permissionChecker, Group group, String className,
 		long classPK, String portletId, String actionId) {
 

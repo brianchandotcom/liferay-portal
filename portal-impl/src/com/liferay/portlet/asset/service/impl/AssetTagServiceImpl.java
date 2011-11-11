@@ -108,7 +108,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	public int getGroupTagsCount(long groupId)
-		throws  SystemException {
+		throws SystemException {
 
 		return assetTagPersistence.filterCountByGroupId(groupId);
 	}

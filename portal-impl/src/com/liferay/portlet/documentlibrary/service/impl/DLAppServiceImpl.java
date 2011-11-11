@@ -2462,7 +2462,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				toRepository.deleteFileEntry(
 					destinationFileEntry.getFileEntryId());
 
-				throw  pe;
+				throw pe;
 			}
 		}
 
@@ -2682,7 +2682,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		catch (PortalException pe) {
 			toRepository.deleteFolder(newFolder.getFolderId());
 
-			throw  pe;
+			throw pe;
 		}
 
 		try {

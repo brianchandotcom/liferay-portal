@@ -61,7 +61,7 @@ public class GetArticleAction extends Action {
 
 		try {
 			long groupId = ParamUtil.getLong(request, "groupId");
-			String articleId =  ParamUtil.getString(request, "articleId");
+			String articleId = ParamUtil.getString(request, "articleId");
 
 			String languageId = LanguageUtil.getLanguageId(request);
 

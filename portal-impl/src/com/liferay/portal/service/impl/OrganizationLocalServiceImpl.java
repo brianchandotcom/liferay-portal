@@ -1553,7 +1553,7 @@ public class OrganizationLocalServiceImpl
 
 		if (!oldName.equals(name)) {
 			groupLocalService.updateGroup(
-				group.getGroupId(),  name, group.getDescription(),
+				group.getGroupId(), name, group.getDescription(),
 				group.getType(), group.getFriendlyURL(), group.isActive(),
 				null);
 		}

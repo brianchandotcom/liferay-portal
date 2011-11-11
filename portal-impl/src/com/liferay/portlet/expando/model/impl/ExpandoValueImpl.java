@@ -58,7 +58,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		long columnId = getColumnId();
 
 		if (columnId <= 0) {
-			return  null;
+			return null;
 		}
 
 		return ExpandoColumnLocalServiceUtil.getColumn(columnId);

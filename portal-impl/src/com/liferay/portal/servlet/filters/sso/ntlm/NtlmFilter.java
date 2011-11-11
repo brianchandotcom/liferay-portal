@@ -119,16 +119,16 @@ public class NtlmFilter extends BasePortalFilter {
 
 		String domain = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_DOMAIN, PropsValues.NTLM_DOMAIN);
-		String domainController =  PrefsPropsUtil.getString(
+		String domainController = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_DOMAIN_CONTROLLER,
 			PropsValues.NTLM_DOMAIN_CONTROLLER);
-		String domainControllerName =  PrefsPropsUtil.getString(
+		String domainControllerName = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_DOMAIN_CONTROLLER_NAME,
 			PropsValues.NTLM_DOMAIN_CONTROLLER_NAME);
-		String serviceAccount =  PrefsPropsUtil.getString(
+		String serviceAccount = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_SERVICE_ACCOUNT,
 			PropsValues.NTLM_SERVICE_ACCOUNT);
-		String servicePassword =  PrefsPropsUtil.getString(
+		String servicePassword = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_SERVICE_PASSWORD,
 			PropsValues.NTLM_SERVICE_PASSWORD);
 

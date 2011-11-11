@@ -67,7 +67,7 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 	List<String> activityDefinitionLanguageKeys = new ArrayList<String>();
 
 	for (String modelName : activitySettingsMap.keySet()) {
-		List<SocialActivityDefinition> activityDefinitions  = SocialConfigurationUtil.getActivityDefinitions(modelName);
+		List<SocialActivityDefinition> activityDefinitions = SocialConfigurationUtil.getActivityDefinitions(modelName);
 
 		for (SocialActivityDefinition activityDefinition : activityDefinitions) {
 			activityDefinitionLanguageKeys.add("'" + modelName + "." + activityDefinition.getLanguageKey() + "': '" + activityDefinition.getName(locale) + "'");

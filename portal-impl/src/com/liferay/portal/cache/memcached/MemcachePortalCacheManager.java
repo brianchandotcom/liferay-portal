@@ -52,7 +52,7 @@ public class MemcachePortalCacheManager implements PortalCacheManager {
 
 		if (memcachePortalCache == null) {
 			try {
-				MemcachedClientIF memcachedClient  =
+				MemcachedClientIF memcachedClient =
 					_memcachedClientFactory.getMemcachedClient();
 
 				memcachePortalCache = new MemcachePortalCache(

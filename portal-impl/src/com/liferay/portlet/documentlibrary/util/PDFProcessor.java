@@ -592,7 +592,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 				return true;
 			}
 		}
-		else  if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && previewExists) {
+		else if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && previewExists) {
 			return true;
 		}
 		else if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&

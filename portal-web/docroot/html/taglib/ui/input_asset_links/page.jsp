@@ -40,7 +40,7 @@ if (Validator.isNull(assetLinkSearchContainerPrimaryKeys) && SessionErrors.isEmp
 else {
 	String[] assetEntriesPrimaryKeys = StringUtil.split(assetLinkSearchContainerPrimaryKeys);
 
-	for (String assetEntryPrimaryKey :  assetEntriesPrimaryKeys) {
+	for (String assetEntryPrimaryKey : assetEntriesPrimaryKeys) {
 		long assetEntryId = GetterUtil.getLong(assetEntryPrimaryKey);
 
 		AssetEntry assetEntry2 = AssetEntryServiceUtil.getEntry(assetEntryId);

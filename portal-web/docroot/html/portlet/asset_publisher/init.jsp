@@ -115,8 +115,6 @@ long assetVocabularyId = GetterUtil.getLong(preferences.getValue("assetVocabular
 
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
-long filterCategoryId = ParamUtil.getLong(request, "filterCategoryId");
-
 String assetCategoryTitle = null;
 String assetVocabularyTitle = null;
 
@@ -139,8 +137,6 @@ if (assetCategoryId > 0) {
 }
 
 String assetTagName = ParamUtil.getString(request, "tag");
-
-String filterTagName = ParamUtil.getString(request, "filterTagName");
 
 if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};

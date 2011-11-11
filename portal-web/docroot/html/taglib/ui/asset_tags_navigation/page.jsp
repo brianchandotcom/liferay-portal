@@ -143,6 +143,7 @@ private String _buildTagsNavigation(long groupId, String selectedTagName, Portle
 		}
 		else {
 			portletURL.setParameter("tag", tagName);
+			portletURL.setParameter("resetCur", Boolean.TRUE.toString());
 
  			sb.append("<a href=\"");
 		}

@@ -266,6 +266,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -372,6 +373,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -441,6 +443,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -470,6 +473,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -522,6 +526,7 @@
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
 		<supported-public-render-parameter>nodeId</supported-public-render-parameter>
 		<supported-public-render-parameter>nodeName</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 		<supported-public-render-parameter>title</supported-public-render-parameter>
 	</portlet>
@@ -1360,6 +1365,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -1498,6 +1504,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -1705,6 +1712,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>124</portlet-name>
@@ -1971,6 +1979,7 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -2144,6 +2153,7 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -2549,6 +2559,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -2605,6 +2616,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -2950,6 +2962,10 @@
 	<public-render-parameter>
 		<identifier>tag</identifier>
 		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:tag</qname>
+	</public-render-parameter>
+	<public-render-parameter>
+		<identifier>resetCur</identifier>
+		<qname xmlns:w="http://www.liferay.com/public-render-parameters">w:resetCur</qname>
 	</public-render-parameter>
 	<public-render-parameter>
 		<identifier>nodeId</identifier>

@@ -964,6 +964,16 @@ public class SourceFormatter {
 			line = _replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
 
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (trimmedLine.contains(StringPool.TAB) &&
+				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				!trimmedLine.startsWith(StringPool.STAR)) {
+
+				line = StringUtil.replaceLast(
+					line, StringPool.TAB, StringPool.SPACE);
+			}
+
 			sb.append(line);
 			sb.append("\n");
 
@@ -972,16 +982,6 @@ public class SourceFormatter {
 					_sourceFormatterHelper.printError(
 						fileName, "tab: " + fileName + " " + lineCount);
 				}
-			}
-
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			if (trimmedLine.contains(StringPool.TAB) &&
-				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
-				!trimmedLine.startsWith(StringPool.STAR)) {
-
-				_sourceFormatterHelper.printError(
-					fileName, "tab: " + fileName + " " + lineCount);
 			}
 
 			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
@@ -1268,8 +1268,8 @@ public class SourceFormatter {
 				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
 
-				_sourceFormatterHelper.printError(
-					fileName, "tab: " + fileName + " " + lineCount);
+				line = StringUtil.replaceLast(
+					line, StringPool.TAB, StringPool.SPACE);
 			}
 
 			int x = line.indexOf("<%@ include file");

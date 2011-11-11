@@ -149,6 +149,80 @@ pageContext.setAttribute("portletURL", portletURL);
 			sb.append("<br />");
 			sb.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
 		}
+		else {
+			boolean organizationUser = false;
+
+			LinkedHashMap organizationParams = new LinkedHashMap();
+
+			organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
+
+			List<Organization> organizationsGroups = OrganizationLocalServiceUtil.search(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			List<String> names = new ArrayList<String>();
+
+			for (Organization organization : organizationsGroups) {
+				for (long userOrganizationId : user.getOrganizationIds()) {
+					if (userOrganizationId == organization.getOrganizationId()) {
+						names.add(organization.getName());
+
+						organizationUser = true;
+					}
+				}
+			}
+
+			row.setParameter("organizationUser", organizationUser);
+
+			boolean userGroupUser = false;
+
+			LinkedHashMap userGroupParams = new LinkedHashMap();
+
+			userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
+
+			List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), null, null, userGroupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (UserGroup userGroup : userGroupsGroups) {
+				for (long userGroupId : user.getUserGroupIds()) {
+					if (userGroupId == userGroup.getUserGroupId()) {
+						names.add(userGroup.getName());
+
+						userGroupUser = true;
+					}
+				}
+			}
+
+			row.setParameter("userGroupUser", userGroupUser);
+
+			String iconHelpMessage = StringPool.BLANK;
+
+			if (organizationUser || userGroupUser) {
+                StringBundler namesString = new StringBundler();
+                
+                for (int j = 0; j < (names.size() - 1); j++) {
+                    namesString.append(names.get(j));
+
+                    if (j < (names.size() - 2)) {
+                        namesString.append(StringPool.COMMA);
+                    }
+                }
+
+                if (names.size() == 1) {
+                    iconHelpMessage = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[]{HtmlUtil.escape(group.getDescriptiveName()), names.get(0)});
+                }
+				else {
+                    iconHelpMessage = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName()), namesString, names.get(names.size() - 1)});
+                }
+			}
+			%>
+
+			<liferay-util:buffer var="iconHelpTaglib">
+				<liferay-ui:icon-help message="<%= iconHelpMessage %>" />
+			</liferay-util:buffer>
+
+		<%
+			if (Validator.isNotNull(iconHelpMessage)) {
+				sb.append(iconHelpTaglib);
+			}
+		}
 
 		row.addText(sb.toString());
 

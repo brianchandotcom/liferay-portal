@@ -1028,7 +1028,7 @@
 	</library>
 	<library>
 		<file-name>portal/aspectj-rt.jar</file-name>
-		<version>1.6.8</version>
+		<version>1.6.6</version>
 		<project-name>AspectJ</project-name>
 		<project-url>http://www.eclipse.org/aspectj</project-url>
 		<licenses>
@@ -1039,7 +1039,7 @@
 	</library>
 	<library>
 		<file-name>portal/aspectj-weaver.jar</file-name>
-		<version>1.6.8</version>
+		<version>1.6.6</version>
 		<project-name>AspectJ</project-name>
 		<project-url>http://www.eclipse.org/aspectj</project-url>
 		<licenses>
@@ -1049,6 +1049,8 @@
 		</licenses>
 		<comments>
 			Removed testdata.* because it conflicts with JBoss 5.1.
+			Version 1.6.6 is required to prevent issue with JBoss 7. Do not
+			upgrade until aspectj issue is fixed see LPS-23053.
 		</comments>
 	</library>
 	<library>

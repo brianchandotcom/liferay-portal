@@ -485,7 +485,9 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 		java.util.List<com.liferay.portal.model.Organization> availableOrganizations);
 
 	/**
-	* Returns all the organizations associated with the user.
+	* Returns all the organizations associated with the user, optionally
+	* including the organizations associated with the user groups to which the
+	* user belongs.
 	*
 	* @param userId the primary key of the user
 	* @return the organizations associated with the user
@@ -499,56 +501,9 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the organizations associated with the user, optionally
-	* including the organizations associated with the user groups to which the
-	* user belongs.
-	*
-	* @param userId the primary key of the user
-	* @param inheritUserGroups whether to include organizations associated
-	with the user groups to which the user belongs
-	* @return the organizations associated with the user
-	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, boolean inheritUserGroups)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns a range of all the organizations associated with the user,
 	* optionally including the organizations associated with the user groups to
 	* which the user belongs.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param inheritUserGroups whether to include organizations associated
-	with the user groups to which the user belongs
-	* @param start the lower bound of the range of organizations to return
-	* @param end the upper bound of the range of organizations to return (not
-	inclusive)
-	* @return the range organizations associated with the user
-	* @throws PortalException if a user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, boolean inheritUserGroups, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the organizations associated with the user.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -638,19 +593,13 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 	*
 	* <ol>
 	* <li>
-	* If <code>inheritSuborganizations=<code>false</code></code> and
-	* <code>inheritUserGroups=<code>false</code></code>: the method checks
-	* whether the user
-	* belongs to the organization specified by <code>organizationId</code>. The
-	* parameter
+	* If <code>inheritSuborganizations=<code>false</code></code>:
+	* the method checks whether the user belongs to the organization specified
+	* by <code>organizationId</code>. The parameter
 	* <code>includeSpecifiedOrganization</code> is ignored.
 	* </li>
 	* <li>
-	* If <code>inheritUserGroups=<code>true</code></code>: the method checks
-	* whether the
-	* user belongs to a user group which has been made as a whole member of the
-	* the organization specified by <code>organizationId</code>. The parameter
-	* <code>includeSpecifiedOrganization</code> is
+	* The parameter <code>includeSpecifiedOrganization</code> is
 	* ignored unless <code>inheritSuborganizations</code> is also
 	* <code>true</code>.
 	* </li>
@@ -677,9 +626,6 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 	* @param organizationId the primary key of the organization
 	* @param inheritSuborganizations if <code>true</code> sub-organizations
 	are considered in the determination
-	* @param inheritUserGroups if <code>true</code> organizations inherited
-	from the user groups to which the user belongs are considered in
-	the determination
 	* @param includeSpecifiedOrganization if <code>true</code> the
 	organization specified by <code>organizationId</code> is
 	considered in the determination.
@@ -692,8 +638,7 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserOrganization(long userId, long organizationId,
-		boolean inheritSuborganizations, boolean inheritUserGroups,
-		boolean includeSpecifiedOrganization)
+		boolean inheritSuborganizations, boolean includeSpecifiedOrganization)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

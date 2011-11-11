@@ -56,7 +56,7 @@ String type = displayTerms.getType();
 
 		<aui:select label="region" name="<%= displayTerms.REGION_ID %>" />
 
-		<aui:input name="<%= displayTerms.ZIP %>" label="postal-code" size="20" type="text" value="<%= displayTerms.getZip() %>" /> 
+		<aui:input label="postal-code" name="<%= displayTerms.ZIP %>" size="20" type="text" value="<%= displayTerms.getZip() %>" /> 
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 

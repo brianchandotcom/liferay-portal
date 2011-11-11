@@ -96,15 +96,23 @@ public class SearchContainer<R> {
 
 		_curParam = curParam;
 
-		if (cur < 1) {
-			_cur = ParamUtil.getInteger(portletRequest, _curParam, DEFAULT_CUR);
+		boolean resetCur = ParamUtil.getBoolean(portletRequest, "resetCur");
 
-			if (_cur < 1) {
-				_cur = DEFAULT_CUR;
-			}
+		if (resetCur) {
+			_cur = DEFAULT_CUR;
 		}
 		else {
-			_cur = cur;
+			if (cur < 1) {
+				_cur = ParamUtil.getInteger(
+					portletRequest, _curParam, DEFAULT_CUR);
+
+				if (_cur < 1) {
+					_cur = DEFAULT_CUR;
+				}
+			}
+			else {
+				_cur = cur;
+			}
 		}
 
 		if (!_curParam.equals(DEFAULT_CUR_PARAM)) {

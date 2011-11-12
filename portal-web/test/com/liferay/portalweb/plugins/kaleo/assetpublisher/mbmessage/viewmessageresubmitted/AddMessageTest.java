@@ -143,6 +143,6 @@ public class AddMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

@@ -44,7 +44,7 @@ public class ViewMessageResubmittedTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Message Boards Message Subject"));
 		assertFalse(selenium.isTextPresent("Message Boards Message Body"));
 		selenium.open("/web/guest/home/");

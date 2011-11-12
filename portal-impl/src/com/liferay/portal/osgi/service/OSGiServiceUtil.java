@@ -53,6 +53,8 @@ import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
@@ -374,14 +376,8 @@ public class OSGiServiceUtil {
 		_framework.start();
 	}
 
-	private void _registerContext(Object context) {
-		if ((context == null) || !(context instanceof ApplicationContext) ||
-			!PropsValues.OSGI_REGISTER_LIFERAY_SERVICES) {
-
-			return;
-		}
-
-		ApplicationContext applicationContext = (ApplicationContext)context;
+	private void _registerApplicationContext(
+		ApplicationContext applicationContext) {
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
@@ -401,6 +397,38 @@ public class OSGiServiceUtil {
 				_registerService(bundleContext, beanName, bean);
 			}
 		}
+	}
+
+	private void _registerContext(Object context) {
+		if (context == null) {
+			return;
+		}
+
+		if ((context instanceof ApplicationContext) &&
+			PropsValues.OSGI_REGISTER_LIFERAY_SERVICES) {
+
+			ApplicationContext applicationContext = (ApplicationContext)context;
+
+			_registerApplicationContext(applicationContext);
+		}
+		else if (context instanceof ServletContext) {
+			ServletContext servletContext = (ServletContext)context;
+
+			_registerServletContext(servletContext);
+		}
+	}
+
+	private void _registerServletContext(ServletContext servletContext) {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(OSGiConstants.BEAN_ID, ServletContext.class.getName());
+		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
+
+		bundleContext.registerService(
+			new String[] {ServletContext.class.getName()}, servletContext,
+			properties);
 	}
 
 	private void _registerService(

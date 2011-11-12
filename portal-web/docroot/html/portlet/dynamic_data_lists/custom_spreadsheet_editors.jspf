@@ -149,11 +149,11 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					value: null
 				},
 
-				recordSet: {
+				recordset: {
 					value: null
 				},
 
-				recordSetId: {
+				recordsetId: {
 					value: null
 				},
 
@@ -170,11 +170,11 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					var fieldName = instance.get('elementName');
 					var record = instance.get('record');
-					var recordSet = instance.get('recordSet');
+					var recordset = instance.get('recordset');
 
 					instance.set('value', '');
 
-					recordSet.updateRecordDataByKey(record, fieldName, '');
+					recordset.updateRecordDataByKey(record, fieldName, '');
 
 					instance.hide();
 				},
@@ -185,17 +185,18 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					return instance.get('value');
 				},
 
-				uploadFile: function() {
+				uploadFile: function(callback) {
 					var instance = this;
 
+					var elementName = instance.get('elementName');
 					var record = instance.get('record');
 					var recordData = record.get('data');
+					var recordset = instance.get('recordset');
 
 					var portletURL = Liferay.PortletURL.createResourceURL();
 
-					portletURL.setParameter('<%= Constants.CMD %>', '<%= Constants.UPDATE %>');
 					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
-					portletURL.setParameter('fieldName', instance.get('elementName'));
+					portletURL.setParameter('fieldName', elementName);
 					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 					portletURL.setParameter('recordId', recordData.recordId);
 					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
@@ -204,10 +205,44 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					portletURL.setWindowState('pop_up');
 
-					instance._submitForm(
-						portletURL,
-						function(xhr) {
-							instance._onUploadFile.call(instance, xhr);
+					var uri = portletURL.toString();
+
+					var form = instance.get('contentBox');
+
+					// form.attr('action', uri);
+
+					A.io.request(
+						uri,
+						{
+							dataType: 'json',
+							form: {
+								id: form,
+								upload: true
+							},
+							method: 'POST',
+							on: {
+								complete: function(event, id, xhr) {
+									var responseText = xhr.responseText;
+									var data = A.JSON.parse(responseText);
+
+									if (data) {
+										var exception = data.exception;
+
+										if (exception) {
+											instance._handleException(exception);
+										}
+										else {
+											recordset.updateRecordDataByKey(record, elementName, responseText);
+
+											instance.set('value', responseText);
+
+											if (callback) {
+												callback.apply(instance, arguments);
+											}
+										}
+									}
+								}
+							}
 						}
 					);
 				},
@@ -245,48 +280,52 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					if (exception.indexOf('com.liferay.portlet.documentlibrary.FileSizeException') > -1) {
 						errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
 					}
+					else {
+						errorMessage = '<liferay-ui:message key="an-unexpected-error-occurred" />';
+					}
 
 					instance._showErrorMessage(errorMessage);
 				},
 
-				_handleSaveEvent: function(event) {
+				_onSubmit: function(event) {
 					var instance = this;
 
 					var record = instance.get('record');
 					var recordData = record.get('data');
-					var recordSet = instance.get('recordSet');
-					var displayIndex = recordSet.getRecordIndex(record);
-					var recordSetId = instance.get('recordSetId');
+					var recordset = instance.get('recordset');
+					var displayIndex = recordset.getRecordIndex(record);
+					var recordsetId = instance.get('recordsetId');
+
+					var validator = event.validator;
+
+					if (validator) {
+						validator.formEvent.halt();
+					}
 
 					if (!recordData.recordId) {
 						Liferay.SpreadSheet.addRecord(
-							recordSetId,
+							recordsetId,
 							displayIndex,
 							{},
 							function(response) {
-								if (response.recordId > 0) {
-									recordData.recordId = response.recordId;
+								var exception = response.exception;
 
-									instance.uploadFile();
+								if (exception) {
+									instance._handleException(exception);
+								}
+								else {
+									if (response.recordId > 0) {
+										recordData.recordId = response.recordId;
+
+										instance.uploadFile(instance._handleSaveEvent);
+									}
 								}
 							}
 						);
 					}
 					else {
-						instance.uploadFile();
+						instance.uploadFile(instance._handleSaveEvent);
 					}
-				},
-
-				_onUploadFile: function(response) {
-					var instance = this;
-
-					var fieldName = instance.get('elementName');
-					var record = instance.get('record');
-					var recordSet = instance.get('recordSet');
-
-					instance.set('value', response);
-
-					recordSet.updateRecordDataByKey(record, fieldName, response);
 				},
 
 				_showErrorMessage: function(errorMessage) {
@@ -299,49 +338,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					contentBox.prepend(messageNode);
 
 					setTimeout(A.fn('remove', messageNode, null), 5000);
-				},
-
-				_submitForm: function(portletURL, callback) {
-					var instance = this;
-
-					var form = instance.get('contentBox');
-
-					var uri = portletURL.toString();
-
-					form.attr('action', uri);
-
-					A.io.request(
-						uri,
-						{
-							dataType: 'json',
-							form: {
-								id: form,
-								upload: true
-							},
-							method: 'POST',
-							on: {
-								complete: function(event, id, xhr) {
-									var responseText = xhr.responseText;
-
-									if (responseText) {
-										var data = A.JSON.parse(responseText);
-										var exception = data.exception;
-
-										if (!exception) {
-											if (callback) {
-												callback.call(instance, responseText);
-											}
-
-											instance.hide();
-										}
-										else {
-											instance._handleException(exception);
-										}
-									}
-								}
-							}
-						}
-					);
 				},
 
 				_syncElementsFocus: function() {
@@ -365,41 +361,36 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					var toolbar = instance.toolbar;
 
-					var fieldName = instance.get('elementName');
-					var structure = instance.get('structure');
-
-					var toolbarIndex = 1;
-
 					if (toolbar) {
-						if (val) {
+						if (!val) {
+							toolbar.remove('deleteEvent');
+							toolbar.remove('downloadEvent');
+						}
+						else {
+							toolbar.add(
+								{
+									handler: A.bind(instance._handleDownloadEvent, instance),
+									id: 'downloadEvent',
+									label: '<liferay-ui:message key="download" />'
+								}
+							);
+
+							var structure = instance.get('structure');
+
 							if (structure) {
+								var fieldName = instance.get('elementName');
 								var structureField = Liferay.SpreadSheet.findStructureFieldByAttribute(structure, 'name', fieldName);
 
 								if (structureField.required === 'false') {
 									toolbar.add(
 										{
 											handler: A.bind(instance._handleDeleteEvent, instance),
-											icon: 'close',
 											id: 'deleteEvent',
 											label: '<liferay-ui:message key="delete" />'
-										},
-										toolbarIndex++
+										}
 									);
 								}
 							}
-
-							toolbar.add(
-								{
-									handler: A.bind(instance._handleDownloadEvent, instance),
-									id: 'downloadEvent',
-									label: '<liferay-ui:message key="download" />'
-								},
-								toolbarIndex
-							);
-						}
-						else {
-							toolbar.remove('deleteEvent');
-							toolbar.remove('downloadEvent');
 						}
 					}
 				}

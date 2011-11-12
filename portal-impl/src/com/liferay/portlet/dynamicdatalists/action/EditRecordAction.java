@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -42,7 +41,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.portlet.ActionRequest;
@@ -180,16 +178,18 @@ public class EditRecordAction extends PortletAction {
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 			String fieldValue = ParamUtil.getString(actionRequest, fieldName);
 
-			if (!fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
-				Serializable fieldValueSerializable =
-					FieldConstants.getSerializable(fieldDataType, fieldValue);
-
-				Field field = new Field(
-					ddmStructure.getStructureId(), fieldName,
-					fieldValueSerializable);
-
-				fields.put(field);
+			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
+				continue;
 			}
+
+			Serializable fieldValueSerializable =
+				FieldConstants.getSerializable(fieldDataType, fieldValue);
+
+			Field field = new Field(
+				ddmStructure.getStructureId(), fieldName,
+				fieldValueSerializable);
+
+			fields.put(field);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -211,25 +211,8 @@ public class EditRecordAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		InputStream inputStream = null;
-
-		for (String fieldName : ddmStructure.getFieldNames()) {
-			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
-
-			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
-				try {
-					inputStream = uploadPortletRequest.getFileAsStream(
-						fieldName, true);
-
-					DDLUtil.uploadRecordFieldFile(
-						record, fieldName, inputStream, uploadPortletRequest,
-						serviceContext);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
-			}
-		}
+		DDLUtil.uploadRecordFieldFiles(
+			record, uploadPortletRequest, serviceContext);
 
 		return record;
 	}

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -248,7 +249,7 @@ public class DDLUtil {
 			template.getScript(), template.getLanguage());
 	}
 
-	protected static String storeRecordFieldFile(
+	public static String storeRecordFieldFile(
 			DDLRecord record, String fieldName, InputStream inputStream)
 		throws Exception {
 
@@ -279,7 +280,7 @@ public class DDLUtil {
 	}
 
 	public static void uploadRecordFieldFile(
-			DDLRecord record, String fieldName, InputStream inputStream,
+			DDLRecord record, String fieldName,
 			UploadPortletRequest uploadPortletRequest,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -291,37 +292,63 @@ public class DDLUtil {
 
 		String fileName = uploadPortletRequest.getFileName(fieldName);
 
-		Field oldField = record.getField(fieldName);
+		Field field = record.getField(fieldName);
 		String fieldValue = StringPool.BLANK;
 
-		if (oldField != null) {
-			fieldValue = String.valueOf(oldField.getValue());
+		if (field != null) {
+			fieldValue = String.valueOf(field.getValue());
 		}
 
-		if (inputStream != null) {
-			String filePath = storeRecordFieldFile(
-				record, fieldName, inputStream);
+		InputStream inputStream = null;
 
-			JSONObject recordFileJSONObject =
-				JSONFactoryUtil.createJSONObject();
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream(fieldName, true);
 
-			recordFileJSONObject.put("name", fileName);
-			recordFileJSONObject.put("path", filePath);
-			recordFileJSONObject.put(
-				"recordId", record.getRecordId());
+			if (inputStream != null) {
+				String filePath = storeRecordFieldFile(
+					record, fieldName, inputStream);
 
-			fieldValue = recordFileJSONObject.toString();
+				JSONObject recordFileJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				recordFileJSONObject.put("name", fileName);
+				recordFileJSONObject.put("path", filePath);
+				recordFileJSONObject.put("recordId", record.getRecordId());
+
+				fieldValue = recordFileJSONObject.toString();
+			}
+
+			field = new Field(
+				ddmStructure.getStructureId(), fieldName, fieldValue);
+
+			fields.put(field);
+
+			DDLRecordVersion recordVersion = record.getLatestRecordVersion();
+
+			StorageEngineUtil.update(
+				recordVersion.getDDMStorageId(), fields, true, serviceContext);
 		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
 
-		Field field = new Field(
-			ddmStructure.getStructureId(), fieldName, fieldValue);
+	public static void uploadRecordFieldFiles(
+			DDLRecord record, UploadPortletRequest uploadPortletRequest,
+			ServiceContext serviceContext)
+		throws Exception {
 
-		fields.put(field);
+		DDLRecordSet recordSet = record.getRecordSet();
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
+		for (String fieldName : ddmStructure.getFieldNames()) {
+			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 
-		StorageEngineUtil.update(
-			recordVersion.getDDMStorageId(), fields, true, serviceContext);
+			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
+				DDLUtil.uploadRecordFieldFile(
+					record, fieldName, uploadPortletRequest, serviceContext);
+			}
+		}
 	}
 
 	private static Transformer _transformer = new DDLTransformer();

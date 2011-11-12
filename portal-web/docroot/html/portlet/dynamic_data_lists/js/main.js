@@ -117,7 +117,7 @@ AUI().add(
 						var column = event.column;
 						var record = event.record;
 
-						var recordSet = instance.get('recordset');
+						var recordset = instance.get('recordset');
 						var recordsetId = instance.get('recordsetId');
 						var structure = instance.get('structure');
 
@@ -125,7 +125,7 @@ AUI().add(
 
 						if (editor) {
 							editor.set('record', record);
-							editor.set('recordSet', recordSet);
+							editor.set('recordset', recordset);
 							editor.set('recordsetId', recordsetId);
 							editor.set('structure', structure);
 						}
@@ -338,8 +338,8 @@ AUI().add(
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								config.validator.rules[name] = {
-										acceptFiles: structureField.acceptFiles,
-										requiredFields: true
+									acceptFiles: structureField.acceptFiles,
+									requiredFields: true
 								};
 							}
 							else if ((type === 'radio') || (type === 'select')) {

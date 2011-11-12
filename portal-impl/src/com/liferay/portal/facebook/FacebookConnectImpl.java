@@ -189,6 +189,14 @@ public class FacebookConnectImpl implements FacebookConnect {
 			PropsValues.FACEBOOK_CONNECT_AUTH_ENABLED);
 	}
 
+	public boolean isVerifiedAccountRequired(long companyId)
+		throws SystemException {
+
+		return PrefsPropsUtil.getBoolean(
+			companyId, PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED,
+			PropsValues.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED);
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(FacebookConnectImpl.class);
 
 }

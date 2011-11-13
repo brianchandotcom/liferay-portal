@@ -1576,7 +1576,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
-		return dlFileEntry;
+		return dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 	}
 
 	protected void updateFileVersion(

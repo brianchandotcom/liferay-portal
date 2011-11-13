@@ -155,6 +155,11 @@ public class OrganizationLocalServiceImpl
 
 		organization.setCompanyId(user.getCompanyId());
 		organization.setParentOrganizationId(parentOrganizationId);
+
+		String treePath = organization.buildTreePath();
+
+		organization.setTreePath(treePath);
+
 		organization.setName(name);
 		organization.setType(type);
 		organization.setRecursable(recursable);

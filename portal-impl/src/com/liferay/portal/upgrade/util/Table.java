@@ -479,7 +479,7 @@ public class Table {
 				if ((values.length) != (columns.length)) {
 					throw new UpgradeException(
 						"Column lengths differ between temp file and schema. " +
-							"Attempted to insert row " + line  + ".");
+							"Attempted to insert row " + line + ".");
 				}
 
 				if (count == 0) {

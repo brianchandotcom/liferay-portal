@@ -1001,7 +1001,7 @@ public class ShoppingUtil {
 		if (!item.isFields()) {
 			int stockQuantity = item.getStockQuantity();
 
-			if ((stockQuantity > 0)  &&
+			if ((stockQuantity > 0) &&
 				(stockQuantity >= orderedQuantity.intValue())) {
 
 				return true;

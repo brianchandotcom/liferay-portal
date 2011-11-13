@@ -370,7 +370,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			sb.append("groupId, DLFolder.companyId as companyId, ");
 			sb.append("DLFolder.createDate as createDate, ");
 			sb.append("DLFolder.parentFolderId as parentFolderId, 'folder' ");
-			sb.append("as type  from DLFolder");
+			sb.append("as type from DLFolder");
 
 			String sql = sb.toString();
 

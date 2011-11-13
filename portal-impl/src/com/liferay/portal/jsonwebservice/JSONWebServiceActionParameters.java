@@ -348,7 +348,7 @@ public class JSONWebServiceActionParameters {
 
 				value = null;
 			}
-			else  if (key.startsWith(StringPool.PLUS)) {
+			else if (key.startsWith(StringPool.PLUS)) {
 				key = key.substring(1);
 
 				int pos = key.indexOf(CharPool.COLON);

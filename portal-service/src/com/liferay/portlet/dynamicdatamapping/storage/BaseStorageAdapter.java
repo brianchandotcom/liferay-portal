@@ -259,7 +259,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws Exception;
 
-	protected abstract  List<Fields> doQuery(
+	protected abstract List<Fields> doQuery(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
 			OrderByComparator orderByComparator)
 		throws Exception;

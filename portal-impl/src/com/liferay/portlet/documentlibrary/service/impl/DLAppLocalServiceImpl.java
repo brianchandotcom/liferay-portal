@@ -1672,7 +1672,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				toLocalRepository.deleteFileEntry(
 					destinationFileEntry.getFileEntryId());
 
-				throw  pe;
+				throw pe;
 			}
 		}
 

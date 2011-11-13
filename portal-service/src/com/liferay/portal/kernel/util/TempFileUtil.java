@@ -186,7 +186,7 @@ public class TempFileUtil {
 	public static String[] getTempFileEntryNames(String tempPathName) {
 		File dir = new File(getTempAbsolutePath(tempPathName));
 
-		File[] files =  dir.listFiles(
+		File[] files = dir.listFiles(
 			new FileFilter(_SUFFIX_TEMP_FILENAME_REGEX));
 
 		String[] fileNames = new String[files.length];

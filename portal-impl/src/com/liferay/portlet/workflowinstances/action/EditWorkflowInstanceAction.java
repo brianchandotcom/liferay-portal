@@ -128,7 +128,7 @@ public class EditWorkflowInstanceAction extends PortletAction {
 			workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
 		long groupId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
-		String className =  GetterUtil.getString(
+		String className = GetterUtil.getString(
 			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
 		long classPK = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));

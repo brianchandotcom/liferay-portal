@@ -966,12 +966,28 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			if (trimmedLine.contains(StringPool.TAB) &&
-				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
 
-				line = StringUtil.replaceLast(
-					line, StringPool.TAB, StringPool.SPACE);
+				while (trimmedLine.contains(StringPool.TAB)) {
+					line = StringUtil.replaceLast(
+						line, StringPool.TAB, StringPool.SPACE);
+
+					trimmedLine = StringUtil.replaceLast(
+						trimmedLine, StringPool.TAB, StringPool.SPACE);
+				}
+
+				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
+					   !trimmedLine.contains(
+						   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
+					   !fileName.contains("Test")) {
+
+					line = StringUtil.replaceLast(
+						line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+
+					trimmedLine = StringUtil.replaceLast(
+						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+				}
 			}
 
 			sb.append(line);
@@ -1264,12 +1280,28 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			if (trimmedLine.contains(StringPool.TAB) &&
-				!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
 
-				line = StringUtil.replaceLast(
-					line, StringPool.TAB, StringPool.SPACE);
+				while (trimmedLine.contains(StringPool.TAB)) {
+					line = StringUtil.replaceLast(
+						line, StringPool.TAB, StringPool.SPACE);
+
+					trimmedLine = StringUtil.replaceLast(
+						trimmedLine, StringPool.TAB, StringPool.SPACE);
+				}
+
+				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
+					   !trimmedLine.contains(
+						   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
+					   !fileName.endsWith(".vm")) {
+
+					line = StringUtil.replaceLast(
+						line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+
+					trimmedLine = StringUtil.replaceLast(
+						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+				}
 			}
 
 			int x = line.indexOf("<%@ include file");

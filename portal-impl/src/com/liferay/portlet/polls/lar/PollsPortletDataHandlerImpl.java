@@ -261,7 +261,7 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 		PollsQuestion importedQuestion = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			PollsQuestion existingQuestion =  PollsQuestionUtil.fetchByUUID_G(
+			PollsQuestion existingQuestion = PollsQuestionUtil.fetchByUUID_G(
 				question.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingQuestion == null) {

@@ -923,8 +923,8 @@ public class BaseDeployer implements Deployer {
 		String prefix = "auto.deploy." + ServerDetector.getServerId() + ".jee.";
 
 		String dmId = PropsUtil.get(prefix + "dm.id");
-		String dmUser =  PropsUtil.get(prefix + "dm.user");
-		String dmPassword =  PropsUtil.get(prefix + "dm.passwd");
+		String dmUser = PropsUtil.get(prefix + "dm.user");
+		String dmPassword = PropsUtil.get(prefix + "dm.passwd");
 		String dfClassName = PropsUtil.get(prefix + "df.classname");
 
 		return new DeploymentHandler(dmId, dmUser, dmPassword, dfClassName);

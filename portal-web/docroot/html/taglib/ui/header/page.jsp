@@ -34,7 +34,7 @@ String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : ti
 %>
 
 <div class="taglib-header <%= (cssClass != null) ? cssClass : "" %>">
-	<c:if test="<%= showBackURL && Validator.isNotNull(backURL)  %>">
+	<c:if test="<%= showBackURL && Validator.isNotNull(backURL) %>">
 		<span class="header-back-to">
 			<a href="<%= backURL %>" id="<%= namespace %>TabsBack"><%= backLabel %></a>
 		</span>

@@ -1364,7 +1364,7 @@ public class StringUtil {
 
 				lastIndex = returnIndex + 1;
 			}
-			else  if (newLineIndex < returnIndex) {
+			else if (newLineIndex < returnIndex) {
 				lines.add(s.substring(lastIndex, newLineIndex));
 
 				lastIndex = newLineIndex + 1;

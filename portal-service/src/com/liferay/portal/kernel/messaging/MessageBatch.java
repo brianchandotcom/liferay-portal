@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Michael C. Han
  */
-public class MessageBatch  implements Serializable {
+public class MessageBatch implements Serializable {
 
 	public MessageBatch(int initialSize) {
 		this(null, initialSize);

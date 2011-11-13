@@ -149,7 +149,7 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 	@Override
 	public Object uniqueResult() throws ORMException {
 		try {
-			Object object =  sessionImpl.uniqueResult(
+			Object object = sessionImpl.uniqueResult(
 				queryString, positionalParameterMap, namedParameterMap,
 				strictName, firstResult, maxResults, flushModeType,
 				lockModeType, sqlQuery, entityClass);

@@ -145,7 +145,7 @@ public class NtlmManager {
 	protected byte[] getTargetInformation() throws UnsupportedEncodingException{
 		byte[] computerName = getAVPairBytes(
 			1, _ntlmServiceAccount.getComputerName());
-		byte[] domainName =  getAVPairBytes(2, _domain);
+		byte[] domainName = getAVPairBytes(2, _domain);
 
 		byte[] targetInformation = ArrayUtil.append(computerName, domainName);
 

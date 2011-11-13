@@ -210,7 +210,7 @@ public class EditDiscussionAction extends PortletAction {
 				}
 
 				if (user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-					return  null;
+					return null;
 				}
 			}
 

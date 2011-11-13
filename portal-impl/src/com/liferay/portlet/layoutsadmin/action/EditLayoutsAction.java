@@ -719,7 +719,7 @@ public class EditLayoutsAction extends PortletAction {
 		}
 		else if (group != null) {
 			String oldPath = group.getFriendlyURL() + oldLayoutFriendlyURL;
-			String newPath =  group.getFriendlyURL();
+			String newPath = group.getFriendlyURL();
 
 			return PortalUtil.updateRedirect(
 				closeRedirect, oldPath, newPath);

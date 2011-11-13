@@ -470,7 +470,7 @@ public class SampleSQLBuilder {
 			public void run() {
 				try {
 					_writerSampleSQL = new UnsyncTeeWriter(
-						writer, createFileWriter(_outputDir +  "/sample.sql"));
+						writer, createFileWriter(_outputDir + "/sample.sql"));
 
 					createSample();
 

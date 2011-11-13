@@ -140,7 +140,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	public long getLastGeneration() {
-		if (_countDownLatch.getCount() >  0) {
+		if (_countDownLatch.getCount() > 0) {
 			return DEFAULT_LAST_GENERATION;
 		}
 

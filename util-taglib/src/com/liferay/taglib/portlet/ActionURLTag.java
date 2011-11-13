@@ -323,7 +323,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 	private long _doAsUserId;
 	private Boolean _encrypt;
 	private Boolean _escapeXml;
-	private String  _name;
+	private String _name;
 	private long _plid = LayoutConstants.DEFAULT_PLID;
 	private Boolean _portletConfiguration;
 	private String _portletMode;

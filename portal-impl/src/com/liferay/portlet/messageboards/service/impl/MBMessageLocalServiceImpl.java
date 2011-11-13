@@ -1971,7 +1971,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNotNull(signature)) {
-			body +=  "\n--\n" + signature;
+			body += "\n--\n" + signature;
 		}
 
 		String inReplyTo = null;

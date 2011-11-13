@@ -116,7 +116,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn(
-				"No rule handler registered for type " +  rule.getType());
+				"No rule handler registered for type " + rule.getType());
 		}
 
 		return false;

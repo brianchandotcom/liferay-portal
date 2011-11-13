@@ -25,7 +25,7 @@ import java.util.Properties;
 /**
  * @author Jorge Ferrer
  */
-public class LiferayGroupDatabase  implements GroupDatabase {
+public class LiferayGroupDatabase implements GroupDatabase {
 
 	public void commit() {
 	}

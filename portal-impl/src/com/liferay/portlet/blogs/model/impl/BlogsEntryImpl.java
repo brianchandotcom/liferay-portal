@@ -30,7 +30,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 	public String getSmallImageType() throws PortalException, SystemException {
 		if ((_smallImageType == null) && isSmallImage()) {
-			Image smallImage =  ImageLocalServiceUtil.getImage(
+			Image smallImage = ImageLocalServiceUtil.getImage(
 				getSmallImageId());
 
 			_smallImageType = smallImage.getType();

@@ -63,7 +63,7 @@ public class FieldConstants {
 
 	public static final String TYPE = "type";
 
-	public static final String VALUE  = "value";
+	public static final String VALUE = "value";
 
 	public static final Serializable getSerializable(
 		String type, String value) {

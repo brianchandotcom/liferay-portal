@@ -44,7 +44,7 @@ public class LayoutRevisionLocalServiceImpl
 
 	public LayoutRevision addLayoutRevision(
 			long userId, long layoutSetBranchId, long layoutBranchId,
-			long parentLayoutRevisionId, boolean head,  long plid,
+			long parentLayoutRevisionId, boolean head, long plid,
 			boolean privateLayout, String name, String title,
 			String description, String keywords, String robots,
 			String typeSettings, boolean iconImage, long iconImageId,

@@ -375,7 +375,7 @@ public class AssetPublisherUtil {
 			portletPreferences.getValue("anyClassType" + className, null));
 
 		if (defaultClassTypeId > 0) {
-			return  new Long[] {defaultClassTypeId};
+			return new Long[] {defaultClassTypeId};
 		}
 
 		Long[] classTypeIds = ArrayUtil.toArray(

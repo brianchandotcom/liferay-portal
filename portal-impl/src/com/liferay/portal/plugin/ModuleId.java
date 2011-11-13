@@ -32,7 +32,7 @@ public class ModuleId implements Serializable {
 		ModuleId moduleIdObj = _moduleIds.get(moduleId);
 
 		if (moduleIdObj == null) {
-			moduleIdObj =  new ModuleId(moduleId);
+			moduleIdObj = new ModuleId(moduleId);
 
 			_moduleIds.put(moduleId, moduleIdObj);
 		}

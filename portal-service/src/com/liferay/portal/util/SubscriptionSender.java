@@ -293,7 +293,7 @@ public class SubscriptionSender implements Serializable {
 		_mailIdIds = ids;
 	}
 
-	public  void setPortletId(String portletId) {
+	public void setPortletId(String portletId) {
 		this.portletId = portletId;
 	}
 

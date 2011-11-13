@@ -180,7 +180,7 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 	}
 
 	private static final String[] _HTML_TAGS = {
-		"<blockquote>", "</blockquote>", "<br>", "<br/>", "<br />",  "<center>",
+		"<blockquote>", "</blockquote>", "<br>", "<br/>", "<br />", "<center>",
 		"</center>", "<cite>", "</cite>","<code>", "</code>", "<div[^>]*>",
 		"</div>", "<font[^>]*>", "</font>", "<hr>", "<hr/>", "<hr />", "<p>",
 		"</p>", "<tt>", "</tt>", "<var>", "</var>"};

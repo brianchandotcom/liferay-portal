@@ -59,7 +59,7 @@ public class LanguageTag extends IncludeTag {
 	protected void cleanUp() {
 		_displayStyle = LIST_ICON;
 		_formAction = null;
-		_formName =  "fm";
+		_formName = "fm";
 		_languageIds = null;
 		_name = "languageId";
 	}

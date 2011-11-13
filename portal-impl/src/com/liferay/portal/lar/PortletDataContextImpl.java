@@ -144,7 +144,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_scopeGroupId = groupId;
 		_parameterMap = parameterMap;
 		_primaryKeys = primaryKeys;
-		_dataStrategy =  null;
+		_dataStrategy = null;
 		_userIdStrategy = null;
 		_startDate = startDate;
 		_endDate = endDate;
@@ -164,7 +164,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_scopeGroupId = groupId;
 		_parameterMap = parameterMap;
 		_primaryKeys = primaryKeys;
-		_dataStrategy =  MapUtil.getString(
+		_dataStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.DATA_STRATEGY,
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
 		_userIdStrategy = userIdStrategy;

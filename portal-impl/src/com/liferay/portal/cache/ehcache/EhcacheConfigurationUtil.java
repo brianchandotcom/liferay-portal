@@ -96,12 +96,36 @@ public class EhcacheConfigurationUtil {
 		return configuration;
 	}
 
-	private static void _clearCacheEventListenerConfigurations(
+	private static String _clearCacheEventListenerConfigurations(
 		CacheConfiguration cacheConfiguration) {
 
 		cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 
+		List cacheEventListenerConfigurations =
+			cacheConfiguration.getCacheEventListenerConfigurations();
+
+		String properties = null;
+
+		for (Object cacheEventListenerConfiguration :
+				cacheEventListenerConfigurations) {
+			CacheEventListenerFactoryConfiguration configuration =
+				(CacheEventListenerFactoryConfiguration)
+					cacheEventListenerConfiguration;
+
+			if (configuration.getFullyQualifiedClassPath().contains(
+					"LiferayCacheEventListenerFactory") ||
+				configuration.getFullyQualifiedClassPath().contains(
+					"net.sf.ehcache.distribution")) {
+
+				properties = configuration.getProperties();
+
+				break;
+			}
+		}
+
 		cacheConfiguration.getCacheEventListenerConfigurations().clear();
+
+		return properties;
 	}
 
 	private static void _configureCacheEventListeners(
@@ -139,16 +163,18 @@ public class EhcacheConfigurationUtil {
 		if (clearCachePeerProviderConfigurations ||
 			(!usingDefault && usingLiferayCacheEventListenerFactory)) {
 
-			_clearCacheEventListenerConfigurations(cacheConfiguration);
+			String properties = _clearCacheEventListenerConfigurations(
+				cacheConfiguration);
 
 			if (enableClusterLinkReplication) {
-				_enableClusterLinkReplication(cacheConfiguration);
+				_enableClusterLinkReplication(cacheConfiguration, properties);
 			}
 		}
 	}
 
 	private static void _enableClusterLinkReplication(
-		CacheConfiguration cacheConfiguration) {
+		CacheConfiguration cacheConfiguration,
+		String cacheEventListenerProperties) {
 
 		CacheEventListenerFactoryConfiguration
 			cacheEventListenerFactoryConfiguration =
@@ -156,6 +182,8 @@ public class EhcacheConfigurationUtil {
 
 		cacheEventListenerFactoryConfiguration.setClass(
 			EhcachePortalCacheClusterReplicatorFactory.class.getName());
+		cacheEventListenerFactoryConfiguration.setProperties(
+			cacheEventListenerProperties);
 
 		cacheConfiguration.addCacheEventListenerFactory(
 			cacheEventListenerFactoryConfiguration);

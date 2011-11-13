@@ -29,8 +29,16 @@ public class PortalCacheClusterEvent implements Serializable {
 		String cacheName, Serializable elementKey,
 		PortalCacheClusterEventType portalCacheClusterEventType) {
 
+		this(cacheName, elementKey, null, portalCacheClusterEventType);
+	}
+
+	public PortalCacheClusterEvent(
+		String cacheName, Serializable elementKey, Serializable elementValue,
+		PortalCacheClusterEventType portalCacheClusterEventType) {
+
 		_cacheName = cacheName;
 		_elementKey = elementKey;
+		_elementValue = elementValue;
 		_portalCacheClusterEventType = portalCacheClusterEventType;
 	}
 
@@ -50,6 +58,8 @@ public class PortalCacheClusterEvent implements Serializable {
 		if (Validator.equals(_cacheName, portalCacheClusterEvent._cacheName) &&
 			Validator.equals(
 				_elementKey, portalCacheClusterEvent._elementKey) &&
+			Validator.equals(
+				_elementValue, portalCacheClusterEvent._elementValue) &&
 			Validator.equals(
 				_portalCacheClusterEventType,
 				portalCacheClusterEvent._portalCacheClusterEventType)) {
@@ -72,9 +82,17 @@ public class PortalCacheClusterEvent implements Serializable {
 		return _portalCacheClusterEventType;
 	}
 
+	public Serializable getElementValue() {
+		return _elementValue;
+	}
+
 	@Override
 	public int hashCode() {
 		return toString().hashCode();
+	}
+
+	public void setElementValue(Serializable elementValue) {
+		_elementValue = elementValue;
 	}
 
 	@Override
@@ -85,6 +103,12 @@ public class PortalCacheClusterEvent implements Serializable {
 		sb.append(StringPool.COLON);
 		sb.append(_elementKey.toString());
 		sb.append(StringPool.COLON);
+
+		if (_elementValue != null) {
+			sb.append(_elementValue.toString());
+			sb.append(StringPool.COLON);
+		}
+
 		sb.append(_portalCacheClusterEventType.toString());
 
 		return sb.toString();
@@ -92,6 +116,7 @@ public class PortalCacheClusterEvent implements Serializable {
 
 	private String _cacheName;
 	private Serializable _elementKey;
+	private Serializable _elementValue;
 	private PortalCacheClusterEventType _portalCacheClusterEventType;
 
 }

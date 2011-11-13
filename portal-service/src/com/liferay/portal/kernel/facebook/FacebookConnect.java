@@ -48,4 +48,7 @@ public interface FacebookConnect {
 
 	public boolean isEnabled(long companyId) throws SystemException;
 
+	public boolean isVerifiedAccountRequired(long companyId)
+		throws SystemException;
+
 }

@@ -170,6 +170,12 @@ public class FacebookConnectAction extends PortletAction {
 			return;
 		}
 
+		if (FacebookConnectUtil.isVerifiedAccountRequired(companyId) &&
+			!jsonObject.getBoolean("verified")) {
+
+			return;
+		}
+
 		User user = null;
 
 		long facebookId = jsonObject.getLong("id");

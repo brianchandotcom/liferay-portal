@@ -78,6 +78,12 @@ public class FacebookConnectUtil {
 		return getFacebookConnect().isEnabled(companyId);
 	}
 
+	public static boolean isVerifiedAccountRequired(long companyId)
+		throws SystemException {
+
+		return getFacebookConnect().isVerifiedAccountRequired(companyId);
+	}
+
 	public void setFacebookConnect(FacebookConnect facebookConnect) {
 		_facebookConnect = facebookConnect;
 	}

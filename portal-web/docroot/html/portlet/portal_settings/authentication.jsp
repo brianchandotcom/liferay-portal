@@ -35,6 +35,7 @@ String casServiceURL = PrefsPropsUtil.getString(company.getCompanyId(), PropsKey
 String casNoSuchUserRedirectURL = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL, PropsValues.CAS_NO_SUCH_USER_REDIRECT_URL);
 
 boolean facebookConnectAuthEnabled = FacebookConnectUtil.isEnabled(company.getCompanyId());
+boolean facebookConnectVerifiedAccountRequired = FacebookConnectUtil.isVerifiedAccountRequired(company.getCompanyId());
 String facebookConnectAppId = FacebookConnectUtil.getAppId(company.getCompanyId());
 String facebookConnectAppSecret = FacebookConnectUtil.getAppSecret(company.getCompanyId());
 String facebookConnectGraphURL = FacebookConnectUtil.getGraphURL(company.getCompanyId());
@@ -138,6 +139,8 @@ String siteminderUserHeader = PrefsPropsUtil.getString(company.getCompanyId(), P
 	<liferay-ui:section>
 		<aui:fieldset>
 			<aui:input inlineLabel="left" label="enabled" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_AUTH_ENABLED + "--" %>' type="checkbox" value="<%= facebookConnectAuthEnabled %>" />
+
+			<aui:input inlineLabel="left" label="verified-account-required" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED + "--" %>' type="checkbox" value="<%= facebookConnectVerifiedAccountRequired %>" />
 
 			<aui:input cssClass="lfr-input-text-container" label="application-id" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_APP_ID + "--" %>' type="text" value="<%= facebookConnectAppId %>" />
 

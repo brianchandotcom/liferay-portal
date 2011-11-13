@@ -312,10 +312,14 @@ public class DDMStructureLocalServiceUtil {
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure copyStructure(
 		long userId, long structureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().copyStructure(userId, structureId, serviceContext);
+		return getService()
+				   .copyStructure(userId, structureId, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	public static void deleteStructure(

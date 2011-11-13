@@ -310,6 +310,17 @@ public class DDMTemplateLocalServiceUtil {
 			.addTemplateResources(template, groupPermissions, guestPermissions);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
+		long userId, long structureId, long newStructureId,
+		java.lang.String type,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .copyTemplates(userId, structureId, newStructureId, type,
+			serviceContext);
+	}
+
 	public static void deleteTemplate(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template)
 		throws com.liferay.portal.kernel.exception.PortalException,

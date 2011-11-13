@@ -49,7 +49,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure copyStructure(
-			long structureId, ServiceContext serviceContext)
+			long structureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMPermission.check(
@@ -57,7 +58,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ActionKeys.ADD_STRUCTURE);
 
 		return ddmStructureLocalService.copyStructure(
-			getUserId(), structureId, serviceContext);
+			getUserId(), structureId, nameMap, descriptionMap, serviceContext);
 	}
 
 	public void deleteStructure(long structureId)

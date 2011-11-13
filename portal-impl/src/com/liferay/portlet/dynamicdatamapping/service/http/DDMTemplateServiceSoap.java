@@ -65,6 +65,24 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DDMTemplateServiceSoap {
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] copyTemplates(
+		long structureId, long newStructureId, java.lang.String type,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.copyTemplates(structureId,
+					newStructureId, type, serviceContext);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteTemplate(long templateId)
 		throws RemoteException {
 		try {

@@ -857,6 +857,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMTemplate",
 	{
 		addTemplate: true,
+		copyTemplates: true,
 		deleteTemplate: true,
 		getTemplate: true,
 		getTemplates: true,

@@ -48,6 +48,19 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			mode, language, script, serviceContext);
 	}
 
+	public List<DDMTemplate> copyTemplates(
+			long structureId, long newStructureId, String type,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_TEMPLATE);
+
+		return ddmTemplateLocalService.copyTemplates(
+			getUserId(), structureId, newStructureId, type, serviceContext);
+	}
+
 	public void deleteTemplate(long templateId)
 		throws PortalException, SystemException {
 

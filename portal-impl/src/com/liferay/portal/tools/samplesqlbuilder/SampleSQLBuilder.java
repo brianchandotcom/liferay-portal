@@ -197,7 +197,7 @@ public class SampleSQLBuilder {
 
 			_tempDir.mkdirs();
 
-			final CharPipe charPipe = new CharPipe(_WRITER_BUFFER_SIZE * 4);
+			final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 
 			generateSQL(charPipe);
 
@@ -658,7 +658,9 @@ public class SampleSQLBuilder {
 
 	private static final int _OPTIMIZE_BUFFER_SIZE = 8192;
 
-	private static final int _WRITER_BUFFER_SIZE = 16 * 1024 * 1024;
+	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
+
+	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/samplesqlbuilder/dependencies/";

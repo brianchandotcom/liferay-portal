@@ -232,40 +232,42 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					var form = instance.get('contentBox');
 
-					A.io.request(
-						uri,
-						{
-							dataType: 'json',
-							form: {
-								id: form,
-								upload: true
-							},
-							method: 'POST',
-							on: {
-								complete: function(event, id, xhr) {
-									var responseText = xhr.responseText;
-									var data = A.JSON.parse(responseText);
+					setTimeout(function() {
+						A.io.request(
+							uri,
+							{
+								dataType: 'json',
+								form: {
+									id: form,
+									upload: true
+								},
+								method: 'POST',
+								on: {
+									complete: function(event, id, xhr) {
+										var responseText = xhr.responseText;
+										var data = A.JSON.parse(responseText);
 
-									if (data) {
-										var exception = data.exception;
+										if (data) {
+											var exception = data.exception;
 
-										if (exception) {
-											instance._handleException(exception);
-										}
-										else {
-											recordset.updateRecordDataByKey(record, elementName, responseText);
+											if (exception) {
+												instance._handleException(exception);
+											}
+											else {
+												recordset.updateRecordDataByKey(record, elementName, responseText);
 
-											instance.set('value', responseText);
+												instance.set('value', responseText);
 
-											if (callback) {
-												callback.apply(instance, arguments);
+												if (callback) {
+													callback.apply(instance, arguments);
+												}
 											}
 										}
 									}
 								}
 							}
-						}
-					);
+						);
+					}, 0);
 				},
 
 				_handleDeleteEvent: function() {

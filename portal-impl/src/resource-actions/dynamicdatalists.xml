@@ -31,11 +31,15 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_RECORD_SET</action-key>
+				<action-key>ADD_STRUCTURE</action-key>
+				<action-key>ADD_TEMPLATE</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_RECORD_SET</action-key>
+				<action-key>ADD_STRUCTURE</action-key>
+				<action-key>ADD_TEMPLATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

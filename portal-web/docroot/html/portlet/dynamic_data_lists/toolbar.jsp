@@ -29,7 +29,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_RECORD_SET) %>">
+	<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
 		<portlet:renderURL var="addRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -50,6 +50,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
 		Liferay.Util.openDDMPortlet(
 			{
+				ddmResource: '<%= portletConfig.getInitParameter("ddm-resource") %>',
 				dialog: {
 					width:820
 				},

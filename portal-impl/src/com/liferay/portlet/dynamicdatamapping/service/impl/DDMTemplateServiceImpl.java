@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -39,9 +40,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		String ddmResource = GetterUtil.getString(
+			serviceContext.getAttribute("ddmResource"));
+
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_TEMPLATE);
+			ddmResource, ActionKeys.ADD_TEMPLATE);
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, structureId, nameMap, descriptionMap, type,
@@ -53,9 +57,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		String ddmResource = GetterUtil.getString(
+			serviceContext.getAttribute("ddmResource"));
+
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_TEMPLATE);
+			ddmResource, ActionKeys.ADD_TEMPLATE);
 
 		return ddmTemplateLocalService.copyTemplates(
 			getUserId(), structureId, newStructureId, type, serviceContext);

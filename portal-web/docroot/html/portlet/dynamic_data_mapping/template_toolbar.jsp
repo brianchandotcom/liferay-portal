@@ -39,7 +39,7 @@ long structureId = ParamUtil.getLong(request, "structureId");
 	String message = "add";
 	%>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) %>">
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -60,7 +60,7 @@ long structureId = ParamUtil.getLong(request, "structureId");
 		</span>
 	</c:if>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -1090,6 +1090,7 @@
             ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
 
 			ddmURL.setParameter('chooseCallback', config.chooseCallback);
+			ddmURL.setParameter('ddmResource', config.ddmResource);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);

@@ -154,6 +154,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 			{
 				chooseCallback: '<portlet:namespace />selectDDMStructure',
 				saveCallback: '<portlet:namespace />selectDDMStructure',
+				ddmResource: '<%= portletConfig.getInitParameter("ddm-resource") %>',
 				dialog: {
 					width:820
 				},

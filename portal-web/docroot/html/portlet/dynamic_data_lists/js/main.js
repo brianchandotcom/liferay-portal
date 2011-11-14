@@ -457,7 +457,7 @@ AUI().add(
 						},
 						callback
 					);
-				},
+				}
 			}
 		);
 
@@ -478,28 +478,6 @@ AUI().add(
 				}
 				catch (e) {
 				}
-			},
-
-			getFileEntryLinkNode: function(fileJSON, fileEntryLinkNode) {
-				var instance = this;
-
-				fileEntryLinkNode = fileEntryLinkNode || A.Node.create('<a href="javascript:;"></a>');
-
-				if (fileJSON) {
-					instance.getFileEntry(
-						fileJSON,
-						function(fileEntry) {
-							var fileEntryURL = instance.getFileEntryURL(fileEntry);
-
-							fileEntryLinkNode.setContent(fileEntry.title).attr('href', fileEntryURL);
-						}
-					);
-				}
-				else {
-					fileEntryLinkNode.setContent(STR_EMPTY).attr('href', 'javascript:;');
-				}
-
-				return fileEntryLinkNode;
 			},
 
 			getFileEntryURL: function(fileEntry) {

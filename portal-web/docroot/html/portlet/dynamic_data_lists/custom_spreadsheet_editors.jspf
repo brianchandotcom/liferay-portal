@@ -23,6 +23,10 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 <aui:script use="aui-io-request,io-upload-iframe,liferay-portlet-dynamic-data-lists,liferay-portlet-url">
 	var SpreadSheet = Liferay.SpreadSheet;
 
+	var Util = SpreadSheet.Util;
+
+	var STR_EMPTY = '';
+
 	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
 	DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = function(value) {
@@ -125,8 +129,27 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var instance = this;
 
 					var contentBox = instance.get('contentBox');
+					var fileEntryLinkNode = contentBox.one('a');
 
-					var fileEntryLinkNode = SpreadSheet.Util.getFileEntryLinkNode(val, contentBox.one('a'));
+					if (!fileEntryLinkNode) {
+						fileEntryLinkNode = A.Node.create('<a href="javascript:;"></a>');
+					}
+
+					if (val) {
+						Util.getFileEntry(
+							val,
+							function(fileEntry) {
+								var fileEntryURL = Util.getFileEntryURL(fileEntry);
+
+								fileEntryLinkNode.attr('href', fileEntryURL);
+								fileEntryLinkNode.setContent(fileEntry.title);
+							}
+						);
+					}
+					else {
+						fileEntryLinkNode.attr('href', 'javascript:;');
+						fileEntryLinkNode.setContent(STR_EMPTY)
+					}
 
 					contentBox.prepend(fileEntryLinkNode);
 
@@ -172,9 +195,9 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var record = instance.get('record');
 					var recordset = instance.get('recordset');
 
-					instance.set('value', '');
+					instance.set('value', STR_EMPTY);
 
-					recordset.updateRecordDataByKey(record, fieldName, '');
+					recordset.updateRecordDataByKey(record, fieldName, STR_EMPTY);
 
 					instance.hide();
 				},
@@ -208,8 +231,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var uri = portletURL.toString();
 
 					var form = instance.get('contentBox');
-
-					// form.attr('action', uri);
 
 					A.io.request(
 						uri,
@@ -275,7 +296,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 				_handleException: function(exception) {
 					var instance = this;
 
-					var errorMessage = '';
+					var errorMessage = STR_EMPTY;
 
 					if (exception.indexOf('com.liferay.portlet.documentlibrary.FileSizeException') > -1) {
 						errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
@@ -343,7 +364,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 				_syncElementsFocus: function() {
 					var instance = this;
 
-					instance.elements.val('');
+					instance.elements.val(STR_EMPTY);
 
 					instance.validator.resetAllFields();
 				},
@@ -398,19 +419,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 		}
 	);
 
-	var PasswordCellEditor = A.Component.create(
-		{
-			NAME: 'password-cell-editor',
-
-			EXTENDS: A.TextCellEditor,
-
-			prototype: {
-				ELEMENT_TEMPLATE: '<input autocomplete="off" type="password" />'
-			}
-		}
-	);
-
 	Liferay.SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
 	Liferay.SpreadSheet.TYPE_EDITOR['ddm-fileupload'] = FileUploadCellEditor;
-	Liferay.SpreadSheet.TYPE_EDITOR['ddm-password'] = PasswordCellEditor;
 </aui:script>

@@ -102,11 +102,11 @@ else {
 				</aui:column>
 
 				<aui:column columnWidth="50">
-					<aui:select label="type" name='<%= "addressTypeId" + addressesIndex %>' listType="<%= className + ListTypeConstants.ADDRESS %>" />
+					<aui:select label="type" listType="<%= className + ListTypeConstants.ADDRESS %>" name='<%= "addressTypeId" + addressesIndex %>' />
 
-					<aui:input name="zip" label="postal-code"fieldParam='<%= "addressZip" + addressesIndex %>' />
+					<aui:input fieldParam='<%= "addressZip" + addressesIndex %>' label="postal-code" name="zip" />
 
-					<aui:input name="city" fieldParam='<%= "addressCity" + addressesIndex %>' />
+					<aui:input fieldParam='<%= "addressCity" + addressesIndex %>' name="city" />
 
 					<aui:input checked="<%= address.isPrimary() %>" cssClass="primary-ctrl" id='<%= "addressPrimary" + addressesIndex %>' inlineLabel="left" label="primary" name="addressPrimary" type="radio" value="<%= addressesIndex %>" />
 

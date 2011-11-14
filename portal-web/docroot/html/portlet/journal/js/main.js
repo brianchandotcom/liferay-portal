@@ -2734,6 +2734,8 @@ AUI().add(
 				var fieldInstance = instance.getFieldInstance(source);
 
 				fieldInstance.set('localized', checkbox.get('checked'));
+
+                fieldInstance.setInstanceId(fieldInstance.get('instanceId'));
 			},
 
 			_updateOriginalStructureXSD: function() {

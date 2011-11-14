@@ -43,6 +43,7 @@ import com.liferay.portal.util.PropsValues;
 import java.text.ParseException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -155,7 +156,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		throws SchedulerException {
 
 		if (!PropsValues.SCHEDULER_ENABLED) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		try {
@@ -187,7 +188,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		throws SchedulerException {
 
 		if (!PropsValues.SCHEDULER_ENABLED) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		try {

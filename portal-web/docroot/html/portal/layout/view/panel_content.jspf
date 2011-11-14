@@ -33,7 +33,7 @@ if (!denyAccess && (themeDisplay.isStateExclusive() || themeDisplay.isStatePopUp
 	else if (layoutTypePortlet.hasStateMax()) {
 		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
-		PortletURL portletURL = new PortletURLImpl(request, ppid, plid, PortletRequest.ACTION_PHASE);
+		PortletURL portletURL = new PortletURLImpl(request, ppid, plid, PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 		portletURL.setPortletMode(PortletMode.VIEW);

@@ -1572,8 +1572,6 @@ public class PortalImpl implements Portal {
 		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			User user = getUser(portletRequest);
-
 			int valueDateMonth = ParamUtil.getInteger(
 				portletRequest, name + "Month");
 			int valueDateDay = ParamUtil.getInteger(
@@ -1591,7 +1589,13 @@ public class PortalImpl implements Portal {
 				valueDateHour += 12;
 			}
 
-			TimeZone timeZone = (user != null) ? user.getTimeZone() : null;
+			TimeZone timeZone = null;
+
+			User user = getUser(portletRequest);
+
+			if (user != null) {
+				timeZone = user.getTimeZone();
+			}
 
 			value = getDate(
 				valueDateMonth, valueDateDay, valueDateYear, valueDateHour,

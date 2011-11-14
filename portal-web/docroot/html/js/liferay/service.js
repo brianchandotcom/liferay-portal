@@ -844,16 +844,6 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
-	Liferay.Service.DDM, "DDMStructureLink",
-	{
-		addStructureLink: true,
-		deleteStructureLink: true,
-		getStructureLink: true,
-		updateStructureLink: true
-	}
-);
-
-Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMTemplate",
 	{
 		addTemplate: true,

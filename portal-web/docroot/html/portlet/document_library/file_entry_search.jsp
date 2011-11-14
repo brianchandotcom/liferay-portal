@@ -33,12 +33,18 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 	<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "searchFileEntry();" %>'>
 
 		<%
-		String taglibOnClick = "javascript:event.preventDefault(); " + liferayPortletResponse.getNamespace() + "searchFileEntry();";
+		String taglibOnClick = "javascript:" + liferayPortletResponse.getNamespace() + "searchFileEntry();";
 		%>
 
-		<aui:input cssClass="first keywords lfr-search-combobox-item" id="keywords" label="" name="keywords" type="text" />
+		<aui:layout>
+			<aui:column columnWidth="70">
+				<aui:input cssClass="keywords lfr-search-combobox-item" id="keywords" label="" name="keywords" type="text" />
+			</aui:column>
 
-		<aui:button cssClass="last lfr-search-combobox-item" name="search" onClick="<%= taglibOnClick %>" value="search" />
+			<aui:column columnWidth="30">
+				<aui:button cssClass="lfr-search-combobox-item" name="search" onClick="<%= taglibOnClick %>" value="search" />
+			</aui:column>
+		</aui:layout>
 	</aui:form>
 </div>
 

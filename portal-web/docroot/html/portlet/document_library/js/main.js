@@ -64,8 +64,6 @@ AUI().add(
 
 		var STR_FOLDER_START = 'folderStart';
 
-		var STR_ICON = 'icon';
-
 		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
 
 		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcutCheckbox';

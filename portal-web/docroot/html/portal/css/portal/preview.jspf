@@ -34,7 +34,7 @@
 }
 
 .lfr-preview-image-content img {
-	max-height: 480px;
+	max-height: 440px;
 	max-width: 100%;
 }
 
@@ -242,4 +242,8 @@
 
 .lfr-preview-file-arrow-right {
 	right: -50px;
+}
+
+.ie6 .lfr-preview-file {
+	zoom: 1;
 }

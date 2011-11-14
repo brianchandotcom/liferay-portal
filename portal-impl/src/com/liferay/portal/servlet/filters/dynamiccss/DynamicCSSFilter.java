@@ -92,10 +92,6 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 		File file = new File(realPath);
 
-		if (!file.exists()) {
-			return null;
-		}
-
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(_tempDir);
@@ -131,7 +127,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 		String content = null;
 
 		try {
-			if (realPath.endsWith(_CSS_EXTENSION)) {
+			if (realPath.endsWith(_CSS_EXTENSION) && file.exists()) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Parsing SASS on CSS " + file);
 				}
@@ -145,9 +141,9 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 				FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
 			}
-			else if (realPath.endsWith(_JSP_EXTENSION)) {
+			else if (realPath.endsWith(_JSP_EXTENSION) || !file.exists()) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Parsing SASS on JSP " + file);
+					_log.info("Parsing SASS on JSP or servlet " + realPath);
 				}
 
 				StringServletResponse stringResponse =

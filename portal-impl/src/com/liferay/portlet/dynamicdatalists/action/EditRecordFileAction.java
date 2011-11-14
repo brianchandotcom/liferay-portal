@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
@@ -85,7 +87,11 @@ public class EditRecordFileAction extends PortletAction {
 			}
 		}
 
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
+		resourceResponse.setContentType(ContentTypes.TEXT_PLAIN);
+
+		ServletResponseUtil.write(
+			PortalUtil.getHttpServletResponse(resourceResponse),
+			jsonObject.toString());
 	}
 
 	protected void deleteRecordFieldFile(PortletRequest request)

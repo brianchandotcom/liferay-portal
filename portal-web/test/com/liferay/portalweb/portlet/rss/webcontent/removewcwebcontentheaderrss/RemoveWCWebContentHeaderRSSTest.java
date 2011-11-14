@@ -61,6 +61,7 @@ public class RemoveWCWebContentHeaderRSSTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isTextPresent("Web Content Content"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));

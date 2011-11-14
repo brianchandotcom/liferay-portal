@@ -67,7 +67,7 @@ if (displayTerms.getParentOrganizationId() > 0) {
 
 		<aui:select label="region" name="<%= displayTerms.REGION_ID %>"></aui:select>
 
-		<aui:input name="<%= displayTerms.ZIP %>" size="20" value="<%= displayTerms.getZip() %>" />
+		<aui:input label="postal-code" name="<%= displayTerms.ZIP %>" size="20" value="<%= displayTerms.getZip() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 

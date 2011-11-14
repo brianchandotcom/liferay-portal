@@ -81,7 +81,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			<liferay-ui:error exception="<%= BillingPhoneException.class %>" message="please-enter-a-valid-phone" />
 			<liferay-ui:error exception="<%= BillingStateException.class %>" message="please-enter-a-valid-state" />
 			<liferay-ui:error exception="<%= BillingStreetException.class %>" message="please-enter-a-valid-street" />
-			<liferay-ui:error exception="<%= BillingZipException.class %>" message="please-enter-a-valid-zip" />
+			<liferay-ui:error exception="<%= BillingZipException.class %>" message="please-enter-a-valid-postal-code" />
 
 			<aui:fieldset>
 				<c:if test="<%= !addresses.isEmpty() %>">
@@ -138,7 +138,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 					<aui:input bean="<%= null %>" label="other-state" name="billingState" value="<%= billingState %>" />
 
-					<aui:input label="zip" name="billingZip" />
+					<aui:input label="postal-code" name="billingZip" />
 
 					<aui:input label="country" name="billingCountry" />
 
@@ -156,7 +156,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			<liferay-ui:error exception="<%= ShippingPhoneException.class %>" message="please-enter-a-valid-phone" />
 			<liferay-ui:error exception="<%= ShippingStateException.class %>" message="please-enter-a-valid-state" />
 			<liferay-ui:error exception="<%= ShippingStreetException.class %>" message="please-enter-a-valid-street" />
-			<liferay-ui:error exception="<%= ShippingZipException.class %>" message="please-enter-a-valid-zip" />
+			<liferay-ui:error exception="<%= ShippingZipException.class %>" message="please-enter-a-valid-postal-code" />
 
 			<aui:fieldset>
 				<c:if test="<%= !addresses.isEmpty() %>">
@@ -216,7 +216,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 					<aui:input bean="<%= null %>" label="other-state" name="shippingState" value="<%= shippingState %>" />
 
-					<aui:input label="zip" name="shippingZip" />
+					<aui:input label="postal-code" name="shippingZip" />
 
 					<aui:input label="country" name="shippingCountry" />
 

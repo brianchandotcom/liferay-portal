@@ -44,7 +44,7 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 
 	<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 	<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
-	<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-zip" />
+	<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
 	<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />

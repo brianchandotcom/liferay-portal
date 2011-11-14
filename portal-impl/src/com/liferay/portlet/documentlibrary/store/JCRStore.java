@@ -650,64 +650,24 @@ public class JCRStore extends BaseStore {
 				repositoryNode = getFolderNode(repositoryNode, path);
 			}
 
-			Node fileNode = repositoryNode.getNode(fileName);
-
-			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
-
 			Node newRepositoryNode = getFolderNode(rootNode, newRepositoryId);
 
 			if (newRepositoryNode.hasNode(fileName)) {
 				throw new DuplicateFileException(fileName);
 			}
 			else {
+				Node fileNode = repositoryNode.getNode(fileName);
+
+				Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
+
 				Node newFileNode = newRepositoryNode.addNode(
 					fileName, JCRConstants.NT_FILE);
 
-				Node newContentNode = newFileNode.addNode(
-					JCRConstants.JCR_CONTENT, JCRConstants.NT_RESOURCE);
+				String contentNodePath = contentNode.getPath();
+				String newContentNodePath = newFileNode.getPath().concat(
+					StringPool.SLASH).concat(JCRConstants.JCR_CONTENT);
 
-				VersionHistory versionHistory =
-					versionManager.getVersionHistory(contentNode.getPath());
-
-				String[] versionLabels = versionHistory.getVersionLabels();
-
-				for (int i = (versionLabels.length - 1); i >= 0; i--) {
-					Version version = versionHistory.getVersionByLabel(
-						versionLabels[i]);
-
-					Node frozenContentNode = version.getNode(
-						JCRConstants.JCR_FROZEN_NODE);
-
-					if (i == (versionLabels.length - 1)) {
-						newContentNode.addMixin(JCRConstants.MIX_VERSIONABLE);
-					}
-					else {
-						versionManager.checkout(newContentNode.getPath());
-					}
-
-					newContentNode.setProperty(
-						JCRConstants.JCR_MIME_TYPE, "text/plain");
-
-					copyBinaryProperty(
-						frozenContentNode, newContentNode,
-						JCRConstants.JCR_DATA);
-
-					newContentNode.setProperty(
-						JCRConstants.JCR_LAST_MODIFIED, Calendar.getInstance());
-
-					session.save();
-
-					Version newVersion = versionManager.checkin(
-						newContentNode.getPath());
-
-					VersionHistory newVersionHistory =
-						versionManager.getVersionHistory(
-							newContentNode.getPath());
-
-					newVersionHistory.addVersionLabel(
-						newVersion.getName(), versionLabels[i],
-						PropsValues.DL_STORE_JCR_MOVE_VERSION_LABELS);
-				}
+				session.move(contentNodePath, newContentNodePath);
 
 				fileNode.remove();
 
@@ -752,61 +712,27 @@ public class JCRStore extends BaseStore {
 				repositoryNode = getFolderNode(repositoryNode, path);
 			}
 
-			Node fileNode = repositoryNode.getNode(fileName);
+			if (repositoryNode.hasNode(newFileName)) {
+				throw new DuplicateFileException(newFileName);
+			}
+			else {
+				Node fileNode = repositoryNode.getNode(fileName);
 
-			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
+				Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
-			Node newFileNode = repositoryNode.addNode(
-				newFileName, JCRConstants.NT_FILE);
+				Node newFileNode = repositoryNode.addNode(
+					newFileName, JCRConstants.NT_FILE);
 
-			Node newContentNode = newFileNode.addNode(
-				JCRConstants.JCR_CONTENT, JCRConstants.NT_RESOURCE);
+				String contentNodePath = contentNode.getPath();
+				String newContentNodePath = newFileNode.getPath().concat(
+					StringPool.SLASH).concat(JCRConstants.JCR_CONTENT);
 
-			VersionHistory versionHistory = versionManager.getVersionHistory(
-				contentNode.getPath());
+				session.move(contentNodePath, newContentNodePath);
 
-			String[] versionLabels = versionHistory.getVersionLabels();
-
-			for (int i = (versionLabels.length - 1); i >= 0; i--) {
-				Version version = versionHistory.getVersionByLabel(
-					versionLabels[i]);
-
-				Node frozenContentNode = version.getNode(
-					JCRConstants.JCR_FROZEN_NODE);
-
-				if (i == (versionLabels.length - 1)) {
-					newContentNode.addMixin(JCRConstants.MIX_VERSIONABLE);
-				}
-				else {
-					versionManager.checkout(newContentNode.getPath());
-				}
-
-				newContentNode.setProperty(
-					JCRConstants.JCR_MIME_TYPE, "text/plain");
-
-				copyBinaryProperty(
-					frozenContentNode, newContentNode,
-					JCRConstants.JCR_DATA);
-
-				newContentNode.setProperty(
-					JCRConstants.JCR_LAST_MODIFIED, Calendar.getInstance());
+				fileNode.remove();
 
 				session.save();
-
-				Version newVersion = versionManager.checkin(
-					newContentNode.getPath());
-
-				VersionHistory newVersionHistory =
-					versionManager.getVersionHistory(newContentNode.getPath());
-
-				newVersionHistory.addVersionLabel(
-					newVersion.getName(), versionLabels[i],
-					PropsValues.DL_STORE_JCR_MOVE_VERSION_LABELS);
 			}
-
-			fileNode.remove();
-
-			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(fileName);
@@ -886,16 +812,6 @@ public class JCRStore extends BaseStore {
 		finally {
 			JCRFactoryUtil.closeSession(session);
 		}
-	}
-
-	protected void copyBinaryProperty(Node fromNode, Node toNode, String name)
-		throws RepositoryException {
-
-		Property property = fromNode.getProperty(name);
-
-		Binary binary = property.getBinary();
-
-		toNode.setProperty(name, binary);
 	}
 
 	protected Node getFileContentNode(

@@ -370,7 +370,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									<c:when test="<%= hasImages %>">
 										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
 											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-												<img src="<%= previewFileURL %>" />
+												<div class="lfr-preview-file-image-current-column">
+													<div class="lfr-preview-file-image-container">
+														<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+													</div>
+												</div>
 											</div>
 										</div>
 									</c:when>

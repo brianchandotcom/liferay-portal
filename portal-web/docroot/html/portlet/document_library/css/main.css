@@ -822,27 +822,33 @@
 }
 
 .ie6 {
-	.lfr-header-row {
-		height: 31px;
+	.portlet-document-library {
+		.taglib-ratings.stars {
+			border-width: 0;
+		}
 
-		.lfr-header-row-content {
-			.toolbar {
-				position: relative;
+		.lfr-header-row {
+			height: 31px;
 
-				.aui-field-choice {
-					width: 24px;
+			.lfr-header-row-content {
+				.toolbar {
+					position: relative;
+
+					.aui-field-choice {
+						width: 24px;
+					}
 				}
-			}
 
-			.display-style {
-				position: relative;
-			}
+				.display-style {
+					position: relative;
+				}
 
-			.lfr-search-combobox {
-				width: 250px;
+				.lfr-search-combobox {
+					width: 250px;
 
-				.aui-field-input-text {
-					width: 95%;
+					.aui-field-input-text {
+						width: 95%;
+					}
 				}
 			}
 		}

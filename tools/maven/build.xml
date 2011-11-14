@@ -16,6 +16,9 @@
 	</condition>
 
 	<property name="gpg.executable" value="gpg${gpg.extension}" />
+	<property name="mvn-sign-and-deploy" value="org.apache.maven.plugins:maven-gpg-plugin:1.4:sign-and-deploy-file" />
+	<property name="mvn-deploy-file" value="org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy-file" />
+	<property name="mvn-install-file" value="org.apache.maven.plugins:maven-install-plugin:2.3:install-file" />
 
 	<condition property="maven.extension" value=".bat" else="">
 		<contains string="${os.name}" substring="Windows" casesensitive="false" />
@@ -90,152 +93,128 @@
 				<equals arg1="${gpg.keyname}" arg2="" />
 			</not>
 			<then>
-				<exec dir="." executable="${maven.executable}" failonerror="true">
-					<arg value="gpg:sign-and-deploy-file" />
-					<arg value="-DartifactId=${artifact.id}" />
-					<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
-					<arg value="-Dgpg.executable=${gpg.executable}" />
-					<arg value="-Dgpg.keyname=${gpg.keyname}" />
-					<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
-					<arg value="-DgroupId=com.liferay.portal" />
-					<arg value="-Dpackaging=${packaging}" />
-					<arg value="-DpomFile=dist/${artifact.id}.pom" />
-					<arg value="-DrepositoryId=${lp.maven.repository.id}" />
-					<arg value="-Durl=${lp.maven.repository.url}" />
-					<arg value="-Dversion=${lp.version.maven}" />
-				</exec>
-
 				<if>
-					<not>
-						<or>
-							<equals arg1="${packaging}" arg2="pom" />
-							<equals arg1="${packaging}" arg2="war" />
-						</or>
-					</not>
+					<equals arg1="${packaging}" arg2="jar" />
 					<then>
-						<exec dir="." executable="${maven.executable}" failonerror="true">
-							<arg value="gpg:sign-and-deploy-file" />
-							<arg value="-DartifactId=${artifact.id}" />
-							<arg value="-Dclassifier=javadoc" />
-							<arg value="-Dfile=dist/${artifact.id}-javadoc.${packaging}" />
-							<arg value="-DgeneratePom=false" />
-							<arg value="-Dgpg.executable=${gpg.executable}" />
-							<arg value="-Dgpg.keyname=${gpg.keyname}" />
-							<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
-							<arg value="-DgroupId=com.liferay.portal" />
-							<arg value="-Dpackaging=jar" />
-							<arg value="-DpomFile=dist/${artifact.id}.pom" />
-							<arg value="-DrepositoryId=${lp.maven.repository.id}" />
-							<arg value="-Durl=${lp.maven.repository.url}" />
-							<arg value="-Dversion=${lp.version.maven}" />
-						</exec>
-
-						<exec dir="." executable="${maven.executable}" failonerror="true">
-							<arg value="gpg:sign-and-deploy-file" />
-							<arg value="-DartifactId=${artifact.id}" />
-							<arg value="-Dclassifier=sources" />
-							<arg value="-Dfile=dist/${artifact.id}-sources.${packaging}" />
-							<arg value="-DgeneratePom=false" />
-							<arg value="-Dgpg.executable=${gpg.executable}" />
-							<arg value="-Dgpg.keyname=${gpg.keyname}" />
-							<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
-							<arg value="-DgroupId=com.liferay.portal" />
-							<arg value="-Dpackaging=jar" />
-							<arg value="-DpomFile=dist/${artifact.id}.pom" />
-							<arg value="-DrepositoryId=${lp.maven.repository.id}" />
-							<arg value="-Durl=${lp.maven.repository.url}" />
-							<arg value="-Dversion=${lp.version.maven}" />
-						</exec>
-
 						<if>
-							<equals arg1="${artifact.id}" arg2="util-taglib" />
+							<not>
+								<equals arg1="${artifact.id}" arg2="util-taglib" />
+							</not>
 							<then>
 								<exec dir="." executable="${maven.executable}" failonerror="true">
-									<arg value="gpg:sign-and-deploy-file" />
+									<arg value="${mvn-sign-and-deploy}" />
 									<arg value="-DartifactId=${artifact.id}" />
-									<arg value="-Dclassifier=tlddoc" />
-									<arg value="-Dfile=dist/${artifact.id}-tlddoc.${packaging}" />
-									<arg value="-DgeneratePom=false" />
+									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 									<arg value="-Dgpg.executable=${gpg.executable}" />
 									<arg value="-Dgpg.keyname=${gpg.keyname}" />
 									<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
 									<arg value="-DgroupId=com.liferay.portal" />
-									<arg value="-Dpackaging=jar" />
+									<arg value="-Dpackaging=${packaging}" />
 									<arg value="-DpomFile=dist/${artifact.id}.pom" />
 									<arg value="-DrepositoryId=${lp.maven.repository.id}" />
 									<arg value="-Durl=${lp.maven.repository.url}" />
 									<arg value="-Dversion=${lp.version.maven}" />
+									<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
+									<arg value="-Dsources=dist/${artifact.id}-sources.${packaging}" />
 								</exec>
 							</then>
-						</if>
-					</then>
-				</if>
-			</then>
-			<else>
-				<exec dir="." executable="${maven.executable}" failonerror="true">
-					<arg value="deploy:deploy-file" />
-					<arg value="-DartifactId=${artifact.id}" />
-					<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
-					<arg value="-DgroupId=com.liferay.portal" />
-					<arg value="-Dpackaging=${packaging}" />
-					<arg value="-DpomFile=dist/${artifact.id}.pom" />
-					<arg value="-DrepositoryId=${lp.maven.repository.id}" />
-					<arg value="-Durl=${lp.maven.repository.url}" />
-					<arg value="-Dversion=${lp.version.maven}" />
-				</exec>
-
-				<if>
-					<not>
-						<or>
-							<equals arg1="${packaging}" arg2="pom" />
-							<equals arg1="${packaging}" arg2="war" />
-						</or>
-					</not>
-					<then>
-						<exec dir="." executable="${maven.executable}" failonerror="true">
-							<arg value="deploy:deploy-file" />
-							<arg value="-DartifactId=${artifact.id}" />
-							<arg value="-Dclassifier=javadoc" />
-							<arg value="-Dfile=dist/${artifact.id}-javadoc.${packaging}" />
-							<arg value="-DgeneratePom=false" />
-							<arg value="-DgroupId=com.liferay.portal" />
-							<arg value="-Dpackaging=jar" />
-							<arg value="-DrepositoryId=${lp.maven.repository.id}" />
-							<arg value="-Durl=${lp.maven.repository.url}" />
-							<arg value="-Dversion=${lp.version.maven}" />
-						</exec>
-
-						<exec dir="." executable="${maven.executable}" failonerror="true">
-							<arg value="deploy:deploy-file" />
-							<arg value="-DartifactId=${artifact.id}" />
-							<arg value="-Dclassifier=sources" />
-							<arg value="-Dfile=dist/${artifact.id}-sources.${packaging}" />
-							<arg value="-DgeneratePom=false" />
-							<arg value="-DgroupId=com.liferay.portal" />
-							<arg value="-Dpackaging=jar" />
-							<arg value="-DrepositoryId=${lp.maven.repository.id}" />
-							<arg value="-Durl=${lp.maven.repository.url}" />
-							<arg value="-Dversion=${lp.version.maven}" />
-						</exec>
-
-						<if>
-							<equals arg1="${artifact.id}" arg2="util-taglib" />
-							<then>
+							<else>
 								<exec dir="." executable="${maven.executable}" failonerror="true">
-									<arg value="gpg:sign-and-deploy-file" />
+									<arg value="${mvn-sign-and-deploy}" />
 									<arg value="-DartifactId=${artifact.id}" />
-									<arg value="-Dclassifier=tlddoc" />
-									<arg value="-Dfile=dist/${artifact.id}-tlddoc.${packaging}" />
-									<arg value="-DgeneratePom=false" />
+									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
+									<arg value="-Dgpg.executable=${gpg.executable}" />
+									<arg value="-Dgpg.keyname=${gpg.keyname}" />
+									<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
 									<arg value="-DgroupId=com.liferay.portal" />
-									<arg value="-Dpackaging=jar" />
+									<arg value="-Dpackaging=${packaging}" />
+									<arg value="-DpomFile=dist/${artifact.id}.pom" />
 									<arg value="-DrepositoryId=${lp.maven.repository.id}" />
 									<arg value="-Durl=${lp.maven.repository.url}" />
 									<arg value="-Dversion=${lp.version.maven}" />
+									<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
+									<arg value="-Dsources=dist/${artifact.id}-sources.${packaging}" />
+									<arg value="-Dclassifiers=tlddoc" />
+									<arg value="-Dfiles=dist/${artifact.id}-tlddoc.${packaging}" />
+									<arg value="-Dtypes=jar" />
 								</exec>
-							</then>
+							</else>								
 						</if>
 					</then>
+					<else>
+						<exec dir="." executable="${maven.executable}" failonerror="true">
+							<arg value="${mvn-sign-and-deploy}" />
+							<arg value="-DartifactId=${artifact.id}" />
+							<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
+							<arg value="-Dgpg.executable=${gpg.executable}" />
+							<arg value="-Dgpg.keyname=${gpg.keyname}" />
+							<arg value="-Dgpg.passphrase=${gpg.passphrase}" />
+							<arg value="-DgroupId=com.liferay.portal" />
+							<arg value="-Dpackaging=${packaging}" />
+							<arg value="-DpomFile=dist/${artifact.id}.pom" />
+							<arg value="-DrepositoryId=${lp.maven.repository.id}" />
+							<arg value="-Durl=${lp.maven.repository.url}" />
+							<arg value="-Dversion=${lp.version.maven}" />
+						</exec>
+					</else>
+				</if>
+			</then>
+			<else>
+				<if>
+					<equals arg1="${packaging}" arg2="jar" />
+					<then>
+						<if>
+							<not>
+								<equals arg1="${artifact.id}" arg2="util-taglib" />
+							</not>
+							<then>
+								<exec dir="." executable="${maven.executable}" failonerror="true">
+									<arg value="${mvn-deploy-file}" />
+									<arg value="-DartifactId=${artifact.id}" />
+									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
+									<arg value="-DgroupId=com.liferay.portal" />
+									<arg value="-Dpackaging=${packaging}" />
+									<arg value="-DpomFile=dist/${artifact.id}.pom" />
+									<arg value="-DrepositoryId=${lp.maven.repository.id}" />
+									<arg value="-Durl=${lp.maven.repository.url}" />
+									<arg value="-Dversion=${lp.version.maven}" />
+									<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
+									<arg value="-Dsources=dist/${artifact.id}-sources.${packaging}" />
+								</exec>
+							</then>
+							<else>
+								<exec dir="." executable="${maven.executable}" failonerror="true">
+									<arg value="${mvn-deploy-file}" />
+									<arg value="-DartifactId=${artifact.id}" />
+									<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
+									<arg value="-DgroupId=com.liferay.portal" />
+									<arg value="-Dpackaging=${packaging}" />
+									<arg value="-DpomFile=dist/${artifact.id}.pom" />
+									<arg value="-DrepositoryId=${lp.maven.repository.id}" />
+									<arg value="-Durl=${lp.maven.repository.url}" />
+									<arg value="-Dversion=${lp.version.maven}" />
+									<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
+									<arg value="-Dsources=dist/${artifact.id}-sources.${packaging}" />
+									<arg value="-Dclassifiers=tlddoc" />
+									<arg value="-Dfiles=dist/${artifact.id}-tlddoc.${packaging}" />
+									<arg value="-Dtypes=jar" />
+								</exec>
+							</else>
+						</if>
+					</then>
+					<else>
+						<exec dir="." executable="${maven.executable}" failonerror="true">
+							<arg value="${mvn-deploy-file}" />
+							<arg value="-DartifactId=${artifact.id}" />
+							<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
+							<arg value="-DgroupId=com.liferay.portal" />
+							<arg value="-Dpackaging=${packaging}" />
+							<arg value="-DpomFile=dist/${artifact.id}.pom" />
+							<arg value="-DrepositoryId=${lp.maven.repository.id}" />
+							<arg value="-Durl=${lp.maven.repository.url}" />
+							<arg value="-Dversion=${lp.version.maven}" />
+						</exec>
+					</else>
 				</if>
 			</else>
 		</if>
@@ -296,51 +275,26 @@
 	</target>
 
 	<target name="install-artifact">
-		<exec dir="." executable="${maven.executable}" failonerror="true">
-			<arg value="install:install-file" />
-			<arg value="-DartifactId=${artifact.id}" />
-			<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
-			<arg value="-DgroupId=com.liferay.portal" />
-			<arg value="-Dpackaging=${packaging}" />
-			<arg value="-DpomFile=dist/${artifact.id}.pom" />
-			<arg value="-Dversion=${lp.version.maven}" />
-		</exec>
-
 		<if>
-			<not>
-				<or>
-					<equals arg1="${packaging}" arg2="pom" />
-					<equals arg1="${packaging}" arg2="war" />
-				</or>
-			</not>
+			<equals arg1="${packaging}" arg2="jar" />
 			<then>
 				<exec dir="." executable="${maven.executable}" failonerror="true">
-					<arg value="install:install-file" />
+					<arg value="${mvn-install-file}" />
 					<arg value="-DartifactId=${artifact.id}" />
-					<arg value="-Dclassifier=javadoc" />
-					<arg value="-Dfile=dist/${artifact.id}-javadoc.${packaging}" />
-					<arg value="-DgeneratePom=false" />
+					<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
 					<arg value="-DgroupId=com.liferay.portal" />
-					<arg value="-Dpackaging=jar" />
+					<arg value="-Dpackaging=${packaging}" />
+					<arg value="-DpomFile=dist/${artifact.id}.pom" />
 					<arg value="-Dversion=${lp.version.maven}" />
-				</exec>
-
-				<exec dir="." executable="${maven.executable}" failonerror="true">
-					<arg value="install:install-file" />
-					<arg value="-DartifactId=${artifact.id}" />
-					<arg value="-Dfile=dist/${artifact.id}-sources.${packaging}" />
-					<arg value="-Dclassifier=sources" />
-					<arg value="-DgeneratePom=false" />
-					<arg value="-DgroupId=com.liferay.portal" />
-					<arg value="-Dpackaging=jar" />
-					<arg value="-Dversion=${lp.version.maven}" />
+					<arg value="-Djavadoc=dist/${artifact.id}-javadoc.${packaging}" />
+					<arg value="-Dsources=dist/${artifact.id}-sources.${packaging}" />
 				</exec>
 
 				<if>
 					<equals arg1="${artifact.id}" arg2="util-taglib" />
 					<then>
 						<exec dir="." executable="${maven.executable}" failonerror="true">
-							<arg value="install:install-file" />
+							<arg value="${mvn-install-file}" />
 							<arg value="-DartifactId=${artifact.id}" />
 							<arg value="-Dclassifier=tlddoc" />
 							<arg value="-Dfile=dist/${artifact.id}-tlddoc.${packaging}" />
@@ -352,6 +306,17 @@
 					</then>
 				</if>
 			</then>
+			<else>
+				<exec dir="." executable="${maven.executable}" failonerror="true">
+					<arg value="${mvn-install-file}" />
+					<arg value="-DartifactId=${artifact.id}" />
+					<arg value="-Dfile=dist/${artifact.id}.${packaging}" />
+					<arg value="-DgroupId=com.liferay.portal" />
+					<arg value="-Dpackaging=${packaging}" />
+					<arg value="-DpomFile=dist/${artifact.id}.pom" />
+					<arg value="-Dversion=${lp.version.maven}" />
+				</exec>
+			</else>
 		</if>
 	</target>
 </project>

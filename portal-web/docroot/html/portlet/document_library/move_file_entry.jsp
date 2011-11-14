@@ -156,10 +156,10 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 	function <portlet:namespace />selectFolder(folderId, folderName) {
 		var folderData = {
-			nameString: 'folderName',
-			nameValue: folderName,
 			idString: 'newFolderId',
-			idValue: folderId
+			idValue: folderId,
+			nameString: 'folderName',
+			nameValue: folderName
 		};
 
 		Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view" /></portlet:renderURL>', '<portlet:namespace />');

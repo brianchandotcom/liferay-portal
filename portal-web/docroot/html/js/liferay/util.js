@@ -1191,12 +1191,14 @@
 			var nameEl = A.byIdNS(namespace, folderNameString);
 
 			nameEl.attr('href', '');
+
 			nameEl.empty();
 
 			var button = A.byIdNS(namespace, 'removeFolderButton');
 
 			if (button) {
 				button.attr('disabled', true);
+
 				button.ancestor('.aui-button').addClass('aui-button-disabled');
 			}
 		},
@@ -1407,12 +1409,14 @@
 			Liferay.Util.addParams(namespace + 'folderId=' + folderData['idValue'], folderHref);
 
 			nameEl.attr('href', folderHref);
+
 			nameEl.setContent(folderData['nameValue'] + '&nbsp;');
 
 			var button = A.byIdNS(namespace, 'removeFolderButton');
 
 			if (button) {
 				button.set('disabled', false);
+
 				button.ancestor('.aui-button').removeClass('aui-button-disabled');
 			}
 		},

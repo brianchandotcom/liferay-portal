@@ -126,10 +126,10 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", B
 
 	function <portlet:namespace />selectFolder(parentFolderId, parentFolderName) {
 		var folderData = {
-			nameString: 'parentFolderName',
-			nameValue: parentFolderName,
 			idString: 'parentFolderId',
-			idValue: parentFolderId
+			idValue: parentFolderId,
+			nameString: 'parentFolderName',
+			nameValue: parentFolderName
 		};
 
 		Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/bookmarks/view" /></portlet:renderURL>', '<portlet:namespace />');

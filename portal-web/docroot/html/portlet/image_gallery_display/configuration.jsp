@@ -117,10 +117,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
 		var folderData = {
-			nameString: 'rootFolderName',
-			nameValue: rootFolderName,
 			idString: 'rootFolderId',
-			idValue: rootFolderId
+			idValue: rootFolderId,
+			nameString: 'rootFolderName',
+			nameValue: rootFolderName
 		};
 
 		Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/image_gallery_display/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');

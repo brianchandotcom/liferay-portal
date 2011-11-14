@@ -96,7 +96,8 @@ AUI().add(
 					instance._formValidator = formValidator;
 
 					formValidator.on(['errorField', 'validField'], instance._updateSectionStatus, instance);
-					formValidator.on('submitError', instance._revealErrorSection, instance);
+
+					formValidator.on('submitError', instance._revealSectionError, instance);
 				}
 			},
 
@@ -151,16 +152,6 @@ AUI().add(
 				}
 			},
 
-			_revealErrorSection: function() {
-				var instance = this;
-
-				var sectionError = instance._navigation.one(SELECTOR_SECTION_ERROR);
-
-				var sectionErrorLink = sectionError.one('a').attr(STR_HREF);
-
-				instance._revealSection(sectionErrorLink, sectionError);
-			},
-
 			_revealSection: function(id, currentNavItem) {
 				var instance = this;
 
@@ -194,6 +185,16 @@ AUI().add(
 						}
 					}
 				}
+			},
+
+			_revealSectionError: function() {
+				var instance = this;
+
+				var sectionError = instance._navigation.one(SELECTOR_SECTION_ERROR);
+
+				var sectionErrorLink = sectionError.one('a').attr(STR_HREF);
+
+				instance._revealSection(sectionErrorLink, sectionError);
 			},
 
 			_trackChanges: function(el) {

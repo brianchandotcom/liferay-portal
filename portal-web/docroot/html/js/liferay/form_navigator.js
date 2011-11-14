@@ -11,6 +11,10 @@ AUI().add(
 
 		var SELECTOR_LIST_ITEM_SELECTED = 'li.selected';
 
+		var SELECTOR_SECTION_ERROR = '.' + CSS_SECTION_ERROR;
+
+		var STR_HREF = 'href';
+
 		var FormNavigator = function(options) {
 			var instance = this;
 
@@ -92,6 +96,8 @@ AUI().add(
 					instance._formValidator = formValidator;
 
 					formValidator.on(['errorField', 'validField'], instance._updateSectionStatus, instance);
+
+					formValidator.on('submitError', instance._revealSectionError, instance);
 				}
 			},
 
@@ -132,7 +138,7 @@ AUI().add(
 				var li = target.get('parentNode');
 
 				if (li && !li.test('.selected')) {
-					var href = target.attr('href');
+					var href = target.attr(STR_HREF);
 
 					instance._revealSection(href, li);
 
@@ -179,6 +185,16 @@ AUI().add(
 						}
 					}
 				}
+			},
+
+			_revealSectionError: function() {
+				var instance = this;
+
+				var sectionError = instance._navigation.one(SELECTOR_SECTION_ERROR);
+
+				var sectionErrorLink = sectionError.one('a').attr(STR_HREF);
+
+				instance._revealSection(sectionErrorLink, sectionError);
 			},
 
 			_trackChanges: function(el) {

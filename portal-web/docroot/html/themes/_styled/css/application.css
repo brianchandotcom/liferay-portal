@@ -57,14 +57,10 @@
 	}
 
 	th.sort-desc .result-column-name {
-		background: url(../images/arrows/05_up.png) no-repeat 100% 50%;
+		background: url(../images/arrows/05_down.png) no-repeat 100% 50%;
 		display: inline-block;
 		font-style: italic;
 		padding-right: 15px;
-	}
-
-	.sort-desc .result-column-name {
-		background-image: url(../images/arrows/05_down.png);
 	}
 
 	span, a {

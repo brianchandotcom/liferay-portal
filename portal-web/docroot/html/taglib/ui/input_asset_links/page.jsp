@@ -19,36 +19,28 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_asset_links_page") + StringPool.UNDERLINE;
 
-String className = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-asset-links:className"));
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:input-asset-links:classPK"));
-
-AssetEntry assetEntry = null;
+long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:input-asset-links:assetEntryId"));
 
 List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 
-if (classPK > 0) {
-	assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
-}
 
 String assetLinkSearchContainerPrimaryKeys = ParamUtil.getString(request, "assetLinkSearchContainerPrimaryKeys");
 
-if (Validator.isNull(assetLinkSearchContainerPrimaryKeys) && SessionErrors.isEmpty(portletRequest)) {
-	if (assetEntry != null) {
-		assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
-	}
+if (Validator.isNull(assetLinkSearchContainerPrimaryKeys) && SessionErrors.isEmpty(portletRequest) && (assetEntryId > 0)) {
+	assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntryId);
 }
 else {
 	String[] assetEntriesPrimaryKeys = StringUtil.split(assetLinkSearchContainerPrimaryKeys);
 
 	for (String assetEntryPrimaryKey : assetEntriesPrimaryKeys) {
-		long assetEntryId = GetterUtil.getLong(assetEntryPrimaryKey);
+		long tempAssetEntryId = GetterUtil.getLong(assetEntryPrimaryKey);
 
-		AssetEntry assetEntry2 = AssetEntryServiceUtil.getEntry(assetEntryId);
+		AssetEntry assetEntry2 = AssetEntryServiceUtil.getEntry(tempAssetEntryId);
 
 		AssetLink assetLink = AssetLinkLocalServiceUtil.createAssetLink(0);
 
-		if (assetEntry != null) {
-			assetLink.setEntryId1(assetEntry.getEntryId());
+		if (assetEntryId > 0) {
+			assetLink.setEntryId1(assetEntryId);
 		}
 		else {
 			assetLink.setEntryId1(0);
@@ -76,8 +68,8 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 	<%
 	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
 		if (assetRendererFactory.isLinkable() && assetRendererFactory.isSelectable()) {
-			if (assetEntry != null) {
-				assetBrowserURL.setParameter("refererAssetEntryId", String.valueOf(assetEntry.getEntryId()));
+			if (assetEntryId > 0) {
+				assetBrowserURL.setParameter("refererAssetEntryId", String.valueOf(assetEntryId));
 			}
 
 			assetBrowserURL.setParameter("typeSelection", assetRendererFactory.getClassName());
@@ -129,7 +121,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 		<%
 		AssetEntry assetLinkEntry = null;
 
-		if ((assetEntry == null) || (assetLink.getEntryId1() == assetEntry.getEntryId())) {
+		if ((assetEntryId > 0) || (assetLink.getEntryId1() == assetEntryId)) {
 			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId2());
 		}
 		else {

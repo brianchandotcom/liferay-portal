@@ -14,6 +14,12 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Juan Fernández
  * @author Shuyang Zhou
@@ -23,6 +29,30 @@ public class InputAssetLinksTag extends AssetLinksTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		long assetEntryId = getAssetEntryId();
+		String className = getClassName();
+		long classPK = getClassPK();
+
+		if ((assetEntryId <= 0) && (classPK > 0)) {
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					className, classPK);
+
+				if (assetEntry != null) {
+					assetEntryId = assetEntry.getEntryId();
+				}
+			}
+			catch (SystemException se) {
+			}
+		}
+
+		request.setAttribute(
+			"liferay-ui:input-asset-links:assetEntryId",
+			String.valueOf(assetEntryId));
 	}
 
 	private static final String _PAGE =

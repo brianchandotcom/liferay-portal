@@ -1560,6 +1560,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="session-smoke" />
+			<param name="test.ant.script.suite" value="SessionTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="sevencogs-smoke" />
 			<param name="test.ant.script.evaluate.logs" value="true" />
 			<param name="test.ant.script.sevencogs" value="true" />

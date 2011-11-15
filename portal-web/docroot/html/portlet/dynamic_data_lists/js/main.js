@@ -87,40 +87,6 @@ AUI().add(
 						instance._fixPluginsUI();
 					},
 
-					addRecord: function(displayIndex, fieldsMap, callback) {
-						var instance = this;
-
-						callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
-
-						var recordsetId = instance.get('recordsetId');
-
-						var serviceParameterTypes = [
-							'long',
-							'long',
-							'int',
-							'java.util.Map<java.lang.String, java.io.Serializable>',
-							'com.liferay.portal.service.ServiceContext'
-						];
-
-						DDLRecord.addRecord(
-							{
-								groupId: themeDisplay.getScopeGroupId(),
-								recordsetId: recordsetId,
-								displayIndex: displayIndex,
-								fieldsMap: JSON.stringify(fieldsMap),
-								serviceContext: JSON.stringify(
-									{
-										scopeGroupId: themeDisplay.getScopeGroupId(),
-										userId: themeDisplay.getUserId(),
-										workflowAction: Liferay.Workflow.ACTION_PUBLISH
-									}
-								),
-								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
-							},
-							callback
-						);
-					},
-
 					updateMinDisplayRows: function(minDisplayRows, callback) {
 						var instance = this;
 
@@ -143,38 +109,6 @@ AUI().add(
 						);
 					},
 
-					updateRecord: function(recordId, displayIndex, fieldsMap, merge, callback) {
-						var instance = this;
-
-						callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
-
-						var serviceParameterTypes = [
-							'long',
-							'int',
-							'java.util.Map<java.lang.String, java.io.Serializable>',
-							'boolean',
-							'com.liferay.portal.service.ServiceContext'
-						];
-
-						DDLRecord.updateRecord(
-							{
-								recordId: recordId,
-								displayIndex: displayIndex,
-								fieldsMap: JSON.stringify(fieldsMap),
-								merge: merge,
-								serviceContext: JSON.stringify(
-									{
-										scopeGroupId: themeDisplay.getScopeGroupId(),
-										userId: themeDisplay.getUserId(),
-										workflowAction: Liferay.Workflow.ACTION_PUBLISH
-									}
-								),
-								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
-							},
-							callback
-						);
-					},
-
 					_editCell: function(event) {
 						var instance = this;
 
@@ -183,10 +117,17 @@ AUI().add(
 						var column = event.column;
 						var record = event.record;
 
+						var recordset = instance.get('recordset');
+						var recordsetId = instance.get('recordsetId');
+						var structure = instance.get('structure');
+
 						var editor = instance.getCellEditor(record, column);
 
 						if (editor) {
 							editor.set('record', record);
+							editor.set('recordset', recordset);
+							editor.set('recordsetId', recordsetId);
+							editor.set('structure', structure);
 						}
 					},
 
@@ -232,6 +173,8 @@ AUI().add(
 					_onRecordUpdate: function(event) {
 						var instance = this;
 
+						var recordsetId = instance.get('recordsetId');
+
 						var recordIndex = event.index;
 
 						AArray.each(
@@ -242,10 +185,11 @@ AUI().add(
 								var fieldsMap = instance._normalizeRecordData(data);
 
 								if (data.recordId > 0) {
-									instance.updateRecord(data.recordId, recordIndex, fieldsMap, true);
+									SpreadSheet.updateRecord(data.recordId, recordIndex, fieldsMap, true);
 								}
 								else {
-									instance.addRecord(
+									SpreadSheet.addRecord(
+										recordsetId,
 										recordIndex,
 										fieldsMap,
 										function(json) {
@@ -258,6 +202,38 @@ AUI().add(
 							}
 						);
 					}
+				},
+
+				addRecord: function(recordsetId, displayIndex, fieldsMap, callback) {
+					var instance = this;
+
+					callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
+
+					var serviceParameterTypes = [
+						'long',
+						'long',
+						'int',
+						'java.util.Map<java.lang.String, java.io.Serializable>',
+						'com.liferay.portal.service.ServiceContext'
+					];
+
+					DDLRecord.addRecord(
+						{
+							groupId: themeDisplay.getScopeGroupId(),
+							recordsetId: recordsetId,
+							displayIndex: displayIndex,
+							fieldsMap: JSON.stringify(fieldsMap),
+							serviceContext: JSON.stringify(
+								{
+									scopeGroupId: themeDisplay.getScopeGroupId(),
+									userId: themeDisplay.getUserId(),
+									workflowAction: Liferay.Workflow.ACTION_PUBLISH
+								}
+							),
+							serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+						},
+						callback
+					);
 				},
 
 				buildDataTableColumnset: function(columnset, structure, editable) {
@@ -313,7 +289,9 @@ AUI().add(
 							}
 							else if (type === 'ddm-date') {
 								config.inputFormatter = function(value) {
-									return A.DataType.Date.parse(value).getTime();
+									var date = A.DataType.Date.parse(value) || new Date();
+
+									return date.getTime();
 								};
 
 								item.formatter = function(obj) {
@@ -330,7 +308,7 @@ AUI().add(
 									return value;
 								};
 							}
-							else if ((type === 'ddm-documentlibrary') || (type === 'ddm-fileupload')) {
+							else if (type === 'ddm-documentlibrary') {
 								item.formatter = function(obj) {
 									var data = obj.record.get('data');
 
@@ -343,15 +321,29 @@ AUI().add(
 
 									return label;
 								};
+							}
+							else if (type === 'ddm-fileupload') {
+								item.formatter = function(obj) {
+									var data = obj.record.get('data');
+
+									var label = STR_EMPTY;
+									var value = data[name];
+
+									if (value !== STR_EMPTY) {
+										var fileData = A.JSON.parse(value);
+
+										label = fileData.name;
+									}
+
+									return label;
+								};
 
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
-								if (type === 'ddm-fileupload') {
-									config.validator.rules[name] = {
-										acceptFiles: structureField.acceptFiles,
-										requiredFields: true
-									};
-								}
+								config.validator.rules[name] = {
+									acceptFiles: structureField.acceptFiles,
+									requiredFields: true
+								};
 							}
 							else if ((type === 'radio') || (type === 'select')) {
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
@@ -436,6 +428,38 @@ AUI().add(
 					);
 
 					return recordModel;
+				},
+
+				updateRecord: function(recordId, displayIndex, fieldsMap, merge, callback) {
+					var instance = this;
+
+					callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
+
+					var serviceParameterTypes = [
+						'long',
+						'int',
+						'java.util.Map<java.lang.String, java.io.Serializable>',
+						'boolean',
+						'com.liferay.portal.service.ServiceContext'
+					];
+
+					DDLRecord.updateRecord(
+						{
+							recordId: recordId,
+							displayIndex: displayIndex,
+							fieldsMap: JSON.stringify(fieldsMap),
+							merge: merge,
+							serviceContext: JSON.stringify(
+								{
+									scopeGroupId: themeDisplay.getScopeGroupId(),
+									userId: themeDisplay.getUserId(),
+									workflowAction: Liferay.Workflow.ACTION_PUBLISH
+								}
+							),
+							serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+						},
+						callback
+					);
 				}
 			}
 		);
@@ -457,28 +481,6 @@ AUI().add(
 				}
 				catch (e) {
 				}
-			},
-
-			getFileEntryLinkNode: function(fileJSON, fileEntryLinkNode) {
-				var instance = this;
-
-				fileEntryLinkNode = fileEntryLinkNode || A.Node.create('<a href="javascript:;"></a>');
-
-				if (fileJSON) {
-					instance.getFileEntry(
-						fileJSON,
-						function(fileEntry) {
-							var fileEntryURL = instance.getFileEntryURL(fileEntry);
-
-							fileEntryLinkNode.setContent(fileEntry.title).attr('href', fileEntryURL);
-						}
-					);
-				}
-				else {
-					fileEntryLinkNode.setContent(STR_EMPTY).attr('href', 'javascript:;');
-				}
-
-				return fileEntryLinkNode;
 			},
 
 			getFileEntryURL: function(fileEntry) {

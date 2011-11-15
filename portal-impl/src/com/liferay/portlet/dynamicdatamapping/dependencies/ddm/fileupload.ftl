@@ -11,5 +11,38 @@
 		</#if>
 	</@aui.input>
 
+	<#if (fields??) && (fieldValue != "")>
+		<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
+
+		<#assign fileName = fileJSONObject.getString("name")>
+		<#assign recordId = fileJSONObject.getString("recordId")>
+
+		<a href="
+			<@liferay_portlet.actionURL windowState="exclusive">
+				<@liferay_portlet.param name="struts_action" value="/dynamic_data_lists/get_file_upload" />
+				<@liferay_portlet.param name="recordId" value=recordId />
+				<@liferay_portlet.param name="fieldName" value=fieldName />
+			</@>">
+
+			${fileName}
+		</a>
+
+		<#if !required>
+			-
+
+			<a href="
+				<@liferay_portlet.actionURL>
+					<@liferay_portlet.param name="struts_action" value="/dynamic_data_lists/edit_record_file" />
+					<@liferay_portlet.param name="cmd" value="delete" />
+					<@liferay_portlet.param name="fieldName" value=fieldName />
+					<@liferay_portlet.param name="recordId" value=recordId />
+					<@liferay_portlet.param name="redirect" value=portalUtil.getCurrentURL(request) />
+				</@>">
+
+				<@liferay_ui.message key="delete" />
+			</a>
+		</#if>
+	</#if>
+
 	${fieldStructure.children}
 </div>

@@ -211,7 +211,8 @@ public class EditRecordAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		DDLUtil.uploadRecordFiles(record, uploadPortletRequest, serviceContext);
+		DDLUtil.uploadRecordFieldFiles(
+			record, uploadPortletRequest, serviceContext);
 
 		return record;
 	}

@@ -14,22 +14,21 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
-import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,7 +56,6 @@ public class GetFileUploadAction extends PortletAction {
 
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 		String fieldName = ParamUtil.getString(actionRequest, "fieldName");
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
@@ -65,7 +63,7 @@ public class GetFileUploadAction extends PortletAction {
 			actionResponse);
 
 		try {
-			getFile(recordId, fieldName, fileName, request, response);
+			getFile(recordId, fieldName, request, response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
@@ -82,10 +80,9 @@ public class GetFileUploadAction extends PortletAction {
 
 		long recordId = ParamUtil.getLong(request, "recordId");
 		String fieldName = ParamUtil.getString(request, "fieldName");
-		String fileName = ParamUtil.getString(request, "fileName");
 
 		try {
-			getFile(recordId, fieldName, fileName, request, response);
+			getFile(recordId, fieldName, request, response);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
@@ -95,28 +92,24 @@ public class GetFileUploadAction extends PortletAction {
 	}
 
 	protected void getFile(
-			long recordId, String fieldName, String fileName,
-			HttpServletRequest request, HttpServletResponse response)
+			long recordId, String fieldName, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(recordId);
 
-		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
+		Serializable fieldValue = record.getFieldValue(fieldName);
 
-		StringBundler sb = new StringBundler(5);
+		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(fieldValue));
 
-		sb.append(DDLUtil.getRecordFileUploadPath(record));
-		sb.append(StringPool.SLASH);
-		sb.append(recordVersion.getVersion());
-		sb.append(StringPool.SLASH);
-		sb.append(fieldName);
-
-		String path = sb.toString();
+		String fileName = fileJSONObject.getString("name");
+		String filePath = fileJSONObject.getString("path");
 
 		InputStream is = DLStoreUtil.getFileAsStream(
-			record.getCompanyId(), CompanyConstants.SYSTEM, path);
+			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
 		long contentLength = DLStoreUtil.getFileSize(
-			record.getCompanyId(), CompanyConstants.SYSTEM, path);
+			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
 		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		ServletResponseUtil.sendFile(

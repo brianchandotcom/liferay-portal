@@ -100,7 +100,7 @@ public class CheckoutOrderBillingZipNullTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a valid zip."),
+						"Please enter a valid postal code."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 

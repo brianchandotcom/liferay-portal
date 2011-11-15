@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SessionExpirationTests extends BaseTests {
+public class SessionTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();

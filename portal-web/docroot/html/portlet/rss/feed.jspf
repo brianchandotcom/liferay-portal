@@ -109,8 +109,6 @@ catch (Exception e) {
 					SyndEntry entry = (SyndEntry)entries.get(j);
 
 					String entryLink = entry.getLink();
-					String enclosureLink = null;
-					String enclosureLinkTitle = entry.getTitle();
 
 					if (Validator.isNotNull(entryLink) && !HttpUtil.hasDomain(entryLink)) {
 						entryLink = baseURL + entryLink;
@@ -131,12 +129,17 @@ catch (Exception e) {
 
 					List <SyndEnclosure> enclosures = (List<SyndEnclosure>)entry.getEnclosures();
 
+					String enclosureLink = StringPool.BLANK;
+					String enclosureLinkTitle = entry.getTitle();
+
 					for (SyndEnclosure enclosure : enclosures) {
 						if (Validator.isNotNull(enclosure.getUrl())) {
 							enclosureLink = enclosure.getUrl();
 
-							if (enclosureLink.indexOf('/') > -1) {
-								enclosureLinkTitle = enclosureLink.substring(enclosureLink.lastIndexOf('/')+1);
+							int pos = enclosureLink.lastIndexOf(StringPool.FORWARD_SLASH);
+
+							if (pos > -1) {
+								enclosureLinkTitle = enclosureLink.substring(pos + 1);
 							}
 							else {
 								enclosureLinkTitle = enclosureLink;
@@ -163,7 +166,7 @@ catch (Exception e) {
 								<span class="feed-entry-author"><%= author %></span>
 							</c:if>
 
-							<c:if test="<%= enclosureLink != null %>">
+							<c:if test="<%= Validator.isNotNull(enclosureLink) %>">
 								<span class="feed-entry-enclosure"><aui:a href="<%= enclosureLink %>" target="_new"><%= enclosureLinkTitle %></aui:a></span>
 							</c:if>
 

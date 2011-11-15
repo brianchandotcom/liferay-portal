@@ -66,8 +66,7 @@ public class CustomSQLUtil {
 	}
 
 	public static String[] keywords(String[] keywordsArray, boolean lowerCase) {
-		return _instance._customSQL.keywords(
-			keywordsArray, lowerCase);
+		return _instance._customSQL.keywords(keywordsArray, lowerCase);
 	}
 
 	public static String removeGroupBy(String sql) {
@@ -79,8 +78,7 @@ public class CustomSQLUtil {
 	}
 
 	public static String replaceAndOperator(String sql, boolean andOperator) {
-		return _instance._customSQL.replaceAndOperator(
-			sql, andOperator);
+		return _instance._customSQL.replaceAndOperator(sql, andOperator);
 	}
 
 	public static String replaceIsNull(String sql) {

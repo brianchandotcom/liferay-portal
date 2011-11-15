@@ -40,8 +40,7 @@ public class PanelFloatingContainerTag
 			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 		}
 
-		request.setAttribute(
-			"liferay-ui:panel-floating-container:id", _id);
+		request.setAttribute("liferay-ui:panel-floating-container:id", _id);
 		request.setAttribute(
 			"liferay-ui:panel-floating-container:trigger", _trigger);
 		request.setAttribute(

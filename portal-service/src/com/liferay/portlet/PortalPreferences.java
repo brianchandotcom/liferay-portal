@@ -23,8 +23,7 @@ public interface PortalPreferences extends Serializable {
 
 	public String getValue(String namespace, String key);
 
-	public String getValue(
-		String namespace, String key, String defaultValue);
+	public String getValue(String namespace, String key, String defaultValue);
 
 	public boolean isSignedIn();
 

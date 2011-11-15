@@ -1360,8 +1360,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Group> userOrgsGroups = new UniqueList<Group>();
 
 		List<Organization> userOrgs =
-			organizationLocalService.getUserOrganizations(
-				userId, start, end);
+			organizationLocalService.getUserOrganizations(userId, start, end);
 
 		for (Organization organization : userOrgs) {
 			userOrgsGroups.add(0, organization.getGroup());

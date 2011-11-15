@@ -205,8 +205,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	protected void handleJGroupsNotification(
 		JGroupEventMessage jGroupEventMessage) {
 
-		Cache cache = _cacheManager.getCache(
-			jGroupEventMessage.getCacheName());
+		Cache cache = _cacheManager.getCache(jGroupEventMessage.getCacheName());
 
 		if (cache == null) {
 			return;

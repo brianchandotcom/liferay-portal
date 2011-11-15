@@ -266,8 +266,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	public int getMountFoldersCount(long parentFolderId)
 		throws SystemException {
 
-		return _baseCmisRepository.getMountFoldersCount(
-			parentFolderId);
+		return _baseCmisRepository.getMountFoldersCount(parentFolderId);
 	}
 
 	public String getObjectName(String objectId)
@@ -470,8 +469,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 
-		return _baseCmisRepository.verifyInheritableLock(
-			folderId, lockUuid);
+		return _baseCmisRepository.verifyInheritableLock(folderId, lockUuid);
 	}
 
 	private BaseCmisRepository _baseCmisRepository;

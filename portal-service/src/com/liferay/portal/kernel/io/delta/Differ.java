@@ -39,8 +39,7 @@ public class Differ {
 		_checksumsByteChannelReader = checksumsByteChannelReader;
 		_deltaByteChannelWriter = deltaByteChannelWriter;
 
-		_checksumsByteChannelReader.resizeBuffer(
-			DeltaUtil.BUFFER_FACTOR * 20);
+		_checksumsByteChannelReader.resizeBuffer(DeltaUtil.BUFFER_FACTOR * 20);
 
 		_checksumsByteBuffer = _checksumsByteChannelReader.getBuffer();
 

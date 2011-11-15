@@ -166,8 +166,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		throws AtomException {
 
 		try {
-			doPutMedia(
-				entry, mimeType, slug, inputStream, atomRequestContext);
+			doPutMedia(entry, mimeType, slug, inputStream, atomRequestContext);
 		}
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();

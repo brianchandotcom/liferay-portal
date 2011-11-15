@@ -60,9 +60,7 @@ public abstract class BasePollerProcessor implements PollerProcessor {
 			pollerRequest.getParameterMap().get(name), defaultValue);
 	}
 
-	protected double getDouble(
-		PollerRequest pollerRequest, String name) {
-
+	protected double getDouble(PollerRequest pollerRequest, String name) {
 		return getDouble(pollerRequest, name, -1);
 	}
 

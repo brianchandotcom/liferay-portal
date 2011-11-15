@@ -215,8 +215,7 @@ public class EditQuestionAction extends PortletAction {
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		int expirationDateMonth = ParamUtil.getInteger(
 			actionRequest, "expirationDateMonth");

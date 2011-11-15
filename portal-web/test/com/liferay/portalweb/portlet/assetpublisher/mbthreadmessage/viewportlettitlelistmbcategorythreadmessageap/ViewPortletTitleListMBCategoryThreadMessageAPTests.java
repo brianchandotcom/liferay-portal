@@ -34,8 +34,7 @@ public class ViewPortletTitleListMBCategoryThreadMessageAPTests
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(AddMBCategoryTest.class);
 		testSuite.addTestSuite(PostNewMBCategoryThreadMessageTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTitleListTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTitleListTest.class);
 		testSuite.addTestSuite(
 			ViewPortletTitleListMBCategoryThreadMessageAPTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);

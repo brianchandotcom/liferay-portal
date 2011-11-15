@@ -59,12 +59,9 @@ public class UserSearchTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:user-search:portletURL", _portletURL);
-		request.setAttribute(
-			"liferay-ui:user-search:rowChecker", _rowChecker);
-		request.setAttribute(
-			"liferay-ui:user-search:userParams", _userParams);
+		request.setAttribute("liferay-ui:user-search:portletURL", _portletURL);
+		request.setAttribute("liferay-ui:user-search:rowChecker", _rowChecker);
+		request.setAttribute("liferay-ui:user-search:userParams", _userParams);
 	}
 
 	private static final String _END_PAGE =

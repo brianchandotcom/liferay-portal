@@ -183,13 +183,11 @@ public class TranslationToXHTMLTests extends AbstractWikiParserTests {
 	}
 
 	public void testParseLinkEmpty() {
-		Assert.assertEquals(
-			"<p> </p>", translate("link-8.creole"));
+		Assert.assertEquals("<p> </p>", translate("link-8.creole"));
 	}
 
 	public void testParseLinkEmptyInHeader() {
-		Assert.assertEquals(
-			"<h2>  </h2>", translate("link-9.creole"));
+		Assert.assertEquals("<h2>  </h2>", translate("link-9.creole"));
 	}
 
 	public void testParseLinkInListItem() {

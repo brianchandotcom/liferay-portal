@@ -88,8 +88,7 @@ public class LongType implements CompositeUserType, Serializable {
 		Object value = null;
 
 		try {
-			value = StandardBasicTypes.LONG.nullSafeGet(
-				rs, names[0], session);
+			value = StandardBasicTypes.LONG.nullSafeGet(rs, names[0], session);
 		}
 		catch (SQLException sqle1) {
 

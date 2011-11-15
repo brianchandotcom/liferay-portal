@@ -262,8 +262,7 @@ public class DDMXSDImpl implements DDMXSD {
 				jsonObject.put(attribute.getName(), attribute.getValue());
 			}
 
-			jsonObject.put(
-				"id", dynamicElementElement.attributeValue("name"));
+			jsonObject.put("id", dynamicElementElement.attributeValue("name"));
 
 			String type = jsonObject.getString("type");
 
@@ -370,8 +369,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		// FreeMarker variables
 
-		FreeMarkerVariablesUtil.insertVariables(
-			freeMarkerContext, request);
+		FreeMarkerVariablesUtil.insertVariables(freeMarkerContext, request);
 
 		// Tag libraries
 

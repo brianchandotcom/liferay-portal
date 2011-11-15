@@ -350,8 +350,7 @@ public class PortalUtil {
 			String category, ThemeDisplay themeDisplay)
 		throws SystemException {
 
-		return getPortal().getControlPanelPortlets(
-			category, themeDisplay);
+		return getPortal().getControlPanelPortlets(category, themeDisplay);
 	}
 
 	public static String getCreateAccountURL(
@@ -493,9 +492,7 @@ public class PortalUtil {
 		return getPortal().getGroupPermissions(request);
 	}
 
-	public static String[] getGroupPermissions(
-		PortletRequest portletRequest) {
-
+	public static String[] getGroupPermissions(PortletRequest portletRequest) {
 		return getPortal().getGroupPermissions(portletRequest);
 	}
 
@@ -1489,9 +1486,7 @@ public class PortalUtil {
 	 * Sets the whole title for a page. This overrides the existing page whole
 	 * title.
 	 */
-	public static void setPageTitle(
-		String title, HttpServletRequest request) {
-
+	public static void setPageTitle(String title, HttpServletRequest request) {
 		getPortal().setPageTitle(title, request);
 	}
 

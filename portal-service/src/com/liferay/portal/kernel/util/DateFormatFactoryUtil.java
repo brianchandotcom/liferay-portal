@@ -72,8 +72,7 @@ public class DateFormatFactoryUtil {
 	public static DateFormat getSimpleDateFormat(
 		String pattern, TimeZone timeZone) {
 
-		return getDateFormatFactory().getSimpleDateFormat(
-			pattern, timeZone);
+		return getDateFormatFactory().getSimpleDateFormat(pattern, timeZone);
 	}
 
 	public static DateFormat getTime(Locale locale) {
@@ -88,9 +87,7 @@ public class DateFormatFactoryUtil {
 		return getDateFormatFactory().getTime(timeZone);
 	}
 
-	public void setDateFormatFactory(
-		DateFormatFactory fastDateFormatFactory) {
-
+	public void setDateFormatFactory(DateFormatFactory fastDateFormatFactory) {
 		_fastDateFormatFactory = fastDateFormatFactory;
 	}
 

@@ -50,8 +50,7 @@ public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 		UnicodeProperties typeSettingsProperties =
 			mdrAction.getTypeSettingsProperties();
 
-		return GetterUtil.getString(
-			typeSettingsProperties.getProperty("url"));
+		return GetterUtil.getString(typeSettingsProperties.getProperty("url"));
 	}
 
 	private static Collection<String> _propertyNames;

@@ -87,9 +87,7 @@ public class ClusterLinkUtil {
 		_clusterLink.sendMulticastMessage(message, priority);
 	}
 
-	public static void sendMulticastMessage(
-		Object payload, Priority priority) {
-
+	public static void sendMulticastMessage(Object payload, Priority priority) {
 		Message message = new Message();
 
 		message.setPayload(payload);

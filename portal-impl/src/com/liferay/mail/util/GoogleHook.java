@@ -52,14 +52,12 @@ public class GoogleHook implements Hook {
 			gUserManager.addGUser(userId, password, firstName, lastName);
 
 			GNicknameManager gNicknameManager =
-				GoogleAppsFactoryUtil.getGNicknameManager(
-					companyId);
+				GoogleAppsFactoryUtil.getGNicknameManager(companyId);
 
 			gNicknameManager.addGNickname(userId, nickname);
 
 			GEmailSettingsManager gEmailSettingsManager =
-				GoogleAppsFactoryUtil.getGEmailSettingsManager(
-					companyId);
+				GoogleAppsFactoryUtil.getGEmailSettingsManager(companyId);
 
 			FullNameGenerator fullNameGenerator =
 				FullNameGeneratorFactory.getInstance();
@@ -86,8 +84,7 @@ public class GoogleHook implements Hook {
 			String nickname = _getNickname(user.getEmailAddress());
 
 			GNicknameManager gNicknameManager =
-				GoogleAppsFactoryUtil.getGNicknameManager(
-					companyId);
+				GoogleAppsFactoryUtil.getGNicknameManager(companyId);
 
 			gNicknameManager.deleteGNickname(nickname);
 		}
@@ -121,14 +118,12 @@ public class GoogleHook implements Hook {
 			deleteEmailAddress(companyId, userId);
 
 			GNicknameManager gNicknameManager =
-				GoogleAppsFactoryUtil.getGNicknameManager(
-					companyId);
+				GoogleAppsFactoryUtil.getGNicknameManager(companyId);
 
 			gNicknameManager.addGNickname(userId, emailAddress);
 
 			GEmailSettingsManager gEmailSettingsManager =
-				GoogleAppsFactoryUtil.getGEmailSettingsManager(
-					companyId);
+				GoogleAppsFactoryUtil.getGEmailSettingsManager(companyId);
 
 			gEmailSettingsManager.addSendAs(
 				userId, user.getFullName(), emailAddress);

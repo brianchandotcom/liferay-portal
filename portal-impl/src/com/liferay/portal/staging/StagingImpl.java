@@ -442,8 +442,7 @@ public class StagingImpl implements Staging {
 			"branchingPrivate", String.valueOf(branchingPrivate));
 		typeSettingsProperties.setProperty(
 			"branchingPublic", String.valueOf(branchingPublic));
-		typeSettingsProperties.setProperty(
-			"staged", Boolean.TRUE.toString());
+		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
 		typeSettingsProperties.setProperty(
 			"stagedRemotely", String.valueOf(false));
 
@@ -619,9 +618,7 @@ public class StagingImpl implements Staging {
 				getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
-	public String getSchedulerGroupName(
-		String destinationName, long groupId) {
-
+	public String getSchedulerGroupName(String destinationName, long groupId) {
 		return destinationName.concat(StringPool.SLASH).concat(
 			String.valueOf(groupId));
 	}
@@ -710,9 +707,7 @@ public class StagingImpl implements Staging {
 				new String[] {Boolean.FALSE.toString()});
 		}
 
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.PORTLET_DATA)) {
-
+		if (!parameterMap.containsKey(PortletDataHandlerKeys.PORTLET_DATA)) {
 			parameterMap.put(
 				PortletDataHandlerKeys.PORTLET_DATA,
 				new String[] {Boolean.FALSE.toString()});
@@ -1970,8 +1965,7 @@ public class StagingImpl implements Staging {
 
 		LayoutExporter.updateLastPublishDate(
 			liveGroup.getPrivateLayoutSet(), 0);
-		LayoutExporter.updateLastPublishDate(
-			liveGroup.getPublicLayoutSet(), 0);
+		LayoutExporter.updateLastPublishDate(liveGroup.getPublicLayoutSet(), 0);
 
 		Set<String> parameterNames = serviceContext.getAttributes().keySet();
 

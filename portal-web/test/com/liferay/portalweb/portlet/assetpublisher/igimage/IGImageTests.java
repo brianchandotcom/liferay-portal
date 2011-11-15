@@ -41,10 +41,8 @@ public class IGImageTests extends BaseTests {
 		testSuite.addTest(DeleteIGFolderImageAPTests.suite());
 		testSuite.addTest(SelectExistingIGFolderImageAPActionsTests.suite());
 		testSuite.addTest(ViewConfigurePortletAbstractsIGImageAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletAvailableIGImageAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletCurrentIGImageAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletAvailableIGImageAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletCurrentIGImageAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletFullContentIGImageAPTests.suite());
 		testSuite.addTest(ViewConfigurePortletTableIGImageAPTests.suite());

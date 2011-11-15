@@ -168,8 +168,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			configurationString = _hibernateConfigurationConverter.convert(
 				configurationString);
 
-			is = new UnsyncByteArrayInputStream(
-				configurationString.getBytes());
+			is = new UnsyncByteArrayInputStream(configurationString.getBytes());
 		}
 
 		configuration = configuration.addInputStream(is);

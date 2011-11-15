@@ -168,8 +168,7 @@ public class MembershipRequestLocalServiceImpl
 		validate(replyComments);
 
 		MembershipRequest membershipRequest =
-			membershipRequestPersistence.findByPrimaryKey(
-				membershipRequestId);
+			membershipRequestPersistence.findByPrimaryKey(membershipRequestId);
 
 		membershipRequest.setReplyComments(replyComments);
 		membershipRequest.setReplyDate(new Date());

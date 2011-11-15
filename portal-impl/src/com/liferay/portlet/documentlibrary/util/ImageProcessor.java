@@ -223,15 +223,11 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		}
 	}
 
-	private String _getCustom1FilePath(
-		FileVersion fileVersion, String type) {
-
+	private String _getCustom1FilePath(FileVersion fileVersion, String type) {
 		return _getCustomFilePath(fileVersion, type, 1);
 	}
 
-	private String _getCustom2FilePath(
-		FileVersion fileVersion, String type) {
-
+	private String _getCustom2FilePath(FileVersion fileVersion, String type) {
 		return _getCustomFilePath(fileVersion, type, 2);
 	}
 

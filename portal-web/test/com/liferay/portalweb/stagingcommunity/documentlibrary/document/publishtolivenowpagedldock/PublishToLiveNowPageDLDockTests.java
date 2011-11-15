@@ -29,8 +29,7 @@ public class PublishToLiveNowPageDLDockTests extends BaseTests {
 
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ActivateSiteStagingLocalLiveDLTest.class);
-		testSuite.addTestSuite(
-			AddPublicPageDLSiteStagingLocalLiveDLTest.class);
+		testSuite.addTestSuite(AddPublicPageDLSiteStagingLocalLiveDLTest.class);
 		testSuite.addTestSuite(
 			AddPublicPagePortletDLSiteStagingLocalLiveDLTest.class);
 		testSuite.addTestSuite(AddDLDocumentSiteStagingLocalLiveDLTest.class);

@@ -224,8 +224,7 @@ public class ServiceContextFactory {
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)portletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			(ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 		if (serviceContext != null) {
 			serviceContext = (ServiceContext)serviceContext.clone();

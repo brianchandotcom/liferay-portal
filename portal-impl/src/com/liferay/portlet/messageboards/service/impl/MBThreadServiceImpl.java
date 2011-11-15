@@ -45,9 +45,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public void deleteThread(long threadId)
 		throws PortalException, SystemException {
 
-		if (lockLocalService.isLocked(
-				MBThread.class.getName(), threadId)) {
-
+		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
 		}
 
@@ -172,8 +170,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		if (userId <= 0) {
 			if (status == WorkflowConstants.STATUS_ANY) {
-				return mbThreadPersistence.countByG_C(
-					groupId, categoryIds);
+				return mbThreadPersistence.countByG_C(groupId, categoryIds);
 			}
 			else {
 				return mbThreadPersistence.countByG_C_S(

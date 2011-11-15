@@ -54,8 +54,7 @@ public class InputPermissionsParamsTagUtil {
 		Group layoutGroup = layout.getGroup();
 
 		List<String> guestDefaultActions =
-			ResourceActionsUtil.getModelResourceGuestDefaultActions(
-				modelName);
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(modelName);
 
 		if (layoutGroup.isControlPanel()) {
 			Group group = themeDisplay.getScopeGroup();

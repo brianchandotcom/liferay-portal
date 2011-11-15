@@ -30,8 +30,7 @@ public class ViewConfigurePortletAbstractsWebContentAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddNewWCWebContentAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleAbstractsTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleAbstractsTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletAbstractsWebContentAPTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);

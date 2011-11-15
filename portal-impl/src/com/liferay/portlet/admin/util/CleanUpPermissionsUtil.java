@@ -65,8 +65,7 @@ public class CleanUpPermissionsUtil {
 
 		_cleanUpAddToPagePermissions_5(companyId, role.getRoleId(), false);
 
-		role = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.USER);
+		role = RoleLocalServiceUtil.getRole(companyId, RoleConstants.USER);
 
 		_cleanUpAddToPagePermissions_5(companyId, role.getRoleId(), true);
 	}
@@ -119,8 +118,7 @@ public class CleanUpPermissionsUtil {
 
 		_cleanUpAddToPagePermissions_6(companyId, role.getRoleId(), false);
 
-		role = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.USER);
+		role = RoleLocalServiceUtil.getRole(companyId, RoleConstants.USER);
 
 		_cleanUpAddToPagePermissions_6(companyId, role.getRoleId(), true);
 	}

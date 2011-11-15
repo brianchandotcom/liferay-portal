@@ -46,8 +46,7 @@ public class WCWebContentTests extends BaseTests {
 			ViewConfigurePortletAbstractsWebContentAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletAvailableWebContentAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletCurrentWebContentAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletCurrentWebContentAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletFullContentWebContentAPTests.suite());
 		testSuite.addTest(ViewConfigurePortletTableWebContentAPTests.suite());

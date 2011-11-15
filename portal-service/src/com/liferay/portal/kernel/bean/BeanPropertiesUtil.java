@@ -65,9 +65,7 @@ public class BeanPropertiesUtil {
 		return getBeanProperties().getByte(bean, param);
 	}
 
-	public static byte getByte(
-		Object bean, String param, byte defaultValue) {
-
+	public static byte getByte(Object bean, String param, byte defaultValue) {
 		return getBeanProperties().getByte(bean, param, defaultValue);
 	}
 
@@ -125,9 +123,7 @@ public class BeanPropertiesUtil {
 		return getBeanProperties().getInteger(bean, param);
 	}
 
-	public static int getInteger(
-		Object bean, String param, int defaultValue) {
-
+	public static int getInteger(Object bean, String param, int defaultValue) {
 		return getBeanProperties().getInteger(bean, param, defaultValue);
 	}
 
@@ -145,9 +141,7 @@ public class BeanPropertiesUtil {
 		return getBeanProperties().getLong(bean, param);
 	}
 
-	public static long getLong(
-		Object bean, String param, long defaultValue) {
-
+	public static long getLong(Object bean, String param, long defaultValue) {
 		return getBeanProperties().getLong(bean, param, defaultValue);
 	}
 

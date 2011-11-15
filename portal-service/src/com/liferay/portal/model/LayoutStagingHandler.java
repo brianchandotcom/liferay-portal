@@ -112,9 +112,7 @@ public class LayoutStagingHandler implements InvocationHandler {
 		_layoutRevision = layoutRevision;
 	}
 
-	private LayoutStagingHandler(
-		Layout layout, LayoutRevision layoutRevision) {
-
+	private LayoutStagingHandler(Layout layout, LayoutRevision layoutRevision) {
 		_layout = layout;
 
 		try {

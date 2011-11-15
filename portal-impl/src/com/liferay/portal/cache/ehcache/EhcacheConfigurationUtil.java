@@ -34,9 +34,7 @@ import net.sf.ehcache.config.ConfigurationFactory;
  */
 public class EhcacheConfigurationUtil {
 
-	public static Configuration getConfiguration(
-		String configurationPath) {
-
+	public static Configuration getConfiguration(String configurationPath) {
 		return getConfiguration(configurationPath, false);
 	}
 
@@ -171,8 +169,7 @@ public class EhcacheConfigurationUtil {
 			(!usingDefault && usingLiferayCacheEventListenerFactory)) {
 
 			String cacheEventListenerProperties =
-				_clearCacheEventListenerConfigurations(
-					cacheConfiguration);
+				_clearCacheEventListenerConfigurations(cacheConfiguration);
 
 			if (enableClusterLinkReplication) {
 				_enableClusterLinkReplication(

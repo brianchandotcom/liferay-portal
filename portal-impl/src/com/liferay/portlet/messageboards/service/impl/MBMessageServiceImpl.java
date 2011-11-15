@@ -98,9 +98,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		checkReplyToPermission(groupId, categoryId, parentMessageId);
 
-		if (lockLocalService.isLocked(
-				MBThread.class.getName(), threadId)) {
-
+		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
 		}
 

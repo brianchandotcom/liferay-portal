@@ -184,8 +184,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 		String moduleId = document.get("moduleId");
 		String repositoryURL = document.get("repositoryURL");
 
-		portletURL.setParameter(
-			"struts_action", "/admin/view");
+		portletURL.setParameter("struts_action", "/admin/view");
 		portletURL.setParameter("tabs2", "repositories");
 		portletURL.setParameter("moduleId", moduleId);
 		portletURL.setParameter("repositoryURL", repositoryURL);

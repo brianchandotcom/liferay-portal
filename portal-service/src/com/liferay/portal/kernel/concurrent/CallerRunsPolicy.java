@@ -31,8 +31,7 @@ public class CallerRunsPolicy implements RejectedExecutionHandler {
 
 		Throwable throwable = null;
 
-		threadPoolHandler.beforeExecute(
-			Thread.currentThread(), runnable);
+		threadPoolHandler.beforeExecute(Thread.currentThread(), runnable);
 
 		try {
 			runnable.run();

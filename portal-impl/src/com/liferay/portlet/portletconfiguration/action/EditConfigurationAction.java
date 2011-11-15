@@ -145,8 +145,7 @@ public class EditConfigurationAction extends PortletAction {
 		}
 
 		ResourceServingConfigurationAction resourceServingConfigurationAction =
-			(ResourceServingConfigurationAction)getConfigurationAction(
-				portlet);
+			(ResourceServingConfigurationAction)getConfigurationAction(portlet);
 
 		if (resourceServingConfigurationAction != null) {
 			resourceServingConfigurationAction.serveResource(

@@ -76,8 +76,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 		Team team = teamLocalService.getTeam(groupId, name);
 
-		TeamPermissionUtil.check(
-			getPermissionChecker(), team, ActionKeys.VIEW);
+		TeamPermissionUtil.check(getPermissionChecker(), team, ActionKeys.VIEW);
 
 		return team;
 	}

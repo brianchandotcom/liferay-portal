@@ -266,8 +266,7 @@ public class SQLTransformer {
 
 		newSQL = _transformPositionalParams(newSQL);
 
-		newSQL = StringUtil.replace(
-			newSQL, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
+		newSQL = StringUtil.replace(newSQL, _HQL_NOT_EQUALS, _JPQL_NOT_EQUALS);
 		newSQL = StringUtil.replace(
 			newSQL, _HQL_COMPOSITE_ID_MARKER, _JPQL_DOT_SEPARTOR);
 

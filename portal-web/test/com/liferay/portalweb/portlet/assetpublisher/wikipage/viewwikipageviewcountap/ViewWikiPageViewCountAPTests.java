@@ -34,8 +34,7 @@ public class ViewWikiPageViewCountAPTests extends BaseTests {
 		testSuite.addTestSuite(AddWikiPageTest.class);
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletShowMetadataViewCountTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowMetadataViewCountTest.class);
 		testSuite.addTestSuite(ViewWikiPageViewCountAPTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

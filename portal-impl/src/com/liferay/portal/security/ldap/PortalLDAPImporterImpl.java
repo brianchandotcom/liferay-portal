@@ -210,8 +210,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		Properties userMappings = LDAPSettingsUtil.getUserMappings(
 			ldapServerId, companyId);
 		Properties userExpandoMappings =
-			LDAPSettingsUtil.getUserExpandoMappings(
-				ldapServerId, companyId);
+			LDAPSettingsUtil.getUserExpandoMappings(ldapServerId, companyId);
 		Properties contactMappings = LDAPSettingsUtil.getContactMappings(
 			ldapServerId, companyId);
 		Properties contactExpandoMappings =
@@ -414,8 +413,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				companyId, ldapGroup.getGroupName());
 		}
 		catch (NoSuchRoleException nsre) {
-			User defaultUser = UserLocalServiceUtil.getDefaultUser(
-				companyId);
+			User defaultUser = UserLocalServiceUtil.getDefaultUser(companyId);
 
 			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 

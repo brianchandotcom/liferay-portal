@@ -34,8 +34,7 @@ public class ViewConfigurePortletAbstractsDLDocumentAPTests
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddDLFolderTest.class);
 		testSuite.addTestSuite(AddNewDLFolderDocumentAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleAbstractsTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleAbstractsTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletAbstractsDLDocumentAPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);

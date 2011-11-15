@@ -31,8 +31,7 @@ import net.htmlparser.jericho.LoggerProvider;
 public class CachedLoggerProvider implements LoggerProvider {
 
 	public static void install() throws Exception {
-		Class<?> clazz = Class.forName(
-			"net.htmlparser.jericho.LoggerFactory");
+		Class<?> clazz = Class.forName("net.htmlparser.jericho.LoggerFactory");
 
 		Method method = ReflectionUtil.getDeclaredMethod(
 			clazz, "getDefaultLoggerProvider");

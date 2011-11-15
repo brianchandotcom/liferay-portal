@@ -63,10 +63,8 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 		iteratorURL.setParameter(
 			WorkflowTaskDisplayTerms.TYPE, displayTerms.getType());
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType");
+		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
+		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
 
 		OrderByComparator orderByComparator = getOrderByComparator(
 			orderByCol, orderByType);

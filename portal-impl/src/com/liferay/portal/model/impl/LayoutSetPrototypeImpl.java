@@ -73,9 +73,7 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 		super.setSettings(settings);
 	}
 
-	public void setSettingsProperties(
-		UnicodeProperties settingsProperties) {
-
+	public void setSettingsProperties(UnicodeProperties settingsProperties) {
 		_settingsProperties = settingsProperties;
 
 		super.setSettings(settingsProperties.toString());

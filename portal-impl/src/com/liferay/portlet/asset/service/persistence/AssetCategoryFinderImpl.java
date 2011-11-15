@@ -257,8 +257,7 @@ public class AssetCategoryFinderImpl
 		Session session = null;
 
 		try {
-			AssetEntry entry = AssetEntryUtil.fetchByC_C(
-				classNameId, classPK);
+			AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
 
 			if (entry == null) {
 				return Collections.emptyList();

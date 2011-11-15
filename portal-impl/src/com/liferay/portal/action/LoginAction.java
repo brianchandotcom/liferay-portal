@@ -155,12 +155,10 @@ public class LoginAction extends Action {
 	protected WindowState getWindowState(HttpServletRequest request) {
 		WindowState windowState = WindowState.MAXIMIZED;
 
-		String windowStateString = ParamUtil.getString(
-			request, "windowState");
+		String windowStateString = ParamUtil.getString(request, "windowState");
 
 		if (Validator.isNotNull(windowStateString)) {
-			windowState = WindowStateFactory.getWindowState(
-				windowStateString);
+			windowState = WindowStateFactory.getWindowState(windowStateString);
 		}
 
 		return windowState;

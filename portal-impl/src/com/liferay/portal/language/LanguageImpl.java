@@ -704,8 +704,7 @@ public class LanguageImpl implements Language {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, pageContext.getServletContext());
 
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(
-			locale);
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
 		return ResourceBundleUtil.getString(resourceBundle, key);
 	}

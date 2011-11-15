@@ -65,8 +65,7 @@ public class GUserManagerImpl extends GBaseManagerImpl implements GUserManager {
 
 		addAtomCategory(atomEntryElement, "user");
 
-		Element appsLoginElement = atomEntryElement.addElement(
-			"apps:login");
+		Element appsLoginElement = atomEntryElement.addElement("apps:login");
 
 		appsLoginElement.addAttribute("password", password);
 		appsLoginElement.addAttribute("userName", String.valueOf(userId));

@@ -142,8 +142,7 @@ public class PortletURLUtil {
 
 		sb.append(plid);
 
-		Portlet portlet = (Portlet)request.getAttribute(
-			WebKeys.RENDER_PORTLET);
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 		String portletId = portlet.getPortletId();
 

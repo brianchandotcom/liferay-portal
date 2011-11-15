@@ -115,8 +115,7 @@ public class AssetTagFinderImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		return doFindByG_C_N(
-			groupId, classNameId, name, start, end, obc, true);
+		return doFindByG_C_N(groupId, classNameId, name, start, end, obc, true);
 	}
 
 	public List<AssetTag> filterFindByG_N_P(
@@ -169,8 +168,7 @@ public class AssetTagFinderImpl
 		Session session = null;
 
 		try {
-			AssetEntry entry = AssetEntryUtil.fetchByC_C(
-				classNameId, classPK);
+			AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
 
 			if (entry == null) {
 				return Collections.emptyList();

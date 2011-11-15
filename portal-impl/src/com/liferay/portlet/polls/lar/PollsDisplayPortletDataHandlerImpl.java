@@ -197,8 +197,7 @@ public class PollsDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					PollsQuestion.class);
 
-			questionId = MapUtil.getLong(
-				questionPKs, questionId, questionId);
+			questionId = MapUtil.getLong(questionPKs, questionId, questionId);
 
 			portletPreferences.setValue(
 				"questionId", String.valueOf(questionId));

@@ -31,8 +31,7 @@ public class PortalSessionListener implements HttpSessionListener {
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
-				new CompoundSessionIdHttpSession(
-					httpSessionEvent.getSession());
+				new CompoundSessionIdHttpSession(httpSessionEvent.getSession());
 
 			httpSessionEvent = new HttpSessionEvent(
 				compoundSessionIdHttpSession);
@@ -50,8 +49,7 @@ public class PortalSessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
-				new CompoundSessionIdHttpSession(
-					httpSessionEvent.getSession());
+				new CompoundSessionIdHttpSession(httpSessionEvent.getSession());
 
 			httpSessionEvent = new HttpSessionEvent(
 				compoundSessionIdHttpSession);

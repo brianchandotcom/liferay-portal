@@ -145,8 +145,7 @@ public class UserIndexer extends BaseIndexer {
 					BooleanQueryFactoryUtil.create(searchContext);
 
 				for (long organizationId : values) {
-					usersOrgsQuery.addTerm(
-						"organizationIds", organizationId);
+					usersOrgsQuery.addTerm("organizationIds", organizationId);
 					usersOrgsQuery.addTerm(
 						"ancestorOrganizationIds", organizationId);
 				}

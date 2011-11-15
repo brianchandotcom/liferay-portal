@@ -294,8 +294,7 @@ public class FileSystemStore extends BaseStore {
 			String fileName)
 		throws PortalException {
 
-		File fileNameDir = getFileNameDir(
-			companyId, repositoryId, fileName);
+		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 		File newFileNameDir = getFileNameDir(
 			companyId, newRepositoryId, fileName);
 
@@ -315,8 +314,7 @@ public class FileSystemStore extends BaseStore {
 			String newFileName)
 		throws PortalException {
 
-		File fileNameDir = getFileNameDir(
-			companyId, repositoryId, fileName);
+		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 		File newFileNameDir = getFileNameDir(
 			companyId, repositoryId, newFileName);
 

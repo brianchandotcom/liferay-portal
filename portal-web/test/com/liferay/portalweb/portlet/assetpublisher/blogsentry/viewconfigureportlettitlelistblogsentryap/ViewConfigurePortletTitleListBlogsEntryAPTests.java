@@ -32,8 +32,7 @@ public class ViewConfigurePortletTitleListBlogsEntryAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddNewBlogsEntryAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTitleListTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTitleListTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletTitleListBlogsEntryAPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);

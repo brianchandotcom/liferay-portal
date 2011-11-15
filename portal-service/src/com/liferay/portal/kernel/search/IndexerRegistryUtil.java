@@ -45,9 +45,7 @@ public class IndexerRegistryUtil {
 		register(indexer.getClass().getName(), indexer);
 	}
 
-	public static void register(
-		String className, Indexer indexer) {
-
+	public static void register(String className, Indexer indexer) {
 		getIndexerRegistry().register(className, indexer);
 	}
 

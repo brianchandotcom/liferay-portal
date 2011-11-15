@@ -356,8 +356,7 @@ public class ShoppingOrderLocalServiceImpl
 		}
 
 		order.setModifiedDate(new Date());
-		order.setTax(
-			ShoppingUtil.calculateTax(items, order.getBillingState()));
+		order.setTax(ShoppingUtil.calculateTax(items, order.getBillingState()));
 		order.setShipping(
 			ShoppingUtil.calculateAlternativeShipping(
 				items, cart.getAltShipping()));

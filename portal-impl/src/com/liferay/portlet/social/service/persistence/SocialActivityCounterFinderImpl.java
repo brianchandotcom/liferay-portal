@@ -300,8 +300,7 @@ public class SocialActivityCounterFinderImpl
 			qPos.add(PortalUtil.getClassNameId(User.class.getName()));
 			qPos.add(SocialCounterPeriodUtil.getStartPeriod());
 
-			return (List<Long>)QueryUtil.list(
-				q, getDialect(), start, end);
+			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

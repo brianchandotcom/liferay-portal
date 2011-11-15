@@ -593,8 +593,7 @@ public class JCRStore extends BaseStore {
 		throws PortalException, SystemException {
 
 		try {
-			getFileContentNode(
-				companyId, repositoryId, fileName, versionLabel);
+			getFileContentNode(companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchFileException nsfe) {
 			return false;

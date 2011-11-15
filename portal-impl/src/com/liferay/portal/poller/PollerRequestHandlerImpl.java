@@ -125,8 +125,7 @@ public class PollerRequestHandlerImpl
 		String pollerSessionId = getPollerSessionId(pollerHeader);
 
 		synchronized (_pollerSessions) {
-			PollerSession pollerSession = _pollerSessions.get(
-				pollerSessionId);
+			PollerSession pollerSession = _pollerSessions.get(pollerSessionId);
 
 			if ((pollerSession != null) &&
 				pollerSession.completePortletProcessing(
@@ -256,8 +255,7 @@ public class PollerRequestHandlerImpl
 		JSONObject pollerResponseHeaderJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		pollerResponseHeaderJSONObject.put(
-			"userId", pollerHeader.getUserId());
+		pollerResponseHeaderJSONObject.put("userId", pollerHeader.getUserId());
 		pollerResponseHeaderJSONObject.put(
 			"initialRequest", pollerHeader.isInitialRequest());
 		pollerResponseHeaderJSONObject.put("suspendPolling", suspendPolling);

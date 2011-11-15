@@ -76,8 +76,7 @@ public class VerifySQLServer extends VerifyProcess {
 						tableName, columnName, length, nullable);
 				}
 				else if (dataType.equals("text")) {
-					convertTextColumn(
-						tableName, columnName, length, nullable);
+					convertTextColumn(tableName, columnName, length, nullable);
 				}
 			}
 

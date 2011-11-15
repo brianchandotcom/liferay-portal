@@ -37,8 +37,7 @@ public class ViewConfigurePortletCurrentIGImageAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ViewConfigurePortletAvailableIGImageAPTest.class);
 		testSuite.addTestSuite(ConfigurePortletCurrentIGImageTest.class);
-		testSuite.addTestSuite(
-			ViewConfigurePortletCurrentIGImageAPTest.class);
+		testSuite.addTestSuite(ViewConfigurePortletCurrentIGImageAPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

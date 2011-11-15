@@ -930,8 +930,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			boolean value = false;
 
 			if (checkGuest) {
-				value = hasGuestPermission(
-					groupId, name, primKey, actionId);
+				value = hasGuestPermission(groupId, name, primKey, actionId);
 			}
 
 			if (!value) {

@@ -57,9 +57,7 @@ public class TeamPermissionUtil {
 		return _userGroupPermission;
 	}
 
-	public void setTeamPermission(
-		TeamPermission userGroupPermission) {
-
+	public void setTeamPermission(TeamPermission userGroupPermission) {
 		_userGroupPermission = userGroupPermission;
 	}
 

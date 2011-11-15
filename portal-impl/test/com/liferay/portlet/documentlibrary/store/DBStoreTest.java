@@ -113,8 +113,7 @@ public class DBStoreTest extends BaseTestCase {
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
-			new BufferedInputStream(
-				new ByteArrayInputStream(_DATA_VERSION_1)));
+			new BufferedInputStream(new ByteArrayInputStream(_DATA_VERSION_1)));
 
 		assertTrue(
 			_store.hasFile(

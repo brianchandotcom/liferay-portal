@@ -45,8 +45,7 @@ public class MailSessionFactoryBean extends AbstractFactoryBean<Session> {
 
 	@Override
 	protected Session createInstance() throws Exception {
-		Properties properties = PropsUtil.getProperties(
-			_propertyPrefix, true);
+		Properties properties = PropsUtil.getProperties(_propertyPrefix, true);
 
 		String jndiName = properties.getProperty("jndi.name");
 

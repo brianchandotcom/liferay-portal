@@ -42,11 +42,9 @@ public interface BaseRepository extends Repository {
 
 	public void setCompanyId(long companyId);
 
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService);
+	public void setCompanyLocalService(CompanyLocalService companyLocalService);
 
-	public void setCounterLocalService(
-		CounterLocalService counterLocalService);
+	public void setCounterLocalService(CounterLocalService counterLocalService);
 
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService);

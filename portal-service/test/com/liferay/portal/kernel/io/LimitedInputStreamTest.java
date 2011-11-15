@@ -90,8 +90,7 @@ public class LimitedInputStreamTest extends TestCase {
 
 		// Normal
 
-		new LimitedInputStream(
-			new ByteArrayInputStream(new byte[10]), 5, 5);
+		new LimitedInputStream(new ByteArrayInputStream(new byte[10]), 5, 5);
 	}
 
 	public void testMarkSupported() throws IOException {

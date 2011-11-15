@@ -27,8 +27,7 @@ public class MonitoringProcessorManager
 	implements MonitoringProcessorManagerMBean {
 
 	public String getLevel(String namespace) {
-		Level level = _monitoringProcessor.getLevel(
-			namespace);
+		Level level = _monitoringProcessor.getLevel(namespace);
 
 		if (level == null) {
 			level = Level.OFF;

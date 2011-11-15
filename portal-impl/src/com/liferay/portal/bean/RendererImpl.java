@@ -131,8 +131,7 @@ public class RendererImpl implements Renderer {
 		}
 
 		if (Validator.isNull(velocityTemplateContent)) {
-			_log.warn(
-				"No entity renderer template found for " + className);
+			_log.warn("No entity renderer template found for " + className);
 
 			return null;
 		}

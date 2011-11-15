@@ -53,8 +53,7 @@ public class WebXML23Converter {
 				root.attributeValue("version"));
 
 			if (version == 2.4) {
-				System.out.println(
-					"Convert web.xml because it is Servlet 2.4");
+				System.out.println("Convert web.xml because it is Servlet 2.4");
 			}
 			else {
 				System.out.println(

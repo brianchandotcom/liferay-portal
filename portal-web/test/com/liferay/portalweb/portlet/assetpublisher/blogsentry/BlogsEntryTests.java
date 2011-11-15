@@ -48,12 +48,10 @@ public class BlogsEntryTests extends BaseTests {
 			ViewConfigurePortletAbstractsBlogsEntryAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletAvailableBlogsEntryAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletCurrentBlogsEntryAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletCurrentBlogsEntryAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletFullContentBlogsEntryAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletTableBlogsEntryAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletTableBlogsEntryAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletTitleListBlogsEntryAPTests.suite());
 		testSuite.addTest(ViewBlogsEntryViewCountAPTests.suite());

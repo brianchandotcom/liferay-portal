@@ -1197,8 +1197,7 @@ public class HookHotDeployListener
 				portletClassLoader, Authenticator.class,
 				authenticatorClassName);
 
-			authenticatorsContainer.registerAuthenticator(
-				key, authenticator);
+			authenticatorsContainer.registerAuthenticator(key, authenticator);
 		}
 	}
 
@@ -2073,8 +2072,7 @@ public class HookHotDeployListener
 					return;
 				}
 
-				value = StringUtil.split(
-					portalProperties.getProperty(key));
+				value = StringUtil.split(portalProperties.getProperty(key));
 			}
 			else {
 				value = PropsUtil.getArray(key);

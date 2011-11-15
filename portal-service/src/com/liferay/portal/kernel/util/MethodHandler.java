@@ -69,8 +69,7 @@ public class MethodHandler implements Serializable {
 		Object targetObject = null;
 
 		if (newInstance && !Modifier.isStatic(method.getModifiers())) {
-			Class<?> targetClass = contextClassLoader.loadClass(
-				getClassName());
+			Class<?> targetClass = contextClassLoader.loadClass(getClassName());
 
 			targetObject = targetClass.newInstance();
 		}

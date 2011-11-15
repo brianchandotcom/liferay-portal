@@ -53,8 +53,7 @@ public class IPDetector {
 		}
 
 		try {
-			InetAddress[] inetAddresses = InetAddress.getAllByName(
-				"localhost");
+			InetAddress[] inetAddresses = InetAddress.getAllByName("localhost");
 
 			for (InetAddress inetAddress : inetAddresses) {
 				if (inetAddress.getHostAddress().contains(":")) {

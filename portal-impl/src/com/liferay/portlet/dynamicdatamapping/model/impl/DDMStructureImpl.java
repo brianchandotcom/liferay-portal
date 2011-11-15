@@ -259,8 +259,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 					XPath xPathSelector = SAXReaderUtil.createXPath(
 						"//dynamic-element[@dataType]");
 
-					List<Node> nodes = xPathSelector.selectNodes(
-						getDocument());
+					List<Node> nodes = xPathSelector.selectNodes(getDocument());
 
 					Iterator<Node> itr = nodes.iterator();
 

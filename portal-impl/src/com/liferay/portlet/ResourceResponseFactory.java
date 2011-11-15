@@ -26,8 +26,7 @@ public class ResourceResponseFactory {
 			HttpServletResponse response, String portletName, long companyId)
 		throws Exception {
 
-		return create(
-			resourceRequestImpl, response, portletName, companyId, 0);
+		return create(resourceRequestImpl, response, portletName, companyId, 0);
 	}
 
 	public static ResourceResponseImpl create(

@@ -40,8 +40,7 @@ public class StoreWrapper implements Store {
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
-		_store.addFile(
-			companyId, repositoryId, fileName, bytes);
+		_store.addFile(companyId, repositoryId, fileName, bytes);
 	}
 
 	public void addFile(

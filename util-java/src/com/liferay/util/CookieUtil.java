@@ -62,8 +62,7 @@ public class CookieUtil {
 			cookieMap = new HashMap<String, Cookie>(cookies.length * 4 / 3);
 
 			for (Cookie cookie : cookies) {
-				String cookieName = GetterUtil.getString(
-					cookie.getName());
+				String cookieName = GetterUtil.getString(cookie.getName());
 
 				cookieName = cookieName.toUpperCase();
 

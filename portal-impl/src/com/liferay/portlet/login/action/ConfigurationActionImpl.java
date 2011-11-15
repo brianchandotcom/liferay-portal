@@ -48,8 +48,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailFrom(ActionRequest actionRequest)
 		throws Exception {
 
-		String emailFromName = getParameter(
-			actionRequest, "emailFromName");
+		String emailFromName = getParameter(actionRequest, "emailFromName");
 		String emailFromAddress = getParameter(
 			actionRequest, "emailFromAddress");
 

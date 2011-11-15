@@ -50,9 +50,7 @@ public class UserPermissionImpl implements UserPermission {
 			long[] organizationIds, String actionId)
 		throws PrincipalException {
 
-		if (!contains(
-				permissionChecker, userId, organizationIds, actionId)) {
-
+		if (!contains(permissionChecker, userId, organizationIds, actionId)) {
 			throw new PrincipalException();
 		}
 	}

@@ -184,8 +184,7 @@ public class GetArticlesAction extends Action {
 			Document articleDoc = SAXReaderUtil.read(
 				article.getContentByLocale(languageId));
 
-			resultEl.content().add(
-				articleDoc.getRootElement().createCopy());
+			resultEl.content().add(articleDoc.getRootElement().createCopy());
 
 			resultEl = resultEl.element("root");
 

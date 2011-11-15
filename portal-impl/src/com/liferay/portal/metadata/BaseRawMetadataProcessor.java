@@ -173,10 +173,8 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 			Geographic.class.getSimpleName(), Geographic.class.getFields());
 		_fields.put(
 			HttpHeaders.class.getSimpleName(), HttpHeaders.class.getFields());
-		_fields.put(
-			Message.class.getSimpleName(), Message.class.getFields());
-		_fields.put(
-			MSOffice.class.getSimpleName(), MSOffice.class.getFields());
+		_fields.put(Message.class.getSimpleName(), Message.class.getFields());
+		_fields.put(MSOffice.class.getSimpleName(), MSOffice.class.getFields());
 		_fields.put(TIFF.class.getSimpleName(), TIFF.class.getFields());
 		_fields.put(
 			TikaMetadataKeys.class.getSimpleName(),

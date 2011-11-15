@@ -460,8 +460,7 @@ public class ClusterSchedulerEngine
 
 			_clusterEventListener = new MemorySchedulerClusterEventListener();
 
-			ClusterExecutorUtil.addClusterEventListener(
-				_clusterEventListener);
+			ClusterExecutorUtil.addClusterEventListener(_clusterEventListener);
 
 			if (!isMemorySchedulerClusterLockOwner(
 					lockMemorySchedulerCluster(null))) {

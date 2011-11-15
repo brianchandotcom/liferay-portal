@@ -438,8 +438,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		int actionDate = rs.getInt("actionDate");
 
-		Date actionDateDate = SocialCounterPeriodUtil.getDate(
-			actionDate - 365);
+		Date actionDateDate = SocialCounterPeriodUtil.getDate(actionDate - 365);
 
 		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(
 			actionDateDate.getTime());

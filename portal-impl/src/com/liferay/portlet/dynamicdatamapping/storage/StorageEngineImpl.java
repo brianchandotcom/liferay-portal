@@ -158,9 +158,7 @@ public class StorageEngineImpl implements StorageEngine {
 		return storageAdapter.queryCount(ddmStructureId, condition);
 	}
 
-	public void setDefaultStorageAdapter(
-		StorageAdapter defaultStorageAdapter) {
-
+	public void setDefaultStorageAdapter(StorageAdapter defaultStorageAdapter) {
 		_defaultStorageAdapter = defaultStorageAdapter;
 	}
 

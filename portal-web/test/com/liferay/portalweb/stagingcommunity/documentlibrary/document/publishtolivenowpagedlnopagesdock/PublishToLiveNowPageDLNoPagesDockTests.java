@@ -29,14 +29,12 @@ public class PublishToLiveNowPageDLNoPagesDockTests extends BaseTests {
 
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(ActivateSiteStagingLocalLiveDLTest.class);
-		testSuite.addTestSuite(
-			AddPublicPageDLSiteStagingLocalLiveDLTest.class);
+		testSuite.addTestSuite(AddPublicPageDLSiteStagingLocalLiveDLTest.class);
 		testSuite.addTestSuite(
 			AddPublicPagePortletDLSiteStagingLocalLiveDLTest.class);
 		testSuite.addTestSuite(AddDLDocumentSiteStagingLocalLiveDLTest.class);
 		testSuite.addTestSuite(PublishToLiveNowPageDLNoPagesDockTest.class);
-		testSuite.addTestSuite(
-			ViewPublishToLiveNowPageDLNoPagesDockTest.class);
+		testSuite.addTestSuite(ViewPublishToLiveNowPageDLNoPagesDockTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

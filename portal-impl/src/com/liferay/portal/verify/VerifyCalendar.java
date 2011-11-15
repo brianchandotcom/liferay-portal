@@ -31,8 +31,7 @@ public class VerifyCalendar extends VerifyProcess {
 		List<CalEvent> events = CalEventLocalServiceUtil.getNoAssetEvents();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + events.size() + " events with no asset");
+			_log.debug("Processing " + events.size() + " events with no asset");
 		}
 
 		for (CalEvent event : events) {

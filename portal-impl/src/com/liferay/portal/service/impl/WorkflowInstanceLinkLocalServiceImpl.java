@@ -275,8 +275,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 
 			workflowInstanceLink.setClassPK(newClassPK);
 
-			workflowInstanceLinkPersistence.update(
-				workflowInstanceLink, false);
+			workflowInstanceLinkPersistence.update(workflowInstanceLink, false);
 
 			Map<String, Serializable> workflowContext =
 				new HashMap<String, Serializable>(

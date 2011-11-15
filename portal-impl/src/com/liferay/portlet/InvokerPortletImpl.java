@@ -683,8 +683,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 		String portletId = _getPortletId(portletResponse);
 
-		List<ActionFilter> actionFilters = _actionFiltersMap.get(
-			portletId);
+		List<ActionFilter> actionFilters = _actionFiltersMap.get(portletId);
 
 		invoke(
 			portletRequest, portletResponse, PortletRequest.ACTION_PHASE,
@@ -720,8 +719,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 		String portletId = _getPortletId(portletResponse);
 
-		List<RenderFilter> renderFilters = _renderFiltersMap.get(
-			portletId);
+		List<RenderFilter> renderFilters = _renderFiltersMap.get(portletId);
 
 		invoke(
 			portletRequest, portletResponse, PortletRequest.RENDER_PHASE,

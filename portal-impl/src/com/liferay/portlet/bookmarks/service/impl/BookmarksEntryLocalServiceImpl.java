@@ -94,8 +94,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
-			BookmarksEntry.class);
+		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
 		indexer.reindex(entry);
 
@@ -301,8 +300,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
-			BookmarksEntry.class);
+		Indexer indexer = IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 
 		indexer.reindex(entry);
 

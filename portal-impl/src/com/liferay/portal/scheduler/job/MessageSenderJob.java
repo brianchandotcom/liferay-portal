@@ -81,8 +81,7 @@ public class MessageSenderJob implements Job {
 
 		String contextPath = message.getString(SchedulerEngine.CONTEXT_PATH);
 
-		String lockKey = PortletContextLoaderListener.getLockKey(
-			contextPath);
+		String lockKey = PortletContextLoaderListener.getLockKey(contextPath);
 
 		ReentrantLock executionLock = null;
 
@@ -164,8 +163,7 @@ public class MessageSenderJob implements Job {
 	protected JobState updatePersistedJobState(
 		JobState jobState, Trigger trigger) {
 
-		jobState.setTriggerDate(
-			SchedulerEngine.END_TIME, trigger.getEndTime());
+		jobState.setTriggerDate(SchedulerEngine.END_TIME, trigger.getEndTime());
 		jobState.setTriggerDate(
 			SchedulerEngine.FINAL_FIRE_TIME, trigger.getFinalFireTime());
 		jobState.setTriggerDate(SchedulerEngine.NEXT_FIRE_TIME, null);

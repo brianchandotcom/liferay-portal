@@ -33,8 +33,7 @@ public class RateWCWebContentCommentAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletEnableCommentRatingsTest.class);
+		testSuite.addTestSuite(ConfigurePortletEnableCommentRatingsTest.class);
 		testSuite.addTestSuite(BeTheFirstWCWebContentCommentAPTest.class);
 		testSuite.addTestSuite(RateWCWebContentCommentAPTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);

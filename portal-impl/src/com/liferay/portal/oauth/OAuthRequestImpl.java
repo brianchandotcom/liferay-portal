@@ -37,8 +37,7 @@ public class OAuthRequestImpl implements OAuthRequest {
 	}
 
 	public Verb getVerb() {
-		return VerbTranslator.translate(
-			_oAuthRequest.getVerb());
+		return VerbTranslator.translate(_oAuthRequest.getVerb());
 	}
 
 	public Object getWrappedOAuthRequest() {

@@ -82,8 +82,7 @@ public class BeanToXMLUtil {
 	}
 
 	public static String getClassNameWithoutPackage(String className) {
-		String[] classNameArray = StringUtil.split(
-			className, CharPool.PERIOD);
+		String[] classNameArray = StringUtil.split(className, CharPool.PERIOD);
 
 		String classNameWithoutPackage =
 			classNameArray[classNameArray.length - 1];

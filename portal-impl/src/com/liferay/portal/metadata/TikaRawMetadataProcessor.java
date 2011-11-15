@@ -43,8 +43,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			String extension, String mimeType, File file)
 		throws SystemException {
 
-		Metadata metadata = super.extractMetadata(
-			extension, mimeType, file);
+		Metadata metadata = super.extractMetadata(extension, mimeType, file);
 
 		try {
 			InputStream inputStream = new FileInputStream(file);

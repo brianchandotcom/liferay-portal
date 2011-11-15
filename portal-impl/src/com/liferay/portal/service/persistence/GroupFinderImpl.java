@@ -1205,10 +1205,8 @@ public class GroupFinderImpl
 			"rolePermissions_6_block",
 			_getCondition(
 				CustomSQLUtil.get(JOIN_BY_ROLE_RESOURCE_TYPE_PERMISSIONS)));
-		whereMap.put(
-			"site", _getCondition(CustomSQLUtil.get(JOIN_BY_SITE)));
-		whereMap.put(
-			"type", _getCondition(CustomSQLUtil.get(JOIN_BY_TYPE)));
+		whereMap.put("site", _getCondition(CustomSQLUtil.get(JOIN_BY_SITE)));
+		whereMap.put("type", _getCondition(CustomSQLUtil.get(JOIN_BY_TYPE)));
 		whereMap.put(
 			"userGroupRole",
 			_getCondition(CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE)));

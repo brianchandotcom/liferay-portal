@@ -408,9 +408,7 @@ public class DocumentImpl implements Document {
 		addUID(portletId, String.valueOf(field1));
 	}
 
-	public void addUID(
-		String portletId, long field1, String field2) {
-
+	public void addUID(String portletId, long field1, String field2) {
 		addUID(portletId, String.valueOf(field1), field2);
 	}
 
@@ -418,9 +416,7 @@ public class DocumentImpl implements Document {
 		addUID(portletId, field1.longValue());
 	}
 
-	public void addUID(
-		String portletId, Long field1, String field2) {
-
+	public void addUID(String portletId, Long field1, String field2) {
 		addUID(portletId, field1.longValue(), field2);
 	}
 
@@ -428,9 +424,7 @@ public class DocumentImpl implements Document {
 		addUID(portletId, field1, null);
 	}
 
-	public void addUID(
-		String portletId, String field1, String field2) {
-
+	public void addUID(String portletId, String field1, String field2) {
 		addUID(portletId, field1, field2, null);
 	}
 

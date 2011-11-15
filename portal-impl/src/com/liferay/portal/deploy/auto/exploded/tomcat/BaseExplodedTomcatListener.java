@@ -88,8 +88,7 @@ public abstract class BaseExplodedTomcatListener implements AutoDeployListener {
 
 		if (Validator.isNull(docBase)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					file.getPath() + " does not have a docBase defined");
+				_log.debug(file.getPath() + " does not have a docBase defined");
 			}
 
 			return null;

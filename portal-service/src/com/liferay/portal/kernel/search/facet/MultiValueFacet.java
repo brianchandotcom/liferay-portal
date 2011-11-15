@@ -62,8 +62,7 @@ public class MultiValueFacet extends BaseFacet {
 		}
 
 		String[] valuesParam = StringUtil.split(
-			GetterUtil.getString(
-				searchContext.getAttribute(getFieldName())));
+			GetterUtil.getString(searchContext.getAttribute(getFieldName())));
 
 		if (!isStatic() && (valuesParam != null) && (valuesParam.length > 0)) {
 			values = valuesParam;

@@ -94,8 +94,7 @@ public class CaptchaImpl implements Captcha {
 
 		if (captcha == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Restoring " + _originalCaptcha.getClass().getName());
+				_log.info("Restoring " + _originalCaptcha.getClass().getName());
 			}
 
 			_captcha = _originalCaptcha;

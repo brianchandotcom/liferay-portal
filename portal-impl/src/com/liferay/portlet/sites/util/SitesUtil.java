@@ -448,9 +448,7 @@ public class SitesUtil {
 		return false;
 	}
 
-	public static boolean isLayoutLocked(
-		LayoutTypePortlet layoutTypePortlet) {
-
+	public static boolean isLayoutLocked(LayoutTypePortlet layoutTypePortlet) {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		try {
@@ -526,8 +524,7 @@ public class SitesUtil {
 			return false;
 		}
 
-		Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
-			layout);
+		Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(layout);
 
 		Date layoutModifiedDate = layout.getModifiedDate();
 

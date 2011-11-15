@@ -116,8 +116,7 @@ public class MBThreadFlagLocalServiceImpl
 			return null;
 		}
 
-		return mbThreadFlagPersistence.fetchByU_T(
-			userId, thread.getThreadId());
+		return mbThreadFlagPersistence.fetchByU_T(userId, thread.getThreadId());
 	}
 
 	public boolean hasThreadFlag(long userId, MBThread thread)

@@ -77,8 +77,7 @@ public class SocialActivityCounterLocalServiceImpl
 		activityCounter.setEndPeriod(
 			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
 
-		socialActivityCounterPersistence.update(
-			activityCounter, false);
+		socialActivityCounterPersistence.update(activityCounter, false);
 
 		return activityCounter;
 	}

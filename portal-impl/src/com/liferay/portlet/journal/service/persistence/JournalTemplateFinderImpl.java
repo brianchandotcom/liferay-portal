@@ -255,8 +255,7 @@ public class JournalTemplateFinderImpl
 				sql = StringUtil.replace(
 					sql, "(companyId", "(JournalTemplate.companyId");
 
-				sql = StringUtil.replace(
-					sql, "(name", "(JournalTemplate.name");
+				sql = StringUtil.replace(sql, "(name", "(JournalTemplate.name");
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -348,8 +347,7 @@ public class JournalTemplateFinderImpl
 				sql = StringUtil.replace(
 					sql, "(companyId", "(JournalTemplate.companyId");
 
-				sql = StringUtil.replace(
-					sql, "(name", "(JournalTemplate.name");
+				sql = StringUtil.replace(sql, "(name", "(JournalTemplate.name");
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);

@@ -198,8 +198,7 @@ public class EditActionAction extends EditRuleAction {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		ActionHandler actionHandler = ActionHandlerManagerUtil.getActionHandler(

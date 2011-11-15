@@ -1713,8 +1713,7 @@ public class OrganizationLocalServiceImpl
 		// of organizationId
 
 		Organization parentOrganization =
-			organizationPersistence.findByPrimaryKey(
-				parentOrganizationId);
+			organizationPersistence.findByPrimaryKey(parentOrganizationId);
 
 		List<Organization> parentOrganizations = getParentOrganizations(
 			organizationId);
@@ -1747,8 +1746,7 @@ public class OrganizationLocalServiceImpl
 		}
 		else {
 			Organization parentOrganization =
-				organizationPersistence.fetchByPrimaryKey(
-					parentOrganizationId);
+				organizationPersistence.fetchByPrimaryKey(parentOrganizationId);
 
 			if (parentOrganization == null) {
 				throw new OrganizationParentException(

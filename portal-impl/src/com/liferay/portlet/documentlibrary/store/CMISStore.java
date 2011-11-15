@@ -95,8 +95,7 @@ public class CMISStore extends BaseStore {
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException {
 
-		updateFile(
-			companyId, repositoryId, fileName, VERSION_DEFAULT, is);
+		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
 
 	@Override
@@ -577,8 +576,7 @@ public class CMISStore extends BaseStore {
 			PropsValues.DL_STORE_CMIS_REPOSITORY_URL);
 		parameters.put(
 			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
-		parameters.put(
-			SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+		parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
 
 		Locale locale = LocaleUtil.getDefault();
 

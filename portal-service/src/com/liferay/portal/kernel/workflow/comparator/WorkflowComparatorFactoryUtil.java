@@ -84,8 +84,7 @@ public class WorkflowComparatorFactoryUtil {
 	}
 
 	public static OrderByComparator getLogUserIdComparator(boolean ascending) {
-		return getWorkflowComparatorFactory().getLogUserIdComparator(
-			ascending);
+		return getWorkflowComparatorFactory().getLogUserIdComparator(ascending);
 	}
 
 	public static OrderByComparator getTaskCompletionDateComparator() {

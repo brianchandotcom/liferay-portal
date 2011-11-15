@@ -87,8 +87,7 @@ public class BasePortalToLDAPConverter implements PortalToLDAPConverter {
 		sb.append(userGroup.getName());
 		sb.append(StringPool.COMMA);
 		sb.append(
-			PortalLDAPUtil.getGroupsDN(
-				ldapServerId, userGroup.getCompanyId()));
+			PortalLDAPUtil.getGroupsDN(ldapServerId, userGroup.getCompanyId()));
 
 		return sb.toString();
 	}

@@ -114,8 +114,7 @@ public class WAIAutoDeployer extends PortletAutoDeployer {
 			"liferay-display.xml", srcFile + "/WEB-INF", filterMap);
 		copyDependencyXml(
 			"liferay-portlet.xml", srcFile + "/WEB-INF", filterMap);
-		copyDependencyXml(
-			"portlet.xml", srcFile + "/WEB-INF", filterMap);
+		copyDependencyXml("portlet.xml", srcFile + "/WEB-INF", filterMap);
 		copyDependencyXml("iframe.jsp", srcFile + "/WEB-INF/jsp/liferay/wai");
 	}
 

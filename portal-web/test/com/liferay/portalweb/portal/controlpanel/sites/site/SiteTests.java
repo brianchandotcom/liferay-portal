@@ -59,8 +59,7 @@ public class SiteTests extends BaseTests {
 		testSuite.addTest(AssignMembersSiteTests.suite());
 		testSuite.addTest(AutoApprovePendingMembersTests.suite());
 		testSuite.addTest(DeactivateStagingSiteTests.suite());
-		testSuite.addTest(
-			DeactivateStagingSiteNavigatingStagingTests.suite());
+		testSuite.addTest(DeactivateStagingSiteNavigatingStagingTests.suite());
 		testSuite.addTest(DeleteSiteTests.suite());
 		testSuite.addTest(DeleteSiteAssignMembersTests.suite());
 		testSuite.addTest(DeleteSiteGuestTests.suite());

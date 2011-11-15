@@ -159,8 +159,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		folderIds.add(0, folderId);
 
-		return ArrayUtil.toArray(
-			folderIds.toArray(new Long[folderIds.size()]));
+		return ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()]));
 	}
 
 	public List<DLFolder> getFolders(

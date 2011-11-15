@@ -32,8 +32,7 @@ public class ViewConfigurePortletAbstractsBlogsEntryAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddNewBlogsEntryAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleAbstractsTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleAbstractsTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletAbstractsBlogsEntryAPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);

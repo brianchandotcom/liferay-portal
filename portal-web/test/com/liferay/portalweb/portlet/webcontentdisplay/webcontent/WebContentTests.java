@@ -47,11 +47,9 @@ public class WebContentTests extends BaseTests {
 			AddPortletScopeCurrentPageWCWebContentWCDTests.suite());
 		testSuite.addTest(AddPortletScopeDefaultWCWebContentWCDTests.suite());
 		testSuite.addTest(AddWCWebContentWCDTests.suite());
-		testSuite.addTest(
-			DeleteThisVersionWCWebContentWCDActionsTests.suite());
+		testSuite.addTest(DeleteThisVersionWCWebContentWCDActionsTests.suite());
 		testSuite.addTest(EditWCWebContentWCDDetailsTests.suite());
-		testSuite.addTest(
-			ExpireThisVersionWCWebContentWCDDetailsTests.suite());
+		testSuite.addTest(ExpireThisVersionWCWebContentWCDDetailsTests.suite());
 		testSuite.addTest(LocalizeWCWebContentTemplateWCDTests.suite());
 		testSuite.addTest(LocalizeWCWebContentWCDTests.suite());
 		testSuite.addTest(RateWCWebContentWCDTests.suite());

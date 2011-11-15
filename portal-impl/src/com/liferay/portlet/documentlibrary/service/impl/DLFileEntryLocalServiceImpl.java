@@ -795,9 +795,7 @@ public class DLFileEntryLocalServiceImpl
 
 		String version = dlFileVersion.getVersion();
 
-		if (version.equals(
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 			return true;
 		}
 		else {
@@ -1079,8 +1077,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		addFileEntryResources(
-			dlFileEntry, groupPermissions, guestPermissions);
+		addFileEntryResources(dlFileEntry, groupPermissions, guestPermissions);
 	}
 
 	protected DLFileVersion addFileVersion(

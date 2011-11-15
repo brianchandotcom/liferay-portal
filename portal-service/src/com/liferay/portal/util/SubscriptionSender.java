@@ -376,8 +376,7 @@ public class SubscriptionSender implements Serializable {
 
 		if (_sentEmailAddresses.contains(emailAddress)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Do not send a duplicate email to " + emailAddress);
+				_log.debug("Do not send a duplicate email to " + emailAddress);
 			}
 
 			return;

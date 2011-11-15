@@ -165,8 +165,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Small image
 
-		saveImages(
-			smallImage, entry.getSmallImageId(), smallImageBytes);
+		saveImages(smallImage, entry.getSmallImageId(), smallImageBytes);
 
 		// Asset
 
@@ -345,8 +344,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.countByC_LtD(
-				companyId, new Date());
+			return blogsEntryPersistence.countByC_LtD(companyId, new Date());
 		}
 		else {
 			return blogsEntryPersistence.countByC_LtD_S(
@@ -600,8 +598,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Small image
 
-		saveImages(
-			smallImage, entry.getSmallImageId(), smallImageBytes);
+		saveImages(smallImage, entry.getSmallImageId(), smallImageBytes);
 
 		// Asset
 
@@ -830,8 +827,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		else {
 			localizedSubjectMap = BlogsUtil.getEmailEntryAddedSubjectMap(
 				preferences);
-			localizedBodyMap = BlogsUtil.getEmailEntryAddedBodyMap(
-				preferences);
+			localizedBodyMap = BlogsUtil.getEmailEntryAddedBodyMap(preferences);
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();

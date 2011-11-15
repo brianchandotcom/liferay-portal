@@ -83,8 +83,7 @@ public class CustomAttributesAvailableTag extends TagSupport {
 			while (enu.hasMoreElements()) {
 				String attributeName = enu.nextElement();
 
-				Serializable value = expandoBridge.getAttribute(
-					attributeName);
+				Serializable value = expandoBridge.getAttribute(attributeName);
 
 				if (Validator.isNull(value)) {
 					continue;

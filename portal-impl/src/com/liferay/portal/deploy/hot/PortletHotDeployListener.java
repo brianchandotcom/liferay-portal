@@ -419,8 +419,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		_vars.put(
 			servletContextName,
-			new ObjectValuePair<long[], List<Portlet>>(
-				companyIds, portlets));
+			new ObjectValuePair<long[], List<Portlet>>(companyIds, portlets));
 
 		if (_log.isInfoEnabled()) {
 			if (portlets.size() == 1) {
@@ -461,8 +460,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		if (portlets != null) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unregistering portlets for " + servletContextName);
+				_log.info("Unregistering portlets for " + servletContextName);
 			}
 
 			Iterator<Portlet> itr = portlets.iterator();

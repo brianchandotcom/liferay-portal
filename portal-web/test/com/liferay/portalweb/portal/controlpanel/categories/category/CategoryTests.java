@@ -63,8 +63,7 @@ public class CategoryTests extends BaseTests {
 		testSuite.addTest(DeleteSubcategoryDetailsTests.suite());
 		testSuite.addTest(EditCategoryTests.suite());
 		testSuite.addTest(EditSubcategoryTests.suite());
-		testSuite.addTest(
-			EditVocabulary1CategoryToVocabulary2DADTests.suite());
+		testSuite.addTest(EditVocabulary1CategoryToVocabulary2DADTests.suite());
 		testSuite.addTest(
 			EditVocabulary1CategoryToVocabulary2DetailsTests.suite());
 

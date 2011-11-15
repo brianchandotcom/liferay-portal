@@ -594,11 +594,9 @@ public abstract class BaseStore implements Store {
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
-		updateFile(
-			companyId, repositoryId, fileName, toVersionLabel, is);
+		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 
-		deleteFile(
-			companyId, repositoryId, fileName, fromVersionLabel);
+		deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BaseStore.class);

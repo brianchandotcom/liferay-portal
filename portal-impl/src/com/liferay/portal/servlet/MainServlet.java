@@ -660,11 +660,9 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			Company company = CompanyLocalServiceUtil.getCompanyById(
-				companyId);
+			Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
-			request = new EncryptedServletRequest(
-				request, company.getKeyObj());
+			request = new EncryptedServletRequest(request, company.getKeyObj());
 		}
 		catch (Exception e) {
 		}
@@ -680,9 +678,7 @@ public class MainServlet extends ActionServlet {
 		return PortalUtil.getUserPassword(request);
 	}
 
-	protected String getRemoteUser(
-		HttpServletRequest request, long userId) {
-
+	protected String getRemoteUser(HttpServletRequest request, long userId) {
 		String remoteUser = request.getRemoteUser();
 
 		if (!PropsValues.PORTAL_JAAS_ENABLE) {
@@ -1108,8 +1104,7 @@ public class MainServlet extends ActionServlet {
 		String html = ContentUtil.get(
 			"com/liferay/portal/dependencies/inactive.html");
 
-		html = StringUtil.replace(
-			html, "[$MESSAGE$]", message);
+		html = StringUtil.replace(html, "[$MESSAGE$]", message);
 
 		ServletOutputStream servletOutputStream = response.getOutputStream();
 

@@ -288,8 +288,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
 
-		addEventResources(
-			event, addGroupPermissions, addGuestPermissions);
+		addEventResources(event, addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addEventResources(
@@ -895,8 +894,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		Calendar recurrenceCal = (Calendar)tzICal.clone();
 		recurrenceCal.set(
 			Calendar.HOUR_OF_DAY, eventCal.get(Calendar.HOUR_OF_DAY));
-		recurrenceCal.set(
-			Calendar.MINUTE, eventCal.get(Calendar.MINUTE));
+		recurrenceCal.set(Calendar.MINUTE, eventCal.get(Calendar.MINUTE));
 		recurrenceCal.set(Calendar.SECOND, 0);
 		recurrenceCal.set(Calendar.MILLISECOND, 0);
 

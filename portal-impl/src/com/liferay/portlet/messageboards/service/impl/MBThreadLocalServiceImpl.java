@@ -479,23 +479,20 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
 
-		MBThread thread = mbThreadPersistence.findByPrimaryKey(
-			threadId);
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
 		long oldCategoryId = thread.getCategoryId();
 
 		MBCategory oldCategory = null;
 
 		if (oldCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			oldCategory = mbCategoryPersistence.findByPrimaryKey(
-				oldCategoryId);
+			oldCategory = mbCategoryPersistence.findByPrimaryKey(oldCategoryId);
 		}
 
 		MBCategory category = null;
 
 		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			category = mbCategoryPersistence.findByPrimaryKey(
-				categoryId);
+			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
 		}
 
 		// Messages
@@ -710,8 +707,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		String newFileName = sb.toString();
 
 		try {
-			File file = DLStoreUtil.getFile(
-				companyId, repositoryId, fileName);
+			File file = DLStoreUtil.getFile(companyId, repositoryId, fileName);
 
 			DLStoreUtil.addFile(
 				companyId, repositoryId, newFileName, false, file);

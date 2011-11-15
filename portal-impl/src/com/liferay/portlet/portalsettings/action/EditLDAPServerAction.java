@@ -156,8 +156,7 @@ public class EditLDAPServerAction extends PortletAction {
 			keys[i] = _KEYS[i] + postfix;
 		}
 
-		CompanyServiceUtil.removePreferences(
-			themeDisplay.getCompanyId(), keys);
+		CompanyServiceUtil.removePreferences(themeDisplay.getCompanyId(), keys);
 
 		// Update preferences
 
@@ -190,8 +189,7 @@ public class EditLDAPServerAction extends PortletAction {
 			actionRequest, "settings--");
 
 		if (ldapServerId <= 0) {
-			properties = addLDAPServer(
-				themeDisplay.getCompanyId(), properties);
+			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);
 		}
 
 		CompanyServiceUtil.updatePreferences(

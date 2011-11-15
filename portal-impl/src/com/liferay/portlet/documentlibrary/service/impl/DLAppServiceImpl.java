@@ -405,8 +405,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		DLProcessorRegistryUtil.cleanUp(
-			fileEntry.getLatestFileVersion());
+		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
 
 		repository.cancelCheckOut(fileEntryId);
 
@@ -909,8 +908,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		return repository.getFileEntriesAndFileShortcutsCount(
-			folderId, status);
+		return repository.getFileEntriesAndFileShortcutsCount(folderId, status);
 	}
 
 	/**
@@ -2239,8 +2237,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			changeLog, majorVersion, is, size, serviceContext);
 
 		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(
-				fileEntry.getLatestFileVersion());
+			DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
 		}
 
 		dlAppHelperLocalService.updateFileEntry(
@@ -2292,8 +2289,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			changeLog, majorVersion, is, size, serviceContext);
 
 		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(
-				fileEntry.getLatestFileVersion());
+			DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
 		}
 
 		repository.checkInFileEntry(
@@ -2422,8 +2418,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		return repository.verifyInheritableLock(
-			folderId, lockUuid);
+		return repository.verifyInheritableLock(folderId, lockUuid);
 	}
 
 	protected FileEntry copyFileEntry(

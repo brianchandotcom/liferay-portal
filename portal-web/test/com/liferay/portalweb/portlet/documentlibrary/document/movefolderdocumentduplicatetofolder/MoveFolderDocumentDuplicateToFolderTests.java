@@ -33,8 +33,7 @@ public class MoveFolderDocumentDuplicateToFolderTests extends BaseTests {
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(AddFolder1DocumentTest.class);
 		testSuite.addTestSuite(AddFolder2DocumentDuplicateTest.class);
-		testSuite.addTestSuite(
-			MoveFolderDocumentDuplicateToFolderTest.class);
+		testSuite.addTestSuite(MoveFolderDocumentDuplicateToFolderTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

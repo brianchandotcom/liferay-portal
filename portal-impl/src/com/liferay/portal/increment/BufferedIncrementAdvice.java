@@ -41,8 +41,7 @@ public class BufferedIncrementAdvice
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		BufferedIncrement bufferedIncrement = findAnnotation(
-			methodInvocation);
+		BufferedIncrement bufferedIncrement = findAnnotation(methodInvocation);
 
 		if (bufferedIncrement == _nullBufferedIncrement) {
 			return null;

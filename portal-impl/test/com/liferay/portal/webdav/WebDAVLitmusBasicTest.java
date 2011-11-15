@@ -78,8 +78,7 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	}
 
 	public void test08DeleteNull() {
-		assertCode(
-			HttpServletResponse.SC_NOT_FOUND, serviceDelete("404me"));
+		assertCode(HttpServletResponse.SC_NOT_FOUND, serviceDelete("404me"));
 	}
 
 	public void test09DeleteFragment() {

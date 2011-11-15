@@ -112,8 +112,7 @@ public class UsersAdminUtil {
 	public static List<UserGroup> filterUserGroups(
 		PermissionChecker permissionChecker, List<UserGroup> userGroups) {
 
-		return getUsersAdmin().filterUserGroups(
-			permissionChecker, userGroups);
+		return getUsersAdmin().filterUserGroups(permissionChecker, userGroups);
 	}
 
 	public static List<Address> getAddresses(ActionRequest actionRequest) {

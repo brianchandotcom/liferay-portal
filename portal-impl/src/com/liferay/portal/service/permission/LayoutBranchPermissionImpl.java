@@ -42,9 +42,7 @@ public class LayoutBranchPermissionImpl
 			String actionId)
 		throws PortalException, SystemException {
 
-		if (!contains(
-				permissionChecker, layoutBranchId, actionId)) {
-
+		if (!contains(permissionChecker, layoutBranchId, actionId)) {
 			throw new PrincipalException();
 		}
 	}

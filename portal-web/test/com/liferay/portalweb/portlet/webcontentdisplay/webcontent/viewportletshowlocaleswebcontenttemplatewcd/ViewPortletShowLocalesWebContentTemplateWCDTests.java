@@ -32,8 +32,7 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTests
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddPageLanguageTest.class);
 		testSuite.addTestSuite(AddPortletLanguageTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletShowAvailableLocalesTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowAvailableLocalesTest.class);
 		testSuite.addTestSuite(AddStructureLocalizedTest.class);
 		testSuite.addTestSuite(AddTemplateLocalizedTest.class);
 		testSuite.addTestSuite(AddWCWebContentTemplateWCDTest.class);

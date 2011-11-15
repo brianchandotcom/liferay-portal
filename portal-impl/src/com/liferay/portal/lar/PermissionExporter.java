@@ -370,8 +370,7 @@ public class PermissionExporter {
 
 		Document document = SAXReaderUtil.createDocument();
 
-		Element rootElement = document.addElement(
-			"portlet-data-permissions");
+		Element rootElement = document.addElement("portlet-data-permissions");
 
 		Map<String, List<KeyValuePair>> permissionsMap =
 			portletDataContext.getPermissions();
@@ -385,8 +384,7 @@ public class PermissionExporter {
 			String resourceName = permissionParts[0];
 			long resourcePK = GetterUtil.getLong(permissionParts[1]);
 
-			Element portletDataElement = rootElement.addElement(
-				"portlet-data");
+			Element portletDataElement = rootElement.addElement("portlet-data");
 
 			portletDataElement.addAttribute("resource-name", resourceName);
 			portletDataElement.addAttribute(
@@ -456,8 +454,7 @@ public class PermissionExporter {
 			String portletId, Element rolesElement)
 		throws Exception {
 
-		String resourceName = PortletConstants.getRootPortletId(
-			portletId);
+		String resourceName = PortletConstants.getRootPortletId(portletId);
 
 		Element portletElement = rolesElement.addElement("portlet");
 

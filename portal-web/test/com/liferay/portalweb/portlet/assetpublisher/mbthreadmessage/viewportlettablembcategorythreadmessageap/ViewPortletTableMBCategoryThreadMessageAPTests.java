@@ -33,8 +33,7 @@ public class ViewPortletTableMBCategoryThreadMessageAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(AddMBCategoryTest.class);
 		testSuite.addTestSuite(PostNewMBCategoryThreadMessageTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTableTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTableTest.class);
 		testSuite.addTestSuite(
 			ViewPortletTableMBCategoryThreadMessageAPTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);

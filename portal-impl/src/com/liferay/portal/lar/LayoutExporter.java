@@ -655,8 +655,7 @@ public class LayoutExporter {
 				String.valueOf(layoutRevision.getLayoutBranch().getName()));
 		}
 
-		layoutElement.addAttribute(
-			"layout-uuid", layout.getUuid());
+		layoutElement.addAttribute("layout-uuid", layout.getUuid());
 		layoutElement.addAttribute(
 			"layout-id", String.valueOf(layout.getLayoutId()));
 

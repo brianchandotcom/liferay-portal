@@ -249,8 +249,7 @@ public class PortletAction extends Action {
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			LayoutTypePortlet layoutTypePortlet =
 				themeDisplay.getLayoutTypePortlet();

@@ -290,8 +290,7 @@ public class LiferayRepository
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = dlFileEntryService.getFileEntry(
-			fileEntryId);
+		DLFileEntry dlFileEntry = dlFileEntryService.getFileEntry(fileEntryId);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

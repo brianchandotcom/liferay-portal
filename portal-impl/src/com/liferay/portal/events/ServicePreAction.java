@@ -885,8 +885,7 @@ public class ServicePreAction extends Action {
 		if (layout != null) {
 			if (layout.isTypePortlet()) {
 				boolean freeformLayout =
-					layoutTypePortlet.getLayoutTemplateId().equals(
-						"freeform");
+					layoutTypePortlet.getLayoutTemplateId().equals("freeform");
 
 				themeDisplay.setFreeformLayout(freeformLayout);
 
@@ -1886,8 +1885,7 @@ public class ServicePreAction extends Action {
 
 		// Main Journal article
 
-		long mainJournalArticleId = ParamUtil.getLong(
-			request, "p_j_a_id");
+		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
 
 		if (mainJournalArticleId > 0) {
 			try{

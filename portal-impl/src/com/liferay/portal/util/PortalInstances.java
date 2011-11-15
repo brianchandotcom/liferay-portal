@@ -135,8 +135,7 @@ public class PortalInstances {
 
 		long[] companyIds = new long[_companyIds.length + 1];
 
-		System.arraycopy(
-			_companyIds, 0, companyIds, 0, _companyIds.length);
+		System.arraycopy(_companyIds, 0, companyIds, 0, _companyIds.length);
 
 		companyIds[_companyIds.length] = companyId;
 

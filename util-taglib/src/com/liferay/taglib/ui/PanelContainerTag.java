@@ -39,8 +39,7 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 		}
 
-		request.setAttribute(
-			"liferay-ui:panel-container:id", _id);
+		request.setAttribute("liferay-ui:panel-container:id", _id);
 		request.setAttribute(
 			"liferay-ui:panel-container:accordion", String.valueOf(_accordion));
 		request.setAttribute(

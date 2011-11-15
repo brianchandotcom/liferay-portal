@@ -35,8 +35,7 @@ public class RateBlogsEntryCommentAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletEnableCommentRatingsTest.class);
+		testSuite.addTestSuite(ConfigurePortletEnableCommentRatingsTest.class);
 		testSuite.addTestSuite(BeTheFirstBlogsEntryCommentAPTest.class);
 		testSuite.addTestSuite(RateBlogsEntryCommentAPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);

@@ -31,8 +31,7 @@ public class ViewWebContentTaskActivitiesCompletedTests extends BaseTests {
 		testSuite.addTestSuite(AddWebContentTest.class);
 		testSuite.addTestSuite(AssignToMeWebContentActionsTest.class);
 		testSuite.addTestSuite(ApproveWebContentActionsTest.class);
-		testSuite.addTestSuite(
-			ViewWebContentTaskActivitiesCompletedTest.class);
+		testSuite.addTestSuite(ViewWebContentTaskActivitiesCompletedTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 

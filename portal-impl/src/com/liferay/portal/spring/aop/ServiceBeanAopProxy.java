@@ -282,8 +282,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			methodInterceptorsBag._mergedMethodInterceptors);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ServiceBeanAopProxy.class);
+	private static Log _log = LogFactoryUtil.getLog(ServiceBeanAopProxy.class);
 
 	private static Map <ServiceBeanMethodInvocation, MethodInterceptorsBag>
 		_methodInterceptorBags = new ConcurrentHashMap

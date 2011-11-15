@@ -45,8 +45,7 @@ public class DefaultControlPanelEntryFactory {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Return " + _controlPanelEntry.getClass().getName());
+			_log.debug("Return " + _controlPanelEntry.getClass().getName());
 		}
 
 		return _controlPanelEntry;

@@ -71,8 +71,7 @@ public class AnnouncementsFlagLocalServiceImpl
 	public AnnouncementsFlag getFlag(long userId, long entryId, int value)
 		throws PortalException, SystemException {
 
-		return announcementsFlagPersistence.findByU_E_V(
-			userId, entryId, value);
+		return announcementsFlagPersistence.findByU_E_V(userId, entryId, value);
 	}
 
 }

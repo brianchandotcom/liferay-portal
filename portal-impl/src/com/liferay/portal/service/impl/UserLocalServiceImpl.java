@@ -2108,8 +2108,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public int getRoleUsersCount(long roleId, int status)
 		throws PortalException, SystemException {
 
-		Role role = rolePersistence.findByPrimaryKey(
-			roleId);
+		Role role = rolePersistence.findByPrimaryKey(roleId);
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
@@ -5335,8 +5334,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				userGroupRoles.remove(userGroupRole);
 			}
 			else {
-				userGroupRoleLocalService.deleteUserGroupRole(
-					userGroupRole);
+				userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
 			}
 		}
 
@@ -5359,8 +5357,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long organizationId = organizationIds[i];
 
 			Organization organization =
-				organizationPersistence.findByPrimaryKey(
-					organizationId);
+				organizationPersistence.findByPrimaryKey(organizationId);
 
 			Group organizationGroup = organization.getGroup();
 

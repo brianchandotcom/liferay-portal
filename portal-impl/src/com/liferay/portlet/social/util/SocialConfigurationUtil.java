@@ -197,8 +197,7 @@ public class SocialConfigurationUtil {
 	private static void _readAchievementProperty(
 		SocialAchievement achievement, Element propertyElement) {
 
-		String name = GetterUtil.getString(
-			propertyElement.elementText("name"));
+		String name = GetterUtil.getString(propertyElement.elementText("name"));
 		String value = GetterUtil.getString(
 			propertyElement.elementText("value"));
 

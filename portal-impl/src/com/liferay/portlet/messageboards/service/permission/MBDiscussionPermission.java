@@ -65,8 +65,7 @@ public class MBDiscussionPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
-			messageId);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
 
 		if (PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER &&
 			(permissionChecker.getUserId() == message.getUserId())) {

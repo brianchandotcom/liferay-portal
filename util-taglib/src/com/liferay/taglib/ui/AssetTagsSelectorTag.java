@@ -94,8 +94,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-ui:asset-tags-selector:focus", String.valueOf(_focus));
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:hiddenInput", _hiddenInput);
-		request.setAttribute(
-			"liferay-ui:asset-tags-selector:id", id);
+		request.setAttribute("liferay-ui:asset-tags-selector:id", id);
 	}
 
 	private static final String _PAGE =

@@ -1079,8 +1079,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		addFileEntryResources(
-			dlFileEntry, groupPermissions, guestPermissions);
+		addFileEntryResources(dlFileEntry, groupPermissions, guestPermissions);
 	}
 
 	protected DLFileVersion addFileVersion(

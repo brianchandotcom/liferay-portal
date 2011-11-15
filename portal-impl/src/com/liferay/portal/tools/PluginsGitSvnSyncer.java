@@ -277,8 +277,7 @@ public class PluginsGitSvnSyncer {
 		File tempFile = File.createTempFile("svn-ignores-", null, null);
 
 		try {
-			String[] ignoresArray = ignores.toArray(
-				new String[ignores.size()]);
+			String[] ignoresArray = ignores.toArray(new String[ignores.size()]);
 
 			_fileUtil.write(tempFile, StringUtil.merge(ignoresArray, "\n"));
 

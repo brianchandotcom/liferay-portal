@@ -549,8 +549,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			return null;
 		}
 
-		return companyPersistence.fetchByPrimaryKey(
-			virtualHost.getCompanyId());
+		return companyPersistence.fetchByPrimaryKey(virtualHost.getCompanyId());
 	}
 
 	/**

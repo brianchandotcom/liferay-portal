@@ -57,8 +57,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		_private = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("private"));
-		_user = GetterUtil.getBoolean(
-			servletConfig.getInitParameter("user"));
+		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
 
 		if (_private) {
 			if (_user) {
@@ -189,8 +188,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					group = user.getGroup();
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No user exists with friendly URL " + screenName);
+					_log.warn("No user exists with friendly URL " + screenName);
 				}
 			}
 			else {

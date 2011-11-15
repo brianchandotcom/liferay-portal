@@ -88,8 +88,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to remove file rank " + fileRankId);
+						_log.warn("Unable to remove file rank " + fileRankId);
 					}
 				}
 			}

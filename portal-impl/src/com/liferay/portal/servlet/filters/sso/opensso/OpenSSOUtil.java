@@ -187,8 +187,7 @@ public class OpenSSOUtil {
 				(InputStream)httpURLConnection.getContent();
 
 			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(inputStream));
+				new UnsyncBufferedReader(new InputStreamReader(inputStream));
 
 			int responseCode = httpURLConnection.getResponseCode();
 

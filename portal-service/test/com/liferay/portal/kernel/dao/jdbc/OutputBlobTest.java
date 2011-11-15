@@ -106,8 +106,7 @@ public class OutputBlobTest extends TestCase {
 
 		// Fail to skip enough data
 
-		outputBlob = new OutputBlob(
-			new ByteArrayInputStream(new byte[10]), 5);
+		outputBlob = new OutputBlob(new ByteArrayInputStream(new byte[10]), 5);
 
 		try {
 			outputBlob.getBinaryStream(6, 1);
@@ -118,8 +117,7 @@ public class OutputBlobTest extends TestCase {
 
 		// Normal
 
-		outputBlob = new OutputBlob(
-			new ByteArrayInputStream(new byte[10]), 10);
+		outputBlob = new OutputBlob(new ByteArrayInputStream(new byte[10]), 10);
 
 		InputStream inputStream = outputBlob.getBinaryStream(2, 5);
 
@@ -173,8 +171,7 @@ public class OutputBlobTest extends TestCase {
 
 		assertEquals(10, outputBlob.length());
 
-		outputBlob = new OutputBlob(
-			new ByteArrayInputStream(new byte[10]), 5);
+		outputBlob = new OutputBlob(new ByteArrayInputStream(new byte[10]), 5);
 
 		assertEquals(5, outputBlob.length());
 	}

@@ -61,8 +61,7 @@ public class ShoppingCartLocalServiceImpl
 	public void deleteShoppingCart(long cartId)
 		throws PortalException, SystemException {
 
-		ShoppingCart cart = shoppingCartPersistence.findByPrimaryKey(
-			cartId);
+		ShoppingCart cart = shoppingCartPersistence.findByPrimaryKey(cartId);
 
 		deleteShoppingCart(cart);
 	}

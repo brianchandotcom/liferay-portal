@@ -88,8 +88,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			if (message.getBoolean(SchedulerEngine.DISABLE) &&
 				destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
 
-				MessageBusUtil.unregisterMessageListener(
-					destinationName, this);
+				MessageBusUtil.unregisterMessageListener(destinationName, this);
 			}
 		}
 	}

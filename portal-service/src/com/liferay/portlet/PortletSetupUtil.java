@@ -41,8 +41,7 @@ public class PortletSetupUtil {
 	}
 
 	public static String cssToJSONString(PortletPreferences portletSetup) {
-		String css = portletSetup.getValue(
-			"portletSetupCss", StringPool.BLANK);
+		String css = portletSetup.getValue("portletSetupCss", StringPool.BLANK);
 
 		try {
 			JSONObject jsonObject = _toJSONObject(portletSetup, css);

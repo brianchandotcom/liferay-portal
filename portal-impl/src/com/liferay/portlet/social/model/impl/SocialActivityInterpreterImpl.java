@@ -61,8 +61,7 @@ public class SocialActivityInterpreterImpl
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {
 
-		return _activityInterpreter.interpret(
-			activity, themeDisplay);
+		return _activityInterpreter.interpret(activity, themeDisplay);
 	}
 
 	private String _portletId;

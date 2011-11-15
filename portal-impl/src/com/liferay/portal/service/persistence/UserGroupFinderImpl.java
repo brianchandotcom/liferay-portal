@@ -200,8 +200,7 @@ public class UserGroupFinderImpl
 			qPos.add(description);
 			qPos.add(description);
 
-			return (List<UserGroup>)QueryUtil.list(
-				q, getDialect(), start, end);
+			return (List<UserGroup>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

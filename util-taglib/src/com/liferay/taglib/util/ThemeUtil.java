@@ -135,8 +135,7 @@ public class ThemeUtil {
 			!FreeMarkerEngineUtil.resourceExists(resourcePath) &&
 			portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
 
-			String rootPortletId = PortletConstants.getRootPortletId(
-				portletId);
+			String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 			resourcePath = theme.getResourcePath(
 				servletContext, rootPortletId, path);

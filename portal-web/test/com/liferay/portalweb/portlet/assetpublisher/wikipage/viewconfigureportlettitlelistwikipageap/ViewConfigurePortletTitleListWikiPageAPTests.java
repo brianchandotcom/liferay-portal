@@ -32,8 +32,7 @@ public class ViewConfigurePortletTitleListWikiPageAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPageWikiTest.class);
 		testSuite.addTestSuite(AddPortletWikiTest.class);
 		testSuite.addTestSuite(AddWikiPageTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTitleListTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTitleListTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletTitleListWikiPageAPTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);

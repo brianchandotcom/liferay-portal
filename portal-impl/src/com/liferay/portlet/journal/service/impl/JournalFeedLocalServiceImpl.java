@@ -263,8 +263,7 @@ public class JournalFeedLocalServiceImpl
 	public int searchCount(long companyId, long groupId, String keywords)
 		throws SystemException {
 
-		return journalFeedFinder.countByKeywords(
-			companyId, groupId, keywords);
+		return journalFeedFinder.countByKeywords(companyId, groupId, keywords);
 	}
 
 	public int searchCount(

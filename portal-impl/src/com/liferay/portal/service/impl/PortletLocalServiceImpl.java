@@ -769,8 +769,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portletsPool.put(portlet.getPortletId(), portlet);
 		}
 
-		List<Portlet> portlets = portletPersistence.findByCompanyId(
-			companyId);
+		List<Portlet> portlets = portletPersistence.findByCompanyId(companyId);
 
 		for (Portlet portlet : portlets) {
 			Portlet portletModel = portletsPool.get(portlet.getPortletId());

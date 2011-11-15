@@ -103,8 +103,7 @@ public class LinkbackConsumerUtil {
 		}
 
 		try {
-			MBMessageLocalServiceUtil.deleteDiscussionMessage(
-				messageId);
+			MBMessageLocalServiceUtil.deleteDiscussionMessage(messageId);
 		}
 		catch (Exception e) {
 			_log.error(

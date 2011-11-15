@@ -70,8 +70,7 @@ public class PortalSessionCreator extends BasePortalLifecycle {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PortalSessionCreator.class);
+	private static Log _log = LogFactoryUtil.getLog(PortalSessionCreator.class);
 
 	private HttpSessionEvent _httpSessionEvent;
 

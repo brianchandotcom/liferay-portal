@@ -26,8 +26,7 @@ public class RenderResponseFactory {
 			String portletName, long companyId)
 		throws Exception {
 
-		return create(
-			renderRequestImpl, response, portletName, companyId, 0);
+		return create(renderRequestImpl, response, portletName, companyId, 0);
 	}
 
 	public static RenderResponseImpl create(

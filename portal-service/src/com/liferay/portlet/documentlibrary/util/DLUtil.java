@@ -141,8 +141,7 @@ public class DLUtil {
 		portletURL.setParameter(
 			"viewDisplayStyleButttons", Boolean.TRUE.toString());
 		portletURL.setParameter("viewEntries", Boolean.TRUE.toString());
-		portletURL.setParameter(
-			"viewFileEntrySearch", Boolean.TRUE.toString());
+		portletURL.setParameter("viewFileEntrySearch", Boolean.TRUE.toString());
 		portletURL.setParameter("viewFolders", Boolean.TRUE.toString());
 		portletURL.setParameter("viewSortButton", Boolean.TRUE.toString());
 
@@ -228,8 +227,7 @@ public class DLUtil {
 			RenderResponse renderResponse, boolean showGlobally)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(
-			request, "struts_action");
+		String strutsAction = ParamUtil.getString(request, "struts_action");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 

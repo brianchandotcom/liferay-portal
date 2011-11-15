@@ -279,8 +279,7 @@ public class SecureFilter extends BasePortalFilter {
 				sb.append(nonce);
 				sb.append("\"");
 
-				response.setHeader(
-					HttpHeaders.WWW_AUTHENTICATE, sb.toString());
+				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, sb.toString());
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
 				return null;

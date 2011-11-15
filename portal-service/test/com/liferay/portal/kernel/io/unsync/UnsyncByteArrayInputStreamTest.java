@@ -106,10 +106,8 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		long size = _SIZE * 2 / 3;
 
 		assertEquals(size, unsyncByteArrayInputStream.skip(size));
-		assertEquals(
-			_SIZE - size, unsyncByteArrayInputStream.available());
-		assertEquals(
-			_SIZE - size, unsyncByteArrayInputStream.skip(size));
+		assertEquals(_SIZE - size, unsyncByteArrayInputStream.available());
+		assertEquals(_SIZE - size, unsyncByteArrayInputStream.skip(size));
 		assertEquals(0, unsyncByteArrayInputStream.available());
 	}
 

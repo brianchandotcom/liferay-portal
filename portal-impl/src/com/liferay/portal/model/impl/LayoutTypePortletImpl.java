@@ -279,8 +279,7 @@ public class LayoutTypePortletImpl
 				columnValue = getUserPreference(columnId);
 			}
 			else {
-				columnValue = getTypeSettingsProperties().getProperty(
-					columnId);
+				columnValue = getTypeSettingsProperties().getProperty(columnId);
 			}
 
 			if ((columnValue == null) &&
@@ -1037,8 +1036,7 @@ public class LayoutTypePortletImpl
 				columnValue = getUserPreference(columnId);
 			}
 			else {
-				columnValue = getTypeSettingsProperties().getProperty(
-					columnId);
+				columnValue = getTypeSettingsProperties().getProperty(columnId);
 			}
 
 			columnValue = StringUtil.remove(columnValue, portletId);
@@ -1141,8 +1139,7 @@ public class LayoutTypePortletImpl
 
 			long plid = layout.getPlid();
 
-			_portalPreferences.resetValues(
-				CustomizedPages.namespacePlid(plid));
+			_portalPreferences.resetValues(CustomizedPages.namespacePlid(plid));
 
 			_portalPreferences.setValue(
 				CustomizedPages.namespacePlid(plid), _MODIFIED_DATE,
@@ -1323,8 +1320,7 @@ public class LayoutTypePortletImpl
 	}
 
 	protected String getColumn(String portletId) {
-		String rootPortletId = PortletConstants.getRootPortletId(
-			portletId);
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 		List<String> columns = getColumns();
 

@@ -327,12 +327,10 @@ public class PortletExporter {
 			PortletDataContext portletDataContext, Element rootElement)
 		throws Exception {
 
-		Element assetVocabulariesElement = rootElement.element(
-			"vocabularies");
+		Element assetVocabulariesElement = rootElement.element("vocabularies");
 
 		if (assetVocabulariesElement == null) {
-			assetVocabulariesElement = rootElement.addElement(
-				"vocabularies");
+			assetVocabulariesElement = rootElement.addElement("vocabularies");
 		}
 
 		Element assetsElement = rootElement.addElement("assets");
@@ -415,8 +413,7 @@ public class PortletExporter {
 
 			propertyElement.addAttribute(
 				"userUuid", assetCategoryProperty.getUserUuid());
-			propertyElement.addAttribute(
-				"key", assetCategoryProperty.getKey());
+			propertyElement.addAttribute("key", assetCategoryProperty.getKey());
 			propertyElement.addAttribute(
 				"value", assetCategoryProperty.getValue());
 		}
@@ -655,8 +652,7 @@ public class PortletExporter {
 			String className = entryKey.substring(0, pos);
 			String key = entryKey.substring(pos + 1);
 
-			String path = getLockPath(
-				portletDataContext, className, key, lock);
+			String path = getLockPath(portletDataContext, className, key, lock);
 
 			Element assetElement = rootElement.addElement("asset");
 

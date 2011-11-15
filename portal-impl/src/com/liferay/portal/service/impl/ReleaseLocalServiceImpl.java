@@ -52,8 +52,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		if (servletContextName.equals(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
 
-			release = releasePersistence.create(
-				ReleaseConstants.DEFAULT_ID);
+			release = releasePersistence.create(ReleaseConstants.DEFAULT_ID);
 		}
 		else {
 			long releaseId = counterLocalService.increment();

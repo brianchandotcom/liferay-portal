@@ -360,8 +360,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = getLatestArticle(groupId, articleId);
 
-		addArticleResources(
-			article, addGroupPermissions, addGuestPermissions);
+		addArticleResources(article, addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addArticleResources(
@@ -3234,8 +3233,7 @@ public class JournalArticleLocalServiceImpl
 			Group companyGroup = groupLocalService.getCompanyGroup(companyId);
 
 			try {
-				journalStructurePersistence.findByG_S(
-					groupId, structureId);
+				journalStructurePersistence.findByG_S(groupId, structureId);
 			}
 			catch (NoSuchStructureException nsse) {
 				journalStructurePersistence.findByG_S(

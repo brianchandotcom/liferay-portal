@@ -211,8 +211,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 
 		changedLines.addAll(stringList.subList(start, end + 1));
 
-		DiffResult diffResult = new DiffResult(
-			start, changedLines);
+		DiffResult diffResult = new DiffResult(start, changedLines);
 
 		results.add(diffResult);
 	}

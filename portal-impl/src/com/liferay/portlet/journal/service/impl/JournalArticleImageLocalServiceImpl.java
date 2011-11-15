@@ -66,8 +66,7 @@ public class JournalArticleImageLocalServiceImpl
 	public void deleteArticleImage(long articleImageId) throws SystemException {
 		try {
 			JournalArticleImage articleImage =
-				journalArticleImagePersistence.findByPrimaryKey(
-					articleImageId);
+				journalArticleImagePersistence.findByPrimaryKey(articleImageId);
 
 			deleteArticleImage(articleImage);
 		}

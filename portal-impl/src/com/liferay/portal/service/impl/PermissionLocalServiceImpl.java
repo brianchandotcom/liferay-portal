@@ -1157,8 +1157,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 		throws SystemException {
 
 		ResourceCode resourceCode =
-			resourceCodeLocalService.getResourceCode(
-				companyId, name, scope);
+			resourceCodeLocalService.getResourceCode(companyId, name, scope);
 
 		Resource resource = resourcePersistence.fetchByC_P(
 			resourceCode.getCodeId(), primKey);
@@ -1319,8 +1318,7 @@ public class PermissionLocalServiceImpl extends PermissionLocalServiceBaseImpl {
 
 		addRolePermissions(RoleConstants.OWNER, permission);
 
-		SearchEngineUtil.updatePermissionFields(
-			resource.getResourceId());
+		SearchEngineUtil.updatePermissionFields(resource.getResourceId());
 	}
 
 	protected boolean hasUserPermissions_1(

@@ -32,8 +32,7 @@ public class ViewConfigurePortletTableWikiPageAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPageWikiTest.class);
 		testSuite.addTestSuite(AddPortletWikiTest.class);
 		testSuite.addTestSuite(AddWikiPageTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTableTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTableTest.class);
 		testSuite.addTestSuite(ViewConfigurePortletTableWikiPageAPTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

@@ -82,8 +82,7 @@ public class LockMethodImpl implements Method {
 
 			if (Validator.isNotNull(xml)) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Request XML\n" + XMLFormatter.toString(xml));
+					_log.debug("Request XML\n" + XMLFormatter.toString(xml));
 				}
 
 				SAXReader reader = new SAXReader();

@@ -533,8 +533,7 @@ public class EditServerAction extends PortletAction {
 		preferences.setValue(
 			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH,
 			String.valueOf(dlFileEntryThumbnailMaxWidth));
-		preferences.setValue(
-			PropsKeys.DL_FILE_EXTENSIONS, dlFileExtensions);
+		preferences.setValue(PropsKeys.DL_FILE_EXTENSIONS, dlFileExtensions);
 		preferences.setValue(
 			PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(dlFileMaxSize));
 		preferences.setValue(

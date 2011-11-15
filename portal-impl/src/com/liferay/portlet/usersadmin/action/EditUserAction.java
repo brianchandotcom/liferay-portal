@@ -152,8 +152,7 @@ public class EditUserAction extends PortletAction {
 			}
 
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -373,8 +372,7 @@ public class EditUserAction extends PortletAction {
 			actionRequest);
 		long[] userGroupIds = getLongArray(
 			actionRequest, "userGroupsSearchContainerPrimaryKeys");
-		List<Address> addresses = UsersAdminUtil.getAddresses(
-			actionRequest);
+		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
 			actionRequest);
 		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);

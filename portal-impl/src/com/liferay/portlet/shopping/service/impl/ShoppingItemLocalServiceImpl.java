@@ -140,8 +140,7 @@ public class ShoppingItemLocalServiceImpl
 				item.setDiscount(itemPrice.getDiscount());
 				item.setTaxable(itemPrice.getTaxable());
 				item.setShipping(itemPrice.getShipping());
-				item.setUseShippingFormula(
-					itemPrice.getUseShippingFormula());
+				item.setUseShippingFormula(itemPrice.getUseShippingFormula());
 			}
 
 			if ((sale == null) && (itemPrice.getDiscount() > 0) &&
@@ -229,8 +228,7 @@ public class ShoppingItemLocalServiceImpl
 
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);
 
-		addItemResources(
-			item, addGroupPermissions, addGuestPermissions);
+		addItemResources(item, addGroupPermissions, addGuestPermissions);
 	}
 
 	public void addItemResources(
@@ -507,8 +505,7 @@ public class ShoppingItemLocalServiceImpl
 				item.setDiscount(itemPrice.getDiscount());
 				item.setTaxable(itemPrice.getTaxable());
 				item.setShipping(itemPrice.getShipping());
-				item.setUseShippingFormula(
-					itemPrice.getUseShippingFormula());
+				item.setUseShippingFormula(itemPrice.getUseShippingFormula());
 			}
 
 			if ((sale == null) && (itemPrice.getDiscount() > 0) &&
@@ -826,8 +823,7 @@ public class ShoppingItemLocalServiceImpl
 			throw new ItemSKUException();
 		}
 
-		ShoppingItem item = shoppingItemPersistence.fetchByC_S(
-			companyId, sku);
+		ShoppingItem item = shoppingItemPersistence.fetchByC_S(companyId, sku);
 
 		if (item != null) {
 			if (itemId > 0) {

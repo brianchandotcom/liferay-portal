@@ -100,8 +100,7 @@ public class SetupWizardUtil {
 		String driverClassName = _getParameter(
 			request, PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME,
 			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME);
-		String url = _getParameter(
-			request, PropsKeys.JDBC_DEFAULT_URL, null);
+		String url = _getParameter(request, PropsKeys.JDBC_DEFAULT_URL, null);
 		String userName = _getParameter(
 			request, PropsKeys.JDBC_DEFAULT_USERNAME, null);
 		String password = _getParameter(
@@ -191,8 +190,7 @@ public class SetupWizardUtil {
 			PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
 		String defaultPassword = unicodeProperties.get(
 			PropsKeys.JDBC_DEFAULT_PASSWORD);
-		String defaultURL = unicodeProperties.get(
-			PropsKeys.JDBC_DEFAULT_URL);
+		String defaultURL = unicodeProperties.get(PropsKeys.JDBC_DEFAULT_URL);
 		String defaultUsername = unicodeProperties.get(
 			PropsKeys.JDBC_DEFAULT_USERNAME);
 

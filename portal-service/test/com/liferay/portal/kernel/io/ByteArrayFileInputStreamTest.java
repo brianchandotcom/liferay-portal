@@ -73,8 +73,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		// FileInputStream
 
-		byteArrayFileInputStream = new ByteArrayFileInputStream(
-			_testFile, 512);
+		byteArrayFileInputStream = new ByteArrayFileInputStream(_testFile, 512);
 
 		byteArrayFileInputStream.read();
 

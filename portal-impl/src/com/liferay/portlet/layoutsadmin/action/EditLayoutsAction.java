@@ -598,15 +598,13 @@ public class EditLayoutsAction extends PortletAction {
 		for (String key : configurableSettings.keySet()) {
 			ThemeSetting themeSetting = configurableSettings.get(key);
 
-			String type = GetterUtil.getString(
-				themeSetting.getType(), "text");
+			String type = GetterUtil.getString(themeSetting.getType(), "text");
 
 			String property =
 				device + "ThemeSettingsProperties--" + key +
 					StringPool.DOUBLE_DASH;
 
-			String value = ParamUtil.getString(
-				actionRequest, property);
+			String value = ParamUtil.getString(actionRequest, property);
 
 			if (type.equals("checkbox")) {
 				value = String.valueOf(GetterUtil.getBoolean(value));
@@ -632,8 +630,7 @@ public class EditLayoutsAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
-			inputStream = uploadPortletRequest.getFileAsStream(
-				iconFileName);
+			inputStream = uploadPortletRequest.getFileAsStream(iconFileName);
 
 			if (inputStream != null) {
 				return FileUtil.getBytes(inputStream);
@@ -714,15 +711,13 @@ public class EditLayoutsAction extends PortletAction {
 			String oldPath = oldLayoutFriendlyURL;
 			String newPath = layout.getFriendlyURL();
 
-			return PortalUtil.updateRedirect(
-				closeRedirect, oldPath, newPath);
+			return PortalUtil.updateRedirect(closeRedirect, oldPath, newPath);
 		}
 		else if (group != null) {
 			String oldPath = group.getFriendlyURL() + oldLayoutFriendlyURL;
 			String newPath = group.getFriendlyURL();
 
-			return PortalUtil.updateRedirect(
-				closeRedirect, oldPath, newPath);
+			return PortalUtil.updateRedirect(closeRedirect, oldPath, newPath);
 		}
 
 		return closeRedirect;

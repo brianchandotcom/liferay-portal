@@ -184,8 +184,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			log.error(includePath + " is not a valid include");
 		}
 		else {
-			portletRequestDispatcher.include(
-				portletRequest, portletResponse);
+			portletRequestDispatcher.include(portletRequest, portletResponse);
 		}
 	}
 

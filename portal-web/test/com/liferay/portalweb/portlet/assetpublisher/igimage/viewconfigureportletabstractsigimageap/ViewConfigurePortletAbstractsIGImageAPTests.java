@@ -34,8 +34,7 @@ public class ViewConfigurePortletAbstractsIGImageAPTests
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddIGFolderTest.class);
 		testSuite.addTestSuite(AddNewIGFolderImageAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleAbstractsTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleAbstractsTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletAbstractsIGImageAPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);

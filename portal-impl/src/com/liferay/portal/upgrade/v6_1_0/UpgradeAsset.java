@@ -97,8 +97,7 @@ public class UpgradeAsset extends UpgradeProcess {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
 				String structureId = rs.getString("structureId");
 
-				long journalStructureId = getJournalStructureId(
-					structureId);
+				long journalStructureId = getJournalStructureId(structureId);
 
 				runSQL(
 					"update AssetEntry set classTypeId = " +

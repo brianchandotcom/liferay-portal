@@ -99,12 +99,9 @@ public class HttpImpl implements Http {
 		if (Validator.isNotNull(_NON_PROXY_HOSTS)) {
 			String nonProxyHostsRegEx = _NON_PROXY_HOSTS;
 
-			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll(
-				"\\.", "\\\\.");
-			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll(
-				"\\*", ".*?");
-			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll(
-				"\\|", ")|(");
+			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll("\\.", "\\\\.");
+			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll("\\*", ".*?");
+			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll("\\|", ")|(");
 
 			nonProxyHostsRegEx = "(" + nonProxyHostsRegEx + ")";
 

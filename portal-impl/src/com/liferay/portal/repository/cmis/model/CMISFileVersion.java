@@ -222,8 +222,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 	public String getUserUuid() {
 		try {
-			User user = UserLocalServiceUtil.getDefaultUser(
-				getCompanyId());
+			User user = UserLocalServiceUtil.getDefaultUser(getCompanyId());
 
 			return user.getUserUuid();
 		}

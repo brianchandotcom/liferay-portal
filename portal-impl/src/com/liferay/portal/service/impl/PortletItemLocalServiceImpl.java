@@ -47,8 +47,7 @@ public class PortletItemLocalServiceImpl
 
 		long portletItemId = counterLocalService.increment();
 
-		PortletItem portletItem = portletItemPersistence.create(
-			portletItemId);
+		PortletItem portletItem = portletItemPersistence.create(portletItemId);
 
 		portletItem.setGroupId(groupId);
 		portletItem.setCompanyId(user.getCompanyId());

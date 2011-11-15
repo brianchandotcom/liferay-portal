@@ -280,8 +280,7 @@ public class PasswordPolicyLocalServiceImpl
 		Date now = new Date();
 
 		PasswordPolicy passwordPolicy =
-			passwordPolicyPersistence.findByPrimaryKey(
-				passwordPolicyId);
+			passwordPolicyPersistence.findByPrimaryKey(passwordPolicyId);
 
 		if (!passwordPolicy.getDefaultPolicy()) {
 			validate(passwordPolicyId, passwordPolicy.getCompanyId(), name);

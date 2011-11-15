@@ -141,8 +141,7 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element rootElement = document.getRootElement();
 
-		Element fileEntryTypesElement = rootElement.element(
-			"file-entry-types");
+		Element fileEntryTypesElement = rootElement.element("file-entry-types");
 
 		List<Element> fileEntryTypeElements = fileEntryTypesElement.elements(
 			"file-entry-type");

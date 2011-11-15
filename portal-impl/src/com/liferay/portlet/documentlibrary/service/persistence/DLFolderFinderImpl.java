@@ -119,8 +119,7 @@ public class DLFolderFinderImpl
 			long groupId, long folderId, int status, int start, int end)
 		throws SystemException {
 
-		return doFindFE_FS_ByG_F_S(
-			groupId, folderId, status, start, end, true);
+		return doFindFE_FS_ByG_F_S(groupId, folderId, status, start, end, true);
 	}
 
 	public List<Object> findF_FE_FS_ByG_F_S(

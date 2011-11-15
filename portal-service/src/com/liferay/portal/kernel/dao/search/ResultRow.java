@@ -323,8 +323,7 @@ public class ResultRow {
 	public void addText(
 		String align, String valign, String name, PortletURL portletURL) {
 
-		addText(
-			align, valign, SearchEntry.DEFAULT_COLSPAN, name, portletURL);
+		addText(align, valign, SearchEntry.DEFAULT_COLSPAN, name, portletURL);
 	}
 
 	public void addText(String align, String valign, String name, String href) {

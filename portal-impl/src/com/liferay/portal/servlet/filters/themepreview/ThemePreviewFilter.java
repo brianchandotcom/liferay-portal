@@ -50,8 +50,7 @@ public class ThemePreviewFilter extends BasePortalFilter {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Pattern cssPattern = Pattern.compile(
-			themeDisplay.getPathThemeCss());
+		Pattern cssPattern = Pattern.compile(themeDisplay.getPathThemeCss());
 
 		Matcher cssMatcher = cssPattern.matcher(content);
 

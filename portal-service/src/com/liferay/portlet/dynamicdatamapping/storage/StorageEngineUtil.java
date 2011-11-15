@@ -60,8 +60,7 @@ public class StorageEngineUtil {
 			long ddmStructureId, List<String> fieldNames)
 		throws StorageException {
 
-		return getStorageEngine().getFieldsList(
-			ddmStructureId, fieldNames);
+		return getStorageEngine().getFieldsList(ddmStructureId, fieldNames);
 	}
 
 	public static List<Fields> getFieldsList(
@@ -95,8 +94,7 @@ public class StorageEngineUtil {
 			long ddmStructureId, long[] classPKs)
 		throws StorageException {
 
-		return getStorageEngine().getFieldsMap(
-			ddmStructureId, classPKs);
+		return getStorageEngine().getFieldsMap(ddmStructureId, classPKs);
 	}
 
 	public static Map<Long, Fields> getFieldsMap(

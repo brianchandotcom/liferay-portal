@@ -283,8 +283,7 @@ public class SocialRelationLocalServiceImpl
 	public SocialRelation getRelation(long userId1, long userId2, int type)
 		throws PortalException, SystemException {
 
-		return socialRelationPersistence.findByU1_U2_T(
-			userId1, userId2, type);
+		return socialRelationPersistence.findByU1_U2_T(userId1, userId2, type);
 	}
 
 	/**

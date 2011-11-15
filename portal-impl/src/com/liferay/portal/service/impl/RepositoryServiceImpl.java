@@ -348,8 +348,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				Repository.class.getName(), repositoryId);
 
 			try {
-				dlFolderLocalService.deleteFolder(
-					repository.getDlFolderId());
+				dlFolderLocalService.deleteFolder(repository.getDlFolderId());
 			}
 			catch (NoSuchFolderException nsfe) {
 			}

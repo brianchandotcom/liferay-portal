@@ -668,8 +668,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public long[] getAssetCategoryIds(Class<?> clazz, long classPK) {
-		return _assetCategoryIdsMap.get(
-			getPrimaryKeyString(clazz, classPK));
+		return _assetCategoryIdsMap.get(getPrimaryKeyString(clazz, classPK));
 	}
 
 	public Map<String, long[]> getAssetCategoryIdsMap() {
@@ -1306,8 +1305,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (isResourceMain(classedModel)) {
 			if (getBooleanParameter(namespace, "categories")) {
-				long[] assetCategoryIds = getAssetCategoryIds(
-					clazz, classPK);
+				long[] assetCategoryIds = getAssetCategoryIds(clazz, classPK);
 
 				serviceContext.setAssetCategoryIds(assetCategoryIds);
 			}

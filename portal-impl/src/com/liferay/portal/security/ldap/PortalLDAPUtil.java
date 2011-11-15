@@ -504,8 +504,7 @@ public class PortalLDAPUtil {
 		Properties userMappings = LDAPSettingsUtil.getUserMappings(
 			ldapServerId, companyId);
 		Properties userExpandoMappings =
-			LDAPSettingsUtil.getUserExpandoMappings(
-				ldapServerId, companyId);
+			LDAPSettingsUtil.getUserExpandoMappings(ldapServerId, companyId);
 
 		PropertiesUtil.merge(userMappings, userExpandoMappings);
 

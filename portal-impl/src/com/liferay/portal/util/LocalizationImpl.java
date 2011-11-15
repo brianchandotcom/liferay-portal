@@ -530,8 +530,7 @@ public class LocalizationImpl implements Localization {
 			String parameter)
 		throws Exception {
 
-		Map<Locale, String> map = getLocalizationMap(
-			portletRequest, parameter);
+		Map<Locale, String> map = getLocalizationMap(portletRequest, parameter);
 
 		for (Map.Entry<Locale, String> entry : map.entrySet()) {
 			String languageId = LocaleUtil.toLanguageId(entry.getKey());

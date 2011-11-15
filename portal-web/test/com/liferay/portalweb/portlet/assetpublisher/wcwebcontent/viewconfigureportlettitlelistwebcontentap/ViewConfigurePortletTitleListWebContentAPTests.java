@@ -30,8 +30,7 @@ public class ViewConfigurePortletTitleListWebContentAPTests extends BaseTests {
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddNewWCWebContentAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTitleListTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTitleListTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletTitleListWebContentAPTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);

@@ -81,8 +81,7 @@ public class ServletVelocityResourceListener extends VelocityResourceListener {
 
 		if ((inputStream == null) && name.endsWith("/init_custom.vm")) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"The template " + name + " should be created");
+				_log.warn("The template " + name + " should be created");
 			}
 
 			return new UnsyncByteArrayInputStream(new byte[0]);

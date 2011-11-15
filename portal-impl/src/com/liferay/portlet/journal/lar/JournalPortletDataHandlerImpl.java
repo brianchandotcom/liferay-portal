@@ -1337,8 +1337,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			int endPos1 = content.indexOf(CharPool.APOSTROPHE, beginPos);
 			int endPos2 = content.indexOf(CharPool.CLOSE_BRACKET, beginPos);
-			int endPos3 = content.indexOf(
-				CharPool.CLOSE_PARENTHESIS, beginPos);
+			int endPos3 = content.indexOf(CharPool.CLOSE_PARENTHESIS, beginPos);
 			int endPos4 = content.indexOf(CharPool.LESS_THAN, beginPos);
 			int endPos5 = content.indexOf(CharPool.QUOTE, beginPos);
 			int endPos6 = content.indexOf(CharPool.SPACE, beginPos);

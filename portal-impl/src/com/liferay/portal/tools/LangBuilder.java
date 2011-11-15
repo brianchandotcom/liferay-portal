@@ -98,8 +98,7 @@ public class LangBuilder {
 		File renameKeysFile = new File(_langDir + "/rename.properties");
 
 		if (renameKeysFile.exists()) {
-			_renameKeys = PropertiesUtil.load(
-				FileUtil.read(renameKeysFile));
+			_renameKeys = PropertiesUtil.load(FileUtil.read(renameKeysFile));
 		}
 
 		String content = _orderProperties(

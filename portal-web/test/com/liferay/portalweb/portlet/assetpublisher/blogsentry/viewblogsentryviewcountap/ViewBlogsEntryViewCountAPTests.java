@@ -34,8 +34,7 @@ public class ViewBlogsEntryViewCountAPTests extends BaseTests {
 		testSuite.addTestSuite(AddNewBlogsEntryAPActionsTest.class);
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletShowMetadataViewCountTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowMetadataViewCountTest.class);
 		testSuite.addTestSuite(ViewBlogsEntryViewCountAPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

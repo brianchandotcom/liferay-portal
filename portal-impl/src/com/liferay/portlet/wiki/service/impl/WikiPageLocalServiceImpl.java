@@ -757,8 +757,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pages = wikiPagePersistence.findByN_T(nodeId, title, 0, 1);
 		}
 		else {
-			pages = wikiPagePersistence.findByN_T_H(
-				nodeId, title, head, 0, 1);
+			pages = wikiPagePersistence.findByN_T_H(nodeId, title, head, 0, 1);
 		}
 
 		if (!pages.isEmpty()) {
@@ -844,8 +843,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long nodeId, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return wikiPagePersistence.findByNodeId(
-			nodeId, start, end, obc);
+		return wikiPagePersistence.findByNodeId(nodeId, start, end, obc);
 	}
 
 	public List<WikiPage> getPages(
@@ -1229,8 +1227,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(
-				nodeId, title);
+			wikiPageResourceLocalService.getPageResourcePrimKey(nodeId, title);
 		long groupId = oldPage.getGroupId();
 
 		WikiPage page = oldPage;

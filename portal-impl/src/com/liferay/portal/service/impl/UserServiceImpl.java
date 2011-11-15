@@ -461,8 +461,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				user.getUserId(), announcementsDelivers);
 
 			if (indexingEnabled) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					User.class);
+				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 				indexer.reindex(user);
 			}
@@ -759,8 +758,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
-		User user = userLocalService.getUserByScreenName(
-			companyId, screenName);
+		User user = userLocalService.getUserByScreenName(companyId, screenName);
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);

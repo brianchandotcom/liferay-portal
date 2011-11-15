@@ -255,8 +255,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			portletPropertiesConfiguration.get(
 				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME);
 
-		reconfigureHibernateCache(
-			classLoader, hibernateCacheConfigurationPath);
+		reconfigureHibernateCache(classLoader, hibernateCacheConfigurationPath);
 	}
 
 	protected void reconfigureCaches(

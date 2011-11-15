@@ -126,8 +126,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		Boolean value = _groupAdmins.get(group.getGroupId());
 
 		if (value == null) {
-			value = Boolean.valueOf(
-				isGroupAdminImpl(permissionChecker, group));
+			value = Boolean.valueOf(isGroupAdminImpl(permissionChecker, group));
 
 			_groupAdmins.put(group.getGroupId(), value);
 		}
@@ -142,8 +141,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		Boolean value = _groupOwners.get(group.getGroupId());
 
 		if (value == null) {
-			value = Boolean.valueOf(
-				isGroupOwnerImpl(permissionChecker, group));
+			value = Boolean.valueOf(isGroupOwnerImpl(permissionChecker, group));
 
 			_groupOwners.put(group.getGroupId(), value);
 		}

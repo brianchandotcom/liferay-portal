@@ -375,8 +375,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			int start, int end)
 		throws SystemException {
 
-		return search(
-			companyId, groupIds, 0, className, keywords, start, end);
+		return search(companyId, groupIds, 0, className, keywords, start, end);
 	}
 
 	public Hits search(

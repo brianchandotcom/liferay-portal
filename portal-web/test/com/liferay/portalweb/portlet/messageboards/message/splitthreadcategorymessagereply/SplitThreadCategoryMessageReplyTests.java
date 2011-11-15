@@ -33,8 +33,7 @@ public class SplitThreadCategoryMessageReplyTests extends BaseTests {
 		testSuite.addTestSuite(AddCategoryMessageTest.class);
 		testSuite.addTestSuite(AddCategoryMessageReplyTest.class);
 		testSuite.addTestSuite(SplitThreadCategoryMessageReplyTest.class);
-		testSuite.addTestSuite(
-			ViewSplitThreadMBCategoryMessageReplyTest.class);
+		testSuite.addTestSuite(ViewSplitThreadMBCategoryMessageReplyTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

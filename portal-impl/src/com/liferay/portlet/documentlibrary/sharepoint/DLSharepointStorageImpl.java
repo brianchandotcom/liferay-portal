@@ -467,8 +467,7 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		String title = getResourceName(documentPath);
 
-		return DLAppServiceUtil.getFileEntry(
-			groupId, parentFolderId, title);
+		return DLAppServiceUtil.getFileEntry(groupId, parentFolderId, title);
 	}
 
 	protected Tree getFileEntryTree(

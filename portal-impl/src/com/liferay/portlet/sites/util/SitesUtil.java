@@ -526,8 +526,7 @@ public class SitesUtil {
 			return false;
 		}
 
-		Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
-			layout);
+		Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(layout);
 
 		Date layoutModifiedDate = layout.getModifiedDate();
 

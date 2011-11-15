@@ -31,12 +31,10 @@ public class ViewPortletShowLocalesWebContentWCDTests extends BaseTests {
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddPageLanguageTest.class);
 		testSuite.addTestSuite(AddPortletLanguageTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletShowAvailableLocalesTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowAvailableLocalesTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
 		testSuite.addTestSuite(LocalizeWCWebContentWCDTest.class);
-		testSuite.addTestSuite(
-			ViewPortletShowLocalesWebContentWCDTest.class);
+		testSuite.addTestSuite(ViewPortletShowLocalesWebContentWCDTest.class);
 		testSuite.addTestSuite(TearDownLanguageTest.class);
 		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWebContentTest.class);

@@ -37,7 +37,6 @@ public interface MBCategoryDisplay {
 
 	public int getSubcategoriesThreadsCount(MBCategory category);
 
-	public void getSubcategoryIds(
-		MBCategory category, List<Long> categoryIds);
+	public void getSubcategoryIds(MBCategory category, List<Long> categoryIds);
 
 }

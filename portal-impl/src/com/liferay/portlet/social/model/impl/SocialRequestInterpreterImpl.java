@@ -61,15 +61,13 @@ public class SocialRequestInterpreterImpl
 	public SocialRequestFeedEntry interpret(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
-		return _requestInterpreter.interpret(
-			request, themeDisplay);
+		return _requestInterpreter.interpret(request, themeDisplay);
 	}
 
 	public boolean processConfirmation(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
-		return _requestInterpreter.processConfirmation(
-			request, themeDisplay);
+		return _requestInterpreter.processConfirmation(request, themeDisplay);
 	}
 
 	public boolean processRejection(

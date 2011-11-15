@@ -194,8 +194,7 @@ public interface Portal {
 	 * @param  url the URL
 	 * @return the URL with the preserved parameters added
 	 */
-	public String addPreservedParameters(
-		ThemeDisplay themeDisplay, String url);
+	public String addPreservedParameters(ThemeDisplay themeDisplay, String url);
 
 	/**
 	 * Clears the render parameters in the request if the portlet is in the
@@ -829,8 +828,7 @@ public interface Portal {
 
 	public PortletPreferences getPreferences(HttpServletRequest request);
 
-	public PreferencesValidator getPreferencesValidator(
-		Portlet portlet);
+	public PreferencesValidator getPreferencesValidator(Portlet portlet);
 
 	public String getRelativeHomeURL(HttpServletRequest request)
 		throws PortalException, SystemException;
@@ -880,8 +878,7 @@ public interface Portal {
 	public String getSiteLoginURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
-	public String getStaticResourceURL(
-		HttpServletRequest request, String uri);
+	public String getStaticResourceURL(HttpServletRequest request, String uri);
 
 	public String getStaticResourceURL(
 		HttpServletRequest request, String uri, long timestamp);

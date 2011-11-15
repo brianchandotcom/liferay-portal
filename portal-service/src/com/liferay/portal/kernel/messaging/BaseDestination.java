@@ -52,8 +52,7 @@ public abstract class BaseDestination implements Destination {
 		for (DestinationEventListener destinationEventListener :
 				_destinationEventListeners) {
 
-			destination.addDestinationEventListener(
-				destinationEventListener);
+			destination.addDestinationEventListener(destinationEventListener);
 		}
 	}
 

@@ -55,8 +55,7 @@ public class InstanceFactory {
 			(parameterTypes.length > 0) && (arguments.length > 0) &&
 			(parameterTypes.length == arguments.length)) {
 
-			Constructor<?> constructor = clazz.getConstructor(
-				parameterTypes);
+			Constructor<?> constructor = clazz.getConstructor(parameterTypes);
 
 			return constructor.newInstance(arguments);
 		}

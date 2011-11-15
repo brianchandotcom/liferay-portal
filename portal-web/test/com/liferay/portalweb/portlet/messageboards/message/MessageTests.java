@@ -102,8 +102,7 @@ public class MessageTests extends BaseTests {
 			SplitThreadCategoryMessageReplyBackButtonTests.suite());
 		testSuite.addTest(
 			SplitThreadCategoryMessageReplyExplanationTests.suite());
-		testSuite.addTest(
-			SplitThreadCategoryMessageReplyMultipleTests.suite());
+		testSuite.addTest(SplitThreadCategoryMessageReplyMultipleTests.suite());
 		testSuite.addTest(UnmarkCategoryMessageQuestionReplyTests.suite());
 		testSuite.addTest(ViewCategoryMessageMyPostsTests.suite());
 		testSuite.addTest(ViewCategoryMessagePostCountTests.suite());

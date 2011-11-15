@@ -36,8 +36,7 @@ public class RateDLFolderDocumentCommentAPTests extends BaseTests {
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(ConfigurePortletEnableCommentsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletEnableCommentRatingsTest.class);
+		testSuite.addTestSuite(ConfigurePortletEnableCommentRatingsTest.class);
 		testSuite.addTestSuite(BeTheFirstDLFolderDocumentCommentAPTest.class);
 		testSuite.addTestSuite(RateDLFolderDocumentCommentAPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);

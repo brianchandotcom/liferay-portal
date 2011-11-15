@@ -527,8 +527,7 @@ public class AntlrCreoleParserTests extends AbstractWikiParserTests {
 
 		unformattedTextNode = (UnformattedTextNode)collectionNode.get(0);
 
-		Assert.assertEquals(
-			"ItalicAndBold", unformattedTextNode.getContent());
+		Assert.assertEquals("ItalicAndBold", unformattedTextNode.getContent());
 	}
 
 	public void testParseSimpleTextParagraph() {

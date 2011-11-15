@@ -557,8 +557,7 @@ public abstract class BaseDB implements DB {
 
 					String includeFileName = line.substring(pos + 1);
 
-					File includeFile = new File(
-						sqlDir + "/" + includeFileName);
+					File includeFile = new File(sqlDir + "/" + includeFileName);
 
 					if (!includeFile.exists()) {
 						continue;

@@ -937,8 +937,7 @@ public class ShoppingUtil {
 	public static String getPayPalReturnURL(
 		PortletURL portletURL, ShoppingOrder order) {
 
-		portletURL.setParameter(
-			"struts_action", "/shopping/checkout");
+		portletURL.setParameter("struts_action", "/shopping/checkout");
 		portletURL.setParameter(Constants.CMD, Constants.VIEW);
 		portletURL.setParameter("orderId", String.valueOf(order.getOrderId()));
 

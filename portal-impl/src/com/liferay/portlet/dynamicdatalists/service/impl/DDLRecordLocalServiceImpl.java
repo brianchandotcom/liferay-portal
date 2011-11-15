@@ -184,8 +184,7 @@ public class DDLRecordLocalServiceImpl
 	public void deleteRecord(long recordId)
 		throws PortalException, SystemException {
 
-		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(
-			recordId);
+		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
 		deleteRecord(record);
 	}

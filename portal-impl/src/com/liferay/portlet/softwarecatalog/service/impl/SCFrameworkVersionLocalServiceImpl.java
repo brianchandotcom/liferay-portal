@@ -49,8 +49,7 @@ public class SCFrameworkVersionLocalServiceImpl
 		long frameworkVersionId = counterLocalService.increment();
 
 		SCFrameworkVersion frameworkVersion =
-			scFrameworkVersionPersistence.create(
-				frameworkVersionId);
+			scFrameworkVersionPersistence.create(frameworkVersionId);
 
 		frameworkVersion.setGroupId(groupId);
 		frameworkVersion.setCompanyId(user.getCompanyId());

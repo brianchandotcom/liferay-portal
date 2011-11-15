@@ -244,8 +244,7 @@ public class EditCompanyAction extends PortletAction {
 		else if (Validator.isNull(casServerURL) &&
 				 Validator.isNull(casServiceURL)) {
 
-			SessionErrors.add(
-				actionRequest, "casServerURLAndServiceURLNotSet");
+			SessionErrors.add(actionRequest, "casServerURLAndServiceURLNotSet");
 		}
 		else {
 			if (Validator.isNotNull(casServerURL) &&

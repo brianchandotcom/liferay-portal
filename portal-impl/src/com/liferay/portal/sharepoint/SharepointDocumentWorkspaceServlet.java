@@ -242,8 +242,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		resultsEl.addElement("Title").setText(group.getName());
 		resultsEl.addElement("LastUpdate");
 
-		User user = (User)request.getSession().getAttribute(
-			WebKeys.USER);
+		User user = (User)request.getSession().getAttribute(WebKeys.USER);
 
 		ResponseElement responseElement = new MemberResponseElement(
 			user, false);

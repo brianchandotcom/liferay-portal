@@ -400,8 +400,7 @@ public class JournalTemplateLocalServiceImpl
 						"data that references templates without a group id.");
 
 			List<JournalTemplate> templates =
-				journalTemplatePersistence.findByTemplateId(
-					templateId);
+				journalTemplatePersistence.findByTemplateId(templateId);
 
 			if (templates.size() == 0) {
 				throw new NoSuchTemplateException(

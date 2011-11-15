@@ -32,8 +32,7 @@ public class ViewWCWebContentViewCountAPTests extends BaseTests {
 		testSuite.addTestSuite(AddNewWCWebContentAPActionsTest.class);
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletShowMetadataViewCountTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowMetadataViewCountTest.class);
 		testSuite.addTestSuite(ViewWCWebContentViewCountAPTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

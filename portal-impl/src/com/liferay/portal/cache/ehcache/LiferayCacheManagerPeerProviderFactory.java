@@ -84,8 +84,7 @@ public class LiferayCacheManagerPeerProviderFactory
 		Properties portalProperties = null;
 
 		try {
-			portalProperties = PropertiesUtil.load(
-				portalPropertiesString);
+			portalProperties = PropertiesUtil.load(portalPropertiesString);
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);

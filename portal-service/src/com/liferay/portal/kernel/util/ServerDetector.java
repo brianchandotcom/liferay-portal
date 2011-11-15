@@ -220,8 +220,7 @@ public class ServerDetector {
 	}
 
 	private boolean _isWebSphere() {
-		return _detect(
-			"/com/ibm/websphere/product/VersionInfo.class");
+		return _detect("/com/ibm/websphere/product/VersionInfo.class");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ServerDetector.class);

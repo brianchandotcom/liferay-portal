@@ -35,8 +35,7 @@ public class ViewIGFolderImageViewCountAPTests extends BaseTests {
 		testSuite.addTestSuite(AddNewIGFolderImageAPActionsTest.class);
 		testSuite.addTestSuite(
 			ConfigurePortletDisplayStyleFullContentTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletShowMetadataViewCountTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowMetadataViewCountTest.class);
 		testSuite.addTestSuite(ViewIGFolderImageViewCountAPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

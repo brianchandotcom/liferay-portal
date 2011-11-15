@@ -85,8 +85,7 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 		portletPreferences.setValue(
 			"expandedItemsPerChannel", StringPool.BLANK);
 		portletPreferences.setValue("showFeedTitle", StringPool.BLANK);
-		portletPreferences.setValue(
-			"showFeedPublishedDate", StringPool.BLANK);
+		portletPreferences.setValue("showFeedPublishedDate", StringPool.BLANK);
 		portletPreferences.setValue("showFeedDescription", StringPool.BLANK);
 		portletPreferences.setValue("showFeedImage", StringPool.BLANK);
 		portletPreferences.setValue("feedImageAlignment", StringPool.BLANK);

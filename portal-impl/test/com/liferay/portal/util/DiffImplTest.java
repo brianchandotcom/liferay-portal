@@ -253,8 +253,7 @@ public class DiffImplTest extends BaseTestCase {
 		expectedSource.add(new DiffResult(0, "abcd"));
 
 		expectedTarget.add(
-			new DiffResult(
-				0, "abcd" + Diff.OPEN_INS + "ee" + Diff.CLOSE_INS));
+			new DiffResult(0, "abcd" + Diff.OPEN_INS + "ee" + Diff.CLOSE_INS));
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 

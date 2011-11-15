@@ -56,8 +56,7 @@ public class VerifyRole extends VerifyProcess {
 		runSQL(
 			"delete from UserGroupGroupRole where roleId = " +
 				role.getRoleId());
-		runSQL(
-			"delete from UserGroupRole where roleId = " + role.getRoleId());
+		runSQL("delete from UserGroupRole where roleId = " + role.getRoleId());
 	}
 
 }

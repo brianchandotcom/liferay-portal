@@ -1988,8 +1988,7 @@ public class PortalImpl implements Portal {
 			namespace + "urlTitle",
 			new String[] {journalArticle.getUrlTitle()});
 
-		String queryString = HttpUtil.parameterMapToString(
-			actualParams, false);
+		String queryString = HttpUtil.parameterMapToString(actualParams, false);
 
 		if (layoutActualURL.contains(StringPool.QUESTION)) {
 			layoutActualURL =

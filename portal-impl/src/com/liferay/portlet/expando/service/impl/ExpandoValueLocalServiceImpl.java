@@ -1817,8 +1817,7 @@ public class ExpandoValueLocalServiceImpl
 	public ExpandoValue getValue(long tableId, long columnId, long classPK)
 		throws SystemException {
 
-		return expandoValuePersistence.fetchByT_C_C(
-			tableId, columnId, classPK);
+		return expandoValuePersistence.fetchByT_C_C(tableId, columnId, classPK);
 	}
 
 	public ExpandoValue getValue(

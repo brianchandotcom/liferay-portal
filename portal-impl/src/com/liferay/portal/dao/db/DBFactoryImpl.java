@@ -189,8 +189,7 @@ public class DBFactoryImpl implements DBFactory {
 		if (_db == null) {
 			Class<?> clazz = dialect.getClass();
 
-			_log.error(
-				"No DB implementation exists for " + clazz.getName());
+			_log.error("No DB implementation exists for " + clazz.getName());
 		}
 		else {
 			if (_log.isDebugEnabled()) {

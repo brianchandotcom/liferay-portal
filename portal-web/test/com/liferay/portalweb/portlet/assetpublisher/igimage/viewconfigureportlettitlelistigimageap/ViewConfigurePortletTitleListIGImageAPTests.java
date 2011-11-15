@@ -34,8 +34,7 @@ public class ViewConfigurePortletTitleListIGImageAPTests
 		testSuite.addTestSuite(AddPortletDLTest.class);
 		testSuite.addTestSuite(AddIGFolderTest.class);
 		testSuite.addTestSuite(AddNewIGFolderImageAPActionsTest.class);
-		testSuite.addTestSuite(
-			ConfigurePortletDisplayStyleTitleListTest.class);
+		testSuite.addTestSuite(ConfigurePortletDisplayStyleTitleListTest.class);
 		testSuite.addTestSuite(
 			ViewConfigurePortletTitleListIGImageAPTest.class);
 		testSuite.addTestSuite(TearDownDLDocumentTest.class);

@@ -445,8 +445,7 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		for (Element attachmentElement : attachmentElements) {
 			String name = attachmentElement.attributeValue("name");
-			String binPath = attachmentElement.attributeValue(
-				"bin-path");
+			String binPath = attachmentElement.attributeValue("bin-path");
 
 			InputStream inputStream =
 				portletDataContext.getZipEntryAsInputStream(binPath);
@@ -475,8 +474,7 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			(categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
 			(categoryId == message.getCategoryId())) {
 
-			String path = getImportCategoryPath(
-				portletDataContext, categoryId);
+			String path = getImportCategoryPath(portletDataContext, categoryId);
 
 			MBCategory category =
 				(MBCategory)portletDataContext.getZipEntryAsObject(path);

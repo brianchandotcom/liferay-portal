@@ -95,8 +95,7 @@ public class InputMoveBoxesTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-move-boxes:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-move-boxes:leftBoxName", _leftBoxName);
-		request.setAttribute(
-			"liferay-ui:input-move-boxes:leftList", _leftList);
+		request.setAttribute("liferay-ui:input-move-boxes:leftList", _leftList);
 		request.setAttribute(
 			"liferay-ui:input-move-boxes:leftOnChange", _leftOnChange);
 		request.setAttribute(

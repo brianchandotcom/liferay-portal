@@ -660,11 +660,9 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			Company company = CompanyLocalServiceUtil.getCompanyById(
-				companyId);
+			Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
-			request = new EncryptedServletRequest(
-				request, company.getKeyObj());
+			request = new EncryptedServletRequest(request, company.getKeyObj());
 		}
 		catch (Exception e) {
 		}
@@ -1108,8 +1106,7 @@ public class MainServlet extends ActionServlet {
 		String html = ContentUtil.get(
 			"com/liferay/portal/dependencies/inactive.html");
 
-		html = StringUtil.replace(
-			html, "[$MESSAGE$]", message);
+		html = StringUtil.replace(html, "[$MESSAGE$]", message);
 
 		ServletOutputStream servletOutputStream = response.getOutputStream();
 

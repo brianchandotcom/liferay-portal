@@ -262,8 +262,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		updateLookAndFeel(
 			groupId, false, themeId, colorSchemeId, css, wapTheme);
-		updateLookAndFeel(
-			groupId, true, themeId, colorSchemeId, css, wapTheme);
+		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css, wapTheme);
 	}
 
 	public LayoutSet updateLookAndFeel(

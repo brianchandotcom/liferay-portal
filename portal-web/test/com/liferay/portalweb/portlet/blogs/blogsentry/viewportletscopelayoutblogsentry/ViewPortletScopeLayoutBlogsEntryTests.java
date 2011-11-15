@@ -41,8 +41,7 @@ public class ViewPortletScopeLayoutBlogsEntryTests extends BaseTests {
 			ViewPortletScopeLayoutCurrentPageBlogsEntryPage2Test.class);
 		testSuite.addTestSuite(
 			ViewPortletScopeLayoutDefaultBlogsEntryPage1Test.class);
-		testSuite.addTestSuite(
-			ConfigurePortletScopeLayoutPage2Page1Test.class);
+		testSuite.addTestSuite(ConfigurePortletScopeLayoutPage2Page1Test.class);
 		testSuite.addTestSuite(
 			ViewPortletScopeLayoutPage2BlogsEntryPage1Test.class);
 		testSuite.addTestSuite(

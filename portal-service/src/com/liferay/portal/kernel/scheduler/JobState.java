@@ -59,8 +59,7 @@ public class JobState implements Cloneable, Serializable {
 			_exceptions = new LinkedList<ObjectValuePair<Exception, Date>>();
 		}
 
-		_exceptions.add(
-			new ObjectValuePair<Exception, Date>(exception, date));
+		_exceptions.add(new ObjectValuePair<Exception, Date>(exception, date));
 
 		while (_exceptions.size() > _exceptionsMaxSize) {
 			_exceptions.poll();

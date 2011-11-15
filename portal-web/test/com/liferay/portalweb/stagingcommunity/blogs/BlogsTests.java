@@ -41,8 +41,7 @@ public class BlogsTests extends BaseTests {
 		testSuite.addTestSuite(PU_LogoutTest.class);
 		testSuite.addTestSuite(Guest_AssertNoPagePrePublishTest.class);
 		testSuite.addTestSuite(Administrator_LoginTest.class);
-		testSuite.addTestSuite(
-			Administrator_PublishToLiveStagedPageTest.class);
+		testSuite.addTestSuite(Administrator_PublishToLiveStagedPageTest.class);
 		testSuite.addTestSuite(Administrator_LogoutTest.class);
 		testSuite.addTestSuite(Guest_AssertPagePresentTest.class);
 		testSuite.addTestSuite(PU_LoginTest.class);
@@ -50,8 +49,7 @@ public class BlogsTests extends BaseTests {
 		testSuite.addTestSuite(PU_LogoutTest.class);
 		testSuite.addTestSuite(Guest_AssertNoBlogsEntryPreApprovalTest.class);
 		testSuite.addTestSuite(PCR_LoginTest.class);
-		testSuite.addTestSuite(
-			PCR_AssignToMeStagedBlogsEntryActionsTest.class);
+		testSuite.addTestSuite(PCR_AssignToMeStagedBlogsEntryActionsTest.class);
 		testSuite.addTestSuite(PCR_ApproveStagedBlogsEntryActionsTest.class);
 		testSuite.addTestSuite(PCR_LogoutTest.class);
 		testSuite.addTestSuite(Guest_AssertNoBlogsEntryPrePublishTest.class);

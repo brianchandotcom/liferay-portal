@@ -151,8 +151,7 @@ public class ResourceActionLocalServiceImpl
 			long resourceActionId = counterLocalService.increment(
 				ResourceAction.class.getName());
 
-			resourceAction = resourceActionPersistence.create(
-				resourceActionId);
+			resourceAction = resourceActionPersistence.create(resourceActionId);
 
 			resourceAction.setName(name);
 			resourceAction.setActionId(actionId);

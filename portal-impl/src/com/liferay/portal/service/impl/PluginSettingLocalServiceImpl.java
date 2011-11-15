@@ -105,8 +105,7 @@ public class PluginSettingLocalServiceImpl
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Could not check permissions for " + pluginId, e);
+				_log.warn("Could not check permissions for " + pluginId, e);
 			}
 
 			return false;

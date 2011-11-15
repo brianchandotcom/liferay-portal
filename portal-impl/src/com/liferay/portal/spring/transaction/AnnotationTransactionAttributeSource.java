@@ -54,8 +54,7 @@ public class AnnotationTransactionAttributeSource
 		Transactional transactional = AnnotationLocator.locate(
 			method, targetClass, Transactional.class);
 
-		transactionAttribute = TransactionAttributeBuilder.build(
-			transactional);
+		transactionAttribute = TransactionAttributeBuilder.build(transactional);
 
 		if (transactionAttribute == null) {
 			_transactionAttributes.put(

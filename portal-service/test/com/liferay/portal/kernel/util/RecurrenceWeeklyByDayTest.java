@@ -102,8 +102,7 @@ public class RecurrenceWeeklyByDayTest extends RecurrenceTestCase {
 	}
 
 	public void testRecurrenceWithUntilDate() {
-		Recurrence recurrence = getRecurrence(
-			dtStart, durationOneHour, 1);
+		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 1);
 
 		recurrence.setUntil(getCalendar(2008, FEBRUARY, 15, 22, 0));
 

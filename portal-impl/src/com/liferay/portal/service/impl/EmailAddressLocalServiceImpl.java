@@ -151,8 +151,7 @@ public class EmailAddressLocalServiceImpl
 
 		if (emailAddressId > 0) {
 			EmailAddress emailAddress =
-				emailAddressPersistence.findByPrimaryKey(
-					emailAddressId);
+				emailAddressPersistence.findByPrimaryKey(emailAddressId);
 
 			companyId = emailAddress.getCompanyId();
 			classNameId = emailAddress.getClassNameId();

@@ -38,8 +38,7 @@ public interface ImageProcessor {
 
 	public static final String TYPE_NOT_AVAILABLE = "na";
 
-	public BufferedImage convertImageType(
-		BufferedImage sourceImage, int type);
+	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 
 	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
 		throws IOException;

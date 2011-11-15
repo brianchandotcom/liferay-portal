@@ -350,8 +350,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 					folderElement.setAttribute(
 						"name",
 						stagingGroup.getGroupId() + " - " +
-							HtmlUtil.escape(
-								stagingGroup.getDescriptiveName()));
+							HtmlUtil.escape(stagingGroup.getDescriptiveName()));
 
 					setNameAttribute = true;
 				}

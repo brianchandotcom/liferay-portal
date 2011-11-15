@@ -512,8 +512,7 @@ public class ClusterExecutorImpl
 			_log.error(
 				"Unable to send multicast message " + clusterRequest, ce);
 
-			throw new SystemException(
-				"Unable to send multicast request", ce);
+			throw new SystemException("Unable to send multicast request", ce);
 		}
 	}
 
@@ -532,8 +531,7 @@ public class ClusterExecutorImpl
 				_log.error(
 					"Unable to send unicast message " + clusterRequest, ce);
 
-				throw new SystemException(
-					"Unable to send unicast request", ce);
+				throw new SystemException("Unable to send unicast request", ce);
 			}
 		}
 	}

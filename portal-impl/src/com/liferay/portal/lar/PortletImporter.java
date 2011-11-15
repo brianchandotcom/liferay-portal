@@ -481,8 +481,7 @@ public class PortletImporter {
 		readAssetLinks(portletDataContext);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Importing portlet takes " + stopWatch.getTime() + " ms");
+			_log.info("Importing portlet takes " + stopWatch.getTime() + " ms");
 		}
 
 		zipReader.close();
@@ -950,8 +949,7 @@ public class PortletImporter {
 
 			try {
 				jxPreferences.setValue("lfrScopeType", scopeType);
-				jxPreferences.setValue(
-					"lfrScopeLayoutUuid", scopeLayoutUuid);
+				jxPreferences.setValue("lfrScopeLayoutUuid", scopeLayoutUuid);
 
 				jxPreferences.store();
 			}
@@ -1217,8 +1215,7 @@ public class PortletImporter {
 			"expando-table");
 
 		for (Element expandoTableElement : expandoTableElements) {
-			String className = expandoTableElement.attributeValue(
-				"class-name");
+			String className = expandoTableElement.attributeValue("class-name");
 
 			ExpandoTable expandoTable = null;
 

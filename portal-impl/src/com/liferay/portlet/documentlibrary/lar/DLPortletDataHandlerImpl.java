@@ -160,8 +160,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				fileEntry.getFileEntryId());
 
 			for (DLFileRank fileRank : fileRanks) {
-				exportFileRank(
-					portletDataContext, fileRanksElement, fileRank);
+				exportFileRank(portletDataContext, fileRanksElement, fileRank);
 			}
 		}
 
@@ -262,8 +261,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element folderElement = (Element)rootElement.selectSingleNode(
 				"//folder[@path='".concat(folderPath).concat("']"));
 
-			importFolder(
-				portletDataContext, folderPath, folderElement, folder);
+			importFolder(portletDataContext, folderPath, folderElement, folder);
 
 			folderUuid = folder.getUuid();
 
@@ -679,8 +677,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
-				fileEntryTypeId);
+			DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(fileEntryTypeId);
 
 		if (dlFileEntryType == null) {
 			return;

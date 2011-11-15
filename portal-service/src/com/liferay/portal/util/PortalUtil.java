@@ -350,8 +350,7 @@ public class PortalUtil {
 			String category, ThemeDisplay themeDisplay)
 		throws SystemException {
 
-		return getPortal().getControlPanelPortlets(
-			category, themeDisplay);
+		return getPortal().getControlPanelPortlets(category, themeDisplay);
 	}
 
 	public static String getCreateAccountURL(

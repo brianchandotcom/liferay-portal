@@ -313,8 +313,7 @@ public class UserImpl extends UserBaseImpl {
 	public List<Organization> getOrganizations()
 		throws PortalException, SystemException {
 
-		return OrganizationLocalServiceUtil.getUserOrganizations(
-			getUserId());
+		return OrganizationLocalServiceUtil.getUserOrganizations(getUserId());
 	}
 
 	public boolean getPasswordModified() {

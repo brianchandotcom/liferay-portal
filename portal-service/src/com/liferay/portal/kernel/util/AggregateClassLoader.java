@@ -311,8 +311,7 @@ public class AggregateClassLoader extends ClassLoader {
 				"Unable to load class " + name, ite.getTargetException());
 		}
 		catch (Exception e) {
-			throw new ClassNotFoundException(
-				"Unable to load class " + name, e);
+			throw new ClassNotFoundException("Unable to load class " + name, e);
 		}
 	}
 

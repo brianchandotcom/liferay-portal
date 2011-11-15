@@ -66,16 +66,14 @@ public class DataSourceSwapper {
 				_log.info("Reinitialize Hibernate for new counter data source");
 			}
 
-			_reinitializeJPA(
-				"counterSessionFactory", newDataSource);
+			_reinitializeJPA("counterSessionFactory", newDataSource);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
 				_log.info("Reinitialize JPA for new counter data source");
 			}
 
-			_reinitializeHibernate(
-				"counterSessionFactory", newDataSource);
+			_reinitializeHibernate("counterSessionFactory", newDataSource);
 		}
 	}
 
@@ -109,16 +107,14 @@ public class DataSourceSwapper {
 				_log.info("Reinitialize Hibernate for new liferay data source");
 			}
 
-			_reinitializeJPA(
-				"liferaySessionFactory", newDataSource);
+			_reinitializeJPA("liferaySessionFactory", newDataSource);
 		}
 		else {
 			if (_log.isInfoEnabled()) {
 				_log.info("Reinitialize JPA for new liferay data source");
 			}
 
-			_reinitializeHibernate(
-				"liferaySessionFactory", newDataSource);
+			_reinitializeHibernate("liferaySessionFactory", newDataSource);
 		}
 	}
 

@@ -31,8 +31,7 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTests extends BaseTests {
 		testSuite.addTestSuite(AddSitePublicPageDLTest.class);
 		testSuite.addTestSuite(AddSitePublicPagePortletDLTest.class);
 		testSuite.addTestSuite(ActivateSiteStagingLocalLiveNoDLTest.class);
-		testSuite.addTestSuite(
-			AddDLDocumentSiteStagingLocalLiveNoDLTest.class);
+		testSuite.addTestSuite(AddDLDocumentSiteStagingLocalLiveNoDLTest.class);
 		testSuite.addTestSuite(
 			ViewAddDLDocumentSiteStagingLocalLiveNoDLTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);

@@ -164,8 +164,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 		try {
 			if (_liveGroup == null) {
-				_liveGroup = GroupLocalServiceUtil.getGroup(
-					getLiveGroupId());
+				_liveGroup = GroupLocalServiceUtil.getGroup(getLiveGroupId());
 			}
 
 			return _liveGroup;

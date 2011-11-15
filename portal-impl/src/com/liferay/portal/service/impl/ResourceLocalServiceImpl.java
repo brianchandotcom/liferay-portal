@@ -325,8 +325,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			}
 		}
 		else {
-			updateResources_1to5(
-				companyId, name, scope, primKey, newPrimKey);
+			updateResources_1to5(companyId, name, scope, primKey, newPrimKey);
 		}
 	}
 
@@ -656,8 +655,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 					role.getRoleId(), groupPermissionsList);
 			}
 			else {
-				groupPersistence.addPermissions(
-					groupId, groupPermissionsList);
+				groupPersistence.addPermissions(groupId, groupPermissionsList);
 			}
 		}
 

@@ -65,8 +65,7 @@ public class VocabularyTests extends BaseTests {
 		testSuite.addTest(AddVocabularyAssetTypeUserTests.suite());
 		testSuite.addTest(AddVocabularyAssetTypeWebContentTests.suite());
 		testSuite.addTest(AddVocabularyAssetTypeWikiPageTests.suite());
-		testSuite.addTest(
-			AddVocabularyDisallowMultipleCategoriesTests.suite());
+		testSuite.addTest(AddVocabularyDisallowMultipleCategoriesTests.suite());
 		testSuite.addTest(AddVocabularyMultipleTests.suite());
 		testSuite.addTest(AddVocabularyNameNullTests.suite());
 		testSuite.addTest(AddVocabularyViewableByAnyoneTests.suite());

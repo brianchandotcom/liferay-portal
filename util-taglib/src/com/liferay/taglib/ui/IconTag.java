@@ -134,8 +134,7 @@ public class IconTag extends IncludeTag {
 		String id = _id;
 
 		if (Validator.isNull(id)) {
-			id = PortalUtil.generateRandomKey(
-				request, IconTag.class.getName());
+			id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
 		}
 
 		request.setAttribute("liferay-ui:icon:cssClass", _cssClass);

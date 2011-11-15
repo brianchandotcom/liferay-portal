@@ -36,8 +36,7 @@ public class SocialActivityLimitImpl extends SocialActivityLimitBaseImpl {
 			return 0;
 		}
 
-		int count = GetterUtil.getInteger(
-			valueParts[valueParts.length-1], 0);
+		int count = GetterUtil.getInteger(valueParts[valueParts.length-1], 0);
 
 		if (limitPeriod == SocialActivityCounterDefinition.LIMIT_PERIOD_DAY) {
 			int activityDay = SocialCounterPeriodUtil.getActivityDay();

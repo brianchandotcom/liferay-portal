@@ -202,8 +202,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	public int getTagsCount(long groupId, String name, String[] tagProperties)
 		throws SystemException {
 
-		return assetTagFinder.filterCountByG_N_P(
-			groupId, name, tagProperties);
+		return assetTagFinder.filterCountByG_N_P(groupId, name, tagProperties);
 	}
 
 	public void mergeTags(
@@ -233,8 +232,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			int end)
 		throws SystemException {
 
-		List<AssetTag> tags = getTags(
-			groupId, name, tagProperties, start, end);
+		List<AssetTag> tags = getTags(groupId, name, tagProperties, start, end);
 
 		return Autocomplete.listToJson(tags, "name", "name");
 	}

@@ -171,8 +171,7 @@ public class EhcacheConfigurationUtil {
 			(!usingDefault && usingLiferayCacheEventListenerFactory)) {
 
 			String cacheEventListenerProperties =
-				_clearCacheEventListenerConfigurations(
-					cacheConfiguration);
+				_clearCacheEventListenerConfigurations(cacheConfiguration);
 
 			if (enableClusterLinkReplication) {
 				_enableClusterLinkReplication(

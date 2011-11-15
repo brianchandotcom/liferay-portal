@@ -99,8 +99,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws SystemException {
 
 		List<BookmarksFolder> folders =
-			bookmarksFolderPersistence.filterFindByG_P(
-				groupId, folderId);
+			bookmarksFolderPersistence.filterFindByG_P(groupId, folderId);
 
 		for (BookmarksFolder folder : folders) {
 			folderIds.add(folder.getFolderId());

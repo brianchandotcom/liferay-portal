@@ -152,8 +152,7 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Social for " + servletContextName + " was unregistered");
+			_log.info("Social for " + servletContextName + " was unregistered");
 		}
 	}
 

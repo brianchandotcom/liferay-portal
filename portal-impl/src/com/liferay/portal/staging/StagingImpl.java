@@ -442,8 +442,7 @@ public class StagingImpl implements Staging {
 			"branchingPrivate", String.valueOf(branchingPrivate));
 		typeSettingsProperties.setProperty(
 			"branchingPublic", String.valueOf(branchingPublic));
-		typeSettingsProperties.setProperty(
-			"staged", Boolean.TRUE.toString());
+		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
 		typeSettingsProperties.setProperty(
 			"stagedRemotely", String.valueOf(false));
 
@@ -1970,8 +1969,7 @@ public class StagingImpl implements Staging {
 
 		LayoutExporter.updateLastPublishDate(
 			liveGroup.getPrivateLayoutSet(), 0);
-		LayoutExporter.updateLastPublishDate(
-			liveGroup.getPublicLayoutSet(), 0);
+		LayoutExporter.updateLastPublishDate(liveGroup.getPublicLayoutSet(), 0);
 
 		Set<String> parameterNames = serviceContext.getAttributes().keySet();
 

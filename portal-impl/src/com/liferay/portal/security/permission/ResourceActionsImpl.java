@@ -819,8 +819,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			for (Element portletResourceElement :
 					rootElement.elements("portlet-resource")) {
 
-				readPortletResource(
-					servletContextName, portletResourceElement);
+				readPortletResource(servletContextName, portletResourceElement);
 			}
 		}
 

@@ -628,8 +628,7 @@ public class MBUtil {
 
 		int maxPosts = 0;
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			statsUser.getGroupId());
+		Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());
 
 		long companyId = group.getCompanyId();
 

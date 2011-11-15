@@ -43,8 +43,7 @@ public class RoleDescriptionComparator extends OrderByComparator {
 		Role role1 = (Role)obj1;
 		Role role2 = (Role)obj2;
 
-		int value = role1.getDescription().compareTo(
-			role2.getDescription());
+		int value = role1.getDescription().compareTo(role2.getDescription());
 
 		if (value == 0) {
 			value = role1.getName().compareTo(role2.getName());

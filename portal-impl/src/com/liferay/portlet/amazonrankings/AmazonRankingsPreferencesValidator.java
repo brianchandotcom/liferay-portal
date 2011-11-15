@@ -53,8 +53,7 @@ public class AmazonRankingsPreferencesValidator
 		}
 
 		if (badIsbns.size() > 0) {
-			throw new ValidatorException(
-				"Failed to retrieve ISBNs", badIsbns);
+			throw new ValidatorException("Failed to retrieve ISBNs", badIsbns);
 		}
 	}
 

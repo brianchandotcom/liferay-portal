@@ -64,8 +64,7 @@ public class DoAsURLTag extends TagSupport {
 			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
 
-				doAsURL = PortalUtil.getLayoutFriendlyURL(
-					layout, themeDisplay);
+				doAsURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 			}
 
 			if (Validator.isNull(doAsURL)) {
@@ -82,8 +81,7 @@ public class DoAsURLTag extends TagSupport {
 		String encDoAsUserId = Encryptor.encrypt(
 			company.getKeyObj(), String.valueOf(doAsUserId));
 
-		doAsURL = HttpUtil.addParameter(
-			doAsURL, "doAsUserId", encDoAsUserId);
+		doAsURL = HttpUtil.addParameter(doAsURL, "doAsUserId", encDoAsUserId);
 
 		if (Validator.isNotNull(var)) {
 			pageContext.setAttribute(var, doAsURL);

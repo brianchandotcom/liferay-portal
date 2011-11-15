@@ -101,8 +101,7 @@ public class ExtRegistry {
 	public static void registerPortal(ServletContext servletContext)
 		throws Exception {
 
-		Set<String> resourcePaths = servletContext.getResourcePaths(
-			"/WEB-INF");
+		Set<String> resourcePaths = servletContext.getResourcePaths("/WEB-INF");
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.startsWith("/WEB-INF/ext-") &&
@@ -111,8 +110,7 @@ public class ExtRegistry {
 				String servletContextName = resourcePath.substring(
 					13, resourcePath.length() - 4);
 
-				Set<String> files = _readExtFiles(
-					servletContext, resourcePath);
+				Set<String> files = _readExtFiles(servletContext, resourcePath);
 
 				_extMap.put(servletContextName, files);
 			}

@@ -330,8 +330,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		if (advancedPermissionChecker.isSignedIn()) {
 			roles.add(
-				RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.GUEST));
+				RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST));
 		}
 
 		for (Group group : groups) {
@@ -405,8 +404,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		BooleanQuery groupsQuery = BooleanQueryFactoryUtil.create(
 			searchContext);
-		BooleanQuery rolesQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery rolesQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		for (Role role : roles) {
 			String roleName = role.getName();
@@ -499,8 +497,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		BooleanQuery groupsQuery = BooleanQueryFactoryUtil.create(
 			searchContext);
-		BooleanQuery rolesQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery rolesQuery = BooleanQueryFactoryUtil.create(searchContext);
 
 		for (Role role : roles) {
 			String roleName = role.getName();

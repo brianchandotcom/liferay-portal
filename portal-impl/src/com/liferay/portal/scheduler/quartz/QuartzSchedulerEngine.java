@@ -584,8 +584,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		groupName = fixMaxLength(
 			getOriginalGroupName(groupName), GROUP_NAME_MAX_LENGTH);
 
-		JobDetail jobDetail = scheduler.getJobDetail(
-			jobName, groupName);
+		JobDetail jobDetail = scheduler.getJobDetail(jobName, groupName);
 
 		if (jobDetail == null) {
 			return null;
@@ -643,8 +642,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			else if (SimpleTrigger.class.isAssignableFrom(
 						trigger.getClass())) {
 
-				SimpleTrigger simpleTrigger = SimpleTrigger.class.cast(
-					trigger);
+				SimpleTrigger simpleTrigger = SimpleTrigger.class.cast(trigger);
 
 				schedulerResponse = new SchedulerResponse();
 

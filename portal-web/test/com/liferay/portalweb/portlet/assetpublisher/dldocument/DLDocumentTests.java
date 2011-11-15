@@ -45,12 +45,10 @@ public class DLDocumentTests extends BaseTests {
 			ViewConfigurePortletAbstractsDLDocumentAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletAvailableDLDocumentAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletCurrentDLDocumentAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletCurrentDLDocumentAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletFullContentDLDocumentAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletTableDLDocumentAPTests.suite());
+		testSuite.addTest(ViewConfigurePortletTableDLDocumentAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletTitleListDLDocumentAPTests.suite());
 

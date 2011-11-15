@@ -130,9 +130,7 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 		}
 	}
 
-	protected Bundle getBundle(
-		Framework framework, Manifest manifest) {
-
+	protected Bundle getBundle(Framework framework, Manifest manifest) {
 		BundleContext bundleContext = framework.getBundleContext();
 
 		Attributes attributes = manifest.getMainAttributes();

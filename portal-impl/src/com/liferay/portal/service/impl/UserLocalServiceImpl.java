@@ -231,9 +231,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				Role role = rolePersistence.findByC_N(
 					user.getCompanyId(), defaultRoleName);
 
-				if (!userPersistence.containsRole(
-						userId, role.getRoleId())) {
-
+				if (!userPersistence.containsRole(userId, role.getRoleId())) {
 					roleIdSet.add(role.getRoleId());
 				}
 			}

@@ -34,15 +34,11 @@ import java.util.Locale;
  */
 public class BaseResourceImpl implements Resource {
 
-	public BaseResourceImpl(
-		String parentPath, long name, long displayName) {
-
+	public BaseResourceImpl(String parentPath, long name, long displayName) {
 		this(parentPath, String.valueOf(name), String.valueOf(displayName));
 	}
 
-	public BaseResourceImpl(
-		String parentPath, long name, String displayName) {
-
+	public BaseResourceImpl(String parentPath, long name, String displayName) {
 		this(parentPath, String.valueOf(name), displayName);
 	}
 

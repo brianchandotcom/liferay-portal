@@ -303,9 +303,7 @@ public class SAXReaderImpl implements SAXReader {
 				xpathFilterExpression, toOldNodes(nodes)));
 	}
 
-	public List<Node> selectNodes(
-		String xpathFilterExpression, Node node) {
-
+	public List<Node> selectNodes(String xpathFilterExpression, Node node) {
 		NodeImpl nodeImpl = (NodeImpl)node;
 
 		return toNewNodes(

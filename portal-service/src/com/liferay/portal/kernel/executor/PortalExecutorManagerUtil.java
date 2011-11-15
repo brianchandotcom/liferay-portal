@@ -27,9 +27,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class PortalExecutorManagerUtil {
 
-	public static <T> Future<T> execute(
-		String name, Callable<T> callable) {
-
+	public static <T> Future<T> execute(String name, Callable<T> callable) {
 		return getPortalExecutorManager().execute(name, callable);
 	}
 

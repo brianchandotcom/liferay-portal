@@ -465,9 +465,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void registerDLProcessorCallback(final FileEntry fileEntry) {
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
 				public Void call() throws Exception {
 					DLProcessorRegistryUtil.trigger(fileEntry);
 

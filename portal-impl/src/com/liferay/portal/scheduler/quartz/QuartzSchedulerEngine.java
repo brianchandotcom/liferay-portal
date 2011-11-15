@@ -639,9 +639,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 						cronTrigger.getEndTime(),
 						cronTrigger.getCronExpression()));
 			}
-			else if (SimpleTrigger.class.isAssignableFrom(
-						trigger.getClass())) {
-
+			else if (SimpleTrigger.class.isAssignableFrom(trigger.getClass())) {
 				SimpleTrigger simpleTrigger = SimpleTrigger.class.cast(trigger);
 
 				schedulerResponse = new SchedulerResponse();

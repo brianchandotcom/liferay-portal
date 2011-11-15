@@ -108,9 +108,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		return count;
 	}
 
-	public void getSubcategoryIds(
-		MBCategory category, List<Long> categoryIds) {
-
+	public void getSubcategoryIds(MBCategory category, List<Long> categoryIds) {
 		List<MBCategory> categories = getCategories(category);
 
 		for (MBCategory curCategory : categories) {

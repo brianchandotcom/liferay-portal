@@ -618,9 +618,7 @@ public class StagingImpl implements Staging {
 				getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
-	public String getSchedulerGroupName(
-		String destinationName, long groupId) {
-
+	public String getSchedulerGroupName(String destinationName, long groupId) {
 		return destinationName.concat(StringPool.SLASH).concat(
 			String.valueOf(groupId));
 	}
@@ -709,9 +707,7 @@ public class StagingImpl implements Staging {
 				new String[] {Boolean.FALSE.toString()});
 		}
 
-		if (!parameterMap.containsKey(
-				PortletDataHandlerKeys.PORTLET_DATA)) {
-
+		if (!parameterMap.containsKey(PortletDataHandlerKeys.PORTLET_DATA)) {
 			parameterMap.put(
 				PortletDataHandlerKeys.PORTLET_DATA,
 				new String[] {Boolean.FALSE.toString()});

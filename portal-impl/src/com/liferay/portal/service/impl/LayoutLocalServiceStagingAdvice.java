@@ -82,9 +82,7 @@ public class LayoutLocalServiceStagingAdvice
 
 		boolean showIncomplete = false;
 
-		if (!_layoutLocalServiceStagingAdviceMethodNames.contains(
-				methodName)) {
-
+		if (!_layoutLocalServiceStagingAdviceMethodNames.contains(methodName)) {
 			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
 		}
 

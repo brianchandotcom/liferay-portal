@@ -63,9 +63,7 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 			AssetDisplayTerms.USER_NAME, displayTerms.getUserName());
 	}
 
-	public AssetSearch(
-		PortletRequest portletRequest, PortletURL iteratorURL) {
-
+	public AssetSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		this(portletRequest, DEFAULT_DELTA, iteratorURL);
 	}
 

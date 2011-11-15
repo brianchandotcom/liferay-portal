@@ -365,9 +365,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			while (itr1.hasNext()) {
 				NotificationEvent notificationEvent = itr1.next();
 
-				if (isRemoveNotificationEvent(
-						notificationEvent, currentTime)) {
-
+				if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
 					itr1.remove();
 				}
 			}

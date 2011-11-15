@@ -1948,9 +1948,7 @@ public class PortalImpl implements Portal {
 					LayoutTypePortletImpl.getFullInstanceSeparator();
 		}
 
-		if (Validator.isNull(
-				currentDefaultAssetPublisherPortletId)) {
-
+		if (Validator.isNull(currentDefaultAssetPublisherPortletId)) {
 			HttpServletRequest request =
 				(HttpServletRequest)requestContext.get("request");
 
@@ -1965,9 +1963,7 @@ public class PortalImpl implements Portal {
 			"p_p_id", new String[] {defaultAssetPublisherPortletId});
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 
-		if (Validator.isNull(
-				currentDefaultAssetPublisherPortletId)) {
-
+		if (Validator.isNull(currentDefaultAssetPublisherPortletId)) {
 			actualParams.put(
 				"p_p_state", new String[] {WindowState.MAXIMIZED.toString()});
 		}
@@ -3445,9 +3441,7 @@ public class PortalImpl implements Portal {
 		return null;
 	}
 
-	public String getStaticResourceURL(
-		HttpServletRequest request, String uri) {
-
+	public String getStaticResourceURL(HttpServletRequest request, String uri) {
 		return getStaticResourceURL(request, uri, null, 0);
 	}
 

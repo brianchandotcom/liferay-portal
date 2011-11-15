@@ -53,9 +53,7 @@ public class JournalContentImpl implements JournalContent {
 		portalCache.removeAll();
 	}
 
-	public void clearCache(
-		long groupId, String articleId, String templateId) {
-
+	public void clearCache(long groupId, String articleId, String templateId) {
 		clearCache();
 	}
 

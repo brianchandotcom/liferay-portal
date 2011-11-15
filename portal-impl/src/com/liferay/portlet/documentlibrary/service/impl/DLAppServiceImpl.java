@@ -2527,9 +2527,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
 				public Void call() throws Exception {
 					for (FileEntry fileEntry : fileEntries) {
 						DLProcessorRegistryUtil.trigger(fileEntry);

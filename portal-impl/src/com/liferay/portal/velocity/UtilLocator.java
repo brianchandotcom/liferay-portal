@@ -45,9 +45,7 @@ public class UtilLocator {
 		return bean;
 	}
 
-	public Object findUtil(
-		String servletContextName, String utilName) {
-
+	public Object findUtil(String servletContextName, String utilName) {
 		Object bean = null;
 
 		try {

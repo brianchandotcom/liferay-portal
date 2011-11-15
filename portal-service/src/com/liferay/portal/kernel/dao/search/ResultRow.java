@@ -290,9 +290,7 @@ public class ResultRow {
 		addText(_searchEntries.size(), name, href);
 	}
 
-	public void addText(
-		String align, String valign, int colspan, String name) {
-
+	public void addText(String align, String valign, int colspan, String name) {
 		addText(_searchEntries.size(), align, valign, colspan, name);
 	}
 

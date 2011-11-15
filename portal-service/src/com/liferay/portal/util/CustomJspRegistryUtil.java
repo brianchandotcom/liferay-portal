@@ -44,9 +44,7 @@ public class CustomJspRegistryUtil {
 			servletContextName, displayName);
 	}
 
-	public static void unregisterServletContextName(
-		String servletContextName) {
-
+	public static void unregisterServletContextName(String servletContextName) {
 		getCustomJspRegistry().unregisterServletContextName(servletContextName);
 	}
 

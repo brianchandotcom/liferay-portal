@@ -45,9 +45,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public void deleteThread(long threadId)
 		throws PortalException, SystemException {
 
-		if (lockLocalService.isLocked(
-				MBThread.class.getName(), threadId)) {
-
+		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
 		}
 

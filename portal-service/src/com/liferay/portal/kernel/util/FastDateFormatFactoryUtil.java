@@ -67,9 +67,7 @@ public class FastDateFormatFactoryUtil {
 		return getFastDateFormatFactory().getSimpleDateFormat(pattern);
 	}
 
-	public static Format getSimpleDateFormat(
-		String pattern, Locale locale) {
-
+	public static Format getSimpleDateFormat(String pattern, Locale locale) {
 		return getFastDateFormatFactory().getSimpleDateFormat(pattern, locale);
 	}
 

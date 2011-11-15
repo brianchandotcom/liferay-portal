@@ -159,9 +159,7 @@ public class XMLMerger {
 		}
 	}
 
-	private void _orderChildren(
-		Element parent, String[] orderedChildrenNames) {
-
+	private void _orderChildren(Element parent, String[] orderedChildrenNames) {
 		if (orderedChildrenNames == null) {
 			return;
 		}

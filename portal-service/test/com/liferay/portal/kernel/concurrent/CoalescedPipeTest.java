@@ -32,9 +32,7 @@ public class CoalescedPipeTest extends TestCase {
 		ScheduledExecutorService scheduledExecutorService =
 			Executors.newScheduledThreadPool(1);
 
-		scheduledExecutorService.schedule(
-			new Runnable() {
-
+		scheduledExecutorService.schedule(new Runnable() {
 				public void run() {
 					try {
 						coalescedPipe.put("test1");
@@ -116,8 +114,7 @@ public class CoalescedPipeTest extends TestCase {
 
 		// With comparator
 
-		coalescedPipe = new CoalescedPipe<String>(
-			new Comparator<String>() {
+		coalescedPipe = new CoalescedPipe<String>(new Comparator<String>() {
 
 				public int compare(String o1, String o2) {
 					return o1.length() - o2.length();

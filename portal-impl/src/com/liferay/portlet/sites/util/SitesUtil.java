@@ -448,9 +448,7 @@ public class SitesUtil {
 		return false;
 	}
 
-	public static boolean isLayoutLocked(
-		LayoutTypePortlet layoutTypePortlet) {
-
+	public static boolean isLayoutLocked(LayoutTypePortlet layoutTypePortlet) {
 		Layout layout = layoutTypePortlet.getLayout();
 
 		try {

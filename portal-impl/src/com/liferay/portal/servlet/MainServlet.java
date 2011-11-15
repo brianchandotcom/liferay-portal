@@ -678,9 +678,7 @@ public class MainServlet extends ActionServlet {
 		return PortalUtil.getUserPassword(request);
 	}
 
-	protected String getRemoteUser(
-		HttpServletRequest request, long userId) {
-
+	protected String getRemoteUser(HttpServletRequest request, long userId) {
 		String remoteUser = request.getRemoteUser();
 
 		if (!PropsValues.PORTAL_JAAS_ENABLE) {

@@ -158,9 +158,7 @@ public class PortletAppImpl implements PortletApp {
 		_defaultNamespace = defaultNamespace;
 	}
 
-	public void setSpriteImages(
-		String spriteFileName, Properties properties) {
-
+	public void setSpriteImages(String spriteFileName, Properties properties) {
 		Iterator<Map.Entry<Object, Object>> itr =
 			properties.entrySet().iterator();
 

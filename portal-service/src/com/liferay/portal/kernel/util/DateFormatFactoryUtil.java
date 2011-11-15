@@ -87,9 +87,7 @@ public class DateFormatFactoryUtil {
 		return getDateFormatFactory().getTime(timeZone);
 	}
 
-	public void setDateFormatFactory(
-		DateFormatFactory fastDateFormatFactory) {
-
+	public void setDateFormatFactory(DateFormatFactory fastDateFormatFactory) {
 		_fastDateFormatFactory = fastDateFormatFactory;
 	}
 

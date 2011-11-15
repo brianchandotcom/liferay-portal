@@ -142,6 +142,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
+				ddmResource: '<%= portletConfig.getInitParameter("ddm-resource") %>',
 				dialog: {
 					width:680
 				},

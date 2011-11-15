@@ -29,7 +29,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_STRUCTURE) %>">
+	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

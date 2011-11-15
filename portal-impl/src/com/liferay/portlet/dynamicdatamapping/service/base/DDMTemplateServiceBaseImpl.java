@@ -35,7 +35,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
@@ -237,25 +236,6 @@ public abstract class DDMTemplateServiceBaseImpl extends PrincipalBean
 	public void setDDMStructureLinkLocalService(
 		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
 		this.ddmStructureLinkLocalService = ddmStructureLinkLocalService;
-	}
-
-	/**
-	 * Returns the d d m structure link remote service.
-	 *
-	 * @return the d d m structure link remote service
-	 */
-	public DDMStructureLinkService getDDMStructureLinkService() {
-		return ddmStructureLinkService;
-	}
-
-	/**
-	 * Sets the d d m structure link remote service.
-	 *
-	 * @param ddmStructureLinkService the d d m structure link remote service
-	 */
-	public void setDDMStructureLinkService(
-		DDMStructureLinkService ddmStructureLinkService) {
-		this.ddmStructureLinkService = ddmStructureLinkService;
 	}
 
 	/**
@@ -583,8 +563,6 @@ public abstract class DDMTemplateServiceBaseImpl extends PrincipalBean
 	protected DDMStructureFinder ddmStructureFinder;
 	@BeanReference(type = DDMStructureLinkLocalService.class)
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
-	@BeanReference(type = DDMStructureLinkService.class)
-	protected DDMStructureLinkService ddmStructureLinkService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 	@BeanReference(type = DDMTemplateLocalService.class)

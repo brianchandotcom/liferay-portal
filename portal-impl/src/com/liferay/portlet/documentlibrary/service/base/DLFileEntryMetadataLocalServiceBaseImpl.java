@@ -73,7 +73,6 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence;
 
 import java.io.Serializable;
@@ -1113,25 +1112,6 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d d m structure link remote service.
-	 *
-	 * @return the d d m structure link remote service
-	 */
-	public DDMStructureLinkService getDDMStructureLinkService() {
-		return ddmStructureLinkService;
-	}
-
-	/**
-	 * Sets the d d m structure link remote service.
-	 *
-	 * @param ddmStructureLinkService the d d m structure link remote service
-	 */
-	public void setDDMStructureLinkService(
-		DDMStructureLinkService ddmStructureLinkService) {
-		this.ddmStructureLinkService = ddmStructureLinkService;
-	}
-
-	/**
 	 * Returns the d d m structure link persistence.
 	 *
 	 * @return the d d m structure link persistence
@@ -1287,8 +1267,6 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	protected UserFinder userFinder;
 	@BeanReference(type = DDMStructureLinkLocalService.class)
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
-	@BeanReference(type = DDMStructureLinkService.class)
-	protected DDMStructureLinkService ddmStructureLinkService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

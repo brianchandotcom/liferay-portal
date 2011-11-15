@@ -107,7 +107,7 @@
 
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 	</entity>
-	<entity name="DDMStructureLink" local-service="true" remote-service="true">
+	<entity name="DDMStructureLink" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 

@@ -24,22 +24,21 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public class DDMPermission {
 
 	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
+			PermissionChecker permissionChecker, long groupId, String name,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
+		if (!contains(permissionChecker, groupId, name, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
+		PermissionChecker permissionChecker, long groupId, String name,
+		String actionId) {
 
 		return permissionChecker.hasPermission(
-			groupId, _CLASS_NAME, groupId, actionId);
+			groupId, name, groupId, actionId);
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.portlet.dynamicdatamapping";
 
 }

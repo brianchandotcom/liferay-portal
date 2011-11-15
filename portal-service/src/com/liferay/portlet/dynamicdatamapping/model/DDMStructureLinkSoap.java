@@ -20,10 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureLinkServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureLinkServiceSoap
  * @generated
  */
 public class DDMStructureLinkSoap implements Serializable {

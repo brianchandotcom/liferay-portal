@@ -322,81 +322,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	* Returns all the d d m structure links that the user has permission to view where classNameId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @return the matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> filterFindByClassNameId(
-		long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByClassNameId(classNameId);
-	}
-
-	/**
-	* Returns a range of all the d d m structure links that the user has permission to view where classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m structure links
-	* @param end the upper bound of the range of d d m structure links (not inclusive)
-	* @return the range of matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> filterFindByClassNameId(
-		long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByClassNameId(classNameId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the d d m structure links that the user has permissions to view where classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m structure links
-	* @param end the upper bound of the range of d d m structure links (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> filterFindByClassNameId(
-		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .filterFindByClassNameId(classNameId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the d d m structure links before and after the current d d m structure link in the ordered set of d d m structure links that the user has permission to view where classNameId = &#63;.
-	*
-	* @param structureLinkId the primary key of the current d d m structure link
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink[] filterFindByClassNameId_PrevAndNext(
-		long structureLinkId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
-		return getPersistence()
-				   .filterFindByClassNameId_PrevAndNext(structureLinkId,
-			classNameId, orderByComparator);
-	}
-
-	/**
 	* Returns the d d m structure link where classPK = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException} if it could not be found.
 	*
 	* @param classPK the class p k
@@ -561,81 +486,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	* Returns all the d d m structure links that the user has permission to view where structureId = &#63;.
-	*
-	* @param structureId the structure ID
-	* @return the matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> filterFindByStructureId(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByStructureId(structureId);
-	}
-
-	/**
-	* Returns a range of all the d d m structure links that the user has permission to view where structureId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param structureId the structure ID
-	* @param start the lower bound of the range of d d m structure links
-	* @param end the upper bound of the range of d d m structure links (not inclusive)
-	* @return the range of matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> filterFindByStructureId(
-		long structureId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByStructureId(structureId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the d d m structure links that the user has permissions to view where structureId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param structureId the structure ID
-	* @param start the lower bound of the range of d d m structure links
-	* @param end the upper bound of the range of d d m structure links (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> filterFindByStructureId(
-		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .filterFindByStructureId(structureId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the d d m structure links before and after the current d d m structure link in the ordered set of d d m structure links that the user has permission to view where structureId = &#63;.
-	*
-	* @param structureLinkId the primary key of the current d d m structure link
-	* @param structureId the structure ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink[] filterFindByStructureId_PrevAndNext(
-		long structureLinkId, long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
-		return getPersistence()
-				   .filterFindByStructureId_PrevAndNext(structureLinkId,
-			structureId, orderByComparator);
-	}
-
-	/**
 	* Returns all the d d m structure links.
 	*
 	* @return the d d m structure links
@@ -741,18 +591,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	* Returns the number of d d m structure links that the user has permission to view where classNameId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @return the number of matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByClassNameId(classNameId);
-	}
-
-	/**
 	* Returns the number of d d m structure links where classPK = &#63;.
 	*
 	* @param classPK the class p k
@@ -774,18 +612,6 @@ public class DDMStructureLinkUtil {
 	public static int countByStructureId(long structureId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByStructureId(structureId);
-	}
-
-	/**
-	* Returns the number of d d m structure links that the user has permission to view where structureId = &#63;.
-	*
-	* @param structureId the structure ID
-	* @return the number of matching d d m structure links that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByStructureId(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByStructureId(structureId);
 	}
 
 	/**

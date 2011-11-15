@@ -62,6 +62,8 @@ String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
 String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 String saveCallback = ParamUtil.getString(request, "saveCallback");
 
+String ddmResource = ParamUtil.getString(request, "ddmResource");
+
 long classNameId = PortalUtil.getClassNameId(scopeStructureType);
 
 String storageTypeValue = StringPool.BLANK;

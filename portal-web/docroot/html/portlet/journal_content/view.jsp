@@ -31,9 +31,23 @@ boolean expired = true;
 
 <c:choose>
 	<c:when test="<%= article == null %>">
-		<div class="portlet-msg-error">
-			<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
-		</div>
+		<c:choose>
+			<c:when test="<%= Validator.isNull(articleId) %>">
+
+				<%
+				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+				%>
+
+				<div class="portlet-msg-info">
+					<liferay-ui:message key="select-existing-web-content-or-add-some-web-content-to-be-displayed-in-this-portlet" />
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="portlet-msg-error">
+					<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 
@@ -213,9 +227,6 @@ boolean expired = true;
 				<c:if test="<%= hasViewPermission %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNull(articleId) %>">
-							<div class="portlet-msg-info">
-								<liferay-ui:message key="select-existing-web-content-or-add-some-web-content-to-be-displayed-in-this-portlet" />
-							</div>
 						</c:when>
 						<c:otherwise>
 

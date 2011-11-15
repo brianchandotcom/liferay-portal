@@ -79,11 +79,11 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
-			boolean checkResourcePermission, String actionId)
+			boolean checkViewableGroup, String actionId)
 		throws PortalException, SystemException {
 
 		return contains(
-			permissionChecker, layout, null, checkResourcePermission, actionId);
+			permissionChecker, layout, null, checkViewableGroup, actionId);
 	}
 
 	public boolean contains(
@@ -95,13 +95,13 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkResourcePermission,
+			String controlPanelCategory, boolean checkViewableGroup,
 			String actionId)
 		throws PortalException, SystemException {
 
 		return containsWithViewableGroup(
 			permissionChecker, layout, controlPanelCategory,
-			checkResourcePermission, actionId);
+			checkViewableGroup, actionId);
 	}
 
 	public boolean contains(
@@ -151,8 +151,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 	protected boolean containsWithoutViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkResourcePermission,
-			String actionId)
+			String controlPanelCategory, String actionId)
 		throws PortalException, SystemException {
 
 		if ((layout.isPrivateLayout() &&
@@ -285,19 +284,18 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 	protected boolean containsWithViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkResourcePermission,
+			String controlPanelCategory, boolean checkViewableGroup,
 			String actionId)
 		throws PortalException, SystemException {
 
-		if (actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) && checkViewableGroup) {
 			return isViewableGroup(
 				permissionChecker, layout, controlPanelCategory,
-				checkResourcePermission);
+				checkViewableGroup);
 		}
 
 		return containsWithoutViewableGroup(
-			permissionChecker, layout, controlPanelCategory,
-			checkResourcePermission, actionId);
+			permissionChecker, layout, controlPanelCategory, actionId);
 	}
 
 	protected boolean isAttemptToModifyLockedLayout(
@@ -342,29 +340,27 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			if (groupUserId == permissionChecker.getUserId()) {
 				return true;
 			}
-			else {
-				User groupUser = UserLocalServiceUtil.getUserById(groupUserId);
 
-				if (!groupUser.isActive()) {
-					return false;
+			User groupUser = UserLocalServiceUtil.getUserById(groupUserId);
+
+			if (!groupUser.isActive()) {
+				return false;
+			}
+
+			if (layout.isPrivateLayout()) {
+				if (UserPermissionUtil.contains(
+						permissionChecker, groupUserId,
+						groupUser.getOrganizationIds(),
+						ActionKeys.MANAGE_LAYOUTS) ||
+					UserPermissionUtil.contains(
+						permissionChecker, groupUserId,
+						groupUser.getOrganizationIds(),
+						ActionKeys.UPDATE)) {
+
+					return true;
 				}
 
-				if (layout.isPrivateLayout()) {
-					if (UserPermissionUtil.contains(
-							permissionChecker, groupUserId,
-							groupUser.getOrganizationIds(),
-							ActionKeys.MANAGE_LAYOUTS) ||
-						UserPermissionUtil.contains(
-							permissionChecker, groupUserId,
-							groupUser.getOrganizationIds(),
-							ActionKeys.UPDATE)) {
-
-						return true;
-					}
-					else {
-						return false;
-					}
-				}
+				return false;
 			}
 		}
 
@@ -382,13 +378,6 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return false;
 		}
 
-		if (containsWithoutViewableGroup(
-				permissionChecker, layout, controlPanelCategory,
-				checkResourcePermission, ActionKeys.VIEW)) {
-
-			return true;
-		}
-
 		// Control panel layouts are only viewable by authenticated users
 
 		if (group.isControlPanel()) {
@@ -397,14 +386,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 				return true;
 			}
-			else {
-				if (Validator.isNotNull(controlPanelCategory)) {
-					return true;
-				}
-				else {
-					return false;
-				}
+
+			if (Validator.isNotNull(controlPanelCategory)) {
+				return true;
 			}
+
+			return false;
 		}
 
 		// Site layouts are only viewable by users who are members of the site
@@ -434,9 +421,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 		else if (group.isLayoutSetPrototype()) {
 			if (LayoutSetPrototypePermissionUtil.contains(
@@ -444,9 +430,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
 		}
 		else if (group.isOrganization()) {
 			long organizationId = group.getOrganizationId();
@@ -479,6 +464,32 @@ public class LayoutPermissionImpl implements LayoutPermission {
 						}
 					}
 				}
+			}
+		}
+
+		// Only check the actual Layout if all of the above has failed
+
+		if (containsWithoutViewableGroup(
+				permissionChecker, layout, controlPanelCategory,
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		// As a last resort, check if any top level pages are viewable by the
+		// user
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		for (Layout curLayout : layouts) {
+			if (!curLayout.isHidden() &&
+				containsWithoutViewableGroup(
+					permissionChecker, curLayout, controlPanelCategory,
+					ActionKeys.VIEW)) {
+
+				return true;
 			}
 		}
 

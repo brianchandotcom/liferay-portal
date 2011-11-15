@@ -232,6 +232,10 @@ public class FriendlyURLServlet extends HttpServlet {
 			friendlyURL = path.substring(pos, path.length());
 		}
 
+		if (Validator.isNull(friendlyURL)) {
+			request.setAttribute("REDIRECT_TO_DEFAULT_LAYOUT", Boolean.TRUE);
+		}
+
 		Map<String, Object> requestContext = new HashMap<String, Object>();
 
 		requestContext.put("request", request);

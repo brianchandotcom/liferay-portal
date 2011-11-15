@@ -104,6 +104,12 @@ List<Group> mySites = user.getMySites(max);
 
 			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.POWER_USER, true);
 
+			Layout defaultLayout = null;
+
+			if (mySite.getDefaultPublicPlid() > 0) {
+				defaultLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPublicPlid());
+			}
+
 			if (mySite.getPublicLayoutsPageCount() == 0) {
 				if (mySite.isRegularSite()) {
 					showPublicSite = PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
@@ -116,8 +122,15 @@ List<Group> mySites = user.getMySites(max);
 					}
 				}
 			}
+			else if ((defaultLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
+				showPublicSite = false;
+			}
 
 			boolean showPrivateSite = true;
+
+			if (mySite.getDefaultPrivatePlid() > 0) {
+				defaultLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPrivatePlid());
+			}
 
 			if (mySite.getPrivateLayoutsPageCount() == 0) {
 				if (mySite.isRegularSite()) {
@@ -130,6 +143,9 @@ List<Group> mySites = user.getMySites(max);
 						showPrivateSite = false;
 					}
 				}
+			}
+			else if ((defaultLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
+				showPrivateSite = false;
 			}
 		%>
 

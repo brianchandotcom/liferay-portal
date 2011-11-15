@@ -86,18 +86,17 @@ public class HtmlEngine implements WikiEngine {
 					Map<String, String> routeParameters =
 						new HashMap<String, String>();
 
-					if (!_router.urlToParameters(friendlyURLPath,
-						routeParameters)) {
+					if (!_router.urlToParameters(
+							friendlyURLPath, routeParameters)) {
 
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"No route could be found to match URL " +
-								friendlyURLPath);
+									friendlyURLPath);
 						}
 					}
 					else {
 						String title = routeParameters.get("title");
-
 						String nodeName = routeParameters.get("nodeName");
 
 						if (Validator.isNotNull(title) &&
@@ -108,11 +107,13 @@ public class HtmlEngine implements WikiEngine {
 									page.getGroupId(), nodeName);
 
 								links.put(title.toLowerCase(), Boolean.TRUE);
-							} catch (NoSuchNodeException nsne) {
+							}
+							catch (NoSuchNodeException nsne) {
 								if (_log.isWarnEnabled()) {
-									_log.warn("There is no wiki node " +
-										"with groupId" + page.getGroupId() +
-										" and nodeName '" + nodeName);
+									_log.warn(
+										"There is no wiki node with groupId " +
+											page.getGroupId() +
+												" and nodeName " + nodeName);
 								}
 							}
 						}
@@ -121,7 +122,8 @@ public class HtmlEngine implements WikiEngine {
 			}
 
 			return links;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new PageContentException(e);
 		}
 	}
@@ -141,7 +143,7 @@ public class HtmlEngine implements WikiEngine {
 			Validator.isNull(_router)) {
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-					page.getCompanyId(), PortletKeys.WIKI);
+				page.getCompanyId(), PortletKeys.WIKI);
 
 			_friendlyURLMapping = Portal.FRIENDLY_URL_SEPARATOR +
 				portlet.getFriendlyURLMapping();
@@ -152,7 +154,7 @@ public class HtmlEngine implements WikiEngine {
 
 	private static Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
 
-	private Router _router;
 	private String _friendlyURLMapping;
+	private Router _router;
 
 }

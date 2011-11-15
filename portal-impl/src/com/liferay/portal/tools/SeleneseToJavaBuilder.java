@@ -54,7 +54,8 @@ public class SeleneseToJavaBuilder {
 		ds.setBasedir(basedir);
 		ds.setExcludes(
 			new String[] {
-				"**\\IterateThemeTest.java", "**\\StopSeleniumTest.java"
+				"**\\EvaluateLogTest.java", "**\\IterateThemeTest.java",
+				"**\\StopSeleniumTest.java"
 			});
 		ds.setIncludes(new String[] {"**\\*Test.html", "**\\*Test.java"});
 		/*ds.setIncludes(

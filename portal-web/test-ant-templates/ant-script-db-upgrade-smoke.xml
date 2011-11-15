@@ -16,7 +16,9 @@
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
 
-		<antcall target="run-smoke-test" />
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
 
 		<antcall target="stop-vm">
 			<param name="vm.host" value="${vm.host.db}" />
@@ -29,7 +31,9 @@
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
 
-		<antcall target="run-smoke-test" />
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
 	</target>
 
 	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-oracle-firefox">
@@ -45,7 +49,9 @@
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
 
-		<antcall target="run-smoke-test" />
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
 
 		<antcall target="stop-vm">
 			<param name="vm.host" value="${vm.host.db}" />
@@ -65,7 +71,9 @@
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
 
-		<antcall target="run-smoke-test" />
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
 
 		<antcall target="stop-vm">
 			<param name="vm.host" value="${vm.host.db}" />
@@ -85,7 +93,9 @@
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
 
-		<antcall target="run-smoke-test" />
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
 
 		<antcall target="stop-vm">
 			<param name="vm.host" value="${vm.host.db}" />
@@ -104,7 +114,9 @@
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
 
-		<antcall target="run-smoke-test" />
+		<antcall target="run-smoke-test">
+			${test.ant.script.file.evaluate.logs}
+		</antcall>
 
 		<antcall target="stop-vm">
 			<param name="vm.host" value="${vm.host.db}" />

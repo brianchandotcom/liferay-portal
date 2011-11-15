@@ -46,6 +46,24 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
@@ -82,8 +100,8 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
 			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Folder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
+				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -105,11 +123,12 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"Media Gallery Permissions Test Subfolder"),
+				"Media Gallery Permissions Test Subfolder 2"),
 			selenium.getText(
-				"//a[@title='Media Gallery Permissions Test Subfolder - ']"));
-		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
-			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
+				"//a[@title='Media Gallery Permissions Test Subfolder 2 - ']"));
+		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder 2 - ']",
+			RuntimeVariables.replace(
+				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
@@ -166,7 +185,7 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Images", RuntimeVariables.replace("My Images"));
+		selenium.clickAt("link=Mine", RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Permissions Image Test Edited"),

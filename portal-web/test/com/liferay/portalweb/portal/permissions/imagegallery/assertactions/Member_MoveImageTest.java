@@ -112,7 +112,7 @@ public class Member_MoveImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Images Home")) {
+				if (selenium.isVisible("link=Home")) {
 					break;
 				}
 			}
@@ -122,10 +122,9 @@ public class Member_MoveImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Images Home"),
-			selenium.getText("link=Images Home"));
-		selenium.clickAt("link=Images Home",
-			RuntimeVariables.replace("Images Home"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("link=Home"));
+		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

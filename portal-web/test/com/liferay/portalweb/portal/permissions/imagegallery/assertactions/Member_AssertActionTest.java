@@ -91,11 +91,10 @@ public class Member_AssertActionTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Images", RuntimeVariables.replace("My Images"));
+		selenium.clickAt("link=Mine", RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("Permissions Image 3 Test Edited"));
-		selenium.clickAt("link=Recent Images",
-			RuntimeVariables.replace("Recent Images"));
+		selenium.clickAt("link=Recent", RuntimeVariables.replace("Recent"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

@@ -47,7 +47,7 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='portlet-msg-error']"));
 		assertTrue(selenium.isVisible("//section"));
-		assertEquals(RuntimeVariables.replace("Images Home"),
-			selenium.getText("//span[1]/a/span"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//div[1]/span[1]/span"));
 	}
 }

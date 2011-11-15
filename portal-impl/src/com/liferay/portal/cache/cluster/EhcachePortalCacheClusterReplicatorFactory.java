@@ -26,11 +26,8 @@ public class EhcachePortalCacheClusterReplicatorFactory
 	extends CacheEventListenerFactory {
 
 	@Override
-	public CacheEventListener createCacheEventListener(Properties prprts) {
-		return _cacheEventListener;
+	public CacheEventListener createCacheEventListener(Properties properties) {
+		return new EhcachePortalCacheClusterReplicator(properties);
 	}
-
-	private static final CacheEventListener _cacheEventListener =
-		new EhcachePortalCacheClusterReplicator();
 
 }

@@ -27,14 +27,17 @@ import com.liferay.portal.kernel.messaging.Message;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+
+import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterLinkPortalCacheClusterRemoveListener
+public class ClusterLinkPortalCacheClusterListener
 	extends BaseMessageListener {
 
-	public ClusterLinkPortalCacheClusterRemoveListener() {
+	public ClusterLinkPortalCacheClusterListener() {
 		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory =
 			SingletonLiferayEhcacheRegionFactory.getInstance();
 
@@ -77,6 +80,32 @@ public class ClusterLinkPortalCacheClusterRemoveListener
 
 				ehcache.removeAll(true);
 			}
+			else if (portalCacheClusterEventType.equals(
+						PortalCacheClusterEventType.PUT) ||
+					portalCacheClusterEventType.equals(
+						PortalCacheClusterEventType.UPDATE)) {
+
+				Serializable elementKey =
+					portalCacheClusterEvent.getElementKey();
+				Serializable elementValue =
+					portalCacheClusterEvent.getElementValue();
+
+				if (elementValue == null) {
+					ehcache.remove(
+						portalCacheClusterEvent.getElementKey(), true);
+				}
+				else {
+					Element oldElement = ehcache.get(elementKey);
+					Element newElement = new Element(elementKey, elementValue);
+
+					if (oldElement != null) {
+						ehcache.replace(newElement);
+					}
+					else {
+						ehcache.put(newElement);
+					}
+				}
+			}
 			else {
 				ehcache.remove(portalCacheClusterEvent.getElementKey(), true);
 			}
@@ -87,7 +116,7 @@ public class ClusterLinkPortalCacheClusterRemoveListener
 		"com.liferay.portal.kernel.cache.MultiVMPortalCacheManager";
 
 	private static Log _log = LogFactoryUtil.getLog(
-		ClusterLinkPortalCacheClusterRemoveListener.class);
+		ClusterLinkPortalCacheClusterListener.class);
 
 	private CacheManager _hibernateCacheManager;
 	private CacheManager _portalCacheManager;

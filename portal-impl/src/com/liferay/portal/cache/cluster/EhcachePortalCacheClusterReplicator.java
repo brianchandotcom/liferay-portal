@@ -17,6 +17,7 @@ package com.liferay.portal.cache.cluster;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterLinkUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import net.sf.ehcache.CacheException;
@@ -24,10 +25,31 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.distribution.CacheReplicator;
 
+import java.util.Properties;
+
 /**
  * @author Shuyang Zhou
  */
 public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
+
+	public EhcachePortalCacheClusterReplicator(Properties properties) {
+		if (properties != null) {
+			_replicatePuts = GetterUtil.getBoolean(
+				properties.getProperty(_REPLICATE_PUTS), false);
+
+			_replicatePutsViaCopy = GetterUtil.getBoolean(
+				properties.getProperty(_REPLICATE_PUTS_VIA_COPY), false);
+
+			_replicateRemovals = GetterUtil.getBoolean(
+				properties.getProperty(_REPLICATE_REMOVALS), true);
+
+			_replicateUpdates = GetterUtil.getBoolean(
+				properties.getProperty(_REPLICATE_UPDATES), true);
+
+			_replicateUpdatesViaCopy = GetterUtil.getBoolean(
+				properties.getProperty(_REPLICATE_UPDATES_VIA_COPY), false);
+		}
+	}
 
 	public boolean alive() {
 		return true;
@@ -57,10 +79,29 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 
 	public void notifyElementPut(Ehcache ehcache, Element element)
 		throws CacheException {
+
+		if (!_replicatePuts) {
+			return;
+		}
+
+		PortalCacheClusterEvent portalCacheClusterEvent =
+			new PortalCacheClusterEvent(
+				ehcache.getName(), element.getKey(),
+				PortalCacheClusterEventType.PUT);
+
+		if (_replicatePutsViaCopy) {
+			portalCacheClusterEvent.setElementValue(element.getValue());
+		}
+
+		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
 
 	public void notifyElementRemoved(Ehcache ehcache, Element element)
 		throws CacheException {
+
+		if (!_replicateRemovals) {
+			return;
+		}
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
@@ -73,15 +114,27 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
+		if (!_replicateUpdates) {
+			return;
+		}
+
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
 				ehcache.getName(), element.getKey(),
 				PortalCacheClusterEventType.UPDATE);
 
+		if (_replicateUpdatesViaCopy) {
+			portalCacheClusterEvent.setElementValue(element.getValue());
+		}
+
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
 
 	public void notifyRemoveAll(Ehcache ehcache) {
+		if (!_replicateRemovals) {
+			return;
+		}
+
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
 				ehcache.getName(), StringPool.BLANK,
@@ -89,5 +142,19 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
+
+	private static final String _REPLICATE_PUTS = "replicatePuts";
+	private static final String _REPLICATE_PUTS_VIA_COPY =
+		"replicatePutsViaCopy";
+	private static final String _REPLICATE_UPDATES = "replicateUpdates";
+	private static final String _REPLICATE_UPDATES_VIA_COPY =
+		"replicateUpdatesViaCopy";
+	private static final String _REPLICATE_REMOVALS = "replicateRemovals";
+
+	private boolean _replicatePuts;
+	private boolean _replicatePutsViaCopy;
+	private boolean _replicateRemovals = true;
+	private boolean _replicateUpdates = true;
+	private boolean _replicateUpdatesViaCopy;
 
 }

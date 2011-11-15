@@ -62,6 +62,16 @@
 		</if>
 
 		<if>
+			<isset property="test.ant.script.evaluate.logs" />
+			<then>
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.evaluate.logs" value=" " />
+			</else>
+		</if>
+
+		<if>
 			<isset property="test.ant.script.plugin.hooks" />
 			<then>
 				<property name="test.ant.script.file.plugin.hooks" value="&lt;property name=&quot;hook.plugins.includes&quot; value=&quot;${test.ant.script.plugin.hooks}&quot; /&gt;" />
@@ -137,6 +147,16 @@
 	</target>
 
 	<target name="build-test-ant-script-db-upgrade">
+		<if>
+			<isset property="test.ant.script.evaluate.logs" />
+			<then>
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.evaluate.logs" value=" " />
+			</else>
+		</if>
+
 		<for list="${test.ant.script.versions}" param="test.ant.script.version">
 			<sequential>
 				<if>
@@ -235,7 +255,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -602,6 +622,12 @@
 			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
 		</antcall>
 
+		<antcall target="build-test-ant-script-db-upgrade-smoke">
+			<param name="test.ant.script.command" value="db-upgrade-smoke" />
+			<param name="test.ant.script.evaluate.logs" value="true" />
+			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12,latest" />
+		</antcall>
+
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-social" />
 			<param name="test.ant.script.plugin.portlets" value="social-networking-portlet" />
@@ -637,11 +663,6 @@
 			<param name="test.ant.script.command" value="db-upgrade-wiki" />
 			<param name="test.ant.script.suite" value="Wiki" />
 			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12" />
-		</antcall>
-
-		<antcall target="build-test-ant-script-db-upgrade-smoke">
-			<param name="test.ant.script.command" value="db-upgrade-smoke" />
-			<param name="test.ant.script.versions" value="5.2.3,6.0.6,6.0.12,latest" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -1530,12 +1551,14 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="sevencogs-smoke" />
+			<param name="test.ant.script.evaluate.logs" value="true" />
 			<param name="test.ant.script.sevencogs" value="true" />
 			<param name="test.ant.script.suite" value="SevencogsSmokeTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="smoke-test" />
+			<param name="test.ant.script.evaluate.logs" value="true" />
 			<param name="test.ant.script.suite" value="SmokeTestSuite" />
 		</antcall>
 
@@ -1849,6 +1872,13 @@
 
 	<target name="evaluate-logs">
 		<if>
+			<available file="portal-web/test-ant-scripts/log" />
+			<then>
+				<move file="portal-web/test-ant-scripts/log" todir="."/>
+			</then>
+		</if>
+
+		<if>
 			<isset property="print.logs" />
 			<then>
 				<loadfile property="log.content" srcfile="log">
@@ -1857,15 +1887,20 @@
 					</filterchain>
 				</loadfile>
 
-				<echo>Displaying Websphere Logs:</echo>
+				<echo>Displaying Logs:</echo>
 				<echo></echo>
 				<echo>${log.content}</echo>
 			</then>
 		</if>
 
-		<ant dir="portal-web" target="test-class" inheritAll="false">
-			<property name="class" value="EvaluateLogTestSuite" />
-		</ant>
+		<if>
+			<isset property="test.evaluate.logs" />
+			<then>
+				<ant dir="portal-web" target="test-class" inheritAll="false">
+					<property name="class" value="EvaluateLogTestSuite" />
+				</ant>
+			</then>
+		</if>
 
 		<delete file="log" />
 	</target>

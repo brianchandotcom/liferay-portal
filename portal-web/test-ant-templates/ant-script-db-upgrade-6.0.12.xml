@@ -23,6 +23,7 @@
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="6.0.12" />
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012TestSuite" />
 			<param name="tomcat.folder.dir" value="liferay-portal-6.0-ee-sp2/tomcat-6.0.32" />
 		</antcall>
@@ -35,6 +36,7 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
 		</antcall>
 
@@ -56,6 +58,7 @@
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="6.0.12" />
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012TestSuite" />
 			<param name="tomcat.folder.dir" value="liferay-portal-6.0-ee-sp2/tomcat-6.0.32" />
 		</antcall>
@@ -68,6 +71,7 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
 		</antcall>
 	</target>
@@ -92,6 +96,7 @@
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="6.0.12" />
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012TestSuite" />
 			<param name="tomcat.folder.dir" value="liferay-portal-6.0-ee-sp2/tomcat-6.0.32" />
 		</antcall>
@@ -104,6 +109,7 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
 		</antcall>
 
@@ -132,6 +138,7 @@
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="6.0.12" />
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012TestSuite" />
 			<param name="tomcat.folder.dir" value="liferay-portal-6.0-ee-sp2/tomcat-6.0.32" />
 		</antcall>
@@ -144,6 +151,7 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
 		</antcall>
 
@@ -172,6 +180,7 @@
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="6.0.12" />
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012TestSuite" />
 			<param name="tomcat.folder.dir" value="liferay-portal-6.0-ee-sp2/tomcat-6.0.32" />
 		</antcall>
@@ -184,6 +193,7 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
 		</antcall>
 
@@ -212,6 +222,7 @@
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="6.0.12" />
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012TestSuite" />
 			<param name="tomcat.folder.dir" value="liferay-portal-6.0-ee-sp2/tomcat-6.0.32" />
 		</antcall>
@@ -224,6 +235,7 @@
 
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.evaluate.logs}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
 		</antcall>
 

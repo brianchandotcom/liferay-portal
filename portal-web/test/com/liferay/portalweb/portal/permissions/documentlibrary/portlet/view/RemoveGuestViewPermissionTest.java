@@ -43,8 +43,29 @@ public class RemoveGuestViewPermissionTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Permissions Page",
 			RuntimeVariables.replace("Document Library Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));

@@ -47,6 +47,9 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 
@@ -96,7 +99,7 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//tr[3]/td[2]")) {
+				if (selenium.isVisible("//tr[3]/td[1]")) {
 					break;
 				}
 			}
@@ -107,8 +110,8 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Document Type Name"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertFalse(selenium.isElementPresent("//tr[3]/td[4]/span/a/span"));
+			selenium.getText("//tr[3]/td[1]"));
+		assertFalse(selenium.isElementPresent("//tr[3]/td[3]/span/a/span"));
 		assertFalse(selenium.isElementPresent("link=Permissions"));
 		selenium.selectFrame("relative=top");
 	}

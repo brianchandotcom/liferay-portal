@@ -18,6 +18,8 @@
 
 <%
 PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUESTION);
+
+boolean missingQuestion = GetterUtil.get(request.getAttribute("view.jsp-missing_question"), Boolean.FALSE);
 %>
 
 <c:choose>
@@ -26,16 +28,16 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 		<%
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 
-        String msgKey = "please-configure-this-portlet-to-make-it-visible-to-all-users";
+		String configurationMessage = "please-configure-this-portlet-to-make-it-visible-to-all-users";
 
-        if(GetterUtil.get(request.getAttribute("view.jsp-question_missing"), Boolean.FALSE)){
-            msgKey = "polls-current-question-deleted-or-expired";
-        }
-        %>
+		if (missingQuestion) {
+			configurationMessage = "current-poll-expired-or-deleted";
+		}
+		%>
 
 		<div class="portlet-configuration portlet-msg-info">
 			<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
-				<liferay-ui:message key="<%= msgKey %>" />
+				<liferay-ui:message key="<%= configurationMessage %>" />
 			</a>
 		</div>
 	</c:when>
@@ -183,7 +185,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditPollIcon || sho
 			</c:if>
 
 			<c:if test="<%= showAddPollIcon %>">
-			   	<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" refererPlid="<%= plid %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="addPollURL">
+				<liferay-portlet:renderURL doAsGroupId="<%= scopeGroupId %>" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.POLLS %>" refererPlid="<%= plid %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="addPollURL">
 					<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
 					<liferay-portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<liferay-portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />

@@ -55,12 +55,17 @@ public class ViewAction extends PortletAction {
 
 				renderRequest.setAttribute(WebKeys.POLLS_QUESTION, question);
 			}
-		}catch(NoSuchQuestionException e) {
-             renderRequest.setAttribute("view.jsp-question_missing", Boolean.TRUE);
-        }catch (Exception e) {
-			SessionErrors.add(renderRequest, e.getClass().getName());
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchQuestionException) {
+				renderRequest.setAttribute(
+					"view.jsp-missing_question", Boolean.TRUE);
+			}
+			else {
+				SessionErrors.add(renderRequest, e.getClass().getName());
 
-			return mapping.findForward("portlet.polls_display.error");
+				return mapping.findForward("portlet.polls_display.error");
+			}
 		}
 
 		return mapping.findForward("portlet.polls_display.view");

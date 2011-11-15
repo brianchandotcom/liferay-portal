@@ -418,7 +418,7 @@ public class GroupImpl extends GroupBaseImpl {
 				return parentGroup.isStagedPortlet(portletId);
 			}
 		}
-		catch (Exception e){
+		catch (Exception e) {
 		}
 
 		portletId = PortletConstants.getRootPortletId(portletId);

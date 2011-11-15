@@ -182,8 +182,14 @@ public class PortletImporter {
 				int i = 0;
 
 				for (String importedCategoryPK : importedCategoryPKs) {
-					newCategoryPKs[i++] = StringUtil.valueOf(
+					String newCategoryPk = StringUtil.valueOf(
 						assetCategoryPKs.get(new Long(importedCategoryPK)));
+
+					if (Validator.isNull(newCategoryPk)) {
+						newCategoryPk = importedCategoryPK;
+					}
+
+					newCategoryPKs[i++] = newCategoryPk;
 				}
 
 				portletPreferences.setValues(queryValuesName, newCategoryPKs);

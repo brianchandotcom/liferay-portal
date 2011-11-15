@@ -174,6 +174,7 @@ AUI().add(
 						var instance = this;
 
 						var recordsetId = instance.get('recordsetId');
+
 						var recordIndex = event.index;
 
 						AArray.each(
@@ -288,7 +289,9 @@ AUI().add(
 							}
 							else if (type === 'ddm-date') {
 								config.inputFormatter = function(value) {
-									return A.DataType.Date.parse(value).getTime();
+									var date = A.DataType.Date.parse(value) || new Date();
+
+									return date.getTime();
 								};
 
 								item.formatter = function(obj) {

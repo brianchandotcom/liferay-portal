@@ -29,28 +29,25 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 	DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = function(value) {
 		var spreadSheet = window.<portlet:namespace />spreadSheet;
+
 		var activeColumn = spreadSheet.selection.getActiveColumn();
+
 		var activeColumnKey = activeColumn.get('key');
+
 		var activeRecord = spreadSheet.selection.getActiveRecord();
 
-		var valid = true;
-
-		A.Array.each(
+		return !A.Array.some(
 			window.<portlet:namespace />structure,
 			function(item, index, collection) {
 				var fieldName = item.name;
 				var fieldValue = activeRecord.getValue(fieldName);
 
-				if (!fieldValue && (activeColumnKey !== fieldName) && (item.required === 'true')) {
-					valid = false;
-				}
+				return !fieldValue && (activeColumnKey !== fieldName) && (item.required === 'true');
 			}
 		);
-
-		return valid;
 	};
 
-	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = Liferay.Language.get('please-fill-out-all-required-fields');
+	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<liferay-ui:message key="please-fill-out-all-required-fields" />';
 
 	var DLFileEntryCellEditor = A.Component.create(
 		{
@@ -127,6 +124,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var instance = this;
 
 					var contentBox = instance.get('contentBox');
+
 					var fileEntryLinkNode = contentBox.one('a') || A.Node.create('<a href="javascript:;"></a>');
 
 					if (val) {
@@ -153,12 +151,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 	var FileUploadCellEditor = A.Component.create(
 		{
-			NAME: 'fileupload-cell-editor',
-
-			EXTENDS: A.BaseCellEditor,
-
-			UI_ATTRS: ['structure', 'value'],
-
 			ATTRS: {
 				record: {
 					value: null
@@ -176,6 +168,12 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					value: null
 				}
 			},
+
+			EXTENDS: A.BaseCellEditor,
+
+			NAME: 'fileupload-cell-editor',
+
+			UI_ATTRS: ['structure', 'value'],
 
 			prototype: {
 				ELEMENT_TEMPLATE: '<input type="file" />',
@@ -238,6 +236,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 									on: {
 										complete: function(event, id, xhr) {
 											var responseText = xhr.responseText;
+
 											var data = A.JSON.parse(responseText);
 
 											if (data) {
@@ -369,9 +368,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 				_uiSetStructure: function(val) {
 					var instance = this;
 
-					instance._uiSetValue(
-						instance.get('value')
-					);
+					instance._uiSetValue(instance.get('value'));
 				},
 
 				_uiSetValue: function(val) {
@@ -397,6 +394,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 							if (structure) {
 								var fieldName = instance.get('elementName');
+
 								var structureField = Liferay.SpreadSheet.findStructureFieldByAttribute(structure, 'name', fieldName);
 
 								if (structureField.required === 'false') {

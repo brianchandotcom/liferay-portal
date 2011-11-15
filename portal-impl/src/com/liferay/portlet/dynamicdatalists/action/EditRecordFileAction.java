@@ -42,6 +42,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -87,11 +89,12 @@ public class EditRecordFileAction extends PortletAction {
 			}
 		}
 
-		resourceResponse.setContentType(ContentTypes.TEXT_PLAIN);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
 
-		ServletResponseUtil.write(
-			PortalUtil.getHttpServletResponse(resourceResponse),
-			jsonObject.toString());
+		response.setContentType(ContentTypes.TEXT_PLAIN);
+
+		ServletResponseUtil.write(response, jsonObject.toString());
 	}
 
 	protected void deleteRecordFieldFile(PortletRequest request)

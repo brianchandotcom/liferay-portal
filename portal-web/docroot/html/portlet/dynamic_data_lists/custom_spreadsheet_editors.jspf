@@ -23,8 +23,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 <aui:script use="aui-io-request,io-upload-iframe,liferay-portlet-dynamic-data-lists,liferay-portlet-url">
 	var SpreadSheet = Liferay.SpreadSheet;
 
-	var Util = SpreadSheet.Util;
-
 	var STR_EMPTY = '';
 
 	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
@@ -129,26 +127,20 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var instance = this;
 
 					var contentBox = instance.get('contentBox');
-					var fileEntryLinkNode = contentBox.one('a');
-
-					if (!fileEntryLinkNode) {
-						fileEntryLinkNode = A.Node.create('<a href="javascript:;"></a>');
-					}
+					var fileEntryLinkNode = contentBox.one('a') || A.Node.create('<a href="javascript:;"></a>');
 
 					if (val) {
-						Util.getFileEntry(
+						SpreadSheet.Util.getFileEntry(
 							val,
 							function(fileEntry) {
-								var fileEntryURL = Util.getFileEntryURL(fileEntry);
+								var fileEntryURL = SpreadSheet.Util.getFileEntryURL(fileEntry);
 
-								fileEntryLinkNode.attr('href', fileEntryURL);
-								fileEntryLinkNode.setContent(fileEntry.title);
+								fileEntryLinkNode.setContent(fileEntry.title).attr('href', fileEntryURL);
 							}
 						);
 					}
 					else {
-						fileEntryLinkNode.attr('href', 'javascript:;');
-						fileEntryLinkNode.setContent(STR_EMPTY)
+						fileEntryLinkNode.setContent(STR_EMPTY).attr('href', 'javascript:;');
 					}
 
 					contentBox.prepend(fileEntryLinkNode);
@@ -232,42 +224,45 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 
 					var form = instance.get('contentBox');
 
-					setTimeout(function() {
-						A.io.request(
-							uri,
-							{
-								dataType: 'json',
-								form: {
-									id: form,
-									upload: true
-								},
-								method: 'POST',
-								on: {
-									complete: function(event, id, xhr) {
-										var responseText = xhr.responseText;
-										var data = A.JSON.parse(responseText);
+					setTimeout(
+						function() {
+							A.io.request(
+								uri,
+								{
+									dataType: 'json',
+									form: {
+										id: form,
+										upload: true
+									},
+									method: 'POST',
+									on: {
+										complete: function(event, id, xhr) {
+											var responseText = xhr.responseText;
+											var data = A.JSON.parse(responseText);
 
-										if (data) {
-											var exception = data.exception;
+											if (data) {
+												var exception = data.exception;
 
-											if (exception) {
-												instance._handleException(exception);
-											}
-											else {
-												recordset.updateRecordDataByKey(record, elementName, responseText);
+												if (exception) {
+													instance._handleException(exception);
+												}
+												else {
+													recordset.updateRecordDataByKey(record, elementName, responseText);
 
-												instance.set('value', responseText);
+													instance.set('value', responseText);
 
-												if (callback) {
-													callback.apply(instance, arguments);
+													if (callback) {
+														callback.apply(instance, arguments);
+													}
 												}
 											}
 										}
 									}
 								}
-							}
-						);
-					}, 0);
+							);
+						},
+						0
+					);
 				},
 
 				_handleDeleteEvent: function() {

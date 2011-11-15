@@ -124,7 +124,6 @@ public class BeanPropertiesUtil {
 	}
 
 	public static int getInteger(Object bean, String param, int defaultValue) {
-
 		return getBeanProperties().getInteger(bean, param, defaultValue);
 	}
 
@@ -143,7 +142,6 @@ public class BeanPropertiesUtil {
 	}
 
 	public static long getLong(Object bean, String param, long defaultValue) {
-
 		return getBeanProperties().getLong(bean, param, defaultValue);
 	}
 

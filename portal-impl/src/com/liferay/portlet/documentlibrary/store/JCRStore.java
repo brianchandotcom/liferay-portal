@@ -78,25 +78,24 @@ public class JCRStore extends BaseStore {
 			if (repositoryNode.hasNode(dirName)) {
 				throw new DuplicateDirectoryException(dirName);
 			}
-			else {
-				String[] dirNameArray = StringUtil.split(dirName, '/');
 
-				Node dirNode = repositoryNode;
+			String[] dirNameArray = StringUtil.split(dirName, '/');
 
-				for (int i = 0; i < dirNameArray.length; i++) {
-					if (Validator.isNotNull(dirNameArray[i])) {
-						if (dirNode.hasNode(dirNameArray[i])) {
-							dirNode = dirNode.getNode(dirNameArray[i]);
-						}
-						else {
-							dirNode = dirNode.addNode(
-								dirNameArray[i], JCRConstants.NT_FOLDER);
-						}
+			Node dirNode = repositoryNode;
+
+			for (int i = 0; i < dirNameArray.length; i++) {
+				if (Validator.isNotNull(dirNameArray[i])) {
+					if (dirNode.hasNode(dirNameArray[i])) {
+						dirNode = dirNode.getNode(dirNameArray[i]);
+					}
+					else {
+						dirNode = dirNode.addNode(
+							dirNameArray[i], JCRConstants.NT_FOLDER);
 					}
 				}
-
-				session.save();
 			}
+
+			session.save();
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
@@ -259,8 +258,9 @@ public class JCRStore extends BaseStore {
 
 			versionManager.checkout(contentNode.getPath());
 
-			contentNode.setProperty(JCRConstants.JCR_MIME_TYPE, "text/plain");
-			contentNode.setProperty(JCRConstants.JCR_DATA, "");
+			contentNode.setProperty(
+				JCRConstants.JCR_MIME_TYPE, ContentTypes.TEXT_PLAIN);
+			contentNode.setProperty(JCRConstants.JCR_DATA, StringPool.BLANK);
 			contentNode.setProperty(
 				JCRConstants.JCR_LAST_MODIFIED, Calendar.getInstance());
 
@@ -771,7 +771,8 @@ public class JCRStore extends BaseStore {
 
 			versionManager.checkout(contentNode.getPath());
 
-			contentNode.setProperty(JCRConstants.JCR_MIME_TYPE, "text/plain");
+			contentNode.setProperty(
+				JCRConstants.JCR_MIME_TYPE, ContentTypes.TEXT_PLAIN);
 
 			ValueFactory valueFactory = session.getValueFactory();
 

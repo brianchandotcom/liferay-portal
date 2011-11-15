@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.session.SessionExpirationTests;
+import com.liferay.portalweb.portal.session.SessionTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,13 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortalWebSessionExpirationTestSuite extends BaseTests {
+public class SessionTestSuite extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SessionExpirationTests.suite());
+		testSuite.addTest(SessionTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

@@ -297,6 +297,10 @@
 			<name>view-action</name>
 			<value>/polls/view</value>
 		</init-param>
+        <init-param>
+			<name>hide-process-action-error</name>
+			<value>false</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -778,6 +782,10 @@
 		<init-param>
 			<name>config-jsp</name>
 			<value>/html/portlet/polls_display/configuration.jsp</value>
+		</init-param>
+        <init-param>
+			<name>hide-process-action-error</name>
+			<value>false</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -43,50 +43,22 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 		List<PollsChoice> choices = question.getChoices();
 
 		boolean hasVoted = PollsUtil.hasVoted(request, question.getQuestionId());
-
-		if (!question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE)) {
-			String cmd = ParamUtil.getString(request, Constants.CMD);
-
-			if (cmd.equals(Constants.VOTE)) {
-				long choiceId = ParamUtil.getLong(request, "choiceId");
-
-				try {
-					PollsVoteServiceUtil.addVote(question.getQuestionId(), choiceId, new ServiceContext());
-
-					SessionMessages.add(renderRequest, "vote_added");
-
-					PollsUtil.saveVote(request, question.getQuestionId());
-
-					hasVoted = true;
-				}
-				catch (DuplicateVoteException dve) {
-					SessionErrors.add(renderRequest, dve.getClass().getName());
-				}
-				catch (NoSuchChoiceException nsce) {
-					SessionErrors.add(renderRequest, nsce.getClass().getName());
-				}
-				catch (QuestionExpiredException qee) {
-				}
-			}
-		}
 		%>
 
-		<portlet:renderURL var="viewPollURL">
-			<portlet:param name="struts_action" value="/polls_display/view" />
-		</portlet:renderURL>
+		<portlet:actionURL var="votePollURL">
+			<portlet:param name="struts_action" value="/polls_display/vote_question" />
+		</portlet:actionURL>
 
-		<aui:form action="<%= viewPollURL %>" method="post" name="fm">
+		<aui:form action="<%= votePollURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.VOTE %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="questionId" type="hidden" value="<%= question.getQuestionId() %>" />
-
-			<liferay-ui:success key="vote_added" message="thank-you-for-your-vote" />
+			<aui:input name="successMessage" type="hidden" value='<%= LanguageUtil.get(pageContext, "thank-you-for-your-vote") %>' />
 
 			<liferay-ui:error exception="<%= DuplicateVoteException.class %>" message="you-may-only-vote-once" />
 			<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
 
 			<%= StringUtil.replace(HtmlUtil.escape(question.getDescription(locale)), StringPool.NEW_LINE, "<br />") %>
-
-			<br /><br />
 
 			<c:choose>
 				<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">

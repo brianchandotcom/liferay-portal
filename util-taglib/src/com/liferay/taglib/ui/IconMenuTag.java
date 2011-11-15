@@ -295,7 +295,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 					ScriptTag.doTag(
 						null, "liferay-menu",
-						"Liferay.Menu.register('#" + _id + "');", bodyContent,
+						"Liferay.Menu.register('" + _id + "');", bodyContent,
 						pageContext);
 				}
 

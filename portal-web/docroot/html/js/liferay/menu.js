@@ -445,13 +445,15 @@ AUI().add(
 		Menu.register = function(id) {
 			var instance = Menu._INSTANCE;
 
+			var menuNode = document.getElementById(id);
+
 			if (!instance) {
 				instance = new Menu();
 
 				Menu._INSTANCE = instance;
 			}
 
-			buffer.push(id);
+			buffer.push(menuNode);
 
 			Menu._registerTask();
 		};
@@ -461,11 +463,7 @@ AUI().add(
 				var instance = Menu._INSTANCE;
 
 				if (buffer.length) {
-					var list = buffer.join();
-
-					buffer.length = 0;
-
-					var nodes = A.all(list);
+					var nodes = A.all(buffer);
 
 					nodes.on(
 						EVENT_CLICK,

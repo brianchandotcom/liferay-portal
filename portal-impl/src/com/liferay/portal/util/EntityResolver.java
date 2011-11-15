@@ -622,6 +622,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
+			"http://www.liferay.com/dtd/liferay-workflow-definition_6_1_0.xsd",
+			"liferay-workflow-definition_6_1_0.xsd"
+		),
+
+		new KeyValuePair(
 			"http://www.w3.org/2001/xml.xsd",
 			"xml.xsd"
 		)

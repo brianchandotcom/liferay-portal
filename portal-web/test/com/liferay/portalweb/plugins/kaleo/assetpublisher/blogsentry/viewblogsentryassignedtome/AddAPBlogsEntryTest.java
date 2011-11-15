@@ -152,6 +152,6 @@ public class AddAPBlogsEntryTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText("//div[@class='portlet-body']/p"));
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

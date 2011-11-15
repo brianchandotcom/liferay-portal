@@ -44,7 +44,7 @@ public class ViewWebContentAssignedToMeTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Web Content Name"));
 		assertFalse(selenium.isTextPresent("Web Content Content"));
 		selenium.open("/web/guest/home/");

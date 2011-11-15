@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.evaluatelog;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -44,15 +44,19 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			if (line.contains("[antelope:post]")) {
+				continue;
+			}
+
 			if (line.contains("[junit]")) {
 				continue;
 			}
 
-			Pattern pattern = Pattern.compile(
-				"The web application \\[.*\\] appears to have started a thread");
-			Matcher matcher = pattern.matcher(line);
+			Pattern startedThreadPattern = Pattern.compile(
+				"The web application \\[.*\\] appears to have started");
+			Matcher startedThreadMatcher = startedThreadPattern.matcher(line);
 
-			if (matcher.find()) {
+			if (startedThreadMatcher.find()) {
 				if (line.contains("[AWT-Windows]")) {
 					continue;
 				}
@@ -62,7 +66,7 @@ public class EvaluateLogTest extends BaseTestCase {
 				}
 			}
 
-			System.out.println("ERROR: " + line);
+			System.out.println("\nException Line:\n\n" + line + "\n");
 
 			return false;
 		}

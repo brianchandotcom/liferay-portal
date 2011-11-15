@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal;
 
+import com.liferay.portalweb.portal.evaluatelog.EvaluateLogTest;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

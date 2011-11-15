@@ -211,15 +211,15 @@ pageContext.setAttribute("portletURL", portletURL);
 				else {
 					message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName()), namesSB, names.get(names.size() - 1)});
 				}
+	%>
+
+				<liferay-util:buffer var="iconHelp">
+					<liferay-ui:icon-help message="<%= message %>" />
+				</liferay-util:buffer>
+
+	<%
+				sb.append(iconHelp);
 			}
-			%>
-
-			<liferay-util:buffer var="iconHelp">
-				<liferay-ui:icon-help message="<%= message %>" />
-			</liferay-util:buffer>
-
-		<%
-			sb.append(iconHelp);
 		}
 
 		row.addText(sb.toString());

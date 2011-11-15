@@ -275,6 +275,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		updatePortletSetup(layout, portletId, preferences);
 
 		addPortletId(layout, PortletKeys.POLLS_DISPLAY, "column-2");
+		addPortletId(layout, PortletKeys.USER_STATISTICS, "column-2");
 
 		// Calendar layout
 

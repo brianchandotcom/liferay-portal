@@ -220,6 +220,8 @@ public class PortletKeys {
 
 	public static final String USER_GROUPS_ADMIN = "127";
 
+	public static final String USER_STATISTICS = "180";
+
 	public static final String USERS_ADMIN = "125";
 
 	public static final String WIKI = "36";

@@ -501,19 +501,15 @@ public class PortletExporter {
 				assetTag.getTagId());
 
 		for (AssetTagProperty assetTagProperty : assetTagProperties) {
-
 			Element propertyElement = assetTagElement.addElement("property");
 
 			propertyElement.addAttribute(
 				"userUuid", assetTagProperty.getUserUuid());
-			propertyElement.addAttribute(
-				"key", assetTagProperty.getKey());
-			propertyElement.addAttribute(
-				"value", assetTagProperty.getValue());
+			propertyElement.addAttribute("key", assetTagProperty.getKey());
+			propertyElement.addAttribute("value", assetTagProperty.getValue());
 		}
 
-		portletDataContext.addPermissions(
-			AssetTag.class, assetTag.getTagId());
+		portletDataContext.addPermissions(AssetTag.class, assetTag.getTagId());
 	}
 
 	protected void exportAssetTags(PortletDataContext portletDataContext)
@@ -543,6 +539,7 @@ public class PortletExporter {
 
 		List<AssetTag> assetTags = AssetTagServiceUtil.getGroupTags(
 			portletDataContext.getScopeGroupId());
+
 		for (AssetTag assetTag : assetTags) {
 			exportAssetTag(portletDataContext, assetTag, rootElement);
 		}
@@ -553,7 +550,7 @@ public class PortletExporter {
 	}
 
 	protected void exportAssetTagsProperties(
-		long assetTagId, Element assetTagElement)
+			long assetTagId, Element assetTagElement)
 		throws PortalException, SystemException {
 
 		Element propertiesElement = assetTagElement.addElement("properties");
@@ -564,6 +561,7 @@ public class PortletExporter {
 		for (AssetTagProperty assetTagProperty : assetTagProperties) {
 			Element assetTagPropertyElement = propertiesElement.addElement(
 				"property");
+
 			assetTagPropertyElement.addAttribute(
 				"key", assetTagProperty.getKey());
 			assetTagPropertyElement.addAttribute(
@@ -1183,7 +1181,7 @@ public class PortletExporter {
 	protected String getAssetCategoryPath(
 		PortletDataContext portletDataContext, long assetCategoryId) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(portletDataContext.getRootPath());
 		sb.append("/categories/");

@@ -505,19 +505,6 @@ public class PortletImporter {
 		return sb.toString();
 	}
 
-	protected String getAssetTagPath(
-		PortletDataContext portletDataContext, long assetTagId) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(portletDataContext.getSourceRootPath());
-		sb.append("/tags/");
-		sb.append(assetTagId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
 	protected Map<Locale, String> getAssetCategoryTitleMap(
 		AssetCategory assetCategory) {
 
@@ -693,7 +680,7 @@ public class PortletImporter {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddCommunityPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCreateDate(assetTag.getCreateDate());
 		serviceContext.setModifiedDate(assetTag.getModifiedDate());
@@ -717,11 +704,12 @@ public class PortletImporter {
 			}
 
 			AssetTag existingAssetTag = null;
+
 			try {
 				existingAssetTag = AssetTagUtil.findByG_N(
 					portletDataContext.getScopeGroupId(), assetTag.getName());
 			}
-			catch (NoSuchTagException e) {
+			catch (NoSuchTagException nste) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"No existing AssetTag found:" + assetTag.getName() +
@@ -729,6 +717,7 @@ public class PortletImporter {
 								portletDataContext.getScopeGroupId());
 				}
 			}
+
 			if (existingAssetTag == null) {
 				importedAssetTag = AssetTagLocalServiceUtil.addTag(
 					userId, assetTag.getName(), properties, serviceContext);
@@ -745,7 +734,7 @@ public class PortletImporter {
 				AssetTag.class, assetTag.getTagId(),
 				importedAssetTag.getTagId());
 		}
-		catch (NoSuchTagException nsce) {
+		catch (NoSuchTagException nste) {
 			_log.error(
 				"Could not find the parent category for category " +
 					assetTag.getTagId());
@@ -1230,10 +1219,6 @@ public class PortletImporter {
 
 		List<Element> assetTagElements = rootElement.elements("tag");
 
-		Map<Long, Long> assetTagPKs =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				AssetTag.class);
-
 		for (Element assetTagElement : assetTagElements) {
 			String path = assetTagElement.attributeValue("path");
 
@@ -1243,6 +1228,10 @@ public class PortletImporter {
 
 			AssetTag assetTag =
 				(AssetTag)portletDataContext.getZipEntryAsObject(path);
+
+			Map<Long, Long> assetTagPKs =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					AssetTag.class);
 
 			importAssetTag(
 				portletDataContext, assetTagPKs, assetTagElement, assetTag);

@@ -22,8 +22,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public interface PortalPermission {
 
-	public void check(
-			PermissionChecker permissionChecker, String actionId)
+	public void check(PermissionChecker permissionChecker, String actionId)
 		throws PrincipalException;
 
 	public boolean contains(

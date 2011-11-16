@@ -51,8 +51,7 @@ public class LayoutLister {
 		return new LayoutView(_list, _depth);
 	}
 
-	private void _createList(
-			long parentLayoutId, int parentId, int depth)
+	private void _createList(long parentLayoutId, int parentId, int depth)
 		throws PortalException, SystemException {
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(

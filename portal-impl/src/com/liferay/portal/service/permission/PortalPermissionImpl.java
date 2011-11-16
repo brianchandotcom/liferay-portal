@@ -23,8 +23,7 @@ import com.liferay.portal.util.PortletKeys;
  */
 public class PortalPermissionImpl implements PortalPermission {
 
-	public void check(
-			PermissionChecker permissionChecker, String actionId)
+	public void check(PermissionChecker permissionChecker, String actionId)
 		throws PrincipalException {
 
 		if (!contains(permissionChecker, actionId)) {

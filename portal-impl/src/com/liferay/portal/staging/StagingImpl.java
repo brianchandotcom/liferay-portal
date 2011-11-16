@@ -544,8 +544,7 @@ public class StagingImpl implements Staging {
 			serviceContext);
 	}
 
-	public List<Layout> getMissingParentLayouts(
-			Layout layout, long liveGroupId)
+	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws Exception {
 
 		List<Layout> missingParentLayouts = new ArrayList<Layout>();

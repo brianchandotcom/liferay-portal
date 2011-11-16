@@ -106,8 +106,7 @@ public class ActionUtil
 			request, targetLayout, sourceLayoutPrototype);
 	}
 
-	public static void copyLookAndFeel(
-			Layout targetLayout, Layout sourceLayout)
+	public static void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
 		LayoutServiceUtil.updateLookAndFeel(

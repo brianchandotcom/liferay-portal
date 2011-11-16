@@ -1037,8 +1037,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @return the number of matching roles
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int searchCount(
-			long companyId, String keywords, Integer[] types)
+	public int searchCount(long companyId, String keywords, Integer[] types)
 		throws SystemException {
 
 		return searchCount(

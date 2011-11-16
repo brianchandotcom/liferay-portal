@@ -24,8 +24,7 @@ import java.io.ObjectStreamClass;
  */
 public class ClassLoaderObjectInputStream extends ObjectInputStream {
 
-	public ClassLoaderObjectInputStream(
-			InputStream is, ClassLoader classLoader)
+	public ClassLoaderObjectInputStream(InputStream is, ClassLoader classLoader)
 		throws IOException {
 
 		super(is);

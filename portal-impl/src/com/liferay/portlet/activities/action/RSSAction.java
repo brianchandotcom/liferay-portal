@@ -83,8 +83,7 @@ public class RSSAction extends PortletAction {
 		}
 	}
 
-	protected List<SocialActivity> getActivities(
-			PortletRequest portletRequest)
+	protected List<SocialActivity> getActivities(PortletRequest portletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

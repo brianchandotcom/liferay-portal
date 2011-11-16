@@ -33,8 +33,7 @@ import com.liferay.portal.util.PortalUtil;
 public class PluginSettingLocalServiceImpl
 	extends PluginSettingLocalServiceBaseImpl {
 
-	public void checkPermission(
-			long userId, String pluginId, String pluginType)
+	public void checkPermission(long userId, String pluginId, String pluginType)
 		throws PortalException {
 
 		if (!hasPermission(userId, pluginId, pluginType)) {

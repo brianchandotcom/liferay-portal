@@ -1054,8 +1054,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			lock.isInheritable(), expirationTime);
 	}
 
-	public void importPermissions(
-			Class<?> clazz, long classPK, long newClassPK)
+	public void importPermissions(Class<?> clazz, long classPK, long newClassPK)
 		throws PortalException, SystemException {
 
 		importPermissions(clazz.getName(), classPK, newClassPK);

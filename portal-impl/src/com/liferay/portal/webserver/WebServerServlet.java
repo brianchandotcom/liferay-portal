@@ -361,8 +361,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	protected Image getImage(
-			HttpServletRequest request, boolean getDefault)
+	protected Image getImage(HttpServletRequest request, boolean getDefault)
 		throws PortalException, SystemException {
 
 		Image image = null;

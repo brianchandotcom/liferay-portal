@@ -25,8 +25,7 @@ import java.io.InputStream;
  */
 public class LimitedInputStream extends InputStream {
 
-	public LimitedInputStream(
-			InputStream inputStream, long offset, long length)
+	public LimitedInputStream(InputStream inputStream, long offset, long length)
 		throws IOException {
 
 		if (offset < 0) {

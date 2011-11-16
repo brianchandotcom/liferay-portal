@@ -151,8 +151,7 @@ public class StoreWrapper implements Store {
 		return _store.getFileNames(companyId, repositoryId, dirName);
 	}
 
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		return _store.getFileSize(companyId, repositoryId, fileName);

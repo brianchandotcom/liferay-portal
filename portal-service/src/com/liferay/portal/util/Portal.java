@@ -598,8 +598,7 @@ public interface Portal {
 
 	public String getGlobalLibDir();
 
-	public String getGoogleGadgetURL(
-			Portlet portlet, ThemeDisplay themeDisplay)
+	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
 	public String getGroupFriendlyURL(
@@ -653,8 +652,7 @@ public interface Portal {
 
 	public String getLayoutEditPage(String type);
 
-	public String getLayoutFriendlyURL(
-			Layout layout, ThemeDisplay themeDisplay)
+	public String getLayoutFriendlyURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
 	public String getLayoutFriendlyURL(

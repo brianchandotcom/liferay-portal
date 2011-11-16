@@ -58,8 +58,7 @@ public interface Store {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
-	public void deleteFile(
-			long companyId, long repositoryId, String fileName)
+	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException;
 
 	public void deleteFile(
@@ -100,8 +99,7 @@ public interface Store {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException;
 
 	public boolean hasDirectory(

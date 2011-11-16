@@ -168,8 +168,7 @@ public class SearchEngineUtil {
 		indexWriter.deleteDocuments(searchContext, uids);
 	}
 
-	public static void deletePortletDocuments(
-			long companyId, String portletId)
+	public static void deletePortletDocuments(long companyId, String portletId)
 		throws SearchException {
 
 		deletePortletDocuments(SYSTEM_ENGINE_ID, companyId, portletId);

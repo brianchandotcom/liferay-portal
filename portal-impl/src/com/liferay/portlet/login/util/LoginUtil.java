@@ -212,8 +212,7 @@ public class LoginUtil {
 		return login;
 	}
 
-	public static PortletURL getLoginURL(
-			HttpServletRequest request, long plid)
+	public static PortletURL getLoginURL(HttpServletRequest request, long plid)
 		throws PortletModeException, WindowStateException {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(

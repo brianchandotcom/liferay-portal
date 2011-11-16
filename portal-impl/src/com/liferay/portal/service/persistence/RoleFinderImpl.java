@@ -241,8 +241,7 @@ public class RoleFinderImpl
 		}
 	}
 
-	public int countByKeywords(
-			long companyId, String keywords, Integer[] types)
+	public int countByKeywords(long companyId, String keywords, Integer[] types)
 		throws SystemException {
 
 		return countByKeywords(

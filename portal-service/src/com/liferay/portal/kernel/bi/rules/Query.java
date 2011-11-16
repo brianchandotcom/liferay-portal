@@ -27,9 +27,7 @@ import java.util.List;
  */
 public class Query implements Serializable {
 
-	public static Query createCustomQuery(
-		String identifier, String queryName) {
-
+	public static Query createCustomQuery(String identifier, String queryName) {
 		if (Validator.isNull(identifier)) {
 			throw new IllegalArgumentException("Query idenfier is null.");
 		}

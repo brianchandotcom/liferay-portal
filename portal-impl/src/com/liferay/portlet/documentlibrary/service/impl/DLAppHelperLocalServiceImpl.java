@@ -193,8 +193,7 @@ public class DLAppHelperLocalServiceImpl
 		return dlFileShortcutPersistence.findByG_F_S(groupId, folderId, status);
 	}
 
-	public int getFileShortcutsCount(
-			long groupId, long folderId, int status)
+	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws SystemException {
 
 		return dlFileShortcutPersistence.countByG_F_S(
@@ -465,7 +464,9 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void registerDLProcessorCallback(final FileEntry fileEntry) {
-		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
 				public Void call() throws Exception {
 					DLProcessorRegistryUtil.trigger(fileEntry);
 

@@ -47,8 +47,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 		}
 	}
 
-	public DLFileEntryMetadata getFileEntryMetadata(
-			long fileEntryMetadataId)
+	public DLFileEntryMetadata getFileEntryMetadata(long fileEntryMetadataId)
 		throws PortalException, SystemException {
 
 		return dlFileEntryMetadataPersistence.findByPrimaryKey(

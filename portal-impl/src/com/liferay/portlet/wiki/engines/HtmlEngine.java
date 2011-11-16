@@ -135,8 +135,7 @@ public class HtmlEngine implements WikiEngine {
 			}
 
 			try {
-				WikiNodeLocalServiceUtil.getNode(
-					page.getGroupId(), nodeName);
+				WikiNodeLocalServiceUtil.getNode(page.getGroupId(), nodeName);
 
 				links.put(title.toLowerCase(), Boolean.TRUE);
 			}

@@ -378,8 +378,7 @@ public class WikiUtil {
 		return content;
 	}
 
-	public static boolean validate(
-			long nodeId, String content, String format)
+	public static boolean validate(long nodeId, String content, String format)
 		throws WikiFormatException {
 
 		return _instance._validate(nodeId, content, format);

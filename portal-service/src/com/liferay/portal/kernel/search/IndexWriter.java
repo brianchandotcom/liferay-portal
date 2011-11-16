@@ -21,16 +21,14 @@ import java.util.Collection;
  */
 public interface IndexWriter {
 
-	public void addDocument(
-			SearchContext searchContext, Document document)
+	public void addDocument(SearchContext searchContext, Document document)
 		throws SearchException;
 
 	public void addDocuments(
 			SearchContext searchContext, Collection<Document> documents)
 		throws SearchException;
 
-	public void deleteDocument(
-			SearchContext searchContext, String uid)
+	public void deleteDocument(SearchContext searchContext, String uid)
 		throws SearchException;
 
 	public void deleteDocuments(
@@ -41,8 +39,7 @@ public interface IndexWriter {
 			SearchContext searchContext, String portletId)
 		throws SearchException;
 
-	public void updateDocument(
-			SearchContext searchContext, Document document)
+	public void updateDocument(SearchContext searchContext, Document document)
 		throws SearchException;
 
 	public void updateDocuments(

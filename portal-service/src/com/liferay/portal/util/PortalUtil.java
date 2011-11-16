@@ -225,8 +225,7 @@ public class PortalUtil {
 		return getPortal().getBasicAuthUserId(request);
 	}
 
-	public static long getDigestAuthUserId(
-			HttpServletRequest request)
+	public static long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException {
 
 		return getPortal().getDigestAuthUserId(request);
@@ -637,8 +636,7 @@ public class PortalUtil {
 		return getPortal().getLayoutTarget(layout);
 	}
 
-	public static String getLayoutURL(
-			Layout layout, ThemeDisplay themeDisplay)
+	public static String getLayoutURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return getPortal().getLayoutURL(layout, themeDisplay);

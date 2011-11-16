@@ -41,7 +41,7 @@ private static final String _getPreviewURL(FileEntry fileEntry, FileVersion file
 	sb.append(StringPool.SLASH);
 	sb.append(fileEntry.getFolderId());
 	sb.append(StringPool.SLASH);
-	sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+	sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())), true);
 	sb.append("?version=");
 	sb.append(fileVersion.getVersion());
 

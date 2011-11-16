@@ -179,6 +179,9 @@ public class PostgreSQLDB extends BaseDB {
 					"alter table @table@ drop constraint @table@_pkey;",
 					"@table@", tokens[2]);
 			}
+			else if (line.indexOf("\\\'") != -1) {
+				line = StringUtil.replace(line, "\\\'", "\'\'");
+			}
 
 			sb.append(line);
 			sb.append("\n");

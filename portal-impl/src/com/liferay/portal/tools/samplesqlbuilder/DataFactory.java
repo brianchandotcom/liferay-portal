@@ -144,9 +144,8 @@ public class DataFactory {
 	}
 
 	public AssetEntry addAssetEntry(
-			long groupId, long userId, long classNameId, long classPK,
-			boolean visible, String mimeType, String title)
-		throws Exception {
+		long groupId, long userId, long classNameId, long classPK,
+		boolean visible, String mimeType, String title) {
 
 		AssetEntry assetEntry = new AssetEntryImpl();
 
@@ -162,9 +161,8 @@ public class DataFactory {
 	}
 
 	public BlogsEntry addBlogsEntry(
-			long groupId, long userId, String title, String urlTitle,
-			String content)
-		throws Exception {
+		long groupId, long userId, String title, String urlTitle,
+		String content) {
 
 		BlogsEntry blogsEntry = new BlogsEntryImpl();
 
@@ -178,9 +176,7 @@ public class DataFactory {
 		return blogsEntry;
 	}
 
-	public BlogsStatsUser addBlogsStatsUser(long groupId, long userId)
-		throws Exception {
-
+	public BlogsStatsUser addBlogsStatsUser(long groupId, long userId) {
 		BlogsStatsUser blogsStatsUser = new BlogsStatsUserImpl();
 
 		blogsStatsUser.setGroupId(groupId);
@@ -189,9 +185,7 @@ public class DataFactory {
 		return blogsStatsUser;
 	}
 
-	public Contact addContact(String firstName, String lastName)
-		throws Exception {
-
+	public Contact addContact(String firstName, String lastName) {
 		Contact contact = new ContactImpl();
 
 		contact.setContactId(_counter.get());
@@ -202,9 +196,7 @@ public class DataFactory {
 		return contact;
 	}
 
-	public DDMContent addDDMContent(long groupId, long companyId, long userId)
-		throws Exception {
-
+	public DDMContent addDDMContent(long groupId, long companyId, long userId) {
 		DDMContent ddmContent = new DDMContentImpl();
 
 		ddmContent.setContentId(_counter.get());
@@ -216,8 +208,7 @@ public class DataFactory {
 	}
 
 	public DDMStorageLink addDDMStorageLink(
-			long classNameId, long classPK, long structureId)
-		throws Exception {
+		long classNameId, long classPK, long structureId) {
 
 		DDMStorageLink ddmStorageLink = new DDMStorageLinkImpl();
 
@@ -230,8 +221,7 @@ public class DataFactory {
 	}
 
 	public DDMStructure addDDMStructure(
-			long groupId, long companyId, long userId, long classNameId)
-		throws Exception {
+		long groupId, long companyId, long userId, long classNameId) {
 
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
@@ -244,8 +234,8 @@ public class DataFactory {
 		return ddmStructure;
 	}
 
-	public DDMStructureLink addDDMStructureLink(long classPK, long structureId)
-		throws Exception {
+	public DDMStructureLink addDDMStructureLink(
+		long classPK, long structureId) {
 
 		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
 
@@ -258,10 +248,9 @@ public class DataFactory {
 	}
 
 	public DLFileEntry addDlFileEntry(
-			long groupId, long companyId, long userId, long folderId,
-			String extension, String mimeType, String name, String title,
-			String description)
-		throws Exception {
+		long groupId, long companyId, long userId, long folderId,
+		String extension, String mimeType, String name, String title,
+		String description) {
 
 		DLFileEntry dlFileEntry = new DLFileEntryImpl();
 
@@ -283,9 +272,8 @@ public class DataFactory {
 	}
 
 	public DLFileEntryMetadata addDLFileEntryMetadata(
-			long ddmStorageId, long ddmStructureId, long fileEntryId,
-			long fileVersionId)
-		throws Exception {
+		long ddmStorageId, long ddmStructureId, long fileEntryId,
+		long fileVersionId) {
 
 		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
 
@@ -299,8 +287,7 @@ public class DataFactory {
 	}
 
 	public DLFileRank addDLFileRank(
-			long groupId, long companyId, long userId, long fileEntryId)
-		throws Exception {
+		long groupId, long companyId, long userId, long fileEntryId) {
 
 		DLFileRank dlFileRank = new DLFileRankImpl();
 
@@ -313,9 +300,7 @@ public class DataFactory {
 		return dlFileRank;
 	}
 
-	public DLFileVersion addDLFileVersion(DLFileEntry dlFileEntry)
-		throws Exception {
-
+	public DLFileVersion addDLFileVersion(DLFileEntry dlFileEntry) {
 		DLFileVersion dlFileVersion = new DLFileVersionImpl();
 
 		dlFileVersion.setFileVersionId(_counter.get());
@@ -334,9 +319,8 @@ public class DataFactory {
 	}
 
 	public DLFolder addDLFolder(
-			long groupId, long companyId, long userId, long parentFolderId,
-			String name, String description)
-		throws Exception {
+		long groupId, long companyId, long userId, long parentFolderId,
+		String name, String description) {
 
 		DLFolder dlFolder = new DLFolderImpl();
 
@@ -353,9 +337,8 @@ public class DataFactory {
 	}
 
 	public DLSync addDLSync(
-			long companyId, long fileId, long repositoryId, long parentFolderId,
-			boolean typeFolder)
-		throws Exception {
+		long companyId, long fileId, long repositoryId, long parentFolderId,
+		boolean typeFolder) {
 
 		DLSync dlSync = new DLSyncImpl();
 
@@ -377,9 +360,8 @@ public class DataFactory {
 	}
 
 	public Group addGroup(
-			long groupId, long classNameId, long classPK, String name,
-			String friendlyURL, boolean site)
-		throws Exception {
+		long groupId, long classNameId, long classPK, String name,
+		String friendlyURL, boolean site) {
 
 		Group group = new GroupImpl();
 
@@ -394,9 +376,8 @@ public class DataFactory {
 	}
 
 	public Layout addLayout(
-			int layoutId, String name, String friendlyURL, String column1,
-			String column2)
-		throws Exception {
+		int layoutId, String name, String friendlyURL, String column1,
+		String column2) {
 
 		Layout layout = new LayoutImpl();
 
@@ -422,9 +403,8 @@ public class DataFactory {
 	}
 
 	public MBCategory addMBCategory(
-			long categoryId, long groupId, long companyId, long userId,
-			String name, String description, int threadCount, int messageCount)
-		throws Exception {
+		long categoryId, long groupId, long companyId, long userId, String name,
+		String description, int threadCount, int messageCount) {
 
 		MBCategory mbCategory = new MBCategoryImpl();
 
@@ -442,8 +422,7 @@ public class DataFactory {
 	}
 
 	public MBDiscussion addMBDiscussion(
-			long classNameId, long classPK, long threadId)
-		throws Exception {
+		long classNameId, long classPK, long threadId) {
 
 		MBDiscussion mbDiscussion = new MBDiscussionImpl();
 
@@ -456,10 +435,9 @@ public class DataFactory {
 	}
 
 	public MBMessage addMBMessage(
-			long messageId, long groupId, long userId, long classNameId,
-			long classPK, long categoryId, long threadId, long rootMessageId,
-			long parentMessageId, String subject, String body)
-		throws Exception {
+		long messageId, long groupId, long userId, long classNameId,
+		long classPK, long categoryId, long threadId, long rootMessageId,
+		long parentMessageId, String subject, String body) {
 
 		MBMessage mbMessage = new MBMessageImpl();
 
@@ -478,9 +456,7 @@ public class DataFactory {
 		return mbMessage;
 	}
 
-	public MBStatsUser addMBStatsUser(long groupId, long userId)
-		throws Exception {
-
+	public MBStatsUser addMBStatsUser(long groupId, long userId) {
 		MBStatsUser mbStatsUser = new MBStatsUserImpl();
 
 		mbStatsUser.setGroupId(groupId);
@@ -490,9 +466,8 @@ public class DataFactory {
 	}
 
 	public MBThread addMBThread(
-			long threadId, long groupId, long companyId, long categoryId,
-			long rootMessageId, int messageCount, long lastPostByUserId)
-		throws Exception {
+		long threadId, long groupId, long companyId, long categoryId,
+		long rootMessageId, int messageCount, long lastPostByUserId) {
 
 		MBThread mbThread = new MBThreadImpl();
 
@@ -508,7 +483,7 @@ public class DataFactory {
 		return mbThread;
 	}
 
-	public List<Permission> addPermissions(Resource resource) throws Exception {
+	public List<Permission> addPermissions(Resource resource) {
 		List<Permission> permissions = new ArrayList<Permission>();
 
 		String name = _individualResourceNames.get(resource.getCodeId());
@@ -530,7 +505,7 @@ public class DataFactory {
 		return permissions;
 	}
 
-	public Resource addResource(String name, String primKey) throws Exception {
+	public Resource addResource(String name, String primKey) {
 		Long codeId = _individualResourceCodeIds.get(name);
 
 		Resource resource = new ResourceImpl();
@@ -543,8 +518,7 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermission> addResourcePermission(
-			long companyId, String name, String primKey)
-		throws Exception {
+		long companyId, String name, String primKey) {
 
 		List<ResourcePermission> resourcePermissions =
 			new ArrayList<ResourcePermission>(2);
@@ -581,8 +555,7 @@ public class DataFactory {
 	}
 
 	public List<KeyValuePair> addRolesPermissions(
-			Resource resource, List<Permission> permissions, Role memberRole)
-		throws Exception {
+		Resource resource, List<Permission> permissions, Role memberRole) {
 
 		List<KeyValuePair> rolesPermissions = new ArrayList<KeyValuePair>();
 
@@ -635,9 +608,8 @@ public class DataFactory {
 	}
 
 	public SocialActivity addSocialActivity(
-			long groupId, long companyId, long userId, long classNameId,
-			long classPK)
-		throws Exception {
+		long groupId, long companyId, long userId, long classNameId,
+		long classPK) {
 
 		SocialActivity socialActivity = new SocialActivityImpl();
 
@@ -651,9 +623,7 @@ public class DataFactory {
 		return socialActivity;
 	}
 
-	public User addUser(boolean defaultUser, String screenName)
-		throws Exception {
-
+	public User addUser(boolean defaultUser, String screenName) {
 		User user = new UserImpl();
 
 		user.setUserId(_counter.get());
@@ -689,8 +659,7 @@ public class DataFactory {
 	}
 
 	public WikiNode addWikiNode(
-			long groupId, long userId, String name, String description)
-		throws Exception {
+		long groupId, long userId, String name, String description) {
 
 		WikiNode wikiNode = new WikiNodeImpl();
 
@@ -704,9 +673,8 @@ public class DataFactory {
 	}
 
 	public WikiPage addWikiPage(
-			long groupId, long userId, long nodeId, String title,
-			double version, String content, boolean head)
-		throws Exception {
+		long groupId, long userId, long nodeId, String title, double version,
+		String content, boolean head) {
 
 		WikiPage wikiPage = new WikiPageImpl();
 
@@ -831,7 +799,7 @@ public class DataFactory {
 		return _wikiPageClassName;
 	}
 
-	public void initClassNames() throws Exception {
+	public void initClassNames() {
 		if (_classNames != null) {
 			return;
 		}
@@ -875,14 +843,14 @@ public class DataFactory {
 		}
 	}
 
-	public void initCompany() throws Exception {
+	public void initCompany() {
 		_company = new CompanyImpl();
 
 		_company.setCompanyId(_counter.get());
 		_company.setAccountId(_counter.get());
 	}
 
-	public void initCounters() throws Exception {
+	public void initCounters() {
 		if (_counters != null) {
 			return;
 		}
@@ -944,13 +912,13 @@ public class DataFactory {
 		_counters.add(counter);
 	}
 
-	public void initDefaultUser() throws Exception {
+	public void initDefaultUser() {
 		_defaultUser = new UserImpl();
 
 		_defaultUser.setUserId(_counter.get());
 	}
 
-	public void initGroups() throws Exception {
+	public void initGroups() {
 		if (_groups != null) {
 			return;
 		}
@@ -1005,7 +973,7 @@ public class DataFactory {
 		}
 	}
 
-	public void initResourceCodes(String name) throws Exception {
+	public void initResourceCodes(String name) {
 
 		// Company
 
@@ -1047,7 +1015,7 @@ public class DataFactory {
 		_individualResourceNames.put(resourceCode.getCodeId(), name);
 	}
 
-	public void initRoles() throws Exception {
+	public void initRoles() {
 		if (_roles != null) {
 			return;
 		}

@@ -28,3 +28,5 @@ ${sampleSQLBuilder.insertUser(contact, userGroup, groupIds, organizationIds, pri
 <#assign mbSystemCategory = dataFactory.addMBCategory(0, 0, 0, 0, "", "", 0, 0)>
 
 ${sampleSQLBuilder.insertMBCategory(mbSystemCategory)}
+
+insert into VirtualHost values (${counter.get()}, ${companyId}, 0, 'localhost');

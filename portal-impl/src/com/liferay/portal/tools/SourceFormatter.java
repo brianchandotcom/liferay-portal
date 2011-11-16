@@ -412,6 +412,41 @@ public class SourceFormatter {
 		}
 	}
 
+	private static boolean _fitsTwoLines(
+		String line, String previousLine, int previousLineLength) {
+
+		if (Validator.isNull(previousLine)) {
+			return false;
+		}
+
+		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+			return false;
+		}
+
+		if ((line.length() + previousLineLength) > 80) {
+			return false;
+		}
+
+		if (line.endsWith(StringPool.SEMICOLON)) {
+			return true;
+		}
+
+		previousLine = previousLine.trim();
+
+		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
+			(previousLine.startsWith("else ") ||
+			 previousLine.startsWith("if ") ||
+			 previousLine.startsWith("private ") ||
+			 previousLine.startsWith("protected ") ||
+			 previousLine.startsWith("public "))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static String _fixAntXMLProjectName(
 			String basedir, String fileName, String content)
 		throws IOException {
@@ -943,6 +978,11 @@ public class SourceFormatter {
 
 		String line = null;
 
+		String previousLine = StringPool.BLANK;
+
+		int lineToSkipIfEmpty = 0;
+		int previousLineLength = 0;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -990,8 +1030,7 @@ public class SourceFormatter {
 				}
 			}
 
-			sb.append(line);
-			sb.append("\n");
+			String originalLine = line;
 
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
@@ -1043,7 +1082,9 @@ public class SourceFormatter {
 					StringUtil.replace(fileName, "\\", "/"));
 			}
 
-			if ((excluded == null) && (line.length() > 80) &&
+			boolean fitsTwoLines= false;
+
+			if ((excluded == null) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
 				!line.matches("\\s*\\*.*")) {
 
@@ -1057,18 +1098,47 @@ public class SourceFormatter {
 						 line.contains(" index IX_")) {
 				}
 				else {
-					_sourceFormatterHelper.printError(
-						fileName, "> 80: " + fileName + " " + lineCount);
+					if (line.length() > 80) {
+						_sourceFormatterHelper.printError(
+							fileName, "> 80: " + fileName + " " + lineCount);
+					}
+					else {
+						fitsTwoLines = _fitsTwoLines(
+							trimmedLine, previousLine, previousLineLength);
+					}
 				}
 			}
+
+			if (fitsTwoLines) {
+				previousLine = previousLine + trimmedLine;
+				previousLineLength = previousLineLength + trimmedLine.length();
+
+				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+					lineToSkipIfEmpty = lineCount + 1;
+				}
+			}
+			else {
+				if ((lineCount > 1) &&
+					(!(Validator.isNull(previousLine) &&
+					   (lineToSkipIfEmpty == lineCount - 1)))) {
+
+					sb.append(previousLine);
+					sb.append("\n");
+				}
+
+				previousLine = originalLine;
+				previousLineLength = line.length();
+			}
 		}
+
+		sb.append(previousLine);
 
 		unsyncBufferedReader.close();
 
 		String newContent = sb.toString();
 
 		if (newContent.endsWith("\n")) {
-			newContent = newContent.substring(0, newContent.length() -1);
+			newContent = newContent.substring(0, newContent.length() - 1);
 		}
 
 		if (longLogFactoryUtil) {

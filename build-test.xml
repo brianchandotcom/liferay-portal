@@ -1241,6 +1241,7 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-test-misc" />
 			<param name="test.ant.script.plugin.portlets" value="test-misc-portlet" />
+			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
 			<param name="test.ant.script.suite" value="PluginsTestMiscTestSuite" />
 		</antcall>
 

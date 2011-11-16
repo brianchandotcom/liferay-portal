@@ -25,8 +25,7 @@ import java.lang.reflect.Method;
  */
 public class MultiClassLoaderProxyRequest extends ProxyRequest {
 
-	public MultiClassLoaderProxyRequest(
-			Method method, Object[] arguments)
+	public MultiClassLoaderProxyRequest(Method method, Object[] arguments)
 		throws Exception {
 
 		super(method, arguments);

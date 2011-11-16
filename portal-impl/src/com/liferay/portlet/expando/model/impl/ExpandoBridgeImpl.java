@@ -103,8 +103,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		addAttribute(name, type, null, secure);
 	}
 
-	public void addAttribute(
-			String name, int type, Serializable defaultValue)
+	public void addAttribute(String name, int type, Serializable defaultValue)
 		throws PortalException {
 
 		boolean secure =

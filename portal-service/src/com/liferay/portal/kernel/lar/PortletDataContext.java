@@ -232,8 +232,7 @@ public interface PortletDataContext extends Serializable {
 	public void importLocks(Class<?> clazz, String key, String newKey)
 		throws PortalException, SystemException;
 
-	public void importPermissions(
-			Class<?> clazz, long classPK, long newClassPK)
+	public void importPermissions(Class<?> clazz, long classPK, long newClassPK)
 		throws PortalException, SystemException;
 
 	public void importPermissions(

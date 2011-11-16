@@ -926,8 +926,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return recurrenceCal;
 	}
 
-	protected void importICal4j(
-			long userId, long groupId, VEvent event)
+	protected void importICal4j(long userId, long groupId, VEvent event)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);

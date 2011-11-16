@@ -286,8 +286,7 @@ public class ResourceBlockLocalServiceImpl
 		}
 	}
 
-	public List<String> getPermissions(
-			ResourceBlock resourceBlock, long roleId)
+	public List<String> getPermissions(ResourceBlock resourceBlock, long roleId)
 		throws SystemException {
 
 		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
@@ -825,8 +824,7 @@ public class ResourceBlockLocalServiceImpl
 		return resourceBlock;
 	}
 
-	public void verifyResourceBlockId(
-			long companyId, String name, long primKey)
+	public void verifyResourceBlockId(long companyId, String name, long primKey)
 		throws PortalException, SystemException {
 
 		PermissionedModel permissionedModel = getPermissionedModel(

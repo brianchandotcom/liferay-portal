@@ -734,8 +734,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected String getUniqueUrlTitle(
-			long entryId, long groupId, String title)
+	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
 		throws SystemException {
 
 		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);

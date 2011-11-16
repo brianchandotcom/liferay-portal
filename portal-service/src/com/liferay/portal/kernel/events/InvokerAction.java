@@ -28,8 +28,7 @@ public class InvokerAction extends Action {
 	}
 
 	@Override
-	public void run(
-			HttpServletRequest request, HttpServletResponse response)
+	public void run(HttpServletRequest request, HttpServletResponse response)
 		throws ActionException {
 
 		Thread currentThread = Thread.currentThread();

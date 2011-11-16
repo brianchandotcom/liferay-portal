@@ -271,8 +271,7 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		return store.getFileNames(companyId, repositoryId, dirName);
 	}
 
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		return store.getFileSize(companyId, repositoryId, fileName);

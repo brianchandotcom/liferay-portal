@@ -48,8 +48,7 @@ public class FileUtil {
 		getFile().copyFile(source, destination);
 	}
 
-	public static void copyFile(
-			String source, String destination, boolean lazy)
+	public static void copyFile(String source, String destination, boolean lazy)
 		throws IOException {
 
 		getFile().copyFile(source, destination, lazy);

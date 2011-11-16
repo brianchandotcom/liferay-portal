@@ -421,8 +421,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 * @return the number of organizations belonging to the parent organization
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int getOrganizationsCount(
-			long companyId, long parentOrganizationId)
+	public int getOrganizationsCount(long companyId, long parentOrganizationId)
 		throws SystemException {
 
 		return organizationPersistence.filterCountByC_P(

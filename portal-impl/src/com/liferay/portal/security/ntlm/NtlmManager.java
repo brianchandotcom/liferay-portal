@@ -45,8 +45,7 @@ public class NtlmManager {
 			servicePassword);
 	}
 
-	public NtlmUserAccount authenticate(
-			byte[] material, byte[] serverChallenge)
+	public NtlmUserAccount authenticate(byte[] material, byte[] serverChallenge)
 		throws IOException, NoSuchAlgorithmException, NtlmLogonException {
 
 		Type3Message type3Message = new Type3Message(material);

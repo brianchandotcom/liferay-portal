@@ -437,8 +437,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			role.getRoleId(), new long[] {group.getGroupId()});
 	}
 
-	protected User addUser(
-			long companyId, LDAPUser ldapUser, String password)
+	protected User addUser(long companyId, LDAPUser ldapUser, String password)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {

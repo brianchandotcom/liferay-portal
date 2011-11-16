@@ -188,8 +188,7 @@ public class IndexCommitSerializationUtil {
 		}
 	}
 
-	private static void writeSegmentsGen(
-			Directory directory, long generation)
+	private static void writeSegmentsGen(Directory directory, long generation)
 		throws IOException {
 
 		if (_log.isDebugEnabled()) {

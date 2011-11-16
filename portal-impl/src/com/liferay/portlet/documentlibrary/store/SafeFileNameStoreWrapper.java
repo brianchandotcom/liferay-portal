@@ -290,8 +290,7 @@ public class SafeFileNameStoreWrapper implements Store {
 		return decodedFileNames;
 	}
 
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);

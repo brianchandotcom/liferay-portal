@@ -28,8 +28,7 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class InputPermissionsParamsTag extends TagSupport {
 
-	public static String doTag(
-			String modelName, PageContext pageContext)
+	public static String doTag(String modelName, PageContext pageContext)
 		throws Exception {
 
 		Object returnObj = PortalClassInvoker.invoke(

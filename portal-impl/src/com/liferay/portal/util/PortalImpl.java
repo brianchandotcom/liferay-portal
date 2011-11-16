@@ -1722,8 +1722,7 @@ public class PortalImpl implements Portal {
 		return PropsValues.LIFERAY_LIB_GLOBAL_DIR;
 	}
 
-	public String getGoogleGadgetURL(
-			Portlet portlet, ThemeDisplay themeDisplay)
+	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return _getServletURL(
@@ -2103,8 +2102,7 @@ public class PortalImpl implements Portal {
 		return layoutSettings.getEditPage();
 	}
 
-	public String getLayoutFriendlyURL(
-			Layout layout, ThemeDisplay themeDisplay)
+	public String getLayoutFriendlyURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		if (!isLayoutFriendliable(layout)) {
@@ -2471,8 +2469,7 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
-	public String getNetvibesURL(
-			Portlet portlet, ThemeDisplay themeDisplay)
+	public String getNetvibesURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		return _getServletURL(

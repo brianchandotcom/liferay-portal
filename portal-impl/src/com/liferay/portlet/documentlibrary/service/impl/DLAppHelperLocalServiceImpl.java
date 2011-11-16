@@ -193,8 +193,7 @@ public class DLAppHelperLocalServiceImpl
 		return dlFileShortcutPersistence.findByG_F_S(groupId, folderId, status);
 	}
 
-	public int getFileShortcutsCount(
-			long groupId, long folderId, int status)
+	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws SystemException {
 
 		return dlFileShortcutPersistence.countByG_F_S(

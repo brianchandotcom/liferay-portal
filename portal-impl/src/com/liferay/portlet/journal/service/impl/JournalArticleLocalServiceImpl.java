@@ -1418,8 +1418,7 @@ public class JournalArticleLocalServiceImpl
 		return article.getVersion();
 	}
 
-	public double getLatestVersion(
-			long groupId, String articleId, int status)
+	public double getLatestVersion(long groupId, String articleId, int status)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getLatestArticle(groupId, articleId, status);

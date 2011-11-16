@@ -106,8 +106,7 @@ public class StoreProxyImpl implements Store {
 		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
-	public File getFile(
-			long companyId, long repositoryId, String fileName)
+	public File getFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();
@@ -182,8 +181,7 @@ public class StoreProxyImpl implements Store {
 		return store.getFileNames(companyId, repositoryId, dirName);
 	}
 
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		Store store = StoreFactory.getInstance();

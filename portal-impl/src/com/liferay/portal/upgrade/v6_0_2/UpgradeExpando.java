@@ -220,8 +220,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		}
 	}
 
-	protected void updateRows(
-			String tableName, long tableId, String columnName)
+	protected void updateRows(String tableName, long tableId, String columnName)
 		throws Exception {
 
 		Connection con = null;

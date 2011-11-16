@@ -1270,8 +1270,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         current user did not have permission to update the user
 	 * @throws SystemException if a system exception occurred
 	 */
-	public User updateReminderQuery(
-			long userId, String question, String answer)
+	public User updateReminderQuery(long userId, String question, String answer)
 		throws PortalException, SystemException {
 
 		UserPermissionUtil.check(

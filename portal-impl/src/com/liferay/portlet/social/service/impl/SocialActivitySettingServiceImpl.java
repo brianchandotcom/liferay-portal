@@ -65,8 +65,7 @@ public class SocialActivitySettingServiceImpl
 			groupId, className);
 	}
 
-	public JSONArray getJSONActivityDefinitions(
-			long groupId, String className)
+	public JSONArray getJSONActivityDefinitions(long groupId, String className)
 		throws PortalException, SystemException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

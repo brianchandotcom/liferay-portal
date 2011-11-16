@@ -111,8 +111,7 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(
-			long companyId, long repositoryId, String fileName)
+	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws SystemException {
 
 		try {
@@ -229,8 +228,7 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public long getFileSize(
-			long companyId, long repositoryId, String fileName)
+	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
 		try {

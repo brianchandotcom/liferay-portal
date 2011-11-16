@@ -79,8 +79,7 @@ public class IFrameUtil {
 		return userName;
 	}
 
-	public static boolean isPasswordTokenEnabled(
-			PortletRequest portletRequest)
+	public static boolean isPasswordTokenEnabled(PortletRequest portletRequest)
 		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

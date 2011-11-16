@@ -151,8 +151,7 @@ public class DataSourceSwapper {
 			sessionFactoryImplementor);
 	}
 
-	private static void _reinitializeJPA(
-			String name, DataSource dataSource)
+	private static void _reinitializeJPA(String name, DataSource dataSource)
 		throws Exception {
 
 		LocalContainerEntityManagerFactoryBean

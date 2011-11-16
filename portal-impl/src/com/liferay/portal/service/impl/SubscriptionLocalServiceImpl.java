@@ -132,8 +132,7 @@ public class SubscriptionLocalServiceImpl
 		deleteSubscription(subscription);
 	}
 
-	public void deleteSubscription(
-			long userId, String className, long classPK)
+	public void deleteSubscription(long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);

@@ -29,8 +29,7 @@ import java.io.InputStream;
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
 
-	public void addDirectory(
-			long companyId, long repositoryId, String dirName)
+	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
 	public void addFile(
@@ -71,8 +70,7 @@ public interface DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException;
 
-	public void deleteFile(
-			long companyId, long repositoryId, String fileName)
+	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException;
 
 	public void deleteFile(
@@ -154,8 +152,7 @@ public interface DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException, SystemException;
 
-	public void validate(
-			String fileName, boolean validateFileExtension)
+	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException;
 
 	public void validate(

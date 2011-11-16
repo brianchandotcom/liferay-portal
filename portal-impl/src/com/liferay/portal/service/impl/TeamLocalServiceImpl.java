@@ -177,8 +177,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		return teamFinder.countByG_N_D(groupId, name, description, params);
 	}
 
-	public Team updateTeam(
-			long teamId, String name, String description)
+	public Team updateTeam(long teamId, String name, String description)
 		throws PortalException, SystemException {
 
 		Date now = new Date();

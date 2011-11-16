@@ -1977,8 +1977,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
 	}
 
-	public Hits search(
-			long repositoryId, SearchContext searchContext)
+	public Hits search(long repositoryId, SearchContext searchContext)
 		throws SearchException {
 
 		try {

@@ -38,8 +38,7 @@ public class ThreadLocalCacheAdvice
 	extends AnnotationChainableMethodAdvice<ThreadLocalCachable> {
 
 	@Override
-	public void afterReturning(
-			MethodInvocation methodInvocation, Object result)
+	public void afterReturning(MethodInvocation methodInvocation, Object result)
 		throws Throwable {
 
 		ThreadLocalCachable threadLocalCachable = findAnnotation(

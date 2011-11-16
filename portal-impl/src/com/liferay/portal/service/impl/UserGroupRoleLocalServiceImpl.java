@@ -85,8 +85,7 @@ public class UserGroupRoleLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 	}
 
-	public void deleteUserGroupRoles(
-			long userId, long groupId, long[] roleIds)
+	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws SystemException {
 
 		for (long roleId : roleIds) {

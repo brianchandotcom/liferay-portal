@@ -41,8 +41,7 @@ import org.apache.lucene.index.Term;
  */
 public class LuceneIndexWriterImpl implements IndexWriter {
 
-	public void addDocument(
-			SearchContext searchContext, Document document)
+	public void addDocument(SearchContext searchContext, Document document)
 		throws SearchException {
 
 		try {
@@ -106,8 +105,7 @@ public class LuceneIndexWriterImpl implements IndexWriter {
 		}
 	}
 
-	public void updateDocument(
-			SearchContext searchContext, Document document)
+	public void updateDocument(SearchContext searchContext, Document document)
 		throws SearchException {
 
 		try {

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -112,10 +113,10 @@ public class DynamicCSSUtil {
 
 		File cssRealFile = new File(cssRealPath);
 		File cacheCssRealFile = SassToCssBuilder.getCacheFile(cssRealPath);
+		boolean isThemeCssFastLoad = _isThemeCssFastLoad(request, themeDisplay);
 
-		if (cacheCssRealFile.exists() &&
-			(cacheCssRealFile.lastModified() == cssRealFile.lastModified()) &&
-			_isThemeCssFastLoad(request, themeDisplay)) {
+		if (isThemeCssFastLoad && cacheCssRealFile.exists() &&
+			(cacheCssRealFile.lastModified() == cssRealFile.lastModified())) {
 
 			parsedContent = FileUtil.read(cacheCssRealFile);
 
@@ -140,6 +141,12 @@ public class DynamicCSSUtil {
 					ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT,
 					ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH
 				});
+
+			String queryString = request.getQueryString();
+
+			if (!isThemeCssFastLoad && Validator.isNotNull(queryString)) {
+				content = _propagateQueryString(content, queryString);
+			}
 
 			parsedContent = _parseSass(
 				request, themeDisplay, theme, cssRealPath, content);
@@ -297,6 +304,43 @@ public class DynamicCSSUtil {
 
 		return unsyncByteArrayOutputStream.toString();
 	}
+
+	private static String _propagateQueryString(
+		String content, String queryString) {
+
+		StringBuilder sb = new StringBuilder(content.length());
+
+		int pos = 0;
+
+		while (true) {
+			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
+			int importY = content.indexOf(
+				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
+
+			if ((importX == -1) || (importY == -1)) {
+				sb.append(content.substring(pos, content.length()));
+
+				break;
+			}
+			else {
+				sb.append(content.substring(pos, importY));
+
+				sb.append(CharPool.QUESTION);
+
+				sb.append(queryString);
+
+				sb.append(_CSS_IMPORT_END);
+
+				pos = importY + _CSS_IMPORT_END.length();
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private static final String _CSS_IMPORT_BEGIN = "@import url(";
+
+	private static final String _CSS_IMPORT_END = ");";
 
 	private static final String _SASS_DIR =
 		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/sass";

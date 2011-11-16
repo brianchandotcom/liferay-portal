@@ -90,6 +90,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetTag"),
 			true);
 	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -267,7 +268,17 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -377,6 +388,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagModelImpl._originalGroupId = assetTagModelImpl._groupId;
 
 		assetTagModelImpl._setOriginalGroupId = false;
+
+		assetTagModelImpl._originalName = assetTagModelImpl._name;
 
 		assetTagModelImpl._columnBitmask = 0;
 	}
@@ -523,6 +536,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private String _originalName;
 	private int _assetCount;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;

@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -60,9 +61,13 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -469,6 +474,41 @@ public class PortletExporter {
 			document.formattedString());
 	}
 
+	protected void exportAssetTag(
+			PortletDataContext portletDataContext, AssetTag assetTag,
+			Element assetTagsElement)
+		throws SystemException, PortalException {
+
+		String path = getAssetTagPath(portletDataContext, assetTag.getTagId());
+
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
+
+		Element assetTagElement = assetTagsElement.addElement("tag");
+
+		assetTagElement.addAttribute("path", path);
+
+		assetTag.setUserUuid(assetTag.getUserUuid());
+
+		portletDataContext.addZipEntry(path, assetTag);
+
+		List<AssetTagProperty> assetTagProperties =
+			AssetTagPropertyLocalServiceUtil.getTagProperties(
+				assetTag.getTagId());
+
+		for (AssetTagProperty assetTagProperty : assetTagProperties) {
+			Element propertyElement = assetTagElement.addElement("property");
+
+			propertyElement.addAttribute(
+				"userUuid", assetTagProperty.getUserUuid());
+			propertyElement.addAttribute("key", assetTagProperty.getKey());
+			propertyElement.addAttribute("value", assetTagProperty.getValue());
+		}
+
+		portletDataContext.addPermissions(AssetTag.class, assetTag.getTagId());
+	}
+
 	protected void exportAssetTags(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -494,9 +534,36 @@ public class PortletExporter {
 				"tags", StringUtil.merge(entry.getValue()));
 		}
 
+		List<AssetTag> assetTags = AssetTagServiceUtil.getGroupTags(
+			portletDataContext.getScopeGroupId());
+
+		for (AssetTag assetTag : assetTags) {
+			exportAssetTag(portletDataContext, assetTag, rootElement);
+		}
+
 		portletDataContext.addZipEntry(
 			portletDataContext.getRootPath() + "/tags.xml",
 			document.formattedString());
+	}
+
+	protected void exportAssetTagsProperties(
+			long assetTagId, Element assetTagElement)
+		throws PortalException, SystemException {
+
+		Element propertiesElement = assetTagElement.addElement("properties");
+
+		List<AssetTagProperty> assetTagProperties =
+			AssetTagPropertyLocalServiceUtil.getTagProperties(assetTagId);
+
+		for (AssetTagProperty assetTagProperty : assetTagProperties) {
+			Element assetTagPropertyElement = propertiesElement.addElement(
+				"property");
+
+			assetTagPropertyElement.addAttribute(
+				"key", assetTagProperty.getKey());
+			assetTagPropertyElement.addAttribute(
+				"value", assetTagProperty.getValue());
+		}
 	}
 
 	protected void exportAssetVocabulary(
@@ -1110,10 +1177,23 @@ public class PortletExporter {
 	protected String getAssetCategoryPath(
 		PortletDataContext portletDataContext, long assetCategoryId) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(portletDataContext.getRootPath());
 		sb.append("/categories/");
+		sb.append(assetCategoryId);
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	protected String getAssetTagPath(
+		PortletDataContext portletDataContext, long assetCategoryId) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(portletDataContext.getRootPath());
+		sb.append("/tags/");
 		sb.append(assetCategoryId);
 		sb.append(".xml");
 

@@ -1143,7 +1143,7 @@ public class MainServlet extends ActionServlet {
 			response.addHeader(
 				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getName());
 		}
-		else {
+		else if (!_HTTP_HEADER_VERSION_VERBOSITY_NONE) {
 			response.addHeader(
 				_LIFERAY_PORTAL_REQUEST_HEADER, ReleaseInfo.getReleaseInfo());
 		}
@@ -1312,6 +1312,9 @@ public class MainServlet extends ActionServlet {
 
 		PrincipalThreadLocal.setPassword(password);
 	}
+
+	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_NONE =
+		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("none");
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
 		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("partial");

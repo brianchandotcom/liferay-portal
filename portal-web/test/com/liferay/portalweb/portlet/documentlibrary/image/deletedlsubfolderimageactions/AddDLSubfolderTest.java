@@ -69,10 +69,12 @@ public class AddDLSubfolderTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -104,6 +106,25 @@ public class AddDLSubfolderTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DL Subfolder Name")
+										.equals(selenium.getText(
+								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("DL Subfolder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

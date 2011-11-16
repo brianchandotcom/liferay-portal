@@ -71,7 +71,7 @@ public class ViewDLBreadcrumbFolderTest extends BaseTestCase {
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='document-library-breadcrumb']"));
-		assertEquals(RuntimeVariables.replace("Documents Home"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
 				"//div[@class='document-library-breadcrumb']/span/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),

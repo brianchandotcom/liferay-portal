@@ -24,6 +24,11 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>DL Folder Name</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>DL Folder Name</td>
@@ -54,6 +59,11 @@
 	<td>DL Folder Document Title</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//fieldset/div/a</td>
+	<td>Be the first.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//fieldset/div/a</td>
 	<td>Be the first.</td>
@@ -79,7 +89,7 @@
 	<td>Reply</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
 	<td>Your request processed successfully.</td>
 </tr>

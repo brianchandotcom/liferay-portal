@@ -45,7 +45,7 @@ public class ViewDLBreadcrumbRootTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
 				"//div[@class='document-library-breadcrumb']"));
-		assertEquals(RuntimeVariables.replace("Documents Home"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
 				"//div[@class='document-library-breadcrumb']/ul/li[1]/span/a"));
 	}

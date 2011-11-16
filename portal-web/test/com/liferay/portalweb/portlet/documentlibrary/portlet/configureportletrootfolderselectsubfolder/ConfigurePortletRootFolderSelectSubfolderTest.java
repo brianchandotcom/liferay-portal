@@ -44,9 +44,11 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -165,7 +167,7 @@ public class ConfigurePortletRootFolderSelectSubfolderTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		assertEquals(RuntimeVariables.replace("Documents Home"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
 				"//div[@class='document-library-breadcrumb']/ul/li/span/a"));
 	}

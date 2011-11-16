@@ -49,6 +49,11 @@
 	<td>DL Folder Image Title</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//button[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//button[2]</td>
 	<td>Edit</td>
@@ -75,8 +80,13 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//h2[@class='document-title']</td>
-	<td>DL Folder Image Title Edit</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -84,13 +94,8 @@
 	<td>DL Folder Image Title Edit</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
-	<td>Liferay Image</td>
-</tr>
-<tr>
 	<td>assertVisible</td>
-	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
+	<td>//div[@class='lfr-preview-file-image-container']/img</td>
 	<td>Liferay Image</td>
 </tr>
 <tr>

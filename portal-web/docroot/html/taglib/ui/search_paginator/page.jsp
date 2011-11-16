@@ -23,11 +23,11 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 
 PortletURL iteratorURL = searchContainer.getIteratorURL();
 
-iteratorURL.setParameter("resetCur", Boolean.FALSE.toString());
-
 String url = StringPool.BLANK;
 
 if (iteratorURL != null) {
+	iteratorURL.setParameter("resetCur", Boolean.FALSE.toString());
+
 	url = HttpUtil.removeParameter(iteratorURL.toString(), namespace + searchContainer.getCurParam());
 }
 %>

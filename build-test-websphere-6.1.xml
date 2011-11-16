@@ -241,6 +241,8 @@ $AdminConfig save</echo>
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
 		</exec>
 
+		<antcall target="clean-up-logs" />
+
 		<exec executable="${pscp.executable}">
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:Progra~1/IBM/WebSphere/AppServer/profiles/AppSrv01/logs/server1/SystemOut.log log" />
 		</exec>

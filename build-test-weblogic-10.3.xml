@@ -190,6 +190,8 @@
 
 		<antcall target="start-selenium" />
 
+		<antcall target="clean-up-logs" />
+
 		<record action="start" name="log" />
 
 		<antcall target="run-weblogic-10.3">

@@ -228,6 +228,8 @@ web.server.display.node=true</echo>
 	</target>
 
 	<target name="run-tomcat">
+		<antcall target="clean-up-logs" />
+
 		<record action="start" name="log" />
 
 		<antcall target="run-simple-server">

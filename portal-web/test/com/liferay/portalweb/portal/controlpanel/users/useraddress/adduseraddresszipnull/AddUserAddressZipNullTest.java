@@ -104,7 +104,8 @@ public class AddUserAddressZipNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid zip."),
+		assertEquals(RuntimeVariables.replace(
+				"Please enter a valid postal code."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

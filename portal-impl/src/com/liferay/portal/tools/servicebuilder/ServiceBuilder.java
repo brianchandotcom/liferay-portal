@@ -4035,7 +4035,7 @@ public class ServiceBuilder {
 					}
 				}
 				else if (colType.equals("Date")) {
-					sb.append("DATE null");
+					sb.append("DATE");
 				}
 				else {
 					sb.append("invalid");
@@ -4043,6 +4043,9 @@ public class ServiceBuilder {
 
 				if (col.isPrimary()) {
 					sb.append(" not null");
+				}
+				else if (colType.equals("String") || colType.equals("Date")) {
+					sb.append(" null");
 				}
 
 				sb.append(",\n");
@@ -4120,7 +4123,7 @@ public class ServiceBuilder {
 				sb.append("BLOB");
 			}
 			else if (colType.equals("Date")) {
-				sb.append("DATE null");
+				sb.append("DATE");
 			}
 			else if (colType.equals("String")) {
 				Map<String, String> hints = ModelHintsUtil.getHints(
@@ -4158,7 +4161,7 @@ public class ServiceBuilder {
 					sb.append(" primary key");
 				}
 			}
-			else if (colType.equals("String")) {
+			else if (colType.equals("String") || colType.equals("Date")) {
 				sb.append(" null");
 			}
 

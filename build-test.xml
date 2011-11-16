@@ -1754,11 +1754,6 @@
 		</delete>
 	</target>
 
-	<target name="clean-up-logs">
-		<delete file="log" />
-		<delete file="portal-web/test-ant-scripts/log" />
-	</target>
-
 	<target name="clean-up-java-processes">
 		<loadfile property="java.processes.old.content" srcfile="java-processes" />
 
@@ -1836,6 +1831,11 @@
 				</if>
 			</sequential>
 		</for>
+	</target>
+
+	<target name="clean-up-logs">
+		<delete file="log" />
+		<delete file="portal-web/test-ant-scripts/log" />
 	</target>
 
 	<target name="clean-up-vms">

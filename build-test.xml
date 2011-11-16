@@ -1233,6 +1233,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="plugins-today-in-christian-history" />
+			<param name="test.ant.script.plugin.portlets" value="tich-portlet" />
+			<param name="test.ant.script.suite" value="PluginsTodayinChristianHistoryTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-todays-events" />
 			<param name="test.ant.script.plugin.portlets" value="todays-events-portlet" />
 			<param name="test.ant.script.suite" value="PluginsTodaysEventsTestSuite" />

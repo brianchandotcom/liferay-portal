@@ -248,7 +248,16 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public void setContextAttribute(String key, Object value) {
-		_context.put(key, HtmlUtil.escape(String.valueOf(value)));
+		setContextAttribute(key, value, true);
+	}
+
+	public void setContextAttribute(String key, Object value, boolean escaped) {
+		if (escaped) {
+			_context.put(key, HtmlUtil.escape(String.valueOf(value)));
+		}
+		else {
+			_context.put(key, String.valueOf(value));
+		}
 	}
 
 	public void setContextAttributes(Object... values) {

@@ -1677,11 +1677,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setCompanyId(page.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$DIFFS_URL$]", diffsURL, "[$NODE_NAME$]", node.getName(),
-			"[$PAGE_CONTENT$]", pageContent, "[$PAGE_DATE_UPDATE$]",
-			page.getModifiedDate(), "[$PAGE_DIFFS$]", replaceStyles(pageDiffs),
-			"[$PAGE_ID$]", page.getPageId(), "[$PAGE_SUMMARY$]",
-			page.getSummary(), "[$PAGE_TITLE$]", page.getTitle(),
-			"[$PAGE_URL$]", pageURL);
+			"[$PAGE_DATE_UPDATE$]", page.getModifiedDate(), "[$PAGE_DIFFS$]",
+			 replaceStyles(pageDiffs), "[$PAGE_ID$]", page.getPageId(),
+			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]",
+			page.getTitle(), "[$PAGE_URL$]", pageURL);
+		subscriptionSender.setContextAttribute(
+			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextUserPrefix("PAGE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

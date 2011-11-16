@@ -113,7 +113,7 @@ public class PluginsEnvironmentBuilder {
 		List<String> ignores = ListUtil.fromFile(
 			libDir.getCanonicalPath() + "/../.gitignore");
 
-		if (!ignores.contains("lib")) {
+		if (!libDirPath.contains("/ext/") && !ignores.contains("lib")) {
 			File gitignoreFile = new File(
 				libDir.getCanonicalPath() + "/.gitignore");
 
@@ -172,13 +172,13 @@ public class PluginsEnvironmentBuilder {
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
 		sb.append("<classpath>\n");
 
-		if (_fileUtil.exists(projectDirName + "/docroot/WEB-INF/service")) {
-			sb.append("\t<classpathentry excluding=\"**/.svn/**|.svn/\" ");
-			sb.append("kind=\"src\" path=\"docroot/WEB-INF/service\" />\n");
+		for (String sourceDirName : _SOURCE_DIR_NAMES) {
+			if (_fileUtil.exists(projectDirName + "/" + sourceDirName)) {
+				sb.append("\t<classpathentry excluding=\"**/.svn/**|.svn/\" ");
+				sb.append("kind=\"src\" path=\"" + sourceDirName + "\" />\n");
+			}
 		}
 
-		sb.append("\t<classpathentry excluding=\"**/.svn/**|.svn/\" ");
-		sb.append("kind=\"src\" path=\"docroot/WEB-INF/src\" />\n");
 		sb.append("\t<classpathentry kind=\"src\" path=\"/portal\" />\n");
 		sb.append("\t<classpathentry kind=\"con\" ");
 		sb.append("path=\"org.eclipse.jdt.launching.JRE_CONTAINER\" />\n");
@@ -209,6 +209,20 @@ public class PluginsEnvironmentBuilder {
 
 		String libDirPath = StringUtil.replace(
 			libDir.getPath(), StringPool.BACK_SLASH, StringPool.SLASH);
+
+		if (libDirPath.contains("/ext/")) {
+			for (String dirName : new String[] {"global", "portal"}) {
+				File file = new File(libDirPath + "/../ext-lib/" + dirName);
+
+				List<String> jars = ListUtil.toList(
+					file.list(new GlobFilenameFilter("*.jar")));
+
+				for (String jar : jars) {
+					addClasspathEntry(
+						sb, "docroot/WEB-INF/ext-lib/" + dirName + "/" + jar);
+				}
+			}
+		}
 
 		for (String jar : customJars) {
 			if (libDirPath.contains("/tmp/WEB-INF/lib")) {
@@ -241,19 +255,65 @@ public class PluginsEnvironmentBuilder {
 
 		boolean javaProject = false;
 
-		if (_fileUtil.exists(projectDirName + "/docroot/WEB-INF/src")) {
-			javaProject = true;
+		for (String sourceDirName : _SOURCE_DIR_NAMES) {
+			if (_fileUtil.exists(projectDirName + "/" + sourceDirName)) {
+				javaProject = true;
+
+				break;
+			}
 		}
-		else {
+
+		if (!javaProject) {
 			System.out.println(
-				"Eclipse Java project will not be used because " +
-					projectDirName + "/docroot/WEB-INF/src does not exist");
+				"Eclipse Java project will not be used because a source " +
+					"folder does not exist");
 		}
 
 		writeProjectFile(projectDirName, projectName, javaProject);
 
 		writeClasspathFile(
 			libDir, dependencyJars, projectDirName, projectName, javaProject);
+
+		for (String sourceDirName : _SOURCE_DIR_NAMES) {
+			if (_fileUtil.exists(projectDirName + "/" + sourceDirName)) {
+				List<String> gitIgnores = new ArrayList<String>();
+
+				if (sourceDirName.endsWith("ext-impl/src")) {
+					gitIgnores.add("classes");
+					gitIgnores.add("ext-impl.jar");
+				}
+				else if (sourceDirName.endsWith("ext-service/src")) {
+					gitIgnores.add("classes");
+					gitIgnores.add("ext-service.jar");
+				}
+				else if (sourceDirName.endsWith("ext-util-bridges/src")) {
+					gitIgnores.add("classes");
+					gitIgnores.add("ext-util-bridges.jar");
+				}
+				else if (sourceDirName.endsWith("ext-util-java/src")) {
+					gitIgnores.add("classes");
+					gitIgnores.add("ext-util-java.jar");
+				}
+				else if (sourceDirName.endsWith("ext-util-taglib/src")) {
+					gitIgnores.add("classes");
+					gitIgnores.add("ext-util-taglib.jar");
+				}
+				else {
+					continue;
+				}
+
+				String dirName = projectDirName + "/" + sourceDirName + "/../";
+
+				if (gitIgnores.isEmpty()) {
+					_fileUtil.delete(dirName + ".gitignore");
+				}
+				else {
+					String s = StringUtil.merge(gitIgnores, "\n");
+
+					_fileUtil.write(dirName + ".gitignore", s);
+				}
+			}
+		}
 
 		if (_fileUtil.exists(projectDirName + "/test")) {
 			_fileUtil.write(
@@ -306,6 +366,16 @@ public class PluginsEnvironmentBuilder {
 	}
 
 	private static final String _BRANCH = "trunk";
+
+	private static final String[] _SOURCE_DIR_NAMES = new String[] {
+		"docroot/WEB-INF/ext-impl/src",
+		"docroot/WEB-INF/ext-service/src",
+		"docroot/WEB-INF/ext-util-bridges/src",
+		"docroot/WEB-INF/ext-util-java/src",
+		"docroot/WEB-INF/ext-util-taglib/src",
+		"docroot/WEB-INF/service",
+		"docroot/WEB-INF/src"
+	};
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 

@@ -32,10 +32,9 @@ import com.xuggle.xuggler.IStreamCoder;
  */
 public class LiferayAudioConverter extends LiferayConverter {
 
-	public LiferayAudioConverter(String inputURL, String outputURL, int rate) {
+	public LiferayAudioConverter(String inputURL, String outputURL) {
 		_inputURL = inputURL;
 		_outputURL = outputURL;
-		_rate = rate;
 	}
 
 	public void convert() throws Exception {
@@ -90,23 +89,10 @@ public class LiferayAudioConverter extends LiferayConverter {
 			ICodec.Type inputICodecType = inputIStreamCoder.getCodecType();
 
 			if (inputICodecType == ICodec.Type.CODEC_TYPE_AUDIO) {
-				int channels = _channels;
-
-				if (inputIStreamCoder.getChannels() > 0) {
-					channels = inputIStreamCoder.getChannels();
-				}
-
-				int rate = _rate;
-
-				if (inputIStreamCoder.getSampleRate() > 0) {
-					rate = inputIStreamCoder.getSampleRate();
-				}
-
 				prepareAudio(
 					iAudioResamplers, inputIAudioSamples, outputIAudioSamples,
 					inputIStreamCoder, outputIStreamCoders, _outputIContainer,
-					outputIStreams, inputICodecType, _outputURL, channels, rate,
-					i);
+					outputIStreams, inputICodecType, _outputURL, i);
 			}
 
 			openStreamCoder(inputIStreamCoders[i]);
@@ -175,11 +161,9 @@ public class LiferayAudioConverter extends LiferayConverter {
 	private static Log _log = LogFactoryUtil.getLog(
 		LiferayAudioConverter.class);
 
-	private int _channels = 1;
 	private IContainer _inputIContainer;
 	private String _inputURL;
 	private IContainer _outputIContainer;
 	private String _outputURL;
-	private int _rate;
 
 }

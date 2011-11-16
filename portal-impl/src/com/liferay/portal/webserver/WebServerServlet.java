@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.servlet.Range;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -825,10 +826,51 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else if (videoPreview) {
+			String type = ParamUtil.getString(request, "type");
+
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(VideoProcessor.PREVIEW_TYPE);
-			inputStream = VideoProcessor.getPreviewAsStream(fileVersion);
-			contentLength = VideoProcessor.getPreviewFileSize(fileVersion);
+				StringPool.PERIOD).concat(type);
+			inputStream = VideoProcessor.getPreviewAsStream(fileVersion, type);
+			contentLength = VideoProcessor.getPreviewFileSize(
+				fileVersion, type);
+
+			response.setHeader(
+				HttpHeaders.ACCEPT_RANGES,
+				HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
+
+			List<Range> ranges = null;
+
+			try {
+				ranges = ServletResponseUtil.getRanges(
+					request, response, contentLength);
+			}
+			catch (IOException ioe) {
+				if (_log.isErrorEnabled()) {
+					_log.error(ioe);
+				}
+
+				response.setHeader(
+					HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
+
+				response.sendError(
+					HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+
+				return;
+			}
+
+			if ((ranges != null) && (ranges.size() > 0)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Video range requested");
+				}
+
+				String contentType = MimeTypesUtil.getContentType(fileName);
+
+				ServletResponseUtil.write(
+					request, response, fileName, ranges, inputStream,
+					contentLength, contentType);
+
+				return;
+			}
 
 			converted = true;
 		}

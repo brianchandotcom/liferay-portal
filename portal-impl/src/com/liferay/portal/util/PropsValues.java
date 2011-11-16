@@ -447,6 +447,8 @@ public class PropsValues {
 
 	public static final String[] DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
 
+	public static final String[] DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS);
+
 	public static final int DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT));
 
 	public static final String[] DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);

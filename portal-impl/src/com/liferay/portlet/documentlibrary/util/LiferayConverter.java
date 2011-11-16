@@ -87,7 +87,7 @@ public abstract class LiferayConverter {
 		IAudioResampler iAudioResampler = null;
 
 		Format inputSampleFormat = inputIStreamCoder.getSampleFormat();
-		Format outputSampleFormat = inputIStreamCoder.getSampleFormat();
+		Format outputSampleFormat = outputIStreamCoder.getSampleFormat();
 
 		if ((inputIStreamCoder.getChannels() ==
 				outputIStreamCoder.getChannels()) &&
@@ -460,7 +460,7 @@ public abstract class LiferayConverter {
 			IAudioSamples[] outputIAudioSamples, IStreamCoder inputIStreamCoder,
 			IStreamCoder[] outputIStreamCoders, IContainer outputIContainer,
 			IStream[] outputIStreams, ICodec.Type inputICodecType,
-			String outputURL, int channels, int rate, int index)
+			String outputURL, int index)
 		throws Exception {
 
 		IStream outputIStream = outputIContainer.addNewStream(index);
@@ -471,11 +471,25 @@ public abstract class LiferayConverter {
 
 		outputIStreamCoders[index] = outputIStreamCoder;
 
-		outputIStreamCoder.setBitRate(inputIStreamCoder.getBitRate());
+		int bitRate = inputIStreamCoder.getBitRate();
+
+		if (bitRate == 0) {
+			bitRate = DEFAULT_AUDIO_BIT_RATE;
+		}
+
+		outputIStreamCoder.setBitRate(bitRate);
+
+		int channels = getAudioEncodingChannels(
+			outputIContainer, inputIStreamCoder.getChannels());
+
 		outputIStreamCoder.setChannels(channels);
 
-		ICodec iCodec = ICodec.guessEncodingCodec(
-			null, null, outputURL, null, inputICodecType);
+		ICodec iCodec = getAudioEncodingICodec(outputIContainer);
+
+		if (iCodec == null) {
+			iCodec = ICodec.guessEncodingCodec(
+				null, null, outputURL, null, inputICodecType);
+		}
 
 		if (iCodec == null) {
 			throw new RuntimeException(
@@ -486,7 +500,14 @@ public abstract class LiferayConverter {
 		outputIStreamCoder.setCodec(iCodec);
 
 		outputIStreamCoder.setGlobalQuality(0);
-		outputIStreamCoder.setSampleRate(rate);
+
+		int sampleRate = DEFAULT_AUDIO_SAMPLE_RATE;
+
+		if (inputIStreamCoder.getSampleRate() > 0) {
+			sampleRate = inputIStreamCoder.getSampleRate();
+		}
+
+		outputIStreamCoder.setSampleRate(sampleRate);
 
 		iAudioResamplers[index] = createIAudioResampler(
 			inputIStreamCoder, outputIStreamCoder);
@@ -645,7 +666,29 @@ public abstract class LiferayConverter {
 		}
 	}
 
+	protected ICodec getAudioEncodingICodec(IContainer outputIContainer) {
+		return null;
+	}
+
+	protected int getAudioEncodingChannels(
+		IContainer outputIContainer, int channels) {
+
+		if (channels == 0 || channels > 2) {
+			channels = 2;
+		}
+
+		return channels;
+	}
+
 	protected static final int DECODE_VIDEO_THUMBNAIL = 2;
+
+	protected static final int DEFAULT_AUDIO_BIT_RATE = 64000;
+
+	protected static final int DEFAULT_AUDIO_SAMPLE_RATE = 44100;
+
+	protected static final int DEFAULT_VIDEO_BIT_RATE = 250000;
+
+	protected static final int MAX_VIDEO_BIT_RATE = 1500000;
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayConverter.class);
 

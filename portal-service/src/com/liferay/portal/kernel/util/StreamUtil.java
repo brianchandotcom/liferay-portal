@@ -127,6 +127,21 @@ public class StreamUtil {
 			boolean cleanUp)
 		throws IOException {
 
+		transfer(inputStream, outputStream, bufferSize, cleanUp, 0);
+	}
+
+	public static void transfer(
+			InputStream inputStream, OutputStream outputStream, long length)
+		throws IOException {
+
+		transfer(inputStream, outputStream, BUFFER_SIZE, true, length);
+	}
+
+	public static void transfer(
+			InputStream inputStream, OutputStream outputStream, int bufferSize,
+			boolean cleanUp, long length)
+		throws IOException {
+
 		if (inputStream == null) {
 			throw new IllegalArgumentException("Input stream cannot be null");
 		}
@@ -145,35 +160,79 @@ public class StreamUtil {
 
 				FileInputStream fileInputStream = (FileInputStream)inputStream;
 
-				FileChannel sourceFileChannel = fileInputStream.getChannel();
-
 				FileOutputStream fileOutputStream =
 					(FileOutputStream)outputStream;
 
+				FileChannel sourceFileChannel = fileInputStream.getChannel();
+
 				FileChannel targetFileChannel = fileOutputStream.getChannel();
 
-				long position = 0;
-
-				while (position < sourceFileChannel.size()) {
-					position += sourceFileChannel.transferTo(
-						position, sourceFileChannel.size() - position,
-						targetFileChannel);
-				}
+				transferFileChannel(
+					sourceFileChannel, targetFileChannel, length);
 			}
 			else {
-				byte[] bytes = new byte[bufferSize];
-
-				int value = -1;
-
-				while ((value = inputStream.read(bytes)) != -1) {
-					outputStream.write(bytes, 0 , value);
-				}
+				transferByteArray(
+					inputStream, outputStream, bufferSize, length);
 			}
 		}
 		finally {
 			if (cleanUp) {
 				cleanUp(inputStream, outputStream);
 			}
+		}
+	}
+
+	protected static void transferByteArray(
+			InputStream inputStream, OutputStream outputStream, int bufferSize,
+			long length)
+		throws IOException {
+
+		byte[] bytes = new byte[bufferSize];
+
+		long lengthRemaining = length;
+
+		if (lengthRemaining > 0) {
+			while (lengthRemaining > 0) {
+				int readBytes = inputStream.read(
+					bytes, 0, (int)Math.min(lengthRemaining, bufferSize));
+
+				if (readBytes == -1) {
+					break;
+				}
+
+				outputStream.write(bytes, 0, readBytes);
+
+				lengthRemaining -= readBytes;
+			}
+		}
+		else {
+			int value = -1;
+
+			while ((value = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0 , value);
+			}
+		}
+	}
+
+	protected static void transferFileChannel(
+			FileChannel inputFileChannel, FileChannel outputFileChannel,
+			long length)
+		throws IOException {
+
+		long size = 0;
+
+		if (length > 0) {
+			size = length;
+		}
+		else {
+			size = inputFileChannel.size();
+		}
+
+		long position = 0;
+
+		while (position < size) {
+			position += inputFileChannel.transferTo(
+				position, size - position, outputFileChannel);
 		}
 	}
 

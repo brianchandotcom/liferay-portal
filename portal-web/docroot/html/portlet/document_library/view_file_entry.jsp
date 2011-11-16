@@ -285,6 +285,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<%
 						int previewFileCount = 0;
 						String previewFileURL = null;
+						String[] previewFileURLs = null;
 						String videoThumbnailURL = null;
 
 						String previewQueryString = null;
@@ -307,7 +308,20 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						}
 
 						if (Validator.isNotNull(previewQueryString)) {
-							previewFileURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
+							if (hasVideo) {
+								String[] videoContainer = PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
+
+								previewFileURLs = new String[videoContainer.length];
+
+								for (int i = 0; i < videoContainer.length; i++) {
+									previewFileURLs[i] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + videoContainer[i]);
+								}
+							}
+							else if (hasAudio) {
+								previewFileURLs = new String[1];
+
+								previewFileURLs[0] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
+							}
 
 							if (!hasPDFImages) {
 								previewFileCount = 1;
@@ -317,7 +331,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
 						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
 
-						request.setAttribute("view_file_entry.jsp-previewFileURL", previewFileURL);
+						request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs);
 						request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 						%>
 

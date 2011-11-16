@@ -168,8 +168,7 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		try {
 			LiferayAudioConverter liferayAudioConverter =
 				new LiferayAudioConverter(
-					srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
-					_SAMPLE_RATE);
+					srcFile.getCanonicalPath(), destFile.getCanonicalPath());
 
 			liferayAudioConverter.convert();
 		}
@@ -257,8 +256,6 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		MessageBusUtil.sendMessage(
 			DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR, fileVersion);
 	}
-
-	private static int _SAMPLE_RATE = 44100;
 
 	private static Log _log = LogFactoryUtil.getLog(AudioProcessor.class);
 

@@ -52,6 +52,7 @@
 					String src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 
 					int playerHeight = 500;
+					String videoDataOptions = "";
 
 					if (hasAudio) {
 						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1", false);
@@ -67,12 +68,16 @@
 						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 					}
 					else if (hasVideo) {
-						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&videoPreview=1") + "&supportedVideo=1&mediaGallery=1", false);
+						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1", false);
 						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
+
+						for (String videoContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
+							videoDataOptions = videoDataOptions + "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoPreview=1&supportedVideo=1&type=" + videoContainer));
+						}
 					}
 					%>
 
-					<a class="image-thumbnail preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+					<a class="image-thumbnail preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + videoDataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
 						<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 
 						<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
@@ -226,12 +231,14 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 				{
 					cfg: {
 						'providers.liferay': {
-							container: '<iframe frameborder="0" width="{width}" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />video={media}&<portlet:namespace />thumbnailURL={thumbnailURL}"></iframe>',
+							container: '<iframe frameborder="0" width="{width}" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />audio={media}&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}"></iframe>',
 							matcher: /(.+)&mediaGallery=1/,
 							options: A.merge(
 								A.MediaViewerPlugin.DEFAULT_OPTIONS,
 								{
-									'thumbnailURL': ''
+									'thumbnailURL': '',
+									'mp4PreviewURL': '',
+									'ogvPreviewURL': ''
 								}
 							),
 							mediaRegex: /(.+)&mediaGallery=1/

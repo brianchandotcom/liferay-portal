@@ -30,26 +30,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.documentlibrary">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.documentlibrary.util">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.documentlibrary.util.CMISHook">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.documentlibrary.util.DLIndexer">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.documentlibrary.util.HookFactory">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.jdbc">
 		<priority value="ERROR" />
 	</category>
@@ -782,8 +762,16 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portlet.documentlibrary.store.StoreFactory">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portlet.documentlibrary.util">
 		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.portlet.documentlibrary.util.DLIndexer">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portlet.documentlibrary.webdav">

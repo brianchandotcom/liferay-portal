@@ -25,6 +25,8 @@ public interface HttpHeaders {
 
 	public static final String ACCEPT_ENCODING = "Accept-Encoding";
 
+	public static final String ACCEPT_RANGES = "Accept-Ranges";
+
 	public static final String AUTHORIZATION = "Authorization";
 
 	public static final String CACHE_CONTROL = "Cache-Control";
@@ -40,6 +42,8 @@ public interface HttpHeaders {
 	public static final String CONTENT_ID = "Content-ID";
 
 	public static final String CONTENT_LENGTH = "Content-Length";
+
+	public static final String CONTENT_RANGE = "Content-Range";
 
 	public static final String CONTENT_TYPE = "Content-Type";
 
@@ -65,11 +69,15 @@ public interface HttpHeaders {
 
 	public static final String PRAGMA = "Pragma";
 
+	public static final String RANGE = "Range";
+
 	public static final String USER_AGENT = "User-Agent";
 
 	public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
 
 	// Values
+
+	public static final String ACCEPT_RANGES_BYTES_VALUE = "bytes";
 
 	public static final String CONNECTION_CLOSE_VALUE = "close";
 

@@ -46,6 +46,9 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 
@@ -143,8 +146,8 @@ public class Member_AddDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.dragAndDropToObject("xPath=(//div[@class='aui-diagram-builder-field-label'])[5]",
-			"xPath=(//div[@class='aui-diagram-builder-field-label'])[5]");
+		selenium.dragAndDropToObject("xPath=(//div[@class='aui-diagram-builder-field-label'])[11]",
+			"xPath=(//div[@class='aui-diagram-builder-field-label'])[11]");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

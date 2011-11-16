@@ -634,7 +634,7 @@
 			<attribute>
 				<name>label</name>
 				<inputType>java.lang.Object</inputType>
-				<outputType>java.lang.Object</outputType>
+				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>
@@ -655,7 +655,7 @@
 			<attribute>
 				<name>value</name>
 				<inputType>java.lang.Object</inputType>
-				<outputType>java.lang.Object</outputType>
+				<outputType>java.lang.String</outputType>
 				<defaultValue></defaultValue>
 				<description></description>
 			</attribute>

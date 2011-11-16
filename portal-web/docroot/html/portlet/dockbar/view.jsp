@@ -113,7 +113,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			</li>
 		</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon() || themeDisplay.isShowSiteContentIcon() || themeDisplay.isShowSiteMapSettingsIcon() || themeDisplay.isShowSiteSettingsIcon()) && (!group.hasStagingGroup() || group.isStagingGroup()) %>">
+		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon() || themeDisplay.isShowSiteContentIcon() || themeDisplay.isShowSiteMapSettingsIcon() || themeDisplay.isShowSiteSettingsIcon()) %>">
 			<li class="manage-content has-submenu" id="<portlet:namespace />manageContent">
 				<a class="menu-button" href="javascript:;">
 					<span>
@@ -124,31 +124,31 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				<div class="aui-menu manage-content-menu aui-overlaycontext-hidden" id="<portlet:namespace />manageContentContainer">
 					<div class="aui-menu-content">
 						<ul>
-							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
+							<c:if test="<%= themeDisplay.isShowPageSettingsIcon() && (!group.hasStagingGroup() || group.isStagingGroup()) %>">
 								<li class="first manage-page use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLPageSettings().toString() %>" label="page" title="manage-page" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() && !themeDisplay.isStateMaximized() %>">
+							<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() && !themeDisplay.isStateMaximized() && (!group.hasStagingGroup() || group.isStagingGroup())  %>">
 								<li class="page-layout use-dialog full-dialog">
 									<aui:a href='<%= themeDisplay.getURLPageSettings().toString() + "#layout" %>' label="page-layout" title="manage-page" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() && !group.isLayoutSetPrototype() %>">
+							<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() && !group.isLayoutSetPrototype() && (!group.hasStagingGroup() || group.isStagingGroup())  %>">
 								<li class="manage-page-customization">
 									<aui:a cssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' id="manageCustomization" label='<%= group.isLayoutPrototype() ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() %>">
+							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() && !group.isLayoutPrototype() && (!group.hasStagingGroup() || group.isStagingGroup())  %>">
 								<li class="settings use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
+							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() && (!group.hasStagingGroup() || group.isStagingGroup())  %>">
 								<li class="sitemap use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
 								</li>
@@ -160,7 +160,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
+							<c:if test="<%= themeDisplay.isShowSiteContentIcon() && (!group.hasStagingGroup() || group.isStagingGroup())  %>">
 								<li class="manage-site-content use-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
 								</li>

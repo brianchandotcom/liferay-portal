@@ -33,6 +33,8 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTempla
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
+String ddmResource = portletConfig.getInitParameter("ddm-resource");
+
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 if (Validator.isNotNull(portletResource)) {

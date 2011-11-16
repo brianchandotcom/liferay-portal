@@ -2464,6 +2464,10 @@
 		<display-name>Dynamic Data List Display</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
+			<name>ddm-resource</name>
+			<value>com.liferay.portlet.dynamicdatalists</value>
+		</init-param>
+		<init-param>
 			<name>view-action</name>
 			<value>/dynamic_data_list_display/view</value>
 		</init-param>

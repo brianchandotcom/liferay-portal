@@ -69,7 +69,7 @@ PortletURL editPermissionsURL = renderResponse.createRenderURL();
 editPermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
 editPermissionsURL.setParameter(Constants.CMD, Constants.EDIT);
 editPermissionsURL.setParameter("tabs1", "roles");
-editPermissionsURL.setParameter("redirect", viewPermissionsURL.toString());
+editPermissionsURL.setParameter("redirect", backURL);
 editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 %>
 

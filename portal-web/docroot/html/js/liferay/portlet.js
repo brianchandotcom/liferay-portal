@@ -276,7 +276,9 @@
 				{
 					after: {
 						success: function() {
-							Liferay.fire('updatedLayout');
+							if (!data.preventNotification) {
+								Liferay.fire('updatedLayout');
+							}
 						}
 					},
 					data: data,
@@ -296,6 +298,12 @@
 							else {
 								Portlet._loadPortletFiles(response, addPortletReturn);
 							}
+						},
+						failure: function(event, id, obj) {
+							var instance = this;
+
+							placeHolder.hide();
+							placeHolder.placeAfter('<div class="portlet-msg-error">' + Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page') + '</div>');
 						}
 					}
 				}

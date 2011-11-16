@@ -186,7 +186,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			sb.append(StringPool.SLASH);
 			sb.append(fileEntry.getFolderId());
 			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(fileEntry.getTitle()));
+			sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
 
 			Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
 

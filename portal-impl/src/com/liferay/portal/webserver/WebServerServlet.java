@@ -279,7 +279,8 @@ public class WebServerServlet extends HttpServlet {
 			sb.append(dlFileEntry.getFolderId());
 			sb.append(StringPool.SLASH);
 			sb.append(
-				HttpUtil.encodeURL(HtmlUtil.unescape(dlFileEntry.getTitle())));
+				HttpUtil.encodeURL(
+					HtmlUtil.unescape(dlFileEntry.getTitle()), true));
 			sb.append("?version=");
 			sb.append(dlFileEntry.getVersion());
 

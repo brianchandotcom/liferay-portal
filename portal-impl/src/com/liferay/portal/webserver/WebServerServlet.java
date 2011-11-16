@@ -1037,7 +1037,7 @@ public class WebServerServlet extends HttpServlet {
 		else {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 			long folderId = GetterUtil.getLong(pathArray[1]);
-			String fileName = HttpUtil.decodeURL(pathArray[2], true);
+			String fileName = pathArray[2];
 
 			try {
 				DLAppLocalServiceUtil.getFileEntry(groupId, folderId, fileName);

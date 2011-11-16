@@ -24,16 +24,6 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div[1]/a/span[1]/img'))</td>
-	<td>dmlDocumentPresent</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${dmlDocumentPresent}</td>
-	<td>DMLDocumentNotPresent</td>
-</tr>
-<tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_20_allRowIdsCheckbox']</td>
 	<td>All Entries Check Box</td>
@@ -47,6 +37,16 @@
 	<td>assertChecked</td>
 	<td>//input[@id='_20_allRowIdsCheckbox']</td>
 	<td>All Entries Check Box</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul[contains(@class,'disabled')]/li/strong/a/span</td>
+	<td>dmlDocumentPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${dmlDocumentPresent}</td>
+	<td>DMLDocumentNotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -82,16 +82,6 @@
 	<td>label</td>
 	<td>DMLDocumentNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
 </tr>
 
 </tbody></table>

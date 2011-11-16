@@ -4,6 +4,8 @@
 	<import file="build-test.xml" />
 
 	<target name="run-jboss">
+		<antcall target="clean-up-logs" />
+
 		<record action="start" name="log" />
 
 		<antcall target="run-simple-server">

@@ -1681,8 +1681,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			 replaceStyles(pageDiffs), "[$PAGE_ID$]", page.getPageId(),
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]",
 			page.getTitle(), "[$PAGE_URL$]", pageURL);
-		subscriptionSender.setContextAttributeNotEscaped(
-			"[$PAGE_CONTENT$]", pageContent);
+		subscriptionSender.setContextAttribute(
+			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextUserPrefix("PAGE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

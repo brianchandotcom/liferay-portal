@@ -1944,7 +1944,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			sb.append(fileEntry.getFolderId());
 			sb.append(StringPool.SLASH);
 			sb.append(
-				HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+				HttpUtil.encodeURL(
+					HtmlUtil.unescape(fileEntry.getTitle()), true));
 
 			content = StringUtil.replace(content, dlReference, sb.toString());
 		}

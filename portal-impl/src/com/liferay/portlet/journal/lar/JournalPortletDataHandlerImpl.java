@@ -1393,7 +1393,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 						if (name.indexOf(StringPool.QUESTION) != -1) {
 							name = name.substring(
-									0, name.indexOf(StringPool.QUESTION));
+								0, name.indexOf(StringPool.QUESTION));
 						}
 
 						map.put("name", new String[] {name});

@@ -23,7 +23,7 @@ try {
 	feed = (SyndFeed)ovp.getValue();
 
 	if (Validator.isNull(title)) {
-		title = HtmlUtil.escape(feed.getTitle());
+		title = feed.getTitle();
 	}
 }
 catch (Exception e) {
@@ -78,7 +78,7 @@ catch (Exception e) {
 
 			<c:if test="<%= showFeedTitle %>">
 				<div class="feed-title">
-					<aui:a href="<%= feedLink %>" target="_new"><%= title %></aui:a>
+					<aui:a href="<%= feedLink %>" target="_new"><%= HtmlUtil.escape(title) %></aui:a>
 				</div>
 			</c:if>
 
@@ -213,7 +213,7 @@ catch (Exception e) {
 	</c:when>
 	<c:otherwise>
 		<div class="portlet-msg-error">
-			<%= LanguageUtil.format(pageContext, "cannot-be-found", urls[i], false) %>
+			<%= LanguageUtil.format(pageContext, "cannot-be-found", HtmlUtil.escape(urls[i]), false) %>
 		</div>
 	</c:otherwise>
 </c:choose>

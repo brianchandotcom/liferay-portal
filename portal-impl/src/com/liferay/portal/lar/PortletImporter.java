@@ -697,36 +697,42 @@ public class PortletImporter {
 
 		AssetTag importedAssetTag = null;
 
+		List<Element> propertyElements = assetTagElement.elements("property");
+
+		String[] properties = new String[propertyElements.size()];
+
+		for (int i = 0; i < propertyElements.size(); i++) {
+			Element propertyElement = propertyElements.get(i);
+
+			String key = propertyElement.attributeValue("key");
+			String value = propertyElement.attributeValue("value");
+
+			properties[i] = key.concat(StringPool.COLON).concat(value);
+		}
+
+		AssetTag existingAssetTag = null;
+
 		try {
-			List<Element> propertyElements = assetTagElement.elements(
-				"property");
+			existingAssetTag = AssetTagUtil.findByG_N(
+				portletDataContext.getScopeGroupId(), assetTag.getName());
+		}
+		catch (NoSuchTagException nste) {
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler();
 
-			String[] properties = new String[propertyElements.size()];
+				sb.append("No AssetTag exists with the key ");
+				sb.append("{groupId=");
+				sb.append(portletDataContext.getScopeGroupId());
+				sb.append(", name=");
+				sb.append(assetTag.getName());
+				sb.append("}");
 
-			for (int i = 0; i < propertyElements.size(); i++) {
-				Element propertyElement = propertyElements.get(i);
-
-				String key = propertyElement.attributeValue("key");
-				String value = propertyElement.attributeValue("value");
-
-				properties[i] = key.concat(StringPool.COLON).concat(value);
+				_log.debug(sb.toString());
 			}
+		}
 
-			AssetTag existingAssetTag = null;
-			try {
-				existingAssetTag = AssetTagUtil.findByG_N(
-					portletDataContext.getScopeGroupId(), assetTag.getName());
-			}
-			catch (NoSuchTagException nste) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"No existing AssetTag found:" + assetTag.getName() +
-						" for groupId:" +
-						portletDataContext.getScopeGroupId());
-				}
-			}
+		try {
 			if (existingAssetTag == null) {
-
 				importedAssetTag = AssetTagLocalServiceUtil.addTag(
 					userId, assetTag.getName(), properties, serviceContext);
 			}

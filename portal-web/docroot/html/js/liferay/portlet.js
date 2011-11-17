@@ -284,6 +284,10 @@
 					data: data,
 					dataType: dataType,
 					on: {
+						failure: function(event, id, obj) {
+							placeHolder.hide();
+							placeHolder.placeAfter('<div class="portlet-msg-error">' + Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page') + '</div>');
+						},
 						success: function(event, id, obj) {
 							var instance = this;
 
@@ -298,12 +302,6 @@
 							else {
 								Portlet._loadPortletFiles(response, addPortletReturn);
 							}
-						},
-						failure: function(event, id, obj) {
-							var instance = this;
-
-							placeHolder.hide();
-							placeHolder.placeAfter('<div class="portlet-msg-error">' + Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page') + '</div>');
 						}
 					}
 				}

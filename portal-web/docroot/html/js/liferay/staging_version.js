@@ -28,10 +28,10 @@ AUI().add(
 					var layoutRevisionToolbar = new A.Toolbar(
 						{
 							activeState: false,
-							boundingBox: '#' + namespace + 'layoutRevisionToolbar',
+							boundingBox: A.byIdNS(namespace, 'layoutRevisionToolbar'),
 							children: [
 								{
-								type: 'ToolbarSpacer'
+									type: 'ToolbarSpacer'
 								},
 								{
 									handler: A.bind(instance._onViewHistory, instance),
@@ -65,7 +65,7 @@ AUI().add(
 						}
 					);
 
-					var layoutRevisionDetails = A.one('#' + namespace + 'layoutRevisionDetails');
+					var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
 
 					if (layoutRevisionDetails) {
 						Liferay.onceAfter(
@@ -79,6 +79,9 @@ AUI().add(
 										},
 										method: 'GET',
 										on: {
+											failure: function(event, id, obj) {
+												layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page'));
+											},
 											success: function(event, id, obj) {
 												instance._destroyToolbarContent();
 
@@ -87,9 +90,6 @@ AUI().add(
 												layoutRevisionDetails.plug(A.Plugin.ParseContent);
 
 												layoutRevisionDetails.setContent(response);
-											},
-											failure: function(event, id, obj) {
-												layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page'));
 											}
 										}
 									}
@@ -187,7 +187,7 @@ AUI().add(
 
 					var namespace = instance._namespace;
 
-					var form = A.one('#' + namespace + 'fm');
+					var form = A.byIdNS(namespace, 'fm');
 
 					var layoutRevisionId = form.one('#' + namespace + 'layoutRevisionId').val();
 					var layoutSetBranchId = form.one('#' + namespace + 'layoutSetBranchId').val();

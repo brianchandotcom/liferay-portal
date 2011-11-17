@@ -1055,9 +1055,7 @@ if (themeDisplay.isStatePopUp()) {
 
 				};
 
-				var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
-
-				Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
+				Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= doRefreshPortletId %>_', data);
 			}
 		</aui:script>
 

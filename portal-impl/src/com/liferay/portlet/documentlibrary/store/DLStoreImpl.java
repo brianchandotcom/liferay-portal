@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
@@ -59,7 +58,7 @@ import java.io.InputStream;
  * @author Alexander Chow
  * @author Edward Han
  */
-public class DLStoreImpl implements DLStore, IdentifiableBean {
+public class DLStoreImpl implements DLStore {
 
 	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -212,10 +211,6 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		throws PortalException, SystemException {
 
 		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
 	}
 
 	public File getFile(long companyId, long repositoryId, String fileName)
@@ -384,10 +379,6 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
-	}
-
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
 	}
 
 	public void updateFile(
@@ -669,7 +660,5 @@ public class DLStoreImpl implements DLStore, IdentifiableBean {
 	private static final String[] _KEYWORDS_FIELDS = {
 		Field.ASSET_TAG_NAMES, Field.CONTENT, Field.PROPERTIES
 	};
-
-	private String _beanIdentifier;
 
 }

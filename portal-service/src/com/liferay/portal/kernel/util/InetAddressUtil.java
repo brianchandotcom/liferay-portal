@@ -35,8 +35,7 @@ public class InetAddressUtil {
 		while (enu1.hasMoreElements()) {
 			NetworkInterface networkInterface = enu1.nextElement();
 
-			Enumeration<InetAddress> enu2 =
-				networkInterface.getInetAddresses();
+			Enumeration<InetAddress> enu2 = networkInterface.getInetAddresses();
 
 			while (enu2.hasMoreElements()) {
 				InetAddress inetAddress = enu2.nextElement();

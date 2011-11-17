@@ -112,9 +112,7 @@ public class ViewAction extends PortletAction {
 				String protocol = src.substring(0, pos + 3);
 				String url = src.substring(pos + 3, src.length());
 
-				src =
-					protocol + userName + ":" + password +
-					"@" + url;
+				src = protocol + userName + ":" + password + "@" + url;
 			}
 			else {
 				ThemeDisplay themeDisplay =

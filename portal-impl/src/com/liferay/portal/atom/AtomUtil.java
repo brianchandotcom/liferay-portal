@@ -207,10 +207,8 @@ public class AtomUtil {
 		return url;
 	}
 
-	private static final String _PAGER =
-		AtomUtil.class.getName() + ".pager";
+	private static final String _PAGER = AtomUtil.class.getName() + ".pager";
 
-	private static final String _USER =
-		AtomUtil.class.getName() + ".user";
+	private static final String _USER = AtomUtil.class.getName() + ".user";
 
 }

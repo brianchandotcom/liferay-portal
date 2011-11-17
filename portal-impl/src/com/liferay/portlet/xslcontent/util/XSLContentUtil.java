@@ -51,8 +51,7 @@ public class XSLContentUtil {
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 
-		Transformer transformer =
-			transformerFactory.newTransformer(xslSource);
+		Transformer transformer = transformerFactory.newTransformer(xslSource);
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();

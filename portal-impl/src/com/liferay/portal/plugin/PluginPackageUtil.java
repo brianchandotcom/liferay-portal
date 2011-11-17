@@ -90,8 +90,7 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class PluginPackageUtil {
 
-	public static final String REPOSITORY_XML_FILENAME_EXTENSION =
-		"xml";
+	public static final String REPOSITORY_XML_FILENAME_EXTENSION = "xml";
 
 	public static final String REPOSITORY_XML_FILENAME_PREFIX =
 		"liferay-plugin-repository";

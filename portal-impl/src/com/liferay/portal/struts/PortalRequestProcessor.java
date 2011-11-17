@@ -989,8 +989,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 	private static String _PATH_PORTAL_RENDER_PORTLET =
 		"/portal/render_portlet";
 
-	private static String _PATH_PORTAL_SETUP_WIZARD =
-		"/portal/setup_wizard";
+	private static String _PATH_PORTAL_SETUP_WIZARD = "/portal/setup_wizard";
 
 	private static String _PATH_PORTAL_TCK = "/portal/tck";
 

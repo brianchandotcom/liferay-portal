@@ -908,8 +908,7 @@ public class ClusterSchedulerEngine
 			ObjectValuePair<SchedulerResponse, TriggerState>
 				memoryClusteredJob = entry.getValue();
 
-			SchedulerResponse schedulerResponse =
-				memoryClusteredJob.getKey();
+			SchedulerResponse schedulerResponse = memoryClusteredJob.getKey();
 
 			if (groupName.equals(schedulerResponse.getGroupName())) {
 				itr.remove();
@@ -949,8 +948,7 @@ public class ClusterSchedulerEngine
 		for (ObjectValuePair<SchedulerResponse, TriggerState>
 				memoryClusteredJob : _memoryClusteredJobs.values()) {
 
-			SchedulerResponse schedulerResponse =
-				memoryClusteredJob.getKey();
+			SchedulerResponse schedulerResponse = memoryClusteredJob.getKey();
 
 			if (groupName.equals(schedulerResponse.getGroupName())) {
 				memoryClusteredJob.setValue(triggerState);

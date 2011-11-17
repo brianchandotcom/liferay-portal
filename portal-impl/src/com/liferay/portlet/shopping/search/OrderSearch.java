@@ -37,8 +37,7 @@ public class OrderSearch extends SearchContainer<ShoppingOrder> {
 		headerNames.add("customer");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-orders-were-found";
+	public static final String EMPTY_RESULTS_MESSAGE = "no-orders-were-found";
 
 	public OrderSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(
@@ -46,8 +45,7 @@ public class OrderSearch extends SearchContainer<ShoppingOrder> {
 			new OrderSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-		OrderDisplayTerms displayTerms =
-			(OrderDisplayTerms)getDisplayTerms();
+		OrderDisplayTerms displayTerms = (OrderDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
 			OrderDisplayTerms.EMAIL_ADDRESS, displayTerms.getEmailAddress());

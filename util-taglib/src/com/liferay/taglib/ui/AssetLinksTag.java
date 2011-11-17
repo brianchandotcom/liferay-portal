@@ -84,8 +84,7 @@ public class AssetLinksTag extends IncludeTag {
 		_classPK = 0;
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_links/page.jsp";
+	private static final String _PAGE = "/html/taglib/ui/asset_links/page.jsp";
 
 	private long _assetEntryId;
 	private String _className = StringPool.BLANK;

@@ -99,14 +99,11 @@ public class ResourceActionsImpl implements ResourceActions {
 			new HashMap<String, List<String>>();
 		_modelPortletResources = new HashMap<String, Set<String>>();
 		_modelResourceActions = new HashMap<String, List<String>>();
-		_modelResourceGroupDefaultActions =
-			new HashMap<String, List<String>>();
-		_modelResourceGuestDefaultActions =
-			new HashMap<String, List<String>>();
+		_modelResourceGroupDefaultActions = new HashMap<String, List<String>>();
+		_modelResourceGuestDefaultActions = new HashMap<String, List<String>>();
 		_modelResourceGuestUnsupportedActions =
 			new HashMap<String, List<String>>();
-		_modelResourceOwnerDefaultActions =
-			new HashMap<String, List<String>>();
+		_modelResourceOwnerDefaultActions = new HashMap<String, List<String>>();
 
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();

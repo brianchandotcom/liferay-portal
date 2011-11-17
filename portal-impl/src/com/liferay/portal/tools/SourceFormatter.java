@@ -946,7 +946,6 @@ public class SourceFormatter {
 		String previousLine = StringPool.BLANK;
 
 		int lineToSkipIfEmpty = 0;
-		int previousLineLength = 0;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
@@ -995,8 +994,6 @@ public class SourceFormatter {
 				}
 			}
 
-			String originalLine = line;
-
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
 					_sourceFormatterHelper.printError(
@@ -1008,31 +1005,6 @@ public class SourceFormatter {
 				_sourceFormatterHelper.printError(
 					fileName, "{:" + fileName + " " + lineCount);
 			}
-
-			StringBundler lineSB = new StringBundler();
-
-			int spacesPerTab = 4;
-
-			for (char c : line.toCharArray()) {
-				if (c == CharPool.TAB) {
-					for (int i = 0; i < spacesPerTab; i++) {
-						lineSB.append(CharPool.SPACE);
-					}
-
-					spacesPerTab = 4;
-				}
-				else {
-					lineSB.append(c);
-
-					spacesPerTab--;
-
-					if (spacesPerTab <= 0) {
-						spacesPerTab = 4;
-					}
-				}
-			}
-
-			line = lineSB.toString();
 
 			if (line.endsWith("private static Log _log =")) {
 				longLogFactoryUtil = true;
@@ -1047,7 +1019,7 @@ public class SourceFormatter {
 					StringUtil.replace(fileName, "\\", "/"));
 			}
 
-			boolean fitsTwoLines= false;
+			String linesCombined = null;
 
 			if ((excluded == null) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
@@ -1063,20 +1035,19 @@ public class SourceFormatter {
 						 line.contains(" index IX_")) {
 				}
 				else {
-					if (line.length() > 80) {
+					if (_getLineLength(line) > 80) {
 						_sourceFormatterHelper.printError(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
 					else {
-						fitsTwoLines = _isFitsTwoLines(
-							trimmedLine, previousLine, previousLineLength);
+						linesCombined = _getLinesCombined(
+							trimmedLine, previousLine);
 					}
 				}
 			}
 
-			if (fitsTwoLines) {
-				previousLine = previousLine + trimmedLine;
-				previousLineLength = previousLineLength + trimmedLine.length();
+			if (Validator.isNotNull(linesCombined)) {
+				previousLine = linesCombined;
 
 				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 					lineToSkipIfEmpty = lineCount + 1;
@@ -1091,8 +1062,7 @@ public class SourceFormatter {
 					sb.append("\n");
 				}
 
-				previousLine = originalLine;
-				previousLineLength = line.length();
+				previousLine = line;
 			}
 		}
 
@@ -1645,6 +1615,81 @@ public class SourceFormatter {
 		return duplicateImports;
 	}
 
+	private static int _getLineLength(String line) {
+		int lineLength = 0;
+		int tabLength = 4;
+
+		for (char c : line.toCharArray()) {
+			if (c == CharPool.TAB) {
+				for (int i = 0; i < tabLength; i++) {
+					lineLength++;
+				}
+
+				tabLength = 4;
+			}
+			else {
+				lineLength++;
+
+				tabLength--;
+
+				if (tabLength <= 0) {
+					tabLength = 4;
+				}
+			}
+		}
+
+		return lineLength;
+	}
+
+	private static String _getLinesCombined(String line, String previousLine) {
+		if (Validator.isNull(previousLine)) {
+			return null;
+		}
+
+		int previousLineLength = _getLineLength(previousLine);
+		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+		if ((line.length() + previousLineLength) < 80) {
+			if (trimmedPreviousLine.startsWith("for ") &&
+				previousLine.endsWith(StringPool.COLON) &&
+				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
+
+			if (previousLine.endsWith(StringPool.EQUAL) &&
+				line.endsWith(StringPool.SEMICOLON)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
+		}
+
+		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+			return null;
+		}
+
+		if ((line.length() + previousLineLength) > 80) {
+			return null;
+		}
+
+		if (line.endsWith(StringPool.SEMICOLON)) {
+			return previousLine + line;
+		}
+
+		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
+			(trimmedPreviousLine.startsWith("else ") ||
+			 trimmedPreviousLine.startsWith("if ") ||
+			 trimmedPreviousLine.startsWith("private ") ||
+			 trimmedPreviousLine.startsWith("protected ") ||
+			 trimmedPreviousLine.startsWith("public "))) {
+
+			return previousLine + line;
+		}
+
+		return null;
+	}
+
 	private static String _getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
@@ -1801,41 +1846,6 @@ public class SourceFormatter {
 		sb.append("([^>]|%>)*>");
 
 		return sb.toString();
-	}
-
-	private static boolean _isFitsTwoLines(
-		String line, String previousLine, int previousLineLength) {
-
-		if (Validator.isNull(previousLine)) {
-			return false;
-		}
-
-		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-			return false;
-		}
-
-		if ((line.length() + previousLineLength) > 80) {
-			return false;
-		}
-
-		if (line.endsWith(StringPool.SEMICOLON)) {
-			return true;
-		}
-
-		previousLine = previousLine.trim();
-
-		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
-			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
-			(previousLine.startsWith("else ") ||
-			 previousLine.startsWith("if ") ||
-			 previousLine.startsWith("private ") ||
-			 previousLine.startsWith("protected ") ||
-			 previousLine.startsWith("public "))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static boolean _isGenerated(String content) {

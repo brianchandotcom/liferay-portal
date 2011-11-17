@@ -59,8 +59,7 @@ public class PortalPreferencesLocalServiceImpl
 		portalPreferences.setOwnerType(ownerType);
 
 		if (Validator.isNull(defaultPreferences)) {
-			defaultPreferences =
-				PortletConstants.DEFAULT_PREFERENCES;
+			defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
 		}
 
 		portalPreferences.setPreferences(defaultPreferences);

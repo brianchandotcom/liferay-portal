@@ -38,8 +38,7 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 		headerNames.add("modified-date");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"there-are-no-results";
+	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
 	public AssetSearch(
 		PortletRequest portletRequest, int delta, PortletURL iteratorURL) {
@@ -49,8 +48,7 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 			new AssetSearchTerms(portletRequest), DEFAULT_CUR_PARAM, delta,
 			iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-		AssetDisplayTerms displayTerms =
-			(AssetDisplayTerms)getDisplayTerms();
+		AssetDisplayTerms displayTerms = (AssetDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
 			AssetDisplayTerms.DESCRIPTION, displayTerms.getDescription());

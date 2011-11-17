@@ -123,8 +123,7 @@ public abstract class BaseTranslator {
 		return content;
 	}
 
-	protected Map<String, String> regexps =
-		new LinkedHashMap<String, String>();
+	protected Map<String, String> regexps = new LinkedHashMap<String, String>();
 	protected List<String> nowikiRegexps = new LinkedList<String>();
 
 	private Map<String, String> _protectedMap =

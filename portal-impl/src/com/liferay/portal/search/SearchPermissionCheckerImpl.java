@@ -294,10 +294,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		List<Group> groups = new UniqueList<Group>();
 		List<Role> roles = new UniqueList<Role>();
-		List<UserGroupRole> userGroupRoles =
-			new UniqueList<UserGroupRole>();
-		Map<Long, List<Role>> groupIdsToRoles =
-			new HashMap<Long, List<Role>>();
+		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
+		Map<Long, List<Role>> groupIdsToRoles = new HashMap<Long, List<Role>>();
 
 		roles.addAll(permissionCheckerBag.getRoles());
 

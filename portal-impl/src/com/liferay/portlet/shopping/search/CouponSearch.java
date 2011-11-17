@@ -38,8 +38,7 @@ public class CouponSearch extends SearchContainer<ShoppingCoupon> {
 		headerNames.add("discount-type");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-coupons-were-found";
+	public static final String EMPTY_RESULTS_MESSAGE = "no-coupons-were-found";
 
 	public CouponSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(
@@ -47,8 +46,7 @@ public class CouponSearch extends SearchContainer<ShoppingCoupon> {
 			new CouponSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-		CouponDisplayTerms displayTerms =
-			(CouponDisplayTerms)getDisplayTerms();
+		CouponDisplayTerms displayTerms = (CouponDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
 			CouponDisplayTerms.ACTIVE, String.valueOf(displayTerms.isActive()));

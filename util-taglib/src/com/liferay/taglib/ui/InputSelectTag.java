@@ -68,8 +68,7 @@ public class InputSelectTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-select:param", _param);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/input_select/page.jsp";
+	private static final String _PAGE = "/html/taglib/ui/input_select/page.jsp";
 
 	private String _cssClass;
 	private Boolean _defaultValue = Boolean.FALSE;

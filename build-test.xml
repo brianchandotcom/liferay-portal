@@ -1416,6 +1416,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-dynamic-data-list-display" />
+			<param name="test.ant.script.suite" value="PortalWebDynamicDataListDisplayTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-hello-velocity" />
 			<param name="test.ant.script.suite" value="PortalWebHelloVelocityTestSuite" />
 		</antcall>
@@ -1773,6 +1778,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="staging-community-user" />
+			<param name="test.ant.script.suite" value="StagingCommunityUserTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-community-web-content-display" />
 			<param name="test.ant.script.suite" value="StagingCommunityWebContentDisplayTestSuite" />
 		</antcall>
@@ -1902,11 +1912,6 @@
 		</for>
 	</target>
 
-	<target name="clean-up-logs">
-		<delete file="log" />
-		<delete file="portal-web/test-ant-scripts/log" />
-	</target>
-
 	<target name="clean-up-vms">
 		<if>
 			<available file="${vm.drive}\${vm.host}\${vm.host}.vmdk.lck" />
@@ -1948,7 +1953,7 @@
 		<if>
 			<available file="portal-web/test-ant-scripts/log" />
 			<then>
-				<move file="portal-web/test-ant-scripts/log" todir="." />
+				<move file="portal-web/test-ant-scripts/log" todir="."/>
 			</then>
 		</if>
 
@@ -1976,7 +1981,7 @@
 			</then>
 		</if>
 
-		<antcall target="clean-up-logs" />
+		<delete file="log" />
 	</target>
 
 	<target name="execute-remote-command">

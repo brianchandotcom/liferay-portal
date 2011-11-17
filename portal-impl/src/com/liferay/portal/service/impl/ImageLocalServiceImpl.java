@@ -51,6 +51,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 	@Override
 	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		try {

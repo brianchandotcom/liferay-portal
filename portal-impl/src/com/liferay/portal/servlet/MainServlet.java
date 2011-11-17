@@ -1317,7 +1317,7 @@ public class MainServlet extends ActionServlet {
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
 		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase(
-			ReleaseInfo.getReleaseInfo());
+			ReleaseInfo.getName());
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
 		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("partial");

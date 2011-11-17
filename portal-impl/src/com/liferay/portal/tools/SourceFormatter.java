@@ -1040,7 +1040,7 @@ public class SourceFormatter {
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
 					else {
-						linesCombined = _isFitsTwoLines(
+						linesCombined = _getLinesCombined(
 							trimmedLine, previousLine);
 					}
 				}
@@ -1641,6 +1641,55 @@ public class SourceFormatter {
 		return lineLength;
 	}
 
+	private static String _getLinesCombined(String line, String previousLine) {
+		if (Validator.isNull(previousLine)) {
+			return null;
+		}
+
+		int previousLineLength = _getLineLength(previousLine);
+		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+		if ((line.length() + previousLineLength) < 80) {
+			if (trimmedPreviousLine.startsWith("for ") &&
+				previousLine.endsWith(StringPool.COLON) &&
+				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
+
+			if (previousLine.endsWith(StringPool.EQUAL) &&
+				line.endsWith(StringPool.SEMICOLON)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
+		}
+
+		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+			return null;
+		}
+
+		if ((line.length() + previousLineLength) > 80) {
+			return null;
+		}
+
+		if (line.endsWith(StringPool.SEMICOLON)) {
+			return previousLine + line;
+		}
+
+		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
+			(trimmedPreviousLine.startsWith("else ") ||
+			 trimmedPreviousLine.startsWith("if ") ||
+			 trimmedPreviousLine.startsWith("private ") ||
+			 trimmedPreviousLine.startsWith("protected ") ||
+			 trimmedPreviousLine.startsWith("public "))) {
+
+			return previousLine + line;
+		}
+
+		return null;
+	}
+
 	private static String _getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
@@ -1797,55 +1846,6 @@ public class SourceFormatter {
 		sb.append("([^>]|%>)*>");
 
 		return sb.toString();
-	}
-
-	private static String _isFitsTwoLines(String line, String previousLine) {
-		if (Validator.isNull(previousLine)) {
-			return null;
-		}
-
-		int previousLineLength = _getLineLength(previousLine);
-		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
-
-		if ((line.length() + previousLineLength) < 80) {
-			if (trimmedPreviousLine.startsWith("for ") &&
-				previousLine.endsWith(StringPool.COLON) &&
-				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
-
-				return previousLine + StringPool.SPACE + line;
-			}
-
-			if (previousLine.endsWith(StringPool.EQUAL) &&
-				line.endsWith(StringPool.SEMICOLON)) {
-
-				return previousLine + StringPool.SPACE + line;
-			}
-		}
-
-		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-			return null;
-		}
-
-		if ((line.length() + previousLineLength) > 80) {
-			return null;
-		}
-
-		if (line.endsWith(StringPool.SEMICOLON)) {
-			return previousLine + line;
-		}
-
-		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
-			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
-			(trimmedPreviousLine.startsWith("else ") ||
-			 trimmedPreviousLine.startsWith("if ") ||
-			 trimmedPreviousLine.startsWith("private ") ||
-			 trimmedPreviousLine.startsWith("protected ") ||
-			 trimmedPreviousLine.startsWith("public "))) {
-
-			return previousLine + line;
-		}
-
-		return null;
 	}
 
 	private static boolean _isGenerated(String content) {

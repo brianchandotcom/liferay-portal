@@ -1019,7 +1019,7 @@ public class SourceFormatter {
 					StringUtil.replace(fileName, "\\", "/"));
 			}
 
-			boolean fitsTwoLines = false;
+			String linesCombined = null;
 
 			if ((excluded == null) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
@@ -1040,14 +1040,14 @@ public class SourceFormatter {
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
 					else {
-						fitsTwoLines = _isFitsTwoLines(
+						linesCombined = _isFitsTwoLines(
 							trimmedLine, previousLine);
 					}
 				}
 			}
 
-			if (fitsTwoLines) {
-				previousLine = previousLine + trimmedLine;
+			if (Validator.isNotNull(linesCombined)) {
+				previousLine = linesCombined;
 
 				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 					lineToSkipIfEmpty = lineCount + 1;
@@ -1799,37 +1799,53 @@ public class SourceFormatter {
 		return sb.toString();
 	}
 
-	private static boolean _isFitsTwoLines(String line, String previousLine) {
+	private static String _isFitsTwoLines(String line, String previousLine) {
 		if (Validator.isNull(previousLine)) {
-			return false;
+			return null;
+		}
+
+		int previousLineLength = _getLineLength(previousLine);
+		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+		if ((line.length() + previousLineLength) < 80) {
+			if (trimmedPreviousLine.startsWith("for ") &&
+				previousLine.endsWith(StringPool.COLON) &&
+				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
+
+			if (previousLine.endsWith(StringPool.EQUAL) &&
+				line.endsWith(StringPool.SEMICOLON)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
 		}
 
 		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-			return false;
+			return null;
 		}
 
-		if ((line.length() + _getLineLength(previousLine)) > 80) {
-			return false;
+		if ((line.length() + previousLineLength) > 80) {
+			return null;
 		}
 
 		if (line.endsWith(StringPool.SEMICOLON)) {
-			return true;
+			return previousLine + line;
 		}
-
-		previousLine = previousLine.trim();
 
 		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
-			(previousLine.startsWith("else ") ||
-			 previousLine.startsWith("if ") ||
-			 previousLine.startsWith("private ") ||
-			 previousLine.startsWith("protected ") ||
-			 previousLine.startsWith("public "))) {
+			(trimmedPreviousLine.startsWith("else ") ||
+			 trimmedPreviousLine.startsWith("if ") ||
+			 trimmedPreviousLine.startsWith("private ") ||
+			 trimmedPreviousLine.startsWith("protected ") ||
+			 trimmedPreviousLine.startsWith("public "))) {
 
-			return true;
+			return previousLine + line;
 		}
 
-		return false;
+		return null;
 	}
 
 	private static boolean _isGenerated(String content) {

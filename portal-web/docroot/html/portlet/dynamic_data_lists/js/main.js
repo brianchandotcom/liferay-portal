@@ -330,9 +330,11 @@ AUI().add(
 									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										var fileData = A.JSON.parse(value);
+										var fileData = SpreadSheet.Util.parseJSON(value);
 
-										label = fileData.name;
+										if (fileData.recordId) {
+											label = fileData.name;
+										}
 									}
 
 									return label;
@@ -468,19 +470,15 @@ AUI().add(
 			getFileEntry: function(fileJSON, callback) {
 				var instance = this;
 
-				try {
-					fileJSON = A.JSON.parse(fileJSON);
+				fileJSON = instance.parseJSON(fileJSON);
 
-					DLApp.getFileEntryByUuidAndGroupId(
-						{
-							uuid: fileJSON.uuid,
-							groupId: fileJSON.groupId
-						},
-						callback
-					);
-				}
-				catch (e) {
-				}
+				DLApp.getFileEntryByUuidAndGroupId(
+					{
+						uuid: fileJSON.uuid,
+						groupId: fileJSON.groupId
+					},
+					callback
+				);
 			},
 
 			getFileEntryURL: function(fileEntry) {
@@ -495,6 +493,20 @@ AUI().add(
 				];
 
 				return buffer.join('/');
+			},
+
+			parseJSON: function(value) {
+				var instance = this;
+
+				var data = {};
+
+				try {
+					data = A.JSON.parse(value);
+				}
+				catch (e) {
+				}
+
+				return data;
 			}
 		};
 

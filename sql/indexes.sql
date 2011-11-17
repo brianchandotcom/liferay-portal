@@ -54,6 +54,7 @@ create index IX_12851A89 on AssetLink (entryId2);
 create index IX_91F132C on AssetLink (entryId2, type_);
 
 create index IX_7C9E46BA on AssetTag (groupId);
+create index IX_D63322F9 on AssetTag (groupId, name);
 
 create index IX_DFF1F063 on AssetTagProperty (companyId);
 create index IX_13805BF7 on AssetTagProperty (companyId, key_);

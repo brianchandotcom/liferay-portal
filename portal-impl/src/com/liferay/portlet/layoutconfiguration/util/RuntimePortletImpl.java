@@ -176,8 +176,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 				Validator.isPassword(instanceId) &&
 				(instanceId.length() >= 4)) {
 
-				/*portletId +=
-					PortletConstants.INSTANCE_SEPARATOR + instanceId;
+				/*portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
 
 				portlet = PortletLocalServiceUtil.getPortletById(
 					themeDisplay.getCompanyId(), portletId);*/

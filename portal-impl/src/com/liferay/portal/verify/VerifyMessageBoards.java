@@ -71,8 +71,7 @@ public class VerifyMessageBoards extends VerifyProcess {
 	}
 
 	protected void verifyAssetsForThreads() throws Exception {
-		List<MBThread> threads =
-			MBThreadLocalServiceUtil.getNoAssetThreads();
+		List<MBThread> threads = MBThreadLocalServiceUtil.getNoAssetThreads();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

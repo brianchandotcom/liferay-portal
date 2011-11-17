@@ -49,8 +49,7 @@ public class ListTypeConstants {
 		GetterUtil.getInteger(PropsUtil.get(PropsKeys.
 			SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_EMAIL_ADDRESS));
 
-	public static final String ACCOUNT_PHONE =
-		Account.class.getName() + PHONE;
+	public static final String ACCOUNT_PHONE = Account.class.getName() + PHONE;
 
 	public static final String ACCOUNT_WEBSITE =
 		Account.class.getName() + WEBSITE;
@@ -67,8 +66,7 @@ public class ListTypeConstants {
 		GetterUtil.getInteger(PropsUtil.get(PropsKeys.
 			SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_CONTACT_EMAIL_ADDRESS));
 
-	public static final String CONTACT_PHONE =
-		Contact.class.getName() + PHONE;
+	public static final String CONTACT_PHONE = Contact.class.getName() + PHONE;
 
 	public static final String CONTACT_PREFIX =
 		Contact.class.getName() + ".prefix";

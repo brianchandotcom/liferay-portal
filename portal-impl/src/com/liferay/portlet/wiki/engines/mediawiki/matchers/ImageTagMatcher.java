@@ -33,8 +33,7 @@ public class ImageTagMatcher extends CallbackMatcher {
 		return replaceMatches(charSequence, _callBack);
 	}
 
-	private static final String _REGEX =
-		"\\[\\[Image:[^\\]]+\\]\\]";
+	private static final String _REGEX = "\\[\\[Image:[^\\]]+\\]\\]";
 
 	private Callback _callBack = new Callback() {
 

@@ -153,8 +153,7 @@ public class ServerDetector {
 
 	private boolean _detect(String className) {
 		try {
-			ClassLoader systemClassLoader =
-				ClassLoader.getSystemClassLoader();
+			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
 			systemClassLoader.loadClass(className);
 

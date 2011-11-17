@@ -183,8 +183,7 @@ public class WordPressImporter {
 				SAXReaderUtil.createQName("comment_parent", _NS_WP)));
 
 		if (commentParentId == 0) {
-			commentParentId =
-				messageDisplay.getMessage().getMessageId();
+			commentParentId = messageDisplay.getMessage().getMessageId();
 		}
 		else {
 			commentParentId = messageIdMap.get(commentParentId);

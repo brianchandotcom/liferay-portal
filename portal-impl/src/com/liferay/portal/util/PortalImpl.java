@@ -386,8 +386,7 @@ public class PortalImpl implements Portal {
 				RoleConstants.SYSTEM_SITE_ROLES, customSystemSiteRoles);
 		}
 
-		_sortedSystemSiteRoles =
-			new String[_allSystemSiteRoles.length];
+		_sortedSystemSiteRoles = new String[_allSystemSiteRoles.length];
 
 		System.arraycopy(
 			_allSystemSiteRoles, 0, _sortedSystemSiteRoles, 0,

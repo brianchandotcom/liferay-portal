@@ -65,8 +65,7 @@ public class PortletPreferencesLocalServiceImpl
 
 		if (Validator.isNull(defaultPreferences)) {
 			if (portlet == null) {
-				defaultPreferences =
-					PortletConstants.DEFAULT_PREFERENCES;
+				defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
 			}
 			else {
 				defaultPreferences = portlet.getDefaultPreferences();

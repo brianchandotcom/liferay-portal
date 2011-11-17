@@ -1634,8 +1634,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		cacheFoldersAndFileEntries(folderId);
 
-		Map<Long, List<FileEntry>> fileEntriesCache =
-			_fileEntriesCache.get();
+		Map<Long, List<FileEntry>> fileEntriesCache = _fileEntriesCache.get();
 
 		return fileEntriesCache.get(folderId);
 	}

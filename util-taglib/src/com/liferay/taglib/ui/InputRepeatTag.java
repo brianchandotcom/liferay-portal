@@ -50,8 +50,7 @@ public class InputRepeatTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-repeat:event", _event);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/input_repeat/page.jsp";
+	private static final String _PAGE = "/html/taglib/ui/input_repeat/page.jsp";
 
 	private String _cssClass;
 	private CalEvent _event;

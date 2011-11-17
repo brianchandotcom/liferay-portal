@@ -843,8 +843,7 @@ public class OrganizationLocalServiceImpl
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
-		List<Organization> organizationsTree =
-			new ArrayList<Organization>();
+		List<Organization> organizationsTree = new ArrayList<Organization>();
 
 		Organization organization =
 			organizationPersistence.findByPrimaryKey(organizationId);

@@ -384,8 +384,7 @@ public class ChannelImpl extends BaseChannelImpl {
 				unconfirmedNotificationEventsSet.iterator();
 
 			while (itr2.hasNext()) {
-				Map.Entry<String, NotificationEvent> entry =
-					itr2.next();
+				Map.Entry<String, NotificationEvent> entry = itr2.next();
 
 				NotificationEvent notificationEvent = entry.getValue();
 

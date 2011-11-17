@@ -43,8 +43,7 @@ public class OpenEntryAction extends Action {
 		try {
 			long entryId = ParamUtil.getLong(request, "entryId");
 
-			BookmarksEntry entry =
-				BookmarksEntryServiceUtil.openEntry(entryId);
+			BookmarksEntry entry = BookmarksEntryServiceUtil.openEntry(entryId);
 
 			request.setAttribute(WebKeys.FORWARD_URL, entry.getUrl());
 

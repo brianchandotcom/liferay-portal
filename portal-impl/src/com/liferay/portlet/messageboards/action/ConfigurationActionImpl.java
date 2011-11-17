@@ -180,8 +180,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			int count = 0;
 
-			Iterator<Map.Entry<String, String>> itr =
-				map.entrySet().iterator();
+			Iterator<Map.Entry<String, String>> itr = map.entrySet().iterator();
 
 			while (itr.hasNext()) {
 				Map.Entry<String, String> entry = itr.next();

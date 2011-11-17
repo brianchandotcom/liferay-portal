@@ -122,8 +122,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletCategory newPortletCategory = new PortletCategory(categoryName);
 
 		if (newPortletCategory.getParentCategory() == null) {
-			PortletCategory rootPortletCategory =
-				new PortletCategory();
+			PortletCategory rootPortletCategory = new PortletCategory();
 
 			rootPortletCategory.addCategory(newPortletCategory);
 		}
@@ -1450,8 +1449,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletElement.elementText("ajaxable"),
 				portletModel.isAjaxable()));
 
-		List<String> headerPortalCssList =
-			portletModel.getHeaderPortalCss();
+		List<String> headerPortalCssList = portletModel.getHeaderPortalCss();
 
 		for (Element headerPortalCssElement :
 				portletElement.elements("header-portal-css")) {

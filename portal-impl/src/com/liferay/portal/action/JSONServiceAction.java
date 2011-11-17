@@ -290,8 +290,7 @@ public class JSONServiceAction extends JSONAction {
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
 
-				int[][] doubleArray =
-					new int[values.length][values0.length];
+				int[][] doubleArray = new int[values.length][values0.length];
 
 				for (int i = 0; i < values.length; i++) {
 					String[] curValues = StringUtil.split(values[i]);
@@ -313,8 +312,7 @@ public class JSONServiceAction extends JSONAction {
 			if ((values != null) && (values.length > 0)) {
 				String[] values0 = StringUtil.split(values[0]);
 
-				long[][] doubleArray =
-					new long[values.length][values0.length];
+				long[][] doubleArray = new long[values.length][values0.length];
 
 				for (int i = 0; i < values.length; i++) {
 					String[] curValues = StringUtil.split(values[i]);

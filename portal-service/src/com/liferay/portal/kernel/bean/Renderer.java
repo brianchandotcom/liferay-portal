@@ -25,8 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface Renderer {
 
-	public static final String RENDERER_TEMPLATE_PREFIX =
-		"renderer.template.";
+	public static final String RENDERER_TEMPLATE_PREFIX = "renderer.template.";
 
 	public String renderBean(
 			HttpServletRequest request, HttpServletResponse response,

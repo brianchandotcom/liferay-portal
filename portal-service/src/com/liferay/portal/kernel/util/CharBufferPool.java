@@ -100,9 +100,7 @@ public class CharBufferPool {
 		_modifyLock.lock();
 
 		try {
-			for (CharBufferHolder charBufferHolder :
-					charBufferHolders) {
-
+			for (CharBufferHolder charBufferHolder : charBufferHolders) {
 				if (charBufferHolder._borrowed) {
 					charBufferHolder._borrowed = false;
 				}

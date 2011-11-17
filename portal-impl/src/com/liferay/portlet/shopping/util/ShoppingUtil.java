@@ -338,8 +338,7 @@ public class ShoppingUtil {
 					category.getCompanyId(), category.getGroupId());
 			}
 
-			ShoppingItemPrice itemPrice =
-				_getItemPrice(item, count.intValue());
+			ShoppingItemPrice itemPrice = _getItemPrice(item, count.intValue());
 
 			subtotal += calculateActualPrice(itemPrice) * count.intValue();
 		}

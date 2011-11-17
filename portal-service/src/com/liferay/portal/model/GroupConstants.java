@@ -51,8 +51,7 @@ public class GroupConstants {
 
 	public static final String TYPE_SITE_SYSTEM_LABEL = "system";
 
-	public static final String USER_PERSONAL_SITE =
-		"User Personal Site";
+	public static final String USER_PERSONAL_SITE = "User Personal Site";
 
 	public static final String USER_PERSONAL_SITE_FRIENDLY_URL =
 		"/personal_site";

@@ -52,8 +52,7 @@ public class ShoppingOrderPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		ShoppingOrder order =
-			ShoppingOrderLocalServiceUtil.getOrder(orderId);
+		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(orderId);
 
 		return contains(permissionChecker, groupId, order, actionId);
 	}

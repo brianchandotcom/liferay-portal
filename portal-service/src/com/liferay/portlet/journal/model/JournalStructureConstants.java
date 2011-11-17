@@ -65,8 +65,7 @@ public class JournalStructureConstants {
 	public static final String RESERVED_ARTICLE_TITLE =
 		"reserved-article-title";
 
-	public static final String RESERVED_ARTICLE_TYPE =
-		"reserved-article-type";
+	public static final String RESERVED_ARTICLE_TYPE = "reserved-article-type";
 
 	public static final String RESERVED_ARTICLE_URL_TITLE =
 		"reserved-article-url-title";

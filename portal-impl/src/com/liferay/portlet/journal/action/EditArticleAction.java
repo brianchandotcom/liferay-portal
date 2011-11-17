@@ -701,8 +701,7 @@ public class EditArticleAction extends PortletAction {
 				groupId, articleId, version);
 
 			Map<Locale, String> titleMap = article.getTitleMap();
-			Map<Locale, String> descriptionMap =
-				article.getDescriptionMap();
+			Map<Locale, String> descriptionMap = article.getDescriptionMap();
 
 			String tempOldUrlTitle = article.getUrlTitle();
 

@@ -81,8 +81,7 @@ public class JSFPortletUtil {
 			return (PortletRequest)request;
 		}
 		else if (request instanceof HttpServletRequest) {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)request;
+			HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 
 			Object portletArtifactHack = httpServletRequest.getAttribute(
 				"com.icesoft.faces.portletHack");

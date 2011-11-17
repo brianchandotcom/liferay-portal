@@ -196,9 +196,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		Set<QName> javaxQNames = new HashSet<QName>(liferayQNames.size());
 
-		for (com.liferay.portal.kernel.xml.QName liferayQName :
-				liferayQNames) {
-
+		for (com.liferay.portal.kernel.xml.QName liferayQName : liferayQNames) {
 			QName javaxQName = new QName(
 				liferayQName.getNamespaceURI(), liferayQName.getLocalPart(),
 				liferayQName.getNamespacePrefix());

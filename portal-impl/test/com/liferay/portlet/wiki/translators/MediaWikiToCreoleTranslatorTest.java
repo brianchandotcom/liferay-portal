@@ -91,8 +91,7 @@ public class MediaWikiToCreoleTranslatorTest extends BaseTestCase {
 	}
 
 	public void testRemoveWorkInProgress() throws Exception {
-		String content =
-			"{{Work in progress}}\ntest";
+		String content = "{{Work in progress}}\ntest";
 
 		String expected = "\ntest";
 		String actual = _translate(content);

@@ -299,8 +299,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		outputIStreams[index] = outputIStream;
 
-		IStreamCoder outputIStreamCoder =
-			outputIStream.getStreamCoder();
+		IStreamCoder outputIStreamCoder = outputIStream.getStreamCoder();
 
 		outputIStreamCoders[index] = outputIStreamCoder;
 

@@ -276,7 +276,7 @@ public class ResourcePermissionFinderImpl
 		sb.append("(");
 
 		for (int i = 0; i < scopes.length; i++) {
-			sb.append("ResourceCode.scope = ? ");
+			sb.append("ResourcePermission.scope = ? ");
 
 			if ((i + 1) != scopes.length) {
 				sb.append("OR ");

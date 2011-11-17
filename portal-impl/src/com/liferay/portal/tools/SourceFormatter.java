@@ -946,7 +946,6 @@ public class SourceFormatter {
 		String previousLine = StringPool.BLANK;
 
 		int lineToSkipIfEmpty = 0;
-		int previousLineLength = 0;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
@@ -995,8 +994,6 @@ public class SourceFormatter {
 				}
 			}
 
-			String originalLine = line;
-
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
 					_sourceFormatterHelper.printError(
@@ -1008,31 +1005,6 @@ public class SourceFormatter {
 				_sourceFormatterHelper.printError(
 					fileName, "{:" + fileName + " " + lineCount);
 			}
-
-			StringBundler lineSB = new StringBundler();
-
-			int spacesPerTab = 4;
-
-			for (char c : line.toCharArray()) {
-				if (c == CharPool.TAB) {
-					for (int i = 0; i < spacesPerTab; i++) {
-						lineSB.append(CharPool.SPACE);
-					}
-
-					spacesPerTab = 4;
-				}
-				else {
-					lineSB.append(c);
-
-					spacesPerTab--;
-
-					if (spacesPerTab <= 0) {
-						spacesPerTab = 4;
-					}
-				}
-			}
-
-			line = lineSB.toString();
 
 			if (line.endsWith("private static Log _log =")) {
 				longLogFactoryUtil = true;
@@ -1047,7 +1019,7 @@ public class SourceFormatter {
 					StringUtil.replace(fileName, "\\", "/"));
 			}
 
-			boolean fitsTwoLines= false;
+			boolean fitsTwoLines = false;
 
 			if ((excluded == null) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
@@ -1063,20 +1035,19 @@ public class SourceFormatter {
 						 line.contains(" index IX_")) {
 				}
 				else {
-					if (line.length() > 80) {
+					if (_getLineLength(line) > 80) {
 						_sourceFormatterHelper.printError(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
 					else {
 						fitsTwoLines = _isFitsTwoLines(
-							trimmedLine, previousLine, previousLineLength);
+							trimmedLine, previousLine);
 					}
 				}
 			}
 
 			if (fitsTwoLines) {
 				previousLine = previousLine + trimmedLine;
-				previousLineLength = previousLineLength + trimmedLine.length();
 
 				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 					lineToSkipIfEmpty = lineCount + 1;
@@ -1091,8 +1062,7 @@ public class SourceFormatter {
 					sb.append("\n");
 				}
 
-				previousLine = originalLine;
-				previousLineLength = line.length();
+				previousLine = line;
 			}
 		}
 
@@ -1645,6 +1615,32 @@ public class SourceFormatter {
 		return duplicateImports;
 	}
 
+	private static int _getLineLength(String line) {
+		int lineLength = 0;
+		int tabLength = 4;
+
+		for (char c : line.toCharArray()) {
+			if (c == CharPool.TAB) {
+				for (int i = 0; i < tabLength; i++) {
+					lineLength++;
+				}
+
+				tabLength = 4;
+			}
+			else {
+				lineLength++;
+
+				tabLength--;
+
+				if (tabLength <= 0) {
+					tabLength = 4;
+				}
+			}
+		}
+
+		return lineLength;
+	}
+
 	private static String _getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
@@ -1803,9 +1799,7 @@ public class SourceFormatter {
 		return sb.toString();
 	}
 
-	private static boolean _isFitsTwoLines(
-		String line, String previousLine, int previousLineLength) {
-
+	private static boolean _isFitsTwoLines(String line, String previousLine) {
 		if (Validator.isNull(previousLine)) {
 			return false;
 		}
@@ -1814,7 +1808,7 @@ public class SourceFormatter {
 			return false;
 		}
 
-		if ((line.length() + previousLineLength) > 80) {
+		if ((line.length() + _getLineLength(previousLine)) > 80) {
 			return false;
 		}
 

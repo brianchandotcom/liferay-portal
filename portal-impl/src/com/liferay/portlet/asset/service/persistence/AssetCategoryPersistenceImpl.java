@@ -544,12 +544,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 
 		if (isNew) {
-			expandTree(assetCategory);
+			expandTree(assetCategory, null);
 		}
 		else {
 			if (assetCategory.getParentCategoryId() != assetCategoryModelImpl.getOriginalParentCategoryId()) {
+				List<Long> childrenCategoryIds = getChildrenTreeCategoryIds(assetCategory);
+
 				shrinkTree(assetCategory);
-				expandTree(assetCategory);
+				expandTree(assetCategory, childrenCategoryIds);
 			}
 		}
 
@@ -6388,6 +6390,27 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		this.rebuildTreeEnabled = rebuildTreeEnabled;
 	}
 
+	protected String buildSqlInClause(List<Long> assetCategoriesIds) {
+		if (assetCategoriesIds.size() == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler((assetCategoriesIds.size() * 2) -
+				1);
+
+		for (int i = 0; i < assetCategoriesIds.size(); i++) {
+			long assetCategoryId = assetCategoriesIds.get(i);
+
+			sb.append(assetCategoryId);
+
+			if ((i + 1) < assetCategoriesIds.size()) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	protected long countOrphanTreeNodes(long groupId) throws SystemException {
 		Session session = null;
 
@@ -6414,8 +6437,38 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 	}
 
-	protected void expandTree(AssetCategory assetCategory)
-		throws SystemException {
+	protected void expandNoChildrenLeftCategoryId(long delta, long groupId,
+		long leftCategoryId, List<Long> childrenCategoryIds) {
+		String sql = "UPDATE AssetCategory SET leftcategoryId = (leftcategoryId + ?) WHERE (groupId = ?) AND (leftcategoryId > ?) AND (categoryId NOT IN (" +
+			buildSqlInClause(childrenCategoryIds) + "))";
+
+		SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+				sql,
+				new int[] {
+					java.sql.Types.BIGINT, java.sql.Types.BIGINT,
+					java.sql.Types.BIGINT
+				});
+
+		_sqlUpdate.update(new Object[] { delta, groupId, leftCategoryId });
+	}
+
+	protected void expandNoChildrenRightCategoryId(long delta, long groupId,
+		long rightCategoryId, List<Long> childrenCategoryIds) {
+		String sql = "UPDATE AssetCategory SET rightcategoryId = (rightcategoryId + ?) WHERE (groupId = ?) AND (rightcategoryId > ?) AND (categoryId NOT IN (" +
+			buildSqlInClause(childrenCategoryIds) + "))";
+
+		SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+				sql,
+				new int[] {
+					java.sql.Types.BIGINT, java.sql.Types.BIGINT,
+					java.sql.Types.BIGINT
+				});
+
+		_sqlUpdate.update(new Object[] { delta, groupId, rightCategoryId });
+	}
+
+	protected void expandTree(AssetCategory assetCategory,
+		List<Long> childrenCategoryIds) throws SystemException {
 		if (!rebuildTreeEnabled) {
 			return;
 		}
@@ -6430,10 +6483,29 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		if (lastRightCategoryId > 0) {
 			leftCategoryId = lastRightCategoryId + 1;
-			rightCategoryId = lastRightCategoryId + 2;
 
-			expandTreeLeftCategoryId.expand(groupId, lastRightCategoryId);
-			expandTreeRightCategoryId.expand(groupId, lastRightCategoryId);
+			long childrenDistance = assetCategory.getRightCategoryId() -
+				assetCategory.getLeftCategoryId();
+
+			if (childrenDistance > 1) {
+				rightCategoryId = leftCategoryId + childrenDistance;
+
+				long diff = leftCategoryId - assetCategory.getLeftCategoryId();
+
+				updateChildrenTree(diff, groupId, childrenCategoryIds);
+
+				expandNoChildrenLeftCategoryId(childrenDistance + 1, groupId,
+					lastRightCategoryId, childrenCategoryIds);
+
+				expandNoChildrenRightCategoryId(childrenDistance + 1, groupId,
+					lastRightCategoryId, childrenCategoryIds);
+			}
+			else {
+				rightCategoryId = lastRightCategoryId + 2;
+
+				expandTreeLeftCategoryId.expand(groupId, lastRightCategoryId);
+				expandTreeRightCategoryId.expand(groupId, lastRightCategoryId);
+			}
 
 			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
 			EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
@@ -6443,6 +6515,39 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		assetCategory.setLeftCategoryId(leftCategoryId);
 		assetCategory.setRightCategoryId(rightCategoryId);
+	}
+
+	protected List<Long> getChildrenTreeCategoryIds(
+		AssetCategory parentAssetCategory) throws SystemException {
+		List<Long> childrenCategoryIds = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(
+					"SELECT categoryId FROM AssetCategory WHERE (groupId = ?) AND (leftcategoryId BETWEEN ? AND ?)");
+
+			q.addScalar("CategoryId",
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(parentAssetCategory.getGroupId());
+			qPos.add(parentAssetCategory.getLeftCategoryId() + 1);
+			qPos.add(parentAssetCategory.getRightCategoryId());
+
+			childrenCategoryIds = q.list();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return childrenCategoryIds;
 	}
 
 	protected long getLastRightCategoryId(long groupId, long parentCategoryId)
@@ -6553,6 +6658,21 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+	}
+
+	protected void updateChildrenTree(long delta, long groupId,
+		List<Long> childrenCategoryIds) {
+		String sql = "UPDATE AssetCategory SET leftcategoryId = (leftcategoryId + ?), rightcategoryId = (rightcategoryId + ?) WHERE (groupId = ?) AND (categoryId IN (" +
+			buildSqlInClause(childrenCategoryIds) + "))";
+
+		SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
+				sql,
+				new int[] {
+					java.sql.Types.BIGINT, java.sql.Types.BIGINT,
+					java.sql.Types.BIGINT
+				});
+
+		_sqlUpdate.update(new Object[] { delta, delta, groupId });
 	}
 
 	/**

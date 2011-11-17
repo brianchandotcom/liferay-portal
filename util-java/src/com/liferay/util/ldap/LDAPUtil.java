@@ -17,6 +17,7 @@ package com.liferay.util.ldap;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
 
@@ -63,6 +64,10 @@ public class LDAPUtil {
 			Attributes attributes, String id, Object defaultValue)
 		throws NamingException {
 
+		if (Validator.isNull(id)) {
+			return defaultValue;
+		}
+
 		Attribute attribute = attributes.get(id);
 
 		if (attribute == null) {
@@ -106,6 +111,10 @@ public class LDAPUtil {
 	public static String getAttributeString(
 			Attributes attributes, String id, String defaultValue)
 		throws NamingException {
+
+		if (Validator.isNull(id)) {
+			return defaultValue;
+		}
 
 		Attribute attribute = attributes.get(id);
 

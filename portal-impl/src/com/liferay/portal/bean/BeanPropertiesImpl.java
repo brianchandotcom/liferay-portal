@@ -475,7 +475,9 @@ public class BeanPropertiesImpl implements BeanProperties {
 				Class<?> propertyTypeClass = BeanUtil.getPropertyType(
 					bean, dateParam);
 
-				if (!propertyTypeClass.equals(Date.class)) {
+				if ((propertyTypeClass == null) ||
+					!propertyTypeClass.equals(Date.class)) {
+
 					continue;
 				}
 

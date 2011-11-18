@@ -664,6 +664,23 @@
 		</ant>
 	</target>
 
+	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
+		</antcall>
+
+		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite}" />
+		</ant>
+	</target>
+
 	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-minimal-firefox">
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
@@ -671,6 +688,24 @@
 		</antcall>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
+			<property name="test.database.minimal" value="true" />
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			<property name="test.name" value="${test.ant.script.suite}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-minimal-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
+		</antcall>
+
+		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			<property name="test.database.minimal" value="true" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}

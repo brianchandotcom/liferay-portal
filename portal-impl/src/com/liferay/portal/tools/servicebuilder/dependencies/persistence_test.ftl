@@ -1,6 +1,12 @@
 <#assign parentPKColumn = "">
 
 <#if entity.isHierarchicalTree()>
+	<#if entity.hasColumn("groupId")>
+		<#assign scopeColumn = entity.getColumn("groupId")>
+	<#else>
+		<#assign scopeColumn = entity.getColumn("companyId")>
+	</#if>
+
 	<#assign pkColumn = entity.getPKList()?first>
 
 	<#assign parentPKColumn = entity.getColumn("parent" + pkColumn.methodName)>
@@ -507,14 +513,14 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 	<#if entity.isHierarchicalTree()>
 		public void testMoveTree() throws Exception {
-			long groupId = nextLong();
+			long ${scopeColumn.name} = nextLong();
 
-			${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
 			long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
 			long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
 
-			${entity.name} child${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+			${entity.name} child${entity.name} = add${entity.name}(${scopeColumn.name}, root${entity.name}.get${pkColumn.methodName}());
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 
@@ -525,15 +531,15 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		}
 
 		public void testMoveTreeFromLeft() throws Exception {
-			long groupId = nextLong();
+			long ${scopeColumn.name} = nextLong();
 
-			${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} parent${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
-			${entity.name} child${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+			${entity.name} child${entity.name} = add${entity.name}(${scopeColumn.name}, parent${entity.name}.get${pkColumn.methodName}());
 
 			parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
 
-			${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
 			long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
 			long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
@@ -554,16 +560,16 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		}
 
 		public void testMoveTreeFromRight() throws Exception {
-			long groupId = nextLong();
+			long ${scopeColumn.name} = nextLong();
 
-			${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
 			long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
 			long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
 
-			${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} parent${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
-			${entity.name} child${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+			${entity.name} child${entity.name} = add${entity.name}(${scopeColumn.name}, parent${entity.name}.get${pkColumn.methodName}());
 
 			parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
 
@@ -583,21 +589,21 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		}
 
 		public void testMoveTreeIntoTreeFromLeft() throws Exception {
-			long groupId = nextLong();
+			long ${scopeColumn.name} = nextLong();
 
-			${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} parent${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
-			${entity.name} parentChild${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+			${entity.name} parentChild${entity.name} = add${entity.name}(${scopeColumn.name}, parent${entity.name}.get${pkColumn.methodName}());
 
 			parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
 
-			${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
-			${entity.name} leftRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+			${entity.name} leftRootChild${entity.name} = add${entity.name}(${scopeColumn.name}, root${entity.name}.get${pkColumn.methodName}());
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 
-			${entity.name} rightRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+			${entity.name} rightRootChild${entity.name} = add${entity.name}(${scopeColumn.name}, root${entity.name}.get${pkColumn.methodName}());
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 
@@ -626,24 +632,24 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 		}
 
 		public void testMoveTreeIntoTreeFromRight() throws Exception {
-			long groupId = nextLong();
+			long ${scopeColumn.name} = nextLong();
 
-			${entity.name} root${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} root${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
-			${entity.name} leftRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+			${entity.name} leftRootChild${entity.name} = add${entity.name}(${scopeColumn.name}, root${entity.name}.get${pkColumn.methodName}());
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 
-			${entity.name} rightRootChild${entity.name} = add${entity.name}(groupId, root${entity.name}.get${pkColumn.methodName}());
+			${entity.name} rightRootChild${entity.name} = add${entity.name}(${scopeColumn.name}, root${entity.name}.get${pkColumn.methodName}());
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 
 			long previousRootLeft${pkColumn.methodName} = root${entity.name}.getLeft${pkColumn.methodName}();
 			long previousRootRight${pkColumn.methodName} = root${entity.name}.getRight${pkColumn.methodName}();
 
-			${entity.name} parent${entity.name} = add${entity.name}(groupId, null);
+			${entity.name} parent${entity.name} = add${entity.name}(${scopeColumn.name}, null);
 
-			${entity.name} parentChild${entity.name} = add${entity.name}(groupId, parent${entity.name}.get${pkColumn.methodName}());
+			${entity.name} parentChild${entity.name} = add${entity.name}(${scopeColumn.name}, parent${entity.name}.get${pkColumn.methodName}());
 
 			parent${entity.name} = _persistence.fetchByPrimaryKey(parent${entity.name}.getPrimaryKey());
 
@@ -668,7 +674,7 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 			assertEquals(parent${entity.name}.getRight${pkColumn.methodName}() - 1, parentChild${entity.name}.getRight${pkColumn.methodName}());
 		}
 
-		protected ${entity.name} add${entity.name}(long groupId, Long parent${pkColumn.methodName}) throws Exception {
+		protected ${entity.name} add${entity.name}(long ${scopeColumn.name}, Long parent${pkColumn.methodName}) throws Exception {
 			<#if entity.hasCompoundPK()>
 				${entity.PKClassName} pk = new ${entity.PKClassName}(
 
@@ -707,8 +713,8 @@ public class ${entity.name}PersistenceTest extends BasePersistenceTestCase {
 
 			<#list entity.regularColList as column>
 				<#if !column.primary && ((parentPKColumn == "") || (parentPKColumn.name != column.name))>
-					<#if column.name ="groupId">
-						${entity.varName}.set${column.methodName}(groupId);
+					<#if column.name ="${scopeColumn.name}">
+						${entity.varName}.set${column.methodName}(${scopeColumn.name});
 					<#else>
 						<#if column.type == "Blob">
 							String ${column.name}String = randomString();

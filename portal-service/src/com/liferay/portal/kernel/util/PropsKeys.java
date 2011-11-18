@@ -1195,6 +1195,8 @@ public interface PropsKeys {
 
 	public static final String LUCENE_COMMIT_TIME_INTERVAL = "lucene.commit.time.interval";
 
+	public static final String LUCENE_COPY_FIELDS = "lucene.copy.field";
+
 	public static final String LUCENE_DIR = "lucene.dir";
 
 	public static final String LUCENE_FILE_EXTRACTOR = "lucene.file.extractor";
@@ -1206,6 +1208,8 @@ public interface PropsKeys {
 	public static final String LUCENE_OPTIMIZE_INTERVAL = "lucene.optimize.interval";
 
 	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
+
+	public static final String LUCENE_SORTABLE_TEXT_FIELDS = "lucene.sortable.text.fields";
 
 	public static final String LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED = "lucene.store.jdbc.auto.clean.up.enabled";
 

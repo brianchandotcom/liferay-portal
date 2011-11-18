@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -389,6 +390,17 @@ public class DocumentImpl implements Document {
 			field.setTokenized(true);
 
 			_fields.put(name, field);
+
+			String[] sortableTextFields = PropsUtil.getArray(
+				PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
+
+			if (ArrayUtil.contains(sortableTextFields, name)) {
+				String sortableName =
+					PropsUtil.get(
+						PropsKeys.LUCENE_COPY_FIELDS, new Filter(name));
+
+				addKeyword(sortableName, value);
+			}
 		}
 	}
 

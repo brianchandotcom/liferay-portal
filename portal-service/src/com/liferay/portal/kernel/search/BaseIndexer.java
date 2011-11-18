@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchRegionException;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -202,7 +204,17 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	public String getSortField(String orderByCol) {
-		return doGetSortField(orderByCol);
+		String sortField = doGetSortField(orderByCol);
+
+		String[] sortableTextFields = PropsUtil.getArray(
+			PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
+
+		if (ArrayUtil.contains(sortableTextFields, sortField)) {
+			sortField = PropsUtil.get(
+				PropsKeys.LUCENE_COPY_FIELDS, new Filter(sortField));
+		}
+
+		return sortField;
 	}
 
 	public Summary getSummary(

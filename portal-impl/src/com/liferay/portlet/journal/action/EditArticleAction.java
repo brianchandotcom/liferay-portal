@@ -686,12 +686,10 @@ public class EditArticleAction extends PortletAction {
 								themeDisplay.getCompanyGroupId(), structureId);
 					}
 
-					if (!cmd.equals(Constants.TRANSLATE)) {
-						content = JournalUtil.mergeArticleContent(
-							curArticle.getContent(), content, true);
-						content = JournalUtil.removeOldContent(
-							content, structure.getMergedXsd());
-					}
+					content = JournalUtil.mergeArticleContent(
+						curArticle.getContent(), content, true);
+					content = JournalUtil.removeOldContent(
+						content, structure.getMergedXsd());
 				}
 			}
 

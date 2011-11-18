@@ -113,9 +113,8 @@ public class MBStatsUserLocalServiceImpl
 		if (results.isEmpty()) {
 			return 0;
 		}
-		else {
-			return results.get(0);
-		}
+
+		return results.get(0);
 	}
 
 	public MBStatsUser getStatsUser(long groupId, long userId)

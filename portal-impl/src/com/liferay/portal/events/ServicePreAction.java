@@ -1155,13 +1155,29 @@ public class ServicePreAction extends Action {
 		if (group.isLayoutPrototype()) {
 			themeDisplay.setShowControlPanelIcon(false);
 			themeDisplay.setShowHomeIcon(false);
+			themeDisplay.setShowManageSiteMembershipsIcon(false);
 			themeDisplay.setShowMyAccountIcon(false);
+			themeDisplay.setShowPageCustomizationIcon(false);
 			themeDisplay.setShowPageSettingsIcon(true);
 			themeDisplay.setShowPortalIcon(false);
 			themeDisplay.setShowSignInIcon(false);
 			themeDisplay.setShowSignOutIcon(false);
 			themeDisplay.setShowSiteContentIcon(false);
+			themeDisplay.setShowSiteSettingsIcon(false);
 			themeDisplay.setShowStagingIcon(false);
+		}
+
+		if (group.isLayoutSetPrototype()) {
+			themeDisplay.setShowSiteSettingsIcon(false);
+		}
+
+		if (group.hasStagingGroup() && !group.isStagingGroup()) {
+			themeDisplay.setShowLayoutTemplatesIcon(false);
+			themeDisplay.setShowPageCustomizationIcon(false);
+			themeDisplay.setShowPageSettingsIcon(false);
+			themeDisplay.setShowSiteContentIcon(false);
+			themeDisplay.setShowSiteMapSettingsIcon(false);
+			themeDisplay.setShowSiteSettingsIcon(false);
 		}
 
 		themeDisplay.setURLPortal(portalURL.concat(contextPath));

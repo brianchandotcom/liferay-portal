@@ -36,8 +36,8 @@
 		</if>
 
 		<replace file="${app.server.jetty.bin.dir}/run.bat">
-			<replacetoken>set "JAVA_OPTS=-Djetty.version=7.5.1 -Djetty.version.date=20110908 -Dfile.encoding=UTF8 -Djava.io.tmpdir=../temp -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"</replacetoken>
-			<replacevalue expandProperties="true">set "JAVA_OPTS=-Djetty.version=7.5.1 -Djetty.version.date=20110908 -Dfile.encoding=UTF8 -Djava.io.tmpdir=../temp -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m -DSTOP.PORT=8079 -DSTOP.KEY=secret"</replacevalue>
+			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
+			<replacevalue>set "JAVA_OPTS=-DSTOP.PORT=8079 -DSTOP.KEY=secret -D</replacevalue>
 		</replace>
 
 		<copy
@@ -47,7 +47,7 @@
 
 		<replace file="${app.server.jetty.bin.dir}/shutdown.bat">
 			<replacetoken>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar</replacetoken>
-			<replacevalue expandProperties="true">"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar --stop</replacevalue>
+			<replacevalue>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar --stop</replacevalue>
 		</replace>
 
 		<antcall target="revert-test-properties" />

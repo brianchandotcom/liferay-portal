@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.LayoutRevisionThreadLocal;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -350,7 +351,9 @@ public class LayoutRevisionLocalServiceImpl
 
 		int workflowAction = serviceContext.getWorkflowAction();
 
-		if (workflowAction != WorkflowConstants.ACTION_PUBLISH) {
+		if (workflowAction != WorkflowConstants.ACTION_PUBLISH &&
+			LayoutRevisionThreadLocal.getLayoutRevisionId() <= 0) {
+
 			long newLayoutRevisionId = counterLocalService.increment();
 
 			layoutRevision = layoutRevisionPersistence.create(
@@ -392,6 +395,9 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setStatusDate(serviceContext.getModifiedDate(now));
 
 			layoutRevisionPersistence.update(layoutRevision, false);
+
+			LayoutRevisionThreadLocal.setLayoutRevisionId(
+				layoutRevision.getLayoutRevisionId());
 
 			// Portlet preferences
 

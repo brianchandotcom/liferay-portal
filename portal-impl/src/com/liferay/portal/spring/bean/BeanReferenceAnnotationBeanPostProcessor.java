@@ -52,6 +52,12 @@ public class BeanReferenceAnnotationBeanPostProcessor
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 		throws BeansException {
 
+		return bean;
+	}
+
+	public Object postProcessBeforeInitialization(Object bean, String beanName)
+		throws BeansException {
+
 		if (bean instanceof IdentifiableBean) {
 			IdentifiableBean identifiableBean = (IdentifiableBean)bean;
 
@@ -65,12 +71,6 @@ public class BeanReferenceAnnotationBeanPostProcessor
 							" for " + ClusterableAdvice.class.getName());
 			}
 		}
-
-		return bean;
-	}
-
-	public Object postProcessBeforeInitialization(Object bean, String beanName)
-		throws BeansException {
 
 		_autoInject(bean, beanName, bean.getClass());
 

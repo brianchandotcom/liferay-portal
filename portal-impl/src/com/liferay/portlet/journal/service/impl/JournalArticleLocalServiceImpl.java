@@ -798,8 +798,9 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No approved JournalArticle with the key {groupId=" + groupId +
-					", className=" + className + ", classPK=" + classPK + "}");
+				"No approved JournalArticle exists with the key {groupId="
+					+ groupId + ", className=" + className + ", classPK=" +
+						classPK + "}");
 		}
 
 		return articles.get(0);
@@ -1264,8 +1265,8 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No approved JournalArticle with the key {groupId=" + groupId +
-					", " + "articleId=" + articleId + "}");
+				"No approved JournalArticle exists with the key {groupId=" +
+					groupId + ", " + "articleId=" + articleId + "}");
 
 		}
 
@@ -1300,7 +1301,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No JournalArticle with the key {groupId=" + groupId +
+				"No JournalArticle exists with the key {groupId=" + groupId +
 					", urlTitle=" + urlTitle + "}");
 		}
 
@@ -1358,7 +1359,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No JournalArticle with the key {resourcePrimKey=" +
+				"No JournalArticle exists with the key {resourcePrimKey=" +
 					resourcePrimKey + "}");
 		}
 
@@ -1391,7 +1392,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No JournalArticle with the key {groupId=" + groupId +
+				"No JournalArticle exists with the key {groupId=" + groupId +
 					", articleId=" + articleId + ", status=" + status + "}");
 		}
 
@@ -1410,7 +1411,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No JournalArticle with the key {groupId=" + groupId +
+				"No JournalArticle exists with the key {groupId=" + groupId +
 					", className=" + className + ", classPK =" + classPK + "}");
 		}
 
@@ -1436,7 +1437,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (articles.isEmpty()) {
 			throw new NoSuchArticleException(
-				"No JournalArticle with the key {groupId=" + groupId +
+				"No JournalArticle exists with the key {groupId=" + groupId +
 					", urlTitle=" + urlTitle + ", status=" + status + "}");
 		}
 

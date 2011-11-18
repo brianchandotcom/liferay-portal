@@ -255,6 +255,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticlePersistence.filterFindByG_L(groupId, layoutUuid);
 	}
 
+	public JournalArticle getDisplayArticleByUrlTitle(
+			long groupId, String urlTitle)
+		throws PortalException, SystemException {
+
+		JournalArticle article =
+			journalArticleLocalService.getDisplayArticleByUrlTitle(
+				groupId, urlTitle);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), article, ActionKeys.VIEW);
+
+		return article;
+	}
+
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException, SystemException {
 

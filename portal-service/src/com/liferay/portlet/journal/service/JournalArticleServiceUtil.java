@@ -209,6 +209,13 @@ public class JournalArticleServiceUtil {
 		return getService().getArticlesByLayoutUuid(groupId, layoutUuid);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle getDisplayArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDisplayArticleByUrlTitle(groupId, urlTitle);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

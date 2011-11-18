@@ -24,7 +24,7 @@ import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchimag
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchnavigation.SearchNavigationTests;
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchnestedportlets.SearchNestedPortletsTests;
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchpollsdisplay.SearchPollsDisplayTests;
-import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchrecentdocuments.SearchRecentDocumentsTests;
+import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchrecentdownloads.SearchRecentDownloadsTests;
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchsitemap.SearchSiteMapTests;
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchtagcloud.SearchTagCloudTests;
 import com.liferay.portalweb.portlet.addapplication.contentmanagement.searchtagsnavigation.SearchTagsNavigationTests;
@@ -53,7 +53,7 @@ public class ContentManagementTests extends BaseTests {
 		testSuite.addTest(SearchNavigationTests.suite());
 		testSuite.addTest(SearchNestedPortletsTests.suite());
 		testSuite.addTest(SearchPollsDisplayTests.suite());
-		testSuite.addTest(SearchRecentDocumentsTests.suite());
+		testSuite.addTest(SearchRecentDownloadsTests.suite());
 		testSuite.addTest(SearchSiteMapTests.suite());
 		testSuite.addTest(SearchTagCloudTests.suite());
 		testSuite.addTest(SearchTagsNavigationTests.suite());

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.addapplication.contentmanagement.searchrecentdocuments;
+package com.liferay.portalweb.portlet.addapplication.social.searchuserstatistics;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,12 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SearchRecentDocumentsTests extends BaseTests {
+public class SearchUserStatisticsTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(SearchRecentDocumentsTest.class);
+		testSuite.addTestSuite(SearchUserStatisticsTest.class);
 
 		return testSuite;
 	}

@@ -91,7 +91,7 @@ public class AddPortletSampleWAPVideoTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/section")) {
+				if (selenium.isVisible("//div[2]/div/section")) {
 					break;
 				}
 			}
@@ -101,6 +101,6 @@ public class AddPortletSampleWAPVideoTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//div[2]/section"));
+		assertTrue(selenium.isVisible("//div[2]/div/section"));
 	}
 }

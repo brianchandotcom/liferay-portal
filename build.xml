@@ -413,8 +413,16 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 						<replace file="${app.server.jetty.bin.dir}/run.bat">
 							<replacetoken>set "JAVA_OPTS=-D</replacetoken>
-							<replacevalue expandProperties="true">set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+							<replacevalue>set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
+
+						<loadfile property="run.bat.content" srcfile="${app.server.jetty.bin.dir}/run.bat">
+							<filterchain>
+								<expandproperties />
+							</filterchain>
+						</loadfile>
+
+						<echo file="${app.server.jetty.bin.dir}/run.bat">${run.bat.content}</echo>
 					</then>
 				</if>
 
@@ -435,8 +443,16 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 						<replace file="${app.server.jetty.bin.dir}/run.sh">
 							<replacetoken>export JAVA_OPTS="-D</replacetoken>
-							<replacevalue expandProperties="true">export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+							<replacevalue>export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
+
+						<loadfile property="run.sh.content" srcfile="${app.server.jetty.bin.dir}/run.sh">
+							<filterchain>
+								<expandproperties />
+							</filterchain>
+						</loadfile>
+
+						<echo file="${app.server.jetty.bin.dir}/run.sh">${run.sh.content}</echo>
 					</then>
 				</if>
 

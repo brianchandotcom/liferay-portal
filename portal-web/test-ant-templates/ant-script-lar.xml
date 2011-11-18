@@ -428,4 +428,19 @@
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
+
+	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-firefox">
+		<antcall target="prepare-mysql">
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
+			<property name="test.name" value="${test.ant.script.suite.1}" />
+		</ant>
+
+		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
+			<property name="skip.delete-selenium-output" value="true" />
+			<property name="test.name" value="${test.ant.script.suite.2}" />
+		</ant>
+	</target>
 </project>

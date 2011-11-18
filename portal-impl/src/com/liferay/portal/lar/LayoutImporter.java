@@ -907,7 +907,7 @@ public class LayoutImporter {
 
 			boolean addGroupPermissions = true;
 
-			Group group = layout.getGroup();
+			Group group = importedLayout.getGroup();
 
 			if (privateLayout && group.isUser()) {
 				addGroupPermissions = false;

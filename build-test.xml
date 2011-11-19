@@ -1233,6 +1233,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="plugins-today-in-christian-history" />
+			<param name="test.ant.script.plugin.portlets" value="tich-portlet" />
+			<param name="test.ant.script.suite" value="PluginsTodayinChristianHistoryTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-todays-events" />
 			<param name="test.ant.script.plugin.portlets" value="todays-events-portlet" />
 			<param name="test.ant.script.suite" value="PluginsTodaysEventsTestSuite" />
@@ -1557,6 +1563,11 @@
 			<param name="test.ant.script.command" value="properties-users-screen-name-allow-numeric" />
 			<param name="test.ant.script.properties" value="users.screen.name.allow.numeric=true" />
 			<param name="test.ant.script.suite" value="PropertiesUsersScreenNameAllowNumericTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="session-smoke" />
+			<param name="test.ant.script.suite" value="SessionSmokeTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

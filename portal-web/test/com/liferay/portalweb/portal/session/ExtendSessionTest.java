@@ -47,7 +47,7 @@ public class ExtendSessionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//input[@value='Extend']")) {
+				if (selenium.isVisible("//input[@value='Extend']")) {
 					break;
 				}
 			}
@@ -65,7 +65,7 @@ public class ExtendSessionTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//input[@value='Extend']")) {
+				if (!selenium.isVisible("//input[@value='Extend']")) {
 					break;
 				}
 			}

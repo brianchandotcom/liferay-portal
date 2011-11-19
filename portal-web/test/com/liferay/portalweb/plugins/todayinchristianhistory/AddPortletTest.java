@@ -30,48 +30,32 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Today In Church History Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click(RuntimeVariables.replace(
-				"link=Today In Church History Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("t"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
 				if (selenium.isVisible(
+							"link=Today in Christian History Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Today in Christian History Test Page",
+			RuntimeVariables.replace("Today in Christian History Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
 							"//div[@title='Today in Christian History']/p/a")) {
 					break;
 				}
@@ -83,7 +67,7 @@ public class AddPortletTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@title='Today in Christian History']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

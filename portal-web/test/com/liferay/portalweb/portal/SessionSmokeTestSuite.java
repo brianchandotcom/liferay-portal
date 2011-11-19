@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.session;
+package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.portal.session.SessionTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,18 +23,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SessionExpirationTests extends BaseTests {
+public class SessionSmokeTestSuite extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(SignInWithOutRememberMeTest.class);
-		testSuite.addTestSuite(ExtendSessionTest.class);
-		testSuite.addTestSuite(ConfirmSessionExpireTest.class);
-		testSuite.addTestSuite(RememberMeLoginTest.class);
-		testSuite.addTestSuite(ConfirmNoSessionExpireTest.class);
-		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTest(LoginTests.suite());
+		testSuite.addTest(SessionTests.suite());
+
+		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;
 	}

@@ -399,7 +399,9 @@ public class DocumentImpl implements Document {
 					PropsUtil.get(
 						PropsKeys.LUCENE_COPY_FIELDS, new Filter(name));
 
-				addKeyword(sortableName, value);
+				field = new Field(sortableName, value);
+
+				_fields.put(sortableName, field);
 			}
 		}
 	}

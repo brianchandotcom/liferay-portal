@@ -53,8 +53,9 @@ public class AssignMembersRoleWebContentEditorUserCPActionsTest
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText(
+				"xPath=(//span[@title='Actions']/ul/li/strong/a)[1]"));
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[1]",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

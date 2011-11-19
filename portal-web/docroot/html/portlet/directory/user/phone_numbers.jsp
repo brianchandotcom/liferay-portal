@@ -30,7 +30,11 @@ if (classPK > 0) {
 }
 
 for (int i = 0; i < organizations.size(); i++) {
-	organizationPhones.addAll(PhoneServiceUtil.getPhones(Organization.class.getName(), organizations.get(i).getOrganizationId()));
+	try {
+		organizationPhones.addAll(PhoneServiceUtil.getPhones(Organization.class.getName(), organizations.get(i).getOrganizationId()));
+	}
+	catch (Exception e) {
+	}
 }
 %>
 

@@ -395,13 +395,7 @@ public class DocumentImpl implements Document {
 				PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
 
 			if (ArrayUtil.contains(sortableTextFields, name)) {
-				String sortableName =
-					PropsUtil.get(
-						PropsKeys.LUCENE_COPY_FIELDS, new Filter(name));
-
-				field = new Field(sortableName, value);
-
-				_fields.put(sortableName, field);
+				addKeyword(name.concat("sortable"), value);
 			}
 		}
 	}

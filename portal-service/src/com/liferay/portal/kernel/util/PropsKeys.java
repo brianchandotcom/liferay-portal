@@ -1195,8 +1195,6 @@ public interface PropsKeys {
 
 	public static final String LUCENE_COMMIT_TIME_INTERVAL = "lucene.commit.time.interval";
 
-	public static final String LUCENE_COPY_FIELDS = "lucene.copy.field";
-
 	public static final String LUCENE_DIR = "lucene.dir";
 
 	public static final String LUCENE_FILE_EXTRACTOR = "lucene.file.extractor";

@@ -210,8 +210,7 @@ public abstract class BaseIndexer implements Indexer {
 			PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
 
 		if (ArrayUtil.contains(sortableTextFields, sortField)) {
-			sortField = PropsUtil.get(
-				PropsKeys.LUCENE_COPY_FIELDS, new Filter(sortField));
+			return sortField.concat("sortable");
 		}
 
 		return sortField;

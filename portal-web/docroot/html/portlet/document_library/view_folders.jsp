@@ -211,40 +211,42 @@ boolean refreshFolders = ParamUtil.getBoolean(request, "refreshFolders");
 								</a>
 							</li>
 
-							<liferay-portlet:renderURL varImpl="viewMyDocumentsURL">
-								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="mine" />
-								<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-								<portlet:param name="entryStart" value="0" />
-								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-								<portlet:param name="folderStart" value="0" />
-								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-							</liferay-portlet:renderURL>
+							<c:if test="<%= themeDisplay.isSignedIn() %>">
+								<liferay-portlet:renderURL varImpl="viewMyDocumentsURL">
+									<portlet:param name="struts_action" value="/document_library/view" />
+									<portlet:param name="navigation" value="mine" />
+									<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+									<portlet:param name="entryStart" value="0" />
+									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+									<portlet:param name="folderStart" value="0" />
+									<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+								</liferay-portlet:renderURL>
 
-							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewMyDocumentsEntriesURL">
-								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="mine" />
-								<portlet:param name="viewAddButton" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="viewBreadcrumb" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="entryStart" value="0" />
-								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-								<portlet:param name="folderStart" value="0" />
-								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-							</liferay-portlet:resourceURL>
+								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewMyDocumentsEntriesURL">
+									<portlet:param name="struts_action" value="/document_library/view" />
+									<portlet:param name="navigation" value="mine" />
+									<portlet:param name="viewAddButton" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewBreadcrumb" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
+									<portlet:param name="entryStart" value="0" />
+									<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+									<portlet:param name="folderStart" value="0" />
+									<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+								</liferay-portlet:resourceURL>
 
-							<li class="folder <%= navigation.equals("mine") ? "selected" : StringPool.BLANK %>">
-								<a class="browse-folder" data-navigation="mine" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewMyDocumentsEntriesURL.toString() %>" href="<%= viewMyDocumentsURL.toString() %>">
-									<liferay-ui:icon image="../aui/person" message="" />
+								<li class="folder <%= navigation.equals("mine") ? "selected" : StringPool.BLANK %>">
+									<a class="browse-folder" data-navigation="mine" data-refresh-entries="<%= Boolean.TRUE.toString() %>" data-resource-url="<%= viewMyDocumentsEntriesURL.toString() %>" href="<%= viewMyDocumentsURL.toString() %>">
+										<liferay-ui:icon image="../aui/person" message="" />
 
-									<span class="entry-title">
-										<%= LanguageUtil.get(pageContext, "mine") %>
-									</span>
-								</a>
-							</li>
+										<span class="entry-title">
+											<%= LanguageUtil.get(pageContext, "mine") %>
+										</span>
+									</a>
+								</li>
+							</c:if>
 
 							<%
 							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay));

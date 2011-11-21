@@ -55,6 +55,7 @@ import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.submitfo
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentassignedtomeactions.UpdateDueDateWebContentAssignedToMeActionsTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentassignedtomyrolesactions.UpdateDueDateWebContentAssignedToMyRolesActionsTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.updateduedatewebcontentcompletedactions.UpdateDueDateWebContentCompletedActionsTests;
+import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.userviewwebcontentassignedtomyrolessitestaging.User_ViewWebContentAssignedToMyRolesSiteStagingTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.viewwebcontenttaskactivitiesassignedtome.ViewWebContentTaskActivitiesAssignedToMeTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.viewwebcontenttaskactivitiesassignedtomyroles.ViewWebContentTaskActivitiesAssignedToMyRolesTests;
 import com.liferay.portalweb.plugins.kaleo.myworkflowtasks.workflowtask.viewwebcontenttaskactivitiescompleted.ViewWebContentTaskActivitiesCompletedTests;
@@ -116,6 +117,8 @@ public class WorkflowTaskTests extends BaseTests {
 		testSuite.addTest(
 			UpdateDueDateWebContentAssignedToMyRolesActionsTests.suite());
 		testSuite.addTest(UpdateDueDateWebContentCompletedActionsTests.suite());
+		testSuite.addTest(
+			User_ViewWebContentAssignedToMyRolesSiteStagingTests.suite());
 		testSuite.addTest(
 			ViewWebContentTaskActivitiesAssignedToMeTests.suite());
 		testSuite.addTest(

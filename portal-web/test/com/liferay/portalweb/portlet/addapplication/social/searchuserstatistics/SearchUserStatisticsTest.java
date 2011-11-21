@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.addapplication.contentmanagement.searchrecentdocuments;
+package com.liferay.portalweb.portlet.addapplication.social.searchuserstatistics;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SearchRecentDocumentsTest extends BaseTestCase {
-	public void testSearchRecentDocuments() throws Exception {
+public class SearchUserStatisticsTest extends BaseTestCase {
+	public void testSearchUserStatistics() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
 
@@ -44,7 +44,7 @@ public class SearchRecentDocumentsTest extends BaseTestCase {
 		selenium.type("layout_configuration_content",
 			RuntimeVariables.replace(""));
 		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("r"));
+			RuntimeVariables.replace("u"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -52,8 +52,7 @@ public class SearchRecentDocumentsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@title='Recently Downloaded Documents']")) {
+				if (selenium.isVisible("//div[@title='User Statistics']")) {
 					break;
 				}
 			}
@@ -63,7 +62,6 @@ public class SearchRecentDocumentsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible(
-				"//div[@title='Recently Downloaded Documents']"));
+		assertTrue(selenium.isVisible("//div[@title='User Statistics']"));
 	}
 }

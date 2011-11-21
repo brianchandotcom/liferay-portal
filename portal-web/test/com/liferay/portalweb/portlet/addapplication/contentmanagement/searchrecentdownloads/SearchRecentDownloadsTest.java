@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.addapplication.social.searchtopusers;
+package com.liferay.portalweb.portlet.addapplication.contentmanagement.searchrecentdownloads;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SearchTopUsersTest extends BaseTestCase {
-	public void testSearchTopUsers() throws Exception {
+public class SearchRecentDownloadsTest extends BaseTestCase {
+	public void testSearchRecentDownloads() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
 
@@ -44,7 +44,7 @@ public class SearchTopUsersTest extends BaseTestCase {
 		selenium.type("layout_configuration_content",
 			RuntimeVariables.replace(""));
 		selenium.typeKeys("layout_configuration_content",
-			RuntimeVariables.replace("t"));
+			RuntimeVariables.replace("r"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -52,7 +52,7 @@ public class SearchTopUsersTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Top Users']")) {
+				if (selenium.isVisible("//div[@title='Recent Downloads']")) {
 					break;
 				}
 			}
@@ -62,6 +62,6 @@ public class SearchTopUsersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//div[@title='Top Users']"));
+		assertTrue(selenium.isVisible("//div[@title='Recent Downloads']"));
 	}
 }

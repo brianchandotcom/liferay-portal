@@ -1074,17 +1074,6 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByR_S">
-		<![CDATA[
-			SELECT
-				{ResourcePermission.*}
-			FROM
-				ResourcePermission
-			WHERE
-				(ResourcePermission.roleId = ?) AND
-				[$SCOPE$]
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByC_P">
 		<![CDATA[
 			SELECT
@@ -1094,6 +1083,17 @@
 			WHERE
 				(ResourcePermission.companyId = ?) AND
 				(ResourcePermission.primKey = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByR_S">
+		<![CDATA[
+			SELECT
+				{ResourcePermission.*}
+			FROM
+				ResourcePermission
+			WHERE
+				(ResourcePermission.roleId = ?) AND
+				[$SCOPE$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByC_N_S">

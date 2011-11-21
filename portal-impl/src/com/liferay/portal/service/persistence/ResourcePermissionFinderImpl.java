@@ -48,14 +48,14 @@ public class ResourcePermissionFinderImpl
 	public static String FIND_BY_RESOURCE =
 		ResourcePermissionFinder.class.getName() + ".findByResource";
 
+	public static String FIND_BY_C_P =
+		ResourcePermissionFinder.class.getName() + ".findByC_P";
+
 	public static String FIND_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".findByR_S";
 
 	public static String FIND_BY_C_N_S =
 		ResourcePermissionFinder.class.getName() + ".findByC_N_S";
-
-	public static String FIND_BY_C_P =
-		ResourcePermissionFinder.class.getName() + ".findByC_P";
 
 	public int countByR_S(long roleId, int[] scopes) throws SystemException {
 		Session session = null;
@@ -203,6 +203,35 @@ public class ResourcePermissionFinderImpl
 		}
 	}
 
+	public List<ResourcePermission> findByC_P(long companyId, String primKey)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_P);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(primKey);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	public List<ResourcePermission> findByR_S(
 			long roleId, int[] scopes, int start, int end)
 		throws SystemException {
@@ -255,35 +284,6 @@ public class ResourcePermissionFinderImpl
 			qPos.add(companyId);
 			qPos.add(name);
 			qPos.add(scope);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	public List<ResourcePermission> findByC_P(long companyId, String primKey)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_P);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(primKey);
 
 			return q.list(true);
 		}

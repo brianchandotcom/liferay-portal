@@ -39,6 +39,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
@@ -76,6 +79,14 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 					actionRequest,
 					portletConfig.getPortletName() + ".doRefresh",
 					PortletKeys.STAGING_BAR);
+
+				Map<String, String> data = new HashMap<String, String>();
+
+				data.put("preventNotification", String.valueOf(true));
+
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doRefreshData", data);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

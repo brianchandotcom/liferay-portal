@@ -41,6 +41,12 @@ public class ResourcePermissionFinderUtil {
 		return getFinder().findByResource(companyId, groupId, name, primKey);
 	}
 
+	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_P(
+		long companyId, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByC_P(companyId, primKey);
+	}
+
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(
 		long roleId, int[] scopes, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -51,12 +57,6 @@ public class ResourcePermissionFinderUtil {
 		java.lang.String name, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByC_N_S(companyId, name, scope);
-	}
-
-	public static java.util.List<java.lang.Long> findByC_P(
-		long companyId,	java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByC_P(companyId, primKey);
 	}
 
 	public static ResourcePermissionFinder getFinder() {

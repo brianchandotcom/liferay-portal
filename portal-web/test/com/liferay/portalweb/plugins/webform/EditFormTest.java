@@ -57,6 +57,9 @@ public class EditFormTest extends BaseTestCase {
 			selenium.getText("//select"));
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//span[3]/span/label"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {

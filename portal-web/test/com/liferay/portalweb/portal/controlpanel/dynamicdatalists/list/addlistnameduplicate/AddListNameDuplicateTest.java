@@ -95,8 +95,9 @@ public class AddListNameDuplicateTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//name", "Data Definition"));
-		selenium.clickAt("//name", RuntimeVariables.replace("Data Definition"));
+		assertTrue(selenium.isPartialText("//td[2]/a", "Data Definition"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("Data Definition"));
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

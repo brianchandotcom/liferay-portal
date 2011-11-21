@@ -156,9 +156,9 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Name"),
-			selenium.getText("//tr[5]/td[1]/div"));
-		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "checkbox"));
-		selenium.doubleClickAt("//tr[5]/td[2]/div",
+			selenium.getText("//tr[6]/td[1]/div"));
+		assertTrue(selenium.isPartialText("//tr[6]/td[2]/div", "checkbox"));
+		selenium.doubleClickAt("//tr[2]/td[2]/div",
 			RuntimeVariables.replace("Boolean"));
 
 		for (int second = 0;; second++) {
@@ -183,8 +183,8 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("booleannameedited"),
-			selenium.getText("//tr[5]/td[2]/div"));
-		assertTrue(selenium.isVisible("//input[@name='booleannameedited']"));
+			selenium.getText("//tr[2]/td[2]/div"));
+		assertTrue(selenium.isVisible("//div[2]/div/div/div[1]/div[1]/label"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

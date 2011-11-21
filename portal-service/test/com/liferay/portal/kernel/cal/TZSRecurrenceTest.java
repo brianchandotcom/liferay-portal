@@ -29,18 +29,20 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 
 	public final Duration durationHour = getDuration(0,0,1,0,0);
 
-	//EET is +2:00 UTC, during DST +3:00 UTC
+	// EET is +2:00 UTC, during DST +3:00 UTC
 	public final TimeZone EET = TimeZone.getTimeZone("Europe/Istanbul");
 
-	//EST is -5:00 UTC, during DST -4:00 UTC
+	// EST is -5:00 UTC, during DST -4:00 UTC
 	public final TimeZone EST = TimeZone.getTimeZone("America/New_York");
 
 	public void testBadTimeZoneTZSRecurrence() {
 
-		//Sets up a time zone that does not have a daylight savings component.
-		//Liferay passes this version of time zone to TZSRecurrence.
+		// Sets up a time zone that does not have a daylight savings component.
+		// Liferay passes this version of time zone to TZSRecurrence.
+
 		TimeZone incompleteTimeZone =
-			(TimeZone) TimeZone.getTimeZone("UTC").clone();
+			(TimeZone)TimeZone.getTimeZone("UTC").clone();
+
 		incompleteTimeZone.setID("Europe/Istanbul");
 		incompleteTimeZone.setRawOffset(2 * 60 * 60 * 1000);
 
@@ -48,15 +50,13 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 	}
 
 	public void testGoodTimeZoneTZSRecurrence() {
-
 		testTimeZone(EET);
 	}
 
 	public void testAcrossDaylightSavingsTZSRecurrence() {
 
-		//Event starting within DST match by month day
-
-		//UTC Time for midnight with given for timeZone of recurrence
+		// Event starting within DST match by month day
+		// UTC Time for midnight with given for timeZone of recurrence
 
 		Calendar firstSundayJulStart = getCalendar(2011, JULY, 3, 4, 0);
 
@@ -65,18 +65,20 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		TZSRecurrence recurFirstSunOfMonth = getMonthByDayRecurrence(
 			firstSundayJulStart, durationHour, SUNDAY, 1, 1, EST);
 
-		//Liferay creates a matching candidate that has a start time based
-		//on the start time of the event.
+		// Liferay creates a matching candidate that has a start time based on
+		// the start time of the event.
 
 		Calendar candidateAugSun = getCalendar(2011, AUGUST, 7, 4, 0);
 		Calendar candidateDecSun = getCalendar(2011, DECEMBER, 4, 4, 0);
 
-		limitTest(candidateAugSun, firstSundayJulStart, durationHour,
+		limitTest(
+			candidateAugSun, firstSundayJulStart, durationHour,
 			recurFirstSunOfMonth);
-		limitTest(candidateDecSun, firstSundayJulStart, durationHour,
-				recurFirstSunOfMonth);
+		limitTest(
+			candidateDecSun, firstSundayJulStart, durationHour,
+			recurFirstSunOfMonth);
 
-		//Events starting within DST match By date
+		// Events starting within DST match By date
 
 		TZSRecurrence recurSecondOfMonth = getMonthByMonthDayRecurrence(
 			firstSundayJulStart, durationHour, 2, 1, EST);
@@ -84,12 +86,14 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		Calendar candidateAugSecond = getCalendar(2011, AUGUST, 2, 4, 0);
 		Calendar candidateDecSecond = getCalendar(2011, DECEMBER, 2, 4, 0);
 
-		limitTest(candidateAugSecond, firstSundayJulStart, durationHour,
+		limitTest(
+			candidateAugSecond, firstSundayJulStart, durationHour,
 			recurSecondOfMonth);
-		limitTest(candidateDecSecond, firstSundayJulStart, durationHour,
+		limitTest(
+			candidateDecSecond, firstSundayJulStart, durationHour,
 			recurSecondOfMonth);
 
-		//Event starting outside of DST match by month day
+		// Event starting outside of DST match by month day
 
 		Calendar firstSundayFebStart = getCalendar(2011, FEBRUARY, 7, 5, 0);
 
@@ -99,12 +103,14 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		Calendar candidateAugMon = getCalendar(2011, AUGUST, 1, 5, 0);
 		Calendar candidateDecMon = getCalendar(2011, DECEMBER, 5, 5, 0);
 
-		limitTest(candidateAugMon, firstSundayFebStart, durationHour,
+		limitTest(
+			candidateAugMon, firstSundayFebStart, durationHour,
 			recurFirstMonOfMonth);
-		limitTest(candidateDecMon, firstSundayFebStart, durationHour,
+		limitTest(
+			candidateDecMon, firstSundayFebStart, durationHour,
 			recurFirstMonOfMonth);
 
-		//Event starting outside of DST match by month day
+		// Event starting outside of DST match by month day
 
 		TZSRecurrence recurSixthOfMonth = getMonthByMonthDayRecurrence(
 			firstSundayFebStart, durationHour, 6, 1, EET);
@@ -112,19 +118,20 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		Calendar candidateAugSixth = getCalendar(2011, AUGUST, 6, 5, 0);
 		Calendar candidateDecSixth = getCalendar(2011, DECEMBER, 6, 5, 0);
 
-		limitTest(candidateAugSixth, firstSundayFebStart, durationHour,
+		limitTest(
+			candidateAugSixth, firstSundayFebStart, durationHour,
 			recurSixthOfMonth);
-		limitTest(candidateDecSixth, firstSundayFebStart, durationHour,
+		limitTest(
+			candidateDecSixth, firstSundayFebStart, durationHour,
 			recurSixthOfMonth);
-}
+	}
 
 	protected void testTimeZone(TimeZone timeZone) {
 
-		//First Sunday in January 2011
-
-		Calendar firstSundayJanStart = getCalendar(2011, JANUARY, 1, 22, 0);
+		// First Sunday in January 2011
 
 		Calendar candidateJan = getCalendar(2013, JANUARY, 5, 22, 0);
+		Calendar firstSundayJanStart = getCalendar(2011, JANUARY, 1, 22, 0);
 
 		TZSRecurrence recurJan = getMonthByDayRecurrence(
 			firstSundayJanStart, durationHour, SUNDAY, 1, 1, timeZone);
@@ -133,8 +140,8 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 
 		// First Sunday in July 2011
 
-		Calendar firstSundayJulStart = getCalendar(2011, JULY, 2, 21, 0);
 		Calendar candidateJuly = getCalendar(2013, JULY, 6, 21, 0);
+		Calendar firstSundayJulStart = getCalendar(2011, JULY, 2, 21, 0);
 
 		TZSRecurrence recurJuly = getMonthByDayRecurrence(
 			firstSundayJulStart, durationHour, SUNDAY, 1, 1, timeZone);
@@ -142,28 +149,29 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		limitTest(candidateJuly, firstSundayJulStart, durationHour, recurJuly);
 	}
 
-	protected void limitTest(Calendar candidate, Calendar startDate,
-			Duration duration, TZSRecurrence recur) {
+	protected void limitTest(
+		Calendar candidate, Calendar startDate, Duration duration,
+		TZSRecurrence recur) {
 
 		long candidateTimeInMills = candidate.getTimeInMillis();
 		long durationInMills = duration.getInterval();
 
-		Calendar beforeRecurPeriod = Calendar.getInstance();
-		Calendar startOfRecurPeriod = Calendar.getInstance();
-		Calendar endOfRecurPeriod = Calendar.getInstance();
 		Calendar afterRecurPeriod = Calendar.getInstance();
+		Calendar beforeRecurPeriod = Calendar.getInstance();
+		Calendar endOfRecurPeriod = Calendar.getInstance();
+		Calendar startOfRecurPeriod = Calendar.getInstance();
 
-		beforeRecurPeriod.setTimeInMillis(candidateTimeInMills - Time.MINUTE);
-		startOfRecurPeriod.setTimeInMillis(candidateTimeInMills + Time.MINUTE);
-		endOfRecurPeriod.setTimeInMillis(
-			candidateTimeInMills + durationInMills - Time.MINUTE);
 		afterRecurPeriod.setTimeInMillis(
 			candidateTimeInMills + durationInMills + Time.MINUTE);
+		beforeRecurPeriod.setTimeInMillis(candidateTimeInMills - Time.MINUTE);
+		endOfRecurPeriod.setTimeInMillis(
+			candidateTimeInMills + durationInMills - Time.MINUTE);
+		startOfRecurPeriod.setTimeInMillis(candidateTimeInMills + Time.MINUTE);
 
-		assertRecurrenceEquals(false, recur, beforeRecurPeriod);
-		assertRecurrenceEquals(true, recur, startOfRecurPeriod);
-		assertRecurrenceEquals(true, recur, endOfRecurPeriod);
 		assertRecurrenceEquals(false, recur, afterRecurPeriod);
+		assertRecurrenceEquals(false, recur, beforeRecurPeriod);
+		assertRecurrenceEquals(true, recur, endOfRecurPeriod);
+		assertRecurrenceEquals(true, recur, startOfRecurPeriod);
 	}
 
 	protected TZSRecurrence getMonthByMonthDayRecurrence(
@@ -197,4 +205,5 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 
 		return recurrence;
 	}
+
 }

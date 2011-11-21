@@ -23,6 +23,7 @@ import java.util.TimeZone;
 
 /**
  * @author Samuel Kong
+ * @author Angelo Jefferson
  */
 public class TZSRecurrence extends Recurrence {
 
@@ -63,8 +64,8 @@ public class TZSRecurrence extends Recurrence {
 				adjustedCandidate.getTime().getTime() - DSTDelta);
 		}
 
-		return super.matchesByField(array, field, adjustedCandidate,
-			allowNegative);
+		return super.matchesByField(
+			array, field, adjustedCandidate, allowNegative);
 	}
 
 	@Override

@@ -104,19 +104,24 @@
 	<td>The role permissions were updated.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
-	<td>Add Document</td>
+	<td>selectAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>label=Media Gallery</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[3]</td>
-	<td>View</td>
+	<td>assertChecked</td>
+	<td>//td/input</td>
+	<td>Add Document Checked</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[10]/td/input</td>
+	<td>View Checked</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>mmmm</td>
+	<td>mmm</td>
 </tr>
 <tr>
 	<td>keyPressAndWait</td>
@@ -159,11 +164,25 @@
 	<td>The role permissions were updated.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[5]/td[3]</td>
-	<td>View</td>
+	<td>typeKeys</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>mmmm</td>
 </tr>
-
+<tr>
+	<td>keyPressAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>\13</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h3</td>
+	<td>Media Gallery</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[6]/td/input</td>
+	<td>View Checked</td>
+</tr>
 </tbody></table>
 </body>
 </html>

@@ -82,20 +82,18 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Add Document"),
-			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Add Document Type"),
-			selenium.getText("//tr[4]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Add Folder"),
-			selenium.getText("//tr[5]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Add Shortcut"),
-			selenium.getText("//tr[6]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//tr[7]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText("//tr[8]/td[3]"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("label=Media Gallery"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isChecked("//td/input"));
+		assertTrue(selenium.isChecked("//tr[4]/td/input"));
+		assertTrue(selenium.isChecked("//tr[5]/td/input"));
+		assertTrue(selenium.isChecked("//tr[6]/td/input"));
+		assertTrue(selenium.isChecked("//tr[8]/td/input"));
+		assertTrue(selenium.isChecked("//tr[9]/td/input"));
+		assertTrue(selenium.isChecked("//tr[10]/td/input"));
 		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("mmmm"));
+			RuntimeVariables.replace("mmm"));
 		selenium.keyPress("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
@@ -111,13 +109,16 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Add to Page"),
-			selenium.getText("//tr[10]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText("//tr[11]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//tr[12]/td[3]"));
-		assertEquals(RuntimeVariables.replace("View"),
-			selenium.getText("//tr[13]/td[3]"));
+		selenium.typeKeys("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("mmmm"));
+		selenium.keyPress("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("\\13"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Media Gallery"),
+			selenium.getText("//h3"));
+		assertTrue(selenium.isChecked("//td/input"));
+		assertTrue(selenium.isChecked("//tr[4]/td/input"));
+		assertTrue(selenium.isChecked("//tr[5]/td/input"));
+		assertTrue(selenium.isChecked("//tr[6]/td/input"));
 	}
 }

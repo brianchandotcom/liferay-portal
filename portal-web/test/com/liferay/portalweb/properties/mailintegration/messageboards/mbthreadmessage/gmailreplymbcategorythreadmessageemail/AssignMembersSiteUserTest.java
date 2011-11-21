@@ -80,23 +80,8 @@ public class AssignMembersSiteUserTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
 					RuntimeVariables.replace("Manage Memberships"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Add Members")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isVisible("link=Add Members"));
 				selenium.clickAt("link=Add Members",
 					RuntimeVariables.replace("Add Members"));
 

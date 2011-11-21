@@ -53,8 +53,9 @@ public class TearDownRoleWebContentEditorTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText(
+				"xPath=(//span[@title='Actions']/ul/li/strong/a)[4]"));
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[4]",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -82,5 +83,8 @@ public class TearDownRoleWebContentEditorTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

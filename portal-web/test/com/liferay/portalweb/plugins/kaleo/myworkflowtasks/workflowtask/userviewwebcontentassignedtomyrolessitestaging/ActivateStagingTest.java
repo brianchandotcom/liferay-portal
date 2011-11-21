@@ -178,7 +178,7 @@ public class ActivateStagingTest extends BaseTestCase {
 			case 6:
 
 				boolean messageBoardsChecked = selenium.isChecked(
-						"_165_staged-portlet_162Checkbox");
+						"_165_staged-portlet_19Checkbox");
 
 				if (messageBoardsChecked) {
 					label = 7;
@@ -186,7 +186,7 @@ public class ActivateStagingTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_162Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_19Checkbox']",
 					RuntimeVariables.replace("Message Boards"));
 
 			case 7:
@@ -291,11 +291,9 @@ public class ActivateStagingTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("//td[1]/a"));
-				selenium.clickAt("//td[1]/a",
-					RuntimeVariables.replace("Site Name"));
-				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Site Name (Staging)"),
 					selenium.getText("//h1[@class='header-title']/span"));
 

@@ -286,6 +286,7 @@
 					on: {
 						failure: function(event, id, obj) {
 							placeHolder.hide();
+
 							placeHolder.placeAfter('<div class="portlet-msg-error">' + Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page') + '</div>');
 						},
 						success: function(event, id, obj) {

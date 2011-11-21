@@ -75,7 +75,9 @@ public abstract class RecurrenceTestCase extends TestCase {
 
 		Calendar calendar = new GregorianCalendar();
 
-		calendar.set(year, month, date, hour, minute);
+		calendar.set(year, month, date, hour, minute, 0);
+
+		calendar.getTime();
 
 		return calendar;
 	}

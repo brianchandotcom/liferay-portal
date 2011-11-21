@@ -14,14 +14,16 @@
 
 package com.liferay.portal.kernel.cal;
 
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
  * @author Samuel Kong
+ * @author Angelo Jefferson
  */
 public class TZSRecurrence extends Recurrence {
 
@@ -41,22 +43,29 @@ public class TZSRecurrence extends Recurrence {
 	}
 
 	public void setTimeZone(TimeZone timeZone) {
-		_timeZone = timeZone;
+		_timeZone = TimeZoneUtil.getTimeZone(timeZone.getID());
 	}
 
 	protected boolean matchesByField(
-		int[] array, int field, Calendar candidate, boolean allowNegative,
-		TimeZone timeZone) {
+		int[] array, int field, Calendar candidate, boolean allowNegative) {
 
 		Calendar adjustedCandidate = candidate;
 
-		if (Validator.isNotNull(timeZone)) {
-			adjustedCandidate = CalendarFactoryUtil.getCalendar(timeZone);
+		if (Validator.isNotNull(_timeZone)) {
+			adjustedCandidate = new GregorianCalendar(_timeZone);
 
 			adjustedCandidate.setTime(candidate.getTime());
+
+			long DSTDelta = _timeZone.getOffset(
+				adjustedCandidate.getTimeInMillis()) -
+					_timeZone.getOffset(dtStart.getTimeInMillis());
+
+			adjustedCandidate.setTimeInMillis(
+				adjustedCandidate.getTime().getTime() - DSTDelta);
 		}
 
-		return matchesByField(array, field, adjustedCandidate, allowNegative);
+		return super.matchesByField(
+			array, field, adjustedCandidate, allowNegative);
 	}
 
 	@Override
@@ -66,9 +75,16 @@ public class TZSRecurrence extends Recurrence {
 		Calendar adjustedCandidate = candidate;
 
 		if (Validator.isNotNull(_timeZone)) {
-			adjustedCandidate = CalendarFactoryUtil.getCalendar(_timeZone);
+			adjustedCandidate = new GregorianCalendar(_timeZone);
 
 			adjustedCandidate.setTime(candidate.getTime());
+
+			long DSTDelta = _timeZone.getOffset(
+				adjustedCandidate.getTimeInMillis()) -
+					_timeZone.getOffset(dtStart.getTimeInMillis());
+
+			adjustedCandidate.setTimeInMillis(
+				adjustedCandidate.getTime().getTime() - DSTDelta);
 		}
 
 		return super.matchesIndividualByDay(adjustedCandidate, pos);
@@ -76,26 +92,22 @@ public class TZSRecurrence extends Recurrence {
 
 	@Override
 	protected boolean matchesByMonthDay(Calendar candidate) {
-		return matchesByField(
-			byMonthDay, Calendar.DATE, candidate, true, _timeZone);
+		return matchesByField(byMonthDay, Calendar.DATE, candidate, true);
 	}
 
 	@Override
 	protected boolean matchesByYearDay(Calendar candidate) {
-		return matchesByField(
-			byYearDay, Calendar.DAY_OF_YEAR, candidate, true, _timeZone);
+		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
 	}
 
 	@Override
 	protected boolean matchesByWeekNo(Calendar candidate) {
-		return matchesByField(
-			byWeekNo, Calendar.WEEK_OF_YEAR, candidate, true, _timeZone);
+		return matchesByField(byWeekNo, Calendar.WEEK_OF_YEAR, candidate, true);
 	}
 
 	@Override
 	protected boolean matchesByMonth(Calendar candidate) {
-		return matchesByField(
-			byMonth, Calendar.MONTH, candidate, false, _timeZone);
+		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
 	}
 
 	private TimeZone _timeZone;

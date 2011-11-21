@@ -155,13 +155,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() %>">
-								<li class="manage-site-memberships use-dialog">
+								<li class="manage-site-memberships use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
-								<li class="manage-site-content use-dialog">
+								<li class="manage-site-content use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
 								</li>
 							</c:if>

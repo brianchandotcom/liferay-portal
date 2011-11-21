@@ -109,9 +109,7 @@ public class ViewAction extends PortletAction {
 			redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
 
 			if (themeDisplay.isI18n()) {
-				int pos = redirect.indexOf(CharPool.SLASH, 1);
-
-				redirect = redirect.substring(pos);
+				redirect = layout.getFriendlyURL();
 			}
 		}
 		else {

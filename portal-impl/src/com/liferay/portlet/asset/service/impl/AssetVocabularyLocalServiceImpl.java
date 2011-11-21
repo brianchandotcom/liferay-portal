@@ -147,6 +147,17 @@ public class AssetVocabularyLocalServiceImpl
 			vocabulary.getVocabularyId(), groupPermissions, guestPermissions);
 	}
 
+	public void deleteVocabularies(long groupId)
+		throws PortalException, SystemException {
+
+		List<AssetVocabulary> vocabularies =
+			assetVocabularyPersistence.findByGroupId(groupId);
+
+		for (AssetVocabulary vocabulary : vocabularies) {
+			deleteVocabulary(vocabulary);
+		}
+	}
+
 	public void deleteVocabulary(AssetVocabulary vocabulary)
 		throws PortalException, SystemException {
 

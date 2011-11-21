@@ -641,13 +641,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Asset Vocabularies
 
-		List<AssetVocabulary> assetVocabularies =
-			assetVocabularyLocalService.getGroupVocabularies(
-				group.getGroupId());
-
-		for (AssetVocabulary vocabulary : assetVocabularies) {
-			assetVocabularyLocalService.deleteVocabulary(vocabulary);
-		}
+		assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
 
 		// Blogs
 
@@ -703,15 +697,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		// Resources
 
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			List<Long> resourcePersmissionsIds =
+			List<Long> resourcePermissionIds =
 				resourcePermissionFinder.findByC_P(
 					group.getCompanyId(), String.valueOf(group.getGroupId()));
 
-			for (Long id : resourcePersmissionsIds) {
-				resourcePermissionLocalService.deleteResourcePermission(id);
+			for (long resourcePermissionId : resourcePermissionIds) {
+				resourcePermissionLocalService.deleteResourcePermission(
+					resourcePermissionId);
 			}
 
-		} else {
+		}
+		else {
 			List<Resource> resources = resourceFinder.findByC_P(
 				group.getCompanyId(), String.valueOf(group.getGroupId()));
 

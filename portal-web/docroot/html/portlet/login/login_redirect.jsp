@@ -169,7 +169,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			}
 		}
 		else {
-			window.opener.parent.location.reload();
+			window.opener.parent.location.href = "<%= HtmlUtil.escapeJS(PortalUtil.getPortalURL(renderRequest) + themeDisplay.getURLSignIn()) %>";
 
 			window.close();
 		}

@@ -265,8 +265,8 @@ public class ResourcePermissionFinderImpl
 			closeSession(session);
 		}
 	}
-	
-	public List<Long> findByC_P(long companyId, String primKey)
+
+	public List<ResourcePermission> findByC_P(long companyId, String primKey)
 		throws SystemException {
 
 		Session session = null;
@@ -278,14 +278,14 @@ public class ResourcePermissionFinderImpl
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addScalar("resourcePermissionId", Type.LONG);
+			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
 			qPos.add(primKey);
 
-			return q.list();
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -42,24 +42,10 @@ public class EditPreferencesTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Stocks Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click("//strong/a");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
+		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");

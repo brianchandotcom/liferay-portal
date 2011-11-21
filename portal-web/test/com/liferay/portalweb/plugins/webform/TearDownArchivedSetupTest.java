@@ -48,6 +48,9 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.clickAt("link=Web Form Test Page",
 					RuntimeVariables.replace("Web Form Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//strong/a"));
 				selenium.click("//strong/a");
 
 				for (int second = 0;; second++) {

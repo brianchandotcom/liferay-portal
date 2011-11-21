@@ -135,7 +135,7 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
+		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label",
 			RuntimeVariables.replace("Boolean"));
 
 		for (int second = 0;; second++) {
@@ -156,10 +156,10 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Name"),
-			selenium.getText("//tr[5]/td[1]/div"));
-		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "checkbox"));
-		selenium.doubleClickAt("//tr[5]/td[2]/div",
-			RuntimeVariables.replace("Boolean"));
+			selenium.getText("//tr[6]/td[1]/div"));
+		assertTrue(selenium.isPartialText("//tr[6]/td[2]/div", "checkbox"));
+		selenium.doubleClickAt("//tr[6]/td[2]/div",
+			RuntimeVariables.replace("checkbox"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -182,8 +182,23 @@ public class EditFieldBooleanNameTest extends BaseTestCase {
 			RuntimeVariables.replace("booleannameedited"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
-		assertEquals(RuntimeVariables.replace("booleannameedited"),
-			selenium.getText("//tr[5]/td[2]/div"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@name='booleannameedited']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isVisible("//input[@name='booleannameedited']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

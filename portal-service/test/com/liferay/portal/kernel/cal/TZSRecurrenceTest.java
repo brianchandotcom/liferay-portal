@@ -35,24 +35,6 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 	// EST is -5:00 UTC, during DST -4:00 UTC
 	public final TimeZone EST = TimeZone.getTimeZone("America/New_York");
 
-	public void testBadTimeZoneTZSRecurrence() {
-
-		// Sets up a time zone that does not have a daylight savings component.
-		// Liferay passes this version of time zone to TZSRecurrence.
-
-		TimeZone incompleteTimeZone =
-			(TimeZone)TimeZone.getTimeZone("UTC").clone();
-
-		incompleteTimeZone.setID("Europe/Istanbul");
-		incompleteTimeZone.setRawOffset(2 * 60 * 60 * 1000);
-
-		testTimeZone(incompleteTimeZone);
-	}
-
-	public void testGoodTimeZoneTZSRecurrence() {
-		testTimeZone(EET);
-	}
-
 	public void testAcrossDaylightSavingsTZSRecurrence() {
 
 		// Event starting within DST match by month day
@@ -126,27 +108,54 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 			recurSixthOfMonth);
 	}
 
-	protected void testTimeZone(TimeZone timeZone) {
+	public void testBadTimeZoneTZSRecurrence() {
 
-		// First Sunday in January 2011
+		// Sets up a time zone that does not have a daylight savings component.
+		// Liferay passes this version of time zone to TZSRecurrence.
 
-		Calendar candidateJan = getCalendar(2013, JANUARY, 5, 22, 0);
-		Calendar firstSundayJanStart = getCalendar(2011, JANUARY, 1, 22, 0);
+		TimeZone incompleteTimeZone =
+			(TimeZone)TimeZone.getTimeZone("UTC").clone();
 
-		TZSRecurrence recurJan = getMonthByDayRecurrence(
-			firstSundayJanStart, durationHour, SUNDAY, 1, 1, timeZone);
+		incompleteTimeZone.setID("Europe/Istanbul");
+		incompleteTimeZone.setRawOffset(2 * 60 * 60 * 1000);
 
-		limitTest(candidateJan, firstSundayJanStart, durationHour, recurJan);
+		testTimeZone(incompleteTimeZone);
+	}
 
-		// First Sunday in July 2011
+	public void testGoodTimeZoneTZSRecurrence() {
+		testTimeZone(EET);
+	}
 
-		Calendar candidateJuly = getCalendar(2013, JULY, 6, 21, 0);
-		Calendar firstSundayJulStart = getCalendar(2011, JULY, 2, 21, 0);
+	protected TZSRecurrence getMonthByDayRecurrence(
+		Calendar dtStart, Duration duration, int day, int position,
+		int interval, TimeZone tz) {
 
-		TZSRecurrence recurJuly = getMonthByDayRecurrence(
-			firstSundayJulStart, durationHour, SUNDAY, 1, 1, timeZone);
+		TZSRecurrence recurrence = new TZSRecurrence(
+			dtStart, duration, Recurrence.MONTHLY);
 
-		limitTest(candidateJuly, firstSundayJulStart, durationHour, recurJuly);
+		DayAndPosition[] days = {new DayAndPosition(day, position)};
+
+		recurrence.setByDay(days);
+		recurrence.setInterval(interval);
+		recurrence.setTimeZone(tz);
+
+		return recurrence;
+	}
+
+	protected TZSRecurrence getMonthByMonthDayRecurrence(
+		Calendar dtStart, Duration duration, int monthDay, int interval,
+		TimeZone tz) {
+
+		TZSRecurrence recurrence = new TZSRecurrence(
+			dtStart, duration, Recurrence.MONTHLY);
+
+		int[] monthDays = {monthDay};
+
+		recurrence.setByMonthDay(monthDays);
+		recurrence.setInterval(interval);
+		recurrence.setTimeZone(tz);
+
+		return recurrence;
 	}
 
 	protected void limitTest(
@@ -174,36 +183,27 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(true, recur, startOfRecurPeriod);
 	}
 
-	protected TZSRecurrence getMonthByMonthDayRecurrence(
-		Calendar dtStart, Duration duration, int monthDay, int interval,
-		TimeZone tz) {
+	protected void testTimeZone(TimeZone timeZone) {
 
-		TZSRecurrence recurrence = new TZSRecurrence(
-			dtStart, duration, Recurrence.MONTHLY);
+		// First Sunday in January 2011
 
-		int[] monthDays = {monthDay};
+		Calendar candidateJan = getCalendar(2013, JANUARY, 5, 22, 0);
+		Calendar firstSundayJanStart = getCalendar(2011, JANUARY, 1, 22, 0);
 
-		recurrence.setByMonthDay(monthDays);
-		recurrence.setInterval(interval);
-		recurrence.setTimeZone(tz);
+		TZSRecurrence recurJan = getMonthByDayRecurrence(
+			firstSundayJanStart, durationHour, SUNDAY, 1, 1, timeZone);
 
-		return recurrence;
-	}
+		limitTest(candidateJan, firstSundayJanStart, durationHour, recurJan);
 
-	protected TZSRecurrence getMonthByDayRecurrence(
-		Calendar dtStart, Duration duration, int day, int position,
-		int interval, TimeZone tz) {
+		// First Sunday in July 2011
 
-		TZSRecurrence recurrence = new TZSRecurrence(
-			dtStart, duration, Recurrence.MONTHLY);
+		Calendar candidateJuly = getCalendar(2013, JULY, 6, 21, 0);
+		Calendar firstSundayJulStart = getCalendar(2011, JULY, 2, 21, 0);
 
-		DayAndPosition[] days = {new DayAndPosition(day, position)};
+		TZSRecurrence recurJuly = getMonthByDayRecurrence(
+			firstSundayJulStart, durationHour, SUNDAY, 1, 1, timeZone);
 
-		recurrence.setByDay(days);
-		recurrence.setInterval(interval);
-		recurrence.setTimeZone(tz);
-
-		return recurrence;
+		limitTest(candidateJuly, firstSundayJulStart, durationHour, recurJuly);
 	}
 
 }

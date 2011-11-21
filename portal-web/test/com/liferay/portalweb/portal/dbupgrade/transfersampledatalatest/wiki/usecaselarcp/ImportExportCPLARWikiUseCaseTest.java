@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ImportExportCPLARWikiUseCaseTest extends BaseTestCase {
 	public void testImportExportCPLARWikiUseCase() throws Exception {
-		selenium.open("/web/blogs-page-scope-community/");
+		selenium.open("/web/wiki-use-case-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -275,6 +275,7 @@ if (Validator.isNull(redirect)) {
 		<c:if test="<%= curParentMessage == null %>">
 
 			<%
+			boolean disabled = false;
 			boolean question = threadAsQuestionByDefault;
 
 			if (message != null) {
@@ -284,9 +285,17 @@ if (Validator.isNull(redirect)) {
 					question = true;
 				}
 			}
+			else {
+				MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+
+				if ((category != null) && category.getDisplayStyle().equals("question")) {
+					disabled = true;
+					question = true;
+				}
+			}
 			%>
 
-			<aui:input helpMessage="message-boards-message-question-help" inlineLabel="left" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
+			<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" inlineLabel="left" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
 		</c:if>
 
 		<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">

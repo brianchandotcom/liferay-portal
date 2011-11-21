@@ -25,12 +25,12 @@ public class LicenseInfo {
 		String owner, String description, String productEntryName,
 		String productId, String productVersion, String licenseEntryType,
 		String licenseVersion, Date startDate, Date expirationDate,
-		long maxUsers, String hostName, String[] ipAddresses,
+		long maxUsers, String[] hostNames, String[] ipAddresses,
 		String[] macAddresses) {
 
 		_description = description;
 		_expirationDate = expirationDate;
-		_hostName = hostName;
+		_hostNames = hostNames;
 		_ipAddresses = ipAddresses;
 		_licenseEntryType = licenseEntryType;
 		_licenseVersion = licenseVersion;
@@ -51,8 +51,8 @@ public class LicenseInfo {
 		return _expirationDate;
 	}
 
-	public String getHostName() {
-		return _hostName;
+	public String[] getHostNames() {
+		return _hostNames;
 	}
 
 	public String[] getIpAddresses() {
@@ -97,7 +97,7 @@ public class LicenseInfo {
 
 	private String _description;
 	private Date _expirationDate;
-	private String _hostName;
+	private String[] _hostNames;
 	private String[] _ipAddresses;
 	private String _licenseEntryType;
 	private String _licenseVersion;

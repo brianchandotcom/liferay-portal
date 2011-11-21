@@ -67,7 +67,7 @@ if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.O
 
 long assetClassPK = 0;
 
-if (!fileVersion.isApproved() && (fileVersion.getVersion() != DLFileEntryConstants.VERSION_DEFAULT)) {
+if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)) {
 	assetClassPK = fileVersion.getFileVersionId();
 	title = fileVersion.getTitle();
 	extension = fileVersion.getExtension();
@@ -300,6 +300,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							previewFileCount = PDFProcessor.getPreviewFileCount(fileVersion);
 
 							previewQueryString = "&previewFileIndex=";
+
+							previewFileURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 						}
 						else if (hasVideo) {
 							previewQueryString = "&videoPreview=1";

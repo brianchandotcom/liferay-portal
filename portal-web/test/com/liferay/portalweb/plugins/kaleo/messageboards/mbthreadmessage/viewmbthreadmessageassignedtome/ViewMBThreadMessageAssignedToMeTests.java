@@ -35,8 +35,7 @@ public class ViewMBThreadMessageAssignedToMeTests extends BaseTests {
 		testSuite.addTestSuite(AssignToMeMBThreadMessageActionsTest.class);
 		testSuite.addTestSuite(ViewMBThreadMessageAssignedToMeTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(
-			Guest_ViewMBThreadMessageAssignedToMeTest.class);
+		testSuite.addTestSuite(Guest_ViewMBThreadMessageAssignedToMeTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownMBThreadMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

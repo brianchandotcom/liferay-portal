@@ -44,6 +44,11 @@
 	<td>DL Folder Name</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
@@ -52,6 +57,11 @@
 	<td>clickAt</td>
 	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -114,13 +124,18 @@
 	<td>DL Folder Image2 Title</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//h2[@class='document-title']</td>
+	<td>DL Folder Image2 Title</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//h2[@class='document-title']</td>
 	<td>DL Folder Image2 Title</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='lfr-preview-file-content lfr-preview-image-content']/img</td>
+	<td>//div[@class='lfr-preview-file-image-container']/img</td>
 	<td>Liferay Image 2</td>
 </tr>
 <tr>

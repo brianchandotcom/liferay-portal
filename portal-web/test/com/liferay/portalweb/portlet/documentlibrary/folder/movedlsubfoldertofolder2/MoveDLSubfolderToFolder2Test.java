@@ -101,7 +101,7 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Documents Home"),
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
 			selenium.getText("//span[@class='folder-title']"));

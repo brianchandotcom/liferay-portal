@@ -77,7 +77,7 @@ public class AssertLockFolderDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."),
+				"You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire."),
 			selenium.getText(
 				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -85,7 +85,7 @@ public class AssertLockFolderDocumentTest extends BaseTestCase {
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."),
+				"You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

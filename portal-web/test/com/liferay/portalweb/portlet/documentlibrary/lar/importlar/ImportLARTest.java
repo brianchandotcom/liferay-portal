@@ -68,11 +68,13 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='category-portlets']/li[3]/a",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText(
 				"//div[2]/div/div/div/div/div/div/section/header/menu/span/ul/li/strong/a"));
 		selenium.clickAt("//div[2]/div/div/div/div/div/div/section/header/menu/span/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

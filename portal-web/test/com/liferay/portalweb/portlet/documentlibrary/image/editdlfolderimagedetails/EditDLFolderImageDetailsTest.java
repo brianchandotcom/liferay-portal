@@ -73,6 +73,23 @@ public class EditDLFolderImageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder Image Title"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//button[2]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[2]"));
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));
@@ -90,9 +107,10 @@ public class EditDLFolderImageDetailsTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("DL Folder Image Title Edit")
+				if (RuntimeVariables.replace(
+							"Your request completed successfully.")
 										.equals(selenium.getText(
-								"//h2[@class='document-title']"))) {
+								"//div[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -102,28 +120,13 @@ public class EditDLFolderImageDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img"));
+				"//div[@class='lfr-preview-file-image-container']/img"));
 		assertEquals(RuntimeVariables.replace(
 				"DL Folder Image Description Edit"),
 			selenium.getText("//span[@class='document-description']"));

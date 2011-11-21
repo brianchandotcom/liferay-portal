@@ -80,7 +80,7 @@ public class SearchDLFolderImageFolderDetailsTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for DL Folder Image Title in DL Folder Name")
+							"Searched for DL Folder Image Title in every folder.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -107,7 +107,7 @@ public class SearchDLFolderImageFolderDetailsTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for DL1 Folder1 Image1 Title1 in DL Folder Name")
+							"Searched for DL1 Folder1 Image1 Title1 in every folder.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;

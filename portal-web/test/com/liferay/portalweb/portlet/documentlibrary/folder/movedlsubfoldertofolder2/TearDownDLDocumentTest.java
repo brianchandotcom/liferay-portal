@@ -130,6 +130,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 
 			case 3:
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

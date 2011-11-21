@@ -89,6 +89,7 @@ public class AddFolderDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",

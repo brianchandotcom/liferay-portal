@@ -30,10 +30,6 @@ public class MBCategoryConstants {
 
 	public static long DISCUSSION_CATEGORY_ID = -1;
 
-	public static final String DISPLAY_STYLE_DEFAULT = "default";
-
-	public static final String DISPLAY_STYLE_QUESTION = "question";
-
 	public static final String[] DISPLAY_STYLES = PropsUtil.getArray(
 		PropsKeys.MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES);
 

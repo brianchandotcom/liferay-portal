@@ -288,7 +288,7 @@ if (Validator.isNull(redirect)) {
 			else {
 				MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 
-				if ((category != null) && Validator.equals(category.getDisplayStyle(), MBCategoryConstants.DISPLAY_STYLE_QUESTION)) {
+				if ((category != null) && category.getDisplayStyle().equals("question")) {
 					disabled = true;
 					question = true;
 				}

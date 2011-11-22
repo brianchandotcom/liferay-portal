@@ -107,7 +107,7 @@ public class ViewDeleteVocabularyAssetType2Test extends BaseTestCase {
 				}
 
 			case 2:
-				assertEquals("Page Revision",
+				assertEquals("Blogs Entry",
 					selenium.getSelectedLabel(
 						"//select[@id='_147_classNameId0']"));
 				assertFalse(selenium.isElementPresent(

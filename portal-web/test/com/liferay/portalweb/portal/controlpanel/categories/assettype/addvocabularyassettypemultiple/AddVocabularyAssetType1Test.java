@@ -110,7 +110,7 @@ public class AddVocabularyAssetType1Test extends BaseTestCase {
 
 			case 2:
 				selenium.select("//select[@id='_147_classNameId0']",
-					RuntimeVariables.replace("Page Revision"));
+					RuntimeVariables.replace("Blogs Entry"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 

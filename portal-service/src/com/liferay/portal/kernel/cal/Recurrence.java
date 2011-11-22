@@ -740,7 +740,7 @@ public class Recurrence implements Serializable {
 	/**
 	 * Method reduce_constant_length_field
 	 */
-	protected static void reduce_constant_length_field(int field,
+	protected void reduce_constant_length_field(int field,
 													   Calendar start,
 													   Calendar candidate) {
 		if ((start.getMaximum(field) != start.getLeastMaximum(field))
@@ -970,7 +970,7 @@ public class Recurrence implements Serializable {
 	 *
 	 * @return boolean
 	 */
-	protected static boolean matchesByField(int[] array, int field,
+	protected boolean matchesByField(int[] array, int field,
 											Calendar candidate,
 											boolean allowNegative) {
 		if ((array == null) || (array.length == 0)) {

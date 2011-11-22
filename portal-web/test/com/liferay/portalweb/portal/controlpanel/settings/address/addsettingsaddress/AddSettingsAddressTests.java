@@ -12,14 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.settings;
+package com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.AdditionalEmailAddressTests;
-import com.liferay.portalweb.portal.controlpanel.settings.address.AddressTests;
-import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.PhoneNumberTests;
-import com.liferay.portalweb.portal.controlpanel.settings.portalsettings.PortalSettingsTests;
-import com.liferay.portalweb.portal.controlpanel.settings.website.WebsiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,16 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SettingsTests extends BaseTests {
+public class AddSettingsAddressTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AdditionalEmailAddressTests.suite());
-		testSuite.addTest(AddressTests.suite());
-		testSuite.addTest(PhoneNumberTests.suite());
-		testSuite.addTest(PortalSettingsTests.suite());
-		testSuite.addTest(WebsiteTests.suite());
+		testSuite.addTestSuite(AddSettingsAddressTest.class);
+		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
 
 		return testSuite;
 	}

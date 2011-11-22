@@ -155,6 +155,9 @@
 				getScopeGroupId: function() {
 					return "<%= themeDisplay.getScopeGroupId() %>";
 				},
+				getScopeGroupIdOrLiveGroupId: function() {
+					return "<%= themeDisplay.getScopeGroupIdOrLiveGroupId() %>";
+				},
 				getParentGroupId: function() {
 					return "<%= themeDisplay.getParentGroupId() %>";
 				},

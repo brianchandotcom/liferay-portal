@@ -254,7 +254,7 @@ AUI().add(
 
 								if (checked) {
 									instance._getSocialActivitySettingMapping(
-										themeDisplay.getScopeGroupId(),
+										themeDisplay.getScopeGroupIdOrLiveGroupId(),
 										modelName,
 										function(result) {
 											getSocialActivitySettingMappingCallback(result, modelName);
@@ -283,7 +283,7 @@ AUI().add(
 						menuItem.radioClass(STR_SELECTED);
 
 						instance._getSocialActivitySettingMapping(
-							themeDisplay.getScopeGroupId(),
+							themeDisplay.getScopeGroupIdOrLiveGroupId(),
 							modelName,
 							function(result) {
 								getSocialActivitySettingMappingCallback(result, modelName);
@@ -351,7 +351,7 @@ AUI().add(
 
 						Liferay.Service.Social.SocialActivitySetting.updateActivitySetting(
 								{
-									groupId: themeDisplay.getScopeGroupId(),
+									groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
 									modelName: modelName,
 									value: currentTarget.attr('checked')
 								}

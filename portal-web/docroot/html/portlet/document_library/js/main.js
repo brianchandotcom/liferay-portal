@@ -532,7 +532,12 @@ AUI().add(
 					_initToggleSelect: function() {
 						var instance = this;
 
-						Liferay.on('checkbox:change', instance._onDocumentSelectorChange, instance);
+						instance._entriesContainer.delegate(
+							'change',
+							instance._onDocumentSelectorChange,
+							'.document-selector',
+							instance
+						);
 					},
 
 					_onDataRetrieveSuccess: function(event) {
@@ -618,23 +623,19 @@ AUI().add(
 					_onDocumentSelectorChange: function(event) {
 						var instance = this;
 
-						var checkbox = event.checkbox;
+						instance._toggleSelected(event.currentTarget, true);
 
-						if (checkbox.ancestor('.document-selector')) {
-							instance._toggleSelected(checkbox, true);
+						window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
-							window[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
-
-							Liferay.Util.checkAllBox(
-								instance._entriesContainer,
-								[
-									instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX),
-									instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
-									instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX)
-								],
-								instance._selectAllCheckbox
-							);
-						}
+						Liferay.Util.checkAllBox(
+							instance._entriesContainer,
+							[
+								instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX),
+								instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
+								instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX)
+							],
+							instance._selectAllCheckbox
+						);
 					},
 
 					_onDragDropHit: function(event) {

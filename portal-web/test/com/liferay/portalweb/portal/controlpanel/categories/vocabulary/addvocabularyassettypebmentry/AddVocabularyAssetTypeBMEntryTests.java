@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyassettypeddlrecord;
+package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyassettypebmentry;
 
 import com.liferay.portalweb.portal.BaseTests;
 
@@ -22,13 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddVocabularyAssetTypeDDLRecordTests extends BaseTests {
+public class AddVocabularyAssetTypeBMEntryTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AddVocabularyAssetTypeDDLRecordTest.class);
-		testSuite.addTestSuite(ViewVocabularyAssetTypeDDLRecordTest.class);
+		testSuite.addTestSuite(AddVocabularyAssetTypeBMEntryTest.class);
+		testSuite.addTestSuite(ViewVocabularyAssetTypeBMEntryTest.class);
 		testSuite.addTestSuite(TearDownVocabularyTest.class);
 
 		return testSuite;

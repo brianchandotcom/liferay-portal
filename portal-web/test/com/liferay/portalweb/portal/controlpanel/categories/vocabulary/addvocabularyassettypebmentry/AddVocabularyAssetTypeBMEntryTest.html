@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ViewVocabularyAssetTypeCommentsTest</title>
+<title>AddVocabularyAssetTypeBMEntryTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ViewVocabularyAssetTypeCommentsTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddVocabularyAssetTypeBMEntryTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -29,14 +29,9 @@
 	<td>Categories</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@class='vocabulary-item']/a</td>
-	<td>Vocabulary Name</td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//a[@class='vocabulary-item-actions-trigger']</td>
-	<td>Edit</td>
+	<td>//input[@value='Add Vocabulary']</td>
+	<td>Add Vocabulary</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -44,12 +39,12 @@
 	<td>Name Text Field</td>
 </tr>
 <tr>
-	<td>assertValue</td>
+	<td>type</td>
 	<td>//input[@id='_147_title_en_US']</td>
 	<td>Vocabulary Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>type</td>
 	<td>//textarea[@id='_147_description_en_US']</td>
 	<td>Vocabulary Description</td>
 </tr>
@@ -84,9 +79,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
+	<td>select</td>
 	<td>//select[@id='_147_classNameId0']</td>
-	<td>Comments</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='vocabulary-item']/a</td>
+	<td>Vocabulary Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='vocabulary-item']/a</td>
+	<td>Vocabulary Name</td>
 </tr>
 
 </tbody></table>

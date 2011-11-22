@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyassettypeddlrecord;
+package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularyassettypebmentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
-	public void testAddVocabularyAssetTypeDDLRecord() throws Exception {
+public class AddVocabularyAssetTypeBMEntryTest extends BaseTestCase {
+	public void testAddVocabularyAssetTypeBMEntry() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -110,7 +110,7 @@ public class AddVocabularyAssetTypeDDLRecordTest extends BaseTestCase {
 
 			case 2:
 				selenium.select("//select[@id='_147_classNameId0']",
-					RuntimeVariables.replace("Dynamic Data Lists Record"));
+					RuntimeVariables.replace("Bookmarks Entry"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 

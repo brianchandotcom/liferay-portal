@@ -91,7 +91,7 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_11_type']",
-					RuntimeVariables.replace("Any"));
+					RuntimeVariables.replace(""));
 				assertTrue(selenium.isElementPresent("link=Test Organization"));
 				selenium.select("//select[@id='_11_type']",
 					RuntimeVariables.replace("Location"));
@@ -99,7 +99,7 @@ public class AdvancedSearchOrganizationTypeTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_11_type']",
-					RuntimeVariables.replace("Any"));
+					RuntimeVariables.replace(""));
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("All"));
 				selenium.clickAt("link=\u00ab Basic",

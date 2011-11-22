@@ -150,7 +150,7 @@
 		<if>
 			<isset property="test.ant.script.evaluate.logs" />
 			<then>
-				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
 			</then>
 			<else>
 				<property name="test.ant.script.file.evaluate.logs" value=" " />
@@ -214,7 +214,7 @@
 		<if>
 			<isset property="test.ant.script.evaluate.logs" />
 			<then>
-				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
 			</then>
 			<else>
 				<property name="test.ant.script.file.evaluate.logs" value=" " />
@@ -265,7 +265,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="9" />
+		<property name="build-test-ant-scripts.version" value="0" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />

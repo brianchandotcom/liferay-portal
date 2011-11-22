@@ -35,12 +35,13 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
-import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.ObjectWrapper;
+import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -195,13 +196,16 @@ public class ThemeUtil {
 
 		// Portal JSP tag library factory
 
-		TaglibFactory portalTaglib = new TaglibFactory(servletContext);
+		TemplateHashModel portalTaglib =
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(servletContext);
 
 		freeMarkerContext.put("PortalJspTagLibs", portalTaglib);
 
 		// Theme JSP tag library factory
 
-		TaglibFactory themeTaglib = new TaglibFactory(themeServletContext);
+		TemplateHashModel themeTaglib =
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
+				themeServletContext);
 
 		freeMarkerContext.put("ThemeJspTaglibs", themeTaglib);
 

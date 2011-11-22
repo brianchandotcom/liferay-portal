@@ -61,7 +61,7 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@name='_3_keywords']",
-			RuntimeVariables.replace("\"selenium\""));
+			RuntimeVariables.replace("\"selenium01\""));
 		selenium.clickAt("//input[@type='image']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

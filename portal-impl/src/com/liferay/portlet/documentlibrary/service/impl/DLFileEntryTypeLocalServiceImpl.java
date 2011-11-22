@@ -36,6 +36,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -277,7 +278,8 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntry.getFolderId());
 
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			new long[] {dlFolder.getGroupId()}, dlFolder.getFolderId(), true);
+			DLUtil.getGroupIds(dlFolder.getGroupId()), dlFolder.getFolderId(),
+			true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 

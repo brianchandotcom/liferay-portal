@@ -78,6 +78,8 @@ public class AddSitesTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -102,12 +104,6 @@ public class AddSitesTest extends BaseTestCase {
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Open"),
-			selenium.getText("//tr[4]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("1 User"),
-			selenium.getText("//tr[4]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[4]/td[4]"));
+			selenium.getText("//tr[4]/td/a"));
 	}
 }

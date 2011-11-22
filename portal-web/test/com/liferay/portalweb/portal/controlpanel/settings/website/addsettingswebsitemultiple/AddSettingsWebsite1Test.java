@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.weather;
+package com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsitemultiple;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditPreferencesTest extends BaseTestCase {
-	public void testEditPreferences() throws Exception {
+public class AddSettingsWebsite1Test extends BaseTestCase {
+	public void testAddSettingsWebsite1() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -30,7 +30,7 @@ public class EditPreferencesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Weather Test Page")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -40,12 +40,12 @@ public class EditPreferencesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace("link=Weather Test Page"));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		selenium.clickAt("link=Portal Settings",
+			RuntimeVariables.replace("Portal Settings"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -53,8 +53,7 @@ public class EditPreferencesTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+				if (selenium.isVisible("//a[@id='_130_websitesLink']")) {
 					break;
 				}
 			}
@@ -64,20 +63,36 @@ public class EditPreferencesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
-			RuntimeVariables.replace("Configuration"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//textarea[@name='_1_WAR_weatherportlet_zips']",
-			RuntimeVariables.replace("Diamond Bar, CA"));
+		selenium.clickAt("//a[@id='_130_websitesLink']",
+			RuntimeVariables.replace("Websites"));
+		selenium.type("//input[@id='_130_websiteUrl0']",
+			RuntimeVariables.replace("http://www.liferay.com"));
+		selenium.select("//select[@id='_130_websiteTypeId0']",
+			RuntimeVariables.replace("label=Public"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated your preferences."),
+				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=Return to Full Page",
-			RuntimeVariables.replace("Return to Full Page"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Diamond Bar, CA"));
+		assertEquals("http://www.liferay.com",
+			selenium.getValue("//input[@id='_130_websiteUrl0']"));
 	}
 }

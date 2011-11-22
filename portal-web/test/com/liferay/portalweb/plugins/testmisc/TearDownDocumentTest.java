@@ -49,22 +49,22 @@ public class TearDownDocumentTest extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-
-				boolean dmlDocumentPresent = selenium.isElementPresent(
-						"//div[1]/a/span[1]/img");
-
-				if (!dmlDocumentPresent) {
-					label = 2;
-
-					continue;
-				}
-
 				assertFalse(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 					RuntimeVariables.replace("All Entries Check Box"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
+
+				boolean dmlDocumentPresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul[contains(@class,'disabled')]/li/strong/a/span");
+
+				if (dmlDocumentPresent) {
+					label = 2;
+
+					continue;
+				}
+
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -98,13 +98,6 @@ public class TearDownDocumentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 
 			case 2:
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace(
-						"There are no documents or media files in this folder."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
-
 			case 100:
 				label = -1;
 			}

@@ -13,9 +13,9 @@
 
 	var STR_BLANK = '';
 
-	var STR_LIST_ITEM_ESCAPE_CHARACTERS = '\\\\';
-
 	var STR_EQUALS = '=';
+
+	var STR_LIST_ITEM_ESCAPE_CHARACTERS = '\\\\';
 
 	var STR_PIPE = '|';
 

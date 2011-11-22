@@ -43,9 +43,9 @@ public class ViewFolderImageMyImagesTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Images", RuntimeVariables.replace("My Images"));
+		selenium.clickAt("link=Mine", RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("My Images"),
+		assertEquals(RuntimeVariables.replace("Mine"),
 			selenium.getText("//div/h1/span"));
 
 		for (int second = 0;; second++) {

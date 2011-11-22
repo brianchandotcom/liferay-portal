@@ -74,7 +74,7 @@ public class MoveSubfolderToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Images Home")) {
+				if (selenium.isVisible("link=Home")) {
 					break;
 				}
 			}
@@ -84,8 +84,7 @@ public class MoveSubfolderToFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Images Home",
-			RuntimeVariables.replace("Images Home"));
+		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
 			selenium.getText("//tr[4]/td/a"));

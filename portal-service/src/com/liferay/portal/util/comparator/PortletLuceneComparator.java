@@ -36,6 +36,9 @@ public class PortletLuceneComparator
 		if (portletId1.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 			return 1;
 		}
+		else if (portletId2.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+			return -1;
+		}
 		else {
 			return portletId1.compareTo(portletId2);
 		}

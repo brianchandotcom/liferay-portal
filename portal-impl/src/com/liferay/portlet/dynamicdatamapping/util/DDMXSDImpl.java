@@ -36,12 +36,13 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
-import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.ObjectWrapper;
+import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -380,8 +381,9 @@ public class DDMXSDImpl implements DDMXSD {
 
 		// Portal JSP tag library factory
 
-		TaglibFactory portalTaglib = new TaglibFactory(
-			pageContext.getServletContext());
+		TemplateHashModel portalTaglib =
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
+				pageContext.getServletContext());
 
 		freeMarkerContext.put("PortalJspTagLibs", portalTaglib);
 

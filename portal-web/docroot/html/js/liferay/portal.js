@@ -23,10 +23,7 @@
 		var tabSection = event.tabSection;
 
 		if (tabItem) {
-			tabItem.radioClass('aui-selected');
-			tabItem.radioClass('aui-state-active');
-			tabItem.radioClass('aui-tab-active');
-			tabItem.radioClass('current');
+			tabItem.radioClass(['aui-selected', 'aui-state-active', 'aui-tab-active', 'current']);
 		}
 
 		if (tabSection) {

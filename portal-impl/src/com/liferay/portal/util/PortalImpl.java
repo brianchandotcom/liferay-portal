@@ -1794,9 +1794,17 @@ public class PortalImpl implements Portal {
 						curLayoutSet.getLayoutSetId()) &&
 					(group.getClassPK() != themeDisplay.getUserId())) {
 
-					Company company = themeDisplay.getCompany();
+					if (group.isControlPanel()) {
+						virtualHostname = curLayoutSet.getVirtualHostname();
+					}
 
-					virtualHostname = company.getVirtualHostname();
+					if (Validator.isNull(virtualHostname) ||
+						virtualHostname.equalsIgnoreCase(_LOCALHOST)) {
+
+						Company company = themeDisplay.getCompany();
+
+						virtualHostname = company.getVirtualHostname();
+					}
 
 					if (!virtualHostname.equalsIgnoreCase(_LOCALHOST)) {
 						portalURL = getPortalURL(

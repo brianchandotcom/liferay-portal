@@ -138,7 +138,7 @@ public class ConfigurePage1PortletDLScopeDefaultTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Default",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
-		selenium.open("/web/blogs-page-scope-community/");
+		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

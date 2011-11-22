@@ -43,10 +43,9 @@ public class ViewFolderImageRecentImagesTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Recent Images",
-			RuntimeVariables.replace("Recent Images"));
+		selenium.clickAt("link=Recent", RuntimeVariables.replace("Recent"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Recent Images"),
+		assertEquals(RuntimeVariables.replace("Recent"),
 			selenium.getText("//div/h1/span"));
 
 		for (int second = 0;; second++) {

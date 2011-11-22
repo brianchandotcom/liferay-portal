@@ -96,7 +96,10 @@ public class AddFolderImageImageInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Image names must end with one of the following extensions: .bmp, .gif, .jpeg, .jpg, .png, .tif, .tiff"),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Media files must be one of the following formats: audio/basic, audio/mid, audio/midi, audio/mod, audio/mp3, audio/mpeg, audio/mpeg3, audio/wav, audio/x-mid, audio/x-midi, audio/x-mod, audio/x-mpeg, audio/x-pn-realaudio, audio/x-realaudio, audio/x-wav, image/bmp, image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/x-tiff, video/avi, video/mp4, video/mpeg, video/quicktime, video/x-flv, video/x-ms-wmv, video/x-msvideo."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

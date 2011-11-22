@@ -43,6 +43,9 @@ public class ConfigurePortletDisplayStyle2Test extends BaseTestCase {
 		selenium.clickAt("link=Breadcrumb Test Page",
 			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {

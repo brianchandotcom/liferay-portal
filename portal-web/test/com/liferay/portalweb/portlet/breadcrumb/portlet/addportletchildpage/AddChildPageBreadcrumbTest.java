@@ -174,7 +174,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
+						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean welcome2Present = selenium.isElementPresent(

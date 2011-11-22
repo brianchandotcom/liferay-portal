@@ -581,6 +581,12 @@
 
 	<definition name="portlet.flags.edit_entry" path="/portlet/flags/edit_entry.jsp" />
 
+	<!-- Group statistics -->
+
+	<definition name="portlet.group_statistics.edit_group_statistics_counters" extends="portlet">
+		<put name="portlet_content" value="/portlet/group_statistics/edit_display_counter.jsp" />
+	</definition>
+
 	<!-- IFrame -->
 
 	<definition name="portlet.iframe" extends="portlet" />

@@ -1474,6 +1474,8 @@
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
 		</action>
 
+		<action path="/portlet_configuration/edit_group_statistics_counters" forward="portlet.group_statistics.edit_group_statistics_counters" />
+
 		<action path="/portlet_configuration/edit_permissions" type="com.liferay.portlet.portletconfiguration.action.EditPermissionsAction">
 			<forward name="portlet.portlet_configuration.edit_permissions" path="portlet.portlet_configuration.edit_permissions" />
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />

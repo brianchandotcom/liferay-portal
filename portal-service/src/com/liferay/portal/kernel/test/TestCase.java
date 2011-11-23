@@ -15,11 +15,13 @@
 package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
 import java.sql.Blob;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -81,6 +83,22 @@ public class TestCase extends junit.framework.TestCase {
 		}
 
 		assertEquals(expectedString, actualString);
+	}
+
+	protected void assertEqualsSorted(
+		String[] expectedStringArray, String[] actualStringArray) {
+
+		if (expectedStringArray != null) {
+			Arrays.sort(expectedStringArray);
+		}
+
+		if (actualStringArray != null) {
+			Arrays.sort(actualStringArray);
+		}
+
+		assertEquals(
+			StringUtil.merge(expectedStringArray),
+			StringUtil.merge(actualStringArray));
 	}
 
 	protected void assertLessThan(double expectedDouble, double actualDouble)

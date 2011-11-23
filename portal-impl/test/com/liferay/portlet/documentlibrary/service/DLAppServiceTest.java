@@ -36,6 +36,8 @@ import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.BaseServiceTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -164,6 +166,10 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 				"Unable to add two files of the same name in different " +
 					"folders");
 		}
+
+		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+
+		_fileEntry = null;
 	}
 
 	public void testAddNullFileEntry() throws Exception {
@@ -280,6 +286,64 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 		testSearchFile(false);
 	}
 
+	public void testTags() throws Exception {
+		long folderId = _folder.getFolderId();
+		String name = "TestTags.txt";
+		String description = StringPool.BLANK;
+		String changeLog = StringPool.BLANK;
+		byte[] bytes = _CONTENT.getBytes();
+		String[] tagNames = new String[] { "hello", "world" };
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAssetTagNames(tagNames);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			TestPropsValues.getGroupId(), folderId, name,
+			ContentTypes.TEXT_PLAIN, name, description, changeLog, bytes,
+			serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		assertEqualsSorted(tagNames, assetEntry.getTagNames());
+
+		Thread.sleep(1000);
+
+		_fileEntry = fileEntry;
+
+		search(false, "hello", true);
+		search(false, "world", true);
+		search(false, "liferay", false);
+
+		tagNames = new String[] { "hello", "world", "liferay" };
+
+		serviceContext.setAssetTagNames(tagNames);
+
+		fileEntry = DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
+			description, changeLog, false, bytes, serviceContext);
+
+		assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		assertEqualsSorted(tagNames, assetEntry.getTagNames());
+
+		Thread.sleep(1000);
+
+		_fileEntry = fileEntry;
+
+		search(false, "hello", true);
+		search(false, "world", true);
+		search(false, "liferay", true);
+
+		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+
+		_fileEntry = null;
+	}
+
 	public void testVersionLabel() throws Exception {
 		long folderId = _folder.getFolderId();
 		String name = "TestVersion.txt";
@@ -346,7 +410,8 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 			serviceContext);
 	}
 
-	protected void search(boolean rootFolder, String keywords)
+	protected void search(
+			boolean rootFolder, String keywords, boolean assertTrue)
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
@@ -393,7 +458,12 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 		message += " using query " + hits.getQuery();
 
-		assertTrue(message, found);
+		if (assertTrue) {
+			assertTrue(message, found);
+		}
+		else {
+			assertFalse(message, found);
+		}
 	}
 
 	protected void testSearchFile(boolean rootFolder) throws Exception {
@@ -401,8 +471,12 @@ public class DLAppServiceTest extends BaseServiceTestCase {
 
 		Thread.sleep(1000);
 
-		search(rootFolder, "title");
-		search(rootFolder, "content");
+		search(rootFolder, "title", true);
+		search(rootFolder, "content", true);
+
+		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+
+		_fileEntry = null;
 	}
 
 	private static final String _CONTENT =

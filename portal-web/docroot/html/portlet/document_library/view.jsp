@@ -180,10 +180,15 @@ if (folder != null) {
 
 			var actionsButton = A.one('#<portlet:namespace />actionsButtonContainer');
 
-			var disabled = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
+			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
 			if (actionsButton) {
-				actionsButton.toggleClass('disabled', disabled);
+				if (hide) {
+					actionsButton.hide();
+				}
+				else {
+					actionsButton.show();
+				}
 			}
 		},
 		['liferay-util-list-fields']

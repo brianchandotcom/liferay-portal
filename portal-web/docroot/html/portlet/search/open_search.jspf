@@ -29,15 +29,28 @@ List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyI
 
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 
+ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+
 Iterator itr = portlets.iterator();
 
 while (itr.hasNext()) {
 	Portlet portlet = (Portlet)itr.next();
 
-	if (Validator.isNull(portlet.getOpenSearchClass()) || portlet.getOpenSearchClass().startsWith("com.liferay")) {
+	if (Validator.isNull(portlet.getOpenSearchClass())) {
 		itr.remove();
 
 		continue;
+	}
+	else {
+		try {
+			Class<?> openSearchClazz = portalClassLoader.loadClass(portlet.getOpenSearchClass());
+
+			itr.remove();
+
+			continue;
+		}
+		catch (ClassNotFoundException cnfe) {
+		}
 	}
 
 	OpenSearch openSearch = portlet.getOpenSearchInstance();

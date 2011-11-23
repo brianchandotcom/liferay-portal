@@ -29,7 +29,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 %>
 
 <div class="asset-resource-info">
-	<aui:a href='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileVersion.getRepositoryId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileVersion.getVersion() %>'>
+	<aui:a href='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileVersion.getRepositoryId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle()), true) + "?version=" + fileVersion.getVersion() %>'>
 		<c:choose>
 			<c:when test="<%= showThumbnail && ImageProcessor.hasImages(fileVersion) %>">
 				<div>

@@ -470,7 +470,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image="download"
 								label="<%= true %>"
 								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileVersion.getSize(), locale) + "k)" %>'
-								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true) + "?version=" + fileVersion.getVersion() %>'
+								url='<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>'
 							/>
 						</c:if>
 					</span>
@@ -486,7 +486,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image='<%= "../file_system/small/" + conversion %>'
 								label="<%= true %>"
 								message="<%= conversion.toUpperCase() %>"
-								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true) + "?version=" + fileVersion.getVersion() + "&targetExtension=" + conversion %>'
+								url='<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
 							/>
 
 						<%
@@ -841,7 +841,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					{
 						handler: function(event) {
-							location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true) + "?version=" + fileVersion.getVersion() %>';
+							location.href = '<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
 						},
 						icon: 'download',
 						label: '<liferay-ui:message key="download" />'

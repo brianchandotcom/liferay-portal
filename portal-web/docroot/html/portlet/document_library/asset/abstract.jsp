@@ -60,7 +60,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 					image='<%= "../file_system/small/" + fileVersion.getIcon() %>'
 					label="<%= true %>"
 					message="<%= HtmlUtil.escape(fileVersion.getTitle()) %>"
-					url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileVersion.getRepositoryId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileVersion.getVersion() %>'
+					url='<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>'
 				/>
 			</c:otherwise>
 		</c:choose>

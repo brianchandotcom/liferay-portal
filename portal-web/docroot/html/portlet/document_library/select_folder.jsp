@@ -83,14 +83,21 @@ if (folder != null) {
 		sb.append("<img align=\"left\" border=\"0\" src=\"");
 		sb.append(themeDisplay.getPathThemeImages());
 
-		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(curFolder.getRepositoryId(), curFolder.getFolderId(), false);
+		int foldersCount = 0;
+		int fileEntriesCount = 0;
 
-		int foldersCount = subfolderIds.size();
+		try {
+			List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(curFolder.getRepositoryId(), curFolder.getFolderId(), false);
 
-		subfolderIds.clear();
-		subfolderIds.add(curFolder.getFolderId());
+			foldersCount = subfolderIds.size();
 
-		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), subfolderIds, WorkflowConstants.STATUS_APPROVED);
+			subfolderIds.clear();
+			subfolderIds.add(curFolder.getFolderId());
+
+			fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), subfolderIds, WorkflowConstants.STATUS_APPROVED);
+		}
+		catch (com.liferay.portal.kernel.repository.RepositoryException re) {
+		}
 
 		if ((foldersCount + fileEntriesCount) > 0) {
 			sb.append("/common/folder_full_document.png\">");
@@ -100,6 +107,7 @@ if (folder != null) {
 		}
 
 		sb.append(curFolder.getName());
+
 
 		row.addText(sb.toString(), rowURL);
 

@@ -432,6 +432,10 @@ public class DLIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
+		if (!dlFileEntry.getLatestFileVersion(true).isApproved()) {
+			return;
+		}
+
 		Document document = getDocument(dlFileEntry);
 
 		if (document != null) {

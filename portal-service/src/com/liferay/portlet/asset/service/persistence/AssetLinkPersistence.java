@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.asset.model.AssetLink;
@@ -869,6 +868,4 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public AssetLink remove(AssetLink assetLink) throws SystemException;
 }

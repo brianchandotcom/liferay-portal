@@ -225,24 +225,11 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 *
 	 * @param primaryKey the primary key of the wiki page resource
 	 * @return the wiki page resource that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a wiki page resource with the primary key could not be found
+	 * @throws com.liferay.portlet.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WikiPageResource remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourcePrimKey the primary key of the wiki page resource
-	 * @return the wiki page resource that was removed
-	 * @throws com.liferay.portlet.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WikiPageResource remove(long resourcePrimKey)
 		throws NoSuchPageResourceException, SystemException {
 		Session session = null;
 
@@ -250,19 +237,18 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			session = openSession();
 
 			WikiPageResource wikiPageResource = (WikiPageResource)session.get(WikiPageResourceImpl.class,
-					Long.valueOf(resourcePrimKey));
+					primaryKey);
 
 			if (wikiPageResource == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourcePrimKey);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPageResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourcePrimKey);
+					primaryKey);
 			}
 
-			return wikiPageResourcePersistence.remove(wikiPageResource);
+			return remove(wikiPageResource);
 		}
 		catch (NoSuchPageResourceException nsee) {
 			throw nsee;
@@ -276,16 +262,16 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	}
 
 	/**
-	 * Removes the wiki page resource from the database. Also notifies the appropriate model listeners.
+	 * Removes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param wikiPageResource the wiki page resource
+	 * @param resourcePrimKey the primary key of the wiki page resource
 	 * @return the wiki page resource that was removed
+	 * @throws com.liferay.portlet.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public WikiPageResource remove(WikiPageResource wikiPageResource)
-		throws SystemException {
-		return super.remove(wikiPageResource);
+	public WikiPageResource remove(long resourcePrimKey)
+		throws NoSuchPageResourceException, SystemException {
+		return remove(Long.valueOf(resourcePrimKey));
 	}
 
 	@Override
@@ -1173,7 +1159,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (WikiPageResource wikiPageResource : findByUuid(uuid)) {
-			wikiPageResourcePersistence.remove(wikiPageResource);
+			remove(wikiPageResource);
 		}
 	}
 
@@ -1188,7 +1174,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		throws NoSuchPageResourceException, SystemException {
 		WikiPageResource wikiPageResource = findByN_T(nodeId, title);
 
-		wikiPageResourcePersistence.remove(wikiPageResource);
+		remove(wikiPageResource);
 	}
 
 	/**
@@ -1198,7 +1184,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	public void removeAll() throws SystemException {
 		for (WikiPageResource wikiPageResource : findAll()) {
-			wikiPageResourcePersistence.remove(wikiPageResource);
+			remove(wikiPageResource);
 		}
 	}
 

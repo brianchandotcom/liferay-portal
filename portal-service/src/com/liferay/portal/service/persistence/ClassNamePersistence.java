@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ClassName;
 
 /**
@@ -213,6 +212,4 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ClassName remove(ClassName className) throws SystemException;
 }

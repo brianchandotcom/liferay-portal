@@ -273,24 +273,11 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 *
 	 * @param primaryKey the primary key of the wiki node
 	 * @return the wiki node that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a wiki node with the primary key could not be found
+	 * @throws com.liferay.portlet.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WikiNode remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param nodeId the primary key of the wiki node
-	 * @return the wiki node that was removed
-	 * @throws com.liferay.portlet.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WikiNode remove(long nodeId)
 		throws NoSuchNodeException, SystemException {
 		Session session = null;
 
@@ -298,18 +285,18 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			session = openSession();
 
 			WikiNode wikiNode = (WikiNode)session.get(WikiNodeImpl.class,
-					Long.valueOf(nodeId));
+					primaryKey);
 
 			if (wikiNode == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + nodeId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchNodeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					nodeId);
+					primaryKey);
 			}
 
-			return wikiNodePersistence.remove(wikiNode);
+			return remove(wikiNode);
 		}
 		catch (NoSuchNodeException nsee) {
 			throw nsee;
@@ -323,15 +310,16 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	/**
-	 * Removes the wiki node from the database. Also notifies the appropriate model listeners.
+	 * Removes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param wikiNode the wiki node
+	 * @param nodeId the primary key of the wiki node
 	 * @return the wiki node that was removed
+	 * @throws com.liferay.portlet.wiki.NoSuchNodeException if a wiki node with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public WikiNode remove(WikiNode wikiNode) throws SystemException {
-		return super.remove(wikiNode);
+	public WikiNode remove(long nodeId)
+		throws NoSuchNodeException, SystemException {
+		return remove(Long.valueOf(nodeId));
 	}
 
 	@Override
@@ -2447,7 +2435,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (WikiNode wikiNode : findByUuid(uuid)) {
-			wikiNodePersistence.remove(wikiNode);
+			remove(wikiNode);
 		}
 	}
 
@@ -2462,7 +2450,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		throws NoSuchNodeException, SystemException {
 		WikiNode wikiNode = findByUUID_G(uuid, groupId);
 
-		wikiNodePersistence.remove(wikiNode);
+		remove(wikiNode);
 	}
 
 	/**
@@ -2473,7 +2461,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (WikiNode wikiNode : findByGroupId(groupId)) {
-			wikiNodePersistence.remove(wikiNode);
+			remove(wikiNode);
 		}
 	}
 
@@ -2485,7 +2473,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (WikiNode wikiNode : findByCompanyId(companyId)) {
-			wikiNodePersistence.remove(wikiNode);
+			remove(wikiNode);
 		}
 	}
 
@@ -2500,7 +2488,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		throws NoSuchNodeException, SystemException {
 		WikiNode wikiNode = findByG_N(groupId, name);
 
-		wikiNodePersistence.remove(wikiNode);
+		remove(wikiNode);
 	}
 
 	/**
@@ -2510,7 +2498,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	public void removeAll() throws SystemException {
 		for (WikiNode wikiNode : findAll()) {
-			wikiNodePersistence.remove(wikiNode);
+			remove(wikiNode);
 		}
 	}
 

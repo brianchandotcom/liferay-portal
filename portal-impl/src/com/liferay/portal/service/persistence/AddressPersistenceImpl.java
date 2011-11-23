@@ -307,43 +307,29 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 *
 	 * @param primaryKey the primary key of the address
 	 * @return the address that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a address with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Address remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the address with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param addressId the primary key of the address
-	 * @return the address that was removed
-	 * @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Address remove(long addressId)
 		throws NoSuchAddressException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Address address = (Address)session.get(AddressImpl.class,
-					Long.valueOf(addressId));
+			Address address = (Address)session.get(AddressImpl.class, primaryKey);
 
 			if (address == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + addressId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchAddressException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					addressId);
+					primaryKey);
 			}
 
-			return addressPersistence.remove(address);
+			return remove(address);
 		}
 		catch (NoSuchAddressException nsee) {
 			throw nsee;
@@ -357,15 +343,16 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	/**
-	 * Removes the address from the database. Also notifies the appropriate model listeners.
+	 * Removes the address with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param address the address
+	 * @param addressId the primary key of the address
 	 * @return the address that was removed
+	 * @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Address remove(Address address) throws SystemException {
-		return super.remove(address);
+	public Address remove(long addressId)
+		throws NoSuchAddressException, SystemException {
+		return remove(Long.valueOf(addressId));
 	}
 
 	@Override
@@ -3094,7 +3081,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Address address : findByCompanyId(companyId)) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 
@@ -3106,7 +3093,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (Address address : findByUserId(userId)) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 
@@ -3120,7 +3107,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public void removeByC_C(long companyId, long classNameId)
 		throws SystemException {
 		for (Address address : findByC_C(companyId, classNameId)) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 
@@ -3135,7 +3122,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public void removeByC_C_C(long companyId, long classNameId, long classPK)
 		throws SystemException {
 		for (Address address : findByC_C_C(companyId, classNameId, classPK)) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 
@@ -3152,7 +3139,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		boolean mailing) throws SystemException {
 		for (Address address : findByC_C_C_M(companyId, classNameId, classPK,
 				mailing)) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 
@@ -3169,7 +3156,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		boolean primary) throws SystemException {
 		for (Address address : findByC_C_C_P(companyId, classNameId, classPK,
 				primary)) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 
@@ -3180,7 +3167,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	public void removeAll() throws SystemException {
 		for (Address address : findAll()) {
-			addressPersistence.remove(address);
+			remove(address);
 		}
 	}
 

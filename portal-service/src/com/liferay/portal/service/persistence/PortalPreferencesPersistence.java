@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PortalPreferences;
 
 /**
@@ -223,7 +222,4 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public PortalPreferences remove(PortalPreferences portalPreferences)
-		throws SystemException;
 }

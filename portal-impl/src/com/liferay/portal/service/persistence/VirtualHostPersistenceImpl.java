@@ -204,24 +204,11 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 *
 	 * @param primaryKey the primary key of the virtual host
 	 * @return the virtual host that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a virtual host with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public VirtualHost remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param virtualHostId the primary key of the virtual host
-	 * @return the virtual host that was removed
-	 * @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public VirtualHost remove(long virtualHostId)
 		throws NoSuchVirtualHostException, SystemException {
 		Session session = null;
 
@@ -229,18 +216,18 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			session = openSession();
 
 			VirtualHost virtualHost = (VirtualHost)session.get(VirtualHostImpl.class,
-					Long.valueOf(virtualHostId));
+					primaryKey);
 
 			if (virtualHost == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + virtualHostId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchVirtualHostException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					virtualHostId);
+					primaryKey);
 			}
 
-			return virtualHostPersistence.remove(virtualHost);
+			return remove(virtualHost);
 		}
 		catch (NoSuchVirtualHostException nsee) {
 			throw nsee;
@@ -254,16 +241,16 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	}
 
 	/**
-	 * Removes the virtual host from the database. Also notifies the appropriate model listeners.
+	 * Removes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param virtualHost the virtual host
+	 * @param virtualHostId the primary key of the virtual host
 	 * @return the virtual host that was removed
+	 * @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public VirtualHost remove(VirtualHost virtualHost)
-		throws SystemException {
-		return super.remove(virtualHost);
+	public VirtualHost remove(long virtualHostId)
+		throws NoSuchVirtualHostException, SystemException {
+		return remove(Long.valueOf(virtualHostId));
 	}
 
 	@Override
@@ -907,7 +894,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		throws NoSuchVirtualHostException, SystemException {
 		VirtualHost virtualHost = findByHostname(hostname);
 
-		virtualHostPersistence.remove(virtualHost);
+		remove(virtualHost);
 	}
 
 	/**
@@ -921,7 +908,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		throws NoSuchVirtualHostException, SystemException {
 		VirtualHost virtualHost = findByC_L(companyId, layoutSetId);
 
-		virtualHostPersistence.remove(virtualHost);
+		remove(virtualHost);
 	}
 
 	/**
@@ -931,7 +918,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 */
 	public void removeAll() throws SystemException {
 		for (VirtualHost virtualHost : findAll()) {
-			virtualHostPersistence.remove(virtualHost);
+			remove(virtualHost);
 		}
 	}
 

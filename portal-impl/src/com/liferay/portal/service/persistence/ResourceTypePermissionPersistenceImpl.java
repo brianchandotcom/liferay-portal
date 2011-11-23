@@ -260,24 +260,11 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 *
 	 * @param primaryKey the primary key of the resource type permission
 	 * @return the resource type permission that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource type permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceTypePermission remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceTypePermissionId the primary key of the resource type permission
-	 * @return the resource type permission that was removed
-	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceTypePermission remove(long resourceTypePermissionId)
 		throws NoSuchResourceTypePermissionException, SystemException {
 		Session session = null;
 
@@ -285,19 +272,18 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			session = openSession();
 
 			ResourceTypePermission resourceTypePermission = (ResourceTypePermission)session.get(ResourceTypePermissionImpl.class,
-					Long.valueOf(resourceTypePermissionId));
+					primaryKey);
 
 			if (resourceTypePermission == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourceTypePermissionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourceTypePermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceTypePermissionId);
+					primaryKey);
 			}
 
-			return resourceTypePermissionPersistence.remove(resourceTypePermission);
+			return remove(resourceTypePermission);
 		}
 		catch (NoSuchResourceTypePermissionException nsee) {
 			throw nsee;
@@ -311,17 +297,16 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
-	 * Removes the resource type permission from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceTypePermission the resource type permission
+	 * @param resourceTypePermissionId the primary key of the resource type permission
 	 * @return the resource type permission that was removed
+	 * @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ResourceTypePermission remove(
-		ResourceTypePermission resourceTypePermission)
-		throws SystemException {
-		return super.remove(resourceTypePermission);
+	public ResourceTypePermission remove(long resourceTypePermissionId)
+		throws NoSuchResourceTypePermissionException, SystemException {
+		return remove(Long.valueOf(resourceTypePermissionId));
 	}
 
 	@Override
@@ -1658,7 +1643,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	public void removeByRoleId(long roleId) throws SystemException {
 		for (ResourceTypePermission resourceTypePermission : findByRoleId(
 				roleId)) {
-			resourceTypePermissionPersistence.remove(resourceTypePermission);
+			remove(resourceTypePermission);
 		}
 	}
 
@@ -1674,7 +1659,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		throws SystemException {
 		for (ResourceTypePermission resourceTypePermission : findByC_N_R(
 				companyId, name, roleId)) {
-			resourceTypePermissionPersistence.remove(resourceTypePermission);
+			remove(resourceTypePermission);
 		}
 	}
 
@@ -1693,7 +1678,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		ResourceTypePermission resourceTypePermission = findByC_G_N_R(companyId,
 				groupId, name, roleId);
 
-		resourceTypePermissionPersistence.remove(resourceTypePermission);
+		remove(resourceTypePermission);
 	}
 
 	/**
@@ -1703,7 +1688,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 */
 	public void removeAll() throws SystemException {
 		for (ResourceTypePermission resourceTypePermission : findAll()) {
-			resourceTypePermissionPersistence.remove(resourceTypePermission);
+			remove(resourceTypePermission);
 		}
 	}
 

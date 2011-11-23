@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
@@ -473,6 +472,4 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public MDRAction remove(MDRAction mdrAction) throws SystemException;
 }

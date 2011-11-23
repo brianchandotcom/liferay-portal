@@ -214,24 +214,11 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	 *
 	 * @param primaryKey the primary key of the org group permission
 	 * @return the org group permission that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a org group permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchOrgGroupPermissionException if a org group permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgGroupPermission remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove((OrgGroupPermissionPK)primaryKey);
-	}
-
-	/**
-	 * Removes the org group permission with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param orgGroupPermissionPK the primary key of the org group permission
-	 * @return the org group permission that was removed
-	 * @throws com.liferay.portal.NoSuchOrgGroupPermissionException if a org group permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public OrgGroupPermission remove(OrgGroupPermissionPK orgGroupPermissionPK)
 		throws NoSuchOrgGroupPermissionException, SystemException {
 		Session session = null;
 
@@ -239,19 +226,18 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 			session = openSession();
 
 			OrgGroupPermission orgGroupPermission = (OrgGroupPermission)session.get(OrgGroupPermissionImpl.class,
-					orgGroupPermissionPK);
+					primaryKey);
 
 			if (orgGroupPermission == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						orgGroupPermissionPK);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchOrgGroupPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					orgGroupPermissionPK);
+					primaryKey);
 			}
 
-			return orgGroupPermissionPersistence.remove(orgGroupPermission);
+			return remove(orgGroupPermission);
 		}
 		catch (NoSuchOrgGroupPermissionException nsee) {
 			throw nsee;
@@ -265,16 +251,16 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	}
 
 	/**
-	 * Removes the org group permission from the database. Also notifies the appropriate model listeners.
+	 * Removes the org group permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param orgGroupPermission the org group permission
+	 * @param orgGroupPermissionPK the primary key of the org group permission
 	 * @return the org group permission that was removed
+	 * @throws com.liferay.portal.NoSuchOrgGroupPermissionException if a org group permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public OrgGroupPermission remove(OrgGroupPermission orgGroupPermission)
-		throws SystemException {
-		return super.remove(orgGroupPermission);
+	public OrgGroupPermission remove(OrgGroupPermissionPK orgGroupPermissionPK)
+		throws NoSuchOrgGroupPermissionException, SystemException {
+		return remove(orgGroupPermissionPK);
 	}
 
 	@Override
@@ -1313,7 +1299,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (OrgGroupPermission orgGroupPermission : findByGroupId(groupId)) {
-			orgGroupPermissionPersistence.remove(orgGroupPermission);
+			remove(orgGroupPermission);
 		}
 	}
 
@@ -1327,7 +1313,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 		throws SystemException {
 		for (OrgGroupPermission orgGroupPermission : findByPermissionId(
 				permissionId)) {
-			orgGroupPermissionPersistence.remove(orgGroupPermission);
+			remove(orgGroupPermission);
 		}
 	}
 
@@ -1338,7 +1324,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	 */
 	public void removeAll() throws SystemException {
 		for (OrgGroupPermission orgGroupPermission : findAll()) {
-			orgGroupPermissionPersistence.remove(orgGroupPermission);
+			remove(orgGroupPermission);
 		}
 	}
 

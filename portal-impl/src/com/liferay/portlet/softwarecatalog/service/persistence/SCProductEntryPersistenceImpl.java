@@ -275,24 +275,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 *
 	 * @param primaryKey the primary key of the s c product entry
 	 * @return the s c product entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a s c product entry with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCProductEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the s c product entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param productEntryId the primary key of the s c product entry
-	 * @return the s c product entry that was removed
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductEntry remove(long productEntryId)
 		throws NoSuchProductEntryException, SystemException {
 		Session session = null;
 
@@ -300,19 +287,18 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			session = openSession();
 
 			SCProductEntry scProductEntry = (SCProductEntry)session.get(SCProductEntryImpl.class,
-					Long.valueOf(productEntryId));
+					primaryKey);
 
 			if (scProductEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						productEntryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchProductEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					productEntryId);
+					primaryKey);
 			}
 
-			return scProductEntryPersistence.remove(scProductEntry);
+			return remove(scProductEntry);
 		}
 		catch (NoSuchProductEntryException nsee) {
 			throw nsee;
@@ -326,16 +312,16 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	}
 
 	/**
-	 * Removes the s c product entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the s c product entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param scProductEntry the s c product entry
+	 * @param productEntryId the primary key of the s c product entry
 	 * @return the s c product entry that was removed
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SCProductEntry remove(SCProductEntry scProductEntry)
-		throws SystemException {
-		return super.remove(scProductEntry);
+	public SCProductEntry remove(long productEntryId)
+		throws NoSuchProductEntryException, SystemException {
+		return remove(Long.valueOf(productEntryId));
 	}
 
 	@Override
@@ -2641,7 +2627,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (SCProductEntry scProductEntry : findByGroupId(groupId)) {
-			scProductEntryPersistence.remove(scProductEntry);
+			remove(scProductEntry);
 		}
 	}
 
@@ -2653,7 +2639,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (SCProductEntry scProductEntry : findByCompanyId(companyId)) {
-			scProductEntryPersistence.remove(scProductEntry);
+			remove(scProductEntry);
 		}
 	}
 
@@ -2667,7 +2653,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	public void removeByG_U(long groupId, long userId)
 		throws SystemException {
 		for (SCProductEntry scProductEntry : findByG_U(groupId, userId)) {
-			scProductEntryPersistence.remove(scProductEntry);
+			remove(scProductEntry);
 		}
 	}
 
@@ -2682,7 +2668,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		throws NoSuchProductEntryException, SystemException {
 		SCProductEntry scProductEntry = findByRG_RA(repoGroupId, repoArtifactId);
 
-		scProductEntryPersistence.remove(scProductEntry);
+		remove(scProductEntry);
 	}
 
 	/**
@@ -2692,7 +2678,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 */
 	public void removeAll() throws SystemException {
 		for (SCProductEntry scProductEntry : findAll()) {
-			scProductEntryPersistence.remove(scProductEntry);
+			remove(scProductEntry);
 		}
 	}
 
@@ -3584,11 +3570,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			}
 		}
 
-		containsSCLicense = new ContainsSCLicense(this);
+		containsSCLicense = new ContainsSCLicense();
 
-		addSCLicense = new AddSCLicense(this);
-		clearSCLicenses = new ClearSCLicenses(this);
-		removeSCLicense = new RemoveSCLicense(this);
+		addSCLicense = new AddSCLicense();
+		clearSCLicenses = new ClearSCLicenses();
+		removeSCLicense = new RemoveSCLicense();
 	}
 
 	public void destroy() {
@@ -3625,10 +3611,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	protected RemoveSCLicense removeSCLicense;
 
 	protected class ContainsSCLicense {
-		protected ContainsSCLicense(
-			SCProductEntryPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsSCLicense() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSSCLICENSE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -3655,17 +3638,15 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	}
 
 	protected class AddSCLicense {
-		protected AddSCLicense(SCProductEntryPersistenceImpl persistenceImpl) {
+		protected AddSCLicense() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO SCLicenses_SCProductEntries (productEntryId, licenseId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long productEntryId, long licenseId)
 			throws SystemException {
-			if (!_persistenceImpl.containsSCLicense.contains(productEntryId,
-						licenseId)) {
+			if (!containsSCLicense.contains(productEntryId, licenseId)) {
 				ModelListener<com.liferay.portlet.softwarecatalog.model.SCLicense>[] scLicenseListeners =
 					scLicensePersistence.getListeners();
 
@@ -3698,11 +3679,10 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private SCProductEntryPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearSCLicenses {
-		protected ClearSCLicenses(SCProductEntryPersistenceImpl persistenceImpl) {
+		protected ClearSCLicenses() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM SCLicenses_SCProductEntries WHERE productEntryId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -3754,17 +3734,15 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	}
 
 	protected class RemoveSCLicense {
-		protected RemoveSCLicense(SCProductEntryPersistenceImpl persistenceImpl) {
+		protected RemoveSCLicense() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM SCLicenses_SCProductEntries WHERE productEntryId = ? AND licenseId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long productEntryId, long licenseId)
 			throws SystemException {
-			if (_persistenceImpl.containsSCLicense.contains(productEntryId,
-						licenseId)) {
+			if (containsSCLicense.contains(productEntryId, licenseId)) {
 				ModelListener<com.liferay.portlet.softwarecatalog.model.SCLicense>[] scLicenseListeners =
 					scLicensePersistence.getListeners();
 
@@ -3797,7 +3775,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private SCProductEntryPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_SCPRODUCTENTRY = "SELECT scProductEntry FROM SCProductEntry scProductEntry";

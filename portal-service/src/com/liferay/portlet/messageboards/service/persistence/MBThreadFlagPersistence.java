@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
@@ -472,7 +471,4 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public MBThreadFlag remove(MBThreadFlag mbThreadFlag)
-		throws SystemException;
 }

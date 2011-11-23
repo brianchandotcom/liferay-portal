@@ -261,24 +261,11 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 *
 	 * @param primaryKey the primary key of the journal feed
 	 * @return the journal feed that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal feed with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFeed remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param id the primary key of the journal feed
-	 * @return the journal feed that was removed
-	 * @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalFeed remove(long id)
 		throws NoSuchFeedException, SystemException {
 		Session session = null;
 
@@ -286,18 +273,18 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			session = openSession();
 
 			JournalFeed journalFeed = (JournalFeed)session.get(JournalFeedImpl.class,
-					Long.valueOf(id));
+					primaryKey);
 
 			if (journalFeed == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFeedException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					id);
+					primaryKey);
 			}
 
-			return journalFeedPersistence.remove(journalFeed);
+			return remove(journalFeed);
 		}
 		catch (NoSuchFeedException nsee) {
 			throw nsee;
@@ -311,16 +298,16 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	}
 
 	/**
-	 * Removes the journal feed from the database. Also notifies the appropriate model listeners.
+	 * Removes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param journalFeed the journal feed
+	 * @param id the primary key of the journal feed
 	 * @return the journal feed that was removed
+	 * @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public JournalFeed remove(JournalFeed journalFeed)
-		throws SystemException {
-		return super.remove(journalFeed);
+	public JournalFeed remove(long id)
+		throws NoSuchFeedException, SystemException {
+		return remove(Long.valueOf(id));
 	}
 
 	@Override
@@ -2090,7 +2077,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (JournalFeed journalFeed : findByUuid(uuid)) {
-			journalFeedPersistence.remove(journalFeed);
+			remove(journalFeed);
 		}
 	}
 
@@ -2105,7 +2092,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		throws NoSuchFeedException, SystemException {
 		JournalFeed journalFeed = findByUUID_G(uuid, groupId);
 
-		journalFeedPersistence.remove(journalFeed);
+		remove(journalFeed);
 	}
 
 	/**
@@ -2116,7 +2103,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (JournalFeed journalFeed : findByGroupId(groupId)) {
-			journalFeedPersistence.remove(journalFeed);
+			remove(journalFeed);
 		}
 	}
 
@@ -2131,7 +2118,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		throws NoSuchFeedException, SystemException {
 		JournalFeed journalFeed = findByG_F(groupId, feedId);
 
-		journalFeedPersistence.remove(journalFeed);
+		remove(journalFeed);
 	}
 
 	/**
@@ -2141,7 +2128,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	public void removeAll() throws SystemException {
 		for (JournalFeed journalFeed : findAll()) {
-			journalFeedPersistence.remove(journalFeed);
+			remove(journalFeed);
 		}
 	}
 

@@ -389,43 +389,29 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 *
 	 * @param primaryKey the primary key of the group
 	 * @return the group that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a group with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Group remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the group with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param groupId the primary key of the group
-	 * @return the group that was removed
-	 * @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Group remove(long groupId)
 		throws NoSuchGroupException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Group group = (Group)session.get(GroupImpl.class,
-					Long.valueOf(groupId));
+			Group group = (Group)session.get(GroupImpl.class, primaryKey);
 
 			if (group == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + groupId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					groupId);
+					primaryKey);
 			}
 
-			return groupPersistence.remove(group);
+			return remove(group);
 		}
 		catch (NoSuchGroupException nsee) {
 			throw nsee;
@@ -439,15 +425,16 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
-	 * Removes the group from the database. Also notifies the appropriate model listeners.
+	 * Removes the group with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param group the group
+	 * @param groupId the primary key of the group
 	 * @return the group that was removed
+	 * @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Group remove(Group group) throws SystemException {
-		return super.remove(group);
+	public Group remove(long groupId)
+		throws NoSuchGroupException, SystemException {
+		return remove(Long.valueOf(groupId));
 	}
 
 	@Override
@@ -2701,7 +2688,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Group group : findByCompanyId(companyId)) {
-			groupPersistence.remove(group);
+			remove(group);
 		}
 	}
 
@@ -2715,7 +2702,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws NoSuchGroupException, SystemException {
 		Group group = findByLiveGroupId(liveGroupId);
 
-		groupPersistence.remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2729,7 +2716,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_N(companyId, name);
 
-		groupPersistence.remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2743,7 +2730,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_F(companyId, friendlyURL);
 
-		groupPersistence.remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2755,7 +2742,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	public void removeByT_A(int type, boolean active) throws SystemException {
 		for (Group group : findByT_A(type, active)) {
-			groupPersistence.remove(group);
+			remove(group);
 		}
 	}
 
@@ -2771,7 +2758,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_C_C(companyId, classNameId, classPK);
 
-		groupPersistence.remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2786,7 +2773,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_L_N(companyId, liveGroupId, name);
 
-		groupPersistence.remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2803,7 +2790,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws NoSuchGroupException, SystemException {
 		Group group = findByC_C_L_N(companyId, classNameId, liveGroupId, name);
 
-		groupPersistence.remove(group);
+		remove(group);
 	}
 
 	/**
@@ -2813,7 +2800,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	public void removeAll() throws SystemException {
 		for (Group group : findAll()) {
-			groupPersistence.remove(group);
+			remove(group);
 		}
 	}
 
@@ -5746,35 +5733,35 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			}
 		}
 
-		containsOrganization = new ContainsOrganization(this);
+		containsOrganization = new ContainsOrganization();
 
-		addOrganization = new AddOrganization(this);
-		clearOrganizations = new ClearOrganizations(this);
-		removeOrganization = new RemoveOrganization(this);
+		addOrganization = new AddOrganization();
+		clearOrganizations = new ClearOrganizations();
+		removeOrganization = new RemoveOrganization();
 
-		containsPermission = new ContainsPermission(this);
+		containsPermission = new ContainsPermission();
 
-		addPermission = new AddPermission(this);
-		clearPermissions = new ClearPermissions(this);
-		removePermission = new RemovePermission(this);
+		addPermission = new AddPermission();
+		clearPermissions = new ClearPermissions();
+		removePermission = new RemovePermission();
 
-		containsRole = new ContainsRole(this);
+		containsRole = new ContainsRole();
 
-		addRole = new AddRole(this);
-		clearRoles = new ClearRoles(this);
-		removeRole = new RemoveRole(this);
+		addRole = new AddRole();
+		clearRoles = new ClearRoles();
+		removeRole = new RemoveRole();
 
-		containsUserGroup = new ContainsUserGroup(this);
+		containsUserGroup = new ContainsUserGroup();
 
-		addUserGroup = new AddUserGroup(this);
-		clearUserGroups = new ClearUserGroups(this);
-		removeUserGroup = new RemoveUserGroup(this);
+		addUserGroup = new AddUserGroup();
+		clearUserGroups = new ClearUserGroups();
+		removeUserGroup = new RemoveUserGroup();
 
-		containsUser = new ContainsUser(this);
+		containsUser = new ContainsUser();
 
-		addUser = new AddUser(this);
-		clearUsers = new ClearUsers(this);
-		removeUser = new RemoveUser(this);
+		addUser = new AddUser();
+		clearUsers = new ClearUsers();
+		removeUser = new RemoveUser();
 	}
 
 	public void destroy() {
@@ -5977,9 +5964,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected RemoveUser removeUser;
 
 	protected class ContainsOrganization {
-		protected ContainsOrganization(GroupPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsOrganization() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSORGANIZATION,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6006,17 +5991,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class AddOrganization {
-		protected AddOrganization(GroupPersistenceImpl persistenceImpl) {
+		protected AddOrganization() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_Orgs (groupId, organizationId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long groupId, long organizationId)
 			throws SystemException {
-			if (!_persistenceImpl.containsOrganization.contains(groupId,
-						organizationId)) {
+			if (!containsOrganization.contains(groupId, organizationId)) {
 				ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
 					organizationPersistence.getListeners();
 
@@ -6049,11 +6032,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearOrganizations {
-		protected ClearOrganizations(GroupPersistenceImpl persistenceImpl) {
+		protected ClearOrganizations() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Orgs WHERE groupId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6104,17 +6086,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class RemoveOrganization {
-		protected RemoveOrganization(GroupPersistenceImpl persistenceImpl) {
+		protected RemoveOrganization() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Orgs WHERE groupId = ? AND organizationId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long groupId, long organizationId)
 			throws SystemException {
-			if (_persistenceImpl.containsOrganization.contains(groupId,
-						organizationId)) {
+			if (containsOrganization.contains(groupId, organizationId)) {
 				ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
 					organizationPersistence.getListeners();
 
@@ -6147,13 +6127,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsPermission {
-		protected ContainsPermission(GroupPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsPermission() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSPERMISSION,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6180,17 +6157,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class AddPermission {
-		protected AddPermission(GroupPersistenceImpl persistenceImpl) {
+		protected AddPermission() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_Permissions (groupId, permissionId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long groupId, long permissionId)
 			throws SystemException {
-			if (!_persistenceImpl.containsPermission.contains(groupId,
-						permissionId)) {
+			if (!containsPermission.contains(groupId, permissionId)) {
 				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
 					permissionPersistence.getListeners();
 
@@ -6223,11 +6198,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearPermissions {
-		protected ClearPermissions(GroupPersistenceImpl persistenceImpl) {
+		protected ClearPermissions() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Permissions WHERE groupId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6278,17 +6252,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class RemovePermission {
-		protected RemovePermission(GroupPersistenceImpl persistenceImpl) {
+		protected RemovePermission() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Permissions WHERE groupId = ? AND permissionId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long groupId, long permissionId)
 			throws SystemException {
-			if (_persistenceImpl.containsPermission.contains(groupId,
-						permissionId)) {
+			if (containsPermission.contains(groupId, permissionId)) {
 				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
 					permissionPersistence.getListeners();
 
@@ -6321,13 +6293,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsRole {
-		protected ContainsRole(GroupPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsRole() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSROLE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6354,15 +6323,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class AddRole {
-		protected AddRole(GroupPersistenceImpl persistenceImpl) {
+		protected AddRole() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_Roles (groupId, roleId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long groupId, long roleId) throws SystemException {
-			if (!_persistenceImpl.containsRole.contains(groupId, roleId)) {
+			if (!containsRole.contains(groupId, roleId)) {
 				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
 
 				for (ModelListener<Group> listener : listeners) {
@@ -6392,11 +6360,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearRoles {
-		protected ClearRoles(GroupPersistenceImpl persistenceImpl) {
+		protected ClearRoles() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Roles WHERE groupId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6446,16 +6413,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class RemoveRole {
-		protected RemoveRole(GroupPersistenceImpl persistenceImpl) {
+		protected RemoveRole() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Roles WHERE groupId = ? AND roleId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long groupId, long roleId)
 			throws SystemException {
-			if (_persistenceImpl.containsRole.contains(groupId, roleId)) {
+			if (containsRole.contains(groupId, roleId)) {
 				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
 
 				for (ModelListener<Group> listener : listeners) {
@@ -6485,13 +6451,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsUserGroup {
-		protected ContainsUserGroup(GroupPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsUserGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSUSERGROUP,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6518,17 +6481,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class AddUserGroup {
-		protected AddUserGroup(GroupPersistenceImpl persistenceImpl) {
+		protected AddUserGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_UserGroups (groupId, userGroupId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long groupId, long userGroupId)
 			throws SystemException {
-			if (!_persistenceImpl.containsUserGroup.contains(groupId,
-						userGroupId)) {
+			if (!containsUserGroup.contains(groupId, userGroupId)) {
 				ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
 					userGroupPersistence.getListeners();
 
@@ -6561,11 +6522,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearUserGroups {
-		protected ClearUserGroups(GroupPersistenceImpl persistenceImpl) {
+		protected ClearUserGroups() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_UserGroups WHERE groupId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6616,16 +6576,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class RemoveUserGroup {
-		protected RemoveUserGroup(GroupPersistenceImpl persistenceImpl) {
+		protected RemoveUserGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_UserGroups WHERE groupId = ? AND userGroupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long groupId, long userGroupId)
 			throws SystemException {
-			if (_persistenceImpl.containsUserGroup.contains(groupId, userGroupId)) {
+			if (containsUserGroup.contains(groupId, userGroupId)) {
 				ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
 					userGroupPersistence.getListeners();
 
@@ -6658,13 +6617,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsUser {
-		protected ContainsUser(GroupPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsUser() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSUSER,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6691,15 +6647,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class AddUser {
-		protected AddUser(GroupPersistenceImpl persistenceImpl) {
+		protected AddUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Groups (groupId, userId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long groupId, long userId) throws SystemException {
-			if (!_persistenceImpl.containsUser.contains(groupId, userId)) {
+			if (!containsUser.contains(groupId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Group> listener : listeners) {
@@ -6729,11 +6684,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearUsers {
-		protected ClearUsers(GroupPersistenceImpl persistenceImpl) {
+		protected ClearUsers() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Groups WHERE groupId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6783,16 +6737,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	protected class RemoveUser {
-		protected RemoveUser(GroupPersistenceImpl persistenceImpl) {
+		protected RemoveUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Groups WHERE groupId = ? AND userId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long groupId, long userId)
 			throws SystemException {
-			if (_persistenceImpl.containsUser.contains(groupId, userId)) {
+			if (containsUser.contains(groupId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Group> listener : listeners) {
@@ -6822,7 +6775,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private GroupPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_GROUP_ = "SELECT group_ FROM Group group_";

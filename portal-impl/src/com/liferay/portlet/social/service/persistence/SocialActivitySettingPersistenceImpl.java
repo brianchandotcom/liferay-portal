@@ -264,24 +264,11 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	 *
 	 * @param primaryKey the primary key of the social activity setting
 	 * @return the social activity setting that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity setting with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivitySetting remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param activitySettingId the primary key of the social activity setting
-	 * @return the social activity setting that was removed
-	 * @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivitySetting remove(long activitySettingId)
 		throws NoSuchActivitySettingException, SystemException {
 		Session session = null;
 
@@ -289,19 +276,18 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 			session = openSession();
 
 			SocialActivitySetting socialActivitySetting = (SocialActivitySetting)session.get(SocialActivitySettingImpl.class,
-					Long.valueOf(activitySettingId));
+					primaryKey);
 
 			if (socialActivitySetting == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						activitySettingId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchActivitySettingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					activitySettingId);
+					primaryKey);
 			}
 
-			return socialActivitySettingPersistence.remove(socialActivitySetting);
+			return remove(socialActivitySetting);
 		}
 		catch (NoSuchActivitySettingException nsee) {
 			throw nsee;
@@ -315,16 +301,16 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	/**
-	 * Removes the social activity setting from the database. Also notifies the appropriate model listeners.
+	 * Removes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param socialActivitySetting the social activity setting
+	 * @param activitySettingId the primary key of the social activity setting
 	 * @return the social activity setting that was removed
+	 * @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SocialActivitySetting remove(
-		SocialActivitySetting socialActivitySetting) throws SystemException {
-		return super.remove(socialActivitySetting);
+	public SocialActivitySetting remove(long activitySettingId)
+		throws NoSuchActivitySettingException, SystemException {
+		return remove(Long.valueOf(activitySettingId));
 	}
 
 	@Override
@@ -1667,7 +1653,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		throws SystemException {
 		for (SocialActivitySetting socialActivitySetting : findByG_A(groupId,
 				activityType)) {
-			socialActivitySettingPersistence.remove(socialActivitySetting);
+			remove(socialActivitySetting);
 		}
 	}
 
@@ -1683,7 +1669,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		throws SystemException {
 		for (SocialActivitySetting socialActivitySetting : findByG_C_A(
 				groupId, classNameId, activityType)) {
-			socialActivitySettingPersistence.remove(socialActivitySetting);
+			remove(socialActivitySetting);
 		}
 	}
 
@@ -1702,7 +1688,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		SocialActivitySetting socialActivitySetting = findByG_C_A_N(groupId,
 				classNameId, activityType, name);
 
-		socialActivitySettingPersistence.remove(socialActivitySetting);
+		remove(socialActivitySetting);
 	}
 
 	/**
@@ -1712,7 +1698,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	 */
 	public void removeAll() throws SystemException {
 		for (SocialActivitySetting socialActivitySetting : findAll()) {
-			socialActivitySettingPersistence.remove(socialActivitySetting);
+			remove(socialActivitySetting);
 		}
 	}
 

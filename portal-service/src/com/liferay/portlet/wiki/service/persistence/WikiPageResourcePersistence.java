@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.wiki.model.WikiPageResource;
@@ -349,7 +348,4 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public WikiPageResource remove(WikiPageResource wikiPageResource)
-		throws SystemException;
 }

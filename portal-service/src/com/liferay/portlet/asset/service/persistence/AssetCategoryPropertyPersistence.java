@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
@@ -605,7 +604,4 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public AssetCategoryProperty remove(
-		AssetCategoryProperty assetCategoryProperty) throws SystemException;
 }

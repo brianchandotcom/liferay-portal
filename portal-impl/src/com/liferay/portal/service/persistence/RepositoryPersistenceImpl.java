@@ -192,24 +192,11 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 *
 	 * @param primaryKey the primary key of the repository
 	 * @return the repository that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a repository with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Repository remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the repository with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param repositoryId the primary key of the repository
-	 * @return the repository that was removed
-	 * @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Repository remove(long repositoryId)
 		throws NoSuchRepositoryException, SystemException {
 		Session session = null;
 
@@ -217,18 +204,18 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			session = openSession();
 
 			Repository repository = (Repository)session.get(RepositoryImpl.class,
-					Long.valueOf(repositoryId));
+					primaryKey);
 
 			if (repository == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + repositoryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRepositoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					repositoryId);
+					primaryKey);
 			}
 
-			return repositoryPersistence.remove(repository);
+			return remove(repository);
 		}
 		catch (NoSuchRepositoryException nsee) {
 			throw nsee;
@@ -242,15 +229,16 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	}
 
 	/**
-	 * Removes the repository from the database. Also notifies the appropriate model listeners.
+	 * Removes the repository with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param repository the repository
+	 * @param repositoryId the primary key of the repository
 	 * @return the repository that was removed
+	 * @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Repository remove(Repository repository) throws SystemException {
-		return super.remove(repository);
+	public Repository remove(long repositoryId)
+		throws NoSuchRepositoryException, SystemException {
+		return remove(Long.valueOf(repositoryId));
 	}
 
 	@Override
@@ -924,7 +912,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (Repository repository : findByGroupId(groupId)) {
-			repositoryPersistence.remove(repository);
+			remove(repository);
 		}
 	}
 
@@ -935,7 +923,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	public void removeAll() throws SystemException {
 		for (Repository repository : findAll()) {
-			repositoryPersistence.remove(repository);
+			remove(repository);
 		}
 	}
 

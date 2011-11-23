@@ -235,24 +235,11 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 *
 	 * @param primaryKey the primary key of the d d m structure link
 	 * @return the d d m structure link that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m structure link with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMStructureLink remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d d m structure link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param structureLinkId the primary key of the d d m structure link
-	 * @return the d d m structure link that was removed
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStructureLink remove(long structureLinkId)
 		throws NoSuchStructureLinkException, SystemException {
 		Session session = null;
 
@@ -260,19 +247,18 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			session = openSession();
 
 			DDMStructureLink ddmStructureLink = (DDMStructureLink)session.get(DDMStructureLinkImpl.class,
-					Long.valueOf(structureLinkId));
+					primaryKey);
 
 			if (ddmStructureLink == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						structureLinkId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchStructureLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					structureLinkId);
+					primaryKey);
 			}
 
-			return ddmStructureLinkPersistence.remove(ddmStructureLink);
+			return remove(ddmStructureLink);
 		}
 		catch (NoSuchStructureLinkException nsee) {
 			throw nsee;
@@ -286,16 +272,16 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	}
 
 	/**
-	 * Removes the d d m structure link from the database. Also notifies the appropriate model listeners.
+	 * Removes the d d m structure link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddmStructureLink the d d m structure link
+	 * @param structureLinkId the primary key of the d d m structure link
 	 * @return the d d m structure link that was removed
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DDMStructureLink remove(DDMStructureLink ddmStructureLink)
-		throws SystemException {
-		return super.remove(ddmStructureLink);
+	public DDMStructureLink remove(long structureLinkId)
+		throws NoSuchStructureLinkException, SystemException {
+		return remove(Long.valueOf(structureLinkId));
 	}
 
 	@Override
@@ -1487,7 +1473,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	public void removeByClassNameId(long classNameId) throws SystemException {
 		for (DDMStructureLink ddmStructureLink : findByClassNameId(classNameId)) {
-			ddmStructureLinkPersistence.remove(ddmStructureLink);
+			remove(ddmStructureLink);
 		}
 	}
 
@@ -1501,7 +1487,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		throws NoSuchStructureLinkException, SystemException {
 		DDMStructureLink ddmStructureLink = findByClassPK(classPK);
 
-		ddmStructureLinkPersistence.remove(ddmStructureLink);
+		remove(ddmStructureLink);
 	}
 
 	/**
@@ -1512,7 +1498,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	public void removeByStructureId(long structureId) throws SystemException {
 		for (DDMStructureLink ddmStructureLink : findByStructureId(structureId)) {
-			ddmStructureLinkPersistence.remove(ddmStructureLink);
+			remove(ddmStructureLink);
 		}
 	}
 
@@ -1523,7 +1509,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	public void removeAll() throws SystemException {
 		for (DDMStructureLink ddmStructureLink : findAll()) {
-			ddmStructureLinkPersistence.remove(ddmStructureLink);
+			remove(ddmStructureLink);
 		}
 	}
 

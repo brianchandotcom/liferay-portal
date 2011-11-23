@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.journal.model.JournalFeed;
@@ -603,7 +602,4 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public JournalFeed remove(JournalFeed journalFeed)
-		throws SystemException;
 }

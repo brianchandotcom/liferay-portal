@@ -242,24 +242,11 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	 *
 	 * @param primaryKey the primary key of the layout set prototype
 	 * @return the layout set prototype that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a layout set prototype with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutSetPrototype remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the layout set prototype
-	 * @return the layout set prototype that was removed
-	 * @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutSetPrototype remove(long layoutSetPrototypeId)
 		throws NoSuchLayoutSetPrototypeException, SystemException {
 		Session session = null;
 
@@ -267,19 +254,18 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			session = openSession();
 
 			LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)session.get(LayoutSetPrototypeImpl.class,
-					Long.valueOf(layoutSetPrototypeId));
+					primaryKey);
 
 			if (layoutSetPrototype == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						layoutSetPrototypeId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLayoutSetPrototypeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					layoutSetPrototypeId);
+					primaryKey);
 			}
 
-			return layoutSetPrototypePersistence.remove(layoutSetPrototype);
+			return remove(layoutSetPrototype);
 		}
 		catch (NoSuchLayoutSetPrototypeException nsee) {
 			throw nsee;
@@ -293,16 +279,16 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	}
 
 	/**
-	 * Removes the layout set prototype from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutSetPrototype the layout set prototype
+	 * @param layoutSetPrototypeId the primary key of the layout set prototype
 	 * @return the layout set prototype that was removed
+	 * @throws com.liferay.portal.NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public LayoutSetPrototype remove(LayoutSetPrototype layoutSetPrototype)
-		throws SystemException {
-		return super.remove(layoutSetPrototype);
+	public LayoutSetPrototype remove(long layoutSetPrototypeId)
+		throws NoSuchLayoutSetPrototypeException, SystemException {
+		return remove(Long.valueOf(layoutSetPrototypeId));
 	}
 
 	@Override
@@ -2677,7 +2663,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (LayoutSetPrototype layoutSetPrototype : findByUuid(uuid)) {
-			layoutSetPrototypePersistence.remove(layoutSetPrototype);
+			remove(layoutSetPrototype);
 		}
 	}
 
@@ -2689,7 +2675,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (LayoutSetPrototype layoutSetPrototype : findByCompanyId(companyId)) {
-			layoutSetPrototypePersistence.remove(layoutSetPrototype);
+			remove(layoutSetPrototype);
 		}
 	}
 
@@ -2703,7 +2689,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public void removeByC_A(long companyId, boolean active)
 		throws SystemException {
 		for (LayoutSetPrototype layoutSetPrototype : findByC_A(companyId, active)) {
-			layoutSetPrototypePersistence.remove(layoutSetPrototype);
+			remove(layoutSetPrototype);
 		}
 	}
 
@@ -2714,7 +2700,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	 */
 	public void removeAll() throws SystemException {
 		for (LayoutSetPrototype layoutSetPrototype : findAll()) {
-			layoutSetPrototypePersistence.remove(layoutSetPrototype);
+			remove(layoutSetPrototype);
 		}
 	}
 

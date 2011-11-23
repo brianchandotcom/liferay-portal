@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
@@ -886,7 +885,4 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 	public void setSCProductVersions(long pk,
 		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public SCFrameworkVersion remove(SCFrameworkVersion scFrameworkVersion)
-		throws SystemException;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
@@ -762,6 +761,4 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	public void setSCProductEntries(long pk,
 		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public SCLicense remove(SCLicense scLicense) throws SystemException;
 }

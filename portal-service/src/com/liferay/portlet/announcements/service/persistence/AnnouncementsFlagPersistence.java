@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.announcements.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
@@ -353,7 +352,4 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public AnnouncementsFlag remove(AnnouncementsFlag announcementsFlag)
-		throws SystemException;
 }

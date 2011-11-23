@@ -237,24 +237,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param primaryKey the primary key of the m d r rule group
 	 * @return the m d r rule group that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a m d r rule group with the primary key could not be found
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the m d r rule group with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ruleGroupId the primary key of the m d r rule group
-	 * @return the m d r rule group that was removed
-	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MDRRuleGroup remove(long ruleGroupId)
 		throws NoSuchRuleGroupException, SystemException {
 		Session session = null;
 
@@ -262,18 +249,18 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			session = openSession();
 
 			MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)session.get(MDRRuleGroupImpl.class,
-					Long.valueOf(ruleGroupId));
+					primaryKey);
 
 			if (mdrRuleGroup == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ruleGroupId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRuleGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					ruleGroupId);
+					primaryKey);
 			}
 
-			return mdrRuleGroupPersistence.remove(mdrRuleGroup);
+			return remove(mdrRuleGroup);
 		}
 		catch (NoSuchRuleGroupException nsee) {
 			throw nsee;
@@ -287,16 +274,16 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	}
 
 	/**
-	 * Removes the m d r rule group from the database. Also notifies the appropriate model listeners.
+	 * Removes the m d r rule group with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mdrRuleGroup the m d r rule group
+	 * @param ruleGroupId the primary key of the m d r rule group
 	 * @return the m d r rule group that was removed
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MDRRuleGroup remove(MDRRuleGroup mdrRuleGroup)
-		throws SystemException {
-		return super.remove(mdrRuleGroup);
+	public MDRRuleGroup remove(long ruleGroupId)
+		throws NoSuchRuleGroupException, SystemException {
+		return remove(Long.valueOf(ruleGroupId));
 	}
 
 	@Override
@@ -1833,7 +1820,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (MDRRuleGroup mdrRuleGroup : findByUuid(uuid)) {
-			mdrRuleGroupPersistence.remove(mdrRuleGroup);
+			remove(mdrRuleGroup);
 		}
 	}
 
@@ -1848,7 +1835,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		throws NoSuchRuleGroupException, SystemException {
 		MDRRuleGroup mdrRuleGroup = findByUUID_G(uuid, groupId);
 
-		mdrRuleGroupPersistence.remove(mdrRuleGroup);
+		remove(mdrRuleGroup);
 	}
 
 	/**
@@ -1859,7 +1846,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (MDRRuleGroup mdrRuleGroup : findByGroupId(groupId)) {
-			mdrRuleGroupPersistence.remove(mdrRuleGroup);
+			remove(mdrRuleGroup);
 		}
 	}
 
@@ -1870,7 +1857,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 */
 	public void removeAll() throws SystemException {
 		for (MDRRuleGroup mdrRuleGroup : findAll()) {
-			mdrRuleGroupPersistence.remove(mdrRuleGroup);
+			remove(mdrRuleGroup);
 		}
 	}
 

@@ -262,24 +262,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param primaryKey the primary key of the organization
 	 * @return the organization that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a organization with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the organization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param organizationId the primary key of the organization
-	 * @return the organization that was removed
-	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Organization remove(long organizationId)
 		throws NoSuchOrganizationException, SystemException {
 		Session session = null;
 
@@ -287,19 +274,18 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			session = openSession();
 
 			Organization organization = (Organization)session.get(OrganizationImpl.class,
-					Long.valueOf(organizationId));
+					primaryKey);
 
 			if (organization == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						organizationId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchOrganizationException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					organizationId);
+					primaryKey);
 			}
 
-			return organizationPersistence.remove(organization);
+			return remove(organization);
 		}
 		catch (NoSuchOrganizationException nsee) {
 			throw nsee;
@@ -313,16 +299,16 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	/**
-	 * Removes the organization from the database. Also notifies the appropriate model listeners.
+	 * Removes the organization with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param organization the organization
+	 * @param organizationId the primary key of the organization
 	 * @return the organization that was removed
+	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Organization remove(Organization organization)
-		throws SystemException {
-		return super.remove(organization);
+	public Organization remove(long organizationId)
+		throws NoSuchOrganizationException, SystemException {
+		return remove(Long.valueOf(organizationId));
 	}
 
 	@Override
@@ -2939,7 +2925,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Organization organization : findByCompanyId(companyId)) {
-			organizationPersistence.remove(organization);
+			remove(organization);
 		}
 	}
 
@@ -2951,7 +2937,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	public void removeByLocations(long companyId) throws SystemException {
 		for (Organization organization : findByLocations(companyId)) {
-			organizationPersistence.remove(organization);
+			remove(organization);
 		}
 	}
 
@@ -2966,7 +2952,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		throws SystemException {
 		for (Organization organization : findByC_P(companyId,
 				parentOrganizationId)) {
-			organizationPersistence.remove(organization);
+			remove(organization);
 		}
 	}
 
@@ -2981,7 +2967,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		throws NoSuchOrganizationException, SystemException {
 		Organization organization = findByC_N(companyId, name);
 
-		organizationPersistence.remove(organization);
+		remove(organization);
 	}
 
 	/**
@@ -2991,7 +2977,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	public void removeAll() throws SystemException {
 		for (Organization organization : findAll()) {
-			organizationPersistence.remove(organization);
+			remove(organization);
 		}
 	}
 
@@ -4366,17 +4352,17 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		containsGroup = new ContainsGroup(this);
+		containsGroup = new ContainsGroup();
 
-		addGroup = new AddGroup(this);
-		clearGroups = new ClearGroups(this);
-		removeGroup = new RemoveGroup(this);
+		addGroup = new AddGroup();
+		clearGroups = new ClearGroups();
+		removeGroup = new RemoveGroup();
 
-		containsUser = new ContainsUser(this);
+		containsUser = new ContainsUser();
 
-		addUser = new AddUser(this);
-		clearUsers = new ClearUsers(this);
-		removeUser = new RemoveUser(this);
+		addUser = new AddUser();
+		clearUsers = new ClearUsers();
+		removeUser = new RemoveUser();
 	}
 
 	public void destroy() {
@@ -4529,9 +4515,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	protected RemoveUser removeUser;
 
 	protected class ContainsGroup {
-		protected ContainsGroup(OrganizationPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSGROUP,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -4558,16 +4542,15 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	protected class AddGroup {
-		protected AddGroup(OrganizationPersistenceImpl persistenceImpl) {
+		protected AddGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_Orgs (organizationId, groupId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long organizationId, long groupId)
 			throws SystemException {
-			if (!_persistenceImpl.containsGroup.contains(organizationId, groupId)) {
+			if (!containsGroup.contains(organizationId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<Organization> listener : listeners) {
@@ -4597,11 +4580,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private OrganizationPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearGroups {
-		protected ClearGroups(OrganizationPersistenceImpl persistenceImpl) {
+		protected ClearGroups() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Orgs WHERE organizationId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -4651,16 +4633,15 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	protected class RemoveGroup {
-		protected RemoveGroup(OrganizationPersistenceImpl persistenceImpl) {
+		protected RemoveGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Orgs WHERE organizationId = ? AND groupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long organizationId, long groupId)
 			throws SystemException {
-			if (_persistenceImpl.containsGroup.contains(organizationId, groupId)) {
+			if (containsGroup.contains(organizationId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<Organization> listener : listeners) {
@@ -4690,13 +4671,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private OrganizationPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsUser {
-		protected ContainsUser(OrganizationPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsUser() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSUSER,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -4723,16 +4701,15 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	protected class AddUser {
-		protected AddUser(OrganizationPersistenceImpl persistenceImpl) {
+		protected AddUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Orgs (organizationId, userId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long organizationId, long userId)
 			throws SystemException {
-			if (!_persistenceImpl.containsUser.contains(organizationId, userId)) {
+			if (!containsUser.contains(organizationId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Organization> listener : listeners) {
@@ -4762,11 +4739,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private OrganizationPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearUsers {
-		protected ClearUsers(OrganizationPersistenceImpl persistenceImpl) {
+		protected ClearUsers() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Orgs WHERE organizationId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -4816,16 +4792,15 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	protected class RemoveUser {
-		protected RemoveUser(OrganizationPersistenceImpl persistenceImpl) {
+		protected RemoveUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Orgs WHERE organizationId = ? AND userId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long organizationId, long userId)
 			throws SystemException {
-			if (_persistenceImpl.containsUser.contains(organizationId, userId)) {
+			if (containsUser.contains(organizationId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Organization> listener : listeners) {
@@ -4855,7 +4830,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private OrganizationPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_ORGANIZATION = "SELECT organization FROM Organization organization";

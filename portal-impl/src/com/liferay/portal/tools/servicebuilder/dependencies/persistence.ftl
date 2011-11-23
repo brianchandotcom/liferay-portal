@@ -63,6 +63,4 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 		</#if>
 	</#list>
 
-	public ${entity.name} remove(${entity.name} ${entity.varName}) throws SystemException;
-
 }

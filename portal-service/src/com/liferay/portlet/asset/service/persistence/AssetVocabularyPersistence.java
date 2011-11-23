@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -731,7 +730,4 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public AssetVocabulary remove(AssetVocabulary assetVocabulary)
-		throws SystemException;
 }

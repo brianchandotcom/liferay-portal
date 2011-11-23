@@ -308,24 +308,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param primaryKey the primary key of the d d m structure
 	 * @return the d d m structure that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m structure with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMStructure remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param structureId the primary key of the d d m structure
-	 * @return the d d m structure that was removed
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStructure remove(long structureId)
 		throws NoSuchStructureException, SystemException {
 		Session session = null;
 
@@ -333,18 +320,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			session = openSession();
 
 			DDMStructure ddmStructure = (DDMStructure)session.get(DDMStructureImpl.class,
-					Long.valueOf(structureId));
+					primaryKey);
 
 			if (ddmStructure == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + structureId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchStructureException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					structureId);
+					primaryKey);
 			}
 
-			return ddmStructurePersistence.remove(ddmStructure);
+			return remove(ddmStructure);
 		}
 		catch (NoSuchStructureException nsee) {
 			throw nsee;
@@ -358,16 +345,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes the d d m structure from the database. Also notifies the appropriate model listeners.
+	 * Removes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddmStructure the d d m structure
+	 * @param structureId the primary key of the d d m structure
 	 * @return the d d m structure that was removed
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DDMStructure remove(DDMStructure ddmStructure)
-		throws SystemException {
-		return super.remove(ddmStructure);
+	public DDMStructure remove(long structureId)
+		throws NoSuchStructureException, SystemException {
+		return remove(Long.valueOf(structureId));
 	}
 
 	@Override
@@ -3286,7 +3273,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DDMStructure ddmStructure : findByUuid(uuid)) {
-			ddmStructurePersistence.remove(ddmStructure);
+			remove(ddmStructure);
 		}
 	}
 
@@ -3301,7 +3288,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		throws NoSuchStructureException, SystemException {
 		DDMStructure ddmStructure = findByUUID_G(uuid, groupId);
 
-		ddmStructurePersistence.remove(ddmStructure);
+		remove(ddmStructure);
 	}
 
 	/**
@@ -3312,7 +3299,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (DDMStructure ddmStructure : findByGroupId(groupId)) {
-			ddmStructurePersistence.remove(ddmStructure);
+			remove(ddmStructure);
 		}
 	}
 
@@ -3324,7 +3311,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public void removeByClassNameId(long classNameId) throws SystemException {
 		for (DDMStructure ddmStructure : findByClassNameId(classNameId)) {
-			ddmStructurePersistence.remove(ddmStructure);
+			remove(ddmStructure);
 		}
 	}
 
@@ -3339,7 +3326,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		throws NoSuchStructureException, SystemException {
 		DDMStructure ddmStructure = findByG_S(groupId, structureKey);
 
-		ddmStructurePersistence.remove(ddmStructure);
+		remove(ddmStructure);
 	}
 
 	/**
@@ -3353,7 +3340,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public void removeByG_N_D(long groupId, String name, String description)
 		throws SystemException {
 		for (DDMStructure ddmStructure : findByG_N_D(groupId, name, description)) {
-			ddmStructurePersistence.remove(ddmStructure);
+			remove(ddmStructure);
 		}
 	}
 
@@ -3364,7 +3351,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	public void removeAll() throws SystemException {
 		for (DDMStructure ddmStructure : findAll()) {
-			ddmStructurePersistence.remove(ddmStructure);
+			remove(ddmStructure);
 		}
 	}
 

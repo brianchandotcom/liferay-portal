@@ -754,24 +754,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 *
 	 * @param primaryKey the primary key of the journal article
 	 * @return the journal article that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal article with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticle remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param id the primary key of the journal article
-	 * @return the journal article that was removed
-	 * @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticle remove(long id)
 		throws NoSuchArticleException, SystemException {
 		Session session = null;
 
@@ -779,18 +766,18 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			session = openSession();
 
 			JournalArticle journalArticle = (JournalArticle)session.get(JournalArticleImpl.class,
-					Long.valueOf(id));
+					primaryKey);
 
 			if (journalArticle == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchArticleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					id);
+					primaryKey);
 			}
 
-			return journalArticlePersistence.remove(journalArticle);
+			return remove(journalArticle);
 		}
 		catch (NoSuchArticleException nsee) {
 			throw nsee;
@@ -804,16 +791,16 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	}
 
 	/**
-	 * Removes the journal article from the database. Also notifies the appropriate model listeners.
+	 * Removes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param journalArticle the journal article
+	 * @param id the primary key of the journal article
 	 * @return the journal article that was removed
+	 * @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public JournalArticle remove(JournalArticle journalArticle)
-		throws SystemException {
-		return super.remove(journalArticle);
+	public JournalArticle remove(long id)
+		throws NoSuchArticleException, SystemException {
+		return remove(Long.valueOf(id));
 	}
 
 	@Override
@@ -14067,7 +14054,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (JournalArticle journalArticle : findByUuid(uuid)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14082,7 +14069,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws NoSuchArticleException, SystemException {
 		JournalArticle journalArticle = findByUUID_G(uuid, groupId);
 
-		journalArticlePersistence.remove(journalArticle);
+		remove(journalArticle);
 	}
 
 	/**
@@ -14095,7 +14082,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByResourcePrimKey(
 				resourcePrimKey)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14107,7 +14094,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (JournalArticle journalArticle : findByGroupId(groupId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14119,7 +14106,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (JournalArticle journalArticle : findByCompanyId(companyId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14132,7 +14119,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeBySmallImageId(long smallImageId)
 		throws SystemException {
 		for (JournalArticle journalArticle : findBySmallImageId(smallImageId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14146,7 +14133,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByR_ST(long resourcePrimKey, int status)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByR_ST(resourcePrimKey, status)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14160,7 +14147,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByG_A(long groupId, String articleId)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_A(groupId, articleId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14174,7 +14161,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByG_UT(long groupId, String urlTitle)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_UT(groupId, urlTitle)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14188,7 +14175,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByG_S(long groupId, String structureId)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_S(groupId, structureId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14202,7 +14189,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByG_T(long groupId, String templateId)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_T(groupId, templateId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14216,7 +14203,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByG_L(long groupId, String layoutUuid)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_L(groupId, layoutUuid)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14230,7 +14217,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByG_ST(long groupId, int status)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_ST(groupId, status)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14244,7 +14231,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByC_V(long companyId, double version)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByC_V(companyId, version)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14258,7 +14245,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public void removeByC_ST(long companyId, int status)
 		throws SystemException {
 		for (JournalArticle journalArticle : findByC_ST(companyId, status)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14274,7 +14261,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_C_C(groupId, classNameId,
 				classPK)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14291,7 +14278,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		JournalArticle journalArticle = findByG_C_S(groupId, classNameId,
 				structureId);
 
-		journalArticlePersistence.remove(journalArticle);
+		remove(journalArticle);
 	}
 
 	/**
@@ -14306,7 +14293,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_C_T(groupId, classNameId,
 				templateId)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14322,7 +14309,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_C_L(groupId, classNameId,
 				layoutUuid)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14338,7 +14325,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws NoSuchArticleException, SystemException {
 		JournalArticle journalArticle = findByG_A_V(groupId, articleId, version);
 
-		journalArticlePersistence.remove(journalArticle);
+		remove(journalArticle);
 	}
 
 	/**
@@ -14353,7 +14340,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_A_ST(groupId, articleId,
 				status)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14369,7 +14356,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByG_UT_ST(groupId, urlTitle,
 				status)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14385,7 +14372,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		throws SystemException {
 		for (JournalArticle journalArticle : findByC_V_ST(companyId, version,
 				status)) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 
@@ -14396,7 +14383,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	public void removeAll() throws SystemException {
 		for (JournalArticle journalArticle : findAll()) {
-			journalArticlePersistence.remove(journalArticle);
+			remove(journalArticle);
 		}
 	}
 

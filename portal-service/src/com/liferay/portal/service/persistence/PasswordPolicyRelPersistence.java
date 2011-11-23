@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordPolicyRel;
 
 /**
@@ -416,7 +415,4 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public PasswordPolicyRel remove(PasswordPolicyRel passwordPolicyRel)
-		throws SystemException;
 }

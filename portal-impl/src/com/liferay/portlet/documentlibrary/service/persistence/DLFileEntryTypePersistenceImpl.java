@@ -281,24 +281,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 *
 	 * @param primaryKey the primary key of the document library file entry type
 	 * @return the document library file entry type that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry type with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileEntryType remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param fileEntryTypeId the primary key of the document library file entry type
-	 * @return the document library file entry type that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileEntryType remove(long fileEntryTypeId)
 		throws NoSuchFileEntryTypeException, SystemException {
 		Session session = null;
 
@@ -306,19 +293,18 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			session = openSession();
 
 			DLFileEntryType dlFileEntryType = (DLFileEntryType)session.get(DLFileEntryTypeImpl.class,
-					Long.valueOf(fileEntryTypeId));
+					primaryKey);
 
 			if (dlFileEntryType == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						fileEntryTypeId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFileEntryTypeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileEntryTypeId);
+					primaryKey);
 			}
 
-			return dlFileEntryTypePersistence.remove(dlFileEntryType);
+			return remove(dlFileEntryType);
 		}
 		catch (NoSuchFileEntryTypeException nsee) {
 			throw nsee;
@@ -332,16 +318,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	/**
-	 * Removes the document library file entry type from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileEntryType the document library file entry type
+	 * @param fileEntryTypeId the primary key of the document library file entry type
 	 * @return the document library file entry type that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFileEntryType remove(DLFileEntryType dlFileEntryType)
-		throws SystemException {
-		return super.remove(dlFileEntryType);
+	public DLFileEntryType remove(long fileEntryTypeId)
+		throws NoSuchFileEntryTypeException, SystemException {
+		return remove(Long.valueOf(fileEntryTypeId));
 	}
 
 	@Override
@@ -2361,7 +2347,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DLFileEntryType dlFileEntryType : findByUuid(uuid)) {
-			dlFileEntryTypePersistence.remove(dlFileEntryType);
+			remove(dlFileEntryType);
 		}
 	}
 
@@ -2376,7 +2362,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		throws NoSuchFileEntryTypeException, SystemException {
 		DLFileEntryType dlFileEntryType = findByUUID_G(uuid, groupId);
 
-		dlFileEntryTypePersistence.remove(dlFileEntryType);
+		remove(dlFileEntryType);
 	}
 
 	/**
@@ -2387,7 +2373,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (DLFileEntryType dlFileEntryType : findByGroupId(groupId)) {
-			dlFileEntryTypePersistence.remove(dlFileEntryType);
+			remove(dlFileEntryType);
 		}
 	}
 
@@ -2402,7 +2388,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		throws NoSuchFileEntryTypeException, SystemException {
 		DLFileEntryType dlFileEntryType = findByG_N(groupId, name);
 
-		dlFileEntryTypePersistence.remove(dlFileEntryType);
+		remove(dlFileEntryType);
 	}
 
 	/**
@@ -2412,7 +2398,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFileEntryType dlFileEntryType : findAll()) {
-			dlFileEntryTypePersistence.remove(dlFileEntryType);
+			remove(dlFileEntryType);
 		}
 	}
 
@@ -3882,17 +3868,17 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			}
 		}
 
-		containsDLFolder = new ContainsDLFolder(this);
+		containsDLFolder = new ContainsDLFolder();
 
-		addDLFolder = new AddDLFolder(this);
-		clearDLFolders = new ClearDLFolders(this);
-		removeDLFolder = new RemoveDLFolder(this);
+		addDLFolder = new AddDLFolder();
+		clearDLFolders = new ClearDLFolders();
+		removeDLFolder = new RemoveDLFolder();
 
-		containsDDMStructure = new ContainsDDMStructure(this);
+		containsDDMStructure = new ContainsDDMStructure();
 
-		addDDMStructure = new AddDDMStructure(this);
-		clearDDMStructures = new ClearDDMStructures(this);
-		removeDDMStructure = new RemoveDDMStructure(this);
+		addDDMStructure = new AddDDMStructure();
+		clearDDMStructures = new ClearDDMStructures();
+		removeDDMStructure = new RemoveDDMStructure();
 	}
 
 	public void destroy() {
@@ -3939,10 +3925,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	protected RemoveDDMStructure removeDDMStructure;
 
 	protected class ContainsDLFolder {
-		protected ContainsDLFolder(
-			DLFileEntryTypePersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsDLFolder() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSDLFOLDER,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -3969,17 +3952,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	protected class AddDLFolder {
-		protected AddDLFolder(DLFileEntryTypePersistenceImpl persistenceImpl) {
+		protected AddDLFolder() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO DLFileEntryTypes_DLFolders (fileEntryTypeId, folderId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long fileEntryTypeId, long folderId)
 			throws SystemException {
-			if (!_persistenceImpl.containsDLFolder.contains(fileEntryTypeId,
-						folderId)) {
+			if (!containsDLFolder.contains(fileEntryTypeId, folderId)) {
 				ModelListener<com.liferay.portlet.documentlibrary.model.DLFolder>[] dlFolderListeners =
 					dlFolderPersistence.getListeners();
 
@@ -4012,11 +3993,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private DLFileEntryTypePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearDLFolders {
-		protected ClearDLFolders(DLFileEntryTypePersistenceImpl persistenceImpl) {
+		protected ClearDLFolders() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM DLFileEntryTypes_DLFolders WHERE fileEntryTypeId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -4067,17 +4047,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	protected class RemoveDLFolder {
-		protected RemoveDLFolder(DLFileEntryTypePersistenceImpl persistenceImpl) {
+		protected RemoveDLFolder() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM DLFileEntryTypes_DLFolders WHERE fileEntryTypeId = ? AND folderId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long fileEntryTypeId, long folderId)
 			throws SystemException {
-			if (_persistenceImpl.containsDLFolder.contains(fileEntryTypeId,
-						folderId)) {
+			if (containsDLFolder.contains(fileEntryTypeId, folderId)) {
 				ModelListener<com.liferay.portlet.documentlibrary.model.DLFolder>[] dlFolderListeners =
 					dlFolderPersistence.getListeners();
 
@@ -4110,14 +4088,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private DLFileEntryTypePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsDDMStructure {
-		protected ContainsDDMStructure(
-			DLFileEntryTypePersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsDDMStructure() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSDDMSTRUCTURE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -4144,18 +4118,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	protected class AddDDMStructure {
-		protected AddDDMStructure(
-			DLFileEntryTypePersistenceImpl persistenceImpl) {
+		protected AddDDMStructure() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO DLFileEntryTypes_DDMStructures (fileEntryTypeId, structureId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long fileEntryTypeId, long structureId)
 			throws SystemException {
-			if (!_persistenceImpl.containsDDMStructure.contains(
-						fileEntryTypeId, structureId)) {
+			if (!containsDDMStructure.contains(fileEntryTypeId, structureId)) {
 				ModelListener<com.liferay.portlet.dynamicdatamapping.model.DDMStructure>[] ddmStructureListeners =
 					ddmStructurePersistence.getListeners();
 
@@ -4188,12 +4159,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private DLFileEntryTypePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearDDMStructures {
-		protected ClearDDMStructures(
-			DLFileEntryTypePersistenceImpl persistenceImpl) {
+		protected ClearDDMStructures() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM DLFileEntryTypes_DDMStructures WHERE fileEntryTypeId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -4245,18 +4214,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	protected class RemoveDDMStructure {
-		protected RemoveDDMStructure(
-			DLFileEntryTypePersistenceImpl persistenceImpl) {
+		protected RemoveDDMStructure() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM DLFileEntryTypes_DDMStructures WHERE fileEntryTypeId = ? AND structureId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long fileEntryTypeId, long structureId)
 			throws SystemException {
-			if (_persistenceImpl.containsDDMStructure.contains(
-						fileEntryTypeId, structureId)) {
+			if (containsDDMStructure.contains(fileEntryTypeId, structureId)) {
 				ModelListener<com.liferay.portlet.dynamicdatamapping.model.DDMStructure>[] ddmStructureListeners =
 					ddmStructurePersistence.getListeners();
 
@@ -4289,7 +4255,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private DLFileEntryTypePersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType";

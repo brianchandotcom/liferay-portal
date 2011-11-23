@@ -222,24 +222,11 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 *
 	 * @param primaryKey the primary key of the s c product version
 	 * @return the s c product version that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a s c product version with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCProductVersion remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param productVersionId the primary key of the s c product version
-	 * @return the s c product version that was removed
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductVersion remove(long productVersionId)
 		throws NoSuchProductVersionException, SystemException {
 		Session session = null;
 
@@ -247,19 +234,18 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			session = openSession();
 
 			SCProductVersion scProductVersion = (SCProductVersion)session.get(SCProductVersionImpl.class,
-					Long.valueOf(productVersionId));
+					primaryKey);
 
 			if (scProductVersion == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						productVersionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchProductVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					productVersionId);
+					primaryKey);
 			}
 
-			return scProductVersionPersistence.remove(scProductVersion);
+			return remove(scProductVersion);
 		}
 		catch (NoSuchProductVersionException nsee) {
 			throw nsee;
@@ -273,16 +259,16 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	}
 
 	/**
-	 * Removes the s c product version from the database. Also notifies the appropriate model listeners.
+	 * Removes the s c product version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param scProductVersion the s c product version
+	 * @param productVersionId the primary key of the s c product version
 	 * @return the s c product version that was removed
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SCProductVersion remove(SCProductVersion scProductVersion)
-		throws SystemException {
-		return super.remove(scProductVersion);
+	public SCProductVersion remove(long productVersionId)
+		throws NoSuchProductVersionException, SystemException {
+		return remove(Long.valueOf(productVersionId));
 	}
 
 	@Override
@@ -1163,7 +1149,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		throws SystemException {
 		for (SCProductVersion scProductVersion : findByProductEntryId(
 				productEntryId)) {
-			scProductVersionPersistence.remove(scProductVersion);
+			remove(scProductVersion);
 		}
 	}
 
@@ -1177,7 +1163,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		throws NoSuchProductVersionException, SystemException {
 		SCProductVersion scProductVersion = findByDirectDownloadURL(directDownloadURL);
 
-		scProductVersionPersistence.remove(scProductVersion);
+		remove(scProductVersion);
 	}
 
 	/**
@@ -1187,7 +1173,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	 */
 	public void removeAll() throws SystemException {
 		for (SCProductVersion scProductVersion : findAll()) {
-			scProductVersionPersistence.remove(scProductVersion);
+			remove(scProductVersion);
 		}
 	}
 
@@ -1856,11 +1842,11 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			}
 		}
 
-		containsSCFrameworkVersion = new ContainsSCFrameworkVersion(this);
+		containsSCFrameworkVersion = new ContainsSCFrameworkVersion();
 
-		addSCFrameworkVersion = new AddSCFrameworkVersion(this);
-		clearSCFrameworkVersions = new ClearSCFrameworkVersions(this);
-		removeSCFrameworkVersion = new RemoveSCFrameworkVersion(this);
+		addSCFrameworkVersion = new AddSCFrameworkVersion();
+		clearSCFrameworkVersions = new ClearSCFrameworkVersions();
+		removeSCFrameworkVersion = new RemoveSCFrameworkVersion();
 	}
 
 	public void destroy() {
@@ -1889,10 +1875,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	protected RemoveSCFrameworkVersion removeSCFrameworkVersion;
 
 	protected class ContainsSCFrameworkVersion {
-		protected ContainsSCFrameworkVersion(
-			SCProductVersionPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsSCFrameworkVersion() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSSCFRAMEWORKVERSION,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -1920,18 +1903,16 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	}
 
 	protected class AddSCFrameworkVersion {
-		protected AddSCFrameworkVersion(
-			SCProductVersionPersistenceImpl persistenceImpl) {
+		protected AddSCFrameworkVersion() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO SCFrameworkVersi_SCProductVers (productVersionId, frameworkVersionId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long productVersionId, long frameworkVersionId)
 			throws SystemException {
-			if (!_persistenceImpl.containsSCFrameworkVersion.contains(
-						productVersionId, frameworkVersionId)) {
+			if (!containsSCFrameworkVersion.contains(productVersionId,
+						frameworkVersionId)) {
 				ModelListener<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion>[] scFrameworkVersionListeners =
 					scFrameworkVersionPersistence.getListeners();
 
@@ -1964,12 +1945,10 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private SCProductVersionPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearSCFrameworkVersions {
-		protected ClearSCFrameworkVersions(
-			SCProductVersionPersistenceImpl persistenceImpl) {
+		protected ClearSCFrameworkVersions() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM SCFrameworkVersi_SCProductVers WHERE productVersionId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -2023,18 +2002,16 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	}
 
 	protected class RemoveSCFrameworkVersion {
-		protected RemoveSCFrameworkVersion(
-			SCProductVersionPersistenceImpl persistenceImpl) {
+		protected RemoveSCFrameworkVersion() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM SCFrameworkVersi_SCProductVers WHERE productVersionId = ? AND frameworkVersionId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long productVersionId, long frameworkVersionId)
 			throws SystemException {
-			if (_persistenceImpl.containsSCFrameworkVersion.contains(
-						productVersionId, frameworkVersionId)) {
+			if (containsSCFrameworkVersion.contains(productVersionId,
+						frameworkVersionId)) {
 				ModelListener<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion>[] scFrameworkVersionListeners =
 					scFrameworkVersionPersistence.getListeners();
 
@@ -2067,7 +2044,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private SCProductVersionPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_SCPRODUCTVERSION = "SELECT scProductVersion FROM SCProductVersion scProductVersion";

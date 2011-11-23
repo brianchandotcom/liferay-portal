@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
@@ -468,7 +467,4 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DDMStructureLink remove(DDMStructureLink ddmStructureLink)
-		throws SystemException;
 }

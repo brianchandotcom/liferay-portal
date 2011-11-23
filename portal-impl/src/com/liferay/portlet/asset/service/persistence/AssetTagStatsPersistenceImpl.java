@@ -236,24 +236,11 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 *
 	 * @param primaryKey the primary key of the asset tag stats
 	 * @return the asset tag stats that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a asset tag stats with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagStats remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the asset tag stats with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param tagStatsId the primary key of the asset tag stats
-	 * @return the asset tag stats that was removed
-	 * @throws com.liferay.portlet.asset.NoSuchTagStatsException if a asset tag stats with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagStats remove(long tagStatsId)
 		throws NoSuchTagStatsException, SystemException {
 		Session session = null;
 
@@ -261,18 +248,18 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			session = openSession();
 
 			AssetTagStats assetTagStats = (AssetTagStats)session.get(AssetTagStatsImpl.class,
-					Long.valueOf(tagStatsId));
+					primaryKey);
 
 			if (assetTagStats == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tagStatsId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchTagStatsException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					tagStatsId);
+					primaryKey);
 			}
 
-			return assetTagStatsPersistence.remove(assetTagStats);
+			return remove(assetTagStats);
 		}
 		catch (NoSuchTagStatsException nsee) {
 			throw nsee;
@@ -286,16 +273,16 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	}
 
 	/**
-	 * Removes the asset tag stats from the database. Also notifies the appropriate model listeners.
+	 * Removes the asset tag stats with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param assetTagStats the asset tag stats
+	 * @param tagStatsId the primary key of the asset tag stats
 	 * @return the asset tag stats that was removed
+	 * @throws com.liferay.portlet.asset.NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AssetTagStats remove(AssetTagStats assetTagStats)
-		throws SystemException {
-		return super.remove(assetTagStats);
+	public AssetTagStats remove(long tagStatsId)
+		throws NoSuchTagStatsException, SystemException {
+		return remove(Long.valueOf(tagStatsId));
 	}
 
 	@Override
@@ -1514,7 +1501,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	public void removeByTagId(long tagId) throws SystemException {
 		for (AssetTagStats assetTagStats : findByTagId(tagId)) {
-			assetTagStatsPersistence.remove(assetTagStats);
+			remove(assetTagStats);
 		}
 	}
 
@@ -1526,7 +1513,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	public void removeByClassNameId(long classNameId) throws SystemException {
 		for (AssetTagStats assetTagStats : findByClassNameId(classNameId)) {
-			assetTagStatsPersistence.remove(assetTagStats);
+			remove(assetTagStats);
 		}
 	}
 
@@ -1541,7 +1528,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		throws NoSuchTagStatsException, SystemException {
 		AssetTagStats assetTagStats = findByT_C(tagId, classNameId);
 
-		assetTagStatsPersistence.remove(assetTagStats);
+		remove(assetTagStats);
 	}
 
 	/**
@@ -1551,7 +1538,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	 */
 	public void removeAll() throws SystemException {
 		for (AssetTagStats assetTagStats : findAll()) {
-			assetTagStatsPersistence.remove(assetTagStats);
+			remove(assetTagStats);
 		}
 	}
 

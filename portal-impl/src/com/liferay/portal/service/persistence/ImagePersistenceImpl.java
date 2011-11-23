@@ -187,43 +187,29 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 *
 	 * @param primaryKey the primary key of the image
 	 * @return the image that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a image with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Image remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param imageId the primary key of the image
-	 * @return the image that was removed
-	 * @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Image remove(long imageId)
 		throws NoSuchImageException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Image image = (Image)session.get(ImageImpl.class,
-					Long.valueOf(imageId));
+			Image image = (Image)session.get(ImageImpl.class, primaryKey);
 
 			if (image == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + imageId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchImageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					imageId);
+					primaryKey);
 			}
 
-			return imagePersistence.remove(image);
+			return remove(image);
 		}
 		catch (NoSuchImageException nsee) {
 			throw nsee;
@@ -237,15 +223,16 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	}
 
 	/**
-	 * Removes the image from the database. Also notifies the appropriate model listeners.
+	 * Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param image the image
+	 * @param imageId the primary key of the image
 	 * @return the image that was removed
+	 * @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Image remove(Image image) throws SystemException {
-		return super.remove(image);
+	public Image remove(long imageId)
+		throws NoSuchImageException, SystemException {
+		return remove(Long.valueOf(imageId));
 	}
 
 	@Override
@@ -913,7 +900,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	public void removeByLtSize(int size) throws SystemException {
 		for (Image image : findByLtSize(size)) {
-			imagePersistence.remove(image);
+			remove(image);
 		}
 	}
 
@@ -924,7 +911,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	public void removeAll() throws SystemException {
 		for (Image image : findAll()) {
-			imagePersistence.remove(image);
+			remove(image);
 		}
 	}
 

@@ -279,24 +279,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param primaryKey the primary key of the announcements entry
 	 * @return the announcements entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a announcements entry with the primary key could not be found
+	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the announcements entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param entryId the primary key of the announcements entry
-	 * @return the announcements entry that was removed
-	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AnnouncementsEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
 		Session session = null;
 
@@ -304,18 +291,18 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			session = openSession();
 
 			AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)session.get(AnnouncementsEntryImpl.class,
-					Long.valueOf(entryId));
+					primaryKey);
 
 			if (announcementsEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					entryId);
+					primaryKey);
 			}
 
-			return announcementsEntryPersistence.remove(announcementsEntry);
+			return remove(announcementsEntry);
 		}
 		catch (NoSuchEntryException nsee) {
 			throw nsee;
@@ -329,16 +316,16 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	}
 
 	/**
-	 * Removes the announcements entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the announcements entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param announcementsEntry the announcements entry
+	 * @param entryId the primary key of the announcements entry
 	 * @return the announcements entry that was removed
+	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AnnouncementsEntry remove(AnnouncementsEntry announcementsEntry)
-		throws SystemException {
-		return super.remove(announcementsEntry);
+	public AnnouncementsEntry remove(long entryId)
+		throws NoSuchEntryException, SystemException {
+		return remove(Long.valueOf(entryId));
 	}
 
 	@Override
@@ -3547,7 +3534,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (AnnouncementsEntry announcementsEntry : findByUuid(uuid)) {
-			announcementsEntryPersistence.remove(announcementsEntry);
+			remove(announcementsEntry);
 		}
 	}
 
@@ -3559,7 +3546,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (AnnouncementsEntry announcementsEntry : findByUserId(userId)) {
-			announcementsEntryPersistence.remove(announcementsEntry);
+			remove(announcementsEntry);
 		}
 	}
 
@@ -3574,7 +3561,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		throws SystemException {
 		for (AnnouncementsEntry announcementsEntry : findByC_C(classNameId,
 				classPK)) {
-			announcementsEntryPersistence.remove(announcementsEntry);
+			remove(announcementsEntry);
 		}
 	}
 
@@ -3590,7 +3577,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		throws SystemException {
 		for (AnnouncementsEntry announcementsEntry : findByC_C_A(classNameId,
 				classPK, alert)) {
-			announcementsEntryPersistence.remove(announcementsEntry);
+			remove(announcementsEntry);
 		}
 	}
 
@@ -3601,7 +3588,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	public void removeAll() throws SystemException {
 		for (AnnouncementsEntry announcementsEntry : findAll()) {
-			announcementsEntryPersistence.remove(announcementsEntry);
+			remove(announcementsEntry);
 		}
 	}
 

@@ -231,24 +231,11 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 *
 	 * @param primaryKey the primary key of the layout set
 	 * @return the layout set that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a layout set with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutSet remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the layout set with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutSetId the primary key of the layout set
-	 * @return the layout set that was removed
-	 * @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutSet remove(long layoutSetId)
 		throws NoSuchLayoutSetException, SystemException {
 		Session session = null;
 
@@ -256,18 +243,18 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			session = openSession();
 
 			LayoutSet layoutSet = (LayoutSet)session.get(LayoutSetImpl.class,
-					Long.valueOf(layoutSetId));
+					primaryKey);
 
 			if (layoutSet == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + layoutSetId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLayoutSetException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					layoutSetId);
+					primaryKey);
 			}
 
-			return layoutSetPersistence.remove(layoutSet);
+			return remove(layoutSet);
 		}
 		catch (NoSuchLayoutSetException nsee) {
 			throw nsee;
@@ -281,15 +268,16 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	}
 
 	/**
-	 * Removes the layout set from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout set with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutSet the layout set
+	 * @param layoutSetId the primary key of the layout set
 	 * @return the layout set that was removed
+	 * @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public LayoutSet remove(LayoutSet layoutSet) throws SystemException {
-		return super.remove(layoutSet);
+	public LayoutSet remove(long layoutSetId)
+		throws NoSuchLayoutSetException, SystemException {
+		return remove(Long.valueOf(layoutSetId));
 	}
 
 	@Override
@@ -1531,7 +1519,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (LayoutSet layoutSet : findByGroupId(groupId)) {
-			layoutSetPersistence.remove(layoutSet);
+			remove(layoutSet);
 		}
 	}
 
@@ -1545,7 +1533,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		throws SystemException {
 		for (LayoutSet layoutSet : findByLayoutSetPrototypeUuid(
 				layoutSetPrototypeUuid)) {
-			layoutSetPersistence.remove(layoutSet);
+			remove(layoutSet);
 		}
 	}
 
@@ -1560,7 +1548,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		throws NoSuchLayoutSetException, SystemException {
 		LayoutSet layoutSet = findByG_P(groupId, privateLayout);
 
-		layoutSetPersistence.remove(layoutSet);
+		remove(layoutSet);
 	}
 
 	/**
@@ -1570,7 +1558,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	public void removeAll() throws SystemException {
 		for (LayoutSet layoutSet : findAll()) {
-			layoutSetPersistence.remove(layoutSet);
+			remove(layoutSet);
 		}
 	}
 

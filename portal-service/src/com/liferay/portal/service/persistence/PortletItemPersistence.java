@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PortletItem;
 
 /**
@@ -508,7 +507,4 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public PortletItem remove(PortletItem portletItem)
-		throws SystemException;
 }

@@ -295,24 +295,11 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 *
 	 * @param primaryKey the primary key of the asset link
 	 * @return the asset link that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a asset link with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetLink remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param linkId the primary key of the asset link
-	 * @return the asset link that was removed
-	 * @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetLink remove(long linkId)
 		throws NoSuchLinkException, SystemException {
 		Session session = null;
 
@@ -320,18 +307,18 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			session = openSession();
 
 			AssetLink assetLink = (AssetLink)session.get(AssetLinkImpl.class,
-					Long.valueOf(linkId));
+					primaryKey);
 
 			if (assetLink == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + linkId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					linkId);
+					primaryKey);
 			}
 
-			return assetLinkPersistence.remove(assetLink);
+			return remove(assetLink);
 		}
 		catch (NoSuchLinkException nsee) {
 			throw nsee;
@@ -345,15 +332,16 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	}
 
 	/**
-	 * Removes the asset link from the database. Also notifies the appropriate model listeners.
+	 * Removes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param assetLink the asset link
+	 * @param linkId the primary key of the asset link
 	 * @return the asset link that was removed
+	 * @throws com.liferay.portlet.asset.NoSuchLinkException if a asset link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AssetLink remove(AssetLink assetLink) throws SystemException {
-		return super.remove(assetLink);
+	public AssetLink remove(long linkId)
+		throws NoSuchLinkException, SystemException {
+		return remove(Long.valueOf(linkId));
 	}
 
 	@Override
@@ -2760,7 +2748,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public void removeByE1(long entryId1) throws SystemException {
 		for (AssetLink assetLink : findByE1(entryId1)) {
-			assetLinkPersistence.remove(assetLink);
+			remove(assetLink);
 		}
 	}
 
@@ -2772,7 +2760,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public void removeByE2(long entryId2) throws SystemException {
 		for (AssetLink assetLink : findByE2(entryId2)) {
-			assetLinkPersistence.remove(assetLink);
+			remove(assetLink);
 		}
 	}
 
@@ -2786,7 +2774,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public void removeByE_E(long entryId1, long entryId2)
 		throws SystemException {
 		for (AssetLink assetLink : findByE_E(entryId1, entryId2)) {
-			assetLinkPersistence.remove(assetLink);
+			remove(assetLink);
 		}
 	}
 
@@ -2799,7 +2787,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public void removeByE1_T(long entryId1, int type) throws SystemException {
 		for (AssetLink assetLink : findByE1_T(entryId1, type)) {
-			assetLinkPersistence.remove(assetLink);
+			remove(assetLink);
 		}
 	}
 
@@ -2812,7 +2800,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public void removeByE2_T(long entryId2, int type) throws SystemException {
 		for (AssetLink assetLink : findByE2_T(entryId2, type)) {
-			assetLinkPersistence.remove(assetLink);
+			remove(assetLink);
 		}
 	}
 
@@ -2828,7 +2816,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		throws NoSuchLinkException, SystemException {
 		AssetLink assetLink = findByE_E_T(entryId1, entryId2, type);
 
-		assetLinkPersistence.remove(assetLink);
+		remove(assetLink);
 	}
 
 	/**
@@ -2838,7 +2826,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	public void removeAll() throws SystemException {
 		for (AssetLink assetLink : findAll()) {
-			assetLinkPersistence.remove(assetLink);
+			remove(assetLink);
 		}
 	}
 

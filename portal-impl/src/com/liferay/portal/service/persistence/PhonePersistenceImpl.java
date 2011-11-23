@@ -277,43 +277,29 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 *
 	 * @param primaryKey the primary key of the phone
 	 * @return the phone that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a phone with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPhoneException if a phone with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Phone remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the phone with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param phoneId the primary key of the phone
-	 * @return the phone that was removed
-	 * @throws com.liferay.portal.NoSuchPhoneException if a phone with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Phone remove(long phoneId)
 		throws NoSuchPhoneException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Phone phone = (Phone)session.get(PhoneImpl.class,
-					Long.valueOf(phoneId));
+			Phone phone = (Phone)session.get(PhoneImpl.class, primaryKey);
 
 			if (phone == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + phoneId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPhoneException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					phoneId);
+					primaryKey);
 			}
 
-			return phonePersistence.remove(phone);
+			return remove(phone);
 		}
 		catch (NoSuchPhoneException nsee) {
 			throw nsee;
@@ -327,15 +313,16 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	/**
-	 * Removes the phone from the database. Also notifies the appropriate model listeners.
+	 * Removes the phone with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param phone the phone
+	 * @param phoneId the primary key of the phone
 	 * @return the phone that was removed
+	 * @throws com.liferay.portal.NoSuchPhoneException if a phone with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Phone remove(Phone phone) throws SystemException {
-		return super.remove(phone);
+	public Phone remove(long phoneId)
+		throws NoSuchPhoneException, SystemException {
+		return remove(Long.valueOf(phoneId));
 	}
 
 	@Override
@@ -2616,7 +2603,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Phone phone : findByCompanyId(companyId)) {
-			phonePersistence.remove(phone);
+			remove(phone);
 		}
 	}
 
@@ -2628,7 +2615,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (Phone phone : findByUserId(userId)) {
-			phonePersistence.remove(phone);
+			remove(phone);
 		}
 	}
 
@@ -2642,7 +2629,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public void removeByC_C(long companyId, long classNameId)
 		throws SystemException {
 		for (Phone phone : findByC_C(companyId, classNameId)) {
-			phonePersistence.remove(phone);
+			remove(phone);
 		}
 	}
 
@@ -2657,7 +2644,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public void removeByC_C_C(long companyId, long classNameId, long classPK)
 		throws SystemException {
 		for (Phone phone : findByC_C_C(companyId, classNameId, classPK)) {
-			phonePersistence.remove(phone);
+			remove(phone);
 		}
 	}
 
@@ -2674,7 +2661,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		boolean primary) throws SystemException {
 		for (Phone phone : findByC_C_C_P(companyId, classNameId, classPK,
 				primary)) {
-			phonePersistence.remove(phone);
+			remove(phone);
 		}
 	}
 
@@ -2685,7 +2672,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	public void removeAll() throws SystemException {
 		for (Phone phone : findAll()) {
-			phonePersistence.remove(phone);
+			remove(phone);
 		}
 	}
 

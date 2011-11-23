@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -546,7 +545,4 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public MDRRuleGroup remove(MDRRuleGroup mdrRuleGroup)
-		throws SystemException;
 }

@@ -211,43 +211,29 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 *
 	 * @param primaryKey the primary key of the portlet
 	 * @return the portlet that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a portlet with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPortletException if a portlet with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Portlet remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param id the primary key of the portlet
-	 * @return the portlet that was removed
-	 * @throws com.liferay.portal.NoSuchPortletException if a portlet with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Portlet remove(long id)
 		throws NoSuchPortletException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Portlet portlet = (Portlet)session.get(PortletImpl.class,
-					Long.valueOf(id));
+			Portlet portlet = (Portlet)session.get(PortletImpl.class, primaryKey);
 
 			if (portlet == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPortletException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					id);
+					primaryKey);
 			}
 
-			return portletPersistence.remove(portlet);
+			return remove(portlet);
 		}
 		catch (NoSuchPortletException nsee) {
 			throw nsee;
@@ -261,15 +247,16 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	}
 
 	/**
-	 * Removes the portlet from the database. Also notifies the appropriate model listeners.
+	 * Removes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param portlet the portlet
+	 * @param id the primary key of the portlet
 	 * @return the portlet that was removed
+	 * @throws com.liferay.portal.NoSuchPortletException if a portlet with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Portlet remove(Portlet portlet) throws SystemException {
-		return super.remove(portlet);
+	public Portlet remove(long id)
+		throws NoSuchPortletException, SystemException {
+		return remove(Long.valueOf(id));
 	}
 
 	@Override
@@ -1125,7 +1112,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Portlet portlet : findByCompanyId(companyId)) {
-			portletPersistence.remove(portlet);
+			remove(portlet);
 		}
 	}
 
@@ -1140,7 +1127,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		throws NoSuchPortletException, SystemException {
 		Portlet portlet = findByC_P(companyId, portletId);
 
-		portletPersistence.remove(portlet);
+		remove(portlet);
 	}
 
 	/**
@@ -1150,7 +1137,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	public void removeAll() throws SystemException {
 		for (Portlet portlet : findAll()) {
-			portletPersistence.remove(portlet);
+			remove(portlet);
 		}
 	}
 

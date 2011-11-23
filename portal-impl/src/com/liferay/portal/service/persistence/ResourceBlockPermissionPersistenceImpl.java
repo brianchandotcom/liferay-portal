@@ -218,24 +218,11 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 *
 	 * @param primaryKey the primary key of the resource block permission
 	 * @return the resource block permission that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource block permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlockPermission remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceBlockPermissionId the primary key of the resource block permission
-	 * @return the resource block permission that was removed
-	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceBlockPermission remove(long resourceBlockPermissionId)
 		throws NoSuchResourceBlockPermissionException, SystemException {
 		Session session = null;
 
@@ -243,19 +230,18 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			session = openSession();
 
 			ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
-					Long.valueOf(resourceBlockPermissionId));
+					primaryKey);
 
 			if (resourceBlockPermission == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourceBlockPermissionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourceBlockPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceBlockPermissionId);
+					primaryKey);
 			}
 
-			return resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+			return remove(resourceBlockPermission);
 		}
 		catch (NoSuchResourceBlockPermissionException nsee) {
 			throw nsee;
@@ -269,17 +255,16 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	/**
-	 * Removes the resource block permission from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceBlockPermission the resource block permission
+	 * @param resourceBlockPermissionId the primary key of the resource block permission
 	 * @return the resource block permission that was removed
+	 * @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ResourceBlockPermission remove(
-		ResourceBlockPermission resourceBlockPermission)
-		throws SystemException {
-		return super.remove(resourceBlockPermission);
+	public ResourceBlockPermission remove(long resourceBlockPermissionId)
+		throws NoSuchResourceBlockPermissionException, SystemException {
+		return remove(Long.valueOf(resourceBlockPermissionId));
 	}
 
 	@Override
@@ -1144,7 +1129,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		throws SystemException {
 		for (ResourceBlockPermission resourceBlockPermission : findByResourceBlockId(
 				resourceBlockId)) {
-			resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+			remove(resourceBlockPermission);
 		}
 	}
 
@@ -1160,7 +1145,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		ResourceBlockPermission resourceBlockPermission = findByR_R(resourceBlockId,
 				roleId);
 
-		resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+		remove(resourceBlockPermission);
 	}
 
 	/**
@@ -1170,7 +1155,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	public void removeAll() throws SystemException {
 		for (ResourceBlockPermission resourceBlockPermission : findAll()) {
-			resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+			remove(resourceBlockPermission);
 		}
 	}
 

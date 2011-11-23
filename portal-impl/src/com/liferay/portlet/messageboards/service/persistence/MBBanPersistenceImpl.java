@@ -250,42 +250,29 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 *
 	 * @param primaryKey the primary key of the message boards ban
 	 * @return the message boards ban that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards ban with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchBanException if a message boards ban with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBBan remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param banId the primary key of the message boards ban
-	 * @return the message boards ban that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchBanException if a message boards ban with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBBan remove(long banId) throws NoSuchBanException, SystemException {
+		throws NoSuchBanException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			MBBan mbBan = (MBBan)session.get(MBBanImpl.class,
-					Long.valueOf(banId));
+			MBBan mbBan = (MBBan)session.get(MBBanImpl.class, primaryKey);
 
 			if (mbBan == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + banId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchBanException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					banId);
+					primaryKey);
 			}
 
-			return mbBanPersistence.remove(mbBan);
+			return remove(mbBan);
 		}
 		catch (NoSuchBanException nsee) {
 			throw nsee;
@@ -299,15 +286,15 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	}
 
 	/**
-	 * Removes the message boards ban from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbBan the message boards ban
+	 * @param banId the primary key of the message boards ban
 	 * @return the message boards ban that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchBanException if a message boards ban with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBBan remove(MBBan mbBan) throws SystemException {
-		return super.remove(mbBan);
+	public MBBan remove(long banId) throws NoSuchBanException, SystemException {
+		return remove(Long.valueOf(banId));
 	}
 
 	@Override
@@ -1848,7 +1835,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (MBBan mbBan : findByGroupId(groupId)) {
-			mbBanPersistence.remove(mbBan);
+			remove(mbBan);
 		}
 	}
 
@@ -1860,7 +1847,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (MBBan mbBan : findByUserId(userId)) {
-			mbBanPersistence.remove(mbBan);
+			remove(mbBan);
 		}
 	}
 
@@ -1872,7 +1859,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public void removeByBanUserId(long banUserId) throws SystemException {
 		for (MBBan mbBan : findByBanUserId(banUserId)) {
-			mbBanPersistence.remove(mbBan);
+			remove(mbBan);
 		}
 	}
 
@@ -1887,7 +1874,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		throws NoSuchBanException, SystemException {
 		MBBan mbBan = findByG_B(groupId, banUserId);
 
-		mbBanPersistence.remove(mbBan);
+		remove(mbBan);
 	}
 
 	/**
@@ -1897,7 +1884,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	public void removeAll() throws SystemException {
 		for (MBBan mbBan : findAll()) {
-			mbBanPersistence.remove(mbBan);
+			remove(mbBan);
 		}
 	}
 

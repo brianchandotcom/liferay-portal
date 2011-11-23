@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -1004,7 +1003,4 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public BookmarksFolder remove(BookmarksFolder bookmarksFolder)
-		throws SystemException;
 }

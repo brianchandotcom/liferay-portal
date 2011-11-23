@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Phone;
 
 /**
@@ -824,6 +823,4 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Phone remove(Phone phone) throws SystemException;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Permission;
 
 /**
@@ -910,6 +909,4 @@ public interface PermissionPersistence extends BasePersistence<Permission> {
 	public void setUsers(long pk,
 		java.util.List<com.liferay.portal.model.User> users)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Permission remove(Permission permission) throws SystemException;
 }

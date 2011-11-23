@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.RepositoryEntry;
 
 /**
@@ -531,7 +530,4 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public RepositoryEntry remove(RepositoryEntry repositoryEntry)
-		throws SystemException;
 }

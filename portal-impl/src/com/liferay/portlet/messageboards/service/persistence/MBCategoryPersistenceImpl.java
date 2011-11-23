@@ -279,24 +279,11 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 *
 	 * @param primaryKey the primary key of the message boards category
 	 * @return the message boards category that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards category with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchCategoryException if a message boards category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBCategory remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param categoryId the primary key of the message boards category
-	 * @return the message boards category that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchCategoryException if a message boards category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBCategory remove(long categoryId)
 		throws NoSuchCategoryException, SystemException {
 		Session session = null;
 
@@ -304,18 +291,18 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			session = openSession();
 
 			MBCategory mbCategory = (MBCategory)session.get(MBCategoryImpl.class,
-					Long.valueOf(categoryId));
+					primaryKey);
 
 			if (mbCategory == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + categoryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					categoryId);
+					primaryKey);
 			}
 
-			return mbCategoryPersistence.remove(mbCategory);
+			return remove(mbCategory);
 		}
 		catch (NoSuchCategoryException nsee) {
 			throw nsee;
@@ -329,15 +316,16 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
-	 * Removes the message boards category from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbCategory the message boards category
+	 * @param categoryId the primary key of the message boards category
 	 * @return the message boards category that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchCategoryException if a message boards category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBCategory remove(MBCategory mbCategory) throws SystemException {
-		return super.remove(mbCategory);
+	public MBCategory remove(long categoryId)
+		throws NoSuchCategoryException, SystemException {
+		return remove(Long.valueOf(categoryId));
 	}
 
 	@Override
@@ -3316,7 +3304,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (MBCategory mbCategory : findByUuid(uuid)) {
-			mbCategoryPersistence.remove(mbCategory);
+			remove(mbCategory);
 		}
 	}
 
@@ -3331,7 +3319,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		throws NoSuchCategoryException, SystemException {
 		MBCategory mbCategory = findByUUID_G(uuid, groupId);
 
-		mbCategoryPersistence.remove(mbCategory);
+		remove(mbCategory);
 	}
 
 	/**
@@ -3342,7 +3330,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (MBCategory mbCategory : findByGroupId(groupId)) {
-			mbCategoryPersistence.remove(mbCategory);
+			remove(mbCategory);
 		}
 	}
 
@@ -3354,7 +3342,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (MBCategory mbCategory : findByCompanyId(companyId)) {
-			mbCategoryPersistence.remove(mbCategory);
+			remove(mbCategory);
 		}
 	}
 
@@ -3368,7 +3356,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public void removeByG_P(long groupId, long parentCategoryId)
 		throws SystemException {
 		for (MBCategory mbCategory : findByG_P(groupId, parentCategoryId)) {
-			mbCategoryPersistence.remove(mbCategory);
+			remove(mbCategory);
 		}
 	}
 
@@ -3379,7 +3367,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	 */
 	public void removeAll() throws SystemException {
 		for (MBCategory mbCategory : findAll()) {
-			mbCategoryPersistence.remove(mbCategory);
+			remove(mbCategory);
 		}
 	}
 

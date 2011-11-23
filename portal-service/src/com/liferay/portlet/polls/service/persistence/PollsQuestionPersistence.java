@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.polls.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.polls.model.PollsQuestion;
@@ -544,7 +543,4 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public PollsQuestion remove(PollsQuestion pollsQuestion)
-		throws SystemException;
 }

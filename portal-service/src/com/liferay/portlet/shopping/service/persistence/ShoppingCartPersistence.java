@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.shopping.model.ShoppingCart;
@@ -469,7 +468,4 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ShoppingCart remove(ShoppingCart shoppingCart)
-		throws SystemException;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutRevision;
 
 /**
@@ -1294,7 +1293,4 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public LayoutRevision remove(LayoutRevision layoutRevision)
-		throws SystemException;
 }

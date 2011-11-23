@@ -234,24 +234,11 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param primaryKey the primary key of the user ID mapper
 	 * @return the user ID mapper that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user ID mapper with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userIdMapperId the primary key of the user ID mapper
-	 * @return the user ID mapper that was removed
-	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserIdMapper remove(long userIdMapperId)
 		throws NoSuchUserIdMapperException, SystemException {
 		Session session = null;
 
@@ -259,19 +246,18 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			session = openSession();
 
 			UserIdMapper userIdMapper = (UserIdMapper)session.get(UserIdMapperImpl.class,
-					Long.valueOf(userIdMapperId));
+					primaryKey);
 
 			if (userIdMapper == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						userIdMapperId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserIdMapperException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userIdMapperId);
+					primaryKey);
 			}
 
-			return userIdMapperPersistence.remove(userIdMapper);
+			return remove(userIdMapper);
 		}
 		catch (NoSuchUserIdMapperException nsee) {
 			throw nsee;
@@ -285,16 +271,16 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	/**
-	 * Removes the user ID mapper from the database. Also notifies the appropriate model listeners.
+	 * Removes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userIdMapper the user ID mapper
+	 * @param userIdMapperId the primary key of the user ID mapper
 	 * @return the user ID mapper that was removed
+	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public UserIdMapper remove(UserIdMapper userIdMapper)
-		throws SystemException {
-		return super.remove(userIdMapper);
+	public UserIdMapper remove(long userIdMapperId)
+		throws NoSuchUserIdMapperException, SystemException {
+		return remove(Long.valueOf(userIdMapperId));
 	}
 
 	@Override
@@ -1352,7 +1338,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (UserIdMapper userIdMapper : findByUserId(userId)) {
-			userIdMapperPersistence.remove(userIdMapper);
+			remove(userIdMapper);
 		}
 	}
 
@@ -1367,7 +1353,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		throws NoSuchUserIdMapperException, SystemException {
 		UserIdMapper userIdMapper = findByU_T(userId, type);
 
-		userIdMapperPersistence.remove(userIdMapper);
+		remove(userIdMapper);
 	}
 
 	/**
@@ -1381,7 +1367,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		throws NoSuchUserIdMapperException, SystemException {
 		UserIdMapper userIdMapper = findByT_E(type, externalUserId);
 
-		userIdMapperPersistence.remove(userIdMapper);
+		remove(userIdMapper);
 	}
 
 	/**
@@ -1391,7 +1377,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	public void removeAll() throws SystemException {
 		for (UserIdMapper userIdMapper : findAll()) {
-			userIdMapperPersistence.remove(userIdMapper);
+			remove(userIdMapper);
 		}
 	}
 

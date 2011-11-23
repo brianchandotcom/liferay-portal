@@ -239,24 +239,11 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param primaryKey the primary key of the polls choice
 	 * @return the polls choice that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a polls choice with the primary key could not be found
+	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param choiceId the primary key of the polls choice
-	 * @return the polls choice that was removed
-	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PollsChoice remove(long choiceId)
 		throws NoSuchChoiceException, SystemException {
 		Session session = null;
 
@@ -264,18 +251,18 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			session = openSession();
 
 			PollsChoice pollsChoice = (PollsChoice)session.get(PollsChoiceImpl.class,
-					Long.valueOf(choiceId));
+					primaryKey);
 
 			if (pollsChoice == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + choiceId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchChoiceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					choiceId);
+					primaryKey);
 			}
 
-			return pollsChoicePersistence.remove(pollsChoice);
+			return remove(pollsChoice);
 		}
 		catch (NoSuchChoiceException nsee) {
 			throw nsee;
@@ -289,16 +276,16 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	/**
-	 * Removes the polls choice from the database. Also notifies the appropriate model listeners.
+	 * Removes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param pollsChoice the polls choice
+	 * @param choiceId the primary key of the polls choice
 	 * @return the polls choice that was removed
+	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PollsChoice remove(PollsChoice pollsChoice)
-		throws SystemException {
-		return super.remove(pollsChoice);
+	public PollsChoice remove(long choiceId)
+		throws NoSuchChoiceException, SystemException {
+		return remove(Long.valueOf(choiceId));
 	}
 
 	@Override
@@ -1561,7 +1548,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (PollsChoice pollsChoice : findByUuid(uuid)) {
-			pollsChoicePersistence.remove(pollsChoice);
+			remove(pollsChoice);
 		}
 	}
 
@@ -1573,7 +1560,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	public void removeByQuestionId(long questionId) throws SystemException {
 		for (PollsChoice pollsChoice : findByQuestionId(questionId)) {
-			pollsChoicePersistence.remove(pollsChoice);
+			remove(pollsChoice);
 		}
 	}
 
@@ -1588,7 +1575,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		throws NoSuchChoiceException, SystemException {
 		PollsChoice pollsChoice = findByQ_N(questionId, name);
 
-		pollsChoicePersistence.remove(pollsChoice);
+		remove(pollsChoice);
 	}
 
 	/**
@@ -1598,7 +1585,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	public void removeAll() throws SystemException {
 		for (PollsChoice pollsChoice : findAll()) {
-			pollsChoicePersistence.remove(pollsChoice);
+			remove(pollsChoice);
 		}
 	}
 

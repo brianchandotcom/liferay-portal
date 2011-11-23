@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutPrototype;
 
 /**
@@ -765,7 +764,4 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public LayoutPrototype remove(LayoutPrototype layoutPrototype)
-		throws SystemException;
 }

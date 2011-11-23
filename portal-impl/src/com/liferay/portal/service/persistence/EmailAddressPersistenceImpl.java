@@ -278,24 +278,11 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 *
 	 * @param primaryKey the primary key of the email address
 	 * @return the email address that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a email address with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchEmailAddressException if a email address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public EmailAddress remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the email address with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param emailAddressId the primary key of the email address
-	 * @return the email address that was removed
-	 * @throws com.liferay.portal.NoSuchEmailAddressException if a email address with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public EmailAddress remove(long emailAddressId)
 		throws NoSuchEmailAddressException, SystemException {
 		Session session = null;
 
@@ -303,19 +290,18 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			session = openSession();
 
 			EmailAddress emailAddress = (EmailAddress)session.get(EmailAddressImpl.class,
-					Long.valueOf(emailAddressId));
+					primaryKey);
 
 			if (emailAddress == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						emailAddressId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEmailAddressException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					emailAddressId);
+					primaryKey);
 			}
 
-			return emailAddressPersistence.remove(emailAddress);
+			return remove(emailAddress);
 		}
 		catch (NoSuchEmailAddressException nsee) {
 			throw nsee;
@@ -329,16 +315,16 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	}
 
 	/**
-	 * Removes the email address from the database. Also notifies the appropriate model listeners.
+	 * Removes the email address with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param emailAddress the email address
+	 * @param emailAddressId the primary key of the email address
 	 * @return the email address that was removed
+	 * @throws com.liferay.portal.NoSuchEmailAddressException if a email address with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public EmailAddress remove(EmailAddress emailAddress)
-		throws SystemException {
-		return super.remove(emailAddress);
+	public EmailAddress remove(long emailAddressId)
+		throws NoSuchEmailAddressException, SystemException {
+		return remove(Long.valueOf(emailAddressId));
 	}
 
 	@Override
@@ -2641,7 +2627,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (EmailAddress emailAddress : findByCompanyId(companyId)) {
-			emailAddressPersistence.remove(emailAddress);
+			remove(emailAddress);
 		}
 	}
 
@@ -2653,7 +2639,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (EmailAddress emailAddress : findByUserId(userId)) {
-			emailAddressPersistence.remove(emailAddress);
+			remove(emailAddress);
 		}
 	}
 
@@ -2667,7 +2653,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	public void removeByC_C(long companyId, long classNameId)
 		throws SystemException {
 		for (EmailAddress emailAddress : findByC_C(companyId, classNameId)) {
-			emailAddressPersistence.remove(emailAddress);
+			remove(emailAddress);
 		}
 	}
 
@@ -2683,7 +2669,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		throws SystemException {
 		for (EmailAddress emailAddress : findByC_C_C(companyId, classNameId,
 				classPK)) {
-			emailAddressPersistence.remove(emailAddress);
+			remove(emailAddress);
 		}
 	}
 
@@ -2700,7 +2686,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		boolean primary) throws SystemException {
 		for (EmailAddress emailAddress : findByC_C_C_P(companyId, classNameId,
 				classPK, primary)) {
-			emailAddressPersistence.remove(emailAddress);
+			remove(emailAddress);
 		}
 	}
 
@@ -2711,7 +2697,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	public void removeAll() throws SystemException {
 		for (EmailAddress emailAddress : findAll()) {
-			emailAddressPersistence.remove(emailAddress);
+			remove(emailAddress);
 		}
 	}
 

@@ -561,24 +561,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 *
 	 * @param primaryKey the primary key of the blogs entry
 	 * @return the blogs entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a blogs entry with the primary key could not be found
+	 * @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BlogsEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the blogs entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param entryId the primary key of the blogs entry
-	 * @return the blogs entry that was removed
-	 * @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BlogsEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
 		Session session = null;
 
@@ -586,18 +573,18 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			session = openSession();
 
 			BlogsEntry blogsEntry = (BlogsEntry)session.get(BlogsEntryImpl.class,
-					Long.valueOf(entryId));
+					primaryKey);
 
 			if (blogsEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					entryId);
+					primaryKey);
 			}
 
-			return blogsEntryPersistence.remove(blogsEntry);
+			return remove(blogsEntry);
 		}
 		catch (NoSuchEntryException nsee) {
 			throw nsee;
@@ -611,15 +598,16 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	}
 
 	/**
-	 * Removes the blogs entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the blogs entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param blogsEntry the blogs entry
+	 * @param entryId the primary key of the blogs entry
 	 * @return the blogs entry that was removed
+	 * @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public BlogsEntry remove(BlogsEntry blogsEntry) throws SystemException {
-		return super.remove(blogsEntry);
+	public BlogsEntry remove(long entryId)
+		throws NoSuchEntryException, SystemException {
+		return remove(Long.valueOf(entryId));
 	}
 
 	@Override
@@ -9443,7 +9431,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (BlogsEntry blogsEntry : findByUuid(uuid)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9458,7 +9446,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		throws NoSuchEntryException, SystemException {
 		BlogsEntry blogsEntry = findByUUID_G(uuid, groupId);
 
-		blogsEntryPersistence.remove(blogsEntry);
+		remove(blogsEntry);
 	}
 
 	/**
@@ -9469,7 +9457,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (BlogsEntry blogsEntry : findByGroupId(groupId)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9481,7 +9469,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (BlogsEntry blogsEntry : findByCompanyId(companyId)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9495,7 +9483,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByC_U(long companyId, long userId)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByC_U(companyId, userId)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9509,7 +9497,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByC_LtD(long companyId, Date displayDate)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByC_LtD(companyId, displayDate)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9523,7 +9511,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByC_S(long companyId, int status)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByC_S(companyId, status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9538,7 +9526,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		throws NoSuchEntryException, SystemException {
 		BlogsEntry blogsEntry = findByG_UT(groupId, urlTitle);
 
-		blogsEntryPersistence.remove(blogsEntry);
+		remove(blogsEntry);
 	}
 
 	/**
@@ -9551,7 +9539,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByG_LtD(long groupId, Date displayDate)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByG_LtD(groupId, displayDate)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9564,7 +9552,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public void removeByG_S(long groupId, int status) throws SystemException {
 		for (BlogsEntry blogsEntry : findByG_S(groupId, status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9579,7 +9567,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByC_U_S(long companyId, long userId, int status)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByC_U_S(companyId, userId, status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9595,7 +9583,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByC_LtD_S(companyId, displayDate,
 				status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9610,7 +9598,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByG_U_LtD(long groupId, long userId, Date displayDate)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByG_U_LtD(groupId, userId, displayDate)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9625,7 +9613,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByG_U_S(long groupId, long userId, int status)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByG_U_S(groupId, userId, status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9640,7 +9628,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public void removeByG_LtD_S(long groupId, Date displayDate, int status)
 		throws SystemException {
 		for (BlogsEntry blogsEntry : findByG_LtD_S(groupId, displayDate, status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9657,7 +9645,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		int status) throws SystemException {
 		for (BlogsEntry blogsEntry : findByG_U_LtD_S(groupId, userId,
 				displayDate, status)) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 
@@ -9668,7 +9656,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	public void removeAll() throws SystemException {
 		for (BlogsEntry blogsEntry : findAll()) {
-			blogsEntryPersistence.remove(blogsEntry);
+			remove(blogsEntry);
 		}
 	}
 

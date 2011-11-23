@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserNotificationEvent;
 
 /**
@@ -541,7 +540,4 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public UserNotificationEvent remove(
-		UserNotificationEvent userNotificationEvent) throws SystemException;
 }

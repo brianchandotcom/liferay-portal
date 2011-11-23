@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -621,7 +620,4 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DLFileVersion remove(DLFileVersion dlFileVersion)
-		throws SystemException;
 }

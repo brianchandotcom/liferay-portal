@@ -193,24 +193,11 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 *
 	 * @param primaryKey the primary key of the ratings stats
 	 * @return the ratings stats that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a ratings stats with the primary key could not be found
+	 * @throws com.liferay.portlet.ratings.NoSuchStatsException if a ratings stats with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public RatingsStats remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param statsId the primary key of the ratings stats
-	 * @return the ratings stats that was removed
-	 * @throws com.liferay.portlet.ratings.NoSuchStatsException if a ratings stats with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public RatingsStats remove(long statsId)
 		throws NoSuchStatsException, SystemException {
 		Session session = null;
 
@@ -218,18 +205,18 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			session = openSession();
 
 			RatingsStats ratingsStats = (RatingsStats)session.get(RatingsStatsImpl.class,
-					Long.valueOf(statsId));
+					primaryKey);
 
 			if (ratingsStats == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + statsId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchStatsException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					statsId);
+					primaryKey);
 			}
 
-			return ratingsStatsPersistence.remove(ratingsStats);
+			return remove(ratingsStats);
 		}
 		catch (NoSuchStatsException nsee) {
 			throw nsee;
@@ -243,16 +230,16 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	}
 
 	/**
-	 * Removes the ratings stats from the database. Also notifies the appropriate model listeners.
+	 * Removes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ratingsStats the ratings stats
+	 * @param statsId the primary key of the ratings stats
 	 * @return the ratings stats that was removed
+	 * @throws com.liferay.portlet.ratings.NoSuchStatsException if a ratings stats with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public RatingsStats remove(RatingsStats ratingsStats)
-		throws SystemException {
-		return super.remove(ratingsStats);
+	public RatingsStats remove(long statsId)
+		throws NoSuchStatsException, SystemException {
+		return remove(Long.valueOf(statsId));
 	}
 
 	@Override
@@ -739,7 +726,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		throws NoSuchStatsException, SystemException {
 		RatingsStats ratingsStats = findByC_C(classNameId, classPK);
 
-		ratingsStatsPersistence.remove(ratingsStats);
+		remove(ratingsStats);
 	}
 
 	/**
@@ -749,7 +736,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	 */
 	public void removeAll() throws SystemException {
 		for (RatingsStats ratingsStats : findAll()) {
-			ratingsStatsPersistence.remove(ratingsStats);
+			remove(ratingsStats);
 		}
 	}
 

@@ -218,24 +218,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 *
 	 * @param primaryKey the primary key of the s c license
 	 * @return the s c license that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a s c license with the primary key could not be found
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SCLicense remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the s c license with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param licenseId the primary key of the s c license
-	 * @return the s c license that was removed
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense remove(long licenseId)
 		throws NoSuchLicenseException, SystemException {
 		Session session = null;
 
@@ -243,18 +230,18 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			session = openSession();
 
 			SCLicense scLicense = (SCLicense)session.get(SCLicenseImpl.class,
-					Long.valueOf(licenseId));
+					primaryKey);
 
 			if (scLicense == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + licenseId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLicenseException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					licenseId);
+					primaryKey);
 			}
 
-			return scLicensePersistence.remove(scLicense);
+			return remove(scLicense);
 		}
 		catch (NoSuchLicenseException nsee) {
 			throw nsee;
@@ -268,15 +255,16 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	}
 
 	/**
-	 * Removes the s c license from the database. Also notifies the appropriate model listeners.
+	 * Removes the s c license with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param scLicense the s c license
+	 * @param licenseId the primary key of the s c license
 	 * @return the s c license that was removed
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SCLicense remove(SCLicense scLicense) throws SystemException {
-		return super.remove(scLicense);
+	public SCLicense remove(long licenseId)
+		throws NoSuchLicenseException, SystemException {
+		return remove(Long.valueOf(licenseId));
 	}
 
 	@Override
@@ -1988,7 +1976,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	public void removeByActive(boolean active) throws SystemException {
 		for (SCLicense scLicense : findByActive(active)) {
-			scLicensePersistence.remove(scLicense);
+			remove(scLicense);
 		}
 	}
 
@@ -2002,7 +1990,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void removeByA_R(boolean active, boolean recommended)
 		throws SystemException {
 		for (SCLicense scLicense : findByA_R(active, recommended)) {
-			scLicensePersistence.remove(scLicense);
+			remove(scLicense);
 		}
 	}
 
@@ -2013,7 +2001,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	public void removeAll() throws SystemException {
 		for (SCLicense scLicense : findAll()) {
-			scLicensePersistence.remove(scLicense);
+			remove(scLicense);
 		}
 	}
 
@@ -2770,11 +2758,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			}
 		}
 
-		containsSCProductEntry = new ContainsSCProductEntry(this);
+		containsSCProductEntry = new ContainsSCProductEntry();
 
-		addSCProductEntry = new AddSCProductEntry(this);
-		clearSCProductEntries = new ClearSCProductEntries(this);
-		removeSCProductEntry = new RemoveSCProductEntry(this);
+		addSCProductEntry = new AddSCProductEntry();
+		clearSCProductEntries = new ClearSCProductEntries();
+		removeSCProductEntry = new RemoveSCProductEntry();
 	}
 
 	public void destroy() {
@@ -2803,10 +2791,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	protected RemoveSCProductEntry removeSCProductEntry;
 
 	protected class ContainsSCProductEntry {
-		protected ContainsSCProductEntry(
-			SCLicensePersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsSCProductEntry() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSSCPRODUCTENTRY,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -2833,17 +2818,15 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	}
 
 	protected class AddSCProductEntry {
-		protected AddSCProductEntry(SCLicensePersistenceImpl persistenceImpl) {
+		protected AddSCProductEntry() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO SCLicenses_SCProductEntries (licenseId, productEntryId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long licenseId, long productEntryId)
 			throws SystemException {
-			if (!_persistenceImpl.containsSCProductEntry.contains(licenseId,
-						productEntryId)) {
+			if (!containsSCProductEntry.contains(licenseId, productEntryId)) {
 				ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry>[] scProductEntryListeners =
 					scProductEntryPersistence.getListeners();
 
@@ -2876,12 +2859,10 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private SCLicensePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearSCProductEntries {
-		protected ClearSCProductEntries(
-			SCLicensePersistenceImpl persistenceImpl) {
+		protected ClearSCProductEntries() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM SCLicenses_SCProductEntries WHERE licenseId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -2933,17 +2914,15 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	}
 
 	protected class RemoveSCProductEntry {
-		protected RemoveSCProductEntry(SCLicensePersistenceImpl persistenceImpl) {
+		protected RemoveSCProductEntry() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long licenseId, long productEntryId)
 			throws SystemException {
-			if (_persistenceImpl.containsSCProductEntry.contains(licenseId,
-						productEntryId)) {
+			if (containsSCProductEntry.contains(licenseId, productEntryId)) {
 				ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry>[] scProductEntryListeners =
 					scProductEntryPersistence.getListeners();
 
@@ -2976,7 +2955,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private SCLicensePersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_SCLICENSE = "SELECT scLicense FROM SCLicense scLicense";

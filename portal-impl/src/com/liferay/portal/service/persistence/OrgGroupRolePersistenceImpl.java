@@ -205,24 +205,11 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 *
 	 * @param primaryKey the primary key of the org group role
 	 * @return the org group role that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a org group role with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgGroupRole remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove((OrgGroupRolePK)primaryKey);
-	}
-
-	/**
-	 * Removes the org group role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param orgGroupRolePK the primary key of the org group role
-	 * @return the org group role that was removed
-	 * @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public OrgGroupRole remove(OrgGroupRolePK orgGroupRolePK)
 		throws NoSuchOrgGroupRoleException, SystemException {
 		Session session = null;
 
@@ -230,19 +217,18 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 			session = openSession();
 
 			OrgGroupRole orgGroupRole = (OrgGroupRole)session.get(OrgGroupRoleImpl.class,
-					orgGroupRolePK);
+					primaryKey);
 
 			if (orgGroupRole == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						orgGroupRolePK);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchOrgGroupRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					orgGroupRolePK);
+					primaryKey);
 			}
 
-			return orgGroupRolePersistence.remove(orgGroupRole);
+			return remove(orgGroupRole);
 		}
 		catch (NoSuchOrgGroupRoleException nsee) {
 			throw nsee;
@@ -256,16 +242,16 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	}
 
 	/**
-	 * Removes the org group role from the database. Also notifies the appropriate model listeners.
+	 * Removes the org group role with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param orgGroupRole the org group role
+	 * @param orgGroupRolePK the primary key of the org group role
 	 * @return the org group role that was removed
+	 * @throws com.liferay.portal.NoSuchOrgGroupRoleException if a org group role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public OrgGroupRole remove(OrgGroupRole orgGroupRole)
-		throws SystemException {
-		return super.remove(orgGroupRole);
+	public OrgGroupRole remove(OrgGroupRolePK orgGroupRolePK)
+		throws NoSuchOrgGroupRoleException, SystemException {
+		return remove(orgGroupRolePK);
 	}
 
 	@Override
@@ -1290,7 +1276,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (OrgGroupRole orgGroupRole : findByGroupId(groupId)) {
-			orgGroupRolePersistence.remove(orgGroupRole);
+			remove(orgGroupRole);
 		}
 	}
 
@@ -1302,7 +1288,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	public void removeByRoleId(long roleId) throws SystemException {
 		for (OrgGroupRole orgGroupRole : findByRoleId(roleId)) {
-			orgGroupRolePersistence.remove(orgGroupRole);
+			remove(orgGroupRole);
 		}
 	}
 
@@ -1313,7 +1299,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	public void removeAll() throws SystemException {
 		for (OrgGroupRole orgGroupRole : findAll()) {
-			orgGroupRolePersistence.remove(orgGroupRole);
+			remove(orgGroupRole);
 		}
 	}
 

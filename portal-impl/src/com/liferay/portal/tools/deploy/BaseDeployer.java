@@ -1701,6 +1701,19 @@ public class BaseDeployer implements Deployer {
 			return webXmlContent;
 		}
 
+		boolean liferayWebXmlEnabled = true;
+
+		Properties properties = getPluginPackageProperties(srcFile);
+
+		if (properties != null) {
+			liferayWebXmlEnabled = GetterUtil.getBoolean(
+				properties.getProperty("liferay-web-xml-enabled"), true);
+		}
+
+		if (!liferayWebXmlEnabled) {
+			return webXmlContent;
+		}
+
 		String filterContent = webXmlContent.substring(x, y + 17);
 
 		String liferayWebXmlContent = FileUtil.read(

@@ -257,24 +257,11 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 *
 	 * @param primaryKey the primary key of the d d l record
 	 * @return the d d l record that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d d l record with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a d d l record with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecord remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d d l record with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param recordId the primary key of the d d l record
-	 * @return the d d l record that was removed
-	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a d d l record with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDLRecord remove(long recordId)
 		throws NoSuchRecordException, SystemException {
 		Session session = null;
 
@@ -282,18 +269,18 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 			session = openSession();
 
 			DDLRecord ddlRecord = (DDLRecord)session.get(DDLRecordImpl.class,
-					Long.valueOf(recordId));
+					primaryKey);
 
 			if (ddlRecord == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + recordId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRecordException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					recordId);
+					primaryKey);
 			}
 
-			return ddlRecordPersistence.remove(ddlRecord);
+			return remove(ddlRecord);
 		}
 		catch (NoSuchRecordException nsee) {
 			throw nsee;
@@ -307,15 +294,16 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
-	 * Removes the d d l record from the database. Also notifies the appropriate model listeners.
+	 * Removes the d d l record with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddlRecord the d d l record
+	 * @param recordId the primary key of the d d l record
 	 * @return the d d l record that was removed
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordException if a d d l record with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DDLRecord remove(DDLRecord ddlRecord) throws SystemException {
-		return super.remove(ddlRecord);
+	public DDLRecord remove(long recordId)
+		throws NoSuchRecordException, SystemException {
+		return remove(Long.valueOf(recordId));
 	}
 
 	@Override
@@ -1947,7 +1935,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DDLRecord ddlRecord : findByUuid(uuid)) {
-			ddlRecordPersistence.remove(ddlRecord);
+			remove(ddlRecord);
 		}
 	}
 
@@ -1962,7 +1950,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		throws NoSuchRecordException, SystemException {
 		DDLRecord ddlRecord = findByUUID_G(uuid, groupId);
 
-		ddlRecordPersistence.remove(ddlRecord);
+		remove(ddlRecord);
 	}
 
 	/**
@@ -1973,7 +1961,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 */
 	public void removeByRecordSetId(long recordSetId) throws SystemException {
 		for (DDLRecord ddlRecord : findByRecordSetId(recordSetId)) {
-			ddlRecordPersistence.remove(ddlRecord);
+			remove(ddlRecord);
 		}
 	}
 
@@ -1987,7 +1975,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	public void removeByR_U(long recordSetId, long userId)
 		throws SystemException {
 		for (DDLRecord ddlRecord : findByR_U(recordSetId, userId)) {
-			ddlRecordPersistence.remove(ddlRecord);
+			remove(ddlRecord);
 		}
 	}
 
@@ -1998,7 +1986,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	 */
 	public void removeAll() throws SystemException {
 		for (DDLRecord ddlRecord : findAll()) {
-			ddlRecordPersistence.remove(ddlRecord);
+			remove(ddlRecord);
 		}
 	}
 

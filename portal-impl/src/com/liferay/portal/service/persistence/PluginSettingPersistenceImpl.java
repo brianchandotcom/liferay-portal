@@ -226,24 +226,11 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 *
 	 * @param primaryKey the primary key of the plugin setting
 	 * @return the plugin setting that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a plugin setting with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PluginSetting remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param pluginSettingId the primary key of the plugin setting
-	 * @return the plugin setting that was removed
-	 * @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PluginSetting remove(long pluginSettingId)
 		throws NoSuchPluginSettingException, SystemException {
 		Session session = null;
 
@@ -251,19 +238,18 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			session = openSession();
 
 			PluginSetting pluginSetting = (PluginSetting)session.get(PluginSettingImpl.class,
-					Long.valueOf(pluginSettingId));
+					primaryKey);
 
 			if (pluginSetting == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						pluginSettingId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPluginSettingException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					pluginSettingId);
+					primaryKey);
 			}
 
-			return pluginSettingPersistence.remove(pluginSetting);
+			return remove(pluginSetting);
 		}
 		catch (NoSuchPluginSettingException nsee) {
 			throw nsee;
@@ -277,16 +263,16 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	}
 
 	/**
-	 * Removes the plugin setting from the database. Also notifies the appropriate model listeners.
+	 * Removes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param pluginSetting the plugin setting
+	 * @param pluginSettingId the primary key of the plugin setting
 	 * @return the plugin setting that was removed
+	 * @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PluginSetting remove(PluginSetting pluginSetting)
-		throws SystemException {
-		return super.remove(pluginSetting);
+	public PluginSetting remove(long pluginSettingId)
+		throws NoSuchPluginSettingException, SystemException {
+		return remove(Long.valueOf(pluginSettingId));
 	}
 
 	@Override
@@ -1184,7 +1170,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (PluginSetting pluginSetting : findByCompanyId(companyId)) {
-			pluginSettingPersistence.remove(pluginSetting);
+			remove(pluginSetting);
 		}
 	}
 
@@ -1201,7 +1187,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		PluginSetting pluginSetting = findByC_I_T(companyId, pluginId,
 				pluginType);
 
-		pluginSettingPersistence.remove(pluginSetting);
+		remove(pluginSetting);
 	}
 
 	/**
@@ -1211,7 +1197,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	public void removeAll() throws SystemException {
 		for (PluginSetting pluginSetting : findAll()) {
-			pluginSettingPersistence.remove(pluginSetting);
+			remove(pluginSetting);
 		}
 	}
 

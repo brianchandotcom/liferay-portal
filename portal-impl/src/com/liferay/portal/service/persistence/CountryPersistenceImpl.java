@@ -231,43 +231,29 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 *
 	 * @param primaryKey the primary key of the country
 	 * @return the country that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a country with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Country remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the country with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param countryId the primary key of the country
-	 * @return the country that was removed
-	 * @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Country remove(long countryId)
 		throws NoSuchCountryException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Country country = (Country)session.get(CountryImpl.class,
-					Long.valueOf(countryId));
+			Country country = (Country)session.get(CountryImpl.class, primaryKey);
 
 			if (country == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + countryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCountryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					countryId);
+					primaryKey);
 			}
 
-			return countryPersistence.remove(country);
+			return remove(country);
 		}
 		catch (NoSuchCountryException nsee) {
 			throw nsee;
@@ -281,15 +267,16 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	/**
-	 * Removes the country from the database. Also notifies the appropriate model listeners.
+	 * Removes the country with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param country the country
+	 * @param countryId the primary key of the country
 	 * @return the country that was removed
+	 * @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Country remove(Country country) throws SystemException {
-		return super.remove(country);
+	public Country remove(long countryId)
+		throws NoSuchCountryException, SystemException {
+		return remove(Long.valueOf(countryId));
 	}
 
 	@Override
@@ -1445,7 +1432,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		throws NoSuchCountryException, SystemException {
 		Country country = findByName(name);
 
-		countryPersistence.remove(country);
+		remove(country);
 	}
 
 	/**
@@ -1458,7 +1445,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		throws NoSuchCountryException, SystemException {
 		Country country = findByA2(a2);
 
-		countryPersistence.remove(country);
+		remove(country);
 	}
 
 	/**
@@ -1471,7 +1458,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		throws NoSuchCountryException, SystemException {
 		Country country = findByA3(a3);
 
-		countryPersistence.remove(country);
+		remove(country);
 	}
 
 	/**
@@ -1482,7 +1469,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	public void removeByActive(boolean active) throws SystemException {
 		for (Country country : findByActive(active)) {
-			countryPersistence.remove(country);
+			remove(country);
 		}
 	}
 
@@ -1493,7 +1480,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	public void removeAll() throws SystemException {
 		for (Country country : findAll()) {
-			countryPersistence.remove(country);
+			remove(country);
 		}
 	}
 

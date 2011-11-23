@@ -196,24 +196,11 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 *
 	 * @param primaryKey the primary key of the shopping item price
 	 * @return the shopping item price that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping item price with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItemPrice remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param itemPriceId the primary key of the shopping item price
-	 * @return the shopping item price that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingItemPrice remove(long itemPriceId)
 		throws NoSuchItemPriceException, SystemException {
 		Session session = null;
 
@@ -221,18 +208,18 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 			session = openSession();
 
 			ShoppingItemPrice shoppingItemPrice = (ShoppingItemPrice)session.get(ShoppingItemPriceImpl.class,
-					Long.valueOf(itemPriceId));
+					primaryKey);
 
 			if (shoppingItemPrice == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + itemPriceId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchItemPriceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					itemPriceId);
+					primaryKey);
 			}
 
-			return shoppingItemPricePersistence.remove(shoppingItemPrice);
+			return remove(shoppingItemPrice);
 		}
 		catch (NoSuchItemPriceException nsee) {
 			throw nsee;
@@ -246,16 +233,16 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	}
 
 	/**
-	 * Removes the shopping item price from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingItemPrice the shopping item price
+	 * @param itemPriceId the primary key of the shopping item price
 	 * @return the shopping item price that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingItemPrice remove(ShoppingItemPrice shoppingItemPrice)
-		throws SystemException {
-		return super.remove(shoppingItemPrice);
+	public ShoppingItemPrice remove(long itemPriceId)
+		throws NoSuchItemPriceException, SystemException {
+		return remove(Long.valueOf(itemPriceId));
 	}
 
 	@Override
@@ -940,7 +927,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public void removeByItemId(long itemId) throws SystemException {
 		for (ShoppingItemPrice shoppingItemPrice : findByItemId(itemId)) {
-			shoppingItemPricePersistence.remove(shoppingItemPrice);
+			remove(shoppingItemPrice);
 		}
 	}
 
@@ -951,7 +938,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingItemPrice shoppingItemPrice : findAll()) {
-			shoppingItemPricePersistence.remove(shoppingItemPrice);
+			remove(shoppingItemPrice);
 		}
 	}
 

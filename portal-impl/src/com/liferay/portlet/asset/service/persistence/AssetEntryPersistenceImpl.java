@@ -318,24 +318,11 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 *
 	 * @param primaryKey the primary key of the asset entry
 	 * @return the asset entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a asset entry with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the asset entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param entryId the primary key of the asset entry
-	 * @return the asset entry that was removed
-	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
 		Session session = null;
 
@@ -343,18 +330,18 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			session = openSession();
 
 			AssetEntry assetEntry = (AssetEntry)session.get(AssetEntryImpl.class,
-					Long.valueOf(entryId));
+					primaryKey);
 
 			if (assetEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					entryId);
+					primaryKey);
 			}
 
-			return assetEntryPersistence.remove(assetEntry);
+			return remove(assetEntry);
 		}
 		catch (NoSuchEntryException nsee) {
 			throw nsee;
@@ -368,15 +355,16 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	/**
-	 * Removes the asset entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the asset entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param assetEntry the asset entry
+	 * @param entryId the primary key of the asset entry
 	 * @return the asset entry that was removed
+	 * @throws com.liferay.portlet.asset.NoSuchEntryException if a asset entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AssetEntry remove(AssetEntry assetEntry) throws SystemException {
-		return super.remove(assetEntry);
+	public AssetEntry remove(long entryId)
+		throws NoSuchEntryException, SystemException {
+		return remove(Long.valueOf(entryId));
 	}
 
 	@Override
@@ -2551,7 +2539,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (AssetEntry assetEntry : findByCompanyId(companyId)) {
-			assetEntryPersistence.remove(assetEntry);
+			remove(assetEntry);
 		}
 	}
 
@@ -2563,7 +2551,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public void removeByVisible(boolean visible) throws SystemException {
 		for (AssetEntry assetEntry : findByVisible(visible)) {
-			assetEntryPersistence.remove(assetEntry);
+			remove(assetEntry);
 		}
 	}
 
@@ -2575,7 +2563,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public void removeByPublishDate(Date publishDate) throws SystemException {
 		for (AssetEntry assetEntry : findByPublishDate(publishDate)) {
-			assetEntryPersistence.remove(assetEntry);
+			remove(assetEntry);
 		}
 	}
 
@@ -2588,7 +2576,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public void removeByExpirationDate(Date expirationDate)
 		throws SystemException {
 		for (AssetEntry assetEntry : findByExpirationDate(expirationDate)) {
-			assetEntryPersistence.remove(assetEntry);
+			remove(assetEntry);
 		}
 	}
 
@@ -2603,7 +2591,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		throws NoSuchEntryException, SystemException {
 		AssetEntry assetEntry = findByG_CU(groupId, classUuid);
 
-		assetEntryPersistence.remove(assetEntry);
+		remove(assetEntry);
 	}
 
 	/**
@@ -2617,7 +2605,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		throws NoSuchEntryException, SystemException {
 		AssetEntry assetEntry = findByC_C(classNameId, classPK);
 
-		assetEntryPersistence.remove(assetEntry);
+		remove(assetEntry);
 	}
 
 	/**
@@ -2627,7 +2615,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public void removeAll() throws SystemException {
 		for (AssetEntry assetEntry : findAll()) {
-			assetEntryPersistence.remove(assetEntry);
+			remove(assetEntry);
 		}
 	}
 
@@ -4000,17 +3988,17 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			}
 		}
 
-		containsAssetCategory = new ContainsAssetCategory(this);
+		containsAssetCategory = new ContainsAssetCategory();
 
-		addAssetCategory = new AddAssetCategory(this);
-		clearAssetCategories = new ClearAssetCategories(this);
-		removeAssetCategory = new RemoveAssetCategory(this);
+		addAssetCategory = new AddAssetCategory();
+		clearAssetCategories = new ClearAssetCategories();
+		removeAssetCategory = new RemoveAssetCategory();
 
-		containsAssetTag = new ContainsAssetTag(this);
+		containsAssetTag = new ContainsAssetTag();
 
-		addAssetTag = new AddAssetTag(this);
-		clearAssetTags = new ClearAssetTags(this);
-		removeAssetTag = new RemoveAssetTag(this);
+		addAssetTag = new AddAssetTag();
+		clearAssetTags = new ClearAssetTags();
+		removeAssetTag = new RemoveAssetTag();
 	}
 
 	public void destroy() {
@@ -4073,10 +4061,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	protected RemoveAssetTag removeAssetTag;
 
 	protected class ContainsAssetCategory {
-		protected ContainsAssetCategory(
-			AssetEntryPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsAssetCategory() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSASSETCATEGORY,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -4103,17 +4088,15 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	protected class AddAssetCategory {
-		protected AddAssetCategory(AssetEntryPersistenceImpl persistenceImpl) {
+		protected AddAssetCategory() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO AssetEntries_AssetCategories (entryId, categoryId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long entryId, long categoryId)
 			throws SystemException {
-			if (!_persistenceImpl.containsAssetCategory.contains(entryId,
-						categoryId)) {
+			if (!containsAssetCategory.contains(entryId, categoryId)) {
 				ModelListener<com.liferay.portlet.asset.model.AssetCategory>[] assetCategoryListeners =
 					assetCategoryPersistence.getListeners();
 
@@ -4146,12 +4129,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private AssetEntryPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearAssetCategories {
-		protected ClearAssetCategories(
-			AssetEntryPersistenceImpl persistenceImpl) {
+		protected ClearAssetCategories() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM AssetEntries_AssetCategories WHERE entryId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -4202,17 +4183,15 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	protected class RemoveAssetCategory {
-		protected RemoveAssetCategory(AssetEntryPersistenceImpl persistenceImpl) {
+		protected RemoveAssetCategory() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM AssetEntries_AssetCategories WHERE entryId = ? AND categoryId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long entryId, long categoryId)
 			throws SystemException {
-			if (_persistenceImpl.containsAssetCategory.contains(entryId,
-						categoryId)) {
+			if (containsAssetCategory.contains(entryId, categoryId)) {
 				ModelListener<com.liferay.portlet.asset.model.AssetCategory>[] assetCategoryListeners =
 					assetCategoryPersistence.getListeners();
 
@@ -4245,13 +4224,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private AssetEntryPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsAssetTag {
-		protected ContainsAssetTag(AssetEntryPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsAssetTag() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSASSETTAG,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -4278,15 +4254,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	protected class AddAssetTag {
-		protected AddAssetTag(AssetEntryPersistenceImpl persistenceImpl) {
+		protected AddAssetTag() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO AssetEntries_AssetTags (entryId, tagId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long entryId, long tagId) throws SystemException {
-			if (!_persistenceImpl.containsAssetTag.contains(entryId, tagId)) {
+			if (!containsAssetTag.contains(entryId, tagId)) {
 				ModelListener<com.liferay.portlet.asset.model.AssetTag>[] assetTagListeners =
 					assetTagPersistence.getListeners();
 
@@ -4319,11 +4294,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private AssetEntryPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearAssetTags {
-		protected ClearAssetTags(AssetEntryPersistenceImpl persistenceImpl) {
+		protected ClearAssetTags() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM AssetEntries_AssetTags WHERE entryId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -4374,16 +4348,15 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	protected class RemoveAssetTag {
-		protected RemoveAssetTag(AssetEntryPersistenceImpl persistenceImpl) {
+		protected RemoveAssetTag() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM AssetEntries_AssetTags WHERE entryId = ? AND tagId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long entryId, long tagId)
 			throws SystemException {
-			if (_persistenceImpl.containsAssetTag.contains(entryId, tagId)) {
+			if (containsAssetTag.contains(entryId, tagId)) {
 				ModelListener<com.liferay.portlet.asset.model.AssetTag>[] assetTagListeners =
 					assetTagPersistence.getListeners();
 
@@ -4416,7 +4389,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private AssetEntryPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_ASSETENTRY = "SELECT assetEntry FROM AssetEntry assetEntry";

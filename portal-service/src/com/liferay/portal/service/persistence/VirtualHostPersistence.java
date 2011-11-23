@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.VirtualHost;
 
 /**
@@ -275,7 +274,4 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public VirtualHost remove(VirtualHost virtualHost)
-		throws SystemException;
 }

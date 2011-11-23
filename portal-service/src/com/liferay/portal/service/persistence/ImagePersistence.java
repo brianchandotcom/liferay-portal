@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Image;
 
 /**
@@ -276,6 +275,4 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Image remove(Image image) throws SystemException;
 }

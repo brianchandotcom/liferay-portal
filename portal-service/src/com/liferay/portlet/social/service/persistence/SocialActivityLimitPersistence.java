@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.social.model.SocialActivityLimit;
@@ -384,7 +383,4 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public SocialActivityLimit remove(SocialActivityLimit socialActivityLimit)
-		throws SystemException;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.expando.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -695,7 +694,4 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ExpandoColumn remove(ExpandoColumn expandoColumn)
-		throws SystemException;
 }

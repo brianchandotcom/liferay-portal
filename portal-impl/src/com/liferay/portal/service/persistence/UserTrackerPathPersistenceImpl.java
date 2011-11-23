@@ -193,24 +193,11 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 *
 	 * @param primaryKey the primary key of the user tracker path
 	 * @return the user tracker path that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user tracker path with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserTrackerPath remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userTrackerPathId the primary key of the user tracker path
-	 * @return the user tracker path that was removed
-	 * @throws com.liferay.portal.NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTrackerPath remove(long userTrackerPathId)
 		throws NoSuchUserTrackerPathException, SystemException {
 		Session session = null;
 
@@ -218,19 +205,18 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			session = openSession();
 
 			UserTrackerPath userTrackerPath = (UserTrackerPath)session.get(UserTrackerPathImpl.class,
-					Long.valueOf(userTrackerPathId));
+					primaryKey);
 
 			if (userTrackerPath == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						userTrackerPathId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserTrackerPathException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userTrackerPathId);
+					primaryKey);
 			}
 
-			return userTrackerPathPersistence.remove(userTrackerPath);
+			return remove(userTrackerPath);
 		}
 		catch (NoSuchUserTrackerPathException nsee) {
 			throw nsee;
@@ -244,16 +230,16 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	}
 
 	/**
-	 * Removes the user tracker path from the database. Also notifies the appropriate model listeners.
+	 * Removes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userTrackerPath the user tracker path
+	 * @param userTrackerPathId the primary key of the user tracker path
 	 * @return the user tracker path that was removed
+	 * @throws com.liferay.portal.NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public UserTrackerPath remove(UserTrackerPath userTrackerPath)
-		throws SystemException {
-		return super.remove(userTrackerPath);
+	public UserTrackerPath remove(long userTrackerPathId)
+		throws NoSuchUserTrackerPathException, SystemException {
+		return remove(Long.valueOf(userTrackerPathId));
 	}
 
 	@Override
@@ -934,7 +920,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		throws SystemException {
 		for (UserTrackerPath userTrackerPath : findByUserTrackerId(
 				userTrackerId)) {
-			userTrackerPathPersistence.remove(userTrackerPath);
+			remove(userTrackerPath);
 		}
 	}
 
@@ -945,7 +931,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	public void removeAll() throws SystemException {
 		for (UserTrackerPath userTrackerPath : findAll()) {
-			userTrackerPathPersistence.remove(userTrackerPath);
+			remove(userTrackerPath);
 		}
 	}
 

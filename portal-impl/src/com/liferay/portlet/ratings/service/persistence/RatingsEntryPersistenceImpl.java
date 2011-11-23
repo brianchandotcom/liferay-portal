@@ -250,24 +250,11 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 *
 	 * @param primaryKey the primary key of the ratings entry
 	 * @return the ratings entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a ratings entry with the primary key could not be found
+	 * @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public RatingsEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param entryId the primary key of the ratings entry
-	 * @return the ratings entry that was removed
-	 * @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public RatingsEntry remove(long entryId)
 		throws NoSuchEntryException, SystemException {
 		Session session = null;
 
@@ -275,18 +262,18 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 			session = openSession();
 
 			RatingsEntry ratingsEntry = (RatingsEntry)session.get(RatingsEntryImpl.class,
-					Long.valueOf(entryId));
+					primaryKey);
 
 			if (ratingsEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + entryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					entryId);
+					primaryKey);
 			}
 
-			return ratingsEntryPersistence.remove(ratingsEntry);
+			return remove(ratingsEntry);
 		}
 		catch (NoSuchEntryException nsee) {
 			throw nsee;
@@ -300,16 +287,16 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	}
 
 	/**
-	 * Removes the ratings entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ratingsEntry the ratings entry
+	 * @param entryId the primary key of the ratings entry
 	 * @return the ratings entry that was removed
+	 * @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public RatingsEntry remove(RatingsEntry ratingsEntry)
-		throws SystemException {
-		return super.remove(ratingsEntry);
+	public RatingsEntry remove(long entryId)
+		throws NoSuchEntryException, SystemException {
+		return remove(Long.valueOf(entryId));
 	}
 
 	@Override
@@ -1608,7 +1595,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	public void removeByC_C(long classNameId, long classPK)
 		throws SystemException {
 		for (RatingsEntry ratingsEntry : findByC_C(classNameId, classPK)) {
-			ratingsEntryPersistence.remove(ratingsEntry);
+			remove(ratingsEntry);
 		}
 	}
 
@@ -1624,7 +1611,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		throws NoSuchEntryException, SystemException {
 		RatingsEntry ratingsEntry = findByU_C_C(userId, classNameId, classPK);
 
-		ratingsEntryPersistence.remove(ratingsEntry);
+		remove(ratingsEntry);
 	}
 
 	/**
@@ -1638,7 +1625,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	public void removeByC_C_S(long classNameId, long classPK, double score)
 		throws SystemException {
 		for (RatingsEntry ratingsEntry : findByC_C_S(classNameId, classPK, score)) {
-			ratingsEntryPersistence.remove(ratingsEntry);
+			remove(ratingsEntry);
 		}
 	}
 
@@ -1649,7 +1636,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	 */
 	public void removeAll() throws SystemException {
 		for (RatingsEntry ratingsEntry : findAll()) {
-			ratingsEntryPersistence.remove(ratingsEntry);
+			remove(ratingsEntry);
 		}
 	}
 

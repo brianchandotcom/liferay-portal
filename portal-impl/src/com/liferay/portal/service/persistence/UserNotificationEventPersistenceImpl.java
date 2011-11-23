@@ -240,24 +240,11 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 *
 	 * @param primaryKey the primary key of the user notification event
 	 * @return the user notification event that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user notification event with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationEvent remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the user notification event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userNotificationEventId the primary key of the user notification event
-	 * @return the user notification event that was removed
-	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserNotificationEvent remove(long userNotificationEventId)
 		throws NoSuchUserNotificationEventException, SystemException {
 		Session session = null;
 
@@ -265,19 +252,18 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			session = openSession();
 
 			UserNotificationEvent userNotificationEvent = (UserNotificationEvent)session.get(UserNotificationEventImpl.class,
-					Long.valueOf(userNotificationEventId));
+					primaryKey);
 
 			if (userNotificationEvent == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						userNotificationEventId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserNotificationEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userNotificationEventId);
+					primaryKey);
 			}
 
-			return userNotificationEventPersistence.remove(userNotificationEvent);
+			return remove(userNotificationEvent);
 		}
 		catch (NoSuchUserNotificationEventException nsee) {
 			throw nsee;
@@ -291,16 +277,16 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
-	 * Removes the user notification event from the database. Also notifies the appropriate model listeners.
+	 * Removes the user notification event with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userNotificationEvent the user notification event
+	 * @param userNotificationEventId the primary key of the user notification event
 	 * @return the user notification event that was removed
+	 * @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public UserNotificationEvent remove(
-		UserNotificationEvent userNotificationEvent) throws SystemException {
-		return super.remove(userNotificationEvent);
+	public UserNotificationEvent remove(long userNotificationEventId)
+		throws NoSuchUserNotificationEventException, SystemException {
+		return remove(Long.valueOf(userNotificationEventId));
 	}
 
 	@Override
@@ -1775,7 +1761,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (UserNotificationEvent userNotificationEvent : findByUuid(uuid)) {
-			userNotificationEventPersistence.remove(userNotificationEvent);
+			remove(userNotificationEvent);
 		}
 	}
 
@@ -1787,7 +1773,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (UserNotificationEvent userNotificationEvent : findByUserId(userId)) {
-			userNotificationEventPersistence.remove(userNotificationEvent);
+			remove(userNotificationEvent);
 		}
 	}
 
@@ -1802,7 +1788,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		throws SystemException {
 		for (UserNotificationEvent userNotificationEvent : findByU_A(userId,
 				archived)) {
-			userNotificationEventPersistence.remove(userNotificationEvent);
+			remove(userNotificationEvent);
 		}
 	}
 
@@ -1813,7 +1799,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	public void removeAll() throws SystemException {
 		for (UserNotificationEvent userNotificationEvent : findAll()) {
-			userNotificationEventPersistence.remove(userNotificationEvent);
+			remove(userNotificationEvent);
 		}
 	}
 

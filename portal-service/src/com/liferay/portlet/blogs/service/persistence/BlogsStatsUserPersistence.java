@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
@@ -868,7 +867,4 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public BlogsStatsUser remove(BlogsStatsUser blogsStatsUser)
-		throws SystemException;
 }

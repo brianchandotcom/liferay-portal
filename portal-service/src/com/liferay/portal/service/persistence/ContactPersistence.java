@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Contact;
 
 /**
@@ -279,6 +278,4 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Contact remove(Contact contact) throws SystemException;
 }

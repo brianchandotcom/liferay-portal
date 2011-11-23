@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ListType;
 
 /**
@@ -280,6 +279,4 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ListType remove(ListType listType) throws SystemException;
 }

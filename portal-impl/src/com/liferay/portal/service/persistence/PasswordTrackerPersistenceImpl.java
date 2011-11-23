@@ -192,24 +192,11 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 *
 	 * @param primaryKey the primary key of the password tracker
 	 * @return the password tracker that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a password tracker with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordTracker remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param passwordTrackerId the primary key of the password tracker
-	 * @return the password tracker that was removed
-	 * @throws com.liferay.portal.NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PasswordTracker remove(long passwordTrackerId)
 		throws NoSuchPasswordTrackerException, SystemException {
 		Session session = null;
 
@@ -217,19 +204,18 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			session = openSession();
 
 			PasswordTracker passwordTracker = (PasswordTracker)session.get(PasswordTrackerImpl.class,
-					Long.valueOf(passwordTrackerId));
+					primaryKey);
 
 			if (passwordTracker == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						passwordTrackerId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPasswordTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					passwordTrackerId);
+					primaryKey);
 			}
 
-			return passwordTrackerPersistence.remove(passwordTracker);
+			return remove(passwordTracker);
 		}
 		catch (NoSuchPasswordTrackerException nsee) {
 			throw nsee;
@@ -243,16 +229,16 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	}
 
 	/**
-	 * Removes the password tracker from the database. Also notifies the appropriate model listeners.
+	 * Removes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param passwordTracker the password tracker
+	 * @param passwordTrackerId the primary key of the password tracker
 	 * @return the password tracker that was removed
+	 * @throws com.liferay.portal.NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PasswordTracker remove(PasswordTracker passwordTracker)
-		throws SystemException {
-		return super.remove(passwordTracker);
+	public PasswordTracker remove(long passwordTrackerId)
+		throws NoSuchPasswordTrackerException, SystemException {
+		return remove(Long.valueOf(passwordTrackerId));
 	}
 
 	@Override
@@ -930,7 +916,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (PasswordTracker passwordTracker : findByUserId(userId)) {
-			passwordTrackerPersistence.remove(passwordTracker);
+			remove(passwordTracker);
 		}
 	}
 
@@ -941,7 +927,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	public void removeAll() throws SystemException {
 		for (PasswordTracker passwordTracker : findAll()) {
-			passwordTrackerPersistence.remove(passwordTracker);
+			remove(passwordTracker);
 		}
 	}
 

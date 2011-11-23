@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceAction;
 
 /**
@@ -345,7 +344,4 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ResourceAction remove(ResourceAction resourceAction)
-		throws SystemException;
 }

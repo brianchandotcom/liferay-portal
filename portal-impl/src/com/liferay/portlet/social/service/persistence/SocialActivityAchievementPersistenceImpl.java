@@ -311,24 +311,11 @@ public class SocialActivityAchievementPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the social activity achievement
 	 * @return the social activity achievement that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity achievement with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivityAchievement remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param activityAchievementId the primary key of the social activity achievement
-	 * @return the social activity achievement that was removed
-	 * @throws com.liferay.portlet.social.NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityAchievement remove(long activityAchievementId)
 		throws NoSuchActivityAchievementException, SystemException {
 		Session session = null;
 
@@ -336,19 +323,18 @@ public class SocialActivityAchievementPersistenceImpl
 			session = openSession();
 
 			SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)session.get(SocialActivityAchievementImpl.class,
-					Long.valueOf(activityAchievementId));
+					primaryKey);
 
 			if (socialActivityAchievement == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						activityAchievementId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchActivityAchievementException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					activityAchievementId);
+					primaryKey);
 			}
 
-			return socialActivityAchievementPersistence.remove(socialActivityAchievement);
+			return remove(socialActivityAchievement);
 		}
 		catch (NoSuchActivityAchievementException nsee) {
 			throw nsee;
@@ -362,17 +348,16 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	/**
-	 * Removes the social activity achievement from the database. Also notifies the appropriate model listeners.
+	 * Removes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param socialActivityAchievement the social activity achievement
+	 * @param activityAchievementId the primary key of the social activity achievement
 	 * @return the social activity achievement that was removed
+	 * @throws com.liferay.portlet.social.NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SocialActivityAchievement remove(
-		SocialActivityAchievement socialActivityAchievement)
-		throws SystemException {
-		return super.remove(socialActivityAchievement);
+	public SocialActivityAchievement remove(long activityAchievementId)
+		throws NoSuchActivityAchievementException, SystemException {
+		return remove(Long.valueOf(activityAchievementId));
 	}
 
 	@Override
@@ -2500,7 +2485,7 @@ public class SocialActivityAchievementPersistenceImpl
 		throws SystemException {
 		for (SocialActivityAchievement socialActivityAchievement : findByG_U(
 				groupId, userId)) {
-			socialActivityAchievementPersistence.remove(socialActivityAchievement);
+			remove(socialActivityAchievement);
 		}
 	}
 
@@ -2515,7 +2500,7 @@ public class SocialActivityAchievementPersistenceImpl
 		throws SystemException {
 		for (SocialActivityAchievement socialActivityAchievement : findByG_N(
 				groupId, name)) {
-			socialActivityAchievementPersistence.remove(socialActivityAchievement);
+			remove(socialActivityAchievement);
 		}
 	}
 
@@ -2530,7 +2515,7 @@ public class SocialActivityAchievementPersistenceImpl
 		throws SystemException {
 		for (SocialActivityAchievement socialActivityAchievement : findByG_F(
 				groupId, firstInGroup)) {
-			socialActivityAchievementPersistence.remove(socialActivityAchievement);
+			remove(socialActivityAchievement);
 		}
 	}
 
@@ -2547,7 +2532,7 @@ public class SocialActivityAchievementPersistenceImpl
 		SocialActivityAchievement socialActivityAchievement = findByG_U_N(groupId,
 				userId, name);
 
-		socialActivityAchievementPersistence.remove(socialActivityAchievement);
+		remove(socialActivityAchievement);
 	}
 
 	/**
@@ -2562,7 +2547,7 @@ public class SocialActivityAchievementPersistenceImpl
 		throws SystemException {
 		for (SocialActivityAchievement socialActivityAchievement : findByG_U_F(
 				groupId, userId, firstInGroup)) {
-			socialActivityAchievementPersistence.remove(socialActivityAchievement);
+			remove(socialActivityAchievement);
 		}
 	}
 
@@ -2573,7 +2558,7 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	public void removeAll() throws SystemException {
 		for (SocialActivityAchievement socialActivityAchievement : findAll()) {
-			socialActivityAchievementPersistence.remove(socialActivityAchievement);
+			remove(socialActivityAchievement);
 		}
 	}
 

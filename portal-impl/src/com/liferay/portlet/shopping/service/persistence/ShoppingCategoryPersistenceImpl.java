@@ -219,24 +219,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping category with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param categoryId the primary key of the shopping category
-	 * @return the shopping category that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingCategory remove(long categoryId)
 		throws NoSuchCategoryException, SystemException {
 		Session session = null;
 
@@ -244,18 +231,18 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			session = openSession();
 
 			ShoppingCategory shoppingCategory = (ShoppingCategory)session.get(ShoppingCategoryImpl.class,
-					Long.valueOf(categoryId));
+					primaryKey);
 
 			if (shoppingCategory == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + categoryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					categoryId);
+					primaryKey);
 			}
 
-			return shoppingCategoryPersistence.remove(shoppingCategory);
+			return remove(shoppingCategory);
 		}
 		catch (NoSuchCategoryException nsee) {
 			throw nsee;
@@ -269,16 +256,16 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	/**
-	 * Removes the shopping category from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping category with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingCategory the shopping category
+	 * @param categoryId the primary key of the shopping category
 	 * @return the shopping category that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingCategory remove(ShoppingCategory shoppingCategory)
-		throws SystemException {
-		return super.remove(shoppingCategory);
+	public ShoppingCategory remove(long categoryId)
+		throws NoSuchCategoryException, SystemException {
+		return remove(Long.valueOf(categoryId));
 	}
 
 	@Override
@@ -1996,7 +1983,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (ShoppingCategory shoppingCategory : findByGroupId(groupId)) {
-			shoppingCategoryPersistence.remove(shoppingCategory);
+			remove(shoppingCategory);
 		}
 	}
 
@@ -2011,7 +1998,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		throws SystemException {
 		for (ShoppingCategory shoppingCategory : findByG_P(groupId,
 				parentCategoryId)) {
-			shoppingCategoryPersistence.remove(shoppingCategory);
+			remove(shoppingCategory);
 		}
 	}
 
@@ -2022,7 +2009,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingCategory shoppingCategory : findAll()) {
-			shoppingCategoryPersistence.remove(shoppingCategory);
+			remove(shoppingCategory);
 		}
 	}
 

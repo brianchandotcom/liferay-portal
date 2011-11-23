@@ -231,24 +231,11 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 *
 	 * @param primaryKey the primary key of the message boards thread flag
 	 * @return the message boards thread flag that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards thread flag with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBThreadFlag remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param threadFlagId the primary key of the message boards thread flag
-	 * @return the message boards thread flag that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBThreadFlag remove(long threadFlagId)
 		throws NoSuchThreadFlagException, SystemException {
 		Session session = null;
 
@@ -256,18 +243,18 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			session = openSession();
 
 			MBThreadFlag mbThreadFlag = (MBThreadFlag)session.get(MBThreadFlagImpl.class,
-					Long.valueOf(threadFlagId));
+					primaryKey);
 
 			if (mbThreadFlag == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + threadFlagId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchThreadFlagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					threadFlagId);
+					primaryKey);
 			}
 
-			return mbThreadFlagPersistence.remove(mbThreadFlag);
+			return remove(mbThreadFlag);
 		}
 		catch (NoSuchThreadFlagException nsee) {
 			throw nsee;
@@ -281,16 +268,16 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	}
 
 	/**
-	 * Removes the message boards thread flag from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbThreadFlag the message boards thread flag
+	 * @param threadFlagId the primary key of the message boards thread flag
 	 * @return the message boards thread flag that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBThreadFlag remove(MBThreadFlag mbThreadFlag)
-		throws SystemException {
-		return super.remove(mbThreadFlag);
+	public MBThreadFlag remove(long threadFlagId)
+		throws NoSuchThreadFlagException, SystemException {
+		return remove(Long.valueOf(threadFlagId));
 	}
 
 	@Override
@@ -1488,7 +1475,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (MBThreadFlag mbThreadFlag : findByUserId(userId)) {
-			mbThreadFlagPersistence.remove(mbThreadFlag);
+			remove(mbThreadFlag);
 		}
 	}
 
@@ -1500,7 +1487,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	public void removeByThreadId(long threadId) throws SystemException {
 		for (MBThreadFlag mbThreadFlag : findByThreadId(threadId)) {
-			mbThreadFlagPersistence.remove(mbThreadFlag);
+			remove(mbThreadFlag);
 		}
 	}
 
@@ -1515,7 +1502,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		throws NoSuchThreadFlagException, SystemException {
 		MBThreadFlag mbThreadFlag = findByU_T(userId, threadId);
 
-		mbThreadFlagPersistence.remove(mbThreadFlag);
+		remove(mbThreadFlag);
 	}
 
 	/**
@@ -1525,7 +1512,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	public void removeAll() throws SystemException {
 		for (MBThreadFlag mbThreadFlag : findAll()) {
-			mbThreadFlagPersistence.remove(mbThreadFlag);
+			remove(mbThreadFlag);
 		}
 	}
 

@@ -314,24 +314,11 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 *
 	 * @param primaryKey the primary key of the document library file entry metadata
 	 * @return the document library file entry metadata that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry metadata with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileEntryMetadata remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
-	 * @return the document library file entry metadata that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileEntryMetadata remove(long fileEntryMetadataId)
 		throws NoSuchFileEntryMetadataException, SystemException {
 		Session session = null;
 
@@ -339,19 +326,18 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			session = openSession();
 
 			DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)session.get(DLFileEntryMetadataImpl.class,
-					Long.valueOf(fileEntryMetadataId));
+					primaryKey);
 
 			if (dlFileEntryMetadata == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						fileEntryMetadataId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFileEntryMetadataException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileEntryMetadataId);
+					primaryKey);
 			}
 
-			return dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+			return remove(dlFileEntryMetadata);
 		}
 		catch (NoSuchFileEntryMetadataException nsee) {
 			throw nsee;
@@ -365,16 +351,16 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	}
 
 	/**
-	 * Removes the document library file entry metadata from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileEntryMetadata the document library file entry metadata
+	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
 	 * @return the document library file entry metadata that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFileEntryMetadata remove(DLFileEntryMetadata dlFileEntryMetadata)
-		throws SystemException {
-		return super.remove(dlFileEntryMetadata);
+	public DLFileEntryMetadata remove(long fileEntryMetadataId)
+		throws NoSuchFileEntryMetadataException, SystemException {
+		return remove(Long.valueOf(fileEntryMetadataId));
 	}
 
 	@Override
@@ -2520,7 +2506,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DLFileEntryMetadata dlFileEntryMetadata : findByUuid(uuid)) {
-			dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+			remove(dlFileEntryMetadata);
 		}
 	}
 
@@ -2534,7 +2520,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		throws SystemException {
 		for (DLFileEntryMetadata dlFileEntryMetadata : findByFileEntryTypeId(
 				fileEntryTypeId)) {
-			dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+			remove(dlFileEntryMetadata);
 		}
 	}
 
@@ -2547,7 +2533,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public void removeByFileEntryId(long fileEntryId) throws SystemException {
 		for (DLFileEntryMetadata dlFileEntryMetadata : findByFileEntryId(
 				fileEntryId)) {
-			dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+			remove(dlFileEntryMetadata);
 		}
 	}
 
@@ -2561,7 +2547,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		throws SystemException {
 		for (DLFileEntryMetadata dlFileEntryMetadata : findByFileVersionId(
 				fileVersionId)) {
-			dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+			remove(dlFileEntryMetadata);
 		}
 	}
 
@@ -2577,7 +2563,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		DLFileEntryMetadata dlFileEntryMetadata = findByD_F(DDMStructureId,
 				fileVersionId);
 
-		dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+		remove(dlFileEntryMetadata);
 	}
 
 	/**
@@ -2592,7 +2578,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		DLFileEntryMetadata dlFileEntryMetadata = findByF_V(fileEntryId,
 				fileVersionId);
 
-		dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+		remove(dlFileEntryMetadata);
 	}
 
 	/**
@@ -2602,7 +2588,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFileEntryMetadata dlFileEntryMetadata : findAll()) {
-			dlFileEntryMetadataPersistence.remove(dlFileEntryMetadata);
+			remove(dlFileEntryMetadata);
 		}
 	}
 

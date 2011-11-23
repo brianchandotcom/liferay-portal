@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.journal.model.JournalTemplate;
@@ -994,7 +993,4 @@ public interface JournalTemplatePersistence extends BasePersistence<JournalTempl
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public JournalTemplate remove(JournalTemplate journalTemplate)
-		throws SystemException;
 }

@@ -424,41 +424,29 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 *
 	 * @param primaryKey the primary key of the user
 	 * @return the user that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public User remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userId the primary key of the user
-	 * @return the user that was removed
-	 * @throws com.liferay.portal.NoSuchUserException if a user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public User remove(long userId) throws NoSuchUserException, SystemException {
+		throws NoSuchUserException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			User user = (User)session.get(UserImpl.class, Long.valueOf(userId));
+			User user = (User)session.get(UserImpl.class, primaryKey);
 
 			if (user == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + userId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userId);
+					primaryKey);
 			}
 
-			return userPersistence.remove(user);
+			return remove(user);
 		}
 		catch (NoSuchUserException nsee) {
 			throw nsee;
@@ -472,15 +460,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
-	 * Removes the user from the database. Also notifies the appropriate model listeners.
+	 * Removes the user with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param user the user
+	 * @param userId the primary key of the user
 	 * @return the user that was removed
+	 * @throws com.liferay.portal.NoSuchUserException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public User remove(User user) throws SystemException {
-		return super.remove(user);
+	public User remove(long userId) throws NoSuchUserException, SystemException {
+		return remove(Long.valueOf(userId));
 	}
 
 	@Override
@@ -3736,7 +3724,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (User user : findByUuid(uuid)) {
-			userPersistence.remove(user);
+			remove(user);
 		}
 	}
 
@@ -3748,7 +3736,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (User user : findByCompanyId(companyId)) {
-			userPersistence.remove(user);
+			remove(user);
 		}
 	}
 
@@ -3762,7 +3750,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByContactId(contactId);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3774,7 +3762,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void removeByEmailAddress(String emailAddress)
 		throws SystemException {
 		for (User user : findByEmailAddress(emailAddress)) {
-			userPersistence.remove(user);
+			remove(user);
 		}
 	}
 
@@ -3788,7 +3776,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByPortraitId(portraitId);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3802,7 +3790,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByC_U(companyId, userId);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3816,7 +3804,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByC_DU(companyId, defaultUser);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3830,7 +3818,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByC_SN(companyId, screenName);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3844,7 +3832,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByC_EA(companyId, emailAddress);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3858,7 +3846,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByC_FID(companyId, facebookId);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3872,7 +3860,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		throws NoSuchUserException, SystemException {
 		User user = findByC_O(companyId, openId);
 
-		userPersistence.remove(user);
+		remove(user);
 	}
 
 	/**
@@ -3885,7 +3873,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void removeByC_S(long companyId, int status)
 		throws SystemException {
 		for (User user : findByC_S(companyId, status)) {
-			userPersistence.remove(user);
+			remove(user);
 		}
 	}
 
@@ -3896,7 +3884,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	public void removeAll() throws SystemException {
 		for (User user : findAll()) {
-			userPersistence.remove(user);
+			remove(user);
 		}
 	}
 
@@ -7496,41 +7484,41 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 		}
 
-		containsGroup = new ContainsGroup(this);
+		containsGroup = new ContainsGroup();
 
-		addGroup = new AddGroup(this);
-		clearGroups = new ClearGroups(this);
-		removeGroup = new RemoveGroup(this);
+		addGroup = new AddGroup();
+		clearGroups = new ClearGroups();
+		removeGroup = new RemoveGroup();
 
-		containsOrganization = new ContainsOrganization(this);
+		containsOrganization = new ContainsOrganization();
 
-		addOrganization = new AddOrganization(this);
-		clearOrganizations = new ClearOrganizations(this);
-		removeOrganization = new RemoveOrganization(this);
+		addOrganization = new AddOrganization();
+		clearOrganizations = new ClearOrganizations();
+		removeOrganization = new RemoveOrganization();
 
-		containsPermission = new ContainsPermission(this);
+		containsPermission = new ContainsPermission();
 
-		addPermission = new AddPermission(this);
-		clearPermissions = new ClearPermissions(this);
-		removePermission = new RemovePermission(this);
+		addPermission = new AddPermission();
+		clearPermissions = new ClearPermissions();
+		removePermission = new RemovePermission();
 
-		containsRole = new ContainsRole(this);
+		containsRole = new ContainsRole();
 
-		addRole = new AddRole(this);
-		clearRoles = new ClearRoles(this);
-		removeRole = new RemoveRole(this);
+		addRole = new AddRole();
+		clearRoles = new ClearRoles();
+		removeRole = new RemoveRole();
 
-		containsTeam = new ContainsTeam(this);
+		containsTeam = new ContainsTeam();
 
-		addTeam = new AddTeam(this);
-		clearTeams = new ClearTeams(this);
-		removeTeam = new RemoveTeam(this);
+		addTeam = new AddTeam();
+		clearTeams = new ClearTeams();
+		removeTeam = new RemoveTeam();
 
-		containsUserGroup = new ContainsUserGroup(this);
+		containsUserGroup = new ContainsUserGroup();
 
-		addUserGroup = new AddUserGroup(this);
-		clearUserGroups = new ClearUserGroups(this);
-		removeUserGroup = new RemoveUserGroup(this);
+		addUserGroup = new AddUserGroup();
+		clearUserGroups = new ClearUserGroups();
+		removeUserGroup = new RemoveUserGroup();
 	}
 
 	public void destroy() {
@@ -7719,9 +7707,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	protected RemoveUserGroup removeUserGroup;
 
 	protected class ContainsGroup {
-		protected ContainsGroup(UserPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSGROUP,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -7748,15 +7734,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class AddGroup {
-		protected AddGroup(UserPersistenceImpl persistenceImpl) {
+		protected AddGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Groups (userId, groupId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long userId, long groupId) throws SystemException {
-			if (!_persistenceImpl.containsGroup.contains(userId, groupId)) {
+			if (!containsGroup.contains(userId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<User> listener : listeners) {
@@ -7786,11 +7771,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearGroups {
-		protected ClearGroups(UserPersistenceImpl persistenceImpl) {
+		protected ClearGroups() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Groups WHERE userId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -7840,16 +7824,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class RemoveGroup {
-		protected RemoveGroup(UserPersistenceImpl persistenceImpl) {
+		protected RemoveGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Groups WHERE userId = ? AND groupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long userId, long groupId)
 			throws SystemException {
-			if (_persistenceImpl.containsGroup.contains(userId, groupId)) {
+			if (containsGroup.contains(userId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<User> listener : listeners) {
@@ -7879,13 +7862,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsOrganization {
-		protected ContainsOrganization(UserPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsOrganization() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSORGANIZATION,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -7912,17 +7892,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class AddOrganization {
-		protected AddOrganization(UserPersistenceImpl persistenceImpl) {
+		protected AddOrganization() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Orgs (userId, organizationId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long userId, long organizationId)
 			throws SystemException {
-			if (!_persistenceImpl.containsOrganization.contains(userId,
-						organizationId)) {
+			if (!containsOrganization.contains(userId, organizationId)) {
 				ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
 					organizationPersistence.getListeners();
 
@@ -7955,11 +7933,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearOrganizations {
-		protected ClearOrganizations(UserPersistenceImpl persistenceImpl) {
+		protected ClearOrganizations() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Orgs WHERE userId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -8010,17 +7987,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class RemoveOrganization {
-		protected RemoveOrganization(UserPersistenceImpl persistenceImpl) {
+		protected RemoveOrganization() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Orgs WHERE userId = ? AND organizationId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long userId, long organizationId)
 			throws SystemException {
-			if (_persistenceImpl.containsOrganization.contains(userId,
-						organizationId)) {
+			if (containsOrganization.contains(userId, organizationId)) {
 				ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
 					organizationPersistence.getListeners();
 
@@ -8053,13 +8028,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsPermission {
-		protected ContainsPermission(UserPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsPermission() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSPERMISSION,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -8086,17 +8058,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class AddPermission {
-		protected AddPermission(UserPersistenceImpl persistenceImpl) {
+		protected AddPermission() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Permissions (userId, permissionId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long userId, long permissionId)
 			throws SystemException {
-			if (!_persistenceImpl.containsPermission.contains(userId,
-						permissionId)) {
+			if (!containsPermission.contains(userId, permissionId)) {
 				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
 					permissionPersistence.getListeners();
 
@@ -8129,11 +8099,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearPermissions {
-		protected ClearPermissions(UserPersistenceImpl persistenceImpl) {
+		protected ClearPermissions() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Permissions WHERE userId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -8184,17 +8153,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class RemovePermission {
-		protected RemovePermission(UserPersistenceImpl persistenceImpl) {
+		protected RemovePermission() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Permissions WHERE userId = ? AND permissionId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long userId, long permissionId)
 			throws SystemException {
-			if (_persistenceImpl.containsPermission.contains(userId,
-						permissionId)) {
+			if (containsPermission.contains(userId, permissionId)) {
 				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
 					permissionPersistence.getListeners();
 
@@ -8227,13 +8194,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsRole {
-		protected ContainsRole(UserPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsRole() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSROLE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -8260,15 +8224,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class AddRole {
-		protected AddRole(UserPersistenceImpl persistenceImpl) {
+		protected AddRole() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Roles (userId, roleId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long userId, long roleId) throws SystemException {
-			if (!_persistenceImpl.containsRole.contains(userId, roleId)) {
+			if (!containsRole.contains(userId, roleId)) {
 				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
 
 				for (ModelListener<User> listener : listeners) {
@@ -8298,11 +8261,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearRoles {
-		protected ClearRoles(UserPersistenceImpl persistenceImpl) {
+		protected ClearRoles() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Roles WHERE userId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -8352,16 +8314,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class RemoveRole {
-		protected RemoveRole(UserPersistenceImpl persistenceImpl) {
+		protected RemoveRole() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Roles WHERE userId = ? AND roleId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long userId, long roleId)
 			throws SystemException {
-			if (_persistenceImpl.containsRole.contains(userId, roleId)) {
+			if (containsRole.contains(userId, roleId)) {
 				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
 
 				for (ModelListener<User> listener : listeners) {
@@ -8391,13 +8352,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsTeam {
-		protected ContainsTeam(UserPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsTeam() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSTEAM,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -8424,15 +8382,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class AddTeam {
-		protected AddTeam(UserPersistenceImpl persistenceImpl) {
+		protected AddTeam() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Teams (userId, teamId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long userId, long teamId) throws SystemException {
-			if (!_persistenceImpl.containsTeam.contains(userId, teamId)) {
+			if (!containsTeam.contains(userId, teamId)) {
 				ModelListener<com.liferay.portal.model.Team>[] teamListeners = teamPersistence.getListeners();
 
 				for (ModelListener<User> listener : listeners) {
@@ -8462,11 +8419,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearTeams {
-		protected ClearTeams(UserPersistenceImpl persistenceImpl) {
+		protected ClearTeams() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Teams WHERE userId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -8516,16 +8472,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class RemoveTeam {
-		protected RemoveTeam(UserPersistenceImpl persistenceImpl) {
+		protected RemoveTeam() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Teams WHERE userId = ? AND teamId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long userId, long teamId)
 			throws SystemException {
-			if (_persistenceImpl.containsTeam.contains(userId, teamId)) {
+			if (containsTeam.contains(userId, teamId)) {
 				ModelListener<com.liferay.portal.model.Team>[] teamListeners = teamPersistence.getListeners();
 
 				for (ModelListener<User> listener : listeners) {
@@ -8555,13 +8510,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsUserGroup {
-		protected ContainsUserGroup(UserPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsUserGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSUSERGROUP,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -8588,16 +8540,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class AddUserGroup {
-		protected AddUserGroup(UserPersistenceImpl persistenceImpl) {
+		protected AddUserGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_UserGroups (userId, userGroupId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long userId, long userGroupId)
 			throws SystemException {
-			if (!_persistenceImpl.containsUserGroup.contains(userId, userGroupId)) {
+			if (!containsUserGroup.contains(userId, userGroupId)) {
 				ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
 					userGroupPersistence.getListeners();
 
@@ -8630,11 +8581,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearUserGroups {
-		protected ClearUserGroups(UserPersistenceImpl persistenceImpl) {
+		protected ClearUserGroups() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_UserGroups WHERE userId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -8685,16 +8635,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	protected class RemoveUserGroup {
-		protected RemoveUserGroup(UserPersistenceImpl persistenceImpl) {
+		protected RemoveUserGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_UserGroups WHERE userId = ? AND userGroupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long userId, long userGroupId)
 			throws SystemException {
-			if (_persistenceImpl.containsUserGroup.contains(userId, userGroupId)) {
+			if (containsUserGroup.contains(userId, userGroupId)) {
 				ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
 					userGroupPersistence.getListeners();
 
@@ -8727,7 +8676,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private UserPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";

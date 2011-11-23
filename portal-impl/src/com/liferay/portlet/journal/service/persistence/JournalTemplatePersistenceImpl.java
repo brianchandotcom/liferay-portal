@@ -333,24 +333,11 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 *
 	 * @param primaryKey the primary key of the journal template
 	 * @return the journal template that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal template with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchTemplateException if a journal template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalTemplate remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the journal template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param id the primary key of the journal template
-	 * @return the journal template that was removed
-	 * @throws com.liferay.portlet.journal.NoSuchTemplateException if a journal template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalTemplate remove(long id)
 		throws NoSuchTemplateException, SystemException {
 		Session session = null;
 
@@ -358,18 +345,18 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 			session = openSession();
 
 			JournalTemplate journalTemplate = (JournalTemplate)session.get(JournalTemplateImpl.class,
-					Long.valueOf(id));
+					primaryKey);
 
 			if (journalTemplate == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchTemplateException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					id);
+					primaryKey);
 			}
 
-			return journalTemplatePersistence.remove(journalTemplate);
+			return remove(journalTemplate);
 		}
 		catch (NoSuchTemplateException nsee) {
 			throw nsee;
@@ -383,16 +370,16 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	}
 
 	/**
-	 * Removes the journal template from the database. Also notifies the appropriate model listeners.
+	 * Removes the journal template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param journalTemplate the journal template
+	 * @param id the primary key of the journal template
 	 * @return the journal template that was removed
+	 * @throws com.liferay.portlet.journal.NoSuchTemplateException if a journal template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public JournalTemplate remove(JournalTemplate journalTemplate)
-		throws SystemException {
-		return super.remove(journalTemplate);
+	public JournalTemplate remove(long id)
+		throws NoSuchTemplateException, SystemException {
+		return remove(Long.valueOf(id));
 	}
 
 	@Override
@@ -3476,7 +3463,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (JournalTemplate journalTemplate : findByUuid(uuid)) {
-			journalTemplatePersistence.remove(journalTemplate);
+			remove(journalTemplate);
 		}
 	}
 
@@ -3491,7 +3478,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		throws NoSuchTemplateException, SystemException {
 		JournalTemplate journalTemplate = findByUUID_G(uuid, groupId);
 
-		journalTemplatePersistence.remove(journalTemplate);
+		remove(journalTemplate);
 	}
 
 	/**
@@ -3502,7 +3489,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (JournalTemplate journalTemplate : findByGroupId(groupId)) {
-			journalTemplatePersistence.remove(journalTemplate);
+			remove(journalTemplate);
 		}
 	}
 
@@ -3514,7 +3501,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 */
 	public void removeByTemplateId(String templateId) throws SystemException {
 		for (JournalTemplate journalTemplate : findByTemplateId(templateId)) {
-			journalTemplatePersistence.remove(journalTemplate);
+			remove(journalTemplate);
 		}
 	}
 
@@ -3528,7 +3515,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		throws NoSuchTemplateException, SystemException {
 		JournalTemplate journalTemplate = findBySmallImageId(smallImageId);
 
-		journalTemplatePersistence.remove(journalTemplate);
+		remove(journalTemplate);
 	}
 
 	/**
@@ -3542,7 +3529,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		throws NoSuchTemplateException, SystemException {
 		JournalTemplate journalTemplate = findByG_T(groupId, templateId);
 
-		journalTemplatePersistence.remove(journalTemplate);
+		remove(journalTemplate);
 	}
 
 	/**
@@ -3555,7 +3542,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	public void removeByG_S(long groupId, String structureId)
 		throws SystemException {
 		for (JournalTemplate journalTemplate : findByG_S(groupId, structureId)) {
-			journalTemplatePersistence.remove(journalTemplate);
+			remove(journalTemplate);
 		}
 	}
 
@@ -3566,7 +3553,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 	 */
 	public void removeAll() throws SystemException {
 		for (JournalTemplate journalTemplate : findAll()) {
-			journalTemplatePersistence.remove(journalTemplate);
+			remove(journalTemplate);
 		}
 	}
 

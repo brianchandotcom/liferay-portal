@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordTracker;
 
 /**
@@ -284,7 +283,4 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public PasswordTracker remove(PasswordTracker passwordTracker)
-		throws SystemException;
 }

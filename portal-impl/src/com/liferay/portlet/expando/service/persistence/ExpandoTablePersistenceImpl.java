@@ -223,24 +223,11 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 *
 	 * @param primaryKey the primary key of the expando table
 	 * @return the expando table that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a expando table with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoTable remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param tableId the primary key of the expando table
-	 * @return the expando table that was removed
-	 * @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoTable remove(long tableId)
 		throws NoSuchTableException, SystemException {
 		Session session = null;
 
@@ -248,18 +235,18 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			session = openSession();
 
 			ExpandoTable expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
-					Long.valueOf(tableId));
+					primaryKey);
 
 			if (expandoTable == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tableId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchTableException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					tableId);
+					primaryKey);
 			}
 
-			return expandoTablePersistence.remove(expandoTable);
+			return remove(expandoTable);
 		}
 		catch (NoSuchTableException nsee) {
 			throw nsee;
@@ -273,16 +260,16 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	}
 
 	/**
-	 * Removes the expando table from the database. Also notifies the appropriate model listeners.
+	 * Removes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param expandoTable the expando table
+	 * @param tableId the primary key of the expando table
 	 * @return the expando table that was removed
+	 * @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ExpandoTable remove(ExpandoTable expandoTable)
-		throws SystemException {
-		return super.remove(expandoTable);
+	public ExpandoTable remove(long tableId)
+		throws NoSuchTableException, SystemException {
+		return remove(Long.valueOf(tableId));
 	}
 
 	@Override
@@ -1185,7 +1172,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	public void removeByC_C(long companyId, long classNameId)
 		throws SystemException {
 		for (ExpandoTable expandoTable : findByC_C(companyId, classNameId)) {
-			expandoTablePersistence.remove(expandoTable);
+			remove(expandoTable);
 		}
 	}
 
@@ -1201,7 +1188,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		throws NoSuchTableException, SystemException {
 		ExpandoTable expandoTable = findByC_C_N(companyId, classNameId, name);
 
-		expandoTablePersistence.remove(expandoTable);
+		remove(expandoTable);
 	}
 
 	/**
@@ -1211,7 +1198,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	public void removeAll() throws SystemException {
 		for (ExpandoTable expandoTable : findAll()) {
-			expandoTablePersistence.remove(expandoTable);
+			remove(expandoTable);
 		}
 	}
 

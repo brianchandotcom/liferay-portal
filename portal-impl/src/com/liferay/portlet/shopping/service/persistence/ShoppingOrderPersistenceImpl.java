@@ -258,24 +258,11 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 *
 	 * @param primaryKey the primary key of the shopping order
 	 * @return the shopping order that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping order with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingOrder remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param orderId the primary key of the shopping order
-	 * @return the shopping order that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingOrder remove(long orderId)
 		throws NoSuchOrderException, SystemException {
 		Session session = null;
 
@@ -283,18 +270,18 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			session = openSession();
 
 			ShoppingOrder shoppingOrder = (ShoppingOrder)session.get(ShoppingOrderImpl.class,
-					Long.valueOf(orderId));
+					primaryKey);
 
 			if (shoppingOrder == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + orderId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchOrderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					orderId);
+					primaryKey);
 			}
 
-			return shoppingOrderPersistence.remove(shoppingOrder);
+			return remove(shoppingOrder);
 		}
 		catch (NoSuchOrderException nsee) {
 			throw nsee;
@@ -308,16 +295,16 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	}
 
 	/**
-	 * Removes the shopping order from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingOrder the shopping order
+	 * @param orderId the primary key of the shopping order
 	 * @return the shopping order that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingOrder remove(ShoppingOrder shoppingOrder)
-		throws SystemException {
-		return super.remove(shoppingOrder);
+	public ShoppingOrder remove(long orderId)
+		throws NoSuchOrderException, SystemException {
+		return remove(Long.valueOf(orderId));
 	}
 
 	@Override
@@ -2490,7 +2477,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (ShoppingOrder shoppingOrder : findByGroupId(groupId)) {
-			shoppingOrderPersistence.remove(shoppingOrder);
+			remove(shoppingOrder);
 		}
 	}
 
@@ -2504,7 +2491,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		throws NoSuchOrderException, SystemException {
 		ShoppingOrder shoppingOrder = findByNumber(number);
 
-		shoppingOrderPersistence.remove(shoppingOrder);
+		remove(shoppingOrder);
 	}
 
 	/**
@@ -2517,7 +2504,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		throws NoSuchOrderException, SystemException {
 		ShoppingOrder shoppingOrder = findByPPTxnId(ppTxnId);
 
-		shoppingOrderPersistence.remove(shoppingOrder);
+		remove(shoppingOrder);
 	}
 
 	/**
@@ -2532,7 +2519,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		String ppPaymentStatus) throws SystemException {
 		for (ShoppingOrder shoppingOrder : findByG_U_PPPS(groupId, userId,
 				ppPaymentStatus)) {
-			shoppingOrderPersistence.remove(shoppingOrder);
+			remove(shoppingOrder);
 		}
 	}
 
@@ -2543,7 +2530,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingOrder shoppingOrder : findAll()) {
-			shoppingOrderPersistence.remove(shoppingOrder);
+			remove(shoppingOrder);
 		}
 	}
 

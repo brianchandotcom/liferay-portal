@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
@@ -461,7 +460,4 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public SCProductScreenshot remove(SCProductScreenshot scProductScreenshot)
-		throws SystemException;
 }

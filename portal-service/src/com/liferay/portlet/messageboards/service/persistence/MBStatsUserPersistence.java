@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.messageboards.model.MBStatsUser;
@@ -612,7 +611,4 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public MBStatsUser remove(MBStatsUser mbStatsUser)
-		throws SystemException;
 }

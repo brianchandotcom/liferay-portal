@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserGroupGroupRole;
 
 /**
@@ -802,7 +801,4 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public UserGroupGroupRole remove(UserGroupGroupRole userGroupGroupRole)
-		throws SystemException;
 }

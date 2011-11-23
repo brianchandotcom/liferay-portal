@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Ticket;
 
 /**
@@ -209,6 +208,4 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Ticket remove(Ticket ticket) throws SystemException;
 }

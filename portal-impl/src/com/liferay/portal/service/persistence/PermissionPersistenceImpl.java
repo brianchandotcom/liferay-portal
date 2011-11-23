@@ -217,24 +217,11 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 *
 	 * @param primaryKey the primary key of the permission
 	 * @return the permission that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPermissionException if a permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Permission remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the permission with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param permissionId the primary key of the permission
-	 * @return the permission that was removed
-	 * @throws com.liferay.portal.NoSuchPermissionException if a permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Permission remove(long permissionId)
 		throws NoSuchPermissionException, SystemException {
 		Session session = null;
 
@@ -242,18 +229,18 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 			session = openSession();
 
 			Permission permission = (Permission)session.get(PermissionImpl.class,
-					Long.valueOf(permissionId));
+					primaryKey);
 
 			if (permission == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + permissionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					permissionId);
+					primaryKey);
 			}
 
-			return permissionPersistence.remove(permission);
+			return remove(permission);
 		}
 		catch (NoSuchPermissionException nsee) {
 			throw nsee;
@@ -267,15 +254,16 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	/**
-	 * Removes the permission from the database. Also notifies the appropriate model listeners.
+	 * Removes the permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param permission the permission
+	 * @param permissionId the primary key of the permission
 	 * @return the permission that was removed
+	 * @throws com.liferay.portal.NoSuchPermissionException if a permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Permission remove(Permission permission) throws SystemException {
-		return super.remove(permission);
+	public Permission remove(long permissionId)
+		throws NoSuchPermissionException, SystemException {
+		return remove(Long.valueOf(permissionId));
 	}
 
 	@Override
@@ -1162,7 +1150,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 */
 	public void removeByResourceId(long resourceId) throws SystemException {
 		for (Permission permission : findByResourceId(resourceId)) {
-			permissionPersistence.remove(permission);
+			remove(permission);
 		}
 	}
 
@@ -1177,7 +1165,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		throws NoSuchPermissionException, SystemException {
 		Permission permission = findByA_R(actionId, resourceId);
 
-		permissionPersistence.remove(permission);
+		remove(permission);
 	}
 
 	/**
@@ -1187,7 +1175,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 */
 	public void removeAll() throws SystemException {
 		for (Permission permission : findAll()) {
-			permissionPersistence.remove(permission);
+			remove(permission);
 		}
 	}
 
@@ -2768,23 +2756,23 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 			}
 		}
 
-		containsGroup = new ContainsGroup(this);
+		containsGroup = new ContainsGroup();
 
-		addGroup = new AddGroup(this);
-		clearGroups = new ClearGroups(this);
-		removeGroup = new RemoveGroup(this);
+		addGroup = new AddGroup();
+		clearGroups = new ClearGroups();
+		removeGroup = new RemoveGroup();
 
-		containsRole = new ContainsRole(this);
+		containsRole = new ContainsRole();
 
-		addRole = new AddRole(this);
-		clearRoles = new ClearRoles(this);
-		removeRole = new RemoveRole(this);
+		addRole = new AddRole();
+		clearRoles = new ClearRoles();
+		removeRole = new RemoveRole();
 
-		containsUser = new ContainsUser(this);
+		containsUser = new ContainsUser();
 
-		addUser = new AddUser(this);
-		clearUsers = new ClearUsers(this);
-		removeUser = new RemoveUser(this);
+		addUser = new AddUser();
+		clearUsers = new ClearUsers();
+		removeUser = new RemoveUser();
 	}
 
 	public void destroy() {
@@ -2937,9 +2925,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	protected RemoveUser removeUser;
 
 	protected class ContainsGroup {
-		protected ContainsGroup(PermissionPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSGROUP,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -2966,16 +2952,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	protected class AddGroup {
-		protected AddGroup(PermissionPersistenceImpl persistenceImpl) {
+		protected AddGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_Permissions (permissionId, groupId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long permissionId, long groupId)
 			throws SystemException {
-			if (!_persistenceImpl.containsGroup.contains(permissionId, groupId)) {
+			if (!containsGroup.contains(permissionId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<Permission> listener : listeners) {
@@ -3005,11 +2990,10 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private PermissionPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearGroups {
-		protected ClearGroups(PermissionPersistenceImpl persistenceImpl) {
+		protected ClearGroups() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Permissions WHERE permissionId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -3059,16 +3043,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	protected class RemoveGroup {
-		protected RemoveGroup(PermissionPersistenceImpl persistenceImpl) {
+		protected RemoveGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Permissions WHERE permissionId = ? AND groupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long permissionId, long groupId)
 			throws SystemException {
-			if (_persistenceImpl.containsGroup.contains(permissionId, groupId)) {
+			if (containsGroup.contains(permissionId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<Permission> listener : listeners) {
@@ -3098,13 +3081,10 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private PermissionPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsRole {
-		protected ContainsRole(PermissionPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsRole() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSROLE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -3131,16 +3111,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	protected class AddRole {
-		protected AddRole(PermissionPersistenceImpl persistenceImpl) {
+		protected AddRole() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Roles_Permissions (permissionId, roleId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long permissionId, long roleId)
 			throws SystemException {
-			if (!_persistenceImpl.containsRole.contains(permissionId, roleId)) {
+			if (!containsRole.contains(permissionId, roleId)) {
 				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
 
 				for (ModelListener<Permission> listener : listeners) {
@@ -3170,11 +3149,10 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private PermissionPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearRoles {
-		protected ClearRoles(PermissionPersistenceImpl persistenceImpl) {
+		protected ClearRoles() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Roles_Permissions WHERE permissionId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -3224,16 +3202,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	protected class RemoveRole {
-		protected RemoveRole(PermissionPersistenceImpl persistenceImpl) {
+		protected RemoveRole() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Roles_Permissions WHERE permissionId = ? AND roleId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long permissionId, long roleId)
 			throws SystemException {
-			if (_persistenceImpl.containsRole.contains(permissionId, roleId)) {
+			if (containsRole.contains(permissionId, roleId)) {
 				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
 
 				for (ModelListener<Permission> listener : listeners) {
@@ -3263,13 +3240,10 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private PermissionPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsUser {
-		protected ContainsUser(PermissionPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsUser() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSUSER,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -3296,16 +3270,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	protected class AddUser {
-		protected AddUser(PermissionPersistenceImpl persistenceImpl) {
+		protected AddUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Permissions (permissionId, userId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long permissionId, long userId)
 			throws SystemException {
-			if (!_persistenceImpl.containsUser.contains(permissionId, userId)) {
+			if (!containsUser.contains(permissionId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Permission> listener : listeners) {
@@ -3335,11 +3308,10 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private PermissionPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearUsers {
-		protected ClearUsers(PermissionPersistenceImpl persistenceImpl) {
+		protected ClearUsers() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Permissions WHERE permissionId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -3389,16 +3361,15 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	}
 
 	protected class RemoveUser {
-		protected RemoveUser(PermissionPersistenceImpl persistenceImpl) {
+		protected RemoveUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Permissions WHERE permissionId = ? AND userId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long permissionId, long userId)
 			throws SystemException {
-			if (_persistenceImpl.containsUser.contains(permissionId, userId)) {
+			if (containsUser.contains(permissionId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Permission> listener : listeners) {
@@ -3428,7 +3399,6 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private PermissionPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_PERMISSION = "SELECT permission FROM Permission permission";

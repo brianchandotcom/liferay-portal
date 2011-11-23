@@ -231,43 +231,29 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param primaryKey the primary key of the company
 	 * @return the company that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a company with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the company with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param companyId the primary key of the company
-	 * @return the company that was removed
-	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Company remove(long companyId)
 		throws NoSuchCompanyException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Company company = (Company)session.get(CompanyImpl.class,
-					Long.valueOf(companyId));
+			Company company = (Company)session.get(CompanyImpl.class, primaryKey);
 
 			if (company == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + companyId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCompanyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					companyId);
+					primaryKey);
 			}
 
-			return companyPersistence.remove(company);
+			return remove(company);
 		}
 		catch (NoSuchCompanyException nsee) {
 			throw nsee;
@@ -281,15 +267,16 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	/**
-	 * Removes the company from the database. Also notifies the appropriate model listeners.
+	 * Removes the company with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param company the company
+	 * @param companyId the primary key of the company
 	 * @return the company that was removed
+	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Company remove(Company company) throws SystemException {
-		return super.remove(company);
+	public Company remove(long companyId)
+		throws NoSuchCompanyException, SystemException {
+		return remove(Long.valueOf(companyId));
 	}
 
 	@Override
@@ -1422,7 +1409,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByWebId(webId);
 
-		companyPersistence.remove(company);
+		remove(company);
 	}
 
 	/**
@@ -1435,7 +1422,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByMx(mx);
 
-		companyPersistence.remove(company);
+		remove(company);
 	}
 
 	/**
@@ -1448,7 +1435,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		throws NoSuchCompanyException, SystemException {
 		Company company = findByLogoId(logoId);
 
-		companyPersistence.remove(company);
+		remove(company);
 	}
 
 	/**
@@ -1459,7 +1446,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	public void removeBySystem(boolean system) throws SystemException {
 		for (Company company : findBySystem(system)) {
-			companyPersistence.remove(company);
+			remove(company);
 		}
 	}
 
@@ -1470,7 +1457,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	public void removeAll() throws SystemException {
 		for (Company company : findAll()) {
-			companyPersistence.remove(company);
+			remove(company);
 		}
 	}
 

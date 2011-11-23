@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Address;
 
 /**
@@ -978,6 +977,4 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Address remove(Address address) throws SystemException;
 }

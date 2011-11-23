@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.journal.model.JournalContentSearch;
@@ -1076,7 +1075,4 @@ public interface JournalContentSearchPersistence extends BasePersistence<Journal
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public JournalContentSearch remove(
-		JournalContentSearch journalContentSearch) throws SystemException;
 }

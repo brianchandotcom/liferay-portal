@@ -400,24 +400,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param primaryKey the primary key of the social relation
 	 * @return the social relation that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a social relation with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param relationId the primary key of the social relation
-	 * @return the social relation that was removed
-	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialRelation remove(long relationId)
 		throws NoSuchRelationException, SystemException {
 		Session session = null;
 
@@ -425,18 +412,18 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			session = openSession();
 
 			SocialRelation socialRelation = (SocialRelation)session.get(SocialRelationImpl.class,
-					Long.valueOf(relationId));
+					primaryKey);
 
 			if (socialRelation == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + relationId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRelationException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					relationId);
+					primaryKey);
 			}
 
-			return socialRelationPersistence.remove(socialRelation);
+			return remove(socialRelation);
 		}
 		catch (NoSuchRelationException nsee) {
 			throw nsee;
@@ -450,16 +437,16 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	}
 
 	/**
-	 * Removes the social relation from the database. Also notifies the appropriate model listeners.
+	 * Removes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param socialRelation the social relation
+	 * @param relationId the primary key of the social relation
 	 * @return the social relation that was removed
+	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SocialRelation remove(SocialRelation socialRelation)
-		throws SystemException {
-		return super.remove(socialRelation);
+	public SocialRelation remove(long relationId)
+		throws NoSuchRelationException, SystemException {
+		return remove(Long.valueOf(relationId));
 	}
 
 	@Override
@@ -4313,7 +4300,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (SocialRelation socialRelation : findByUuid(uuid)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4325,7 +4312,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (SocialRelation socialRelation : findByCompanyId(companyId)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4337,7 +4324,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByUserId1(long userId1) throws SystemException {
 		for (SocialRelation socialRelation : findByUserId1(userId1)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4349,7 +4336,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByUserId2(long userId2) throws SystemException {
 		for (SocialRelation socialRelation : findByUserId2(userId2)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4361,7 +4348,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByType(int type) throws SystemException {
 		for (SocialRelation socialRelation : findByType(type)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4374,7 +4361,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByC_T(long companyId, int type) throws SystemException {
 		for (SocialRelation socialRelation : findByC_T(companyId, type)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4388,7 +4375,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public void removeByU1_U2(long userId1, long userId2)
 		throws SystemException {
 		for (SocialRelation socialRelation : findByU1_U2(userId1, userId2)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4401,7 +4388,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByU1_T(long userId1, int type) throws SystemException {
 		for (SocialRelation socialRelation : findByU1_T(userId1, type)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4414,7 +4401,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeByU2_T(long userId2, int type) throws SystemException {
 		for (SocialRelation socialRelation : findByU2_T(userId2, type)) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 
@@ -4430,7 +4417,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		throws NoSuchRelationException, SystemException {
 		SocialRelation socialRelation = findByU1_U2_T(userId1, userId2, type);
 
-		socialRelationPersistence.remove(socialRelation);
+		remove(socialRelation);
 	}
 
 	/**
@@ -4440,7 +4427,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	public void removeAll() throws SystemException {
 		for (SocialRelation socialRelation : findAll()) {
-			socialRelationPersistence.remove(socialRelation);
+			remove(socialRelation);
 		}
 	}
 

@@ -306,24 +306,11 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 *
 	 * @param primaryKey the primary key of the blogs stats user
 	 * @return the blogs stats user that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a blogs stats user with the primary key could not be found
+	 * @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BlogsStatsUser remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the blogs stats user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param statsUserId the primary key of the blogs stats user
-	 * @return the blogs stats user that was removed
-	 * @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BlogsStatsUser remove(long statsUserId)
 		throws NoSuchStatsUserException, SystemException {
 		Session session = null;
 
@@ -331,18 +318,18 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			session = openSession();
 
 			BlogsStatsUser blogsStatsUser = (BlogsStatsUser)session.get(BlogsStatsUserImpl.class,
-					Long.valueOf(statsUserId));
+					primaryKey);
 
 			if (blogsStatsUser == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + statsUserId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchStatsUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					statsUserId);
+					primaryKey);
 			}
 
-			return blogsStatsUserPersistence.remove(blogsStatsUser);
+			return remove(blogsStatsUser);
 		}
 		catch (NoSuchStatsUserException nsee) {
 			throw nsee;
@@ -356,16 +343,16 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	}
 
 	/**
-	 * Removes the blogs stats user from the database. Also notifies the appropriate model listeners.
+	 * Removes the blogs stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param blogsStatsUser the blogs stats user
+	 * @param statsUserId the primary key of the blogs stats user
 	 * @return the blogs stats user that was removed
+	 * @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public BlogsStatsUser remove(BlogsStatsUser blogsStatsUser)
-		throws SystemException {
-		return super.remove(blogsStatsUser);
+	public BlogsStatsUser remove(long statsUserId)
+		throws NoSuchStatsUserException, SystemException {
+		return remove(Long.valueOf(statsUserId));
 	}
 
 	@Override
@@ -2782,7 +2769,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (BlogsStatsUser blogsStatsUser : findByGroupId(groupId)) {
-			blogsStatsUserPersistence.remove(blogsStatsUser);
+			remove(blogsStatsUser);
 		}
 	}
 
@@ -2794,7 +2781,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (BlogsStatsUser blogsStatsUser : findByUserId(userId)) {
-			blogsStatsUserPersistence.remove(blogsStatsUser);
+			remove(blogsStatsUser);
 		}
 	}
 
@@ -2809,7 +2796,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		throws NoSuchStatsUserException, SystemException {
 		BlogsStatsUser blogsStatsUser = findByG_U(groupId, userId);
 
-		blogsStatsUserPersistence.remove(blogsStatsUser);
+		remove(blogsStatsUser);
 	}
 
 	/**
@@ -2822,7 +2809,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public void removeByG_NotE(long groupId, int entryCount)
 		throws SystemException {
 		for (BlogsStatsUser blogsStatsUser : findByG_NotE(groupId, entryCount)) {
-			blogsStatsUserPersistence.remove(blogsStatsUser);
+			remove(blogsStatsUser);
 		}
 	}
 
@@ -2836,7 +2823,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public void removeByC_NotE(long companyId, int entryCount)
 		throws SystemException {
 		for (BlogsStatsUser blogsStatsUser : findByC_NotE(companyId, entryCount)) {
-			blogsStatsUserPersistence.remove(blogsStatsUser);
+			remove(blogsStatsUser);
 		}
 	}
 
@@ -2850,7 +2837,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public void removeByU_L(long userId, Date lastPostDate)
 		throws SystemException {
 		for (BlogsStatsUser blogsStatsUser : findByU_L(userId, lastPostDate)) {
-			blogsStatsUserPersistence.remove(blogsStatsUser);
+			remove(blogsStatsUser);
 		}
 	}
 
@@ -2861,7 +2848,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	 */
 	public void removeAll() throws SystemException {
 		for (BlogsStatsUser blogsStatsUser : findAll()) {
-			blogsStatsUserPersistence.remove(blogsStatsUser);
+			remove(blogsStatsUser);
 		}
 	}
 

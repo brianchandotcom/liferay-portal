@@ -352,24 +352,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 *
 	 * @param primaryKey the primary key of the cal event
 	 * @return the cal event that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a cal event with the primary key could not be found
+	 * @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CalEvent remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the cal event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param eventId the primary key of the cal event
-	 * @return the cal event that was removed
-	 * @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public CalEvent remove(long eventId)
 		throws NoSuchEventException, SystemException {
 		Session session = null;
 
@@ -377,18 +364,18 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			session = openSession();
 
 			CalEvent calEvent = (CalEvent)session.get(CalEventImpl.class,
-					Long.valueOf(eventId));
+					primaryKey);
 
 			if (calEvent == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + eventId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					eventId);
+					primaryKey);
 			}
 
-			return calEventPersistence.remove(calEvent);
+			return remove(calEvent);
 		}
 		catch (NoSuchEventException nsee) {
 			throw nsee;
@@ -402,15 +389,16 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	/**
-	 * Removes the cal event from the database. Also notifies the appropriate model listeners.
+	 * Removes the cal event with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param calEvent the cal event
+	 * @param eventId the primary key of the cal event
 	 * @return the cal event that was removed
+	 * @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public CalEvent remove(CalEvent calEvent) throws SystemException {
-		return super.remove(calEvent);
+	public CalEvent remove(long eventId)
+		throws NoSuchEventException, SystemException {
+		return remove(Long.valueOf(eventId));
 	}
 
 	@Override
@@ -5737,7 +5725,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (CalEvent calEvent : findByUuid(uuid)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5752,7 +5740,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		throws NoSuchEventException, SystemException {
 		CalEvent calEvent = findByUUID_G(uuid, groupId);
 
-		calEventPersistence.remove(calEvent);
+		remove(calEvent);
 	}
 
 	/**
@@ -5763,7 +5751,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (CalEvent calEvent : findByCompanyId(companyId)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5775,7 +5763,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (CalEvent calEvent : findByGroupId(groupId)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5787,7 +5775,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public void removeByNotRemindBy(int remindBy) throws SystemException {
 		for (CalEvent calEvent : findByNotRemindBy(remindBy)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5801,7 +5789,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public void removeByG_T(long groupId, String type)
 		throws SystemException {
 		for (CalEvent calEvent : findByG_T(groupId, type)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5815,7 +5803,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public void removeByG_R(long groupId, boolean repeating)
 		throws SystemException {
 		for (CalEvent calEvent : findByG_R(groupId, repeating)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5830,7 +5818,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public void removeByG_T_R(long groupId, String type, boolean repeating)
 		throws SystemException {
 		for (CalEvent calEvent : findByG_T_R(groupId, type, repeating)) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 
@@ -5841,7 +5829,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	 */
 	public void removeAll() throws SystemException {
 		for (CalEvent calEvent : findAll()) {
-			calEventPersistence.remove(calEvent);
+			remove(calEvent);
 		}
 	}
 

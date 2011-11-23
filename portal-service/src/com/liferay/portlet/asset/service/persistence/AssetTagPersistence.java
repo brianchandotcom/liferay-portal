@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.asset.model.AssetTag;
@@ -607,6 +606,4 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	public void setAssetEntries(long pk,
 		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public AssetTag remove(AssetTag assetTag) throws SystemException;
 }

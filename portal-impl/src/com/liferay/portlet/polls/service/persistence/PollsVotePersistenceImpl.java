@@ -232,24 +232,11 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 *
 	 * @param primaryKey the primary key of the polls vote
 	 * @return the polls vote that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a polls vote with the primary key could not be found
+	 * @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsVote remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the polls vote with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param voteId the primary key of the polls vote
-	 * @return the polls vote that was removed
-	 * @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PollsVote remove(long voteId)
 		throws NoSuchVoteException, SystemException {
 		Session session = null;
 
@@ -257,18 +244,18 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			session = openSession();
 
 			PollsVote pollsVote = (PollsVote)session.get(PollsVoteImpl.class,
-					Long.valueOf(voteId));
+					primaryKey);
 
 			if (pollsVote == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + voteId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchVoteException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					voteId);
+					primaryKey);
 			}
 
-			return pollsVotePersistence.remove(pollsVote);
+			return remove(pollsVote);
 		}
 		catch (NoSuchVoteException nsee) {
 			throw nsee;
@@ -282,15 +269,16 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	}
 
 	/**
-	 * Removes the polls vote from the database. Also notifies the appropriate model listeners.
+	 * Removes the polls vote with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param pollsVote the polls vote
+	 * @param voteId the primary key of the polls vote
 	 * @return the polls vote that was removed
+	 * @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PollsVote remove(PollsVote pollsVote) throws SystemException {
-		return super.remove(pollsVote);
+	public PollsVote remove(long voteId)
+		throws NoSuchVoteException, SystemException {
+		return remove(Long.valueOf(voteId));
 	}
 
 	@Override
@@ -1495,7 +1483,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	public void removeByQuestionId(long questionId) throws SystemException {
 		for (PollsVote pollsVote : findByQuestionId(questionId)) {
-			pollsVotePersistence.remove(pollsVote);
+			remove(pollsVote);
 		}
 	}
 
@@ -1507,7 +1495,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	public void removeByChoiceId(long choiceId) throws SystemException {
 		for (PollsVote pollsVote : findByChoiceId(choiceId)) {
-			pollsVotePersistence.remove(pollsVote);
+			remove(pollsVote);
 		}
 	}
 
@@ -1522,7 +1510,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		throws NoSuchVoteException, SystemException {
 		PollsVote pollsVote = findByQ_U(questionId, userId);
 
-		pollsVotePersistence.remove(pollsVote);
+		remove(pollsVote);
 	}
 
 	/**
@@ -1532,7 +1520,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	 */
 	public void removeAll() throws SystemException {
 		for (PollsVote pollsVote : findAll()) {
-			pollsVotePersistence.remove(pollsVote);
+			remove(pollsVote);
 		}
 	}
 

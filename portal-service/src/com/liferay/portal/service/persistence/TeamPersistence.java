@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Team;
 
 /**
@@ -790,6 +789,4 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public void setUserGroups(long pk,
 		java.util.List<com.liferay.portal.model.UserGroup> userGroups)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Team remove(Team team) throws SystemException;
 }

@@ -278,24 +278,11 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 *
 	 * @param primaryKey the primary key of the portlet preferences
 	 * @return the portlet preferences that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a portlet preferences with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PortletPreferences remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param portletPreferencesId the primary key of the portlet preferences
-	 * @return the portlet preferences that was removed
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences remove(long portletPreferencesId)
 		throws NoSuchPortletPreferencesException, SystemException {
 		Session session = null;
 
@@ -303,19 +290,18 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			session = openSession();
 
 			PortletPreferences portletPreferences = (PortletPreferences)session.get(PortletPreferencesImpl.class,
-					Long.valueOf(portletPreferencesId));
+					primaryKey);
 
 			if (portletPreferences == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						portletPreferencesId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPortletPreferencesException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					portletPreferencesId);
+					primaryKey);
 			}
 
-			return portletPreferencesPersistence.remove(portletPreferences);
+			return remove(portletPreferences);
 		}
 		catch (NoSuchPortletPreferencesException nsee) {
 			throw nsee;
@@ -329,16 +315,16 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	/**
-	 * Removes the portlet preferences from the database. Also notifies the appropriate model listeners.
+	 * Removes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param portletPreferences the portlet preferences
+	 * @param portletPreferencesId the primary key of the portlet preferences
 	 * @return the portlet preferences that was removed
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PortletPreferences remove(PortletPreferences portletPreferences)
-		throws SystemException {
-		return super.remove(portletPreferences);
+	public PortletPreferences remove(long portletPreferencesId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return remove(Long.valueOf(portletPreferencesId));
 	}
 
 	@Override
@@ -2055,7 +2041,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	public void removeByPlid(long plid) throws SystemException {
 		for (PortletPreferences portletPreferences : findByPlid(plid)) {
-			portletPreferencesPersistence.remove(portletPreferences);
+			remove(portletPreferences);
 		}
 	}
 
@@ -2069,7 +2055,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public void removeByP_P(long plid, String portletId)
 		throws SystemException {
 		for (PortletPreferences portletPreferences : findByP_P(plid, portletId)) {
-			portletPreferencesPersistence.remove(portletPreferences);
+			remove(portletPreferences);
 		}
 	}
 
@@ -2085,7 +2071,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		throws SystemException {
 		for (PortletPreferences portletPreferences : findByO_O_P(ownerId,
 				ownerType, plid)) {
-			portletPreferencesPersistence.remove(portletPreferences);
+			remove(portletPreferences);
 		}
 	}
 
@@ -2104,7 +2090,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		PortletPreferences portletPreferences = findByO_O_P_P(ownerId,
 				ownerType, plid, portletId);
 
-		portletPreferencesPersistence.remove(portletPreferences);
+		remove(portletPreferences);
 	}
 
 	/**
@@ -2114,7 +2100,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	public void removeAll() throws SystemException {
 		for (PortletPreferences portletPreferences : findAll()) {
-			portletPreferencesPersistence.remove(portletPreferences);
+			remove(portletPreferences);
 		}
 	}
 

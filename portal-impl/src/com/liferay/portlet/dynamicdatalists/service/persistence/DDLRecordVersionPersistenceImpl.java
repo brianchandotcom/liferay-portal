@@ -241,24 +241,11 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 *
 	 * @param primaryKey the primary key of the d d l record version
 	 * @return the d d l record version that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d d l record version with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordVersion remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d d l record version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param recordVersionId the primary key of the d d l record version
-	 * @return the d d l record version that was removed
-	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDLRecordVersion remove(long recordVersionId)
 		throws NoSuchRecordVersionException, SystemException {
 		Session session = null;
 
@@ -266,19 +253,18 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			session = openSession();
 
 			DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)session.get(DDLRecordVersionImpl.class,
-					Long.valueOf(recordVersionId));
+					primaryKey);
 
 			if (ddlRecordVersion == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						recordVersionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRecordVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					recordVersionId);
+					primaryKey);
 			}
 
-			return ddlRecordVersionPersistence.remove(ddlRecordVersion);
+			return remove(ddlRecordVersion);
 		}
 		catch (NoSuchRecordVersionException nsee) {
 			throw nsee;
@@ -292,16 +278,16 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	/**
-	 * Removes the d d l record version from the database. Also notifies the appropriate model listeners.
+	 * Removes the d d l record version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddlRecordVersion the d d l record version
+	 * @param recordVersionId the primary key of the d d l record version
 	 * @return the d d l record version that was removed
+	 * @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DDLRecordVersion remove(DDLRecordVersion ddlRecordVersion)
-		throws SystemException {
-		return super.remove(ddlRecordVersion);
+	public DDLRecordVersion remove(long recordVersionId)
+		throws NoSuchRecordVersionException, SystemException {
+		return remove(Long.valueOf(recordVersionId));
 	}
 
 	@Override
@@ -1559,7 +1545,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	public void removeByRecordId(long recordId) throws SystemException {
 		for (DDLRecordVersion ddlRecordVersion : findByRecordId(recordId)) {
-			ddlRecordVersionPersistence.remove(ddlRecordVersion);
+			remove(ddlRecordVersion);
 		}
 	}
 
@@ -1574,7 +1560,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		throws NoSuchRecordVersionException, SystemException {
 		DDLRecordVersion ddlRecordVersion = findByR_V(recordId, version);
 
-		ddlRecordVersionPersistence.remove(ddlRecordVersion);
+		remove(ddlRecordVersion);
 	}
 
 	/**
@@ -1587,7 +1573,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	public void removeByR_S(long recordId, int status)
 		throws SystemException {
 		for (DDLRecordVersion ddlRecordVersion : findByR_S(recordId, status)) {
-			ddlRecordVersionPersistence.remove(ddlRecordVersion);
+			remove(ddlRecordVersion);
 		}
 	}
 
@@ -1598,7 +1584,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 */
 	public void removeAll() throws SystemException {
 		for (DDLRecordVersion ddlRecordVersion : findAll()) {
-			ddlRecordVersionPersistence.remove(ddlRecordVersion);
+			remove(ddlRecordVersion);
 		}
 	}
 

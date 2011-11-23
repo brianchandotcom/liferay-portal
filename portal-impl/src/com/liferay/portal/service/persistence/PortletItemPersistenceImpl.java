@@ -251,24 +251,11 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 *
 	 * @param primaryKey the primary key of the portlet item
 	 * @return the portlet item that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a portlet item with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPortletItemException if a portlet item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PortletItem remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param portletItemId the primary key of the portlet item
-	 * @return the portlet item that was removed
-	 * @throws com.liferay.portal.NoSuchPortletItemException if a portlet item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletItem remove(long portletItemId)
 		throws NoSuchPortletItemException, SystemException {
 		Session session = null;
 
@@ -276,18 +263,18 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			session = openSession();
 
 			PortletItem portletItem = (PortletItem)session.get(PortletItemImpl.class,
-					Long.valueOf(portletItemId));
+					primaryKey);
 
 			if (portletItem == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + portletItemId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPortletItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					portletItemId);
+					primaryKey);
 			}
 
-			return portletItemPersistence.remove(portletItem);
+			return remove(portletItem);
 		}
 		catch (NoSuchPortletItemException nsee) {
 			throw nsee;
@@ -301,16 +288,16 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	}
 
 	/**
-	 * Removes the portlet item from the database. Also notifies the appropriate model listeners.
+	 * Removes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param portletItem the portlet item
+	 * @param portletItemId the primary key of the portlet item
 	 * @return the portlet item that was removed
+	 * @throws com.liferay.portal.NoSuchPortletItemException if a portlet item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PortletItem remove(PortletItem portletItem)
-		throws SystemException {
-		return super.remove(portletItem);
+	public PortletItem remove(long portletItemId)
+		throws NoSuchPortletItemException, SystemException {
+		return remove(Long.valueOf(portletItemId));
 	}
 
 	@Override
@@ -1688,7 +1675,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	public void removeByG_C(long groupId, long classNameId)
 		throws SystemException {
 		for (PortletItem portletItem : findByG_C(groupId, classNameId)) {
-			portletItemPersistence.remove(portletItem);
+			remove(portletItem);
 		}
 	}
 
@@ -1704,7 +1691,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		throws SystemException {
 		for (PortletItem portletItem : findByG_P_C(groupId, portletId,
 				classNameId)) {
-			portletItemPersistence.remove(portletItem);
+			remove(portletItem);
 		}
 	}
 
@@ -1722,7 +1709,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		PortletItem portletItem = findByG_N_P_C(groupId, name, portletId,
 				classNameId);
 
-		portletItemPersistence.remove(portletItem);
+		remove(portletItem);
 	}
 
 	/**
@@ -1732,7 +1719,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	public void removeAll() throws SystemException {
 		for (PortletItem portletItem : findAll()) {
-			portletItemPersistence.remove(portletItem);
+			remove(portletItem);
 		}
 	}
 

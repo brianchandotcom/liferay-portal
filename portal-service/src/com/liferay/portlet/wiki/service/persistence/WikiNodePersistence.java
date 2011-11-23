@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -725,6 +724,4 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public WikiNode remove(WikiNode wikiNode) throws SystemException;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Country;
 
 /**
@@ -439,6 +438,4 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Country remove(Country country) throws SystemException;
 }

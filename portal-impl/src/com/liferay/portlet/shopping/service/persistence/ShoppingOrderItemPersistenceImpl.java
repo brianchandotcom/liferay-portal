@@ -196,24 +196,11 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 *
 	 * @param primaryKey the primary key of the shopping order item
 	 * @return the shopping order item that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping order item with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingOrderItem remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param orderItemId the primary key of the shopping order item
-	 * @return the shopping order item that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingOrderItem remove(long orderItemId)
 		throws NoSuchOrderItemException, SystemException {
 		Session session = null;
 
@@ -221,18 +208,18 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 			session = openSession();
 
 			ShoppingOrderItem shoppingOrderItem = (ShoppingOrderItem)session.get(ShoppingOrderItemImpl.class,
-					Long.valueOf(orderItemId));
+					primaryKey);
 
 			if (shoppingOrderItem == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + orderItemId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchOrderItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					orderItemId);
+					primaryKey);
 			}
 
-			return shoppingOrderItemPersistence.remove(shoppingOrderItem);
+			return remove(shoppingOrderItem);
 		}
 		catch (NoSuchOrderItemException nsee) {
 			throw nsee;
@@ -246,16 +233,16 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	}
 
 	/**
-	 * Removes the shopping order item from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingOrderItem the shopping order item
+	 * @param orderItemId the primary key of the shopping order item
 	 * @return the shopping order item that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingOrderItem remove(ShoppingOrderItem shoppingOrderItem)
-		throws SystemException {
-		return super.remove(shoppingOrderItem);
+	public ShoppingOrderItem remove(long orderItemId)
+		throws NoSuchOrderItemException, SystemException {
+		return remove(Long.valueOf(orderItemId));
 	}
 
 	@Override
@@ -940,7 +927,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public void removeByOrderId(long orderId) throws SystemException {
 		for (ShoppingOrderItem shoppingOrderItem : findByOrderId(orderId)) {
-			shoppingOrderItemPersistence.remove(shoppingOrderItem);
+			remove(shoppingOrderItem);
 		}
 	}
 
@@ -951,7 +938,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingOrderItem shoppingOrderItem : findAll()) {
-			shoppingOrderItemPersistence.remove(shoppingOrderItem);
+			remove(shoppingOrderItem);
 		}
 	}
 

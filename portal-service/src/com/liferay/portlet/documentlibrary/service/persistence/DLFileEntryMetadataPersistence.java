@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -782,7 +781,4 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DLFileEntryMetadata remove(DLFileEntryMetadata dlFileEntryMetadata)
-		throws SystemException;
 }

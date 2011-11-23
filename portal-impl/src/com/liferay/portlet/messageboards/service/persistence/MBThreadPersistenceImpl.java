@@ -389,24 +389,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 *
 	 * @param primaryKey the primary key of the message boards thread
 	 * @return the message boards thread that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards thread with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBThread remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param threadId the primary key of the message boards thread
-	 * @return the message boards thread that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBThread remove(long threadId)
 		throws NoSuchThreadException, SystemException {
 		Session session = null;
 
@@ -414,18 +401,18 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			session = openSession();
 
 			MBThread mbThread = (MBThread)session.get(MBThreadImpl.class,
-					Long.valueOf(threadId));
+					primaryKey);
 
 			if (mbThread == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + threadId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchThreadException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					threadId);
+					primaryKey);
 			}
 
-			return mbThreadPersistence.remove(mbThread);
+			return remove(mbThread);
 		}
 		catch (NoSuchThreadException nsee) {
 			throw nsee;
@@ -439,15 +426,16 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
-	 * Removes the message boards thread from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbThread the message boards thread
+	 * @param threadId the primary key of the message boards thread
 	 * @return the message boards thread that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBThread remove(MBThread mbThread) throws SystemException {
-		return super.remove(mbThread);
+	public MBThread remove(long threadId)
+		throws NoSuchThreadException, SystemException {
+		return remove(Long.valueOf(threadId));
 	}
 
 	@Override
@@ -7498,7 +7486,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (MBThread mbThread : findByGroupId(groupId)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7512,7 +7500,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		throws NoSuchThreadException, SystemException {
 		MBThread mbThread = findByRootMessageId(rootMessageId);
 
-		mbThreadPersistence.remove(mbThread);
+		remove(mbThread);
 	}
 
 	/**
@@ -7525,7 +7513,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByG_C(long groupId, long categoryId)
 		throws SystemException {
 		for (MBThread mbThread : findByG_C(groupId, categoryId)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7539,7 +7527,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByG_NotC(long groupId, long categoryId)
 		throws SystemException {
 		for (MBThread mbThread : findByG_NotC(groupId, categoryId)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7552,7 +7540,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public void removeByG_S(long groupId, int status) throws SystemException {
 		for (MBThread mbThread : findByG_S(groupId, status)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7566,7 +7554,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByC_P(long categoryId, double priority)
 		throws SystemException {
 		for (MBThread mbThread : findByC_P(categoryId, priority)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7580,7 +7568,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByL_P(Date lastPostDate, double priority)
 		throws SystemException {
 		for (MBThread mbThread : findByL_P(lastPostDate, priority)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7595,7 +7583,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByG_C_L(long groupId, long categoryId, Date lastPostDate)
 		throws SystemException {
 		for (MBThread mbThread : findByG_C_L(groupId, categoryId, lastPostDate)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7610,7 +7598,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByG_C_S(long groupId, long categoryId, int status)
 		throws SystemException {
 		for (MBThread mbThread : findByG_C_S(groupId, categoryId, status)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7625,7 +7613,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public void removeByG_NotC_S(long groupId, long categoryId, int status)
 		throws SystemException {
 		for (MBThread mbThread : findByG_NotC_S(groupId, categoryId, status)) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 
@@ -7636,7 +7624,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	public void removeAll() throws SystemException {
 		for (MBThread mbThread : findAll()) {
-			mbThreadPersistence.remove(mbThread);
+			remove(mbThread);
 		}
 	}
 

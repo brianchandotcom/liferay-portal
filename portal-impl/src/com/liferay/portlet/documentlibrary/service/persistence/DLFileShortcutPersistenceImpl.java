@@ -299,24 +299,11 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 *
 	 * @param primaryKey the primary key of the document library file shortcut
 	 * @return the document library file shortcut that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file shortcut with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param fileShortcutId the primary key of the document library file shortcut
-	 * @return the document library file shortcut that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileShortcut remove(long fileShortcutId)
 		throws NoSuchFileShortcutException, SystemException {
 		Session session = null;
 
@@ -324,19 +311,18 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			session = openSession();
 
 			DLFileShortcut dlFileShortcut = (DLFileShortcut)session.get(DLFileShortcutImpl.class,
-					Long.valueOf(fileShortcutId));
+					primaryKey);
 
 			if (dlFileShortcut == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						fileShortcutId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFileShortcutException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileShortcutId);
+					primaryKey);
 			}
 
-			return dlFileShortcutPersistence.remove(dlFileShortcut);
+			return remove(dlFileShortcut);
 		}
 		catch (NoSuchFileShortcutException nsee) {
 			throw nsee;
@@ -350,16 +336,16 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	}
 
 	/**
-	 * Removes the document library file shortcut from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileShortcut the document library file shortcut
+	 * @param fileShortcutId the primary key of the document library file shortcut
 	 * @return the document library file shortcut that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFileShortcut remove(DLFileShortcut dlFileShortcut)
-		throws SystemException {
-		return super.remove(dlFileShortcut);
+	public DLFileShortcut remove(long fileShortcutId)
+		throws NoSuchFileShortcutException, SystemException {
+		return remove(Long.valueOf(fileShortcutId));
 	}
 
 	@Override
@@ -3042,7 +3028,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DLFileShortcut dlFileShortcut : findByUuid(uuid)) {
-			dlFileShortcutPersistence.remove(dlFileShortcut);
+			remove(dlFileShortcut);
 		}
 	}
 
@@ -3057,7 +3043,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		throws NoSuchFileShortcutException, SystemException {
 		DLFileShortcut dlFileShortcut = findByUUID_G(uuid, groupId);
 
-		dlFileShortcutPersistence.remove(dlFileShortcut);
+		remove(dlFileShortcut);
 	}
 
 	/**
@@ -3069,7 +3055,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public void removeByToFileEntryId(long toFileEntryId)
 		throws SystemException {
 		for (DLFileShortcut dlFileShortcut : findByToFileEntryId(toFileEntryId)) {
-			dlFileShortcutPersistence.remove(dlFileShortcut);
+			remove(dlFileShortcut);
 		}
 	}
 
@@ -3083,7 +3069,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public void removeByG_F(long groupId, long folderId)
 		throws SystemException {
 		for (DLFileShortcut dlFileShortcut : findByG_F(groupId, folderId)) {
-			dlFileShortcutPersistence.remove(dlFileShortcut);
+			remove(dlFileShortcut);
 		}
 	}
 
@@ -3099,7 +3085,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		throws SystemException {
 		for (DLFileShortcut dlFileShortcut : findByG_F_S(groupId, folderId,
 				status)) {
-			dlFileShortcutPersistence.remove(dlFileShortcut);
+			remove(dlFileShortcut);
 		}
 	}
 
@@ -3110,7 +3096,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFileShortcut dlFileShortcut : findAll()) {
-			dlFileShortcutPersistence.remove(dlFileShortcut);
+			remove(dlFileShortcut);
 		}
 	}
 

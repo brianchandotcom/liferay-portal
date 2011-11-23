@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.messageboards.model.MBMailingList;
@@ -534,7 +533,4 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public MBMailingList remove(MBMailingList mbMailingList)
-		throws SystemException;
 }

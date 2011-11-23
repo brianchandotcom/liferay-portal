@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -605,6 +604,4 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DDLRecord remove(DDLRecord ddlRecord) throws SystemException;
 }

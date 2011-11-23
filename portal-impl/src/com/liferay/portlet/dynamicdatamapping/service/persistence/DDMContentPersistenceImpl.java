@@ -254,24 +254,11 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 *
 	 * @param primaryKey the primary key of the d d m content
 	 * @return the d d m content that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m content with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMContent remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param contentId the primary key of the d d m content
-	 * @return the d d m content that was removed
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMContent remove(long contentId)
 		throws NoSuchContentException, SystemException {
 		Session session = null;
 
@@ -279,18 +266,18 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			session = openSession();
 
 			DDMContent ddmContent = (DDMContent)session.get(DDMContentImpl.class,
-					Long.valueOf(contentId));
+					primaryKey);
 
 			if (ddmContent == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + contentId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchContentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					contentId);
+					primaryKey);
 			}
 
-			return ddmContentPersistence.remove(ddmContent);
+			return remove(ddmContent);
 		}
 		catch (NoSuchContentException nsee) {
 			throw nsee;
@@ -304,15 +291,16 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	}
 
 	/**
-	 * Removes the d d m content from the database. Also notifies the appropriate model listeners.
+	 * Removes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddmContent the d d m content
+	 * @param contentId the primary key of the d d m content
 	 * @return the d d m content that was removed
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DDMContent remove(DDMContent ddmContent) throws SystemException {
-		return super.remove(ddmContent);
+	public DDMContent remove(long contentId)
+		throws NoSuchContentException, SystemException {
+		return remove(Long.valueOf(contentId));
 	}
 
 	@Override
@@ -1914,7 +1902,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DDMContent ddmContent : findByUuid(uuid)) {
-			ddmContentPersistence.remove(ddmContent);
+			remove(ddmContent);
 		}
 	}
 
@@ -1929,7 +1917,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		throws NoSuchContentException, SystemException {
 		DDMContent ddmContent = findByUUID_G(uuid, groupId);
 
-		ddmContentPersistence.remove(ddmContent);
+		remove(ddmContent);
 	}
 
 	/**
@@ -1940,7 +1928,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (DDMContent ddmContent : findByGroupId(groupId)) {
-			ddmContentPersistence.remove(ddmContent);
+			remove(ddmContent);
 		}
 	}
 
@@ -1952,7 +1940,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (DDMContent ddmContent : findByCompanyId(companyId)) {
-			ddmContentPersistence.remove(ddmContent);
+			remove(ddmContent);
 		}
 	}
 
@@ -1963,7 +1951,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	 */
 	public void removeAll() throws SystemException {
 		for (DDMContent ddmContent : findAll()) {
-			ddmContentPersistence.remove(ddmContent);
+			remove(ddmContent);
 		}
 	}
 

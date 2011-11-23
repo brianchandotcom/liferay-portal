@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 
 /**
@@ -514,8 +513,4 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public WorkflowDefinitionLink remove(
-		WorkflowDefinitionLink workflowDefinitionLink)
-		throws SystemException;
 }

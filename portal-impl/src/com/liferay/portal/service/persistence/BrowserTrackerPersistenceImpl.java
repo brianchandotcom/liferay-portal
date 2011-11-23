@@ -186,24 +186,11 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param primaryKey the primary key of the browser tracker
 	 * @return the browser tracker that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a browser tracker with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the browser tracker with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param browserTrackerId the primary key of the browser tracker
-	 * @return the browser tracker that was removed
-	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BrowserTracker remove(long browserTrackerId)
 		throws NoSuchBrowserTrackerException, SystemException {
 		Session session = null;
 
@@ -211,19 +198,18 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			session = openSession();
 
 			BrowserTracker browserTracker = (BrowserTracker)session.get(BrowserTrackerImpl.class,
-					Long.valueOf(browserTrackerId));
+					primaryKey);
 
 			if (browserTracker == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						browserTrackerId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchBrowserTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					browserTrackerId);
+					primaryKey);
 			}
 
-			return browserTrackerPersistence.remove(browserTracker);
+			return remove(browserTracker);
 		}
 		catch (NoSuchBrowserTrackerException nsee) {
 			throw nsee;
@@ -237,16 +223,16 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	}
 
 	/**
-	 * Removes the browser tracker from the database. Also notifies the appropriate model listeners.
+	 * Removes the browser tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param browserTracker the browser tracker
+	 * @param browserTrackerId the primary key of the browser tracker
 	 * @return the browser tracker that was removed
+	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public BrowserTracker remove(BrowserTracker browserTracker)
-		throws SystemException {
-		return super.remove(browserTracker);
+	public BrowserTracker remove(long browserTrackerId)
+		throws NoSuchBrowserTrackerException, SystemException {
+		return remove(Long.valueOf(browserTrackerId));
 	}
 
 	@Override
@@ -711,7 +697,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		throws NoSuchBrowserTrackerException, SystemException {
 		BrowserTracker browserTracker = findByUserId(userId);
 
-		browserTrackerPersistence.remove(browserTracker);
+		remove(browserTracker);
 	}
 
 	/**
@@ -721,7 +707,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 */
 	public void removeAll() throws SystemException {
 		for (BrowserTracker browserTracker : findAll()) {
-			browserTrackerPersistence.remove(browserTracker);
+			remove(browserTracker);
 		}
 	}
 

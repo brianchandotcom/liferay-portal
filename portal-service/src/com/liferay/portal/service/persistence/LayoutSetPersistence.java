@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutSet;
 
 /**
@@ -467,6 +466,4 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public LayoutSet remove(LayoutSet layoutSet) throws SystemException;
 }

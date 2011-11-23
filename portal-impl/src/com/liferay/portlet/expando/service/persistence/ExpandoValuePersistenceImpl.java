@@ -381,24 +381,11 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 *
 	 * @param primaryKey the primary key of the expando value
 	 * @return the expando value that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a expando value with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoValue remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the expando value with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param valueId the primary key of the expando value
-	 * @return the expando value that was removed
-	 * @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoValue remove(long valueId)
 		throws NoSuchValueException, SystemException {
 		Session session = null;
 
@@ -406,18 +393,18 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 			session = openSession();
 
 			ExpandoValue expandoValue = (ExpandoValue)session.get(ExpandoValueImpl.class,
-					Long.valueOf(valueId));
+					primaryKey);
 
 			if (expandoValue == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + valueId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchValueException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					valueId);
+					primaryKey);
 			}
 
-			return expandoValuePersistence.remove(expandoValue);
+			return remove(expandoValue);
 		}
 		catch (NoSuchValueException nsee) {
 			throw nsee;
@@ -431,16 +418,16 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	}
 
 	/**
-	 * Removes the expando value from the database. Also notifies the appropriate model listeners.
+	 * Removes the expando value with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param expandoValue the expando value
+	 * @param valueId the primary key of the expando value
 	 * @return the expando value that was removed
+	 * @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ExpandoValue remove(ExpandoValue expandoValue)
-		throws SystemException {
-		return super.remove(expandoValue);
+	public ExpandoValue remove(long valueId)
+		throws NoSuchValueException, SystemException {
+		return remove(Long.valueOf(valueId));
 	}
 
 	@Override
@@ -4219,7 +4206,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	public void removeByTableId(long tableId) throws SystemException {
 		for (ExpandoValue expandoValue : findByTableId(tableId)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4231,7 +4218,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	public void removeByColumnId(long columnId) throws SystemException {
 		for (ExpandoValue expandoValue : findByColumnId(columnId)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4243,7 +4230,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	public void removeByRowId(long rowId) throws SystemException {
 		for (ExpandoValue expandoValue : findByRowId(rowId)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4257,7 +4244,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public void removeByT_C(long tableId, long columnId)
 		throws SystemException {
 		for (ExpandoValue expandoValue : findByT_C(tableId, columnId)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4271,7 +4258,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public void removeByT_CPK(long tableId, long classPK)
 		throws SystemException {
 		for (ExpandoValue expandoValue : findByT_CPK(tableId, classPK)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4284,7 +4271,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	public void removeByT_R(long tableId, long rowId) throws SystemException {
 		for (ExpandoValue expandoValue : findByT_R(tableId, rowId)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4299,7 +4286,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		throws NoSuchValueException, SystemException {
 		ExpandoValue expandoValue = findByC_R(columnId, rowId);
 
-		expandoValuePersistence.remove(expandoValue);
+		remove(expandoValue);
 	}
 
 	/**
@@ -4312,7 +4299,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public void removeByC_C(long classNameId, long classPK)
 		throws SystemException {
 		for (ExpandoValue expandoValue : findByC_C(classNameId, classPK)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4328,7 +4315,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		throws NoSuchValueException, SystemException {
 		ExpandoValue expandoValue = findByT_C_C(tableId, columnId, classPK);
 
-		expandoValuePersistence.remove(expandoValue);
+		remove(expandoValue);
 	}
 
 	/**
@@ -4342,7 +4329,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public void removeByT_C_D(long tableId, long columnId, String data)
 		throws SystemException {
 		for (ExpandoValue expandoValue : findByT_C_D(tableId, columnId, data)) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 
@@ -4353,7 +4340,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	public void removeAll() throws SystemException {
 		for (ExpandoValue expandoValue : findAll()) {
-			expandoValuePersistence.remove(expandoValue);
+			remove(expandoValue);
 		}
 	}
 

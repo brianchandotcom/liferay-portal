@@ -236,24 +236,11 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 *
 	 * @param primaryKey the primary key of the m d r action
 	 * @return the m d r action that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a m d r action with the primary key could not be found
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRAction remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the m d r action with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param actionId the primary key of the m d r action
-	 * @return the m d r action that was removed
-	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MDRAction remove(long actionId)
 		throws NoSuchActionException, SystemException {
 		Session session = null;
 
@@ -261,18 +248,18 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			session = openSession();
 
 			MDRAction mdrAction = (MDRAction)session.get(MDRActionImpl.class,
-					Long.valueOf(actionId));
+					primaryKey);
 
 			if (mdrAction == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + actionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					actionId);
+					primaryKey);
 			}
 
-			return mdrActionPersistence.remove(mdrAction);
+			return remove(mdrAction);
 		}
 		catch (NoSuchActionException nsee) {
 			throw nsee;
@@ -286,15 +273,16 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	}
 
 	/**
-	 * Removes the m d r action from the database. Also notifies the appropriate model listeners.
+	 * Removes the m d r action with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mdrAction the m d r action
+	 * @param actionId the primary key of the m d r action
 	 * @return the m d r action that was removed
+	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MDRAction remove(MDRAction mdrAction) throws SystemException {
-		return super.remove(mdrAction);
+	public MDRAction remove(long actionId)
+		throws NoSuchActionException, SystemException {
+		return remove(Long.valueOf(actionId));
 	}
 
 	@Override
@@ -1548,7 +1536,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (MDRAction mdrAction : findByUuid(uuid)) {
-			mdrActionPersistence.remove(mdrAction);
+			remove(mdrAction);
 		}
 	}
 
@@ -1563,7 +1551,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		throws NoSuchActionException, SystemException {
 		MDRAction mdrAction = findByUUID_G(uuid, groupId);
 
-		mdrActionPersistence.remove(mdrAction);
+		remove(mdrAction);
 	}
 
 	/**
@@ -1576,7 +1564,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		throws SystemException {
 		for (MDRAction mdrAction : findByRuleGroupInstanceId(
 				ruleGroupInstanceId)) {
-			mdrActionPersistence.remove(mdrAction);
+			remove(mdrAction);
 		}
 	}
 
@@ -1587,7 +1575,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	public void removeAll() throws SystemException {
 		for (MDRAction mdrAction : findAll()) {
-			mdrActionPersistence.remove(mdrAction);
+			remove(mdrAction);
 		}
 	}
 

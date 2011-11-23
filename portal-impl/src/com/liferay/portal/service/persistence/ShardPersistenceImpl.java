@@ -203,43 +203,29 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param primaryKey the primary key of the shard
 	 * @return the shard that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shard with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Shard remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shard with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param shardId the primary key of the shard
-	 * @return the shard that was removed
-	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Shard remove(long shardId)
 		throws NoSuchShardException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Shard shard = (Shard)session.get(ShardImpl.class,
-					Long.valueOf(shardId));
+			Shard shard = (Shard)session.get(ShardImpl.class, primaryKey);
 
 			if (shard == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + shardId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchShardException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					shardId);
+					primaryKey);
 			}
 
-			return shardPersistence.remove(shard);
+			return remove(shard);
 		}
 		catch (NoSuchShardException nsee) {
 			throw nsee;
@@ -253,15 +239,16 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	/**
-	 * Removes the shard from the database. Also notifies the appropriate model listeners.
+	 * Removes the shard with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shard the shard
+	 * @param shardId the primary key of the shard
 	 * @return the shard that was removed
+	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Shard remove(Shard shard) throws SystemException {
-		return super.remove(shard);
+	public Shard remove(long shardId)
+		throws NoSuchShardException, SystemException {
+		return remove(Long.valueOf(shardId));
 	}
 
 	@Override
@@ -898,7 +885,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		throws NoSuchShardException, SystemException {
 		Shard shard = findByName(name);
 
-		shardPersistence.remove(shard);
+		remove(shard);
 	}
 
 	/**
@@ -912,7 +899,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		throws NoSuchShardException, SystemException {
 		Shard shard = findByC_C(classNameId, classPK);
 
-		shardPersistence.remove(shard);
+		remove(shard);
 	}
 
 	/**
@@ -922,7 +909,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 */
 	public void removeAll() throws SystemException {
 		for (Shard shard : findAll()) {
-			shardPersistence.remove(shard);
+			remove(shard);
 		}
 	}
 

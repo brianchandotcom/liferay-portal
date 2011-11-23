@@ -266,24 +266,11 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 *
 	 * @param primaryKey the primary key of the repository entry
 	 * @return the repository entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a repository entry with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public RepositoryEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param repositoryEntryId the primary key of the repository entry
-	 * @return the repository entry that was removed
-	 * @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public RepositoryEntry remove(long repositoryEntryId)
 		throws NoSuchRepositoryEntryException, SystemException {
 		Session session = null;
 
@@ -291,19 +278,18 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 			session = openSession();
 
 			RepositoryEntry repositoryEntry = (RepositoryEntry)session.get(RepositoryEntryImpl.class,
-					Long.valueOf(repositoryEntryId));
+					primaryKey);
 
 			if (repositoryEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						repositoryEntryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRepositoryEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					repositoryEntryId);
+					primaryKey);
 			}
 
-			return repositoryEntryPersistence.remove(repositoryEntry);
+			return remove(repositoryEntry);
 		}
 		catch (NoSuchRepositoryEntryException nsee) {
 			throw nsee;
@@ -317,16 +303,16 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	}
 
 	/**
-	 * Removes the repository entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param repositoryEntry the repository entry
+	 * @param repositoryEntryId the primary key of the repository entry
 	 * @return the repository entry that was removed
+	 * @throws com.liferay.portal.NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public RepositoryEntry remove(RepositoryEntry repositoryEntry)
-		throws SystemException {
-		return super.remove(repositoryEntry);
+	public RepositoryEntry remove(long repositoryEntryId)
+		throws NoSuchRepositoryEntryException, SystemException {
+		return remove(Long.valueOf(repositoryEntryId));
 	}
 
 	@Override
@@ -1761,7 +1747,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (RepositoryEntry repositoryEntry : findByUuid(uuid)) {
-			repositoryEntryPersistence.remove(repositoryEntry);
+			remove(repositoryEntry);
 		}
 	}
 
@@ -1776,7 +1762,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		throws NoSuchRepositoryEntryException, SystemException {
 		RepositoryEntry repositoryEntry = findByUUID_G(uuid, groupId);
 
-		repositoryEntryPersistence.remove(repositoryEntry);
+		remove(repositoryEntry);
 	}
 
 	/**
@@ -1788,7 +1774,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	public void removeByRepositoryId(long repositoryId)
 		throws SystemException {
 		for (RepositoryEntry repositoryEntry : findByRepositoryId(repositoryId)) {
-			repositoryEntryPersistence.remove(repositoryEntry);
+			remove(repositoryEntry);
 		}
 	}
 
@@ -1803,7 +1789,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		throws NoSuchRepositoryEntryException, SystemException {
 		RepositoryEntry repositoryEntry = findByR_M(repositoryId, mappedId);
 
-		repositoryEntryPersistence.remove(repositoryEntry);
+		remove(repositoryEntry);
 	}
 
 	/**
@@ -1813,7 +1799,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	 */
 	public void removeAll() throws SystemException {
 		for (RepositoryEntry repositoryEntry : findAll()) {
-			repositoryEntryPersistence.remove(repositoryEntry);
+			remove(repositoryEntry);
 		}
 	}
 

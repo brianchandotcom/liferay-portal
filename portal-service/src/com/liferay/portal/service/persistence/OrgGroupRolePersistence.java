@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.OrgGroupRole;
 
 /**
@@ -409,7 +408,4 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public OrgGroupRole remove(OrgGroupRole orgGroupRole)
-		throws SystemException;
 }

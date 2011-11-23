@@ -263,24 +263,11 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 *
 	 * @param primaryKey the primary key of the message boards mailing list
 	 * @return the message boards mailing list that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards mailing list with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param mailingListId the primary key of the message boards mailing list
-	 * @return the message boards mailing list that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBMailingList remove(long mailingListId)
 		throws NoSuchMailingListException, SystemException {
 		Session session = null;
 
@@ -288,18 +275,18 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			session = openSession();
 
 			MBMailingList mbMailingList = (MBMailingList)session.get(MBMailingListImpl.class,
-					Long.valueOf(mailingListId));
+					primaryKey);
 
 			if (mbMailingList == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + mailingListId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchMailingListException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					mailingListId);
+					primaryKey);
 			}
 
-			return mbMailingListPersistence.remove(mbMailingList);
+			return remove(mbMailingList);
 		}
 		catch (NoSuchMailingListException nsee) {
 			throw nsee;
@@ -313,16 +300,16 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	}
 
 	/**
-	 * Removes the message boards mailing list from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbMailingList the message boards mailing list
+	 * @param mailingListId the primary key of the message boards mailing list
 	 * @return the message boards mailing list that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBMailingList remove(MBMailingList mbMailingList)
-		throws SystemException {
-		return super.remove(mbMailingList);
+	public MBMailingList remove(long mailingListId)
+		throws NoSuchMailingListException, SystemException {
+		return remove(Long.valueOf(mailingListId));
 	}
 
 	@Override
@@ -1751,7 +1738,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (MBMailingList mbMailingList : findByUuid(uuid)) {
-			mbMailingListPersistence.remove(mbMailingList);
+			remove(mbMailingList);
 		}
 	}
 
@@ -1766,7 +1753,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		throws NoSuchMailingListException, SystemException {
 		MBMailingList mbMailingList = findByUUID_G(uuid, groupId);
 
-		mbMailingListPersistence.remove(mbMailingList);
+		remove(mbMailingList);
 	}
 
 	/**
@@ -1777,7 +1764,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	public void removeByActive(boolean active) throws SystemException {
 		for (MBMailingList mbMailingList : findByActive(active)) {
-			mbMailingListPersistence.remove(mbMailingList);
+			remove(mbMailingList);
 		}
 	}
 
@@ -1792,7 +1779,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		throws NoSuchMailingListException, SystemException {
 		MBMailingList mbMailingList = findByG_C(groupId, categoryId);
 
-		mbMailingListPersistence.remove(mbMailingList);
+		remove(mbMailingList);
 	}
 
 	/**
@@ -1802,7 +1789,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	public void removeAll() throws SystemException {
 		for (MBMailingList mbMailingList : findAll()) {
-			mbMailingListPersistence.remove(mbMailingList);
+			remove(mbMailingList);
 		}
 	}
 

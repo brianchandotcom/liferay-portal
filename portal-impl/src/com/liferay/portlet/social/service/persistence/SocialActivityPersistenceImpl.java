@@ -431,24 +431,11 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 *
 	 * @param primaryKey the primary key of the social activity
 	 * @return the social activity that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivity remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param activityId the primary key of the social activity
-	 * @return the social activity that was removed
-	 * @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivity remove(long activityId)
 		throws NoSuchActivityException, SystemException {
 		Session session = null;
 
@@ -456,18 +443,18 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			session = openSession();
 
 			SocialActivity socialActivity = (SocialActivity)session.get(SocialActivityImpl.class,
-					Long.valueOf(activityId));
+					primaryKey);
 
 			if (socialActivity == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + activityId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchActivityException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					activityId);
+					primaryKey);
 			}
 
-			return socialActivityPersistence.remove(socialActivity);
+			return remove(socialActivity);
 		}
 		catch (NoSuchActivityException nsee) {
 			throw nsee;
@@ -481,16 +468,16 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	}
 
 	/**
-	 * Removes the social activity from the database. Also notifies the appropriate model listeners.
+	 * Removes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param socialActivity the social activity
+	 * @param activityId the primary key of the social activity
 	 * @return the social activity that was removed
+	 * @throws com.liferay.portlet.social.NoSuchActivityException if a social activity with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SocialActivity remove(SocialActivity socialActivity)
-		throws SystemException {
-		return super.remove(socialActivity);
+	public SocialActivity remove(long activityId)
+		throws NoSuchActivityException, SystemException {
+		return remove(Long.valueOf(activityId));
 	}
 
 	@Override
@@ -4376,7 +4363,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (SocialActivity socialActivity : findByGroupId(groupId)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4388,7 +4375,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (SocialActivity socialActivity : findByCompanyId(companyId)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4400,7 +4387,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (SocialActivity socialActivity : findByUserId(userId)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4414,7 +4401,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		throws NoSuchActivityException, SystemException {
 		SocialActivity socialActivity = findByMirrorActivityId(mirrorActivityId);
 
-		socialActivityPersistence.remove(socialActivity);
+		remove(socialActivity);
 	}
 
 	/**
@@ -4425,7 +4412,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public void removeByClassNameId(long classNameId) throws SystemException {
 		for (SocialActivity socialActivity : findByClassNameId(classNameId)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4439,7 +4426,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		throws SystemException {
 		for (SocialActivity socialActivity : findByReceiverUserId(
 				receiverUserId)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4453,7 +4440,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public void removeByC_C(long classNameId, long classPK)
 		throws SystemException {
 		for (SocialActivity socialActivity : findByC_C(classNameId, classPK)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4469,7 +4456,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		long classPK) throws SystemException {
 		for (SocialActivity socialActivity : findByM_C_C(mirrorActivityId,
 				classNameId, classPK)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4489,7 +4476,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		throws SystemException {
 		for (SocialActivity socialActivity : findByG_U_C_C_T_R(groupId, userId,
 				classNameId, classPK, type, receiverUserId)) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 
@@ -4511,7 +4498,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		SocialActivity socialActivity = findByG_U_CD_C_C_T_R(groupId, userId,
 				createDate, classNameId, classPK, type, receiverUserId);
 
-		socialActivityPersistence.remove(socialActivity);
+		remove(socialActivity);
 	}
 
 	/**
@@ -4521,7 +4508,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	public void removeAll() throws SystemException {
 		for (SocialActivity socialActivity : findAll()) {
-			socialActivityPersistence.remove(socialActivity);
+			remove(socialActivity);
 		}
 	}
 

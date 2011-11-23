@@ -269,24 +269,11 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 *
 	 * @param primaryKey the primary key of the document library file version
 	 * @return the document library file version that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file version with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param fileVersionId the primary key of the document library file version
-	 * @return the document library file version that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileVersion remove(long fileVersionId)
 		throws NoSuchFileVersionException, SystemException {
 		Session session = null;
 
@@ -294,18 +281,18 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			session = openSession();
 
 			DLFileVersion dlFileVersion = (DLFileVersion)session.get(DLFileVersionImpl.class,
-					Long.valueOf(fileVersionId));
+					primaryKey);
 
 			if (dlFileVersion == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileVersionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFileVersionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileVersionId);
+					primaryKey);
 			}
 
-			return dlFileVersionPersistence.remove(dlFileVersion);
+			return remove(dlFileVersion);
 		}
 		catch (NoSuchFileVersionException nsee) {
 			throw nsee;
@@ -319,16 +306,16 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
-	 * Removes the document library file version from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileVersion the document library file version
+	 * @param fileVersionId the primary key of the document library file version
 	 * @return the document library file version that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFileVersion remove(DLFileVersion dlFileVersion)
-		throws SystemException {
-		return super.remove(dlFileVersion);
+	public DLFileVersion remove(long fileVersionId)
+		throws NoSuchFileVersionException, SystemException {
+		return remove(Long.valueOf(fileVersionId));
 	}
 
 	@Override
@@ -2029,7 +2016,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 */
 	public void removeByFileEntryId(long fileEntryId) throws SystemException {
 		for (DLFileVersion dlFileVersion : findByFileEntryId(fileEntryId)) {
-			dlFileVersionPersistence.remove(dlFileVersion);
+			remove(dlFileVersion);
 		}
 	}
 
@@ -2044,7 +2031,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		throws NoSuchFileVersionException, SystemException {
 		DLFileVersion dlFileVersion = findByF_V(fileEntryId, version);
 
-		dlFileVersionPersistence.remove(dlFileVersion);
+		remove(dlFileVersion);
 	}
 
 	/**
@@ -2057,7 +2044,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public void removeByF_S(long fileEntryId, int status)
 		throws SystemException {
 		for (DLFileVersion dlFileVersion : findByF_S(fileEntryId, status)) {
-			dlFileVersionPersistence.remove(dlFileVersion);
+			remove(dlFileVersion);
 		}
 	}
 
@@ -2072,7 +2059,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public void removeByG_F_S(long groupId, long folderId, int status)
 		throws SystemException {
 		for (DLFileVersion dlFileVersion : findByG_F_S(groupId, folderId, status)) {
-			dlFileVersionPersistence.remove(dlFileVersion);
+			remove(dlFileVersion);
 		}
 	}
 
@@ -2083,7 +2070,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFileVersion dlFileVersion : findAll()) {
-			dlFileVersionPersistence.remove(dlFileVersion);
+			remove(dlFileVersion);
 		}
 	}
 

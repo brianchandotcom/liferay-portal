@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Region;
 
 /**
@@ -533,6 +532,4 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Region remove(Region region) throws SystemException;
 }

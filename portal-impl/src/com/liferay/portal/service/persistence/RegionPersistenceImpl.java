@@ -225,43 +225,29 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 *
 	 * @param primaryKey the primary key of the region
 	 * @return the region that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a region with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Region remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the region with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param regionId the primary key of the region
-	 * @return the region that was removed
-	 * @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Region remove(long regionId)
 		throws NoSuchRegionException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Region region = (Region)session.get(RegionImpl.class,
-					Long.valueOf(regionId));
+			Region region = (Region)session.get(RegionImpl.class, primaryKey);
 
 			if (region == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + regionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRegionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					regionId);
+					primaryKey);
 			}
 
-			return regionPersistence.remove(region);
+			return remove(region);
 		}
 		catch (NoSuchRegionException nsee) {
 			throw nsee;
@@ -275,15 +261,16 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	/**
-	 * Removes the region from the database. Also notifies the appropriate model listeners.
+	 * Removes the region with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param region the region
+	 * @param regionId the primary key of the region
 	 * @return the region that was removed
+	 * @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Region remove(Region region) throws SystemException {
-		return super.remove(region);
+	public Region remove(long regionId)
+		throws NoSuchRegionException, SystemException {
+		return remove(Long.valueOf(regionId));
 	}
 
 	@Override
@@ -1703,7 +1690,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public void removeByCountryId(long countryId) throws SystemException {
 		for (Region region : findByCountryId(countryId)) {
-			regionPersistence.remove(region);
+			remove(region);
 		}
 	}
 
@@ -1715,7 +1702,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public void removeByActive(boolean active) throws SystemException {
 		for (Region region : findByActive(active)) {
-			regionPersistence.remove(region);
+			remove(region);
 		}
 	}
 
@@ -1729,7 +1716,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	public void removeByC_A(long countryId, boolean active)
 		throws SystemException {
 		for (Region region : findByC_A(countryId, active)) {
-			regionPersistence.remove(region);
+			remove(region);
 		}
 	}
 
@@ -1740,7 +1727,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	public void removeAll() throws SystemException {
 		for (Region region : findAll()) {
-			regionPersistence.remove(region);
+			remove(region);
 		}
 	}
 

@@ -242,24 +242,11 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 *
 	 * @param primaryKey the primary key of the social activity limit
 	 * @return the social activity limit that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a social activity limit with the primary key could not be found
+	 * @throws com.liferay.portlet.social.NoSuchActivityLimitException if a social activity limit with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivityLimit remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param activityLimitId the primary key of the social activity limit
-	 * @return the social activity limit that was removed
-	 * @throws com.liferay.portlet.social.NoSuchActivityLimitException if a social activity limit with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SocialActivityLimit remove(long activityLimitId)
 		throws NoSuchActivityLimitException, SystemException {
 		Session session = null;
 
@@ -267,19 +254,18 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			session = openSession();
 
 			SocialActivityLimit socialActivityLimit = (SocialActivityLimit)session.get(SocialActivityLimitImpl.class,
-					Long.valueOf(activityLimitId));
+					primaryKey);
 
 			if (socialActivityLimit == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						activityLimitId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchActivityLimitException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					activityLimitId);
+					primaryKey);
 			}
 
-			return socialActivityLimitPersistence.remove(socialActivityLimit);
+			return remove(socialActivityLimit);
 		}
 		catch (NoSuchActivityLimitException nsee) {
 			throw nsee;
@@ -293,16 +279,16 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	}
 
 	/**
-	 * Removes the social activity limit from the database. Also notifies the appropriate model listeners.
+	 * Removes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param socialActivityLimit the social activity limit
+	 * @param activityLimitId the primary key of the social activity limit
 	 * @return the social activity limit that was removed
+	 * @throws com.liferay.portlet.social.NoSuchActivityLimitException if a social activity limit with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public SocialActivityLimit remove(SocialActivityLimit socialActivityLimit)
-		throws SystemException {
-		return super.remove(socialActivityLimit);
+	public SocialActivityLimit remove(long activityLimitId)
+		throws NoSuchActivityLimitException, SystemException {
+		return remove(Long.valueOf(activityLimitId));
 	}
 
 	@Override
@@ -1272,7 +1258,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		throws SystemException {
 		for (SocialActivityLimit socialActivityLimit : findByC_C(classNameId,
 				classPK)) {
-			socialActivityLimitPersistence.remove(socialActivityLimit);
+			remove(socialActivityLimit);
 		}
 	}
 
@@ -1294,7 +1280,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		SocialActivityLimit socialActivityLimit = findByG_U_C_C_A_A(groupId,
 				userId, classNameId, classPK, activityType, activityCounterName);
 
-		socialActivityLimitPersistence.remove(socialActivityLimit);
+		remove(socialActivityLimit);
 	}
 
 	/**
@@ -1304,7 +1290,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 */
 	public void removeAll() throws SystemException {
 		for (SocialActivityLimit socialActivityLimit : findAll()) {
-			socialActivityLimitPersistence.remove(socialActivityLimit);
+			remove(socialActivityLimit);
 		}
 	}
 

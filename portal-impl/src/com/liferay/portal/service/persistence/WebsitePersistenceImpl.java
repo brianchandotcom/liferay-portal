@@ -278,43 +278,29 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 *
 	 * @param primaryKey the primary key of the website
 	 * @return the website that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a website with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchWebsiteException if a website with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Website remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the website with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param websiteId the primary key of the website
-	 * @return the website that was removed
-	 * @throws com.liferay.portal.NoSuchWebsiteException if a website with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Website remove(long websiteId)
 		throws NoSuchWebsiteException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Website website = (Website)session.get(WebsiteImpl.class,
-					Long.valueOf(websiteId));
+			Website website = (Website)session.get(WebsiteImpl.class, primaryKey);
 
 			if (website == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + websiteId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchWebsiteException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					websiteId);
+					primaryKey);
 			}
 
-			return websitePersistence.remove(website);
+			return remove(website);
 		}
 		catch (NoSuchWebsiteException nsee) {
 			throw nsee;
@@ -328,15 +314,16 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	/**
-	 * Removes the website from the database. Also notifies the appropriate model listeners.
+	 * Removes the website with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param website the website
+	 * @param websiteId the primary key of the website
 	 * @return the website that was removed
+	 * @throws com.liferay.portal.NoSuchWebsiteException if a website with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Website remove(Website website) throws SystemException {
-		return super.remove(website);
+	public Website remove(long websiteId)
+		throws NoSuchWebsiteException, SystemException {
+		return remove(Long.valueOf(websiteId));
 	}
 
 	@Override
@@ -2619,7 +2606,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Website website : findByCompanyId(companyId)) {
-			websitePersistence.remove(website);
+			remove(website);
 		}
 	}
 
@@ -2631,7 +2618,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (Website website : findByUserId(userId)) {
-			websitePersistence.remove(website);
+			remove(website);
 		}
 	}
 
@@ -2645,7 +2632,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public void removeByC_C(long companyId, long classNameId)
 		throws SystemException {
 		for (Website website : findByC_C(companyId, classNameId)) {
-			websitePersistence.remove(website);
+			remove(website);
 		}
 	}
 
@@ -2660,7 +2647,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public void removeByC_C_C(long companyId, long classNameId, long classPK)
 		throws SystemException {
 		for (Website website : findByC_C_C(companyId, classNameId, classPK)) {
-			websitePersistence.remove(website);
+			remove(website);
 		}
 	}
 
@@ -2677,7 +2664,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		boolean primary) throws SystemException {
 		for (Website website : findByC_C_C_P(companyId, classNameId, classPK,
 				primary)) {
-			websitePersistence.remove(website);
+			remove(website);
 		}
 	}
 
@@ -2688,7 +2675,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	public void removeAll() throws SystemException {
 		for (Website website : findAll()) {
-			websitePersistence.remove(website);
+			remove(website);
 		}
 	}
 

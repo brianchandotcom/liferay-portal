@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Subscription;
 
 /**
@@ -627,7 +626,4 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Subscription remove(Subscription subscription)
-		throws SystemException;
 }

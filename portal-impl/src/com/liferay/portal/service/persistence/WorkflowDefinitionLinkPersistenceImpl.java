@@ -262,24 +262,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 *
 	 * @param primaryKey the primary key of the workflow definition link
 	 * @return the workflow definition link that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a workflow definition link with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WorkflowDefinitionLink remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
-	 * @return the workflow definition link that was removed
-	 * @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WorkflowDefinitionLink remove(long workflowDefinitionLinkId)
 		throws NoSuchWorkflowDefinitionLinkException, SystemException {
 		Session session = null;
 
@@ -287,19 +274,18 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			session = openSession();
 
 			WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)session.get(WorkflowDefinitionLinkImpl.class,
-					Long.valueOf(workflowDefinitionLinkId));
+					primaryKey);
 
 			if (workflowDefinitionLink == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						workflowDefinitionLinkId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchWorkflowDefinitionLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					workflowDefinitionLinkId);
+					primaryKey);
 			}
 
-			return workflowDefinitionLinkPersistence.remove(workflowDefinitionLink);
+			return remove(workflowDefinitionLink);
 		}
 		catch (NoSuchWorkflowDefinitionLinkException nsee) {
 			throw nsee;
@@ -313,17 +299,16 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	/**
-	 * Removes the workflow definition link from the database. Also notifies the appropriate model listeners.
+	 * Removes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param workflowDefinitionLink the workflow definition link
+	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
 	 * @return the workflow definition link that was removed
+	 * @throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public WorkflowDefinitionLink remove(
-		WorkflowDefinitionLink workflowDefinitionLink)
-		throws SystemException {
-		return super.remove(workflowDefinitionLink);
+	public WorkflowDefinitionLink remove(long workflowDefinitionLinkId)
+		throws NoSuchWorkflowDefinitionLinkException, SystemException {
+		return remove(Long.valueOf(workflowDefinitionLinkId));
 	}
 
 	@Override
@@ -1707,7 +1692,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (WorkflowDefinitionLink workflowDefinitionLink : findByCompanyId(
 				companyId)) {
-			workflowDefinitionLinkPersistence.remove(workflowDefinitionLink);
+			remove(workflowDefinitionLink);
 		}
 	}
 
@@ -1723,7 +1708,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		int workflowDefinitionVersion) throws SystemException {
 		for (WorkflowDefinitionLink workflowDefinitionLink : findByC_W_W(
 				companyId, workflowDefinitionName, workflowDefinitionVersion)) {
-			workflowDefinitionLinkPersistence.remove(workflowDefinitionLink);
+			remove(workflowDefinitionLink);
 		}
 	}
 
@@ -1743,7 +1728,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		WorkflowDefinitionLink workflowDefinitionLink = findByG_C_C_C_T(groupId,
 				companyId, classNameId, classPK, typePK);
 
-		workflowDefinitionLinkPersistence.remove(workflowDefinitionLink);
+		remove(workflowDefinitionLink);
 	}
 
 	/**
@@ -1753,7 +1738,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	public void removeAll() throws SystemException {
 		for (WorkflowDefinitionLink workflowDefinitionLink : findAll()) {
-			workflowDefinitionLinkPersistence.remove(workflowDefinitionLink);
+			remove(workflowDefinitionLink);
 		}
 	}
 

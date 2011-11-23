@@ -41,10 +41,10 @@ else if (object instanceof FileEntry) {
 
 fileVersion = fileEntry.getFileVersion();
 
-String largeURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
-String thumbnailURL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=1&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
-String custom1URL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=2&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
-String custom2URL = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&imageThumbnail=3&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
+String largeURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+String thumbnailURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
+String custom1URL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=2");
+String custom2URL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=3");
 
 int custom1MaxHeight = PrefsPropsUtil.getInteger(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT);
 int custom1MaxWidth = PrefsPropsUtil.getInteger(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH);

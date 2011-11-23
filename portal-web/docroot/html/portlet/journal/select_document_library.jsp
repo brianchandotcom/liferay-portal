@@ -154,7 +154,7 @@ if (folder != null) {
 	<%
 		ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
-		String rowHREF = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle());
+		String rowHREF = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true);
 
 		// Title
 

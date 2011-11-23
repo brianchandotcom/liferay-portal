@@ -986,6 +986,18 @@ release was successful.</echo>
 				</security-domain>]]>
 			</replacevalue>
 		</replace>
+
+		<replace file="${app.server.jboss.dir}/modules/javax/activation/api/main/module.xml">
+			<replacetoken><![CDATA[<resources>]]></replacetoken>
+			<replacevalue><![CDATA[<dependencies>
+				<module name="javax.api" />
+				<module name="javax.mail.api" >
+					<imports><include path="META-INF"/></imports>
+				</module>
+				</dependencies>
+				<resources>]]>
+			</replacevalue>
+		</replace>
 	</target>
 
 	<target name="unzip-jetty">

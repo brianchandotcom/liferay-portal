@@ -16,7 +16,6 @@ package com.liferay.portal.tools.samplesqlbuilder;
 
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterModelImpl;
-import com.liferay.ibm.icu.text.SimpleDateFormat;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -102,6 +101,8 @@ import com.liferay.util.SimpleCounter;
 
 import java.io.File;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -127,12 +128,12 @@ public class DataFactory {
 			_maxUserToGroupCount = maxUserToGroupCount;
 
 			_counter = counter;
+			_dlDateCounter = dlDateCounter;
 			_permissionCounter = permissionCounter;
 			_resourceCounter = resourceCounter;
 			_resourceCodeCounter = resourceCodeCounter;
 			_resourcePermissionCounter = resourcePermissionCounter;
 			_socialActivityCounter = socialActivityCounter;
-			_dlDateCounter = dlDateCounter;
 
 			initClassNames();
 			initCompany();
@@ -1215,6 +1216,7 @@ public class DataFactory {
 	private List<CounterModelImpl> _counters;
 	private ClassName _ddmContentClassName;
 	private User _defaultUser;
+	private SimpleCounter _dlDateCounter;
 	private ClassName _dlFileEntryClassName;
 	private ClassName _groupClassName;
 	private List<Group> _groups;
@@ -1241,7 +1243,6 @@ public class DataFactory {
 	private Role _siteMemberRole;
 	private Role _siteOwnerRole;
 	private SimpleCounter _socialActivityCounter;
-	private SimpleCounter _dlDateCounter;
 	private ClassName _userClassName;
 	private Object[] _userNames;
 	private Role _userRole;

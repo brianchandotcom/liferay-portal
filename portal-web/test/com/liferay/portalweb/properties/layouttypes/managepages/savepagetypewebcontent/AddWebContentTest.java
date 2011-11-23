@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.managepages.page.savepagetypewebcontent;
+package com.liferay.portalweb.properties.layouttypes.managepages.savepagetypewebcontent;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

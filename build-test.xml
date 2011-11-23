@@ -265,7 +265,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1576,6 +1576,12 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-xsl-content" />
 			<param name="test.ant.script.suite" value="PortalWebXSLContentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-layout-types" />
+			<param name="test.ant.script.properties" value="layout.types=portlet,panel,embedded,article,url,link_to_layout" />
+			<param name="test.ant.script.suite" value="PropertiesLayoutTypesTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

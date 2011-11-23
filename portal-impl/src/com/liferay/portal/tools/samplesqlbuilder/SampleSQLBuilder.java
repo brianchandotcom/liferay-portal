@@ -167,6 +167,7 @@ public class SampleSQLBuilder {
 				) + 1;
 
 			_counter = new SimpleCounter(counterOffset);
+			_dlDateCounter = new SimpleCounter();
 			_permissionCounter = new SimpleCounter();
 			_resourceCounter = new SimpleCounter();
 			_resourceCodeCounter = new SimpleCounter();
@@ -177,8 +178,9 @@ public class SampleSQLBuilder {
 
 			_dataFactory = new DataFactory(
 				baseDir, _maxGroupCount, _maxUserToGroupCount, _counter,
-				_permissionCounter, _resourceCounter, _resourceCodeCounter,
-				_resourcePermissionCounter, _socialActivityCounter);
+				_dlDateCounter, _permissionCounter, _resourceCounter,
+				_resourceCodeCounter, _resourcePermissionCounter,
+				_socialActivityCounter);
 
 			_db = DBFactoryUtil.getDB(_dbType);
 
@@ -488,6 +490,7 @@ public class SampleSQLBuilder {
 				_writerCompanyCSV = getWriter("company.csv");
 				_writerDocumentLibraryCSV = getWriter("document_library.csv");
 				_writerMessageBoardsCSV = getWriter("message_boards.csv");
+				_writerRepositoryCSV = getWriter("repository.csv");
 				_writerUsersCSV = getWriter("users.csv");
 				_writerWikiCSV = getWriter("wiki.csv");
 
@@ -499,6 +502,7 @@ public class SampleSQLBuilder {
 				_writerCompanyCSV.close();
 				_writerDocumentLibraryCSV.close();
 				_writerMessageBoardsCSV.close();
+				_writerRepositoryCSV.close();
 				_writerUsersCSV.close();
 				_writerWikiCSV.close();
 			}
@@ -546,6 +550,7 @@ public class SampleSQLBuilder {
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
 		put(context, "writerMessageBoardsCSV", _writerMessageBoardsCSV);
+		put(context, "writerRepositoryCSV", _writerRepositoryCSV);
 		put(context, "writerUsersCSV", _writerUsersCSV);
 		put(context, "writerWikiCSV", _writerWikiCSV);
 
@@ -669,6 +674,7 @@ public class SampleSQLBuilder {
 	private DataFactory _dataFactory;
 	private DB _db;
 	private String _dbType;
+	private SimpleCounter _dlDateCounter;
 	private int _dlFileEntrySize;
 	private Map<String, StringBundler> _insertSQLs =
 		new ConcurrentHashMap<String, StringBundler>();
@@ -716,6 +722,7 @@ public class SampleSQLBuilder {
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;
 	private Writer _writerMessageBoardsCSV;
+	private Writer _writerRepositoryCSV;
 	private Writer _writerSampleSQL;
 	private Writer _writerUsersCSV;
 	private Writer _writerWikiCSV;

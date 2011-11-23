@@ -116,7 +116,7 @@
 			if (!cached) {
 				cached = new A.Tooltip(
 					{
-						trigger: '.liferay-tooltip',
+						trigger: obj,
 						zIndex: 10000
 					}
 				).render();

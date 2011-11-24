@@ -728,7 +728,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	}
 
 	protected void initJobState() throws Exception {
-		String [] groupNames = _persistedScheduler.getJobGroupNames();
+		String[] groupNames = _persistedScheduler.getJobGroupNames();
 
 		for (String groupName : groupNames) {
 			String[] jobNames = _persistedScheduler.getJobNames(groupName);

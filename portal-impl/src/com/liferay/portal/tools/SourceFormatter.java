@@ -974,14 +974,6 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			if ((trimmedLine.startsWith("private ") ||
-				 trimmedLine.startsWith("protected ") ||
-				 trimmedLine.startsWith("public ")) &&
-				line.contains(" (") && !line.contains(StringPool.QUOTE)) {
-
-				line = StringUtil.replace(line, " (", "(");
-			}
-
 			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
 
@@ -1003,6 +995,20 @@ public class SourceFormatter {
 
 					trimmedLine = StringUtil.replaceLast(
 						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+				}
+
+				if (!line.contains(StringPool.QUOTE)) {
+					if ((trimmedLine.startsWith("private ") ||
+						 trimmedLine.startsWith("protected ") ||
+						 trimmedLine.startsWith("public ")) &&
+						line.contains(" (")) {
+
+						line = StringUtil.replace(line, " (", "(");
+					}
+
+					if (line.contains(" [")) {
+						line = StringUtil.replace(line, " [", "[");
+					}
 				}
 			}
 

@@ -60,7 +60,9 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_15_title",
 			RuntimeVariables.replace("Expando Web Content Test"));
-		selenium.click("_15_changeStructureBtn");
+		assertEquals(RuntimeVariables.replace("Choose"),
+			selenium.getText("//a[@id='_15_changeStructureButton']"));
+		selenium.click("//a[@id='_15_changeStructureButton']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
 		selenium.waitForPopUp("ChangeStructure",
@@ -73,7 +75,7 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=TEST_EXPANDO")) {
+				if (selenium.isVisible("//td[2]/a")) {
 					break;
 				}
 			}
@@ -83,7 +85,8 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("link=TEST_EXPANDO");
+		assertTrue(selenium.isPartialText("//td[2]/a", "Expando Structure Test"));
+		selenium.click("//td[2]/a");
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -117,13 +120,11 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Expando Web Content Test"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertTrue(selenium.isElementPresent("//td[7]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[8]/a"));
+			selenium.getText("//td[7]/a"));
 	}
 }

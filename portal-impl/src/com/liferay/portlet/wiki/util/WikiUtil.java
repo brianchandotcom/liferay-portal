@@ -79,7 +79,7 @@ public class WikiUtil {
 			page, viewPageURL, editPageURL, attachmentURLPrefix);
 	}
 
-	public static String diffHtml (
+	public static String diffHtml(
 			WikiPage sourcePage, WikiPage targetPage, PortletURL viewPageURL,
 			PortletURL editPageURL, String attachmentURLPrefix)
 		throws Exception {

@@ -992,7 +992,7 @@ public class LayoutTypePortletImpl
 		removePortletId(userId, portletId, true);
 	}
 
-	public void removePortletId (
+	public void removePortletId(
 		long userId, String portletId, boolean cleanUp) {
 
 		try {

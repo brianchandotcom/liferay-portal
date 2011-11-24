@@ -141,7 +141,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 	}
 
-	public void deleteUserNotificiationEvent (String notificationEventUuid)
+	public void deleteUserNotificiationEvent(String notificationEventUuid)
 		throws ChannelException {
 
 		try {
@@ -155,7 +155,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 	}
 
-	public void deleteUserNotificiationEvents (
+	public void deleteUserNotificiationEvents(
 			Collection<String> notificationEventUuids)
 		throws ChannelException {
 

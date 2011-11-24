@@ -41,10 +41,10 @@ public interface Channel {
 	public void confirmDelivery(String notificationEventUuid, boolean archive)
 		throws ChannelException;
 
-	public void deleteUserNotificiationEvent (String notificationEventUuid)
+	public void deleteUserNotificiationEvent(String notificationEventUuid)
 		throws ChannelException;
 
-	public void deleteUserNotificiationEvents (
+	public void deleteUserNotificiationEvents(
 			Collection<String> notificationEventUuids)
 		throws ChannelException;
 

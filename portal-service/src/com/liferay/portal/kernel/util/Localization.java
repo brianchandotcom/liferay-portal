@@ -278,7 +278,7 @@ public interface Localization {
 	 *         this prefix, followed by an underscore, and the language ID.
 	 * @throws Exception if an exception occurred
 	 */
-	public void setLocalizedPreferencesValues (
+	public void setLocalizedPreferencesValues(
 			PortletRequest portletRequest, PortletPreferences preferences,
 			String parameter)
 		throws Exception;

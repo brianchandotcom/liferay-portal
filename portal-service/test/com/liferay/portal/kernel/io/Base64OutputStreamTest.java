@@ -188,7 +188,7 @@ public class Base64OutputStreamTest extends TestCase {
 		Base64OutputStream base64OutputStream = new Base64OutputStream(
 			byteArrayOutputStream);
 
-		base64OutputStream.write(new byte [] {'A', 'B', 'C'});
+		base64OutputStream.write(new byte[] {'A', 'B', 'C'});
 
 		base64OutputStream.close();
 

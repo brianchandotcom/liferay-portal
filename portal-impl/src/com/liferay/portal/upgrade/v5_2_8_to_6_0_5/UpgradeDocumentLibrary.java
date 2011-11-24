@@ -137,7 +137,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					",extraSettings VARCHAR(75) null",
 					",title VARCHAR(75) null"
 				},
-				new String [] {
+				new String[] {
 					",extraSettings STRING null",
 					",title VARCHAR(255) null"
 				}));

@@ -325,11 +325,25 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	@Override
 	public void clearCache(Group group) {
-		EntityCacheUtil.removeResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupImpl.class, group.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(group);
+	}
+
+	@Override
+	public void clearCache(List<Group> groupList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Group group : groupList) {
+			doClearCache(group);
+		}
+	}
+
+	protected void doClearCache(Group group) {
+		EntityCacheUtil.removeResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupImpl.class, group.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
 			new Object[] { Long.valueOf(group.getLiveGroupId()) });
@@ -505,54 +519,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		GroupModelImpl groupModelImpl = (GroupModelImpl)group;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-			new Object[] { Long.valueOf(groupModelImpl.getLiveGroupId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
-			new Object[] {
-				Long.valueOf(groupModelImpl.getCompanyId()),
-				
-			groupModelImpl.getName()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_F,
-			new Object[] {
-				Long.valueOf(groupModelImpl.getCompanyId()),
-				
-			groupModelImpl.getFriendlyURL()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C,
-			new Object[] {
-				Long.valueOf(groupModelImpl.getCompanyId()),
-				Long.valueOf(groupModelImpl.getClassNameId()),
-				Long.valueOf(groupModelImpl.getClassPK())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L_N,
-			new Object[] {
-				Long.valueOf(groupModelImpl.getCompanyId()),
-				Long.valueOf(groupModelImpl.getLiveGroupId()),
-				
-			groupModelImpl.getName()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_L_N,
-			new Object[] {
-				Long.valueOf(groupModelImpl.getCompanyId()),
-				Long.valueOf(groupModelImpl.getClassNameId()),
-				Long.valueOf(groupModelImpl.getLiveGroupId()),
-				
-			groupModelImpl.getName()
-			});
-
-		EntityCacheUtil.removeResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupImpl.class, group.getPrimaryKey());
+		clearCache(group);
 
 		return group;
 	}

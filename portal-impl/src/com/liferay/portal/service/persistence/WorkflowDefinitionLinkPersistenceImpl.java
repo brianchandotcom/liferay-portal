@@ -225,12 +225,27 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public void clearCache(WorkflowDefinitionLink workflowDefinitionLink) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(workflowDefinitionLink);
+	}
+
+	@Override
+	public void clearCache(
+		List<WorkflowDefinitionLink> workflowDefinitionLinkList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (WorkflowDefinitionLink workflowDefinitionLink : workflowDefinitionLinkList) {
+			doClearCache(workflowDefinitionLink);
+		}
+	}
+
+	protected void doClearCache(WorkflowDefinitionLink workflowDefinitionLink) {
 		EntityCacheUtil.removeResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowDefinitionLinkImpl.class,
 			workflowDefinitionLink.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
 			new Object[] {
@@ -331,23 +346,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
-			new Object[] {
-				Long.valueOf(workflowDefinitionLinkModelImpl.getGroupId()),
-				Long.valueOf(workflowDefinitionLinkModelImpl.getCompanyId()),
-				Long.valueOf(workflowDefinitionLinkModelImpl.getClassNameId()),
-				Long.valueOf(workflowDefinitionLinkModelImpl.getClassPK()),
-				Long.valueOf(workflowDefinitionLinkModelImpl.getTypePK())
-			});
-
-		EntityCacheUtil.removeResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowDefinitionLinkImpl.class,
-			workflowDefinitionLink.getPrimaryKey());
+		clearCache(workflowDefinitionLink);
 
 		return workflowDefinitionLink;
 	}

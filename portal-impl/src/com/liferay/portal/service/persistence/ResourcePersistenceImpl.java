@@ -176,11 +176,25 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 */
 	@Override
 	public void clearCache(Resource resource) {
-		EntityCacheUtil.removeResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceImpl.class, resource.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(resource);
+	}
+
+	@Override
+	public void clearCache(List<Resource> resourceList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Resource resource : resourceList) {
+			doClearCache(resource);
+		}
+	}
+
+	protected void doClearCache(Resource resource) {
+		EntityCacheUtil.removeResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceImpl.class, resource.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 			new Object[] {
@@ -277,20 +291,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceModelImpl resourceModelImpl = (ResourceModelImpl)resource;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
-			new Object[] {
-				Long.valueOf(resourceModelImpl.getCodeId()),
-				
-			resourceModelImpl.getPrimKey()
-			});
-
-		EntityCacheUtil.removeResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceImpl.class, resource.getPrimaryKey());
+		clearCache(resource);
 
 		return resource;
 	}

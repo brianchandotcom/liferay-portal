@@ -341,11 +341,25 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public void clearCache(ExpandoValue expandoValue) {
-		EntityCacheUtil.removeResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoValueImpl.class, expandoValue.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(expandoValue);
+	}
+
+	@Override
+	public void clearCache(List<ExpandoValue> expandoValueList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ExpandoValue expandoValue : expandoValueList) {
+			doClearCache(expandoValue);
+		}
+	}
+
+	protected void doClearCache(ExpandoValue expandoValue) {
+		EntityCacheUtil.removeResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoValueImpl.class, expandoValue.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
 			new Object[] {
@@ -449,26 +463,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ExpandoValueModelImpl expandoValueModelImpl = (ExpandoValueModelImpl)expandoValue;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R,
-			new Object[] {
-				Long.valueOf(expandoValueModelImpl.getColumnId()),
-				Long.valueOf(expandoValueModelImpl.getRowId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_C_C,
-			new Object[] {
-				Long.valueOf(expandoValueModelImpl.getTableId()),
-				Long.valueOf(expandoValueModelImpl.getColumnId()),
-				Long.valueOf(expandoValueModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoValueImpl.class, expandoValue.getPrimaryKey());
+		clearCache(expandoValue);
 
 		return expandoValue;
 	}

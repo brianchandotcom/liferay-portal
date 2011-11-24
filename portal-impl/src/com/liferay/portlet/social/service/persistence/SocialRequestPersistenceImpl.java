@@ -386,11 +386,25 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void clearCache(SocialRequest socialRequest) {
-		EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SocialRequestImpl.class, socialRequest.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(socialRequest);
+	}
+
+	@Override
+	public void clearCache(List<SocialRequest> socialRequestList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (SocialRequest socialRequest : socialRequestList) {
+			doClearCache(socialRequest);
+		}
+	}
+
+	protected void doClearCache(SocialRequest socialRequest) {
+		EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestImpl.class, socialRequest.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -500,28 +514,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		SocialRequestModelImpl socialRequestModelImpl = (SocialRequestModelImpl)socialRequest;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				socialRequestModelImpl.getUuid(),
-				Long.valueOf(socialRequestModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_C_T_R,
-			new Object[] {
-				Long.valueOf(socialRequestModelImpl.getUserId()),
-				Long.valueOf(socialRequestModelImpl.getClassNameId()),
-				Long.valueOf(socialRequestModelImpl.getClassPK()),
-				Integer.valueOf(socialRequestModelImpl.getType()),
-				Long.valueOf(socialRequestModelImpl.getReceiverUserId())
-			});
-
-		EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-			SocialRequestImpl.class, socialRequest.getPrimaryKey());
+		clearCache(socialRequest);
 
 		return socialRequest;
 	}

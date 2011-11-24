@@ -68,6 +68,19 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 */
 	public void clearCache(T model);
 
+	/**
+	 * Clears the cache for a List instances of this model.
+	 *
+	 * <p>
+	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link
+	 * com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this
+	 * method.
+	 * </p>
+	 *
+	 * @param modelList the List instances of this model to clear the cache for
+	 */
+	public void clearCache(List<T> modelList);
+
 	public void closeSession(Session session);
 
 	/**

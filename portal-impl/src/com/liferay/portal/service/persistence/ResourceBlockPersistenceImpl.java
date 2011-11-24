@@ -222,11 +222,25 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public void clearCache(ResourceBlock resourceBlock) {
-		EntityCacheUtil.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(resourceBlock);
+	}
+
+	@Override
+	public void clearCache(List<ResourceBlock> resourceBlockList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceBlock resourceBlock : resourceBlockList) {
+			doClearCache(resourceBlock);
+		}
+	}
+
+	protected void doClearCache(ResourceBlock resourceBlock) {
+		EntityCacheUtil.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 			new Object[] {
@@ -327,23 +341,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceBlockModelImpl resourceBlockModelImpl = (ResourceBlockModelImpl)resourceBlock;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
-			new Object[] {
-				Long.valueOf(resourceBlockModelImpl.getCompanyId()),
-				Long.valueOf(resourceBlockModelImpl.getGroupId()),
-				
-			resourceBlockModelImpl.getName(),
-				
-			resourceBlockModelImpl.getPermissionsHash()
-			});
-
-		EntityCacheUtil.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
+		clearCache(resourceBlock);
 
 		return resourceBlock;
 	}

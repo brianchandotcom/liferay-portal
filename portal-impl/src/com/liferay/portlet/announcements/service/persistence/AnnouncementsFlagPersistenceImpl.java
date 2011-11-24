@@ -194,11 +194,25 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public void clearCache(AnnouncementsFlag announcementsFlag) {
-		EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(announcementsFlag);
+	}
+
+	@Override
+	public void clearCache(List<AnnouncementsFlag> announcementsFlagList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AnnouncementsFlag announcementsFlag : announcementsFlagList) {
+			doClearCache(announcementsFlag);
+		}
+	}
+
+	protected void doClearCache(AnnouncementsFlag announcementsFlag) {
+		EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
 			new Object[] {
@@ -296,20 +310,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
-			new Object[] {
-				Long.valueOf(announcementsFlagModelImpl.getUserId()),
-				Long.valueOf(announcementsFlagModelImpl.getEntryId()),
-				Integer.valueOf(announcementsFlagModelImpl.getValue())
-			});
-
-		EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
+		clearCache(announcementsFlag);
 
 		return announcementsFlag;
 	}

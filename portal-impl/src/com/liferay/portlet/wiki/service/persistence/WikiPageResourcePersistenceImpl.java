@@ -187,11 +187,25 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public void clearCache(WikiPageResource wikiPageResource) {
-		EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
-			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(wikiPageResource);
+	}
+
+	@Override
+	public void clearCache(List<WikiPageResource> wikiPageResourceList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (WikiPageResource wikiPageResource : wikiPageResourceList) {
+			doClearCache(wikiPageResource);
+		}
+	}
+
+	protected void doClearCache(WikiPageResource wikiPageResource) {
+		EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T,
 			new Object[] {
@@ -293,20 +307,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		WikiPageResourceModelImpl wikiPageResourceModelImpl = (WikiPageResourceModelImpl)wikiPageResource;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T,
-			new Object[] {
-				Long.valueOf(wikiPageResourceModelImpl.getNodeId()),
-				
-			wikiPageResourceModelImpl.getTitle()
-			});
-
-		EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
-			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
+		clearCache(wikiPageResource);
 
 		return wikiPageResource;
 	}

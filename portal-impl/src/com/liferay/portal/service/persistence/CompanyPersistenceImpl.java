@@ -195,11 +195,25 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public void clearCache(Company company) {
-		EntityCacheUtil.removeResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
-			CompanyImpl.class, company.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(company);
+	}
+
+	@Override
+	public void clearCache(List<Company> companyList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Company company : companyList) {
+			doClearCache(company);
+		}
+	}
+
+	protected void doClearCache(Company company) {
+		EntityCacheUtil.removeResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
+			CompanyImpl.class, company.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID,
 			new Object[] { company.getWebId() });
@@ -297,22 +311,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WEBID,
-			new Object[] { companyModelImpl.getWebId() });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MX,
-			new Object[] { companyModelImpl.getMx() });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LOGOID,
-			new Object[] { Long.valueOf(companyModelImpl.getLogoId()) });
-
-		EntityCacheUtil.removeResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
-			CompanyImpl.class, company.getPrimaryKey());
+		clearCache(company);
 
 		return company;
 	}

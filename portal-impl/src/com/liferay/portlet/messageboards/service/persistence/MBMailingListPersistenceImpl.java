@@ -220,11 +220,25 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public void clearCache(MBMailingList mbMailingList) {
-		EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-			MBMailingListImpl.class, mbMailingList.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(mbMailingList);
+	}
+
+	@Override
+	public void clearCache(List<MBMailingList> mbMailingListList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MBMailingList mbMailingList : mbMailingListList) {
+			doClearCache(mbMailingList);
+		}
+	}
+
+	protected void doClearCache(MBMailingList mbMailingList) {
+		EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+			MBMailingListImpl.class, mbMailingList.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -331,25 +345,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		MBMailingListModelImpl mbMailingListModelImpl = (MBMailingListModelImpl)mbMailingList;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				mbMailingListModelImpl.getUuid(),
-				Long.valueOf(mbMailingListModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C,
-			new Object[] {
-				Long.valueOf(mbMailingListModelImpl.getGroupId()),
-				Long.valueOf(mbMailingListModelImpl.getCategoryId())
-			});
-
-		EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-			MBMailingListImpl.class, mbMailingList.getPrimaryKey());
+		clearCache(mbMailingList);
 
 		return mbMailingList;
 	}

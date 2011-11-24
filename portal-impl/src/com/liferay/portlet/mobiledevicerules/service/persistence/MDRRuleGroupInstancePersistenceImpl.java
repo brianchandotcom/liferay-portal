@@ -283,11 +283,25 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	 */
 	@Override
 	public void clearCache(MDRRuleGroupInstance mdrRuleGroupInstance) {
-		EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			MDRRuleGroupInstanceImpl.class, mdrRuleGroupInstance.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(mdrRuleGroupInstance);
+	}
+
+	@Override
+	public void clearCache(List<MDRRuleGroupInstance> mdrRuleGroupInstanceList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MDRRuleGroupInstance mdrRuleGroupInstance : mdrRuleGroupInstanceList) {
+			doClearCache(mdrRuleGroupInstance);
+		}
+	}
+
+	protected void doClearCache(MDRRuleGroupInstance mdrRuleGroupInstance) {
+		EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			MDRRuleGroupInstanceImpl.class, mdrRuleGroupInstance.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -395,26 +409,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		MDRRuleGroupInstanceModelImpl mdrRuleGroupInstanceModelImpl = (MDRRuleGroupInstanceModelImpl)mdrRuleGroupInstance;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				mdrRuleGroupInstanceModelImpl.getUuid(),
-				Long.valueOf(mdrRuleGroupInstanceModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_R,
-			new Object[] {
-				Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassNameId()),
-				Long.valueOf(mdrRuleGroupInstanceModelImpl.getClassPK()),
-				Long.valueOf(mdrRuleGroupInstanceModelImpl.getRuleGroupId())
-			});
-
-		EntityCacheUtil.removeResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			MDRRuleGroupInstanceImpl.class, mdrRuleGroupInstance.getPrimaryKey());
+		clearCache(mdrRuleGroupInstance);
 
 		return mdrRuleGroupInstance;
 	}

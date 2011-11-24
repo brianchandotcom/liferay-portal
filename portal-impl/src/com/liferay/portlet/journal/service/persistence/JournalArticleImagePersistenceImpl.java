@@ -258,11 +258,25 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 */
 	@Override
 	public void clearCache(JournalArticleImage journalArticleImage) {
-		EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImageImpl.class, journalArticleImage.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(journalArticleImage);
+	}
+
+	@Override
+	public void clearCache(List<JournalArticleImage> journalArticleImageList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (JournalArticleImage journalArticleImage : journalArticleImageList) {
+			doClearCache(journalArticleImage);
+		}
+	}
+
+	protected void doClearCache(JournalArticleImage journalArticleImage) {
+		EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleImageImpl.class, journalArticleImage.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
 			new Object[] {
@@ -367,27 +381,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		JournalArticleImageModelImpl journalArticleImageModelImpl = (JournalArticleImageModelImpl)journalArticleImage;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-			new Object[] {
-				Long.valueOf(journalArticleImageModelImpl.getGroupId()),
-				
-			journalArticleImageModelImpl.getArticleId(),
-				Double.valueOf(journalArticleImageModelImpl.getVersion()),
-				
-			journalArticleImageModelImpl.getElInstanceId(),
-				
-			journalArticleImageModelImpl.getElName(),
-				
-			journalArticleImageModelImpl.getLanguageId()
-			});
-
-		EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImageImpl.class, journalArticleImage.getPrimaryKey());
+		clearCache(journalArticleImage);
 
 		return journalArticleImage;
 	}

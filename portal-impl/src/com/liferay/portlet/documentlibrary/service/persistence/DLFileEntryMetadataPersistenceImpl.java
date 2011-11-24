@@ -271,11 +271,25 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	 */
 	@Override
 	public void clearCache(DLFileEntryMetadata dlFileEntryMetadata) {
-		EntityCacheUtil.removeResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(dlFileEntryMetadata);
+	}
+
+	@Override
+	public void clearCache(List<DLFileEntryMetadata> dlFileEntryMetadataList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadataList) {
+			doClearCache(dlFileEntryMetadata);
+		}
+	}
+
+	protected void doClearCache(DLFileEntryMetadata dlFileEntryMetadata) {
+		EntityCacheUtil.removeResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_D_F,
 			new Object[] {
@@ -382,25 +396,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_D_F,
-			new Object[] {
-				Long.valueOf(dlFileEntryMetadataModelImpl.getDDMStructureId()),
-				Long.valueOf(dlFileEntryMetadataModelImpl.getFileVersionId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
-			new Object[] {
-				Long.valueOf(dlFileEntryMetadataModelImpl.getFileEntryId()),
-				Long.valueOf(dlFileEntryMetadataModelImpl.getFileVersionId())
-			});
-
-		EntityCacheUtil.removeResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey());
+		clearCache(dlFileEntryMetadata);
 
 		return dlFileEntryMetadata;
 	}

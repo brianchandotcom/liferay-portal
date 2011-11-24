@@ -270,12 +270,27 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	 */
 	@Override
 	public void clearCache(SocialActivityCounter socialActivityCounter) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(socialActivityCounter);
+	}
+
+	@Override
+	public void clearCache(
+		List<SocialActivityCounter> socialActivityCounterList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (SocialActivityCounter socialActivityCounter : socialActivityCounterList) {
+			doClearCache(socialActivityCounter);
+		}
+	}
+
+	protected void doClearCache(SocialActivityCounter socialActivityCounter) {
 		EntityCacheUtil.removeResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterImpl.class,
 			socialActivityCounter.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
 			new Object[] {
@@ -388,36 +403,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		SocialActivityCounterModelImpl socialActivityCounterModelImpl = (SocialActivityCounterModelImpl)socialActivityCounter;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
-			new Object[] {
-				Long.valueOf(socialActivityCounterModelImpl.getGroupId()),
-				Long.valueOf(socialActivityCounterModelImpl.getClassNameId()),
-				Long.valueOf(socialActivityCounterModelImpl.getClassPK()),
-				
-			socialActivityCounterModelImpl.getName(),
-				Integer.valueOf(socialActivityCounterModelImpl.getOwnerType()),
-				Integer.valueOf(socialActivityCounterModelImpl.getStartPeriod())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
-			new Object[] {
-				Long.valueOf(socialActivityCounterModelImpl.getGroupId()),
-				Long.valueOf(socialActivityCounterModelImpl.getClassNameId()),
-				Long.valueOf(socialActivityCounterModelImpl.getClassPK()),
-				
-			socialActivityCounterModelImpl.getName(),
-				Integer.valueOf(socialActivityCounterModelImpl.getOwnerType()),
-				Integer.valueOf(socialActivityCounterModelImpl.getEndPeriod())
-			});
-
-		EntityCacheUtil.removeResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityCounterImpl.class,
-			socialActivityCounter.getPrimaryKey());
+		clearCache(socialActivityCounter);
 
 		return socialActivityCounter;
 	}

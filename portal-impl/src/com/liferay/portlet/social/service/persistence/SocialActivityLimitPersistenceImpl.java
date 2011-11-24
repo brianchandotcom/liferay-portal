@@ -204,11 +204,25 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 */
 	@Override
 	public void clearCache(SocialActivityLimit socialActivityLimit) {
-		EntityCacheUtil.removeResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityLimitImpl.class, socialActivityLimit.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(socialActivityLimit);
+	}
+
+	@Override
+	public void clearCache(List<SocialActivityLimit> socialActivityLimitList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (SocialActivityLimit socialActivityLimit : socialActivityLimitList) {
+			doClearCache(socialActivityLimit);
+		}
+	}
+
+	protected void doClearCache(SocialActivityLimit socialActivityLimit) {
+		EntityCacheUtil.removeResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivityLimitImpl.class, socialActivityLimit.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A,
 			new Object[] {
@@ -310,24 +324,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		SocialActivityLimitModelImpl socialActivityLimitModelImpl = (SocialActivityLimitModelImpl)socialActivityLimit;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A,
-			new Object[] {
-				Long.valueOf(socialActivityLimitModelImpl.getGroupId()),
-				Long.valueOf(socialActivityLimitModelImpl.getUserId()),
-				Long.valueOf(socialActivityLimitModelImpl.getClassNameId()),
-				Long.valueOf(socialActivityLimitModelImpl.getClassPK()),
-				Integer.valueOf(socialActivityLimitModelImpl.getActivityType()),
-				
-			socialActivityLimitModelImpl.getActivityCounterName()
-			});
-
-		EntityCacheUtil.removeResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-			SocialActivityLimitImpl.class, socialActivityLimit.getPrimaryKey());
+		clearCache(socialActivityLimit);
 
 		return socialActivityLimit;
 	}

@@ -217,11 +217,25 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	@Override
 	public void clearCache(MBBan mbBan) {
-		EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-			MBBanImpl.class, mbBan.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(mbBan);
+	}
+
+	@Override
+	public void clearCache(List<MBBan> mbBanList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MBBan mbBan : mbBanList) {
+			doClearCache(mbBan);
+		}
+	}
+
+	protected void doClearCache(MBBan mbBan) {
+		EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+			MBBanImpl.class, mbBan.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
 			new Object[] {
@@ -315,19 +329,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		MBBanModelImpl mbBanModelImpl = (MBBanModelImpl)mbBan;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_B,
-			new Object[] {
-				Long.valueOf(mbBanModelImpl.getGroupId()),
-				Long.valueOf(mbBanModelImpl.getBanUserId())
-			});
-
-		EntityCacheUtil.removeResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-			MBBanImpl.class, mbBan.getPrimaryKey());
+		clearCache(mbBan);
 
 		return mbBan;
 	}

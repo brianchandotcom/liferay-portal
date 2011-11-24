@@ -276,11 +276,25 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	@Override
 	public void clearCache(BookmarksFolder bookmarksFolder) {
-		EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(bookmarksFolder);
+	}
+
+	@Override
+	public void clearCache(List<BookmarksFolder> bookmarksFolderList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (BookmarksFolder bookmarksFolder : bookmarksFolderList) {
+			doClearCache(bookmarksFolder);
+		}
+	}
+
+	protected void doClearCache(BookmarksFolder bookmarksFolder) {
+		EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -381,19 +395,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		BookmarksFolderModelImpl bookmarksFolderModelImpl = (BookmarksFolderModelImpl)bookmarksFolder;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				bookmarksFolderModelImpl.getUuid(),
-				Long.valueOf(bookmarksFolderModelImpl.getGroupId())
-			});
-
-		EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
+		clearCache(bookmarksFolder);
 
 		return bookmarksFolder;
 	}

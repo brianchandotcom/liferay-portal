@@ -225,11 +225,25 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	@Override
 	public void clearCache(DLFileRank dlFileRank) {
-		EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileRankImpl.class, dlFileRank.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(dlFileRank);
+	}
+
+	@Override
+	public void clearCache(List<DLFileRank> dlFileRankList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLFileRank dlFileRank : dlFileRankList) {
+			doClearCache(dlFileRank);
+		}
+	}
+
+	protected void doClearCache(DLFileRank dlFileRank) {
+		EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileRankImpl.class, dlFileRank.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_F,
 			new Object[] {
@@ -327,20 +341,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLFileRankModelImpl dlFileRankModelImpl = (DLFileRankModelImpl)dlFileRank;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_F,
-			new Object[] {
-				Long.valueOf(dlFileRankModelImpl.getCompanyId()),
-				Long.valueOf(dlFileRankModelImpl.getUserId()),
-				Long.valueOf(dlFileRankModelImpl.getFileEntryId())
-			});
-
-		EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileRankImpl.class, dlFileRank.getPrimaryKey());
+		clearCache(dlFileRank);
 
 		return dlFileRank;
 	}

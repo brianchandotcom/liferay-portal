@@ -1324,7 +1324,8 @@ public class JournalArticleServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String articleId,
 		double version, java.util.Locale locale, java.lang.String title,
-		java.lang.String description, java.lang.String content)
+		java.lang.String description, java.lang.String content,
+		java.util.Map<java.lang.String, byte[]> images)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1333,7 +1334,8 @@ public class JournalArticleServiceHttp {
 					_updateArticleTranslationParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					articleId, version, locale, title, description, content);
+					articleId, version, locale, title, description, content,
+					images);
 
 			Object returnObj = null;
 
@@ -1568,7 +1570,7 @@ public class JournalArticleServiceHttp {
 	private static final Class<?>[] _updateArticleTranslationParameterTypes32 = new Class[] {
 			long.class, java.lang.String.class, double.class,
 			java.util.Locale.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class
+			java.lang.String.class, java.lang.String.class, java.util.Map.class
 		};
 	private static final Class<?>[] _updateContentParameterTypes33 = new Class[] {
 			long.class, java.lang.String.class, double.class,

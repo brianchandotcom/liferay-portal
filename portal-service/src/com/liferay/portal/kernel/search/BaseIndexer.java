@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -202,7 +203,16 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	public String getSortField(String orderByCol) {
-		return doGetSortField(orderByCol);
+		String sortField = doGetSortField(orderByCol);
+
+		String[] sortableTextFields = PropsUtil.getArray(
+			PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
+
+		if (ArrayUtil.contains(sortableTextFields, sortField)) {
+			return sortField.concat("sortable");
+		}
+
+		return sortField;
 	}
 
 	public Summary getSummary(

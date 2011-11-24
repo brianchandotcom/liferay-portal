@@ -43,7 +43,7 @@ public class LayoutPrototypePermissionUtil {
 		return _layoutPrototypePermission;
 	}
 
-	public void setLayoutPrototypePermission (
+	public void setLayoutPrototypePermission(
 			LayoutPrototypePermission layoutPrototypePermission) {
 		_layoutPrototypePermission = layoutPrototypePermission;
 	}

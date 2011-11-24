@@ -264,7 +264,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		return results;
 	}
 
-	protected boolean isRemovedFilters (
+	protected boolean isRemovedFilters(
 		AssetEntryQuery entryQuery, AssetEntryQuery filteredEntryQuery) {
 
 		if (((entryQuery.getAllCategoryIds().length > 0) &&

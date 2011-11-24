@@ -1008,7 +1008,7 @@ public class JournalUtil {
 			themeDisplay, tokens, viewMode, languageId, xml, script, langType);
 	}
 
-	private static void _addElementOptions (
+	private static void _addElementOptions(
 		Element curContentElement, Element newContentElement) {
 
 		List<Element> newElementOptions = newContentElement.elements("option");

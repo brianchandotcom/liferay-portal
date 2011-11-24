@@ -139,7 +139,7 @@ public class PortletImpl extends PortletBaseImpl {
 		String icon, String virtualPath, String strutsPath,
 		String parentStrutsPath, String portletName, String displayName,
 		String portletClass, String configurationActionClass,
-		List <String> indexerClasses, String openSearchClass,
+		List<String> indexerClasses, String openSearchClass,
 		List<SchedulerEntry> schedulerEntries, String portletURLClass,
 		String friendlyURLMapperClass, String friendlyURLMapping,
 		String friendlyURLRoutes, String urlEncoderClass,

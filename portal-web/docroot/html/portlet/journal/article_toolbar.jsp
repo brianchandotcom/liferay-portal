@@ -67,7 +67,7 @@ if ((article != null) && article.isDraft()) {
 					{
 					handler: function(event) {
 						if (!permissionPopUp) {
-							permissionPopUp = Liferay.Util._openWindow(
+							permissionPopUp = Liferay.Util.openWindow(
 								{
 									dialog: {
 										centered: true,

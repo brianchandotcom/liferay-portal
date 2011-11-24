@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -383,19 +384,28 @@ public class DocumentImpl implements Document {
 	}
 
 	public void addText(String name, String value) {
-		if (Validator.isNotNull(value)) {
-			Field field = new Field(name, value);
+		if (Validator.isNull(value)) {
+			return;
+		}
 
-			field.setTokenized(true);
+		Field field = new Field(name, value);
 
-			_fields.put(name, field);
+		field.setTokenized(true);
 
-			String[] sortableTextFields = PropsUtil.getArray(
-				PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
+		_fields.put(name, field);
 
-			if (ArrayUtil.contains(sortableTextFields, name)) {
-				addKeyword(name.concat("sortable"), value);
+		if (ArrayUtil.contains(PropsValues.LUCENE_SORTABLE_TEXT_FIELDS, name)) {
+			String truncatedValue = value;
+
+			if (value.length() >
+					PropsValues.LUCENE_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH) {
+
+				truncatedValue = value.substring(
+					0,
+					PropsValues.LUCENE_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
 			}
+
+			addKeyword(name.concat("sortable"), truncatedValue);
 		}
 	}
 

@@ -859,6 +859,10 @@ public class PropsValues {
 
 	public static final boolean LUCENE_REPLICATE_WRITE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_REPLICATE_WRITE));
 
+	public static final String[] LUCENE_SORTABLE_TEXT_FIELDS = PropsUtil.getArray(PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS);
+
+	public static final int LUCENE_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.LUCENE_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH));
+
 	public static final boolean LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED));
 
 	public static final int LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL));

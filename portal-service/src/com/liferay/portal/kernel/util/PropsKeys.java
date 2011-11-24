@@ -1209,6 +1209,8 @@ public interface PropsKeys {
 
 	public static final String LUCENE_SORTABLE_TEXT_FIELDS = "lucene.sortable.text.fields";
 
+	public static final String LUCENE_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = "lucene.sortable.text.fields.truncated.length";
+
 	public static final String LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED = "lucene.store.jdbc.auto.clean.up.enabled";
 
 	public static final String LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL = "lucene.store.jdbc.auto.clean.up.interval";

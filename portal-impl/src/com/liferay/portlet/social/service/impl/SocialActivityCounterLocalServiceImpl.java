@@ -404,27 +404,34 @@ public class SocialActivityCounterLocalServiceImpl
 			return false;
 		}
 
+		long classPK = activity.getClassPK();
+
+		if (activityCounterName.equals(
+				SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+
+			classPK = 0;
+		}
+
 		SocialActivityLimit activityLimit =
 			socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
 				activity.getGroupId(), user.getUserId(),
-				activity.getClassNameId(), activity.getClassPK(),
-				activity.getType(), activityCounterDefinition.getName());
+				activity.getClassNameId(), classPK, activity.getType(),
+				activityCounterDefinition.getName());
 
 		if (activityLimit == null) {
 			try {
 				activityLimit =
 					socialActivityLimitLocalService.addActivityLimit(
 						user.getUserId(), activity.getGroupId(),
-						activity.getClassNameId(), activity.getClassPK(),
-						activity.getType(), activityCounterDefinition.getName(),
+						activity.getClassNameId(), classPK, activity.getType(),
+						activityCounterDefinition.getName(),
 						activityCounterDefinition.getLimitPeriod());
 			}
 			catch (SystemException se) {
 				activityLimit =
 					socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
 						activity.getGroupId(), user.getUserId(),
-						activity.getClassNameId(), activity.getClassPK(),
-						activity.getType(),
+						activity.getClassNameId(), classPK, activity.getType(),
 						activityCounterDefinition.getName());
 
 				if (activityLimit == null) {

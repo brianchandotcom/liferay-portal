@@ -74,7 +74,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[4]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText("//tr[1]/th[5]"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[5]", "File Upload"));
+		assertTrue(selenium.isPartialText("//tr[3]/td[5]", "document2.txt"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText("//tr[1]/th[6]"));
 		assertEquals(RuntimeVariables.replace("123"),
@@ -137,7 +137,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[4]"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-fieldset-content ']/div[5]",
-				"File Upload File Upload"));
+				"File Upload document2.txt"));
 		assertEquals(RuntimeVariables.replace("Integer 123"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
 		assertEquals(RuntimeVariables.replace("Number 456.0"),
@@ -217,7 +217,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//td[3]/div"));
 		assertEquals(RuntimeVariables.replace("(File)"),
 			selenium.getText("//td[4]/div"));
-		assertEquals(RuntimeVariables.replace("(File)"),
+		assertEquals(RuntimeVariables.replace("document2.txt"),
 			selenium.getText("//td[5]/div"));
 		assertEquals(RuntimeVariables.replace("123"),
 			selenium.getText("//td[6]/div"));

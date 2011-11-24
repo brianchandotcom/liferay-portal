@@ -88,7 +88,7 @@ public class AssignMembersCommunityUserGroupActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("User Group Groups User Groups"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));

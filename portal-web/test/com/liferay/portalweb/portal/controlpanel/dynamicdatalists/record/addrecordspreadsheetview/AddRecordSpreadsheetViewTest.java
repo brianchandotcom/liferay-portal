@@ -356,42 +356,10 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//div[contains(@class,'aui-textcelleditor-focused')]/form/div[2]/span/span/button[1]"));
 		selenium.clickAt("//div[contains(@class,'aui-textcelleditor-focused')]/form/div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Save"));
-		assertEquals(RuntimeVariables.replace("Password"),
+		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
 				"//thead[@class='yui3-datatable-columns']/tr/th[8]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[8]",
-			RuntimeVariables.replace("column 8 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-password-cell-editor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[contains(@class,'aui-password-cell-editor')]",
-			RuntimeVariables.replace("Password Cell Editor"));
-		selenium.type("//div[contains(@class,'aui-password-cell-editor-focused')]/form/div[1]/input",
-			RuntimeVariables.replace("password"));
-		assertEquals(RuntimeVariables.replace("Save"),
-			selenium.getText(
-				"//div[contains(@class,'aui-password-cell-editor-focused')]/form/div[2]/span/span/button[1]"));
-		selenium.clickAt("//div[contains(@class,'aui-password-cell-editor-focused')]/form/div[2]/span/span/button[1]",
-			RuntimeVariables.replace("Save"));
-		assertEquals(RuntimeVariables.replace("Radio"),
-			selenium.getText(
-				"//thead[@class='yui3-datatable-columns']/tr/th[9]/div/a"));
-		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[9]",
 			RuntimeVariables.replace("column 9 row 1"));
 
 		for (int second = 0;; second++) {
@@ -431,8 +399,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//thead[@class='yui3-datatable-columns']/tr/th[10]/div/a"));
-		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[10]",
+				"//thead[@class='yui3-datatable-columns']/tr/th[9]/div/a"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[9]",
 			RuntimeVariables.replace("column 10 row 1"));
 
 		for (int second = 0;; second++) {
@@ -472,8 +440,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//thead[@class='yui3-datatable-columns']/tr/th[11]/div/a"));
-		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[11]",
+				"//thead[@class='yui3-datatable-columns']/tr/th[10]/div/a"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[10]",
 			RuntimeVariables.replace("column 11 row 1"));
 
 		for (int second = 0;; second++) {
@@ -505,7 +473,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
 				"//thead[@class='yui3-datatable-columns']/tr/th[11]/div/a"));
-		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[12]",
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[11]",
 			RuntimeVariables.replace("column 12 row 1"));
 
 		for (int second = 0;; second++) {

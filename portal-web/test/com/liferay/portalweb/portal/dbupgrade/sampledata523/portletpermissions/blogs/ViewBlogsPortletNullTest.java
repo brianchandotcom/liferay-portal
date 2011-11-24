@@ -42,7 +42,7 @@ public class ViewBlogsPortletNullTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent(
 				"You do not have the roles required to access this portlet."));

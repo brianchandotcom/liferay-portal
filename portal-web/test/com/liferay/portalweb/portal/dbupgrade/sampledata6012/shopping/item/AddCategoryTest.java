@@ -40,28 +40,34 @@ public class AddCategoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Shopping Item Community"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Shopping Item Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Shopping Item Page",
+			RuntimeVariables.replace("Shopping Item Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Categories", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Categories",
+			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Category']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Category"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_34_name", RuntimeVariables.replace("Category Test"));
-		selenium.type("_34_description",
+		selenium.type("//input[@id='_34_name']",
+			RuntimeVariables.replace("Category Test"));
+		selenium.type("//textarea[@id='_34_description']",
 			RuntimeVariables.replace("This is a category test."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),

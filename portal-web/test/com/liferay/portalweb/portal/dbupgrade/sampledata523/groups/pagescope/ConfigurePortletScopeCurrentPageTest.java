@@ -41,33 +41,38 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Scope Community"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td[1]/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Public Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Blogs Page Scope Current Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Configuration", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Configuration",
+			RuntimeVariables.replace("Configuration"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Scope", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("_86_scopeLayoutId",
+		selenium.select("//select[@name='_86_scopeLayoutId']",
 			RuntimeVariables.replace(
 				"label=Current Page (Blogs Page Scope Current Page)"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request processed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Current Page (Blogs Page Scope Current Page)",
-			selenium.getSelectedLabel("_86_scopeLayoutId"));
+			selenium.getSelectedLabel("//select[@name='_86_scopeLayoutId']"));
 	}
 }

@@ -40,29 +40,32 @@ public class ViewCouponTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Shopping Coupon Community"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Shopping Coupon Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Shopping Coupon Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Coupons", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Coupon Code"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals("Coupon Test", selenium.getValue("_34_name"));
+		assertEquals("Coupon Test", selenium.getValue("//input[@id='_34_name']"));
 		assertEquals("This is a coupon test.",
-			selenium.getValue("_34_description"));
-		assertEquals("0.00", selenium.getValue("_34_minOrder"));
-		assertEquals("0.50", selenium.getValue("_34_discount"));
-		assertEquals("Percentage", selenium.getSelectedLabel("_34_discountType"));
+			selenium.getValue("//textarea[@id='_34_description']"));
+		assertEquals("0.00", selenium.getValue("//input[@id='_34_minOrder']"));
+		assertEquals("0.50", selenium.getValue("//input[@id='_34_discount']"));
+		assertEquals("Percentage",
+			selenium.getSelectedLabel("//select[@id='_34_discountType']"));
 	}
 }

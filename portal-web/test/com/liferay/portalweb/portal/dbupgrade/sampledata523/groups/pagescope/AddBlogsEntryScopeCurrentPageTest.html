@@ -16,42 +16,42 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Communities</td>
-	<td></td>
+	<td>Communities</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_134_name</td>
+	<td>//input[@id='_134_name']</td>
 	<td>Group Page Scope Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[@class='portlet-section-body results-row']/td[1]/a</td>
-	<td></td>
+	<td>Public Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Page Scope Current Page</td>
-	<td></td>
+	<td>Blogs Page Scope Current Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Blog Entry']</td>
-	<td></td>
+	<td>Add Blog Entry</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -106,12 +106,12 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
-	<td></td>
+	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request processed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -123,7 +123,6 @@
 	<td>//p</td>
 	<td>This is a blogs entry scope current page test.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

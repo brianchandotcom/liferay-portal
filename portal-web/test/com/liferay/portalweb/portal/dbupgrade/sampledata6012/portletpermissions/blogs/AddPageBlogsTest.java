@@ -23,9 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageBlogsTest extends BaseTestCase {
 	public void testAddPageBlogs() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
+		selenium.clickAt("//nav[@id='navigation']",
+			RuntimeVariables.replace("Navigation"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -33,7 +32,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("addPage")) {
+				if (selenium.isElementPresent("//a[@id='addPage']")) {
 					break;
 				}
 			}
@@ -43,7 +42,8 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("addPage", RuntimeVariables.replace(""));
+		selenium.clickAt("//a[@id='addPage']",
+			RuntimeVariables.replace("Add Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -51,7 +51,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input")) {
+				if (selenium.isVisible("//input[@type='text']")) {
 					break;
 				}
 			}
@@ -61,9 +61,10 @@ public class AddPageBlogsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input",
+		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -82,7 +83,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

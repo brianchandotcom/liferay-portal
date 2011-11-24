@@ -41,10 +41,10 @@ public class AddPageBlogsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@id='add-page']/a/span",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 		selenium.type("new_page",
 			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
-		selenium.clickAt("link=Save", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Save", RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -64,7 +64,7 @@ public class AddPageBlogsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

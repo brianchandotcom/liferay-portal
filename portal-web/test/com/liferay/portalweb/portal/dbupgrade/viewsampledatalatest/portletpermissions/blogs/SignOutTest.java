@@ -40,7 +40,7 @@ public class SignOutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

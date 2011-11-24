@@ -40,24 +40,28 @@ public class EditPageLayoutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Layout Community"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Public Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Page Layout Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Page Layout Page",
+			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
 				"//td[@id='column-1' and @class='lfr-column thirty']"));
 		assertTrue(selenium.isElementPresent(
 				"//td[@id='column-2' and @class='lfr-column seventy']"));
-		selenium.clickAt("link=Layout Template", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Layout Template",
+			RuntimeVariables.replace("Layout Template"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -76,7 +80,7 @@ public class EditPageLayoutTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//input[@id='layoutTemplateId2']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("2 Columns (50/50)"));
 		selenium.clickAt("//input[5]", RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(

@@ -87,7 +87,7 @@ public class AddDocumentVersionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_20_file",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6011\\documentlibrary\\documentversion\\dependencies\\test_document2.txt"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\documentlibrary\\documentversion\\dependencies\\test_document2.txt"));
 		selenium.type("_20_title",
 			RuntimeVariables.replace("Test2 Document2.txt"));
 		selenium.type("_20_description",

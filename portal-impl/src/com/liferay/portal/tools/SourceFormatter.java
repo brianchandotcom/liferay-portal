@@ -890,7 +890,9 @@ public class SourceFormatter {
 					"if(",
 					"for(",
 					"while(",
+					"List <",
 					"){\n",
+					"]{\n",
 					"\n\n\n"
 				},
 				new String[] {
@@ -899,7 +901,9 @@ public class SourceFormatter {
 					"if (",
 					"for (",
 					"while (",
+					"List<",
 					") {\n",
+					"] {\n",
 					"\n\n"
 				});
 
@@ -969,6 +973,15 @@ public class SourceFormatter {
 				fileName, line, lineCount);
 
 			String trimmedLine = StringUtil.trimLeading(line);
+
+			if ((trimmedLine.startsWith("private ") ||
+				 trimmedLine.startsWith("protected ") ||
+				 trimmedLine.startsWith("public ")) &&
+				line.contains(" (") &&
+				!line.contains(StringPool.QUOTE)) {
+
+				line = StringUtil.replace(line, " (", "(");
+			}
 
 			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {

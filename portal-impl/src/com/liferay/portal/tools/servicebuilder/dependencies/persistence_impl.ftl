@@ -306,35 +306,59 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void clearCache(${entity.name} ${entity.varName}) {
-		EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		<#list entity.getUniqueFinderList() as finder>
-			<#assign finderColsList = finder.getColumns()>
-
-			FinderCacheUtil.removeResult(
-				FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-				new Object[] {
-					<#list finderColsList as finderCol>
-						<#if finderCol.isPrimitiveType()>
-							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-						</#if>
-
-						${entity.varName}.get${finderCol.methodName}()
-
-						<#if finderCol.isPrimitiveType()>
-							)
-						</#if>
-
-						<#if finderCol_has_next>
-							,
-						</#if>
-					</#list>
-				});
-		</#list>
+		<#if entity.getUniqueFinderList()?size &gt; 0>
+			doClearCache(${entity.varName});
+		<#else>
+			EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		</#if>
 	}
+
+	@Override
+	public void clearCache(List<${entity.name}> ${entity.varName}List) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (${entity.name} ${entity.varName} : ${entity.varName}List) {
+			<#if entity.getUniqueFinderList()?size &gt; 0>
+				doClearCache(${entity.varName});
+			<#else>
+				EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+			</#if>
+		}
+	}
+
+	<#if entity.getUniqueFinderList()?size &gt; 0>
+		protected void doClearCache(${entity.name} ${entity.varName}) {
+			EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+
+			<#list entity.getUniqueFinderList() as finder>
+				<#assign finderColsList = finder.getColumns()>
+
+				FinderCacheUtil.removeResult(
+					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
+					new Object[] {
+						<#list finderColsList as finderCol>
+							<#if finderCol.isPrimitiveType()>
+								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+							</#if>
+
+							${entity.varName}.get${finderCol.methodName}()
+
+							<#if finderCol.isPrimitiveType()>
+								)
+							</#if>
+
+							<#if finderCol_has_next>
+								,
+							</#if>
+						</#list>
+					});
+			</#list>
+		}
+	</#if>
 
 	/**
 	 * Creates a new ${entity.humanName} with the primary key. Does not add the ${entity.humanName} to the database.
@@ -449,40 +473,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		<#assign uniqueFinderList = entity.getUniqueFinderList()>
-
-		<#if uniqueFinderList?size != 0>
-			${entity.name}ModelImpl ${entity.varName}ModelImpl = (${entity.name}ModelImpl)${entity.varName};
-		</#if>
-
-		<#list uniqueFinderList as finder>
-			<#assign finderColsList = finder.getColumns()>
-
-			FinderCacheUtil.removeResult(
-				FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-				new Object[] {
-					<#list finderColsList as finderCol>
-						<#if finderCol.isPrimitiveType()>
-							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-						</#if>
-
-						${entity.varName}ModelImpl.get${finderCol.methodName}()
-
-						<#if finderCol.isPrimitiveType()>
-							)
-						</#if>
-
-						<#if finderCol_has_next>
-							,
-						</#if>
-					</#list>
-				});
-		</#list>
-
-		EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		clearCache(${entity.varName});
 
 		return ${entity.varName};
 	}

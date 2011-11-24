@@ -53,6 +53,7 @@ import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
@@ -251,6 +252,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		DLStoreUtil.addFile(
 			companyId, repositoryId, dirName + "/" + fileName, file);
+
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			dirName + "/" + fileName, 0);
 	}
 
 	public void addPageAttachment(
@@ -280,6 +287,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		DLStoreUtil.addFile(
 			companyId, repositoryId, dirName + "/" + fileName, inputStream);
+
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			dirName + "/" + fileName, 0);
 	}
 
 	public void addPageAttachment(

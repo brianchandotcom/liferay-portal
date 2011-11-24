@@ -228,11 +228,25 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public void clearCache(LayoutBranch layoutBranch) {
-		EntityCacheUtil.removeResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(layoutBranch);
+	}
+
+	@Override
+	public void clearCache(List<LayoutBranch> layoutBranchList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (LayoutBranch layoutBranch : layoutBranchList) {
+			doClearCache(layoutBranch);
+		}
+	}
+
+	protected void doClearCache(LayoutBranch layoutBranch) {
+		EntityCacheUtil.removeResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_N,
 			new Object[] {
@@ -338,28 +352,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		LayoutBranchModelImpl layoutBranchModelImpl = (LayoutBranchModelImpl)layoutBranch;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_N,
-			new Object[] {
-				Long.valueOf(layoutBranchModelImpl.getLayoutSetBranchId()),
-				Long.valueOf(layoutBranchModelImpl.getPlid()),
-				
-			layoutBranchModelImpl.getName()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M,
-			new Object[] {
-				Long.valueOf(layoutBranchModelImpl.getLayoutSetBranchId()),
-				Long.valueOf(layoutBranchModelImpl.getPlid()),
-				Boolean.valueOf(layoutBranchModelImpl.getMaster())
-			});
-
-		EntityCacheUtil.removeResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
+		clearCache(layoutBranch);
 
 		return layoutBranch;
 	}

@@ -202,11 +202,25 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	@Override
 	public void clearCache(ResourceCode resourceCode) {
-		EntityCacheUtil.removeResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceCodeImpl.class, resourceCode.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(resourceCode);
+	}
+
+	@Override
+	public void clearCache(List<ResourceCode> resourceCodeList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceCode resourceCode : resourceCodeList) {
+			doClearCache(resourceCode);
+		}
+	}
+
+	protected void doClearCache(ResourceCode resourceCode) {
+		EntityCacheUtil.removeResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceCodeImpl.class, resourceCode.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
 			new Object[] {
@@ -304,21 +318,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceCodeModelImpl resourceCodeModelImpl = (ResourceCodeModelImpl)resourceCode;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
-			new Object[] {
-				Long.valueOf(resourceCodeModelImpl.getCompanyId()),
-				
-			resourceCodeModelImpl.getName(),
-				Integer.valueOf(resourceCodeModelImpl.getScope())
-			});
-
-		EntityCacheUtil.removeResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceCodeImpl.class, resourceCode.getPrimaryKey());
+		clearCache(resourceCode);
 
 		return resourceCode;
 	}

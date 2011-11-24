@@ -205,11 +205,25 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public void clearCache(DDMStructureLink ddmStructureLink) {
-		EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(ddmStructureLink);
+	}
+
+	@Override
+	public void clearCache(List<DDMStructureLink> ddmStructureLinkList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DDMStructureLink ddmStructureLink : ddmStructureLinkList) {
+			doClearCache(ddmStructureLink);
+		}
+	}
+
+	protected void doClearCache(DDMStructureLink ddmStructureLink) {
+		EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK,
 			new Object[] { Long.valueOf(ddmStructureLink.getClassPK()) });
@@ -303,16 +317,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = (DDMStructureLinkModelImpl)ddmStructureLink;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSPK,
-			new Object[] { Long.valueOf(ddmStructureLinkModelImpl.getClassPK()) });
-
-		EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
+		clearCache(ddmStructureLink);
 
 		return ddmStructureLink;
 	}

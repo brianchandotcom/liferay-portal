@@ -362,11 +362,25 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public void clearCache(SocialRelation socialRelation) {
-		EntityCacheUtil.removeResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-			SocialRelationImpl.class, socialRelation.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(socialRelation);
+	}
+
+	@Override
+	public void clearCache(List<SocialRelation> socialRelationList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (SocialRelation socialRelation : socialRelationList) {
+			doClearCache(socialRelation);
+		}
+	}
+
+	protected void doClearCache(SocialRelation socialRelation) {
+		EntityCacheUtil.removeResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRelationImpl.class, socialRelation.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T,
 			new Object[] {
@@ -468,20 +482,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		SocialRelationModelImpl socialRelationModelImpl = (SocialRelationModelImpl)socialRelation;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U1_U2_T,
-			new Object[] {
-				Long.valueOf(socialRelationModelImpl.getUserId1()),
-				Long.valueOf(socialRelationModelImpl.getUserId2()),
-				Integer.valueOf(socialRelationModelImpl.getType())
-			});
-
-		EntityCacheUtil.removeResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-			SocialRelationImpl.class, socialRelation.getPrimaryKey());
+		clearCache(socialRelation);
 
 		return socialRelation;
 	}

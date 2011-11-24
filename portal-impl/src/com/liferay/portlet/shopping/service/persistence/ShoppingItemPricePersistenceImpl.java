@@ -169,11 +169,22 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public void clearCache(ShoppingItemPrice shoppingItemPrice) {
-		EntityCacheUtil.removeResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemPriceImpl.class, shoppingItemPrice.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingItemPriceImpl.class, shoppingItemPrice.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<ShoppingItemPrice> shoppingItemPriceList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ShoppingItemPrice shoppingItemPrice : shoppingItemPriceList) {
+			EntityCacheUtil.removeResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
+				ShoppingItemPriceImpl.class, shoppingItemPrice.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -264,11 +275,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemPriceImpl.class, shoppingItemPrice.getPrimaryKey());
+		clearCache(shoppingItemPrice);
 
 		return shoppingItemPrice;
 	}

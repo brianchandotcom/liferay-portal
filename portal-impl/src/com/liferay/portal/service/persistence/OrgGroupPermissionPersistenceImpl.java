@@ -187,11 +187,22 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 	 */
 	@Override
 	public void clearCache(OrgGroupPermission orgGroupPermission) {
-		EntityCacheUtil.removeResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			OrgGroupPermissionImpl.class, orgGroupPermission.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			OrgGroupPermissionImpl.class, orgGroupPermission.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<OrgGroupPermission> orgGroupPermissionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (OrgGroupPermission orgGroupPermission : orgGroupPermissionList) {
+			EntityCacheUtil.removeResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
+				OrgGroupPermissionImpl.class, orgGroupPermission.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -282,11 +293,7 @@ public class OrgGroupPermissionPersistenceImpl extends BasePersistenceImpl<OrgGr
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(OrgGroupPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			OrgGroupPermissionImpl.class, orgGroupPermission.getPrimaryKey());
+		clearCache(orgGroupPermission);
 
 		return orgGroupPermission;
 	}

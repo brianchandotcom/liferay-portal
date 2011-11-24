@@ -278,11 +278,25 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public void clearCache(AssetEntry assetEntry) {
-		EntityCacheUtil.removeResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryImpl.class, assetEntry.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(assetEntry);
+	}
+
+	@Override
+	public void clearCache(List<AssetEntry> assetEntryList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AssetEntry assetEntry : assetEntryList) {
+			doClearCache(assetEntry);
+		}
+	}
+
+	protected void doClearCache(AssetEntry assetEntry) {
+		EntityCacheUtil.removeResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryImpl.class, assetEntry.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_CU,
 			new Object[] {
@@ -406,26 +420,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_CU,
-			new Object[] {
-				Long.valueOf(assetEntryModelImpl.getGroupId()),
-				
-			assetEntryModelImpl.getClassUuid()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(assetEntryModelImpl.getClassNameId()),
-				Long.valueOf(assetEntryModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryImpl.class, assetEntry.getPrimaryKey());
+		clearCache(assetEntry);
 
 		return assetEntry;
 	}

@@ -280,11 +280,22 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public void clearCache(Address address) {
-		EntityCacheUtil.removeResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
-			AddressImpl.class, address.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
+			AddressImpl.class, address.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<Address> addressList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Address address : addressList) {
+			EntityCacheUtil.removeResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
+				AddressImpl.class, address.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -373,11 +384,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
-			AddressImpl.class, address.getPrimaryKey());
+		clearCache(address);
 
 		return address;
 	}

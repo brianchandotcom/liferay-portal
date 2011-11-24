@@ -251,11 +251,22 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	 */
 	@Override
 	public void clearCache(EmailAddress emailAddress) {
-		EntityCacheUtil.removeResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-			EmailAddressImpl.class, emailAddress.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
+			EmailAddressImpl.class, emailAddress.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<EmailAddress> emailAddressList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (EmailAddress emailAddress : emailAddressList) {
+			EntityCacheUtil.removeResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
+				EmailAddressImpl.class, emailAddress.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -346,11 +357,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-			EmailAddressImpl.class, emailAddress.getPrimaryKey());
+		clearCache(emailAddress);
 
 		return emailAddress;
 	}

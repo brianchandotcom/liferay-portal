@@ -152,11 +152,25 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	@Override
 	public void clearCache(ClassName className) {
-		EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameImpl.class, className.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(className);
+	}
+
+	@Override
+	public void clearCache(List<ClassName> classNameList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ClassName className : classNameList) {
+			doClearCache(className);
+		}
+	}
+
+	protected void doClearCache(ClassName className) {
+		EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+			ClassNameImpl.class, className.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
 			new Object[] { className.getValue() });
@@ -250,16 +264,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
-			new Object[] { classNameModelImpl.getValue() });
-
-		EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameImpl.class, className.getPrimaryKey());
+		clearCache(className);
 
 		return className;
 	}

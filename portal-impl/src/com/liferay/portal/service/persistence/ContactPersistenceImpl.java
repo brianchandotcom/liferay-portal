@@ -160,11 +160,22 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	 */
 	@Override
 	public void clearCache(Contact contact) {
-		EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactImpl.class, contact.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+			ContactImpl.class, contact.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<Contact> contactList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Contact contact : contactList) {
+			EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
+				ContactImpl.class, contact.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -253,11 +264,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactImpl.class, contact.getPrimaryKey());
+		clearCache(contact);
 
 		return contact;
 	}

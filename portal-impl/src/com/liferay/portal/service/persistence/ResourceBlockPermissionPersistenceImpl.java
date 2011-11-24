@@ -184,12 +184,27 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public void clearCache(ResourceBlockPermission resourceBlockPermission) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(resourceBlockPermission);
+	}
+
+	@Override
+	public void clearCache(
+		List<ResourceBlockPermission> resourceBlockPermissionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceBlockPermission resourceBlockPermission : resourceBlockPermissionList) {
+			doClearCache(resourceBlockPermission);
+		}
+	}
+
+	protected void doClearCache(ResourceBlockPermission resourceBlockPermission) {
 		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
 			resourceBlockPermission.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
 			new Object[] {
@@ -287,21 +302,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R,
-			new Object[] {
-				Long.valueOf(
-					resourceBlockPermissionModelImpl.getResourceBlockId()),
-				Long.valueOf(resourceBlockPermissionModelImpl.getRoleId())
-			});
-
-		EntityCacheUtil.removeResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockPermissionImpl.class,
-			resourceBlockPermission.getPrimaryKey());
+		clearCache(resourceBlockPermission);
 
 		return resourceBlockPermission;
 	}

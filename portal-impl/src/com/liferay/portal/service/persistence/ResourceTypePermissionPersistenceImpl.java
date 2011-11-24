@@ -223,12 +223,27 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 */
 	@Override
 	public void clearCache(ResourceTypePermission resourceTypePermission) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(resourceTypePermission);
+	}
+
+	@Override
+	public void clearCache(
+		List<ResourceTypePermission> resourceTypePermissionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceTypePermission resourceTypePermission : resourceTypePermissionList) {
+			doClearCache(resourceTypePermission);
+		}
+	}
+
+	protected void doClearCache(ResourceTypePermission resourceTypePermission) {
 		EntityCacheUtil.removeResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceTypePermissionImpl.class,
 			resourceTypePermission.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R,
 			new Object[] {
@@ -329,23 +344,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)resourceTypePermission;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R,
-			new Object[] {
-				Long.valueOf(resourceTypePermissionModelImpl.getCompanyId()),
-				Long.valueOf(resourceTypePermissionModelImpl.getGroupId()),
-				
-			resourceTypePermissionModelImpl.getName(),
-				Long.valueOf(resourceTypePermissionModelImpl.getRoleId())
-			});
-
-		EntityCacheUtil.removeResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceTypePermissionImpl.class,
-			resourceTypePermission.getPrimaryKey());
+		clearCache(resourceTypePermission);
 
 		return resourceTypePermission;
 	}

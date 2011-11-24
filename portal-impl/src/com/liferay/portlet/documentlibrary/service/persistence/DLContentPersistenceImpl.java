@@ -247,11 +247,25 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 */
 	@Override
 	public void clearCache(DLContent dlContent) {
-		EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentImpl.class, dlContent.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(dlContent);
+	}
+
+	@Override
+	public void clearCache(List<DLContent> dlContentList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLContent dlContent : dlContentList) {
+			doClearCache(dlContent);
+		}
+	}
+
+	protected void doClearCache(DLContent dlContent) {
+		EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
+			DLContentImpl.class, dlContent.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_P_V,
 			new Object[] {
@@ -352,23 +366,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_P_V,
-			new Object[] {
-				Long.valueOf(dlContentModelImpl.getCompanyId()),
-				Long.valueOf(dlContentModelImpl.getRepositoryId()),
-				
-			dlContentModelImpl.getPath(),
-				
-			dlContentModelImpl.getVersion()
-			});
-
-		EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentImpl.class, dlContent.getPrimaryKey());
+		clearCache(dlContent);
 
 		return dlContent;
 	}

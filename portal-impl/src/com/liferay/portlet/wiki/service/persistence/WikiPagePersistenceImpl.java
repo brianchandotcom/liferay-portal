@@ -586,11 +586,25 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public void clearCache(WikiPage wikiPage) {
-		EntityCacheUtil.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-			WikiPageImpl.class, wikiPage.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(wikiPage);
+	}
+
+	@Override
+	public void clearCache(List<WikiPage> wikiPageList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (WikiPage wikiPage : wikiPageList) {
+			doClearCache(wikiPage);
+		}
+	}
+
+	protected void doClearCache(WikiPage wikiPage) {
+		EntityCacheUtil.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageImpl.class, wikiPage.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { wikiPage.getUuid(), Long.valueOf(
@@ -702,34 +716,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				wikiPageModelImpl.getUuid(),
-				Long.valueOf(wikiPageModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V,
-			new Object[] {
-				Long.valueOf(wikiPageModelImpl.getResourcePrimKey()),
-				Long.valueOf(wikiPageModelImpl.getNodeId()),
-				Double.valueOf(wikiPageModelImpl.getVersion())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V,
-			new Object[] {
-				Long.valueOf(wikiPageModelImpl.getNodeId()),
-				
-			wikiPageModelImpl.getTitle(),
-				Double.valueOf(wikiPageModelImpl.getVersion())
-			});
-
-		EntityCacheUtil.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-			WikiPageImpl.class, wikiPage.getPrimaryKey());
+		clearCache(wikiPage);
 
 		return wikiPage;
 	}

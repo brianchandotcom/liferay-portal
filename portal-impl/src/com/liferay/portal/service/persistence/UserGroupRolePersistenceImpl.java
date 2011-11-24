@@ -245,11 +245,22 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 */
 	@Override
 	public void clearCache(UserGroupRole userGroupRole) {
-		EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
+			UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<UserGroupRole> userGroupRoleList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (UserGroupRole userGroupRole : userGroupRoleList) {
+			EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
+				UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -340,11 +351,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
+		clearCache(userGroupRole);
 
 		return userGroupRole;
 	}

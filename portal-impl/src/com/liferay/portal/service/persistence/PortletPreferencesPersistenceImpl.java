@@ -242,11 +242,25 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public void clearCache(PortletPreferences portletPreferences) {
-		EntityCacheUtil.removeResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesImpl.class, portletPreferences.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(portletPreferences);
+	}
+
+	@Override
+	public void clearCache(List<PortletPreferences> portletPreferencesList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			doClearCache(portletPreferences);
+		}
+	}
+
+	protected void doClearCache(PortletPreferences portletPreferences) {
+		EntityCacheUtil.removeResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortletPreferencesImpl.class, portletPreferences.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O_P_P,
 			new Object[] {
@@ -346,22 +360,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		PortletPreferencesModelImpl portletPreferencesModelImpl = (PortletPreferencesModelImpl)portletPreferences;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O_P_P,
-			new Object[] {
-				Long.valueOf(portletPreferencesModelImpl.getOwnerId()),
-				Integer.valueOf(portletPreferencesModelImpl.getOwnerType()),
-				Long.valueOf(portletPreferencesModelImpl.getPlid()),
-				
-			portletPreferencesModelImpl.getPortletId()
-			});
-
-		EntityCacheUtil.removeResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesImpl.class, portletPreferences.getPrimaryKey());
+		clearCache(portletPreferences);
 
 		return portletPreferences;
 	}

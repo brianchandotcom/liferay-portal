@@ -160,11 +160,22 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public void clearCache(OrgLabor orgLabor) {
-		EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-			OrgLaborImpl.class, orgLabor.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborImpl.class, orgLabor.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<OrgLabor> orgLaborList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (OrgLabor orgLabor : orgLaborList) {
+			EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+				OrgLaborImpl.class, orgLabor.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -254,11 +265,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-			OrgLaborImpl.class, orgLabor.getPrimaryKey());
+		clearCache(orgLabor);
 
 		return orgLabor;
 	}

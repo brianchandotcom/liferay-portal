@@ -211,11 +211,22 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 */
 	@Override
 	public void clearCache(LayoutPrototype layoutPrototype) {
-		EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<LayoutPrototype> layoutPrototypeList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypeList) {
+			EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -310,11 +321,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey());
+		clearCache(layoutPrototype);
 
 		return layoutPrototype;
 	}

@@ -235,11 +235,25 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 */
 	@Override
 	public void clearCache(DLFileVersion dlFileVersion) {
-		EntityCacheUtil.removeResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(dlFileVersion);
+	}
+
+	@Override
+	public void clearCache(List<DLFileVersion> dlFileVersionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLFileVersion dlFileVersion : dlFileVersionList) {
+			doClearCache(dlFileVersion);
+		}
+	}
+
+	protected void doClearCache(DLFileVersion dlFileVersion) {
+		EntityCacheUtil.removeResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
 			new Object[] {
@@ -337,20 +351,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_V,
-			new Object[] {
-				Long.valueOf(dlFileVersionModelImpl.getFileEntryId()),
-				
-			dlFileVersionModelImpl.getVersion()
-			});
-
-		EntityCacheUtil.removeResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey());
+		clearCache(dlFileVersion);
 
 		return dlFileVersion;
 	}

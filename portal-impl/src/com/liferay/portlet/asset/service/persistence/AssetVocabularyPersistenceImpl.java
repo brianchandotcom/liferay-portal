@@ -250,11 +250,25 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public void clearCache(AssetVocabulary assetVocabulary) {
-		EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(assetVocabulary);
+	}
+
+	@Override
+	public void clearCache(List<AssetVocabulary> assetVocabularyList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AssetVocabulary assetVocabulary : assetVocabularyList) {
+			doClearCache(assetVocabulary);
+		}
+	}
+
+	protected void doClearCache(AssetVocabulary assetVocabulary) {
+		EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -362,26 +376,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AssetVocabularyModelImpl assetVocabularyModelImpl = (AssetVocabularyModelImpl)assetVocabulary;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				assetVocabularyModelImpl.getUuid(),
-				Long.valueOf(assetVocabularyModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] {
-				Long.valueOf(assetVocabularyModelImpl.getGroupId()),
-				
-			assetVocabularyModelImpl.getName()
-			});
-
-		EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
+		clearCache(assetVocabulary);
 
 		return assetVocabulary;
 	}

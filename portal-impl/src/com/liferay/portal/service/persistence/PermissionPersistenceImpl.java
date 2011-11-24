@@ -184,11 +184,25 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 	 */
 	@Override
 	public void clearCache(Permission permission) {
-		EntityCacheUtil.removeResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionImpl.class, permission.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(permission);
+	}
+
+	@Override
+	public void clearCache(List<Permission> permissionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Permission permission : permissionList) {
+			doClearCache(permission);
+		}
+	}
+
+	protected void doClearCache(Permission permission) {
+		EntityCacheUtil.removeResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
+			PermissionImpl.class, permission.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_R,
 			new Object[] {
@@ -315,19 +329,7 @@ public class PermissionPersistenceImpl extends BasePersistenceImpl<Permission>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		PermissionModelImpl permissionModelImpl = (PermissionModelImpl)permission;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_R,
-			new Object[] {
-				permissionModelImpl.getActionId(),
-				Long.valueOf(permissionModelImpl.getResourceId())
-			});
-
-		EntityCacheUtil.removeResult(PermissionModelImpl.ENTITY_CACHE_ENABLED,
-			PermissionImpl.class, permission.getPrimaryKey());
+		clearCache(permission);
 
 		return permission;
 	}

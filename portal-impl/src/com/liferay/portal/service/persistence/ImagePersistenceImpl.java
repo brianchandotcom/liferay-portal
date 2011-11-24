@@ -160,11 +160,22 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public void clearCache(Image image) {
-		EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-			ImageImpl.class, image.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
+			ImageImpl.class, image.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<Image> imageList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Image image : imageList) {
+			EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
+				ImageImpl.class, image.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -253,11 +264,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-			ImageImpl.class, image.getPrimaryKey());
+		clearCache(image);
 
 		return image;
 	}

@@ -337,11 +337,25 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	 */
 	@Override
 	public void clearCache(JournalContentSearch journalContentSearch) {
-		EntityCacheUtil.removeResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchImpl.class, journalContentSearch.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(journalContentSearch);
+	}
+
+	@Override
+	public void clearCache(List<JournalContentSearch> journalContentSearchList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (JournalContentSearch journalContentSearch : journalContentSearchList) {
+			doClearCache(journalContentSearch);
+		}
+	}
+
+	protected void doClearCache(JournalContentSearch journalContentSearch) {
+		EntityCacheUtil.removeResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+			JournalContentSearchImpl.class, journalContentSearch.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
 			new Object[] {
@@ -443,25 +457,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		JournalContentSearchModelImpl journalContentSearchModelImpl = (JournalContentSearchModelImpl)journalContentSearch;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
-			new Object[] {
-				Long.valueOf(journalContentSearchModelImpl.getGroupId()),
-				Boolean.valueOf(
-					journalContentSearchModelImpl.getPrivateLayout()),
-				Long.valueOf(journalContentSearchModelImpl.getLayoutId()),
-				
-			journalContentSearchModelImpl.getPortletId(),
-				
-			journalContentSearchModelImpl.getArticleId()
-			});
-
-		EntityCacheUtil.removeResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchImpl.class, journalContentSearch.getPrimaryKey());
+		clearCache(journalContentSearch);
 
 		return journalContentSearch;
 	}

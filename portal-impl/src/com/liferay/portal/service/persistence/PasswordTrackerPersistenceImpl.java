@@ -165,11 +165,22 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	 */
 	@Override
 	public void clearCache(PasswordTracker passwordTracker) {
-		EntityCacheUtil.removeResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordTrackerImpl.class, passwordTracker.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		EntityCacheUtil.removeResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			PasswordTrackerImpl.class, passwordTracker.getPrimaryKey());
+	}
+
+	@Override
+	public void clearCache(List<PasswordTracker> passwordTrackerList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (PasswordTracker passwordTracker : passwordTrackerList) {
+			EntityCacheUtil.removeResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
+				PasswordTrackerImpl.class, passwordTracker.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -260,11 +271,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordTrackerImpl.class, passwordTracker.getPrimaryKey());
+		clearCache(passwordTracker);
 
 		return passwordTracker;
 	}

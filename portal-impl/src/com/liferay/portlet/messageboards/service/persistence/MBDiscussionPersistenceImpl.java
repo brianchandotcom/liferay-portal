@@ -193,11 +193,25 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 */
 	@Override
 	public void clearCache(MBDiscussion mbDiscussion) {
-		EntityCacheUtil.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionImpl.class, mbDiscussion.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(mbDiscussion);
+	}
+
+	@Override
+	public void clearCache(List<MBDiscussion> mbDiscussionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MBDiscussion mbDiscussion : mbDiscussionList) {
+			doClearCache(mbDiscussion);
+		}
+	}
+
+	protected void doClearCache(MBDiscussion mbDiscussion) {
+		EntityCacheUtil.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
+			MBDiscussionImpl.class, mbDiscussion.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THREADID,
 			new Object[] { Long.valueOf(mbDiscussion.getThreadId()) });
@@ -297,22 +311,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		MBDiscussionModelImpl mbDiscussionModelImpl = (MBDiscussionModelImpl)mbDiscussion;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THREADID,
-			new Object[] { Long.valueOf(mbDiscussionModelImpl.getThreadId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(mbDiscussionModelImpl.getClassNameId()),
-				Long.valueOf(mbDiscussionModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionImpl.class, mbDiscussion.getPrimaryKey());
+		clearCache(mbDiscussion);
 
 		return mbDiscussion;
 	}

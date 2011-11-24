@@ -232,11 +232,25 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	 */
 	@Override
 	public void clearCache(Subscription subscription) {
-		EntityCacheUtil.removeResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-			SubscriptionImpl.class, subscription.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(subscription);
+	}
+
+	@Override
+	public void clearCache(List<Subscription> subscriptionList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Subscription subscription : subscriptionList) {
+			doClearCache(subscription);
+		}
+	}
+
+	protected void doClearCache(Subscription subscription) {
+		EntityCacheUtil.removeResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
+			SubscriptionImpl.class, subscription.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_C_C,
 			new Object[] {
@@ -335,21 +349,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		SubscriptionModelImpl subscriptionModelImpl = (SubscriptionModelImpl)subscription;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_C_C,
-			new Object[] {
-				Long.valueOf(subscriptionModelImpl.getCompanyId()),
-				Long.valueOf(subscriptionModelImpl.getUserId()),
-				Long.valueOf(subscriptionModelImpl.getClassNameId()),
-				Long.valueOf(subscriptionModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-			SubscriptionImpl.class, subscription.getPrimaryKey());
+		clearCache(subscription);
 
 		return subscription;
 	}

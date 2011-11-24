@@ -701,11 +701,25 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public void clearCache(JournalArticle journalArticle) {
-		EntityCacheUtil.removeResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImpl.class, journalArticle.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(journalArticle);
+	}
+
+	@Override
+	public void clearCache(List<JournalArticle> journalArticleList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (JournalArticle journalArticle : journalArticleList) {
+			doClearCache(journalArticle);
+		}
+	}
+
+	protected void doClearCache(JournalArticle journalArticle) {
+		EntityCacheUtil.removeResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleImpl.class, journalArticle.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -822,35 +836,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		JournalArticleModelImpl journalArticleModelImpl = (JournalArticleModelImpl)journalArticle;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				journalArticleModelImpl.getUuid(),
-				Long.valueOf(journalArticleModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_S,
-			new Object[] {
-				Long.valueOf(journalArticleModelImpl.getGroupId()),
-				Long.valueOf(journalArticleModelImpl.getClassNameId()),
-				
-			journalArticleModelImpl.getStructureId()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V,
-			new Object[] {
-				Long.valueOf(journalArticleModelImpl.getGroupId()),
-				
-			journalArticleModelImpl.getArticleId(),
-				Double.valueOf(journalArticleModelImpl.getVersion())
-			});
-
-		EntityCacheUtil.removeResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImpl.class, journalArticle.getPrimaryKey());
+		clearCache(journalArticle);
 
 		return journalArticle;
 	}

@@ -168,11 +168,25 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 */
 	@Override
 	public void clearCache(VirtualHost virtualHost) {
-		EntityCacheUtil.removeResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostImpl.class, virtualHost.getPrimaryKey());
-
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		doClearCache(virtualHost);
+	}
+
+	@Override
+	public void clearCache(List<VirtualHost> virtualHostList) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (VirtualHost virtualHost : virtualHostList) {
+			doClearCache(virtualHost);
+		}
+	}
+
+	protected void doClearCache(VirtualHost virtualHost) {
+		EntityCacheUtil.removeResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+			VirtualHostImpl.class, virtualHost.getPrimaryKey());
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
 			new Object[] { virtualHost.getHostname() });
@@ -272,22 +286,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-			new Object[] { virtualHostModelImpl.getHostname() });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_L,
-			new Object[] {
-				Long.valueOf(virtualHostModelImpl.getCompanyId()),
-				Long.valueOf(virtualHostModelImpl.getLayoutSetId())
-			});
-
-		EntityCacheUtil.removeResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostImpl.class, virtualHost.getPrimaryKey());
+		clearCache(virtualHost);
 
 		return virtualHost;
 	}

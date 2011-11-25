@@ -118,6 +118,30 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	public VideoProcessor() {
+		boolean valid = true;
+
+		if (_videoMimeTypes.size() == 0 || _videoMimeTypes.size() > 2) {
+			valid = false;
+		}
+
+		for (String videoMimeType : _videoMimeTypes) {
+			if (!(videoMimeType.equals("mp4") || videoMimeType.equals("ogv"))) {
+				valid = false;
+			}
+		}
+
+		if (!valid) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Liferay is incorrectly configured to generate ");
+			sb.append("video previews using video containers other than MP4 ");
+			sb.append("or OGV. Please change the property ");
+			sb.append(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS);
+			sb.append(" in portal-ext.properties.");
+
+			_log.warn(sb.toString());
+		}
+
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}

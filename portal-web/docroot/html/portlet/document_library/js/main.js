@@ -476,7 +476,7 @@ AUI().add(
 
 						dd.removeInvalid('a');
 
-						dd.set('groups', DOCUMENT_LIBRARY_GROUP);
+						dd.set('groups', [DOCUMENT_LIBRARY_GROUP]);
 
 						dd.plug(
 							[
@@ -510,7 +510,7 @@ AUI().add(
 								item.plug(
 									A.Plugin.Drop,
 									{
-										groups: DOCUMENT_LIBRARY_GROUP
+										groups: [DOCUMENT_LIBRARY_GROUP]
 									}
 								);
 							}

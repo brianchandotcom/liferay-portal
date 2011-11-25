@@ -377,8 +377,9 @@ public class ClusterExecutorImpl
 		ObjectValuePair<Address, ClusterNode> liveInstance =
 			new ObjectValuePair<Address, ClusterNode>(address, clusterNode);
 
-		Long oldExpirationTime = _liveInstances.put(
-			liveInstance, expirationTime);
+		Long oldExpirationTime = _liveInstances.remove(liveInstance);
+
+		_liveInstances.put(liveInstance, expirationTime);
 
 		if ((oldExpirationTime != null) ||
 			((_localAddress != null) && _localAddress.equals(address))) {

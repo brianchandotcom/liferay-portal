@@ -601,7 +601,7 @@ AUI().add(
 			}
 		);
 
-		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'aui-form-builder-field-icon aui-form-builder-field-icon-text';
+		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'aui-form-builder-field-icon aui-form-builder-field-icon-default';
 
 		LiferayFormBuilder.AVAILABLE_FIELDS = {
 			DEFAULT: [
@@ -631,7 +631,7 @@ AUI().add(
 				},
 				{
 					fieldLabel: Liferay.Language.get('text-box'),
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-text',
 					label: Liferay.Language.get('text-box'),
 					type: 'text'
 				},
@@ -662,32 +662,32 @@ AUI().add(
 					type: 'checkbox'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-date',
 					label: Liferay.Language.get('date'),
 					type: 'ddm-date'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-decimal',
 					label: Liferay.Language.get('decimal'),
 					type: 'ddm-decimal'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-document',
 					label: Liferay.Language.get('document-library'),
 					type: 'ddm-documentlibrary'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-fileupload',
 					label: Liferay.Language.get('file-upload'),
 					type: 'ddm-fileupload'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-integer',
 					label: Liferay.Language.get('integer'),
 					type: 'ddm-integer'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-number',
 					label: Liferay.Language.get('number'),
 					type: 'ddm-number'
 				},
@@ -702,12 +702,12 @@ AUI().add(
 					type: 'select'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-text',
 					label: Liferay.Language.get('text'),
 					type: 'text'
 				},
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-textarea',
 					label: Liferay.Language.get('text-box'),
 					type: 'textarea'
 				}
@@ -715,12 +715,12 @@ AUI().add(
 
 			DDM_TEMPLATE: [
 				{
-					iconClass: LiferayFormBuilder.DEFAULT_ICON_CLASS,
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-paragraph',
 					label: Liferay.Language.get('paragraph'),
 					type: 'ddm-paragraph'
 				},
 				{
-					iconClass: 'aui-form-builder-field-icon ddm-field-icon-separator',
+					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'
 				},

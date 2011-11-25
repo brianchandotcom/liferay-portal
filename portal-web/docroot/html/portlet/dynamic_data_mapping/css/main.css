@@ -22,11 +22,6 @@
 		}
 	}
 
-	.ddm-field-icon-separator {
-		background-image: url(@theme_image_path@/journal/selection_break.png);
-		background-position: 0px 6px;
-	}
-
 	.lfr-structure-entry-details-container {
 		margin-top: 10px;
 

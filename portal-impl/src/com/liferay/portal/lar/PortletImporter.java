@@ -639,7 +639,7 @@ public class PortletImporter {
 
 			AssetCategory existingAssetCategory =
 				AssetCategoryUtil.fetchByUUID_G(
-					assetCategory.getUuid(), 
+					assetCategory.getUuid(),
 					portletDataContext.getScopeGroupId());
 
 			if (existingAssetCategory == null) {

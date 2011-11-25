@@ -2100,7 +2100,8 @@ public class JournalArticleLocalServiceImpl
 
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
-			String title, String description, String content)
+			String title, String description, String content,
+			Map<String, byte[]> images)
 		throws PortalException, SystemException {
 
 		validateContent(content);
@@ -2116,14 +2117,14 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = null;
 
+		User user = userService.getUserById(oldArticle.getUserId());
+
 		if (!oldArticle.isDraft()) {
 			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
 
 			long id = counterLocalService.increment();
 
 			article = journalArticlePersistence.create(id);
-
-			User user = userService.getUserById(oldArticle.getUserId());
 
 			article.setResourcePrimKey(oldArticle.getResourcePrimKey());
 			article.setGroupId(oldArticle.getGroupId());
@@ -2175,6 +2176,10 @@ public class JournalArticleLocalServiceImpl
 		descriptionMap.put(locale, description);
 
 		article.setDescriptionMap(descriptionMap);
+
+		content = format(user, groupId, articleId, version,
+			!oldArticle.isDraft(), content, oldArticle.getStructureId(),
+			images);
 
 		article.setContent(content);
 
@@ -2872,7 +2877,9 @@ public class JournalArticleLocalServiceImpl
 				continue;
 			}
 
-			dynamicContent.setText(StringPool.BLANK);
+			if (Validator.isNotNull(elLanguage)) {
+				dynamicContent.setText(StringPool.BLANK);
+			}
 		}
 	}
 

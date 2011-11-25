@@ -908,7 +908,6 @@ Liferay.Service.registerClass(
 		subscribe: true,
 		unsubscribe: true,
 		updateArticle: true,
-		updateArticleTranslation: true,
 		updateContent: true
 	}
 );

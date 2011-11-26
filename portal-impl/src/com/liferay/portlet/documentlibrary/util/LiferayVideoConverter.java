@@ -305,8 +305,19 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		int bitRate = inputIStreamCoder.getBitRate();
 
-		if ((bitRate == 0) || (bitRate > VIDEO_BIT_RATE_MAX)) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Original video bitrate " + bitRate);
+		}
+
+		if (bitRate == 0) {
 			bitRate = VIDEO_BIT_RATE_DEFAULT;
+		}
+		else if (bitRate > VIDEO_BIT_RATE_MAX) {
+			bitRate = VIDEO_BIT_RATE_MAX;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Modified video bitrate " + bitRate);
 		}
 
 		outputIStreamCoder.setBitRate(bitRate);
@@ -335,8 +346,20 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		IRational frameRate = inputIStreamCoder.getFrameRate();
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Original frameRate " + frameRate.getNumerator() + "/" +
+					frameRate.getDenominator());
+		}
+
 		if (outputFormat.equals("mp4")) {
 			frameRate = IRational.make(30, 1);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Modified frameRate " + frameRate.getNumerator() + "/" +
+					frameRate.getDenominator());
 		}
 
 		outputIStreamCoder.setFrameRate(frameRate);

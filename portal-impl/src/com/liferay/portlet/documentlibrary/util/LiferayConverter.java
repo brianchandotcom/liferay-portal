@@ -202,66 +202,92 @@ public abstract class LiferayConverter {
 			int thumbnailWidth, long timeStampOffset)
 		throws Exception {
 
-		int value = inputIStreamCoder.decodeVideo(
-			inputIVideoPicture, inputIPacket, 0);
+		int offset = 0;
 
-		if (value <= 0) {
-			return value;
-		}
+		boolean stopDecoding = false;
 
-		updateVideoTimeStamp(inputIVideoPicture, timeStampOffset);
+		while (offset < inputIPacket.getSize()) {
+			int value = inputIStreamCoder.decodeVideo(
+				inputIVideoPicture, inputIPacket, offset);
 
-		if (!inputIVideoPicture.isComplete()) {
-			return 1;
-		}
-
-		if (thumbnailFile != null) {
-			BufferedImage bufferedImage = null;
-
-			if (_converterFactoryType == null) {
-				_converterFactoryType =
-					ConverterFactory.findRegisteredConverter(
-						ConverterFactory.XUGGLER_BGR_24);
+			if (value <= 0) {
+				return value;
 			}
 
-			if (_converterFactoryType == null) {
-				throw new UnsupportedOperationException(
-					"No converter found for " +
-						ConverterFactory.XUGGLER_BGR_24);
+			updateVideoTimeStamp(inputIVideoPicture, timeStampOffset);
+
+			offset += value;
+
+			// Workaround for ffmpeg bug. See
+			// http://comments.gmane.org/gmane.comp.video.ffmpeg.devel/135657
+
+			ICodec.ID iCodecID = inputIStreamCoder.getCodecID();
+
+			if (iCodecID.equals(ICodec.ID.CODEC_ID_MJPEG)) {
+				stopDecoding = true;
 			}
 
-			if (_videoIConverter == null) {
-				_videoIConverter = ConverterFactory.createConverter(
-					_converterFactoryType.getDescriptor(),
+			if (!inputIVideoPicture.isComplete()) {
+				if (stopDecoding) {
+					return 1;
+				}
+				else {
+					continue;
+				}
+			}
+
+			if (thumbnailFile != null) {
+				BufferedImage bufferedImage = null;
+
+				if (_converterFactoryType == null) {
+					_converterFactoryType =
+						ConverterFactory.findRegisteredConverter(
+							ConverterFactory.XUGGLER_BGR_24);
+				}
+
+				if (_converterFactoryType == null) {
+					throw new UnsupportedOperationException(
+						"No converter found for " +
+							ConverterFactory.XUGGLER_BGR_24);
+				}
+
+				if (_videoIConverter == null) {
+					_videoIConverter = ConverterFactory.createConverter(
+						_converterFactoryType.getDescriptor(),
+						inputIVideoPicture);
+				}
+
+				bufferedImage = _videoIConverter.toImage(
 					inputIVideoPicture);
+
+				thumbnailFile.createNewFile();
+
+				RenderedImage renderedImage = ImageProcessorUtil.scale(
+					bufferedImage, thumbnailHeight, thumbnailWidth);
+
+				ImageIO.write(
+					renderedImage, thumbnailExtension,
+					new FileOutputStream(thumbnailFile));
+
+				return DECODE_VIDEO_THUMBNAIL;
 			}
 
-			bufferedImage = _videoIConverter.toImage(inputIVideoPicture);
+			if ((outputIStreamCoder != null) && (outputIContainer != null)) {
+				IVideoPicture outputIVideoPicture = resampleVideo(
+					iVideoResampler, inputIVideoPicture,
+					resampledIVideoPicture);
 
-			thumbnailFile.createNewFile();
+				outputIVideoPicture.setQuality(0);
 
-			RenderedImage renderedImage = ImageProcessorUtil.scale(
-				bufferedImage, thumbnailHeight, thumbnailWidth);
+				encodeVideo(
+					outputIStreamCoder, outputIVideoPicture, outputIPacket,
+					outputIContainer);
+			}
 
-			ImageIO.write(
-				renderedImage, thumbnailExtension,
-				new FileOutputStream(thumbnailFile));
-
-			return DECODE_VIDEO_THUMBNAIL;
-		}
-
-		if ((outputIStreamCoder != null) && (outputIContainer != null)) {
-			IVideoPicture outputIVideoPicture = null;
-
-			outputIVideoPicture = resampleVideo(
-				iVideoResampler, inputIVideoPicture, resampledIVideoPicture);
-
-			outputIVideoPicture.setQuality(0);
-
-			encodeVideo(
-				outputIStreamCoder, outputIVideoPicture, outputIPacket,
-				outputIContainer);
-		}
+			if (stopDecoding) {
+				break;
+			}
+        }
 
 		return 1;
 	}
@@ -298,14 +324,17 @@ public abstract class LiferayConverter {
 			IPacket outputIPacket, IContainer outputIContainer)
 		throws Exception {
 
-		if (outputIStreamCoder.encodeVideo(
-				outputIPacket, outputIVideoPicture, 0) < 0) {
+		int value = outputIStreamCoder.encodeVideo(
+			outputIPacket, outputIVideoPicture, 0);
 
+		if (value < 0) {
 			throw new RuntimeException("Unable to encode video");
 		}
 
 		if (outputIPacket.isComplete()) {
-			if (outputIContainer.writePacket(outputIPacket, true) < 0) {
+			value = outputIContainer.writePacket(outputIPacket, true);
+
+			if (value < 0) {
 				throw new RuntimeException("Unable to write video packet");
 			}
 		}
@@ -321,18 +350,27 @@ public abstract class LiferayConverter {
 
 			IPacket iPacket = IPacket.make();
 
-			if (outputIStreamCoder.getCodecType() ==
-					ICodec.Type.CODEC_TYPE_AUDIO) {
+			flush(outputIStreamCoder, outputIContainer, iPacket);
 
-				outputIStreamCoder.encodeAudio(iPacket, null, 0);
+			while (iPacket.isComplete()) {
+				flush(outputIStreamCoder, outputIContainer, iPacket);
 			}
-			else {
-				outputIStreamCoder.encodeVideo(iPacket, null, 0);
-			}
+		}
+	}
 
-			if (iPacket.isComplete()) {
-				outputIContainer.writePacket(iPacket, true);
-			}
+	protected void flush(
+		IStreamCoder outputIStreamCoder, IContainer outputIContainer,
+		IPacket iPacket) {
+
+		if (outputIStreamCoder.getCodecType() == ICodec.Type.CODEC_TYPE_AUDIO) {
+			outputIStreamCoder.encodeAudio(iPacket, null, 0);
+		}
+		else {
+			outputIStreamCoder.encodeVideo(iPacket, null, 0);
+		}
+
+		if (iPacket.isComplete()) {
+			outputIContainer.writePacket(iPacket, true);
 		}
 	}
 
@@ -426,7 +464,9 @@ public abstract class LiferayConverter {
 		if (iCodecID.equals(ICodec.ID.CODEC_ID_MJPEG)) {
 			return true;
 		}
-		else if (iCodecID.equals(ICodec.ID.CODEC_ID_MPEG2VIDEO)) {
+		else if (iCodecID.equals(ICodec.ID.CODEC_ID_MPEG2VIDEO) ||
+				 iCodecID.equals(ICodec.ID.CODEC_ID_THEORA)) {
+
 			if (nonKeyAfterKeyCount != 1) {
 				return true;
 			}
@@ -463,8 +503,12 @@ public abstract class LiferayConverter {
 	protected void openStreamCoder(IStreamCoder iStreamCoder)
 		throws Exception {
 
-		if ((iStreamCoder != null) && (iStreamCoder.open() < 0)) {
-			throw new RuntimeException("Unable to open coder");
+		if ((iStreamCoder != null) &&
+			(iStreamCoder.getCodecType() != ICodec.Type.CODEC_TYPE_UNKNOWN)) {
+
+			if (iStreamCoder.open() < 0) {
+				throw new RuntimeException("Unable to open coder");
+			}
 		}
 	}
 
@@ -487,8 +531,16 @@ public abstract class LiferayConverter {
 
 		int bitRate = inputIStreamCoder.getBitRate();
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Original audio bitrate " + bitRate);
+		}
+
 		if (bitRate == 0) {
 			bitRate = AUDIO_BIT_RATE_DEFAULT;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Modified audio bitrate " + bitRate);
 		}
 
 		outputIStreamCoder.setBitRate(bitRate);
@@ -515,13 +567,7 @@ public abstract class LiferayConverter {
 
 		outputIStreamCoder.setGlobalQuality(0);
 
-		int sampleRate = AUDIO_SAMPLE_RATE_DEFAULT;
-
-		if (inputIStreamCoder.getSampleRate() > 0) {
-			sampleRate = inputIStreamCoder.getSampleRate();
-		}
-
-		outputIStreamCoder.setSampleRate(sampleRate);
+		outputIStreamCoder.setSampleRate(AUDIO_SAMPLE_RATE_DEFAULT);
 
 		iAudioResamplers[index] = createIAudioResampler(
 			inputIStreamCoder, outputIStreamCoder);
@@ -688,7 +734,7 @@ public abstract class LiferayConverter {
 
 	protected static final int VIDEO_BIT_RATE_DEFAULT = 250000;
 
-	protected static final int VIDEO_BIT_RATE_MAX = 1500000;
+	protected static final int VIDEO_BIT_RATE_MAX = 1200000;
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayConverter.class);
 

@@ -94,9 +94,7 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 					inputIStreamCoder.getHeight());
 			}
 
-			if ((inputIStreamCoder != null) && (inputIStreamCoder.open() < 0)) {
-				throw new RuntimeException("Unable to open input coder");
-			}
+			openStreamCoder(inputIStreamCoder);
 		}
 
 		boolean thumbnailGenerated = false;

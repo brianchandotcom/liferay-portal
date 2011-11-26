@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xml;
 
+import com.liferay.portal.xml.xpath.LiferayNamespaceContextMap;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
@@ -64,6 +66,12 @@ public interface SAXReader {
 	public Text createText(String text);
 
 	public XPath createXPath(String xpathExpression);
+
+	public XPath createXPath(
+		String xPathExpression, LiferayNamespaceContextMap contextMap);
+
+	public XPath createXPath(
+		String xpathExpression, String prefix, String namespace);
 
 	public Document read(File file) throws DocumentException;
 

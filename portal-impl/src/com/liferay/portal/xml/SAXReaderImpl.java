@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.Text;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.EntityResolver;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.xml.xpath.LiferayNamespaceContextMap;
 import com.liferay.util.xml.XMLSafeReader;
 
 import java.io.File;
@@ -293,6 +294,24 @@ public class SAXReaderImpl implements SAXReader {
 
 	public XPath createXPath(String xPathExpression) {
 		return new XPathImpl(DocumentHelper.createXPath(xPathExpression));
+	}
+
+	public XPath createXPath(
+		String xPathExpression, LiferayNamespaceContextMap contextMap) {
+
+		return new XPathImpl(
+			DocumentHelper.createXPath(xPathExpression), contextMap);
+	}
+
+	public XPath createXPath(
+		String xPathExpression, String prefix, String namespace) {
+
+		LiferayNamespaceContextMap contextMap =
+			new LiferayNamespaceContextMap();
+
+		contextMap.put(prefix, namespace);
+
+		return createXPath(xPathExpression, contextMap);
 	}
 
 	public List<Node> selectNodes(

@@ -71,6 +71,9 @@
 	<bean id="destination.subscription_sender" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/subscription_sender" />
 	</bean>
+	<bean id="destination.user_session_manager" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+		<property name="name" value="liferay/user_session_manager" />
+	</bean>
 
 	<!-- Listeners -->
 
@@ -115,6 +118,7 @@
 		</property>
 	</bean>
 	<bean id="messageListener.subscription_sender" class="com.liferay.portal.messaging.SubscriptionSenderMessageListener" />
+	<bean id="messageListener.user_session_manager" class="com.liferay.portal.usersession.messaging.ClusterUserMessageListener" />
 
 	<!-- Configurator -->
 
@@ -137,6 +141,7 @@
 				<ref bean="destination.live_users" />
 				<ref bean="destination.message_boards_mailing_list" />
 				<ref bean="destination.subscription_sender" />
+				<ref bean="destination.user_session_manager" />
 			</list>
 		</property>
 		<property name="messageBus">
@@ -223,6 +228,11 @@
 				<entry key="liferay/subscription_sender">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.subscription_sender" />
+					</list>
+				</entry>
+				<entry key="liferay/user_session_manager">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.user_session_manager" />
 					</list>
 				</entry>
 			</map>

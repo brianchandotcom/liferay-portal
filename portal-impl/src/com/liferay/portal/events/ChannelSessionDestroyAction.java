@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.usersession.UserSessionManager;
 
 import javax.servlet.http.HttpSession;
 
@@ -55,6 +56,9 @@ public class ChannelSessionDestroyAction extends SessionAction {
 
 			try {
 				ChannelHubManagerUtil.destroyChannel(
+					user.getCompanyId(), user.getUserId());
+
+				UserSessionManager.stopUserSession(
 					user.getCompanyId(), user.getUserId());
 			}
 			catch (ChannelException ce) {

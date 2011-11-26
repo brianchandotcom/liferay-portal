@@ -1411,6 +1411,8 @@ public class PropsValues {
 
 	public static boolean USERS_EMAIL_ADDRESS_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED));
 
+	public static boolean USERS_ENFORCE_SINGLE_SESSION = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_ENFORCE_SINGLE_SESSION));
+
 	public static final String[] USERS_EXPORT_CSV_FIELDS = PropsUtil.getArray(PropsKeys.USERS_EXPORT_CSV_FIELDS);
 
 	public static String[] USERS_FORM_ADD_IDENTIFICATION = PropsUtil.getArray(PropsKeys.USERS_FORM_ADD_IDENTIFICATION);

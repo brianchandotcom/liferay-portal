@@ -17,8 +17,10 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.Channel;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.usersession.UserSessionManager;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +38,14 @@ public class ChannelLoginPostAction extends Action {
 			User user = PortalUtil.getUser(request);
 
 			if (!user.isDefaultUser()) {
-				ChannelHubManagerUtil.getChannel(
+				Channel channel = ChannelHubManagerUtil.getChannel(
 					user.getCompanyId(), user.getUserId(), true);
+
+				if (channel != null) {
+					UserSessionManager.startUserSession(
+						user.getCompanyId(), user.getUserId(),
+						request.getSession());
+				}
 			}
 		}
 		catch (Exception e) {

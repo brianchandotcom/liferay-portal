@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.notifications.DuplicateChannelHubException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.usersession.UserSessionManager;
 
 /**
  * @author Edward Han
@@ -38,6 +39,8 @@ public class ChannelHubAppStartupAction extends SimpleAction {
 			}
 
 			ChannelHubManagerUtil.createChannelHub(companyId);
+
+			UserSessionManager.startPortalInstance(companyId);
 		}
 		catch (DuplicateChannelHubException dche) {
 			if (_log.isWarnEnabled()) {

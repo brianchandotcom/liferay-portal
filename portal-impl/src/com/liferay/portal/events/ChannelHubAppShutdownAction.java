@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.usersession.UserSessionManager;
 
 /**
  * @author Edward Han
@@ -36,6 +37,8 @@ public class ChannelHubAppShutdownAction extends SimpleAction {
 			}
 
 			ChannelHubManagerUtil.destroyChannelHub(companyId);
+
+			UserSessionManager.stopPortalInstance(companyId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

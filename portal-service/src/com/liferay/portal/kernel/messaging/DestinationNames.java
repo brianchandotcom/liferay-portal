@@ -137,6 +137,9 @@ public interface DestinationNames {
 
 	public static final String TEST_TRANSACTION = "liferay/test_transaction";
 
+	public static final String USER_SESSION_MANAGER =
+		"liferay/user_session_manager";
+
 	/**
 	 * @deprecated {@link #SUBSCRIPTION_SENDER}
 	 */

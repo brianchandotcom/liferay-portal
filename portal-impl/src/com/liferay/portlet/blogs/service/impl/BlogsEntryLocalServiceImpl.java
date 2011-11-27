@@ -833,7 +833,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttributes(
-			"[$BLOGS_ENTRY_URL$]", entryURL);
+			"[$BLOGS_ENTRY_URL$]", entryURL, "[$PORTAL_URL$]",
+			serviceContext.getPortalURL());
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

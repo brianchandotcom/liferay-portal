@@ -56,9 +56,11 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -300,7 +302,8 @@ public class JournalArticleLocalServiceImpl
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
-		sendEmail(article, articleURL, preferences, "requested");
+		sendEmail(
+			article, articleURL, preferences, "requested", serviceContext);
 
 		// Workflow
 
@@ -455,7 +458,39 @@ public class JournalArticleLocalServiceImpl
 					article.getCompanyId(), ownerId, ownerType, plid,
 					portletId);
 
-			sendEmail(article, articleURL, preferences, "review");
+			Company company = companyLocalService.getCompany(
+				article.getCompanyId());
+
+			String portalURL = PortalUtil.getPortalURL(
+				company.getVirtualHostname(), 80, false);
+
+			Group group = groupLocalService.getGroup(article.getGroupId());
+
+			if (group.hasPublicLayouts()) {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					article.getGroupId(), false);
+
+				if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+					portalURL = PortalUtil.getPortalURL(
+						layoutSet.getVirtualHostname(), 80, false);
+				}
+			}
+			else if (group.hasPrivateLayouts()) {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					article.getGroupId(), true);
+
+				if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+					portalURL = PortalUtil.getPortalURL(
+						layoutSet.getVirtualHostname(), 80, false);
+				}
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setPortalURL(portalURL);
+
+			sendEmail(
+				article, articleURL, preferences, "review", serviceContext);
 		}
 	}
 
@@ -612,7 +647,8 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), article.getArticleId(),
 				article.getVersion())) {
 
-			sendEmail(article, articleURL, preferences, "denied");
+			sendEmail(
+				article, articleURL, preferences, "denied", serviceContext);
 		}
 
 		// Images
@@ -2063,7 +2099,8 @@ public class JournalArticleLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
-			sendEmail(article, articleURL, preferences, "requested");
+			sendEmail(
+				article, articleURL, preferences, "requested", serviceContext);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
@@ -2432,7 +2469,8 @@ public class JournalArticleLocalServiceImpl
 						ServiceContextUtil.getPortletPreferences(
 							serviceContext);
 
-					sendEmail(article, articleURL, preferences, msg);
+					sendEmail(
+						article, articleURL, preferences, msg, serviceContext);
 				}
 				catch (Exception e) {
 					_log.error(
@@ -3056,7 +3094,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
-			articleURL, "[$ARTICLE_VERSION$]", article.getVersion());
+			articleURL, "[$ARTICLE_VERSION$]", article.getVersion(),
+			"[$PORTAL_URL$]", serviceContext.getPortalURL());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
@@ -3090,7 +3129,8 @@ public class JournalArticleLocalServiceImpl
 
 	protected void sendEmail(
 			JournalArticle article, String articleURL,
-			PortletPreferences preferences, String emailType)
+			PortletPreferences preferences, String emailType,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (preferences == null) {
@@ -3177,7 +3217,8 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			article.getTitle(), "[$ARTICLE_URL$]", articleURL,
 			"[$ARTICLE_USER_NAME$]", article.getUserName(),
-			"[$ARTICLE_VERSION$]", article.getVersion());
+			"[$ARTICLE_VERSION$]", article.getVersion(),
+			"[$PORTAL_URL$]", serviceContext.getPortalURL());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

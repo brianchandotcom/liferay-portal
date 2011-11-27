@@ -329,7 +329,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// User
 
 			userLocalService.addGroupUsers(
-				group.getGroupId(), new long[] {userId});
+				group.getGroupId(), new long[] {userId}, serviceContext);
 
 			// Asset
 

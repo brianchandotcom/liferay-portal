@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.MembershipRequestServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 
@@ -27,11 +28,12 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 public class MembershipRequestServiceImpl
 	extends MembershipRequestServiceBaseImpl {
 
-	public MembershipRequest addMembershipRequest(long groupId, String comments)
+	public MembershipRequest addMembershipRequest(
+			long groupId, String comments, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return membershipRequestLocalService.addMembershipRequest(
-			getUserId(), groupId, comments);
+			getUserId(), groupId, comments, serviceContext);
 	}
 
 	public void deleteMembershipRequests(long groupId, int statusId)
@@ -52,7 +54,8 @@ public class MembershipRequestServiceImpl
 	}
 
 	public void updateStatus(
-			long membershipRequestId, String reviewComments, int statusId)
+			long membershipRequestId, String reviewComments, int statusId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		MembershipRequest membershipRequest =
@@ -63,7 +66,8 @@ public class MembershipRequestServiceImpl
 			ActionKeys.ASSIGN_MEMBERS);
 
 		membershipRequestLocalService.updateStatus(
-			getUserId(), membershipRequestId, reviewComments, statusId, true);
+			getUserId(), membershipRequestId, reviewComments, statusId, true,
+			serviceContext);
 	}
 
 }

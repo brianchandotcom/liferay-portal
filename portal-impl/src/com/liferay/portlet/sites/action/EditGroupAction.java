@@ -356,7 +356,8 @@ public class EditGroupAction extends PortletAction {
 						membershipRequest.getMembershipRequestId(),
 						themeDisplay.translate(
 							"your-membership-has-been-approved"),
-						MembershipRequestConstants.STATUS_APPROVED);
+						MembershipRequestConstants.STATUS_APPROVED,
+						serviceContext);
 
 					LiveUsers.joinGroup(
 						themeDisplay.getCompanyId(),

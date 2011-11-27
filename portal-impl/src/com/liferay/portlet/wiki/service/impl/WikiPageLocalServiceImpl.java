@@ -1690,7 +1690,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"[$DIFFS_URL$]", diffsURL, "[$NODE_NAME$]", node.getName(),
 			"[$PAGE_DATE_UPDATE$]", page.getModifiedDate(), "[$PAGE_ID$]",
 			page.getPageId(), "[$PAGE_SUMMARY$]", page.getSummary(),
-			"[$PAGE_TITLE$]", page.getTitle(), "[$PAGE_URL$]", pageURL);
+			"[$PAGE_TITLE$]", page.getTitle(), "[$PAGE_URL$]", pageURL,
+			"[$PORTAL_URL$]", serviceContext.getPortalURL());
 		subscriptionSender.setContextAttribute(
 			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextAttribute(

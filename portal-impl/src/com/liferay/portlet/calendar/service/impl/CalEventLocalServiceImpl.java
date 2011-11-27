@@ -49,9 +49,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -1205,6 +1208,34 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			String fromAddress = CalUtil.getEmailFromAddress(
 				preferences, event.getCompanyId());
 
+			String portalURL = PortalUtil.getPortalURL(
+				company.getVirtualHostname(), 80, false);
+
+			Group group = groupLocalService.getGroup(event.getGroupId());
+
+			if (group.hasPublicLayouts()) {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					event.getGroupId(), false);
+
+				if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+					portalURL = PortalUtil.getPortalURL(
+						layoutSet.getVirtualHostname(), 80, false);
+				}
+			}
+			else if (group.hasPrivateLayouts()) {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					event.getGroupId(), true);
+
+				if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+					portalURL = PortalUtil.getPortalURL(
+						layoutSet.getVirtualHostname(), 80, false);
+				}
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setPortalURL(portalURL);
+
 			String toName = user.getFullName();
 			String toAddress = user.getEmailAddress();
 
@@ -1237,7 +1268,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 					event.getTitle(),
 					fromAddress,
 					fromName,
-					company.getVirtualHostname(),
+					portalURL,
 					portletName,
 					HtmlUtil.escape(toAddress),
 					HtmlUtil.escape(toName),
@@ -1262,7 +1293,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 					event.getTitle(),
 					fromAddress,
 					fromName,
-					company.getVirtualHostname(),
+					portalURL,
 					portletName,
 					HtmlUtil.escape(toAddress),
 					HtmlUtil.escape(toName),

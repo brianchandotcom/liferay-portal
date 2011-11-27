@@ -24,6 +24,8 @@ import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.OrganizationServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupGroupRoleServiceUtil;
 import com.liferay.portal.service.UserGroupRoleServiceUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
@@ -167,8 +169,11 @@ public class EditGroupAssignmentsAction extends PortletAction {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		UserServiceUtil.addGroupUsers(groupId, addUserIds);
-		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		UserServiceUtil.addGroupUsers(groupId, addUserIds, serviceContext);
+		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);
 
 		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
 		LiveUsers.leaveGroup(

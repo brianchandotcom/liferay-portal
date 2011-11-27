@@ -27,11 +27,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -120,7 +123,9 @@ public class AnnouncementsEntryLocalServiceImpl
 		return entry;
 	}
 
-	public void checkEntries() throws PortalException, SystemException {
+	public void checkEntries()
+		throws PortalException, SystemException {
+
 		Date now = new Date();
 
 		List<AnnouncementsEntry> entries =
@@ -133,7 +138,38 @@ public class AnnouncementsEntryLocalServiceImpl
 		}
 
 		for (AnnouncementsEntry entry : entries) {
-			notifyUsers(entry);
+			Company company = companyLocalService.getCompany(
+				entry.getCompanyId());
+
+			String portalURL = PortalUtil.getPortalURL(
+				company.getVirtualHostname(), 80, false);
+
+			Group group = groupLocalService.getGroup(entry.getGroupId());
+
+			if (group.hasPublicLayouts()) {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					entry.getGroupId(), false);
+
+				if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+					portalURL = PortalUtil.getPortalURL(
+						layoutSet.getVirtualHostname(), 80, false);
+				}
+			}
+			else if (group.hasPrivateLayouts()) {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					entry.getGroupId(), true);
+
+				if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+					portalURL = PortalUtil.getPortalURL(
+						layoutSet.getVirtualHostname(), 80, false);
+				}
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setPortalURL(portalURL);
+
+			notifyUsers(entry, serviceContext);
 		}
 	}
 
@@ -336,7 +372,8 @@ public class AnnouncementsEntryLocalServiceImpl
 		return entry;
 	}
 
-	protected void notifyUsers(AnnouncementsEntry entry)
+	protected void notifyUsers(
+			AnnouncementsEntry entry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Company company = companyPersistence.findByPrimaryKey(
@@ -462,7 +499,8 @@ public class AnnouncementsEntryLocalServiceImpl
 			"[$ENTRY_URL$]", entry.getUrl(), "[$PORTLET_NAME$]",
 			LanguageUtil.get(
 				company.getLocale(),
-				(entry.isAlert() ? "alert" : "announcement")));
+				(entry.isAlert() ? "alert" : "announcement")),
+			"[$PORTAL_URL$]", serviceContext.getPortalURL());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());

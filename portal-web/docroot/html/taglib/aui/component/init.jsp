@@ -36,20 +36,20 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 boolean defineVar = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:component:defineVar")), true);
 java.lang.String excludeAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:excludeAttributes"));
 java.lang.String javaScriptAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:javaScriptAttributes"));
-javax.servlet.jsp.JspContext tagPageContext = (javax.servlet.jsp.JspContext)request.getAttribute("aui:component:tagPageContext");
-java.lang.String var = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:var"));
 java.lang.String module = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:module"));
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:name"));
 java.util.Map options = (java.util.Map)request.getAttribute("aui:component:options");
+javax.servlet.jsp.JspContext tagPageContext = (javax.servlet.jsp.JspContext)request.getAttribute("aui:component:tagPageContext");
+java.lang.String var = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:var"));
 
 _updateOptions(_options, "defineVar", defineVar);
 _updateOptions(_options, "excludeAttributes", excludeAttributes);
 _updateOptions(_options, "javaScriptAttributes", javaScriptAttributes);
-_updateOptions(_options, "tagPageContext", tagPageContext);
-_updateOptions(_options, "var", var);
 _updateOptions(_options, "module", module);
 _updateOptions(_options, "name", name);
 _updateOptions(_options, "options", options);
+_updateOptions(_options, "tagPageContext", tagPageContext);
+_updateOptions(_options, "var", var);
 %>
 
 <%@ include file="/html/taglib/aui/component/init-ext.jspf" %>

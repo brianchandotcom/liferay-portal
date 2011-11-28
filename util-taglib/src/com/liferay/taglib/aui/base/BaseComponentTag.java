@@ -45,14 +45,6 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		return _javaScriptAttributes;
 	}
 
-	public javax.servlet.jsp.JspContext getTagPageContext() {
-		return _tagPageContext;
-	}
-
-	public java.lang.String getVar() {
-		return _var;
-	}
-
 	public java.lang.String getModule() {
 		return _module;
 	}
@@ -63,6 +55,14 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.util.Map getOptions() {
 		return _options;
+	}
+
+	public javax.servlet.jsp.JspContext getTagPageContext() {
+		return _tagPageContext;
+	}
+
+	public java.lang.String getVar() {
+		return _var;
 	}
 
 	public void setDefineVar(boolean defineVar) {
@@ -83,18 +83,6 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("javaScriptAttributes", javaScriptAttributes);
 	}
 
-	public void setTagPageContext(javax.servlet.jsp.JspContext tagPageContext) {
-		_tagPageContext = tagPageContext;
-
-		setScopedAttribute("tagPageContext", tagPageContext);
-	}
-
-	public void setVar(java.lang.String var) {
-		_var = var;
-
-		setScopedAttribute("var", var);
-	}
-
 	public void setModule(java.lang.String module) {
 		_module = module;
 
@@ -113,16 +101,28 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("options", options);
 	}
 
+	public void setTagPageContext(javax.servlet.jsp.JspContext tagPageContext) {
+		_tagPageContext = tagPageContext;
+
+		setScopedAttribute("tagPageContext", tagPageContext);
+	}
+
+	public void setVar(java.lang.String var) {
+		_var = var;
+
+		setScopedAttribute("var", var);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_defineVar = true;
 		_excludeAttributes = null;
 		_javaScriptAttributes = null;
-		_tagPageContext = null;
-		_var = null;
 		_module = null;
 		_name = null;
 		_options = null;
+		_tagPageContext = null;
+		_var = null;
 	}
 
 	@Override
@@ -135,11 +135,11 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "defineVar", _defineVar);
 		setNamespacedAttribute(request, "excludeAttributes", _excludeAttributes);
 		setNamespacedAttribute(request, "javaScriptAttributes", _javaScriptAttributes);
-		setNamespacedAttribute(request, "tagPageContext", _tagPageContext);
-		setNamespacedAttribute(request, "var", _var);
 		setNamespacedAttribute(request, "module", _module);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "options", _options);
+		setNamespacedAttribute(request, "tagPageContext", _tagPageContext);
+		setNamespacedAttribute(request, "var", _var);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:component:";
@@ -150,10 +150,10 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _defineVar = true;
 	private java.lang.String _excludeAttributes = null;
 	private java.lang.String _javaScriptAttributes = null;
-	private javax.servlet.jsp.JspContext _tagPageContext = null;
-	private java.lang.String _var = null;
 	private java.lang.String _module = null;
 	private java.lang.String _name = null;
 	private java.util.Map _options = null;
+	private javax.servlet.jsp.JspContext _tagPageContext = null;
+	private java.lang.String _var = null;
 
 }

@@ -308,10 +308,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public void addGroupUsers(long groupId, long[] userIds)
+	public void addGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userLocalService.addGroupUsers(groupId, userIds);
+		_userLocalService.addGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**
@@ -2216,10 +2217,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetGroupUsers(long groupId, long[] userIds)
+	public void unsetGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userLocalService.unsetGroupUsers(groupId, userIds);
+		_userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**

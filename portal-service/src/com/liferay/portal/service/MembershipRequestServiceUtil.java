@@ -38,10 +38,12 @@ public class MembershipRequestServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long groupId, java.lang.String comments)
+		long groupId, java.lang.String comments,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().addMembershipRequest(groupId, comments);
+		return getService()
+				   .addMembershipRequest(groupId, comments, serviceContext);
 	}
 
 	public static void deleteMembershipRequests(long groupId, int statusId)
@@ -58,10 +60,13 @@ public class MembershipRequestServiceUtil {
 	}
 
 	public static void updateStatus(long membershipRequestId,
-		java.lang.String reviewComments, int statusId)
+		java.lang.String reviewComments, int statusId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateStatus(membershipRequestId, reviewComments, statusId);
+		getService()
+			.updateStatus(membershipRequestId, reviewComments, statusId,
+			serviceContext);
 	}
 
 	public static MembershipRequestService getService() {

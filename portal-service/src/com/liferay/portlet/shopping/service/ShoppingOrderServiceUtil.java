@@ -40,12 +40,13 @@ public class ShoppingOrderServiceUtil {
 	public static void completeOrder(long groupId, java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail)
+		java.lang.String ppPayerEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.completeOrder(groupId, number, ppTxnId, ppPaymentStatus,
-			ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+			ppPaymentGross, ppReceiverEmail, ppPayerEmail, serviceContext);
 	}
 
 	public static void deleteOrder(long groupId, long orderId)
@@ -62,10 +63,11 @@ public class ShoppingOrderServiceUtil {
 	}
 
 	public static void sendEmail(long groupId, long orderId,
-		java.lang.String emailType)
+		java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().sendEmail(groupId, orderId, emailType);
+		getService().sendEmail(groupId, orderId, emailType, serviceContext);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(

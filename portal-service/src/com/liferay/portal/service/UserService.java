@@ -54,7 +54,8 @@ public interface UserService {
 	group members
 	* @throws SystemException if a system exception occurred
 	*/
-	public void addGroupUsers(long groupId, long[] userIds)
+	public void addGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -717,7 +718,8 @@ public interface UserService {
 	modify group assignments
 	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetGroupUsers(long groupId, long[] userIds)
+	public void unsetGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

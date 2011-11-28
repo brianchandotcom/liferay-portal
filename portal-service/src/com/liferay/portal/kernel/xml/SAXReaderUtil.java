@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xml;
 
+import com.liferay.portal.xml.xpath.LiferayNamespaceContextMap;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
@@ -99,6 +101,18 @@ public class SAXReaderUtil {
 
 	public static XPath createXPath(String xPathExpression) {
 		return getSAXReader().createXPath(xPathExpression);
+	}
+
+	public static XPath createXPath(
+			String xPathExpression, LiferayNamespaceContextMap contextMap) {
+
+		return getSAXReader().createXPath(xPathExpression, contextMap);
+	}
+
+	public static XPath createXPath(
+		String xPathExpression, String prefix, String namespace) {
+
+		return getSAXReader().createXPath(xPathExpression, prefix, namespace);
 	}
 
 	public static SAXReader getSAXReader() {

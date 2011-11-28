@@ -465,6 +465,34 @@ public class PortletPreferencesFactoryImpl
 		return getPortletSetup(request, portletId);
 	}
 
+	public Map<Long, PortletPreferences> getPortletSetupMap(
+			long companyId, long groupId, long ownerId, int ownerType,
+			String portletId, boolean privateLayout)
+		throws SystemException {
+
+		Map<Long, PortletPreferences> portletSetupMap =
+			new HashMap<Long, PortletPreferences>();
+
+		List<com.liferay.portal.model.PortletPreferences>
+			portletPreferencesList =
+				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					companyId, groupId, ownerId, ownerType, portletId,
+					privateLayout);
+
+		for (com.liferay.portal.model.PortletPreferences portletPreferences :
+				portletPreferencesList) {
+
+			PortletPreferences portletSetup =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					companyId, ownerId, ownerType, portletPreferences.getPlid(),
+					portletId);
+
+			portletSetupMap.put(portletPreferences.getPlid(), portletSetup);
+		}
+
+		return portletSetupMap;
+	}
+
 	public PortletPreferences getPreferences(HttpServletRequest request) {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);

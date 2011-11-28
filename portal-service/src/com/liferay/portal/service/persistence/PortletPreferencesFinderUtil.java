@@ -27,6 +27,15 @@ public class PortletPreferencesFinderUtil {
 		return getFinder().findByPortletId(portletId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.PortletPreferences> findByC_G_O_O_P_P(
+		long companyId, long groupId, long ownerId, int ownerType,
+		java.lang.String portletId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByC_G_O_O_P_P(companyId, groupId, ownerId, ownerType,
+			portletId, privateLayout);
+	}
+
 	public static PortletPreferencesFinder getFinder() {
 		if (_finder == null) {
 			_finder = (PortletPreferencesFinder)PortalBeanLocatorUtil.locate(PortletPreferencesFinder.class.getName());

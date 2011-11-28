@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class PortletPreferencesFinderImpl
 	extends BasePersistenceImpl<PortletPreferences>
@@ -34,6 +35,9 @@ public class PortletPreferencesFinderImpl
 
 	public static String FIND_BY_PORTLETID =
 		PortletPreferencesFinder.class.getName() + ".findByPortletId";
+
+	public static String FIND_BY_C_G_O_O_P_P =
+		PortletPreferencesFinder.class.getName() + ".findByC_G_O_O_P_P";
 
 	public List<PortletPreferences> findByPortletId(String portletId)
 		throws SystemException {
@@ -52,6 +56,42 @@ public class PortletPreferencesFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(portletId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<PortletPreferences> findByC_G_O_O_P_P(
+			long companyId, long groupId, long ownerId, int ownerType,
+			String portletId, boolean privateLayout)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_G_O_O_P_P);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("PortletPreferences", PortletPreferencesImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(groupId);
+			qPos.add(ownerId);
+			qPos.add(ownerType);
+			qPos.add(portletId);
+			qPos.add(portletId + "_INSTANCE_%");
+			qPos.add(privateLayout);
 
 			return q.list(true);
 		}

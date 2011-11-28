@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -40,6 +41,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.File;
@@ -446,14 +448,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			scopeGroupLayoutUuid = scopeGroupLayout.getUuid();
 		}
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		Map<Long, javax.portlet.PortletPreferences> jxPreferencesMap =
+			PortletPreferencesFactoryUtil.getPortletSetupMap(
+				scopeGroup.getCompanyId(), groupId,
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId, privateLayout);
 
-		layouts.addAll(
-			layoutPersistence.filterFindByG_P(groupId, privateLayout));
-		layouts.addAll(
-			layoutPersistence.filterFindByG_P(scopeGroupId, privateLayout));
+		for (Map.Entry<Long, javax.portlet.PortletPreferences> entry :
+				jxPreferencesMap.entrySet()) {
 
-		for (Layout layout : layouts) {
+			long plid = entry.getKey();
+
+			Layout layout = null;
+
+			try {
+				layout = layoutLocalService.getLayout(plid);
+			}
+			catch (NoSuchLayoutException nsle) {
+				continue;
+			}
+
 			if (!LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
@@ -471,9 +485,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				continue;
 			}
 
-			javax.portlet.PortletPreferences jxPreferences =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletId);
+			javax.portlet.PortletPreferences jxPreferences = entry.getValue();
 
 			String scopeType = GetterUtil.getString(
 				jxPreferences.getValue("lfrScopeType", null));

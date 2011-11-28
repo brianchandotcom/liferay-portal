@@ -68,10 +68,13 @@ public class ShoppingOrderServiceSoap {
 	public static void completeOrder(long groupId, java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail) throws RemoteException {
+		java.lang.String ppPayerEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			ShoppingOrderServiceUtil.completeOrder(groupId, number, ppTxnId,
-				ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+				ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -108,9 +111,12 @@ public class ShoppingOrderServiceSoap {
 	}
 
 	public static void sendEmail(long groupId, long orderId,
-		java.lang.String emailType) throws RemoteException {
+		java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			ShoppingOrderServiceUtil.sendEmail(groupId, orderId, emailType);
+			ShoppingOrderServiceUtil.sendEmail(groupId, orderId, emailType,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -113,7 +113,8 @@ public class UserListener extends BaseModelListener<User> {
 				principalUserId, membershipRequest.getMembershipRequestId(),
 				LanguageUtil.get(
 					user.getLocale(), "your-membership-has-been-approved"),
-				MembershipRequestConstants.STATUS_APPROVED, false);
+				MembershipRequestConstants.STATUS_APPROVED, false,
+				new ServiceContext());
 		}
 	}
 

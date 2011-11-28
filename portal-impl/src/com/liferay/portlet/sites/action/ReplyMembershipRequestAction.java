@@ -24,6 +24,8 @@ import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
@@ -64,8 +66,11 @@ public class ReplyMembershipRequestAction extends PortletAction {
 				MembershipRequestServiceUtil.getMembershipRequest(
 					membershipRequestId);
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
 			MembershipRequestServiceUtil.updateStatus(
-				membershipRequestId, replyComments, statusId);
+				membershipRequestId, replyComments, statusId, serviceContext);
 
 			if (statusId == MembershipRequestConstants.STATUS_APPROVED) {
 				LiveUsers.joinGroup(

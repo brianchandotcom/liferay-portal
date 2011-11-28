@@ -57,7 +57,8 @@ public class ShoppingOrderServiceHttp {
 	public static void completeOrder(HttpPrincipal httpPrincipal, long groupId,
 		java.lang.String number, java.lang.String ppTxnId,
 		java.lang.String ppPaymentStatus, double ppPaymentGross,
-		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
+		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -66,7 +67,7 @@ public class ShoppingOrderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					number, ppTxnId, ppPaymentStatus, ppPaymentGross,
-					ppReceiverEmail, ppPayerEmail);
+					ppReceiverEmail, ppPayerEmail, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -161,7 +162,8 @@ public class ShoppingOrderServiceHttp {
 	}
 
 	public static void sendEmail(HttpPrincipal httpPrincipal, long groupId,
-		long orderId, java.lang.String emailType)
+		long orderId, java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -169,7 +171,7 @@ public class ShoppingOrderServiceHttp {
 					"sendEmail", _sendEmailParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					orderId, emailType);
+					orderId, emailType, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -296,7 +298,8 @@ public class ShoppingOrderServiceHttp {
 	private static final Class<?>[] _completeOrderParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, double.class, java.lang.String.class,
-			java.lang.String.class
+			java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteOrderParameterTypes1 = new Class[] {
 			long.class, long.class
@@ -305,7 +308,8 @@ public class ShoppingOrderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _sendEmailParameterTypes3 = new Class[] {
-			long.class, long.class, java.lang.String.class
+			long.class, long.class, java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateOrderParameterTypes4 = new Class[] {
 			long.class, long.class, java.lang.String.class,

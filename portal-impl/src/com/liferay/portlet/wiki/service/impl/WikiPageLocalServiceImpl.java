@@ -1703,6 +1703,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setPortletId(PortletKeys.WIKI);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(node.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(page.getUserId());
 

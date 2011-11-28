@@ -39,10 +39,11 @@ public class UserServiceWrapper implements UserService,
 	group members
 	* @throws SystemException if a system exception occurred
 	*/
-	public void addGroupUsers(long groupId, long[] userIds)
+	public void addGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userService.addGroupUsers(groupId, userIds);
+		_userService.addGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**
@@ -772,10 +773,11 @@ public class UserServiceWrapper implements UserService,
 	modify group assignments
 	* @throws SystemException if a system exception occurred
 	*/
-	public void unsetGroupUsers(long groupId, long[] userIds)
+	public void unsetGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_userService.unsetGroupUsers(groupId, userIds);
+		_userService.unsetGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**

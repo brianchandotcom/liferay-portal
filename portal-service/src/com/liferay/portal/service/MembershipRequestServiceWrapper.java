@@ -31,10 +31,12 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	}
 
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long groupId, java.lang.String comments)
+		long groupId, java.lang.String comments,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _membershipRequestService.addMembershipRequest(groupId, comments);
+		return _membershipRequestService.addMembershipRequest(groupId,
+			comments, serviceContext);
 	}
 
 	public void deleteMembershipRequests(long groupId, int statusId)
@@ -51,11 +53,12 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	}
 
 	public void updateStatus(long membershipRequestId,
-		java.lang.String reviewComments, int statusId)
+		java.lang.String reviewComments, int statusId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_membershipRequestService.updateStatus(membershipRequestId,
-			reviewComments, statusId);
+			reviewComments, statusId, serviceContext);
 	}
 
 	/**

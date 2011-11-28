@@ -843,6 +843,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setPortletId(PortletKeys.BLOGS);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(entry.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(

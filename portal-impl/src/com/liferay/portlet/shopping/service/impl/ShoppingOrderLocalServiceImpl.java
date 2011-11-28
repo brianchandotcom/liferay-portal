@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
@@ -152,7 +153,7 @@ public class ShoppingOrderLocalServiceImpl
 	public void completeOrder(
 			String number, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail,
-			boolean updateInventory)
+			boolean updateInventory, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Order
@@ -221,7 +222,7 @@ public class ShoppingOrderLocalServiceImpl
 
 		// Email
 
-		sendEmail(order, "confirmation");
+		sendEmail(order, "confirmation", serviceContext);
 	}
 
 	public void deleteOrder(long orderId)
@@ -409,16 +410,19 @@ public class ShoppingOrderLocalServiceImpl
 			andOperator);
 	}
 
-	public void sendEmail(long orderId, String emailType)
+	public void sendEmail(
+			long orderId, String emailType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
 
-		sendEmail(order, emailType);
+		sendEmail(order, emailType, serviceContext);
 	}
 
-	public void sendEmail(ShoppingOrder order, String emailType)
+	public void sendEmail(
+			ShoppingOrder order, String emailType,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
@@ -495,6 +499,7 @@ public class ShoppingOrderLocalServiceImpl
 		subscriptionSender.setMailId("shopping_order", order.getOrderId());
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(order.getUserId());
 

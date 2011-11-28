@@ -17,6 +17,7 @@ package com.liferay.portlet.shopping.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.service.base.ShoppingOrderServiceBaseImpl;
 import com.liferay.portlet.shopping.service.permission.ShoppingOrderPermission;
@@ -29,7 +30,8 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 
 	public void completeOrder(
 			long groupId, String number, String ppTxnId, String ppPaymentStatus,
-			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail)
+			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ShoppingOrder order = shoppingOrderPersistence.findByNumber(number);
@@ -40,7 +42,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 
 		shoppingOrderLocalService.completeOrder(
 			number, ppTxnId, ppPaymentStatus, ppPaymentGross, ppReceiverEmail,
-			ppPayerEmail, false);
+			ppPayerEmail, false, serviceContext);
 	}
 
 	public void deleteOrder(long groupId, long orderId)
@@ -68,13 +70,15 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 		}
 	}
 
-	public void sendEmail(long groupId, long orderId, String emailType)
+	public void sendEmail(
+			long groupId, long orderId, String emailType,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ShoppingOrderPermission.check(
 			getPermissionChecker(), groupId, orderId, ActionKeys.UPDATE);
 
-		shoppingOrderLocalService.sendEmail(orderId, emailType);
+		shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
 	}
 
 	public ShoppingOrder updateOrder(

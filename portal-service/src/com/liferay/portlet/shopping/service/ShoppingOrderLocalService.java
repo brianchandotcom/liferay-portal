@@ -244,7 +244,8 @@ public interface ShoppingOrderLocalService extends PersistedModelLocalService {
 	public void completeOrder(java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, boolean updateInventory)
+		java.lang.String ppPayerEmail, boolean updateInventory,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -309,13 +310,15 @@ public interface ShoppingOrderLocalService extends PersistedModelLocalService {
 		java.lang.String ppPaymentStatus, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void sendEmail(long orderId, java.lang.String emailType)
+	public void sendEmail(long orderId, java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void sendEmail(
 		com.liferay.portlet.shopping.model.ShoppingOrder order,
-		java.lang.String emailType)
+		java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

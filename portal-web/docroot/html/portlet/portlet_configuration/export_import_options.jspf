@@ -14,6 +14,15 @@
  */
 --%>
 
+<c:choose>
+	<c:when test='<%= tabs2.equals("export") %>'>
+		<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
+	</c:when>
+	<c:when test='<%= tabs2.equals("import") %>'>
+		<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
+	</c:when>
+</c:choose>
+
 <ul class="lfr-tree lfr-component">
 	<c:if test="<%= supportsSetup %>">
 		<li class="tree-item">

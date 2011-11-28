@@ -14,6 +14,15 @@
  */
 --%>
 
+<c:choose>
+	<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
+		<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>' />
+	</c:when>
+	<c:when test="<%= cmd.equals(Constants.IMPORT) %>">
+		<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
+	</c:when>
+</c:choose>
+
 <ul class="lfr-tree lfr-component">
 	<li class="tree-item">
 		<aui:input disabled="<%= true %>" inlineLabel="right" name="pages" type="checkbox" value="<%= true %>" />

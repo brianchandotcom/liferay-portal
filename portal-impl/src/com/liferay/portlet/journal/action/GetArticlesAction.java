@@ -188,7 +188,8 @@ public class GetArticlesAction extends Action {
 
 			resultEl = resultEl.element("root");
 
-			JournalUtil.addAllReservedEls(resultEl, tokens, article);
+			JournalUtil.addAllReservedEls(
+				resultEl, tokens, article, languageId);
 		}
 
 		return DDMXMLUtil.formatXML(resultsDoc).getBytes(StringPool.UTF8);

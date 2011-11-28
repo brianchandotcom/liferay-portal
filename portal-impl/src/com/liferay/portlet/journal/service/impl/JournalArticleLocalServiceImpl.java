@@ -983,7 +983,8 @@ public class JournalArticleLocalServiceImpl
 
 				rootElement.add(requestDocument.getRootElement().createCopy());
 
-				JournalUtil.addAllReservedEls(rootElement, tokens, article);
+				JournalUtil.addAllReservedEls(
+					rootElement, tokens, article, languageId);
 
 				xml = DDMXMLUtil.formatXML(document);
 			}

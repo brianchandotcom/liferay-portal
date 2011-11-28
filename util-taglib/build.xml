@@ -8,6 +8,8 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib;singleton:=true" />
 
 	<target name="build-taglibs">
+		<delete file="${project.dir}/util-taglib/src/META-INF/aui.tld" failonerror="false" />
+
 		<java
 			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"
 			classpathref="project.classpath"
@@ -15,7 +17,7 @@
 			maxmemory="256m"
 			newenvironment="true"
 		>
-			<jvmarg value="-Dtagbuilder.components.xml=${project.dir}/util-taglib/src/com/liferay/taglib/aui.xml" />
+			<jvmarg value="-Dtagbuilder.components.xml=${project.dir}/util-taglib/src/com/liferay/taglib/aui.xml,${project.dir}/util-taglib/src/com/liferay/taglib/liferay-aui.xml" />
 			<jvmarg value="-Dtagbuilder.docroot.dir=${project.dir}/portal-web/docroot/" />
 			<jvmarg value="-Dtagbuilder.java.dir=${project.dir}/util-taglib/src/com/liferay/taglib/" />
 			<jvmarg value="-Dtagbuilder.java.package=com.liferay.taglib" />
@@ -68,7 +70,7 @@
 			maxmemory="256m"
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-aui.tld" />
+			<arg value="${project.dir}/util-taglib/src/META-INF/aui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-faces.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />

@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -330,6 +331,25 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 	}
 
+	public List<DLFileEntry> getGroupFileEntries(
+			long groupId, long userId, long rootFolderId, int status,
+			String[] mimeTypes, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
+
+		if (folderIds.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<Long> folderIdsLst = ListUtil.toList(folderIds);
+
+		return dlFileEntryFinder.findByG_U_F_S(
+				groupId, userId, folderIdsLst, status, mimeTypes, start, end);
+	}
+
+
+
 	public int getGroupFileEntriesCount(
 			long groupId, long userId, long rootFolderId)
 		throws SystemException {
@@ -346,6 +366,23 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return dlFileEntryPersistence.filterCountByG_U_F(
 				groupId, userId, folderIds);
 		}
+	}
+
+	public int getGroupFileEntriesCount(
+			long groupId, long userId, long rootFolderId, int status,
+			String[] mimeTypes)
+		throws SystemException {
+
+		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
+
+		if (folderIds.length == 0) {
+			return 0;
+		}
+
+		List<Long> folderIdsLst = ListUtil.toList(folderIds);
+
+		return dlFileEntryFinder.countByG_U_F_S(
+				groupId, userId, folderIdsLst, status, mimeTypes);
 	}
 
 	public boolean hasFileEntryLock(long fileEntryId)

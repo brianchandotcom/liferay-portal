@@ -458,11 +458,32 @@ public class LiferayRepository
 		return toFileEntries(dlFileEntries);
 	}
 
+	public List<FileEntry> getRepositoryFileEntries(
+			long userId, long rootFolderId, int status,
+			String[] mimeTypes, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		List<DLFileEntry> dlFileEntries =
+			dlFileEntryService.getGroupFileEntries(
+				getGroupId(), userId, toFolderId(rootFolderId), status,
+				mimeTypes, start, end, obc);
+
+		return toFileEntries(dlFileEntries);
+	}
+
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
 		throws SystemException {
 
 		return dlFileEntryService.getGroupFileEntriesCount(
 			getGroupId(), userId, toFolderId(rootFolderId));
+	}
+
+	public int getRepositoryFileEntriesCount(long userId, long rootFolderId,
+			int status, String[] mimeTypes)
+		throws SystemException {
+
+		return dlFileEntryService.getGroupFileEntriesCount(
+			getGroupId(), userId, toFolderId(rootFolderId), status, mimeTypes);
 	}
 
 	public void getSubfolderIds(List<Long> folderIds, long folderId)

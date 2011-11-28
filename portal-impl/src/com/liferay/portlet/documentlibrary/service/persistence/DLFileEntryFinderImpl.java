@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,6 +32,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,6 +52,18 @@ public class DLFileEntryFinderImpl
 	public static String COUNT_BY_G_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_F_S";
 
+	public static String COUNT_BY_G_U_F =
+		DLFileEntryFinder.class.getName() + ".countByG_U_F";
+
+	public static String COUNT_BY_G_U_F_S =
+		DLFileEntryFinder.class.getName() + ".countByG_U_F_S";
+
+	public static String FIND_BY_G_U_F =
+		DLFileEntryFinder.class.getName() + ".findFE_ByG_U_F";
+
+	public static String FIND_BY_G_U_F_S =
+		DLFileEntryFinder.class.getName() + ".findFE_ByG_U_F_S";
+
 	public static String FIND_BY_ANY_IMAGE_ID =
 		DLFileEntryFinder.class.getName() + ".findByAnyImageId";
 
@@ -61,6 +75,12 @@ public class DLFileEntryFinderImpl
 
 	public static String FIND_BY_ORPHANED_FILE_ENTRIES =
 		DLFileEntryFinder.class.getName() + ".findByOrphanedFileEntries";
+
+	public static String FIND_FE_BY_G_F =
+		DLFileEntryFinder.class.getName() + ".findFE_ByG_F";
+
+	public static String FIND_FE_BY_G_F_S =
+		DLFileEntryFinder.class.getName() + ".findFE_ByG_F_S";
 
 	public int countByExtraSettings() throws SystemException {
 		Session session = null;
@@ -98,6 +118,99 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_F_S(groupId, folderIds, status, false);
+	}
+
+	public int countByG_U_F_S(
+			long groupId, long userId, List<Long> folderIds, int status,
+			String[] mimeTypes)
+		throws SystemException{
+		Session session = null;
+
+		String table = "DLFileVersion";
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_G_U_F_S);
+
+			if (userId <=0) {
+				if (status == WorkflowConstants.STATUS_ANY) {
+					table = "DLFileEntry";
+
+					sql = CustomSQLUtil.get(COUNT_BY_G_F);
+				}
+				else {
+					sql = CustomSQLUtil.get(COUNT_BY_G_F_S);
+					sql = StringUtil.replace(sql, "[$JOIN$]", "");
+				}
+			}
+			else{
+				if (status == WorkflowConstants.STATUS_ANY) {
+					table = "DLFileEntry";
+
+					sql = CustomSQLUtil.get(COUNT_BY_G_U_F);
+				}
+			}
+
+			StringBundler sb = new StringBundler();
+
+			if (folderIds.size() > 0) {
+				sb.append(StringPool.OPEN_PARENTHESIS);
+
+				sb.append(getFolderIds(folderIds, table));
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+				sb.append(WHERE_AND).append(StringPool.OPEN_PARENTHESIS);
+
+				List<String> mimeTypesLst = ListUtil.fromArray(mimeTypes);
+				sb.append(getMimeTypes(mimeTypesLst, table));
+
+			    sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			for (Long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public DLFileEntry fetchByAnyImageId(long imageId) throws SystemException {
@@ -153,6 +266,91 @@ public class DLFileEntryFinderImpl
 
 		throw new NoSuchFileEntryException(
 			"No DLFileEntry exists with the imageId " + imageId);
+	}
+
+	public List<DLFileEntry> findByG_U_F_S(
+			long groupId, long userId, List<Long> folderIds, int status,
+			String[] mimeTypes, int start, int end)
+		throws SystemException{
+		Session session = null;
+
+		String table = "DLFileVersion";
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_U_F_S);
+
+			if (userId <=0) {
+				if (status == WorkflowConstants.STATUS_ANY) {
+					table = "DLFileEntry";
+
+					sql = CustomSQLUtil.get(FIND_FE_BY_G_F);
+				}
+				else {
+					sql = CustomSQLUtil.get(FIND_FE_BY_G_F_S);
+				}
+			}
+			else{
+				if (status == WorkflowConstants.STATUS_ANY) {
+					table = "DLFileEntry";
+
+					sql = CustomSQLUtil.get(FIND_BY_G_U_F);
+				}
+			}
+
+			StringBundler sb = new StringBundler();
+
+			if (folderIds.size() > 0) {
+				sb.append(StringPool.OPEN_PARENTHESIS);
+
+				sb.append(getFolderIds(folderIds, table));
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+				sb.append(WHERE_AND).append(StringPool.OPEN_PARENTHESIS);
+
+				List<String> mimeTypesLst = ListUtil.fromArray(mimeTypes);
+				sb.append(getMimeTypes(mimeTypesLst, table));
+
+			    sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
+
+
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			for (Long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			return (List<DLFileEntry>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<DLFileEntry> findByExtraSettings(int start, int end)
@@ -319,6 +517,28 @@ public class DLFileEntryFinderImpl
 
 			if ((i + 1) != folderIds.size()) {
 				sb.append("OR ");
+			}
+		}
+
+		return sb.toString();
+	}
+
+	protected String getMimeTypes(List<String> mimeTypes, String table) {
+		if (mimeTypes.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(mimeTypes.size() * 2 - 1);
+
+		for (int i = 0; i < mimeTypes.size(); i++) {
+			sb.append(table);
+
+			sb.append(".mimeType = '");
+			sb.append(mimeTypes.get(i));
+			sb.append("'");
+
+			if ((i + 1) != mimeTypes.size()) {
+				sb.append(WHERE_OR);
 			}
 		}
 

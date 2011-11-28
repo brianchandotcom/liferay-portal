@@ -333,7 +333,7 @@
 		}
 
 		li img {
-				padding: 0;
+			padding: 0;
 		}
 	}
 
@@ -376,6 +376,15 @@
 
 .aui-tree-collapsed .aui-tree-icon {
 	background-image: url(@theme_image_path@/trees/page.png);
+}
+
+.export-dialog-tree .aui-field-input-choice {
+	float: none;
+}
+
+.export-dialog-tree .file-selector {
+	display: block;
+	margin: 0.5em 0 1.5em;
 }
 
 .lfr-export-dialog {

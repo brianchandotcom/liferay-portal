@@ -131,6 +131,10 @@ public class EditQuestionAction extends PortletAction {
 					 e instanceof QuestionTitleException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
+
+				SessionErrors.add(
+					actionRequest,
+					portletConfig.getPortletName() + "hide-default-error");
 			}
 			else if (e instanceof QuestionExpiredException) {
 			}

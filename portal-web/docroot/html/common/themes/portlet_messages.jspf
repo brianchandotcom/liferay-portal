@@ -88,4 +88,6 @@ else if (group.isStagingGroup()) {
 <liferay-ui:success key='<%= portletName + ".doConfigure" %>' message="you-have-successfully-updated-the-setup" />
 <liferay-ui:success key='<%= portletName + ".doEdit" %>' message="you-have-successfully-updated-your-preferences" />
 
-<liferay-ui:error />
+<c:if test='<%= !SessionErrors.contains(renderRequest, portletConfig.getPortletName() + "hide-default-error") %>'>
+	<liferay-ui:error />
+</c:if>

@@ -216,7 +216,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<liferay-ui:error exception="<%= RequiredTemplateException.class %>">
 				<liferay-ui:message key="required-templates-could-not-be-deleted" />
 
-				<liferay-ui:message key="they-are-are-referenced-by-web-contents" />
+				<liferay-ui:message key="they-are-referenced-by-web-contents" />
 			</liferay-ui:error>
 
 			<%

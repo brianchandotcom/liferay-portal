@@ -38,7 +38,7 @@ public class PortletSandboxDeployListener
 
 		String portalWebDir = PortalUtil.getPortalWebDir();
 
-		auiTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-aui.tld";
+		auiTaglibDTD = portalWebDir + "/WEB-INF/tld/aui.tld";
 		portletTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-portlet.tld";
 		portletExtTaglibDTD =
 			portalWebDir + "/WEB-INF/tld/liferay-portlet-ext.tld";

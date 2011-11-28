@@ -392,7 +392,7 @@ public class BaseDeployer implements Deployer {
 
 		if (Validator.isNotNull(auiTaglibDTD)) {
 			FileUtil.copyFile(
-				auiTaglibDTD, srcFile + "/WEB-INF/tld/liferay-aui.tld", true);
+				auiTaglibDTD, srcFile + "/WEB-INF/tld/aui.tld", true);
 		}
 
 		if (Validator.isNotNull(portletTaglibDTD)) {
@@ -1014,7 +1014,7 @@ public class BaseDeployer implements Deployer {
 			sb.append("<taglib>");
 			sb.append("<taglib-uri>http://liferay.com/tld/aui</taglib-uri>");
 			sb.append("<taglib-location>");
-			sb.append("/WEB-INF/tld/liferay-aui.tld");
+			sb.append("/WEB-INF/tld/aui.tld");
 			sb.append("</taglib-location>");
 			sb.append("</taglib>");
 		}

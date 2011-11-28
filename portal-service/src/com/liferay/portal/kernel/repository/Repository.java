@@ -171,7 +171,16 @@ public interface Repository {
 			OrderByComparator obc)
 		throws SystemException;
 
+	public List<FileEntry> getRepositoryFileEntries(
+			long userId, long rootFolderId, int status,
+			String[] mimeTypes, int start, int end, OrderByComparator obc)
+		throws SystemException;
+
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
+		throws SystemException;
+
+	public int getRepositoryFileEntriesCount(
+			long userId, long rootFolderId, int status, String [] mimeTypes)
 		throws SystemException;
 
 	public long getRepositoryId();

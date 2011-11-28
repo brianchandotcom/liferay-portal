@@ -176,8 +176,8 @@
 			</attribute>
 			<attribute>
 				<name>options</name>
-				<inputType>java.util.Map</inputType>
-				<outputType>java.util.Map</outputType>
+				<inputType><![CDATA[java.util.Map<java.lang.String,java.lang.Object>]]></inputType>
+				<outputType><![CDATA[java.util.Map<java.lang.String,java.lang.Object>]]></outputType>
 			</attribute>
 			<attribute>
 				<name>tagPageContext</name>

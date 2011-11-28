@@ -29,7 +29,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 
 <aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
 
-<liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" disabled="<%= true %>" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu align="left" cssClass="actions-button aui-helper-hidden" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	Group scopeGroup = themeDisplay.getScopeGroup();

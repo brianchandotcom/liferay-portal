@@ -256,6 +256,23 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(assetVocabulary);
+	}
+
+	@Override
+	public void clearCache(List<AssetVocabulary> assetVocabularies) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+				AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
+
+			clearUniqueFindersCache(assetVocabulary);
+		}
+	}
+
+	protected void clearUniqueFindersCache(AssetVocabulary assetVocabulary) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				assetVocabulary.getUuid(),
@@ -294,24 +311,11 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 *
 	 * @param primaryKey the primary key of the asset vocabulary
 	 * @return the asset vocabulary that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a asset vocabulary with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetVocabulary remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param vocabularyId the primary key of the asset vocabulary
-	 * @return the asset vocabulary that was removed
-	 * @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetVocabulary remove(long vocabularyId)
 		throws NoSuchVocabularyException, SystemException {
 		Session session = null;
 
@@ -319,18 +323,18 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			session = openSession();
 
 			AssetVocabulary assetVocabulary = (AssetVocabulary)session.get(AssetVocabularyImpl.class,
-					Long.valueOf(vocabularyId));
+					primaryKey);
 
 			if (assetVocabulary == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + vocabularyId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchVocabularyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					vocabularyId);
+					primaryKey);
 			}
 
-			return assetVocabularyPersistence.remove(assetVocabulary);
+			return remove(assetVocabulary);
 		}
 		catch (NoSuchVocabularyException nsee) {
 			throw nsee;
@@ -344,16 +348,16 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	}
 
 	/**
-	 * Removes the asset vocabulary from the database. Also notifies the appropriate model listeners.
+	 * Removes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param assetVocabulary the asset vocabulary
+	 * @param vocabularyId the primary key of the asset vocabulary
 	 * @return the asset vocabulary that was removed
+	 * @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AssetVocabulary remove(AssetVocabulary assetVocabulary)
-		throws SystemException {
-		return super.remove(assetVocabulary);
+	public AssetVocabulary remove(long vocabularyId)
+		throws NoSuchVocabularyException, SystemException {
+		return remove(Long.valueOf(vocabularyId));
 	}
 
 	@Override
@@ -375,26 +379,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AssetVocabularyModelImpl assetVocabularyModelImpl = (AssetVocabularyModelImpl)assetVocabulary;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				assetVocabularyModelImpl.getUuid(),
-				Long.valueOf(assetVocabularyModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] {
-				Long.valueOf(assetVocabularyModelImpl.getGroupId()),
-				
-			assetVocabularyModelImpl.getName()
-			});
-
-		EntityCacheUtil.removeResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey());
+		clearCache(assetVocabulary);
 
 		return assetVocabulary;
 	}
@@ -2487,7 +2472,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (AssetVocabulary assetVocabulary : findByUuid(uuid)) {
-			assetVocabularyPersistence.remove(assetVocabulary);
+			remove(assetVocabulary);
 		}
 	}
 
@@ -2502,7 +2487,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		throws NoSuchVocabularyException, SystemException {
 		AssetVocabulary assetVocabulary = findByUUID_G(uuid, groupId);
 
-		assetVocabularyPersistence.remove(assetVocabulary);
+		remove(assetVocabulary);
 	}
 
 	/**
@@ -2513,7 +2498,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (AssetVocabulary assetVocabulary : findByGroupId(groupId)) {
-			assetVocabularyPersistence.remove(assetVocabulary);
+			remove(assetVocabulary);
 		}
 	}
 
@@ -2525,7 +2510,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (AssetVocabulary assetVocabulary : findByCompanyId(companyId)) {
-			assetVocabularyPersistence.remove(assetVocabulary);
+			remove(assetVocabulary);
 		}
 	}
 
@@ -2540,7 +2525,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		throws NoSuchVocabularyException, SystemException {
 		AssetVocabulary assetVocabulary = findByG_N(groupId, name);
 
-		assetVocabularyPersistence.remove(assetVocabulary);
+		remove(assetVocabulary);
 	}
 
 	/**
@@ -2550,7 +2535,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	public void removeAll() throws SystemException {
 		for (AssetVocabulary assetVocabulary : findAll()) {
-			assetVocabularyPersistence.remove(assetVocabulary);
+			remove(assetVocabulary);
 		}
 	}
 

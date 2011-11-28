@@ -253,6 +253,23 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(dlContent);
+	}
+
+	@Override
+	public void clearCache(List<DLContent> dlContents) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLContent dlContent : dlContents) {
+			EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
+				DLContentImpl.class, dlContent.getPrimaryKey());
+
+			clearUniqueFindersCache(dlContent);
+		}
+	}
+
+	protected void clearUniqueFindersCache(DLContent dlContent) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_P_V,
 			new Object[] {
 				Long.valueOf(dlContent.getCompanyId()),
@@ -284,24 +301,11 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 *
 	 * @param primaryKey the primary key of the document library content
 	 * @return the document library content that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library content with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLContent remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param contentId the primary key of the document library content
-	 * @return the document library content that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLContent remove(long contentId)
 		throws NoSuchContentException, SystemException {
 		Session session = null;
 
@@ -309,18 +313,18 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			session = openSession();
 
 			DLContent dlContent = (DLContent)session.get(DLContentImpl.class,
-					Long.valueOf(contentId));
+					primaryKey);
 
 			if (dlContent == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + contentId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchContentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					contentId);
+					primaryKey);
 			}
 
-			return dlContentPersistence.remove(dlContent);
+			return remove(dlContent);
 		}
 		catch (NoSuchContentException nsee) {
 			throw nsee;
@@ -334,15 +338,16 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	}
 
 	/**
-	 * Removes the document library content from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlContent the document library content
+	 * @param contentId the primary key of the document library content
 	 * @return the document library content that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLContent remove(DLContent dlContent) throws SystemException {
-		return super.remove(dlContent);
+	public DLContent remove(long contentId)
+		throws NoSuchContentException, SystemException {
+		return remove(Long.valueOf(contentId));
 	}
 
 	@Override
@@ -364,23 +369,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_P_V,
-			new Object[] {
-				Long.valueOf(dlContentModelImpl.getCompanyId()),
-				Long.valueOf(dlContentModelImpl.getRepositoryId()),
-				
-			dlContentModelImpl.getPath(),
-				
-			dlContentModelImpl.getVersion()
-			});
-
-		EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentImpl.class, dlContent.getPrimaryKey());
+		clearCache(dlContent);
 
 		return dlContent;
 	}
@@ -2186,7 +2175,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public void removeByC_R(long companyId, long repositoryId)
 		throws SystemException {
 		for (DLContent dlContent : findByC_R(companyId, repositoryId)) {
-			dlContentPersistence.remove(dlContent);
+			remove(dlContent);
 		}
 	}
 
@@ -2201,7 +2190,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public void removeByC_R_P(long companyId, long repositoryId, String path)
 		throws SystemException {
 		for (DLContent dlContent : findByC_R_P(companyId, repositoryId, path)) {
-			dlContentPersistence.remove(dlContent);
+			remove(dlContent);
 		}
 	}
 
@@ -2216,7 +2205,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public void removeByC_R_LikeP(long companyId, long repositoryId, String path)
 		throws SystemException {
 		for (DLContent dlContent : findByC_R_LikeP(companyId, repositoryId, path)) {
-			dlContentPersistence.remove(dlContent);
+			remove(dlContent);
 		}
 	}
 
@@ -2234,7 +2223,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		DLContent dlContent = findByC_R_P_V(companyId, repositoryId, path,
 				version);
 
-		dlContentPersistence.remove(dlContent);
+		remove(dlContent);
 	}
 
 	/**
@@ -2244,7 +2233,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 */
 	public void removeAll() throws SystemException {
 		for (DLContent dlContent : findAll()) {
-			dlContentPersistence.remove(dlContent);
+			remove(dlContent);
 		}
 	}
 

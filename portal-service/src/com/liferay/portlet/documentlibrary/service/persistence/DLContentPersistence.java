@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -660,6 +659,4 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DLContent remove(DLContent dlContent) throws SystemException;
 }

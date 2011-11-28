@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Lock;
 
 /**
@@ -464,6 +463,4 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Lock remove(Lock lock) throws SystemException;
 }

@@ -252,6 +252,17 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<UserGroupRole> userGroupRoles) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
+				UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new user group role with the primary key. Does not add the user group role to the database.
 	 *
@@ -272,24 +283,11 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 *
 	 * @param primaryKey the primary key of the user group role
 	 * @return the user group role that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user group role with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroupRole remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove((UserGroupRolePK)primaryKey);
-	}
-
-	/**
-	 * Removes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userGroupRolePK the primary key of the user group role
-	 * @return the user group role that was removed
-	 * @throws com.liferay.portal.NoSuchUserGroupRoleException if a user group role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserGroupRole remove(UserGroupRolePK userGroupRolePK)
 		throws NoSuchUserGroupRoleException, SystemException {
 		Session session = null;
 
@@ -297,19 +295,18 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			session = openSession();
 
 			UserGroupRole userGroupRole = (UserGroupRole)session.get(UserGroupRoleImpl.class,
-					userGroupRolePK);
+					primaryKey);
 
 			if (userGroupRole == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						userGroupRolePK);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserGroupRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userGroupRolePK);
+					primaryKey);
 			}
 
-			return userGroupRolePersistence.remove(userGroupRole);
+			return remove(userGroupRole);
 		}
 		catch (NoSuchUserGroupRoleException nsee) {
 			throw nsee;
@@ -323,16 +320,16 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	}
 
 	/**
-	 * Removes the user group role from the database. Also notifies the appropriate model listeners.
+	 * Removes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userGroupRole the user group role
+	 * @param userGroupRolePK the primary key of the user group role
 	 * @return the user group role that was removed
+	 * @throws com.liferay.portal.NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public UserGroupRole remove(UserGroupRole userGroupRole)
-		throws SystemException {
-		return super.remove(userGroupRole);
+	public UserGroupRole remove(UserGroupRolePK userGroupRolePK)
+		throws NoSuchUserGroupRoleException, SystemException {
+		return remove(userGroupRolePK);
 	}
 
 	@Override
@@ -354,11 +351,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(UserGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserGroupRoleImpl.class, userGroupRole.getPrimaryKey());
+		clearCache(userGroupRole);
 
 		return userGroupRole;
 	}
@@ -2486,7 +2479,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (UserGroupRole userGroupRole : findByUserId(userId)) {
-			userGroupRolePersistence.remove(userGroupRole);
+			remove(userGroupRole);
 		}
 	}
 
@@ -2498,7 +2491,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (UserGroupRole userGroupRole : findByGroupId(groupId)) {
-			userGroupRolePersistence.remove(userGroupRole);
+			remove(userGroupRole);
 		}
 	}
 
@@ -2510,7 +2503,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 */
 	public void removeByRoleId(long roleId) throws SystemException {
 		for (UserGroupRole userGroupRole : findByRoleId(roleId)) {
-			userGroupRolePersistence.remove(userGroupRole);
+			remove(userGroupRole);
 		}
 	}
 
@@ -2524,7 +2517,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public void removeByU_G(long userId, long groupId)
 		throws SystemException {
 		for (UserGroupRole userGroupRole : findByU_G(userId, groupId)) {
-			userGroupRolePersistence.remove(userGroupRole);
+			remove(userGroupRole);
 		}
 	}
 
@@ -2538,7 +2531,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public void removeByG_R(long groupId, long roleId)
 		throws SystemException {
 		for (UserGroupRole userGroupRole : findByG_R(groupId, roleId)) {
-			userGroupRolePersistence.remove(userGroupRole);
+			remove(userGroupRole);
 		}
 	}
 
@@ -2549,7 +2542,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	 */
 	public void removeAll() throws SystemException {
 		for (UserGroupRole userGroupRole : findAll()) {
-			userGroupRolePersistence.remove(userGroupRole);
+			remove(userGroupRole);
 		}
 	}
 

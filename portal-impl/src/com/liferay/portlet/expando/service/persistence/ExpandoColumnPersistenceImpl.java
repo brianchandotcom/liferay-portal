@@ -197,6 +197,17 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<ExpandoColumn> expandoColumns) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ExpandoColumn expandoColumn : expandoColumns) {
+			EntityCacheUtil.removeResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
+				ExpandoColumnImpl.class, expandoColumn.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new expando column with the primary key. Does not add the expando column to the database.
 	 *
@@ -217,24 +228,11 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 *
 	 * @param primaryKey the primary key of the expando column
 	 * @return the expando column that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a expando column with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.NoSuchColumnException if a expando column with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExpandoColumn remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param columnId the primary key of the expando column
-	 * @return the expando column that was removed
-	 * @throws com.liferay.portlet.expando.NoSuchColumnException if a expando column with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ExpandoColumn remove(long columnId)
 		throws NoSuchColumnException, SystemException {
 		Session session = null;
 
@@ -242,18 +240,18 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			session = openSession();
 
 			ExpandoColumn expandoColumn = (ExpandoColumn)session.get(ExpandoColumnImpl.class,
-					Long.valueOf(columnId));
+					primaryKey);
 
 			if (expandoColumn == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + columnId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchColumnException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					columnId);
+					primaryKey);
 			}
 
-			return expandoColumnPersistence.remove(expandoColumn);
+			return remove(expandoColumn);
 		}
 		catch (NoSuchColumnException nsee) {
 			throw nsee;
@@ -267,16 +265,16 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	}
 
 	/**
-	 * Removes the expando column from the database. Also notifies the appropriate model listeners.
+	 * Removes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param expandoColumn the expando column
+	 * @param columnId the primary key of the expando column
 	 * @return the expando column that was removed
+	 * @throws com.liferay.portlet.expando.NoSuchColumnException if a expando column with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ExpandoColumn remove(ExpandoColumn expandoColumn)
-		throws SystemException {
-		return super.remove(expandoColumn);
+	public ExpandoColumn remove(long columnId)
+		throws NoSuchColumnException, SystemException {
+		return remove(Long.valueOf(columnId));
 	}
 
 	@Override
@@ -298,11 +296,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoColumnImpl.class, expandoColumn.getPrimaryKey());
+		clearCache(expandoColumn);
 
 		return expandoColumn;
 	}
@@ -2375,7 +2369,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	public void removeByTableId(long tableId) throws SystemException {
 		for (ExpandoColumn expandoColumn : findByTableId(tableId)) {
-			expandoColumnPersistence.remove(expandoColumn);
+			remove(expandoColumn);
 		}
 	}
 
@@ -2389,7 +2383,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	public void removeByT_N(long tableId, String name)
 		throws SystemException {
 		for (ExpandoColumn expandoColumn : findByT_N(tableId, name)) {
-			expandoColumnPersistence.remove(expandoColumn);
+			remove(expandoColumn);
 		}
 	}
 
@@ -2400,7 +2394,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 */
 	public void removeAll() throws SystemException {
 		for (ExpandoColumn expandoColumn : findAll()) {
-			expandoColumnPersistence.remove(expandoColumn);
+			remove(expandoColumn);
 		}
 	}
 

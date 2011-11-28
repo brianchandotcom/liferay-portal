@@ -282,6 +282,23 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(bookmarksFolder);
+	}
+
+	@Override
+	public void clearCache(List<BookmarksFolder> bookmarksFolders) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (BookmarksFolder bookmarksFolder : bookmarksFolders) {
+			EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
+				BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
+
+			clearUniqueFindersCache(bookmarksFolder);
+		}
+	}
+
+	protected void clearUniqueFindersCache(BookmarksFolder bookmarksFolder) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				bookmarksFolder.getUuid(),
@@ -313,24 +330,11 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 *
 	 * @param primaryKey the primary key of the bookmarks folder
 	 * @return the bookmarks folder that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a bookmarks folder with the primary key could not be found
+	 * @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the bookmarks folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param folderId the primary key of the bookmarks folder
-	 * @return the bookmarks folder that was removed
-	 * @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public BookmarksFolder remove(long folderId)
 		throws NoSuchFolderException, SystemException {
 		Session session = null;
 
@@ -338,18 +342,18 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			session = openSession();
 
 			BookmarksFolder bookmarksFolder = (BookmarksFolder)session.get(BookmarksFolderImpl.class,
-					Long.valueOf(folderId));
+					primaryKey);
 
 			if (bookmarksFolder == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + folderId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					folderId);
+					primaryKey);
 			}
 
-			return bookmarksFolderPersistence.remove(bookmarksFolder);
+			return remove(bookmarksFolder);
 		}
 		catch (NoSuchFolderException nsee) {
 			throw nsee;
@@ -363,16 +367,16 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	}
 
 	/**
-	 * Removes the bookmarks folder from the database. Also notifies the appropriate model listeners.
+	 * Removes the bookmarks folder with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param bookmarksFolder the bookmarks folder
+	 * @param folderId the primary key of the bookmarks folder
 	 * @return the bookmarks folder that was removed
+	 * @throws com.liferay.portlet.bookmarks.NoSuchFolderException if a bookmarks folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public BookmarksFolder remove(BookmarksFolder bookmarksFolder)
-		throws SystemException {
-		return super.remove(bookmarksFolder);
+	public BookmarksFolder remove(long folderId)
+		throws NoSuchFolderException, SystemException {
+		return remove(Long.valueOf(folderId));
 	}
 
 	@Override
@@ -394,19 +398,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		BookmarksFolderModelImpl bookmarksFolderModelImpl = (BookmarksFolderModelImpl)bookmarksFolder;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				bookmarksFolderModelImpl.getUuid(),
-				Long.valueOf(bookmarksFolderModelImpl.getGroupId())
-			});
-
-		EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
-			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
+		clearCache(bookmarksFolder);
 
 		return bookmarksFolder;
 	}
@@ -3298,7 +3290,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		throws SystemException {
 		for (BookmarksFolder bookmarksFolder : findByResourceBlockId(
 				resourceBlockId)) {
-			bookmarksFolderPersistence.remove(bookmarksFolder);
+			remove(bookmarksFolder);
 		}
 	}
 
@@ -3310,7 +3302,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (BookmarksFolder bookmarksFolder : findByUuid(uuid)) {
-			bookmarksFolderPersistence.remove(bookmarksFolder);
+			remove(bookmarksFolder);
 		}
 	}
 
@@ -3325,7 +3317,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		throws NoSuchFolderException, SystemException {
 		BookmarksFolder bookmarksFolder = findByUUID_G(uuid, groupId);
 
-		bookmarksFolderPersistence.remove(bookmarksFolder);
+		remove(bookmarksFolder);
 	}
 
 	/**
@@ -3336,7 +3328,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (BookmarksFolder bookmarksFolder : findByGroupId(groupId)) {
-			bookmarksFolderPersistence.remove(bookmarksFolder);
+			remove(bookmarksFolder);
 		}
 	}
 
@@ -3348,7 +3340,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (BookmarksFolder bookmarksFolder : findByCompanyId(companyId)) {
-			bookmarksFolderPersistence.remove(bookmarksFolder);
+			remove(bookmarksFolder);
 		}
 	}
 
@@ -3362,7 +3354,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	public void removeByG_P(long groupId, long parentFolderId)
 		throws SystemException {
 		for (BookmarksFolder bookmarksFolder : findByG_P(groupId, parentFolderId)) {
-			bookmarksFolderPersistence.remove(bookmarksFolder);
+			remove(bookmarksFolder);
 		}
 	}
 
@@ -3373,7 +3365,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	 */
 	public void removeAll() throws SystemException {
 		for (BookmarksFolder bookmarksFolder : findAll()) {
-			bookmarksFolderPersistence.remove(bookmarksFolder);
+			remove(bookmarksFolder);
 		}
 	}
 

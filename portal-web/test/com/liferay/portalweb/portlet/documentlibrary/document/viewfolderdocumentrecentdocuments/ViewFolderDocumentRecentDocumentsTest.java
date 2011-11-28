@@ -44,10 +44,29 @@ public class ViewFolderDocumentRecentDocumentsTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Recent Documents"),
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//button[@title='Icon View']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//button[@title='Icon View']",
+			RuntimeVariables.replace("Icon View"));
+		assertEquals(RuntimeVariables.replace("Recent"),
 			selenium.getText("//ul[@class='lfr-component']/li[2]/a"));
 		selenium.clickAt("//ul[@class='lfr-component']/li[2]/a",
-			RuntimeVariables.replace("Recent Documents"));
+			RuntimeVariables.replace("Recent"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

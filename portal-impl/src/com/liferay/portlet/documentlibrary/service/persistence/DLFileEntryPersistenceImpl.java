@@ -372,6 +372,23 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(dlFileEntry);
+	}
+
+	@Override
+	public void clearCache(List<DLFileEntry> dlFileEntries) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			EntityCacheUtil.removeResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+				DLFileEntryImpl.class, dlFileEntry.getPrimaryKey());
+
+			clearUniqueFindersCache(dlFileEntry);
+		}
+	}
+
+	protected void clearUniqueFindersCache(DLFileEntry dlFileEntry) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				dlFileEntry.getUuid(), Long.valueOf(dlFileEntry.getGroupId())
@@ -418,24 +435,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 *
 	 * @param primaryKey the primary key of the document library file entry
 	 * @return the document library file entry that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file entry with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileEntry remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param fileEntryId the primary key of the document library file entry
-	 * @return the document library file entry that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileEntry remove(long fileEntryId)
 		throws NoSuchFileEntryException, SystemException {
 		Session session = null;
 
@@ -443,18 +447,18 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			session = openSession();
 
 			DLFileEntry dlFileEntry = (DLFileEntry)session.get(DLFileEntryImpl.class,
-					Long.valueOf(fileEntryId));
+					primaryKey);
 
 			if (dlFileEntry == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileEntryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFileEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileEntryId);
+					primaryKey);
 			}
 
-			return dlFileEntryPersistence.remove(dlFileEntry);
+			return remove(dlFileEntry);
 		}
 		catch (NoSuchFileEntryException nsee) {
 			throw nsee;
@@ -468,16 +472,16 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
-	 * Removes the document library file entry from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileEntry the document library file entry
+	 * @param fileEntryId the primary key of the document library file entry
 	 * @return the document library file entry that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFileEntry remove(DLFileEntry dlFileEntry)
-		throws SystemException {
-		return super.remove(dlFileEntry);
+	public DLFileEntry remove(long fileEntryId)
+		throws NoSuchFileEntryException, SystemException {
+		return remove(Long.valueOf(fileEntryId));
 	}
 
 	@Override
@@ -499,35 +503,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLFileEntryModelImpl dlFileEntryModelImpl = (DLFileEntryModelImpl)dlFileEntry;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				dlFileEntryModelImpl.getUuid(),
-				Long.valueOf(dlFileEntryModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_N,
-			new Object[] {
-				Long.valueOf(dlFileEntryModelImpl.getGroupId()),
-				Long.valueOf(dlFileEntryModelImpl.getFolderId()),
-				
-			dlFileEntryModelImpl.getName()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_T,
-			new Object[] {
-				Long.valueOf(dlFileEntryModelImpl.getGroupId()),
-				Long.valueOf(dlFileEntryModelImpl.getFolderId()),
-				
-			dlFileEntryModelImpl.getTitle()
-			});
-
-		EntityCacheUtil.removeResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey());
+		clearCache(dlFileEntry);
 
 		return dlFileEntry;
 	}
@@ -6782,7 +6758,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DLFileEntry dlFileEntry : findByUuid(uuid)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6797,7 +6773,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByUUID_G(uuid, groupId);
 
-		dlFileEntryPersistence.remove(dlFileEntry);
+		remove(dlFileEntry);
 	}
 
 	/**
@@ -6808,7 +6784,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (DLFileEntry dlFileEntry : findByGroupId(groupId)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6820,7 +6796,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (DLFileEntry dlFileEntry : findByCompanyId(companyId)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6834,7 +6810,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public void removeByG_U(long groupId, long userId)
 		throws SystemException {
 		for (DLFileEntry dlFileEntry : findByG_U(groupId, userId)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6848,7 +6824,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public void removeByG_F(long groupId, long folderId)
 		throws SystemException {
 		for (DLFileEntry dlFileEntry : findByG_F(groupId, folderId)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6863,7 +6839,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public void removeByG_U_F(long groupId, long userId, long folderId)
 		throws SystemException {
 		for (DLFileEntry dlFileEntry : findByG_U_F(groupId, userId, folderId)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6879,7 +6855,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByG_F_N(groupId, folderId, name);
 
-		dlFileEntryPersistence.remove(dlFileEntry);
+		remove(dlFileEntry);
 	}
 
 	/**
@@ -6894,7 +6870,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		throws NoSuchFileEntryException, SystemException {
 		DLFileEntry dlFileEntry = findByG_F_T(groupId, folderId, title);
 
-		dlFileEntryPersistence.remove(dlFileEntry);
+		remove(dlFileEntry);
 	}
 
 	/**
@@ -6909,7 +6885,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		throws SystemException {
 		for (DLFileEntry dlFileEntry : findByG_F_F(groupId, folderId,
 				fileEntryTypeId)) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 
@@ -6920,7 +6896,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFileEntry dlFileEntry : findAll()) {
-			dlFileEntryPersistence.remove(dlFileEntry);
+			remove(dlFileEntry);
 		}
 	}
 

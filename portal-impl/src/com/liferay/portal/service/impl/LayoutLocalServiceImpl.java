@@ -51,6 +51,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -424,11 +425,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		String primKey =
 			layout.getPlid() + PortletConstants.LAYOUT_SEPARATOR + "%";
 
-		List<Resource> resources = resourceFinder.findByC_P(
-			layout.getCompanyId(), primKey);
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionFinder.findByC_P(
+					layout.getCompanyId(), primKey);
 
-		for (Resource resource : resources) {
-			resourceLocalService.deleteResource(resource);
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				resourcePermissionLocalService.deleteResourcePermission(
+					resourcePermission);
+			}
+		}
+		else {
+			List<Resource> resources = resourceFinder.findByC_P(
+				layout.getCompanyId(), primKey);
+
+			for (Resource resource : resources) {
+				resourceLocalService.deleteResource(resource);
+			}
 		}
 
 		resourceLocalService.deleteResource(

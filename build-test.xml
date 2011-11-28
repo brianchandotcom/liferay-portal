@@ -150,7 +150,7 @@
 		<if>
 			<isset property="test.ant.script.evaluate.logs" />
 			<then>
-				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
 			</then>
 			<else>
 				<property name="test.ant.script.file.evaluate.logs" value=" " />
@@ -214,7 +214,7 @@
 		<if>
 			<isset property="test.ant.script.evaluate.logs" />
 			<then>
-				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
 			</then>
 			<else>
 				<property name="test.ant.script.file.evaluate.logs" value=" " />
@@ -265,7 +265,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -682,6 +682,18 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="kaleo-blogs" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="KaleoBlogsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="kaleo-message-boards" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="KaleoMessageBoardsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-my-submissions" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="KaleoMySubmissionsTestSuite" />
@@ -694,6 +706,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="kaleo-page-comments" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="KaleoPageCommentsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-web-content" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="KaleoWebContentTestSuite" />
@@ -703,6 +721,12 @@
 			<param name="test.ant.script.command" value="kaleo-web-content-display" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="KaleoWebContentDisplayTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="kaleo-wiki" />
+			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.suite" value="KaleoWikiTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -989,19 +1013,19 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-sample-icefaces-jsf-1.1-myfaces-jsp" />
 			<param name="test.ant.script.plugin.portlets" value="sample-icefaces-jsf-1.1-myfaces-jsp-portlet" />
-			<param name="test.ant.script.suite" value="PluginsSampleIcefacesJSF11SunFaceletsTestSuite" />
+			<param name="test.ant.script.suite" value="PluginsSampleIcefacesJSF11SunMyfacesJSPTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-sample-icefaces-jsf-1.1-sun-facelets" />
 			<param name="test.ant.script.plugin.portlets" value="sample-icefaces-jsf-1.1-sun-facelets-portlet" />
-			<param name="test.ant.script.suite" value="PluginsSampleIcefacesJSF11SunJSPTestSuite" />
+			<param name="test.ant.script.suite" value="PluginsSampleIcefacesJSF11SunFaceletsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-sample-icefaces-jsf-1.1-sun-jsp" />
 			<param name="test.ant.script.plugin.portlets" value="sample-icefaces-jsf-1.1-sun-jsp-portlet" />
-			<param name="test.ant.script.suite" value="PluginsSampleIcefacesJSF11SunMyfacesJSPTestSuite" />
+			<param name="test.ant.script.suite" value="PluginsSampleIcefacesJSF11SunJSPTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -1217,6 +1241,7 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-test-misc" />
 			<param name="test.ant.script.plugin.portlets" value="test-misc-portlet" />
+			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
 			<param name="test.ant.script.suite" value="PluginsTestMiscTestSuite" />
 		</antcall>
 
@@ -1551,6 +1576,12 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-xsl-content" />
 			<param name="test.ant.script.suite" value="PortalWebXSLContentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="properties-layout-types" />
+			<param name="test.ant.script.properties" value="layout.types=portlet,panel,embedded,article,url,link_to_layout" />
+			<param name="test.ant.script.suite" value="PropertiesLayoutTypesTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
@@ -3143,7 +3174,7 @@ file.
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
 				dir="${simple.server.deploy.dir}"
-				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
+				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal.war/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
 			/>
 		</delete>
 

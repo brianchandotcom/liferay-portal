@@ -94,7 +94,7 @@ public class PermissionsPortletGuestViewOffTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
+				if (selenium.isVisible("//tr[3]/td[4]/input")) {
 					break;
 				}
 			}
@@ -104,16 +104,20 @@ public class PermissionsPortletGuestViewOffTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
+		assertEquals(RuntimeVariables.replace("Guest"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("View"),
+			selenium.getText("//tr[1]/th[4]"));
+		assertTrue(selenium.isChecked("//tr[3]/td[4]/input"));
+		selenium.clickAt("//tr[3]/td[4]/input",
 			RuntimeVariables.replace("Guest View"));
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//tr[3]/td[4]/input"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//tr[3]/td[4]/input"));
 	}
 }

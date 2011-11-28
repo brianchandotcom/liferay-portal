@@ -256,18 +256,22 @@ public class LangBuilder {
 					}
 				}
 
-				if ((translatedText != null) &&
-					((translatedText.indexOf("Babel Fish") != -1) ||
-					 (translatedText.indexOf("Yahoo! - 999") != -1))) {
+				if (translatedText != null) {
+					if (translatedText.contains("Babel Fish") ||
+						translatedText.contains("Yahoo! - 999")) {
 
-					translatedText = "";
+						translatedText = "";
+					}
+					else if (translatedText.endsWith(AUTOMATIC_COPY)) {
+						translatedText = value + AUTOMATIC_COPY;
+					}
 				}
 
 				if ((translatedText == null) || translatedText.equals("")) {
-					if (line.indexOf("{") != -1 || line.indexOf("<") != -1) {
+					if (line.contains("{") || line.contains("<")) {
 						translatedText = value + AUTOMATIC_COPY;
 					}
-					else if (line.indexOf("[") != -1) {
+					else if (line.contains("[")) {
 						pos = line.indexOf("[");
 
 						String baseKey = line.substring(0, pos);
@@ -327,15 +331,15 @@ public class LangBuilder {
 				}
 
 				if (Validator.isNotNull(translatedText)) {
-					if ((translatedText.indexOf("Babel Fish") != -1) ||
-						(translatedText.indexOf("Yahoo! - 999") != -1)) {
+					if (translatedText.contains("Babel Fish") ||
+						translatedText.contains("Yahoo! - 999")) {
 
 						throw new IOException(
 							"IP was blocked because of over usage. Please " +
 								"use another IP.");
 					}
 
-					if (translatedText.indexOf("&#39;") != -1) {
+					if (translatedText.contains("&#39;")) {
 						translatedText = StringUtil.replace(
 							translatedText, "&#39;", "\'");
 					}
@@ -343,10 +347,11 @@ public class LangBuilder {
 					translatedText = StringUtil.replace(
 						translatedText.trim(),
 						new String[] {
-							"  ", "<b>", "</b>", "<i>", "</i>"
+							"  ", "<b>", "</b>", "<i>", "</i>", " url "
 						},
 						new String[] {
-							" ", "<strong>", "</strong>", "<em>", "</em>"
+							" ", "<strong>", "</strong>", "<em>", "</em>",
+							" URL "
 						});
 
 					unsyncBufferedWriter.write(key + "=" + translatedText);
@@ -557,9 +562,7 @@ public class LangBuilder {
 
 			toText = translation.getToText();
 
-			if ((toText != null) &&
-				(toText.indexOf("Babel Fish") != -1)) {
-
+			if ((toText != null) && toText.contains("Babel Fish")) {
 				toText = null;
 			}
 		}

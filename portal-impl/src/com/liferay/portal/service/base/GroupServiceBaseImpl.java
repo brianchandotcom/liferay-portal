@@ -212,8 +212,12 @@ import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetEntryService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyService;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder;
+import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryService;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalService;
@@ -3867,6 +3871,82 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the asset vocabulary local service.
+	 *
+	 * @return the asset vocabulary local service
+	 */
+	public AssetVocabularyLocalService getAssetVocabularyLocalService() {
+		return assetVocabularyLocalService;
+	}
+
+	/**
+	 * Sets the asset vocabulary local service.
+	 *
+	 * @param assetVocabularyLocalService the asset vocabulary local service
+	 */
+	public void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+		this.assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	/**
+	 * Returns the asset vocabulary remote service.
+	 *
+	 * @return the asset vocabulary remote service
+	 */
+	public AssetVocabularyService getAssetVocabularyService() {
+		return assetVocabularyService;
+	}
+
+	/**
+	 * Sets the asset vocabulary remote service.
+	 *
+	 * @param assetVocabularyService the asset vocabulary remote service
+	 */
+	public void setAssetVocabularyService(
+		AssetVocabularyService assetVocabularyService) {
+		this.assetVocabularyService = assetVocabularyService;
+	}
+
+	/**
+	 * Returns the asset vocabulary persistence.
+	 *
+	 * @return the asset vocabulary persistence
+	 */
+	public AssetVocabularyPersistence getAssetVocabularyPersistence() {
+		return assetVocabularyPersistence;
+	}
+
+	/**
+	 * Sets the asset vocabulary persistence.
+	 *
+	 * @param assetVocabularyPersistence the asset vocabulary persistence
+	 */
+	public void setAssetVocabularyPersistence(
+		AssetVocabularyPersistence assetVocabularyPersistence) {
+		this.assetVocabularyPersistence = assetVocabularyPersistence;
+	}
+
+	/**
+	 * Returns the asset vocabulary finder.
+	 *
+	 * @return the asset vocabulary finder
+	 */
+	public AssetVocabularyFinder getAssetVocabularyFinder() {
+		return assetVocabularyFinder;
+	}
+
+	/**
+	 * Sets the asset vocabulary finder.
+	 *
+	 * @param assetVocabularyFinder the asset vocabulary finder
+	 */
+	public void setAssetVocabularyFinder(
+		AssetVocabularyFinder assetVocabularyFinder) {
+		this.assetVocabularyFinder = assetVocabularyFinder;
+	}
+
+	/**
 	 * Returns the blogs entry local service.
 	 *
 	 * @return the blogs entry local service
@@ -5540,6 +5620,14 @@ public abstract class GroupServiceBaseImpl extends PrincipalBean
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
+	@BeanReference(type = AssetVocabularyLocalService.class)
+	protected AssetVocabularyLocalService assetVocabularyLocalService;
+	@BeanReference(type = AssetVocabularyService.class)
+	protected AssetVocabularyService assetVocabularyService;
+	@BeanReference(type = AssetVocabularyPersistence.class)
+	protected AssetVocabularyPersistence assetVocabularyPersistence;
+	@BeanReference(type = AssetVocabularyFinder.class)
+	protected AssetVocabularyFinder assetVocabularyFinder;
 	@BeanReference(type = BlogsEntryLocalService.class)
 	protected BlogsEntryLocalService blogsEntryLocalService;
 	@BeanReference(type = BlogsEntryService.class)

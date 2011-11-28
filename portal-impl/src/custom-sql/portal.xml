@@ -1074,6 +1074,17 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByC_P">
+		<![CDATA[
+			SELECT
+				{ResourcePermission.*}
+			FROM
+				ResourcePermission
+			WHERE
+				(ResourcePermission.companyId = ?) AND
+				(ResourcePermission.primKey LIKE ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByR_S">
 		<![CDATA[
 			SELECT

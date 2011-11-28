@@ -162,6 +162,23 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(webDAVProps);
+	}
+
+	@Override
+	public void clearCache(List<WebDAVProps> webDAVPropses) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (WebDAVProps webDAVProps : webDAVPropses) {
+			EntityCacheUtil.removeResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
+				WebDAVPropsImpl.class, webDAVProps.getPrimaryKey());
+
+			clearUniqueFindersCache(webDAVProps);
+		}
+	}
+
+	protected void clearUniqueFindersCache(WebDAVProps webDAVProps) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 			new Object[] {
 				Long.valueOf(webDAVProps.getClassNameId()),
@@ -189,24 +206,11 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	 *
 	 * @param primaryKey the primary key of the web d a v props
 	 * @return the web d a v props that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a web d a v props with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WebDAVProps remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the web d a v props with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param webDavPropsId the primary key of the web d a v props
-	 * @return the web d a v props that was removed
-	 * @throws com.liferay.portal.NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WebDAVProps remove(long webDavPropsId)
 		throws NoSuchWebDAVPropsException, SystemException {
 		Session session = null;
 
@@ -214,18 +218,18 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			session = openSession();
 
 			WebDAVProps webDAVProps = (WebDAVProps)session.get(WebDAVPropsImpl.class,
-					Long.valueOf(webDavPropsId));
+					primaryKey);
 
 			if (webDAVProps == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + webDavPropsId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchWebDAVPropsException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					webDavPropsId);
+					primaryKey);
 			}
 
-			return webDAVPropsPersistence.remove(webDAVProps);
+			return remove(webDAVProps);
 		}
 		catch (NoSuchWebDAVPropsException nsee) {
 			throw nsee;
@@ -239,16 +243,16 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	}
 
 	/**
-	 * Removes the web d a v props from the database. Also notifies the appropriate model listeners.
+	 * Removes the web d a v props with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param webDAVProps the web d a v props
+	 * @param webDavPropsId the primary key of the web d a v props
 	 * @return the web d a v props that was removed
+	 * @throws com.liferay.portal.NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public WebDAVProps remove(WebDAVProps webDAVProps)
-		throws SystemException {
-		return super.remove(webDAVProps);
+	public WebDAVProps remove(long webDavPropsId)
+		throws NoSuchWebDAVPropsException, SystemException {
+		return remove(Long.valueOf(webDavPropsId));
 	}
 
 	@Override
@@ -270,19 +274,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(webDAVPropsModelImpl.getClassNameId()),
-				Long.valueOf(webDAVPropsModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-			WebDAVPropsImpl.class, webDAVProps.getPrimaryKey());
+		clearCache(webDAVProps);
 
 		return webDAVProps;
 	}
@@ -736,7 +728,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		throws NoSuchWebDAVPropsException, SystemException {
 		WebDAVProps webDAVProps = findByC_C(classNameId, classPK);
 
-		webDAVPropsPersistence.remove(webDAVProps);
+		remove(webDAVProps);
 	}
 
 	/**
@@ -746,7 +738,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	 */
 	public void removeAll() throws SystemException {
 		for (WebDAVProps webDAVProps : findAll()) {
-			webDAVPropsPersistence.remove(webDAVProps);
+			remove(webDAVProps);
 		}
 	}
 

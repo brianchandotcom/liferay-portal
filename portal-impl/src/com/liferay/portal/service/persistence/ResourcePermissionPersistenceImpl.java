@@ -428,6 +428,24 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(resourcePermission);
+	}
+
+	@Override
+	public void clearCache(List<ResourcePermission> resourcePermissions) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			EntityCacheUtil.removeResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourcePermissionImpl.class, resourcePermission.getPrimaryKey());
+
+			clearUniqueFindersCache(resourcePermission);
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		ResourcePermission resourcePermission) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
 			new Object[] {
 				Long.valueOf(resourcePermission.getCompanyId()),
@@ -462,24 +480,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 *
 	 * @param primaryKey the primary key of the resource permission
 	 * @return the resource permission that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource permission with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourcePermission remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourcePermissionId the primary key of the resource permission
-	 * @return the resource permission that was removed
-	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourcePermission remove(long resourcePermissionId)
 		throws NoSuchResourcePermissionException, SystemException {
 		Session session = null;
 
@@ -487,19 +492,18 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			session = openSession();
 
 			ResourcePermission resourcePermission = (ResourcePermission)session.get(ResourcePermissionImpl.class,
-					Long.valueOf(resourcePermissionId));
+					primaryKey);
 
 			if (resourcePermission == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourcePermissionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourcePermissionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourcePermissionId);
+					primaryKey);
 			}
 
-			return resourcePermissionPersistence.remove(resourcePermission);
+			return remove(resourcePermission);
 		}
 		catch (NoSuchResourcePermissionException nsee) {
 			throw nsee;
@@ -513,16 +517,16 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
-	 * Removes the resource permission from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourcePermission the resource permission
+	 * @param resourcePermissionId the primary key of the resource permission
 	 * @return the resource permission that was removed
+	 * @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ResourcePermission remove(ResourcePermission resourcePermission)
-		throws SystemException {
-		return super.remove(resourcePermission);
+	public ResourcePermission remove(long resourcePermissionId)
+		throws NoSuchResourcePermissionException, SystemException {
+		return remove(Long.valueOf(resourcePermissionId));
 	}
 
 	@Override
@@ -544,26 +548,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourcePermissionModelImpl resourcePermissionModelImpl = (ResourcePermissionModelImpl)resourcePermission;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R_O_A,
-			new Object[] {
-				Long.valueOf(resourcePermissionModelImpl.getCompanyId()),
-				
-			resourcePermissionModelImpl.getName(),
-				Integer.valueOf(resourcePermissionModelImpl.getScope()),
-				
-			resourcePermissionModelImpl.getPrimKey(),
-				Long.valueOf(resourcePermissionModelImpl.getRoleId()),
-				Long.valueOf(resourcePermissionModelImpl.getOwnerId()),
-				Long.valueOf(resourcePermissionModelImpl.getActionIds())
-			});
-
-		EntityCacheUtil.removeResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey());
+		clearCache(resourcePermission);
 
 		return resourcePermission;
 	}
@@ -5424,7 +5409,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 */
 	public void removeByScope(int scope) throws SystemException {
 		for (ResourcePermission resourcePermission : findByScope(scope)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5436,7 +5421,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 */
 	public void removeByRoleId(long roleId) throws SystemException {
 		for (ResourcePermission resourcePermission : findByRoleId(roleId)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5452,7 +5437,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_S(companyId,
 				name, scope)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5469,7 +5454,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String primKey) throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_S_P(companyId,
 				name, scope, primKey)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5486,7 +5471,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		long ownerId) throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_P_O(companyId,
 				name, primKey, ownerId)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5504,7 +5489,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String primKey, long roleId) throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_S_P_R(
 				companyId, name, scope, primKey, roleId)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5522,7 +5507,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		long roleId, long actionIds) throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_P_R_A(
 				companyId, name, primKey, roleId, actionIds)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5541,7 +5526,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String primKey, long roleId, long actionIds) throws SystemException {
 		for (ResourcePermission resourcePermission : findByC_N_S_P_R_A(
 				companyId, name, scope, primKey, roleId, actionIds)) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 
@@ -5563,7 +5548,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		ResourcePermission resourcePermission = findByC_N_S_P_R_O_A(companyId,
 				name, scope, primKey, roleId, ownerId, actionIds);
 
-		resourcePermissionPersistence.remove(resourcePermission);
+		remove(resourcePermission);
 	}
 
 	/**
@@ -5573,7 +5558,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 */
 	public void removeAll() throws SystemException {
 		for (ResourcePermission resourcePermission : findAll()) {
-			resourcePermissionPersistence.remove(resourcePermission);
+			remove(resourcePermission);
 		}
 	}
 

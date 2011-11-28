@@ -639,7 +639,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	/**
 	* Returns <code>true</code> if the user is a member of the organization,
-	* optionally focusing on sub-organizations, user groups, or the specified
+	* optionally focusing on sub-organizations or the specified
 	* organization. This method is usually called to determine if the user has
 	* view access to a resource belonging to the organization.
 	*

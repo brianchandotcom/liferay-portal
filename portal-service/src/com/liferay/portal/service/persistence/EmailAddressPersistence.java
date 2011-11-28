@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.EmailAddress;
 
 /**
@@ -830,7 +829,4 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public EmailAddress remove(EmailAddress emailAddress)
-		throws SystemException;
 }

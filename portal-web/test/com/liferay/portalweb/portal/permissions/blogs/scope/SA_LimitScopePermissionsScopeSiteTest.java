@@ -120,13 +120,14 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText("//tr[3]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText("//tr[3]/td[2]"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("label=Blogs"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Blogs"), selenium.getText("//h3"));
+		assertTrue(selenium.isChecked("//td/input"));
 		assertEquals(RuntimeVariables.replace("Add Entry"),
+			selenium.getText("//tr[3]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Scope Sitex"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Scope Site"),
-			selenium.getText("//tr[3]/td[4]"));
 	}
 }

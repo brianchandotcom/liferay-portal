@@ -18,7 +18,6 @@ import com.liferay.mail.model.FileAttachment;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,12 +34,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
@@ -197,7 +199,7 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
-	public void initialize() throws PortalException, SystemException {
+	public void initialize() throws Exception {
 		if (_initialized) {
 			return;
 		}
@@ -209,7 +211,8 @@ public class SubscriptionSender implements Serializable {
 		setContextAttribute("[$COMPANY_ID$]", company.getCompanyId());
 		setContextAttribute("[$COMPANY_MX$]", company.getMx());
 		setContextAttribute("[$COMPANY_NAME$]", company.getName());
-		setContextAttribute("[$PORTAL_URL$]", company.getVirtualHostname());
+		setContextAttribute(
+			"[$PORTAL_URL$]", getPortalURL(company.getVirtualHostname()));
 
 		if (groupId > 0) {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -348,6 +351,38 @@ public class SubscriptionSender implements Serializable {
 
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			subscription.getSubscriptionId());
+	}
+
+	protected String getPortalURL(String virtualHostname) throws Exception {
+		String portalURL = PortalUtil.getPortalURL(
+			virtualHostname, Http.HTTP_PORT, false);
+
+		if (groupId <= 0) {
+			return portalURL;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.hasPublicLayouts()) {
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, false);
+
+			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+				portalURL = PortalUtil.getPortalURL(
+					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
+			}
+		}
+		else if (group.hasPrivateLayouts()) {
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, true);
+
+			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+				portalURL = PortalUtil.getPortalURL(
+					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
+			}
+		}
+
+		return portalURL;
 	}
 
 	protected boolean hasPermission(Subscription subscription, User user)

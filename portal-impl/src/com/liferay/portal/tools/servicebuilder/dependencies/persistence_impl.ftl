@@ -311,30 +311,52 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		<#list entity.getUniqueFinderList() as finder>
-			<#assign finderColsList = finder.getColumns()>
-
-			FinderCacheUtil.removeResult(
-				FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-				new Object[] {
-					<#list finderColsList as finderCol>
-						<#if finderCol.isPrimitiveType()>
-							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-						</#if>
-
-						${entity.varName}.get${finderCol.methodName}()
-
-						<#if finderCol.isPrimitiveType()>
-							)
-						</#if>
-
-						<#if finderCol_has_next>
-							,
-						</#if>
-					</#list>
-				});
-		</#list>
+		<#if entity.getUniqueFinderList()?size &gt; 0>
+			clearUniqueFindersCache(${entity.varName});
+		</#if>
 	}
+
+	@Override
+	public void clearCache(List<${entity.name}> ${entity.varNames}) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (${entity.name} ${entity.varName} : ${entity.varNames}) {
+			EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+
+			<#if entity.getUniqueFinderList()?size &gt; 0>
+				clearUniqueFindersCache(${entity.varName});
+			</#if>
+		}
+	}
+
+	<#if entity.getUniqueFinderList()?size &gt; 0>
+		protected void clearUniqueFindersCache(${entity.name} ${entity.varName}) {
+			<#list entity.getUniqueFinderList() as finder>
+				<#assign finderColsList = finder.getColumns()>
+
+				FinderCacheUtil.removeResult(
+					FINDER_PATH_FETCH_BY_${finder.name?upper_case},
+					new Object[] {
+						<#list finderColsList as finderCol>
+							<#if finderCol.isPrimitiveType()>
+								${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+							</#if>
+
+							${entity.varName}.get${finderCol.methodName}()
+
+							<#if finderCol.isPrimitiveType()>
+								)
+							</#if>
+
+							<#if finderCol_has_next>
+								,
+							</#if>
+						</#list>
+					});
+			</#list>
+		}
+	</#if>
 
 	/**
 	 * Creates a new ${entity.humanName} with the primary key. Does not add the ${entity.humanName} to the database.
@@ -362,55 +384,27 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param primaryKey the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName} that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a ${entity.humanName} with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public ${entity.name} remove(Serializable primaryKey) throws NoSuchModelException, SystemException {
-		<#if entity.hasPrimitivePK(false)>
-			return remove(((${serviceBuilder.getPrimitiveObj("${entity.PKClassName}")})primaryKey).${entity.PKClassName}Value());
-		<#else>
-			return remove((${entity.PKClassName})primaryKey);
-		</#if>
-	}
-
-	/**
-	 * Removes the ${entity.humanName} with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
-	 * @return the ${entity.humanName} that was removed
 	 * @throws ${packagePath}.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public ${entity.name} remove(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception, SystemException {
+	@Override
+	public ${entity.name} remove(Serializable primaryKey) throws ${noSuchEntity}Exception, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			${entity.name} ${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class,
-
-			<#if entity.hasPrimitivePK()>
-				${serviceBuilder.getPrimitiveObj("${entity.PKClassName}")}.valueOf(
-			</#if>
-
-			${entity.PKVarName}
-
-			<#if entity.hasPrimitivePK()>
-				)
-			</#if>
-
-			);
+			${entity.name} ${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
 
 			if (${entity.varName} == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ${entity.PKVarName});
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + ${entity.PKVarName});
+				throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			return ${entity.varName}Persistence.remove(${entity.varName});
+			return remove(${entity.varName});
 		}
 		catch (${noSuchEntity}Exception nsee) {
 			throw nsee;
@@ -424,15 +418,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	/**
-	 * Removes the ${entity.humanName} from the database. Also notifies the appropriate model listeners.
+	 * Removes the ${entity.humanName} with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ${entity.varName} the ${entity.humanName}
+	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName} that was removed
+	 * @throws ${packagePath}.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ${entity.name} remove(${entity.name} ${entity.varName}) throws SystemException {
-		return super.remove(${entity.varName});
+	public ${entity.name} remove(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception, SystemException {
+		<#if entity.hasPrimitivePK(false)>
+			return remove(${serviceBuilder.getPrimitiveObj("${entity.PKClassName}")}.valueOf(${entity.PKVarName}));
+		<#else>
+			return remove(${entity.PKVarName});
+		</#if>
 	}
 
 	@Override
@@ -473,40 +471,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		<#assign uniqueFinderList = entity.getUniqueFinderList()>
-
-		<#if uniqueFinderList?size != 0>
-			${entity.name}ModelImpl ${entity.varName}ModelImpl = (${entity.name}ModelImpl)${entity.varName};
-		</#if>
-
-		<#list uniqueFinderList as finder>
-			<#assign finderColsList = finder.getColumns()>
-
-			FinderCacheUtil.removeResult(
-				FINDER_PATH_FETCH_BY_${finder.name?upper_case},
-				new Object[] {
-					<#list finderColsList as finderCol>
-						<#if finderCol.isPrimitiveType()>
-							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-						</#if>
-
-						${entity.varName}ModelImpl.get${finderCol.methodName}()
-
-						<#if finderCol.isPrimitiveType()>
-							)
-						</#if>
-
-						<#if finderCol_has_next>
-							,
-						</#if>
-					</#list>
-				});
-		</#list>
-
-		EntityCacheUtil.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		clearCache(${entity.varName});
 
 		return ${entity.varName};
 	}
@@ -2573,7 +2538,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#list>
 
 				)) {
-					${entity.varName}Persistence.remove(${entity.varName});
+					remove(${entity.varName});
 				}
 			}
 		<#else>
@@ -2608,7 +2573,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				);
 
-				${entity.varName}Persistence.remove(${entity.varName});
+				remove(${entity.varName});
 			}
 		</#if>
 	</#list>
@@ -2620,7 +2585,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	public void removeAll() throws SystemException {
 		for (${entity.name} ${entity.varName} : findAll()) {
-			${entity.varName}Persistence.remove(${entity.varName});
+			remove(${entity.varName});
 		}
 	}
 
@@ -3835,12 +3800,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if column.isCollection() && (column.isMappingManyToMany() || column.isMappingOneToMany())>
 				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
-				contains${tempEntity.name} = new Contains${tempEntity.name}(this);
+				contains${tempEntity.name} = new Contains${tempEntity.name}();
 
 				<#if column.isMappingManyToMany()>
-					add${tempEntity.name} = new Add${tempEntity.name}(this);
-					clear${tempEntity.names} = new Clear${tempEntity.names}(this);
-					remove${tempEntity.name} = new Remove${tempEntity.name}(this);
+					add${tempEntity.name} = new Add${tempEntity.name}();
+					clear${tempEntity.names} = new Clear${tempEntity.names}();
+					remove${tempEntity.name} = new Remove${tempEntity.name}();
 				</#if>
 			</#if>
 		</#list>
@@ -3901,9 +3866,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			protected class Contains${tempEntity.name} {
 
-				protected Contains${tempEntity.name}(${entity.name}PersistenceImpl persistenceImpl) {
-					super();
-
+				protected Contains${tempEntity.name}() {
 					_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(), _SQL_CONTAINS${tempEntity.name?upper_case}, new int[] {java.sql.Types.${entitySqlType}, java.sql.Types.${tempEntitySqlType}}, RowMapper.COUNT);
 				}
 
@@ -3928,13 +3891,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if column.isMappingManyToMany()>
 				protected class Add${tempEntity.name} {
 
-					protected Add${tempEntity.name}(${entity.name}PersistenceImpl persistenceImpl) {
+					protected Add${tempEntity.name}() {
 						_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "INSERT INTO ${column.mappingTable} (${entity.PKVarName}, ${tempEntity.PKVarName}) VALUES (?, ?)", new int[] {java.sql.Types.${entitySqlType}, java.sql.Types.${tempEntitySqlType}});
-						_persistenceImpl = persistenceImpl;
 					}
 
 					protected void add(${entity.PKClassName} ${entity.PKVarName}, ${tempEntity.PKClassName} ${tempEntity.PKVarName}) throws SystemException {
-						if (!_persistenceImpl.contains${tempEntity.name}.contains(${entity.PKVarName}, ${tempEntity.PKVarName})) {
+						if (!contains${tempEntity.name}.contains(${entity.PKVarName}, ${tempEntity.PKVarName})) {
 							ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}>[] ${tempEntity.varName}Listeners = ${tempEntity.varName}Persistence.getListeners();
 
 							for (ModelListener<${entity.name}> listener : listeners) {
@@ -3958,13 +3920,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 
 					private SqlUpdate _sqlUpdate;
-					private ${entity.name}PersistenceImpl _persistenceImpl;
 
 				}
 
 				protected class Clear${tempEntity.names} {
 
-					protected Clear${tempEntity.names}(${entity.name}PersistenceImpl persistenceImpl) {
+					protected Clear${tempEntity.names}() {
 						_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "DELETE FROM ${column.mappingTable} WHERE ${entity.PKVarName} = ?", new int[] {java.sql.Types.${entitySqlType}});
 					}
 
@@ -4008,13 +3969,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				protected class Remove${tempEntity.name} {
 
-					protected Remove${tempEntity.name}(${entity.name}PersistenceImpl persistenceImpl) {
+					protected Remove${tempEntity.name}() {
 						_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "DELETE FROM ${column.mappingTable} WHERE ${entity.PKVarName} = ? AND ${tempEntity.PKVarName} = ?", new int[] {java.sql.Types.${entitySqlType}, java.sql.Types.${tempEntitySqlType}});
-						_persistenceImpl = persistenceImpl;
 					}
 
 					protected void remove(${entity.PKClassName} ${entity.PKVarName}, ${tempEntity.PKClassName} ${tempEntity.PKVarName}) throws SystemException {
-						if (_persistenceImpl.contains${tempEntity.name}.contains(${entity.PKVarName}, ${tempEntity.PKVarName})) {
+						if (contains${tempEntity.name}.contains(${entity.PKVarName}, ${tempEntity.PKVarName})) {
 							ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}>[] ${tempEntity.varName}Listeners = ${tempEntity.varName}Persistence.getListeners();
 
 							for (ModelListener<${entity.name}> listener : listeners) {
@@ -4038,7 +3998,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 
 					private SqlUpdate _sqlUpdate;
-					private ${entity.name}PersistenceImpl _persistenceImpl;
 
 				}
 			</#if>

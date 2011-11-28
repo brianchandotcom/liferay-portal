@@ -40,16 +40,19 @@ public class AddPageBlogsScopeDefaultTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Scope Community"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/span", RuntimeVariables.replace(""));
+		selenium.clickAt("//strong/span",
+			RuntimeVariables.replace("Public Pages"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -67,15 +70,17 @@ public class AddPageBlogsScopeDefaultTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Manage Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Manage Pages",
+			RuntimeVariables.replace("Manage Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name_en_US",
+		selenium.type("//input[@name='_134_name_en_US']",
 			RuntimeVariables.replace("Blogs Page Scope Default"));
 		selenium.clickAt("//input[@value='Add Page']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request processed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=Blogs Page Scope Default"));
 	}
 }

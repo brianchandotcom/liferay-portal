@@ -151,7 +151,7 @@ public class LocalizationUtil {
 			xml, key, requestedLanguageId, cdata, localized);
 	}
 
-	public static void setLocalizedPreferencesValues (
+	public static void setLocalizedPreferencesValues(
 			PortletRequest portletRequest, PortletPreferences preferences,
 			String parameter)
 		throws Exception {

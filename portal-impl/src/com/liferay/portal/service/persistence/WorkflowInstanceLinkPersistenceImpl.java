@@ -182,6 +182,18 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<WorkflowInstanceLink> workflowInstanceLinks) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (WorkflowInstanceLink workflowInstanceLink : workflowInstanceLinks) {
+			EntityCacheUtil.removeResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
+				WorkflowInstanceLinkImpl.class,
+				workflowInstanceLink.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
 	 *
@@ -202,24 +214,11 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 *
 	 * @param primaryKey the primary key of the workflow instance link
 	 * @return the workflow instance link that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a workflow instance link with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public WorkflowInstanceLink remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the workflow instance link
-	 * @return the workflow instance link that was removed
-	 * @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public WorkflowInstanceLink remove(long workflowInstanceLinkId)
 		throws NoSuchWorkflowInstanceLinkException, SystemException {
 		Session session = null;
 
@@ -227,19 +226,18 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			session = openSession();
 
 			WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)session.get(WorkflowInstanceLinkImpl.class,
-					Long.valueOf(workflowInstanceLinkId));
+					primaryKey);
 
 			if (workflowInstanceLink == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						workflowInstanceLinkId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchWorkflowInstanceLinkException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					workflowInstanceLinkId);
+					primaryKey);
 			}
 
-			return workflowInstanceLinkPersistence.remove(workflowInstanceLink);
+			return remove(workflowInstanceLink);
 		}
 		catch (NoSuchWorkflowInstanceLinkException nsee) {
 			throw nsee;
@@ -253,16 +251,16 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	}
 
 	/**
-	 * Removes the workflow instance link from the database. Also notifies the appropriate model listeners.
+	 * Removes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param workflowInstanceLink the workflow instance link
+	 * @param workflowInstanceLinkId the primary key of the workflow instance link
 	 * @return the workflow instance link that was removed
+	 * @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public WorkflowInstanceLink remove(
-		WorkflowInstanceLink workflowInstanceLink) throws SystemException {
-		return super.remove(workflowInstanceLink);
+	public WorkflowInstanceLink remove(long workflowInstanceLinkId)
+		throws NoSuchWorkflowInstanceLinkException, SystemException {
+		return remove(Long.valueOf(workflowInstanceLinkId));
 	}
 
 	@Override
@@ -284,11 +282,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkImpl.class, workflowInstanceLink.getPrimaryKey());
+		clearCache(workflowInstanceLink);
 
 		return workflowInstanceLink;
 	}
@@ -1034,7 +1028,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		long classPK) throws SystemException {
 		for (WorkflowInstanceLink workflowInstanceLink : findByG_C_C_C(
 				groupId, companyId, classNameId, classPK)) {
-			workflowInstanceLinkPersistence.remove(workflowInstanceLink);
+			remove(workflowInstanceLink);
 		}
 	}
 
@@ -1045,7 +1039,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	 */
 	public void removeAll() throws SystemException {
 		for (WorkflowInstanceLink workflowInstanceLink : findAll()) {
-			workflowInstanceLinkPersistence.remove(workflowInstanceLink);
+			remove(workflowInstanceLink);
 		}
 	}
 

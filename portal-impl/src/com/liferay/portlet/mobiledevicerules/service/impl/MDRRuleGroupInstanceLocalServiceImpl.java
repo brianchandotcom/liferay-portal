@@ -22,7 +22,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.DuplicateRuleGroupInstanceException;
-import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 import com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator;
@@ -142,9 +141,16 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			classNameId, classPK, ruleGroupId);
 	}
 
+	public MDRRuleGroupInstance getRuleGroupInstance(long ruleGroupInstanceId)
+		throws PortalException, SystemException {
+
+		return mdrRuleGroupInstancePersistence.findByPrimaryKey(
+			ruleGroupInstanceId);
+	}
+
 	public MDRRuleGroupInstance getRuleGroupInstance(
 			String className, long classPK, long ruleGroupId)
-		throws NoSuchRuleGroupInstanceException, SystemException {
+		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 

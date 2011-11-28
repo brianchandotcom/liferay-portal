@@ -237,22 +237,18 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 										complete: function(event, id, xhr) {
 											var responseText = xhr.responseText;
 
-											var data = A.JSON.parse(responseText);
+											var data = SpreadSheet.Util.parseJSON(responseText);
 
-											if (data) {
-												var exception = data.exception;
+											var exception = data.exception;
 
-												if (exception) {
-													instance._handleException(exception);
-												}
-												else {
-													recordset.updateRecordDataByKey(record, elementName, responseText);
+											if (exception) {
+												instance._handleException(exception);
+											}
+											else {
+												instance.set('value', responseText);
 
-													instance.set('value', responseText);
-
-													if (callback) {
-														callback.apply(instance, arguments);
-													}
+												if (callback) {
+													callback.apply(instance, arguments);
 												}
 											}
 										}
@@ -274,7 +270,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var instance = this;
 
 					var value = instance.get('value');
-					var data = A.JSON.parse(value);
+					var data = SpreadSheet.Util.parseJSON(value);
 
 					var portletURL = Liferay.PortletURL.createActionURL();
 
@@ -320,7 +316,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					}
 
 					if (!recordData.recordId) {
-						Liferay.SpreadSheet.addRecord(
+						SpreadSheet.addRecord(
 							recordsetId,
 							displayIndex,
 							{},
@@ -377,7 +373,9 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					var toolbar = instance.toolbar;
 
 					if (toolbar) {
-						if (!val) {
+						var value = SpreadSheet.Util.parseJSON(val);
+
+						if (!value.recordId) {
 							toolbar.remove('deleteEvent');
 							toolbar.remove('downloadEvent');
 						}
@@ -395,7 +393,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 							if (structure) {
 								var fieldName = instance.get('elementName');
 
-								var structureField = Liferay.SpreadSheet.findStructureFieldByAttribute(structure, 'name', fieldName);
+								var structureField = SpreadSheet.findStructureFieldByAttribute(structure, 'name', fieldName);
 
 								if (structureField.required === 'false') {
 									toolbar.add(
@@ -414,6 +412,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 		}
 	);
 
-	Liferay.SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
-	Liferay.SpreadSheet.TYPE_EDITOR['ddm-fileupload'] = FileUploadCellEditor;
+	SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
+	SpreadSheet.TYPE_EDITOR['ddm-fileupload'] = FileUploadCellEditor;
 </aui:script>

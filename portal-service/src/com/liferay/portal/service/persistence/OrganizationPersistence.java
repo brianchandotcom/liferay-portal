@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Organization;
 
 /**
@@ -1201,7 +1200,4 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public void setUsers(long pk,
 		java.util.List<com.liferay.portal.model.User> users)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Organization remove(Organization organization)
-		throws SystemException;
 }

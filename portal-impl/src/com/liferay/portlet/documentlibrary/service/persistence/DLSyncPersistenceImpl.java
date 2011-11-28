@@ -188,6 +188,23 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(dlSync);
+	}
+
+	@Override
+	public void clearCache(List<DLSync> dlSyncs) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLSync dlSync : dlSyncs) {
+			EntityCacheUtil.removeResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
+				DLSyncImpl.class, dlSync.getPrimaryKey());
+
+			clearUniqueFindersCache(dlSync);
+		}
+	}
+
+	protected void clearUniqueFindersCache(DLSync dlSync) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
 			new Object[] { Long.valueOf(dlSync.getFileId()) });
 	}
@@ -212,43 +229,29 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 *
 	 * @param primaryKey the primary key of the d l sync
 	 * @return the d l sync that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d l sync with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLSync remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d l sync with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param syncId the primary key of the d l sync
-	 * @return the d l sync that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLSync remove(long syncId)
 		throws NoSuchSyncException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			DLSync dlSync = (DLSync)session.get(DLSyncImpl.class,
-					Long.valueOf(syncId));
+			DLSync dlSync = (DLSync)session.get(DLSyncImpl.class, primaryKey);
 
 			if (dlSync == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + syncId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchSyncException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					syncId);
+					primaryKey);
 			}
 
-			return dlSyncPersistence.remove(dlSync);
+			return remove(dlSync);
 		}
 		catch (NoSuchSyncException nsee) {
 			throw nsee;
@@ -262,15 +265,16 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	}
 
 	/**
-	 * Removes the d l sync from the database. Also notifies the appropriate model listeners.
+	 * Removes the d l sync with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlSync the d l sync
+	 * @param syncId the primary key of the d l sync
 	 * @return the d l sync that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLSync remove(DLSync dlSync) throws SystemException {
-		return super.remove(dlSync);
+	public DLSync remove(long syncId)
+		throws NoSuchSyncException, SystemException {
+		return remove(Long.valueOf(syncId));
 	}
 
 	@Override
@@ -291,16 +295,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLSyncModelImpl dlSyncModelImpl = (DLSyncModelImpl)dlSync;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FILEID,
-			new Object[] { Long.valueOf(dlSyncModelImpl.getFileId()) });
-
-		EntityCacheUtil.removeResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncImpl.class, dlSync.getPrimaryKey());
+		clearCache(dlSync);
 
 		return dlSync;
 	}
@@ -1170,7 +1165,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		throws NoSuchSyncException, SystemException {
 		DLSync dlSync = findByFileId(fileId);
 
-		dlSyncPersistence.remove(dlSync);
+		remove(dlSync);
 	}
 
 	/**
@@ -1184,7 +1179,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	public void removeByC_M_R(long companyId, Date modifiedDate,
 		long repositoryId) throws SystemException {
 		for (DLSync dlSync : findByC_M_R(companyId, modifiedDate, repositoryId)) {
-			dlSyncPersistence.remove(dlSync);
+			remove(dlSync);
 		}
 	}
 
@@ -1195,7 +1190,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	 */
 	public void removeAll() throws SystemException {
 		for (DLSync dlSync : findAll()) {
-			dlSyncPersistence.remove(dlSync);
+			remove(dlSync);
 		}
 	}
 

@@ -44,6 +44,7 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("link=Page Staging Community Quartz",
 			RuntimeVariables.replace("Page Staging Community Quartz"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 

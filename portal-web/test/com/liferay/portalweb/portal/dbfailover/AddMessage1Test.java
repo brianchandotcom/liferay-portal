@@ -53,8 +53,8 @@ public class AddMessage1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Test Message 1 Subject"));
-		selenium.clickAt("link=Source", RuntimeVariables.replace("Source"));
 		Thread.sleep(5000);
+		selenium.clickAt("link=Source", RuntimeVariables.replace("Source"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

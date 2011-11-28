@@ -30,7 +30,7 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 <liferay-ui:icon
 	image="download"
 	label="<%= false %>"
-	url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle()) + "?version=" + fileVersion.getVersion() %>'
+	url="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 />
 
 <portlet:renderURL var="viewFileVersionURL">

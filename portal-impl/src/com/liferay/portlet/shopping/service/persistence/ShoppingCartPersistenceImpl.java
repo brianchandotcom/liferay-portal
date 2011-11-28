@@ -204,6 +204,23 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(shoppingCart);
+	}
+
+	@Override
+	public void clearCache(List<ShoppingCart> shoppingCarts) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ShoppingCart shoppingCart : shoppingCarts) {
+			EntityCacheUtil.removeResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
+				ShoppingCartImpl.class, shoppingCart.getPrimaryKey());
+
+			clearUniqueFindersCache(shoppingCart);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ShoppingCart shoppingCart) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
 			new Object[] {
 				Long.valueOf(shoppingCart.getGroupId()),
@@ -231,24 +248,11 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 *
 	 * @param primaryKey the primary key of the shopping cart
 	 * @return the shopping cart that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping cart with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCart remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param cartId the primary key of the shopping cart
-	 * @return the shopping cart that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingCart remove(long cartId)
 		throws NoSuchCartException, SystemException {
 		Session session = null;
 
@@ -256,18 +260,18 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			session = openSession();
 
 			ShoppingCart shoppingCart = (ShoppingCart)session.get(ShoppingCartImpl.class,
-					Long.valueOf(cartId));
+					primaryKey);
 
 			if (shoppingCart == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + cartId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCartException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					cartId);
+					primaryKey);
 			}
 
-			return shoppingCartPersistence.remove(shoppingCart);
+			return remove(shoppingCart);
 		}
 		catch (NoSuchCartException nsee) {
 			throw nsee;
@@ -281,16 +285,16 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	}
 
 	/**
-	 * Removes the shopping cart from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingCart the shopping cart
+	 * @param cartId the primary key of the shopping cart
 	 * @return the shopping cart that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingCart remove(ShoppingCart shoppingCart)
-		throws SystemException {
-		return super.remove(shoppingCart);
+	public ShoppingCart remove(long cartId)
+		throws NoSuchCartException, SystemException {
+		return remove(Long.valueOf(cartId));
 	}
 
 	@Override
@@ -312,19 +316,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ShoppingCartModelImpl shoppingCartModelImpl = (ShoppingCartModelImpl)shoppingCart;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
-			new Object[] {
-				Long.valueOf(shoppingCartModelImpl.getGroupId()),
-				Long.valueOf(shoppingCartModelImpl.getUserId())
-			});
-
-		EntityCacheUtil.removeResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCartImpl.class, shoppingCart.getPrimaryKey());
+		clearCache(shoppingCart);
 
 		return shoppingCart;
 	}
@@ -1493,7 +1485,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (ShoppingCart shoppingCart : findByGroupId(groupId)) {
-			shoppingCartPersistence.remove(shoppingCart);
+			remove(shoppingCart);
 		}
 	}
 
@@ -1505,7 +1497,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (ShoppingCart shoppingCart : findByUserId(userId)) {
-			shoppingCartPersistence.remove(shoppingCart);
+			remove(shoppingCart);
 		}
 	}
 
@@ -1520,7 +1512,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		throws NoSuchCartException, SystemException {
 		ShoppingCart shoppingCart = findByG_U(groupId, userId);
 
-		shoppingCartPersistence.remove(shoppingCart);
+		remove(shoppingCart);
 	}
 
 	/**
@@ -1530,7 +1522,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingCart shoppingCart : findAll()) {
-			shoppingCartPersistence.remove(shoppingCart);
+			remove(shoppingCart);
 		}
 	}
 

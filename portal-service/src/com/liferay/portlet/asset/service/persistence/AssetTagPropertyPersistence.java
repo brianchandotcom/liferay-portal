@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.asset.model.AssetTagProperty;
@@ -604,7 +603,4 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public AssetTagProperty remove(AssetTagProperty assetTagProperty)
-		throws SystemException;
 }

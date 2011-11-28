@@ -49,10 +49,10 @@ public class TearDownSiteTest extends BaseTestCase {
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean GlobalSitePresent = selenium.isPartialText("//strong/a",
-						"Global");
+				boolean LiferaySitePresent = selenium.isPartialText("//strong/a",
+						"Liferay");
 
-				if (GlobalSitePresent) {
+				if (LiferaySitePresent) {
 					label = 2;
 
 					continue;
@@ -60,25 +60,24 @@ public class TearDownSiteTest extends BaseTestCase {
 
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Site Name"));
-				selenium.clickAt("link=Global",
-					RuntimeVariables.replace("Global"));
-				selenium.waitForPageToLoad("30000");
 
 			case 2:
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean Sites1Present = selenium.isElementPresent("//td[1]/a");
+				boolean Site1Present = selenium.isElementPresent(
+						"//tr[4]/td[1]/a");
 
-				if (!Sites1Present) {
+				if (!Site1Present) {
 					label = 3;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -110,17 +109,19 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean Sites2Present = selenium.isElementPresent("//td[1]/a");
+				boolean Site2Present = selenium.isElementPresent(
+						"//tr[4]/td[1]/a");
 
-				if (!Sites2Present) {
+				if (!Site2Present) {
 					label = 4;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -152,17 +153,19 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean Sites3Present = selenium.isElementPresent("//td[1]/a");
+				boolean Site3Present = selenium.isElementPresent(
+						"//tr[4]/td[1]/a");
 
-				if (!Sites3Present) {
+				if (!Site3Present) {
 					label = 5;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -194,17 +197,19 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean Sites4Present = selenium.isElementPresent("//td[1]/a");
+				boolean Site4Present = selenium.isElementPresent(
+						"//tr[4]/td[1]/a");
 
-				if (!Sites4Present) {
+				if (!Site4Present) {
 					label = 6;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -236,17 +241,19 @@ public class TearDownSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-				boolean sites5Present = selenium.isElementPresent("//td[1]/a");
+				boolean site5Present = selenium.isElementPresent(
+						"//tr[4]/td[1]/a");
 
-				if (!sites5Present) {
+				if (!site5Present) {
 					label = 7;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {

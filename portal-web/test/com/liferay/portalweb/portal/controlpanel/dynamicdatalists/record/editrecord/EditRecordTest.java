@@ -129,7 +129,7 @@ public class EditRecordTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//tr[4]/td[1]")) {
+				if (selenium.isVisible("//input[@value='Choose']")) {
 					break;
 				}
 			}
@@ -139,9 +139,7 @@ public class EditRecordTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText("//tr[4]/td[1]", "File Upload"));
-		assertTrue(selenium.isVisible("//tr[4]/td[5]/input"));
-		selenium.clickAt("//tr[4]/td[5]/input",
+		selenium.clickAt("//input[@value='Choose']",
 			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		assertTrue(selenium.isPartialText(

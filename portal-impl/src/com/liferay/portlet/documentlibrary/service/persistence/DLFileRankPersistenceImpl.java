@@ -231,6 +231,23 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(dlFileRank);
+	}
+
+	@Override
+	public void clearCache(List<DLFileRank> dlFileRanks) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLFileRank dlFileRank : dlFileRanks) {
+			EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+				DLFileRankImpl.class, dlFileRank.getPrimaryKey());
+
+			clearUniqueFindersCache(dlFileRank);
+		}
+	}
+
+	protected void clearUniqueFindersCache(DLFileRank dlFileRank) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_F,
 			new Object[] {
 				Long.valueOf(dlFileRank.getCompanyId()),
@@ -259,24 +276,11 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 *
 	 * @param primaryKey the primary key of the document library file rank
 	 * @return the document library file rank that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library file rank with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileRank remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library file rank with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param fileRankId the primary key of the document library file rank
-	 * @return the document library file rank that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFileRank remove(long fileRankId)
 		throws NoSuchFileRankException, SystemException {
 		Session session = null;
 
@@ -284,18 +288,18 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			session = openSession();
 
 			DLFileRank dlFileRank = (DLFileRank)session.get(DLFileRankImpl.class,
-					Long.valueOf(fileRankId));
+					primaryKey);
 
 			if (dlFileRank == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + fileRankId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFileRankException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					fileRankId);
+					primaryKey);
 			}
 
-			return dlFileRankPersistence.remove(dlFileRank);
+			return remove(dlFileRank);
 		}
 		catch (NoSuchFileRankException nsee) {
 			throw nsee;
@@ -309,15 +313,16 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	}
 
 	/**
-	 * Removes the document library file rank from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library file rank with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFileRank the document library file rank
+	 * @param fileRankId the primary key of the document library file rank
 	 * @return the document library file rank that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFileRank remove(DLFileRank dlFileRank) throws SystemException {
-		return super.remove(dlFileRank);
+	public DLFileRank remove(long fileRankId)
+		throws NoSuchFileRankException, SystemException {
+		return remove(Long.valueOf(fileRankId));
 	}
 
 	@Override
@@ -339,20 +344,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLFileRankModelImpl dlFileRankModelImpl = (DLFileRankModelImpl)dlFileRank;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_F,
-			new Object[] {
-				Long.valueOf(dlFileRankModelImpl.getCompanyId()),
-				Long.valueOf(dlFileRankModelImpl.getUserId()),
-				Long.valueOf(dlFileRankModelImpl.getFileEntryId())
-			});
-
-		EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileRankImpl.class, dlFileRank.getPrimaryKey());
+		clearCache(dlFileRank);
 
 		return dlFileRank;
 	}
@@ -1943,7 +1935,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (DLFileRank dlFileRank : findByUserId(userId)) {
-			dlFileRankPersistence.remove(dlFileRank);
+			remove(dlFileRank);
 		}
 	}
 
@@ -1955,7 +1947,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	public void removeByFileEntryId(long fileEntryId) throws SystemException {
 		for (DLFileRank dlFileRank : findByFileEntryId(fileEntryId)) {
-			dlFileRankPersistence.remove(dlFileRank);
+			remove(dlFileRank);
 		}
 	}
 
@@ -1969,7 +1961,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public void removeByG_U(long groupId, long userId)
 		throws SystemException {
 		for (DLFileRank dlFileRank : findByG_U(groupId, userId)) {
-			dlFileRankPersistence.remove(dlFileRank);
+			remove(dlFileRank);
 		}
 	}
 
@@ -1985,7 +1977,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		throws NoSuchFileRankException, SystemException {
 		DLFileRank dlFileRank = findByC_U_F(companyId, userId, fileEntryId);
 
-		dlFileRankPersistence.remove(dlFileRank);
+		remove(dlFileRank);
 	}
 
 	/**
@@ -1995,7 +1987,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFileRank dlFileRank : findAll()) {
-			dlFileRankPersistence.remove(dlFileRank);
+			remove(dlFileRank);
 		}
 	}
 

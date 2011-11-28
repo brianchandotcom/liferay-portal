@@ -525,7 +525,7 @@ public class LocalizationImpl implements Localization {
 		return xml;
 	}
 
-	public void setLocalizedPreferencesValues (
+	public void setLocalizedPreferencesValues(
 			PortletRequest portletRequest, PortletPreferences preferences,
 			String parameter)
 		throws Exception {

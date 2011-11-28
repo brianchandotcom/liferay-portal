@@ -326,6 +326,13 @@ public class MDRActionLocalServiceUtil {
 		return getService().fetchAction(actionId);
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction getAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAction(actionId);
+	}
+
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions(
 		long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {

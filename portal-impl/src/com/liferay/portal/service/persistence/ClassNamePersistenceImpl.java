@@ -158,6 +158,23 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(className);
+	}
+
+	@Override
+	public void clearCache(List<ClassName> classNames) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ClassName className : classNames) {
+			EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+				ClassNameImpl.class, className.getPrimaryKey());
+
+			clearUniqueFindersCache(className);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ClassName className) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
 			new Object[] { className.getValue() });
 	}
@@ -182,24 +199,11 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 *
 	 * @param primaryKey the primary key of the class name
 	 * @return the class name that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a class name with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ClassName remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the class name with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param classNameId the primary key of the class name
-	 * @return the class name that was removed
-	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ClassName remove(long classNameId)
 		throws NoSuchClassNameException, SystemException {
 		Session session = null;
 
@@ -207,18 +211,18 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			session = openSession();
 
 			ClassName className = (ClassName)session.get(ClassNameImpl.class,
-					Long.valueOf(classNameId));
+					primaryKey);
 
 			if (className == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + classNameId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchClassNameException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					classNameId);
+					primaryKey);
 			}
 
-			return classNamePersistence.remove(className);
+			return remove(className);
 		}
 		catch (NoSuchClassNameException nsee) {
 			throw nsee;
@@ -232,15 +236,16 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	/**
-	 * Removes the class name from the database. Also notifies the appropriate model listeners.
+	 * Removes the class name with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param className the class name
+	 * @param classNameId the primary key of the class name
 	 * @return the class name that was removed
+	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ClassName remove(ClassName className) throws SystemException {
-		return super.remove(className);
+	public ClassName remove(long classNameId)
+		throws NoSuchClassNameException, SystemException {
+		return remove(Long.valueOf(classNameId));
 	}
 
 	@Override
@@ -262,16 +267,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE,
-			new Object[] { classNameModelImpl.getValue() });
-
-		EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameImpl.class, className.getPrimaryKey());
+		clearCache(className);
 
 		return className;
 	}
@@ -712,7 +708,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		throws NoSuchClassNameException, SystemException {
 		ClassName className = findByValue(value);
 
-		classNamePersistence.remove(className);
+		remove(className);
 	}
 
 	/**
@@ -722,7 +718,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	public void removeAll() throws SystemException {
 		for (ClassName className : findAll()) {
-			classNamePersistence.remove(className);
+			remove(className);
 		}
 	}
 

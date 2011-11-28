@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -139,6 +140,10 @@ public class EditRecordFileAction extends PortletAction {
 			record, fieldName, uploadPortletRequest, serviceContext);
 
 		String fieldValue = String.valueOf(record.getFieldValue(fieldName));
+
+		if (Validator.isNull(fieldValue)) {
+			fieldValue = JSONFactoryUtil.getNullJSON();
+		}
 
 		return JSONFactoryUtil.createJSONObject(fieldValue);
 	}

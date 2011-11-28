@@ -194,6 +194,25 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(announcementsDelivery);
+	}
+
+	@Override
+	public void clearCache(List<AnnouncementsDelivery> announcementsDeliveries) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AnnouncementsDelivery announcementsDelivery : announcementsDeliveries) {
+			EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+				AnnouncementsDeliveryImpl.class,
+				announcementsDelivery.getPrimaryKey());
+
+			clearUniqueFindersCache(announcementsDelivery);
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		AnnouncementsDelivery announcementsDelivery) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 			new Object[] {
 				Long.valueOf(announcementsDelivery.getUserId()),
@@ -222,24 +241,11 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 *
 	 * @param primaryKey the primary key of the announcements delivery
 	 * @return the announcements delivery that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a announcements delivery with the primary key could not be found
+	 * @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsDelivery remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param deliveryId the primary key of the announcements delivery
-	 * @return the announcements delivery that was removed
-	 * @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AnnouncementsDelivery remove(long deliveryId)
 		throws NoSuchDeliveryException, SystemException {
 		Session session = null;
 
@@ -247,18 +253,18 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			session = openSession();
 
 			AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)session.get(AnnouncementsDeliveryImpl.class,
-					Long.valueOf(deliveryId));
+					primaryKey);
 
 			if (announcementsDelivery == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + deliveryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchDeliveryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					deliveryId);
+					primaryKey);
 			}
 
-			return announcementsDeliveryPersistence.remove(announcementsDelivery);
+			return remove(announcementsDelivery);
 		}
 		catch (NoSuchDeliveryException nsee) {
 			throw nsee;
@@ -272,16 +278,16 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	}
 
 	/**
-	 * Removes the announcements delivery from the database. Also notifies the appropriate model listeners.
+	 * Removes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param announcementsDelivery the announcements delivery
+	 * @param deliveryId the primary key of the announcements delivery
 	 * @return the announcements delivery that was removed
+	 * @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AnnouncementsDelivery remove(
-		AnnouncementsDelivery announcementsDelivery) throws SystemException {
-		return super.remove(announcementsDelivery);
+	public AnnouncementsDelivery remove(long deliveryId)
+		throws NoSuchDeliveryException, SystemException {
+		return remove(Long.valueOf(deliveryId));
 	}
 
 	@Override
@@ -303,21 +309,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
-			new Object[] {
-				Long.valueOf(announcementsDeliveryModelImpl.getUserId()),
-				
-			announcementsDeliveryModelImpl.getType()
-			});
-
-		EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-			AnnouncementsDeliveryImpl.class,
-			announcementsDelivery.getPrimaryKey());
+		clearCache(announcementsDelivery);
 
 		return announcementsDelivery;
 	}
@@ -1146,7 +1138,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (AnnouncementsDelivery announcementsDelivery : findByUserId(userId)) {
-			announcementsDeliveryPersistence.remove(announcementsDelivery);
+			remove(announcementsDelivery);
 		}
 	}
 
@@ -1161,7 +1153,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		throws NoSuchDeliveryException, SystemException {
 		AnnouncementsDelivery announcementsDelivery = findByU_T(userId, type);
 
-		announcementsDeliveryPersistence.remove(announcementsDelivery);
+		remove(announcementsDelivery);
 	}
 
 	/**
@@ -1171,7 +1163,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	public void removeAll() throws SystemException {
 		for (AnnouncementsDelivery announcementsDelivery : findAll()) {
-			announcementsDeliveryPersistence.remove(announcementsDelivery);
+			remove(announcementsDelivery);
 		}
 	}
 

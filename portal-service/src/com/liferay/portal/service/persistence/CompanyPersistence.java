@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
 
 /**
@@ -439,6 +438,4 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Company remove(Company company) throws SystemException;
 }

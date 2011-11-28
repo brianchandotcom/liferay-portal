@@ -79,10 +79,12 @@ public class MoveFolderDocumentDuplicateToFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Entry Check Box"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -107,7 +109,26 @@ public class MoveFolderDocumentDuplicateToFolderTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Documents Home"),
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Home")
+										.equals(selenium.getText(
+								"//a[@id='_20_folderName']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));

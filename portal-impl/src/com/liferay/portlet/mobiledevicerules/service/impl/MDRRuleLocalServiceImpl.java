@@ -125,6 +125,12 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		return mdrRulePersistence.fetchByPrimaryKey(ruleId);
 	}
 
+	public MDRRule getRule(long ruleId)
+		throws PortalException, SystemException {
+
+		return mdrRulePersistence.findByPrimaryKey(ruleId);
+	}
+
 	public List<MDRRule> getRules(long ruleGroupId) throws SystemException {
 		return mdrRulePersistence.findByRuleGroupId(ruleGroupId);
 	}

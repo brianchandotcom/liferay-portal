@@ -148,7 +148,7 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 			case 3:
 
 				boolean messageBoardsChecked = selenium.isChecked(
-						"_165_staged-portlet_162Checkbox");
+						"_165_staged-portlet_19Checkbox");
 
 				if (messageBoardsChecked) {
 					label = 4;
@@ -156,7 +156,7 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_165_staged-portlet_162Checkbox']",
+				selenium.clickAt("//input[@id='_165_staged-portlet_19Checkbox']",
 					RuntimeVariables.replace("Message Boards"));
 
 			case 4:

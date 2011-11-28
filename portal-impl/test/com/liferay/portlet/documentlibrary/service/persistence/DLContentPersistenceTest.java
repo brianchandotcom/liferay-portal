@@ -85,7 +85,9 @@ public class DLContentPersistenceTest extends BasePersistenceTestCase {
 
 		newDLContent.setVersion(randomString());
 
-		byte[] newDataBytes = randomString().getBytes(StringPool.UTF8);
+		String newDataString = randomString();
+
+		byte[] newDataBytes = newDataString.getBytes(StringPool.UTF8);
 
 		Blob newDataBlob = new OutputBlob(new UnsyncByteArrayInputStream(
 					newDataBytes), newDataBytes.length);
@@ -254,7 +256,9 @@ public class DLContentPersistenceTest extends BasePersistenceTestCase {
 
 		dlContent.setVersion(randomString());
 
-		byte[] dataBytes = randomString().getBytes(StringPool.UTF8);
+		String dataString = randomString();
+
+		byte[] dataBytes = dataString.getBytes(StringPool.UTF8);
 
 		Blob dataBlob = new OutputBlob(new UnsyncByteArrayInputStream(dataBytes),
 				dataBytes.length);

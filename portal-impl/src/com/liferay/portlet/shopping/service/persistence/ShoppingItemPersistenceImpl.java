@@ -231,6 +231,23 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(shoppingItem);
+	}
+
+	@Override
+	public void clearCache(List<ShoppingItem> shoppingItems) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ShoppingItem shoppingItem : shoppingItems) {
+			EntityCacheUtil.removeResult(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
+				ShoppingItemImpl.class, shoppingItem.getPrimaryKey());
+
+			clearUniqueFindersCache(shoppingItem);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ShoppingItem shoppingItem) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
 			new Object[] { Long.valueOf(shoppingItem.getSmallImageId()) });
 
@@ -268,24 +285,11 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param primaryKey the primary key of the shopping item
 	 * @return the shopping item that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping item with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param itemId the primary key of the shopping item
-	 * @return the shopping item that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingItem remove(long itemId)
 		throws NoSuchItemException, SystemException {
 		Session session = null;
 
@@ -293,18 +297,18 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			session = openSession();
 
 			ShoppingItem shoppingItem = (ShoppingItem)session.get(ShoppingItemImpl.class,
-					Long.valueOf(itemId));
+					primaryKey);
 
 			if (shoppingItem == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + itemId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchItemException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					itemId);
+					primaryKey);
 			}
 
-			return shoppingItemPersistence.remove(shoppingItem);
+			return remove(shoppingItem);
 		}
 		catch (NoSuchItemException nsee) {
 			throw nsee;
@@ -318,16 +322,16 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	}
 
 	/**
-	 * Removes the shopping item from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingItem the shopping item
+	 * @param itemId the primary key of the shopping item
 	 * @return the shopping item that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingItem remove(ShoppingItem shoppingItem)
-		throws SystemException {
-		return super.remove(shoppingItem);
+	public ShoppingItem remove(long itemId)
+		throws NoSuchItemException, SystemException {
+		return remove(Long.valueOf(itemId));
 	}
 
 	@Override
@@ -349,30 +353,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ShoppingItemModelImpl shoppingItemModelImpl = (ShoppingItemModelImpl)shoppingItem;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
-			new Object[] { Long.valueOf(shoppingItemModelImpl.getSmallImageId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_MEDIUMIMAGEID,
-			new Object[] { Long.valueOf(
-					shoppingItemModelImpl.getMediumImageId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LARGEIMAGEID,
-			new Object[] { Long.valueOf(shoppingItemModelImpl.getLargeImageId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_S,
-			new Object[] {
-				Long.valueOf(shoppingItemModelImpl.getCompanyId()),
-				
-			shoppingItemModelImpl.getSku()
-			});
-
-		EntityCacheUtil.removeResult(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemImpl.class, shoppingItem.getPrimaryKey());
+		clearCache(shoppingItem);
 
 		return shoppingItem;
 	}
@@ -2041,7 +2022,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findBySmallImageId(smallImageId);
 
-		shoppingItemPersistence.remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
@@ -2054,7 +2035,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByMediumImageId(mediumImageId);
 
-		shoppingItemPersistence.remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
@@ -2067,7 +2048,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByLargeImageId(largeImageId);
 
-		shoppingItemPersistence.remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
@@ -2080,7 +2061,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	public void removeByG_C(long groupId, long categoryId)
 		throws SystemException {
 		for (ShoppingItem shoppingItem : findByG_C(groupId, categoryId)) {
-			shoppingItemPersistence.remove(shoppingItem);
+			remove(shoppingItem);
 		}
 	}
 
@@ -2095,7 +2076,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		throws NoSuchItemException, SystemException {
 		ShoppingItem shoppingItem = findByC_S(companyId, sku);
 
-		shoppingItemPersistence.remove(shoppingItem);
+		remove(shoppingItem);
 	}
 
 	/**
@@ -2105,7 +2086,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingItem shoppingItem : findAll()) {
-			shoppingItemPersistence.remove(shoppingItem);
+			remove(shoppingItem);
 		}
 	}
 
@@ -2740,7 +2721,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			}
 		}
 
-		containsShoppingItemPrice = new ContainsShoppingItemPrice(this);
+		containsShoppingItemPrice = new ContainsShoppingItemPrice();
 	}
 
 	public void destroy() {
@@ -2774,10 +2755,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	protected ContainsShoppingItemPrice containsShoppingItemPrice;
 
 	protected class ContainsShoppingItemPrice {
-		protected ContainsShoppingItemPrice(
-			ShoppingItemPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsShoppingItemPrice() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSSHOPPINGITEMPRICE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },

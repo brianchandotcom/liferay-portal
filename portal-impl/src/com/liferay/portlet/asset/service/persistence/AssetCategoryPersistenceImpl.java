@@ -370,6 +370,23 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(assetCategory);
+	}
+
+	@Override
+	public void clearCache(List<AssetCategory> assetCategories) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AssetCategory assetCategory : assetCategories) {
+			EntityCacheUtil.removeResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+				AssetCategoryImpl.class, assetCategory.getPrimaryKey());
+
+			clearUniqueFindersCache(assetCategory);
+		}
+	}
+
+	protected void clearUniqueFindersCache(AssetCategory assetCategory) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				assetCategory.getUuid(),
@@ -409,24 +426,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 *
 	 * @param primaryKey the primary key of the asset category
 	 * @return the asset category that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a asset category with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetCategory remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param categoryId the primary key of the asset category
-	 * @return the asset category that was removed
-	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetCategory remove(long categoryId)
 		throws NoSuchCategoryException, SystemException {
 		Session session = null;
 
@@ -434,18 +438,18 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			session = openSession();
 
 			AssetCategory assetCategory = (AssetCategory)session.get(AssetCategoryImpl.class,
-					Long.valueOf(categoryId));
+					primaryKey);
 
 			if (assetCategory == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + categoryId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCategoryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					categoryId);
+					primaryKey);
 			}
 
-			return assetCategoryPersistence.remove(assetCategory);
+			return remove(assetCategory);
 		}
 		catch (NoSuchCategoryException nsee) {
 			throw nsee;
@@ -459,16 +463,16 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	/**
-	 * Removes the asset category from the database. Also notifies the appropriate model listeners.
+	 * Removes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param assetCategory the asset category
+	 * @param categoryId the primary key of the asset category
 	 * @return the asset category that was removed
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AssetCategory remove(AssetCategory assetCategory)
-		throws SystemException {
-		return super.remove(assetCategory);
+	public AssetCategory remove(long categoryId)
+		throws NoSuchCategoryException, SystemException {
+		return remove(Long.valueOf(categoryId));
 	}
 
 	@Override
@@ -502,27 +506,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AssetCategoryModelImpl assetCategoryModelImpl = (AssetCategoryModelImpl)assetCategory;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				assetCategoryModelImpl.getUuid(),
-				Long.valueOf(assetCategoryModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_N_V,
-			new Object[] {
-				Long.valueOf(assetCategoryModelImpl.getParentCategoryId()),
-				
-			assetCategoryModelImpl.getName(),
-				Long.valueOf(assetCategoryModelImpl.getVocabularyId())
-			});
-
-		EntityCacheUtil.removeResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetCategoryImpl.class, assetCategory.getPrimaryKey());
+		clearCache(assetCategory);
 
 		return assetCategory;
 	}
@@ -4971,7 +4955,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (AssetCategory assetCategory : findByUuid(uuid)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -4986,7 +4970,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		throws NoSuchCategoryException, SystemException {
 		AssetCategory assetCategory = findByUUID_G(uuid, groupId);
 
-		assetCategoryPersistence.remove(assetCategory);
+		remove(assetCategory);
 	}
 
 	/**
@@ -4997,7 +4981,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (AssetCategory assetCategory : findByGroupId(groupId)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5011,7 +4995,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		throws SystemException {
 		for (AssetCategory assetCategory : findByParentCategoryId(
 				parentCategoryId)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5024,7 +5008,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public void removeByVocabularyId(long vocabularyId)
 		throws SystemException {
 		for (AssetCategory assetCategory : findByVocabularyId(vocabularyId)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5038,7 +5022,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public void removeByG_V(long groupId, long vocabularyId)
 		throws SystemException {
 		for (AssetCategory assetCategory : findByG_V(groupId, vocabularyId)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5052,7 +5036,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public void removeByP_N(long parentCategoryId, String name)
 		throws SystemException {
 		for (AssetCategory assetCategory : findByP_N(parentCategoryId, name)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5067,7 +5051,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		throws SystemException {
 		for (AssetCategory assetCategory : findByP_V(parentCategoryId,
 				vocabularyId)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5081,7 +5065,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public void removeByN_V(String name, long vocabularyId)
 		throws SystemException {
 		for (AssetCategory assetCategory : findByN_V(name, vocabularyId)) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -5098,7 +5082,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		AssetCategory assetCategory = findByP_N_V(parentCategoryId, name,
 				vocabularyId);
 
-		assetCategoryPersistence.remove(assetCategory);
+		remove(assetCategory);
 	}
 
 	/**
@@ -5108,7 +5092,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 */
 	public void removeAll() throws SystemException {
 		for (AssetCategory assetCategory : findAll()) {
-			assetCategoryPersistence.remove(assetCategory);
+			remove(assetCategory);
 		}
 	}
 
@@ -6672,11 +6656,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 		}
 
-		containsAssetEntry = new ContainsAssetEntry(this);
+		containsAssetEntry = new ContainsAssetEntry();
 
-		addAssetEntry = new AddAssetEntry(this);
-		clearAssetEntries = new ClearAssetEntries(this);
-		removeAssetEntry = new RemoveAssetEntry(this);
+		addAssetEntry = new AddAssetEntry();
+		clearAssetEntries = new ClearAssetEntries();
+		removeAssetEntry = new RemoveAssetEntry();
 
 		expandTreeLeftCategoryId = new ExpandTreeLeftCategoryId();
 		expandTreeRightCategoryId = new ExpandTreeRightCategoryId();
@@ -6717,10 +6701,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	protected RemoveAssetEntry removeAssetEntry;
 
 	protected class ContainsAssetEntry {
-		protected ContainsAssetEntry(
-			AssetCategoryPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsAssetEntry() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSASSETENTRY,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6747,17 +6728,15 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	protected class AddAssetEntry {
-		protected AddAssetEntry(AssetCategoryPersistenceImpl persistenceImpl) {
+		protected AddAssetEntry() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO AssetEntries_AssetCategories (categoryId, entryId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long categoryId, long entryId)
 			throws SystemException {
-			if (!_persistenceImpl.containsAssetEntry.contains(categoryId,
-						entryId)) {
+			if (!containsAssetEntry.contains(categoryId, entryId)) {
 				ModelListener<com.liferay.portlet.asset.model.AssetEntry>[] assetEntryListeners =
 					assetEntryPersistence.getListeners();
 
@@ -6790,12 +6769,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private AssetCategoryPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearAssetEntries {
-		protected ClearAssetEntries(
-			AssetCategoryPersistenceImpl persistenceImpl) {
+		protected ClearAssetEntries() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM AssetEntries_AssetCategories WHERE categoryId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6846,16 +6823,15 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	protected class RemoveAssetEntry {
-		protected RemoveAssetEntry(AssetCategoryPersistenceImpl persistenceImpl) {
+		protected RemoveAssetEntry() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM AssetEntries_AssetCategories WHERE categoryId = ? AND entryId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long categoryId, long entryId)
 			throws SystemException {
-			if (_persistenceImpl.containsAssetEntry.contains(categoryId, entryId)) {
+			if (containsAssetEntry.contains(categoryId, entryId)) {
 				ModelListener<com.liferay.portlet.asset.model.AssetEntry>[] assetEntryListeners =
 					assetEntryPersistence.getListeners();
 
@@ -6888,7 +6864,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private AssetCategoryPersistenceImpl _persistenceImpl;
 	}
 
 	protected boolean rebuildTreeEnabled = true;

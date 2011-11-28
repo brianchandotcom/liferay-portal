@@ -71,7 +71,7 @@ int defaultSpeed = 3000;
 
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			String largeSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
+			String largeSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
 		%>
 
 			<img border="0" name="<portlet:namespace />slideShow" src="<%= largeSrc %>" />
@@ -93,7 +93,7 @@ int defaultSpeed = 3000;
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		String largeSrc = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileEntry.getVersion() + "&t=" + WebServerServletTokenUtil.getToken(fileEntry.getFileEntryId());
+		String largeSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
 	%>
 
 		<portlet:namespace />imgArray[<%= i %>] = "<%= largeSrc %>";

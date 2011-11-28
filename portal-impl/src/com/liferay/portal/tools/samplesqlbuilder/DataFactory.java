@@ -16,10 +16,12 @@ package com.liferay.portal.tools.samplesqlbuilder;
 
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -101,7 +103,10 @@ import com.liferay.util.SimpleCounter;
 
 import java.io.File;
 
+import java.text.Format;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,8 +118,9 @@ public class DataFactory {
 
 	public DataFactory(
 		String baseDir, int maxGroupsCount, int maxUserToGroupCount,
-		SimpleCounter counter, SimpleCounter permissionCounter,
-		SimpleCounter resourceCounter, SimpleCounter resourceCodeCounter,
+		SimpleCounter counter, SimpleCounter dlDateCounter,
+		SimpleCounter permissionCounter, SimpleCounter resourceCounter,
+		SimpleCounter resourceCodeCounter,
 		SimpleCounter resourcePermissionCounter,
 		SimpleCounter socialActivityCounter) {
 
@@ -124,6 +130,7 @@ public class DataFactory {
 			_maxUserToGroupCount = maxUserToGroupCount;
 
 			_counter = counter;
+			_dlDateCounter = dlDateCounter;
 			_permissionCounter = permissionCounter;
 			_resourceCounter = resourceCounter;
 			_resourceCodeCounter = resourceCodeCounter;
@@ -229,6 +236,7 @@ public class DataFactory {
 		ddmStructure.setGroupId(groupId);
 		ddmStructure.setCompanyId(companyId);
 		ddmStructure.setUserId(userId);
+		ddmStructure.setCreateDate(newCreateDate());
 		ddmStructure.setClassNameId(classNameId);
 
 		return ddmStructure;
@@ -258,6 +266,7 @@ public class DataFactory {
 		dlFileEntry.setGroupId(groupId);
 		dlFileEntry.setCompanyId(companyId);
 		dlFileEntry.setUserId(userId);
+		dlFileEntry.setCreateDate(newCreateDate());
 		dlFileEntry.setRepositoryId(groupId);
 		dlFileEntry.setFolderId(folderId);
 		dlFileEntry.setName(name);
@@ -328,6 +337,7 @@ public class DataFactory {
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(companyId);
 		dlFolder.setUserId(userId);
+		dlFolder.setCreateDate(newCreateDate());
 		dlFolder.setRepositoryId(groupId);
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
@@ -709,6 +719,14 @@ public class DataFactory {
 
 	public List<CounterModelImpl> getCounters() {
 		return _counters;
+	}
+
+	public String getDateLong(Date date) {
+		return String.valueOf(date.getTime());
+	}
+
+	public String getDateString(Date date) {
+		return _simpleDateFormat.format(date);
 	}
 
 	public ClassName getDDMContentClassName() {
@@ -1164,6 +1182,10 @@ public class DataFactory {
 		_userNames[1] = lastNames;
 	}
 
+	protected Date newCreateDate() {
+		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
+	}
+
 	public IntegerWrapper newInteger() {
 		return new IntegerWrapper();
 	}
@@ -1187,6 +1209,7 @@ public class DataFactory {
 	}
 
 	private Role _administratorRole;
+	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
 	private String _baseDir;
 	private ClassName _blogsEntryClassName;
 	private List<ClassName> _classNames;
@@ -1195,6 +1218,7 @@ public class DataFactory {
 	private List<CounterModelImpl> _counters;
 	private ClassName _ddmContentClassName;
 	private User _defaultUser;
+	private SimpleCounter _dlDateCounter;
 	private ClassName _dlFileEntryClassName;
 	private ClassName _groupClassName;
 	private List<Group> _groups;
@@ -1217,6 +1241,8 @@ public class DataFactory {
 	private SimpleCounter _resourcePermissionCounter;
 	private ClassName _roleClassName;
 	private List<Role> _roles;
+	private Format _simpleDateFormat =
+		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Role _siteAdministratorRole;
 	private Role _siteMemberRole;
 	private Role _siteOwnerRole;

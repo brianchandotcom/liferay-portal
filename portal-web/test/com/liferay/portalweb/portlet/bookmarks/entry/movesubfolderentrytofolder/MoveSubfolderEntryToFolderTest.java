@@ -82,7 +82,7 @@ public class MoveSubfolderEntryToFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Bookmarks Home")) {
+				if (selenium.isElementPresent("link=Home")) {
 					break;
 				}
 			}
@@ -92,7 +92,7 @@ public class MoveSubfolderEntryToFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Bookmarks Home", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Home", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");

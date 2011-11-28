@@ -27,8 +27,6 @@ ColorScheme selColorScheme = (ColorScheme)request.getAttribute("edit_pages.jsp-s
 String device = (String)request.getAttribute("edit_pages.jsp-device");
 boolean editable = (Boolean)request.getAttribute("edit_pages.jsp-editable");
 
-PluginPackage selPluginPackage = selTheme.getPluginPackage();
-
 Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
 %>
 
@@ -50,6 +48,11 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 				</c:choose>
 
 				<dl class="theme-fields">
+
+					<%
+					PluginPackage selPluginPackage = selTheme.getPluginPackage();
+					%>
+
 					<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
 						<dt>
 							<liferay-ui:message key="description" />

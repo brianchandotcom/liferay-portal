@@ -183,6 +183,23 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(resourceAction);
+	}
+
+	@Override
+	public void clearCache(List<ResourceAction> resourceActions) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceAction resourceAction : resourceActions) {
+			EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceActionImpl.class, resourceAction.getPrimaryKey());
+
+			clearUniqueFindersCache(resourceAction);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ResourceAction resourceAction) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A,
 			new Object[] { resourceAction.getName(), resourceAction.getActionId() });
 	}
@@ -207,24 +224,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param primaryKey the primary key of the resource action
 	 * @return the resource action that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource action with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceAction remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceActionId the primary key of the resource action
-	 * @return the resource action that was removed
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceAction remove(long resourceActionId)
 		throws NoSuchResourceActionException, SystemException {
 		Session session = null;
 
@@ -232,19 +236,18 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			session = openSession();
 
 			ResourceAction resourceAction = (ResourceAction)session.get(ResourceActionImpl.class,
-					Long.valueOf(resourceActionId));
+					primaryKey);
 
 			if (resourceAction == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourceActionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourceActionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceActionId);
+					primaryKey);
 			}
 
-			return resourceActionPersistence.remove(resourceAction);
+			return remove(resourceAction);
 		}
 		catch (NoSuchResourceActionException nsee) {
 			throw nsee;
@@ -258,16 +261,16 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	/**
-	 * Removes the resource action from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceAction the resource action
+	 * @param resourceActionId the primary key of the resource action
 	 * @return the resource action that was removed
+	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ResourceAction remove(ResourceAction resourceAction)
-		throws SystemException {
-		return super.remove(resourceAction);
+	public ResourceAction remove(long resourceActionId)
+		throws NoSuchResourceActionException, SystemException {
+		return remove(Long.valueOf(resourceActionId));
 	}
 
 	@Override
@@ -289,20 +292,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_A,
-			new Object[] {
-				resourceActionModelImpl.getName(),
-				
-			resourceActionModelImpl.getActionId()
-			});
-
-		EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionImpl.class, resourceAction.getPrimaryKey());
+		clearCache(resourceAction);
 
 		return resourceAction;
 	}
@@ -1171,7 +1161,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	public void removeByName(String name) throws SystemException {
 		for (ResourceAction resourceAction : findByName(name)) {
-			resourceActionPersistence.remove(resourceAction);
+			remove(resourceAction);
 		}
 	}
 
@@ -1186,7 +1176,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		throws NoSuchResourceActionException, SystemException {
 		ResourceAction resourceAction = findByN_A(name, actionId);
 
-		resourceActionPersistence.remove(resourceAction);
+		remove(resourceAction);
 	}
 
 	/**
@@ -1196,7 +1186,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	public void removeAll() throws SystemException {
 		for (ResourceAction resourceAction : findAll()) {
-			resourceActionPersistence.remove(resourceAction);
+			remove(resourceAction);
 		}
 	}
 

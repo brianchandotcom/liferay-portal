@@ -67,7 +67,7 @@ if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.O
 
 long assetClassPK = 0;
 
-if (!fileVersion.isApproved() && (fileVersion.getVersion() != DLFileEntryConstants.VERSION_DEFAULT)) {
+if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)) {
 	assetClassPK = fileVersion.getFileVersionId();
 	title = fileVersion.getTitle();
 	extension = fileVersion.getExtension();
@@ -300,6 +300,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							previewFileCount = PDFProcessor.getPreviewFileCount(fileVersion);
 
 							previewQueryString = "&previewFileIndex=";
+
+							previewFileURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 						}
 						else if (hasVideo) {
 							previewQueryString = "&videoPreview=1";
@@ -309,17 +311,26 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						if (Validator.isNotNull(previewQueryString)) {
 							if (hasVideo) {
-								previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
+								if (PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length > 0) {
+									previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
 
-								for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-									previewFileURLs[i] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+									for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
+										previewFileURLs[i] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+									}
+								}
+								else {
+									previewFileURLs = new String[1];
+
+									previewFileURLs[0] = videoThumbnailURL;
 								}
 							}
-							else if (hasAudio) {
+							else {
 								previewFileURLs = new String[1];
 
 								previewFileURLs[0] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 							}
+
+							previewFileURL = previewFileURLs[0];
 
 							if (!hasPDFImages) {
 								previewFileCount = 1;
@@ -459,7 +470,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image="download"
 								label="<%= true %>"
 								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileVersion.getSize(), locale) + "k)" %>'
-								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true) + "?version=" + fileVersion.getVersion() %>'
+								url="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 							/>
 						</c:if>
 					</span>
@@ -475,7 +486,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image='<%= "../file_system/small/" + conversion %>'
 								label="<%= true %>"
 								message="<%= conversion.toUpperCase() %>"
-								url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true) + "?version=" + fileVersion.getVersion() + "&targetExtension=" + conversion %>'
+								url='<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
 							/>
 
 						<%
@@ -830,7 +841,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					{
 						handler: function(event) {
-							location.href = '<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true) + "?version=" + fileVersion.getVersion() %>';
+							location.href = '<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
 						},
 						icon: 'download',
 						label: '<liferay-ui:message key="download" />'

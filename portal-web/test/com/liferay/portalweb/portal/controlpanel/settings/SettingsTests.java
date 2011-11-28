@@ -15,11 +15,11 @@
 package com.liferay.portalweb.portal.controlpanel.settings;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.AdditionalEmailAddressTests;
+import com.liferay.portalweb.portal.controlpanel.settings.address.AddressTests;
+import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.PhoneNumberTests;
 import com.liferay.portalweb.portal.controlpanel.settings.portalsettings.PortalSettingsTests;
-import com.liferay.portalweb.portal.controlpanel.settings.settingsadditionalemailaddress.SettingsAdditionalEmailAddressTests;
-import com.liferay.portalweb.portal.controlpanel.settings.settingsaddress.SettingsAddressTests;
-import com.liferay.portalweb.portal.controlpanel.settings.settingsphonenumber.SettingsPhoneNumberTests;
-import com.liferay.portalweb.portal.controlpanel.settings.settingswebsite.SettingsWebsiteTests;
+import com.liferay.portalweb.portal.controlpanel.settings.website.WebsiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,11 +32,11 @@ public class SettingsTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AdditionalEmailAddressTests.suite());
+		testSuite.addTest(AddressTests.suite());
+		testSuite.addTest(PhoneNumberTests.suite());
 		testSuite.addTest(PortalSettingsTests.suite());
-		testSuite.addTest(SettingsAddressTests.suite());
-		testSuite.addTest(SettingsAdditionalEmailAddressTests.suite());
-		testSuite.addTest(SettingsPhoneNumberTests.suite());
-		testSuite.addTest(SettingsWebsiteTests.suite());
+		testSuite.addTest(WebsiteTests.suite());
 
 		return testSuite;
 	}

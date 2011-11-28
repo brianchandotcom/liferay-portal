@@ -199,6 +199,23 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(mbDiscussion);
+	}
+
+	@Override
+	public void clearCache(List<MBDiscussion> mbDiscussions) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MBDiscussion mbDiscussion : mbDiscussions) {
+			EntityCacheUtil.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
+				MBDiscussionImpl.class, mbDiscussion.getPrimaryKey());
+
+			clearUniqueFindersCache(mbDiscussion);
+		}
+	}
+
+	protected void clearUniqueFindersCache(MBDiscussion mbDiscussion) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THREADID,
 			new Object[] { Long.valueOf(mbDiscussion.getThreadId()) });
 
@@ -229,24 +246,11 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 *
 	 * @param primaryKey the primary key of the message boards discussion
 	 * @return the message boards discussion that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards discussion with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param discussionId the primary key of the message boards discussion
-	 * @return the message boards discussion that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBDiscussion remove(long discussionId)
 		throws NoSuchDiscussionException, SystemException {
 		Session session = null;
 
@@ -254,18 +258,18 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			session = openSession();
 
 			MBDiscussion mbDiscussion = (MBDiscussion)session.get(MBDiscussionImpl.class,
-					Long.valueOf(discussionId));
+					primaryKey);
 
 			if (mbDiscussion == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + discussionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchDiscussionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					discussionId);
+					primaryKey);
 			}
 
-			return mbDiscussionPersistence.remove(mbDiscussion);
+			return remove(mbDiscussion);
 		}
 		catch (NoSuchDiscussionException nsee) {
 			throw nsee;
@@ -279,16 +283,16 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	}
 
 	/**
-	 * Removes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbDiscussion the message boards discussion
+	 * @param discussionId the primary key of the message boards discussion
 	 * @return the message boards discussion that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBDiscussion remove(MBDiscussion mbDiscussion)
-		throws SystemException {
-		return super.remove(mbDiscussion);
+	public MBDiscussion remove(long discussionId)
+		throws NoSuchDiscussionException, SystemException {
+		return remove(Long.valueOf(discussionId));
 	}
 
 	@Override
@@ -310,22 +314,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		MBDiscussionModelImpl mbDiscussionModelImpl = (MBDiscussionModelImpl)mbDiscussion;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THREADID,
-			new Object[] { Long.valueOf(mbDiscussionModelImpl.getThreadId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(mbDiscussionModelImpl.getClassNameId()),
-				Long.valueOf(mbDiscussionModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionImpl.class, mbDiscussion.getPrimaryKey());
+		clearCache(mbDiscussion);
 
 		return mbDiscussion;
 	}
@@ -1281,7 +1270,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 */
 	public void removeByClassNameId(long classNameId) throws SystemException {
 		for (MBDiscussion mbDiscussion : findByClassNameId(classNameId)) {
-			mbDiscussionPersistence.remove(mbDiscussion);
+			remove(mbDiscussion);
 		}
 	}
 
@@ -1295,7 +1284,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		throws NoSuchDiscussionException, SystemException {
 		MBDiscussion mbDiscussion = findByThreadId(threadId);
 
-		mbDiscussionPersistence.remove(mbDiscussion);
+		remove(mbDiscussion);
 	}
 
 	/**
@@ -1309,7 +1298,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		throws NoSuchDiscussionException, SystemException {
 		MBDiscussion mbDiscussion = findByC_C(classNameId, classPK);
 
-		mbDiscussionPersistence.remove(mbDiscussion);
+		remove(mbDiscussion);
 	}
 
 	/**
@@ -1319,7 +1308,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	 */
 	public void removeAll() throws SystemException {
 		for (MBDiscussion mbDiscussion : findAll()) {
-			mbDiscussionPersistence.remove(mbDiscussion);
+			remove(mbDiscussion);
 		}
 	}
 

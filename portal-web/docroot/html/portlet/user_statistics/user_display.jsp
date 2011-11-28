@@ -72,7 +72,7 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 	</c:if>
 </liferay-ui:user-display>
 
-<c:if test="<%= displayAdditionalCounters %>">
+<c:if test="<%= displayAdditionalActivityCounters %>">
 	<div class="separator"><!-- --></div>
 
 	<%

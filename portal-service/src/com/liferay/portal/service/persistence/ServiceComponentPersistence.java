@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ServiceComponent;
 
 /**
@@ -349,7 +348,4 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ServiceComponent remove(ServiceComponent serviceComponent)
-		throws SystemException;
 }

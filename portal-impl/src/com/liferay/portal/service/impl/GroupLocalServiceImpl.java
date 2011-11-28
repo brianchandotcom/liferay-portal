@@ -59,6 +59,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -638,6 +639,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				Group.class.getName(), group.getGroupId());
 		}
 
+		assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
+
 		// Blogs
 
 		blogsEntryLocalService.deleteEntries(group.getGroupId());
@@ -691,11 +694,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Resources
 
-		List<Resource> resources = resourceFinder.findByC_P(
-			group.getCompanyId(), String.valueOf(group.getGroupId()));
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionFinder.findByC_P(
+					group.getCompanyId(), String.valueOf(group.getGroupId()));
 
-		for (Resource resource : resources) {
-			resourceLocalService.deleteResource(resource);
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				resourcePermissionLocalService.deleteResourcePermission(
+					resourcePermission);
+			}
+		}
+		else {
+			List<Resource> resources = resourceFinder.findByC_P(
+				group.getCompanyId(), String.valueOf(group.getGroupId()));
+
+			for (Resource resource : resources) {
+				resourceLocalService.deleteResource(resource);
+			}
 		}
 
 		if (!group.isStagingGroup() &&

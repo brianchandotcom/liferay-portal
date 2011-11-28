@@ -72,19 +72,19 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		UnicodeProperties typeSettingsProperties =
 			mdrAction.getTypeSettingsProperties();
 
-		long layoutId = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("layoutId"));
+		long plid = GetterUtil.getLong(
+			typeSettingsProperties.getProperty("plid"));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout themeDisplayLayout = themeDisplay.getLayout();
 
-		if (layoutId == themeDisplayLayout.getLayoutId()) {
+		if (plid == themeDisplayLayout.getPlid()) {
 			return null;
 		}
 
-		Layout layout = _layoutLocalService.fetchLayout(layoutId);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		long groupId = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("groupId"));
@@ -148,7 +148,7 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		_propertyNames = new ArrayList<String>(2);
 
 		_propertyNames.add("groupId");
-		_propertyNames.add("layoutId");
+		_propertyNames.add("plid");
 
 		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
 	}

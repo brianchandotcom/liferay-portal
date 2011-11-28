@@ -37,7 +37,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -72,7 +72,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012LatestTestSuite" />
 		</antcall>
 	</target>
 
@@ -110,7 +110,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -152,7 +152,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -194,7 +194,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -236,7 +236,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6011LatestTestSuite" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}6012LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">

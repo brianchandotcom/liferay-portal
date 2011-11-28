@@ -340,6 +340,23 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(dlFolder);
+	}
+
+	@Override
+	public void clearCache(List<DLFolder> dlFolders) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DLFolder dlFolder : dlFolders) {
+			EntityCacheUtil.removeResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
+				DLFolderImpl.class, dlFolder.getPrimaryKey());
+
+			clearUniqueFindersCache(dlFolder);
+		}
+	}
+
+	protected void clearUniqueFindersCache(DLFolder dlFolder) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { dlFolder.getUuid(), Long.valueOf(
 					dlFolder.getGroupId()) });
@@ -380,24 +397,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 *
 	 * @param primaryKey the primary key of the document library folder
 	 * @return the document library folder that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a document library folder with the primary key could not be found
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFolder remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param folderId the primary key of the document library folder
-	 * @return the document library folder that was removed
-	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DLFolder remove(long folderId)
 		throws NoSuchFolderException, SystemException {
 		Session session = null;
 
@@ -405,18 +409,18 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			session = openSession();
 
 			DLFolder dlFolder = (DLFolder)session.get(DLFolderImpl.class,
-					Long.valueOf(folderId));
+					primaryKey);
 
 			if (dlFolder == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + folderId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					folderId);
+					primaryKey);
 			}
 
-			return dlFolderPersistence.remove(dlFolder);
+			return remove(dlFolder);
 		}
 		catch (NoSuchFolderException nsee) {
 			throw nsee;
@@ -430,15 +434,16 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
-	 * Removes the document library folder from the database. Also notifies the appropriate model listeners.
+	 * Removes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dlFolder the document library folder
+	 * @param folderId the primary key of the document library folder
 	 * @return the document library folder that was removed
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a document library folder with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DLFolder remove(DLFolder dlFolder) throws SystemException {
-		return super.remove(dlFolder);
+	public DLFolder remove(long folderId)
+		throws NoSuchFolderException, SystemException {
+		return remove(Long.valueOf(folderId));
 	}
 
 	@Override
@@ -469,30 +474,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DLFolderModelImpl dlFolderModelImpl = (DLFolderModelImpl)dlFolder;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				dlFolderModelImpl.getUuid(),
-				Long.valueOf(dlFolderModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_REPOSITORYID,
-			new Object[] { Long.valueOf(dlFolderModelImpl.getRepositoryId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_N,
-			new Object[] {
-				Long.valueOf(dlFolderModelImpl.getGroupId()),
-				Long.valueOf(dlFolderModelImpl.getParentFolderId()),
-				
-			dlFolderModelImpl.getName()
-			});
-
-		EntityCacheUtil.removeResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-			DLFolderImpl.class, dlFolder.getPrimaryKey());
+		clearCache(dlFolder);
 
 		return dlFolder;
 	}
@@ -4634,7 +4616,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DLFolder dlFolder : findByUuid(uuid)) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -4649,7 +4631,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByUUID_G(uuid, groupId);
 
-		dlFolderPersistence.remove(dlFolder);
+		remove(dlFolder);
 	}
 
 	/**
@@ -4660,7 +4642,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (DLFolder dlFolder : findByGroupId(groupId)) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -4672,7 +4654,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (DLFolder dlFolder : findByCompanyId(companyId)) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -4686,7 +4668,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByRepositoryId(repositoryId);
 
-		dlFolderPersistence.remove(dlFolder);
+		remove(dlFolder);
 	}
 
 	/**
@@ -4699,7 +4681,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public void removeByG_P(long groupId, long parentFolderId)
 		throws SystemException {
 		for (DLFolder dlFolder : findByG_P(groupId, parentFolderId)) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -4713,7 +4695,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public void removeByP_N(long parentFolderId, String name)
 		throws SystemException {
 		for (DLFolder dlFolder : findByP_N(parentFolderId, name)) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -4728,7 +4710,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public void removeByG_P_M(long groupId, long parentFolderId,
 		boolean mountPoint) throws SystemException {
 		for (DLFolder dlFolder : findByG_P_M(groupId, parentFolderId, mountPoint)) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -4744,7 +4726,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		throws NoSuchFolderException, SystemException {
 		DLFolder dlFolder = findByG_P_N(groupId, parentFolderId, name);
 
-		dlFolderPersistence.remove(dlFolder);
+		remove(dlFolder);
 	}
 
 	/**
@@ -4754,7 +4736,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	public void removeAll() throws SystemException {
 		for (DLFolder dlFolder : findAll()) {
-			dlFolderPersistence.remove(dlFolder);
+			remove(dlFolder);
 		}
 	}
 
@@ -6026,11 +6008,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			}
 		}
 
-		containsDLFileEntryType = new ContainsDLFileEntryType(this);
+		containsDLFileEntryType = new ContainsDLFileEntryType();
 
-		addDLFileEntryType = new AddDLFileEntryType(this);
-		clearDLFileEntryTypes = new ClearDLFileEntryTypes(this);
-		removeDLFileEntryType = new RemoveDLFileEntryType(this);
+		addDLFileEntryType = new AddDLFileEntryType();
+		clearDLFileEntryTypes = new ClearDLFileEntryTypes();
+		removeDLFileEntryType = new RemoveDLFileEntryType();
 	}
 
 	public void destroy() {
@@ -6079,10 +6061,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected RemoveDLFileEntryType removeDLFileEntryType;
 
 	protected class ContainsDLFileEntryType {
-		protected ContainsDLFileEntryType(
-			DLFolderPersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsDLFileEntryType() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSDLFILEENTRYTYPE,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6109,17 +6088,15 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected class AddDLFileEntryType {
-		protected AddDLFileEntryType(DLFolderPersistenceImpl persistenceImpl) {
+		protected AddDLFileEntryType() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO DLFileEntryTypes_DLFolders (folderId, fileEntryTypeId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long folderId, long fileEntryTypeId)
 			throws SystemException {
-			if (!_persistenceImpl.containsDLFileEntryType.contains(folderId,
-						fileEntryTypeId)) {
+			if (!containsDLFileEntryType.contains(folderId, fileEntryTypeId)) {
 				ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType>[] dlFileEntryTypeListeners =
 					dlFileEntryTypePersistence.getListeners();
 
@@ -6152,11 +6129,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private DLFolderPersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearDLFileEntryTypes {
-		protected ClearDLFileEntryTypes(DLFolderPersistenceImpl persistenceImpl) {
+		protected ClearDLFileEntryTypes() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM DLFileEntryTypes_DLFolders WHERE folderId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6210,17 +6186,15 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	protected class RemoveDLFileEntryType {
-		protected RemoveDLFileEntryType(DLFolderPersistenceImpl persistenceImpl) {
+		protected RemoveDLFileEntryType() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM DLFileEntryTypes_DLFolders WHERE folderId = ? AND fileEntryTypeId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long folderId, long fileEntryTypeId)
 			throws SystemException {
-			if (_persistenceImpl.containsDLFileEntryType.contains(folderId,
-						fileEntryTypeId)) {
+			if (containsDLFileEntryType.contains(folderId, fileEntryTypeId)) {
 				ModelListener<com.liferay.portlet.documentlibrary.model.DLFileEntryType>[] dlFileEntryTypeListeners =
 					dlFileEntryTypePersistence.getListeners();
 
@@ -6253,7 +6227,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private DLFolderPersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_DLFOLDER = "SELECT dlFolder FROM DLFolder dlFolder";

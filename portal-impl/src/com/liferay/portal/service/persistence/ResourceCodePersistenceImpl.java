@@ -208,6 +208,23 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(resourceCode);
+	}
+
+	@Override
+	public void clearCache(List<ResourceCode> resourceCodes) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceCode resourceCode : resourceCodes) {
+			EntityCacheUtil.removeResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceCodeImpl.class, resourceCode.getPrimaryKey());
+
+			clearUniqueFindersCache(resourceCode);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ResourceCode resourceCode) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
 			new Object[] {
 				Long.valueOf(resourceCode.getCompanyId()),
@@ -236,24 +253,11 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 *
 	 * @param primaryKey the primary key of the resource code
 	 * @return the resource code that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource code with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceCodeException if a resource code with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceCode remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource code with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param codeId the primary key of the resource code
-	 * @return the resource code that was removed
-	 * @throws com.liferay.portal.NoSuchResourceCodeException if a resource code with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceCode remove(long codeId)
 		throws NoSuchResourceCodeException, SystemException {
 		Session session = null;
 
@@ -261,18 +265,18 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			session = openSession();
 
 			ResourceCode resourceCode = (ResourceCode)session.get(ResourceCodeImpl.class,
-					Long.valueOf(codeId));
+					primaryKey);
 
 			if (resourceCode == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + codeId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourceCodeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					codeId);
+					primaryKey);
 			}
 
-			return resourceCodePersistence.remove(resourceCode);
+			return remove(resourceCode);
 		}
 		catch (NoSuchResourceCodeException nsee) {
 			throw nsee;
@@ -286,16 +290,16 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	}
 
 	/**
-	 * Removes the resource code from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource code with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceCode the resource code
+	 * @param codeId the primary key of the resource code
 	 * @return the resource code that was removed
+	 * @throws com.liferay.portal.NoSuchResourceCodeException if a resource code with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ResourceCode remove(ResourceCode resourceCode)
-		throws SystemException {
-		return super.remove(resourceCode);
+	public ResourceCode remove(long codeId)
+		throws NoSuchResourceCodeException, SystemException {
+		return remove(Long.valueOf(codeId));
 	}
 
 	@Override
@@ -317,21 +321,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceCodeModelImpl resourceCodeModelImpl = (ResourceCodeModelImpl)resourceCode;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_S,
-			new Object[] {
-				Long.valueOf(resourceCodeModelImpl.getCompanyId()),
-				
-			resourceCodeModelImpl.getName(),
-				Integer.valueOf(resourceCodeModelImpl.getScope())
-			});
-
-		EntityCacheUtil.removeResult(ResourceCodeModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceCodeImpl.class, resourceCode.getPrimaryKey());
+		clearCache(resourceCode);
 
 		return resourceCode;
 	}
@@ -1547,7 +1537,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (ResourceCode resourceCode : findByCompanyId(companyId)) {
-			resourceCodePersistence.remove(resourceCode);
+			remove(resourceCode);
 		}
 	}
 
@@ -1559,7 +1549,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	public void removeByName(String name) throws SystemException {
 		for (ResourceCode resourceCode : findByName(name)) {
-			resourceCodePersistence.remove(resourceCode);
+			remove(resourceCode);
 		}
 	}
 
@@ -1575,7 +1565,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 		throws NoSuchResourceCodeException, SystemException {
 		ResourceCode resourceCode = findByC_N_S(companyId, name, scope);
 
-		resourceCodePersistence.remove(resourceCode);
+		remove(resourceCode);
 	}
 
 	/**
@@ -1585,7 +1575,7 @@ public class ResourceCodePersistenceImpl extends BasePersistenceImpl<ResourceCod
 	 */
 	public void removeAll() throws SystemException {
 		for (ResourceCode resourceCode : findAll()) {
-			resourceCodePersistence.remove(resourceCode);
+			remove(resourceCode);
 		}
 	}
 

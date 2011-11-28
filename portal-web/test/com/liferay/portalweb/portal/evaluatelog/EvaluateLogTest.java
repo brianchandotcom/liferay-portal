@@ -63,6 +63,14 @@ public class EvaluateLogTest extends BaseTestCase {
 				}
 			}
 
+			// LPS-23351
+
+			if (line.contains(
+					"user lacks privilege or object not found: LOCK_")) {
+
+				continue;
+			}
+
 			System.out.println("\nException Line:\n\n" + line + "\n");
 
 			return false;

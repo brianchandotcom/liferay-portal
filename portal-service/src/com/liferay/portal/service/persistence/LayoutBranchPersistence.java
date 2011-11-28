@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutBranch;
 
 /**
@@ -550,7 +549,4 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public LayoutBranch remove(LayoutBranch layoutBranch)
-		throws SystemException;
 }

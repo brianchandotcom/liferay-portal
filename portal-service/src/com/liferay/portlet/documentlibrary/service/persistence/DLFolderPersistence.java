@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -1556,6 +1555,4 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 	public void setDLFileEntryTypes(long pk,
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DLFolder remove(DLFolder dlFolder) throws SystemException;
 }

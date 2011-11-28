@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Website;
 
 /**
@@ -825,6 +824,4 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Website remove(Website website) throws SystemException;
 }

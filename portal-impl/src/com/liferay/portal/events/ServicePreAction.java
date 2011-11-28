@@ -1168,6 +1168,7 @@ public class ServicePreAction extends Action {
 		}
 
 		if (group.isLayoutSetPrototype()) {
+			themeDisplay.setShowPageCustomizationIcon(false);
 			themeDisplay.setShowSiteSettingsIcon(false);
 		}
 

@@ -15,17 +15,6 @@
 --%>
 
 <%
-int total = 0;
-
-if (searchTerms.isAdvancedSearch()) {
-	total = JournalStructureServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
-}
-else {
-	total = JournalStructureServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords());
-}
-
-searchContainer.setTotal(total);
-
 List results = null;
 
 if (searchTerms.isAdvancedSearch()) {
@@ -36,4 +25,15 @@ else {
 }
 
 searchContainer.setResults(results);
+
+int total = 0;
+
+if (searchTerms.isAdvancedSearch()) {
+	total = JournalStructureServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getStructureId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+}
+else {
+	total = JournalStructureServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords());
+}
+
+searchContainer.setTotal(total);
 %>

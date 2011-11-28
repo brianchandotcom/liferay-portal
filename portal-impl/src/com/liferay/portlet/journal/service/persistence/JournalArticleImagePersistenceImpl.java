@@ -264,6 +264,25 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(journalArticleImage);
+	}
+
+	@Override
+	public void clearCache(List<JournalArticleImage> journalArticleImages) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (JournalArticleImage journalArticleImage : journalArticleImages) {
+			EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+				JournalArticleImageImpl.class,
+				journalArticleImage.getPrimaryKey());
+
+			clearUniqueFindersCache(journalArticleImage);
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		JournalArticleImage journalArticleImage) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
 			new Object[] {
 				Long.valueOf(journalArticleImage.getGroupId()),
@@ -299,24 +318,11 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 *
 	 * @param primaryKey the primary key of the journal article image
 	 * @return the journal article image that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal article image with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleImage remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param articleImageId the primary key of the journal article image
-	 * @return the journal article image that was removed
-	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleImage remove(long articleImageId)
 		throws NoSuchArticleImageException, SystemException {
 		Session session = null;
 
@@ -324,19 +330,18 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			session = openSession();
 
 			JournalArticleImage journalArticleImage = (JournalArticleImage)session.get(JournalArticleImageImpl.class,
-					Long.valueOf(articleImageId));
+					primaryKey);
 
 			if (journalArticleImage == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						articleImageId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchArticleImageException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					articleImageId);
+					primaryKey);
 			}
 
-			return journalArticleImagePersistence.remove(journalArticleImage);
+			return remove(journalArticleImage);
 		}
 		catch (NoSuchArticleImageException nsee) {
 			throw nsee;
@@ -350,16 +355,16 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	}
 
 	/**
-	 * Removes the journal article image from the database. Also notifies the appropriate model listeners.
+	 * Removes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param journalArticleImage the journal article image
+	 * @param articleImageId the primary key of the journal article image
 	 * @return the journal article image that was removed
+	 * @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public JournalArticleImage remove(JournalArticleImage journalArticleImage)
-		throws SystemException {
-		return super.remove(journalArticleImage);
+	public JournalArticleImage remove(long articleImageId)
+		throws NoSuchArticleImageException, SystemException {
+		return remove(Long.valueOf(articleImageId));
 	}
 
 	@Override
@@ -381,27 +386,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		JournalArticleImageModelImpl journalArticleImageModelImpl = (JournalArticleImageModelImpl)journalArticleImage;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-			new Object[] {
-				Long.valueOf(journalArticleImageModelImpl.getGroupId()),
-				
-			journalArticleImageModelImpl.getArticleId(),
-				Double.valueOf(journalArticleImageModelImpl.getVersion()),
-				
-			journalArticleImageModelImpl.getElInstanceId(),
-				
-			journalArticleImageModelImpl.getElName(),
-				
-			journalArticleImageModelImpl.getLanguageId()
-			});
-
-		EntityCacheUtil.removeResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleImageImpl.class, journalArticleImage.getPrimaryKey());
+		clearCache(journalArticleImage);
 
 		return journalArticleImage;
 	}
@@ -2144,7 +2129,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (JournalArticleImage journalArticleImage : findByGroupId(groupId)) {
-			journalArticleImagePersistence.remove(journalArticleImage);
+			remove(journalArticleImage);
 		}
 	}
 
@@ -2157,7 +2142,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	public void removeByTempImage(boolean tempImage) throws SystemException {
 		for (JournalArticleImage journalArticleImage : findByTempImage(
 				tempImage)) {
-			journalArticleImagePersistence.remove(journalArticleImage);
+			remove(journalArticleImage);
 		}
 	}
 
@@ -2173,7 +2158,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		throws SystemException {
 		for (JournalArticleImage journalArticleImage : findByG_A_V(groupId,
 				articleId, version)) {
-			journalArticleImagePersistence.remove(journalArticleImage);
+			remove(journalArticleImage);
 		}
 	}
 
@@ -2194,7 +2179,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		JournalArticleImage journalArticleImage = findByG_A_V_E_E_L(groupId,
 				articleId, version, elInstanceId, elName, languageId);
 
-		journalArticleImagePersistence.remove(journalArticleImage);
+		remove(journalArticleImage);
 	}
 
 	/**
@@ -2204,7 +2189,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 */
 	public void removeAll() throws SystemException {
 		for (JournalArticleImage journalArticleImage : findAll()) {
-			journalArticleImagePersistence.remove(journalArticleImage);
+			remove(journalArticleImage);
 		}
 	}
 

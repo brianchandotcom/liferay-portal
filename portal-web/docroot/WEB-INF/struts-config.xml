@@ -1186,10 +1186,14 @@
 			<forward name="portlet.mobile_device_rules.error" path="portlet.mobile_device_rules.error" />
 		</action>
 
+		<action path="/mobile_device_rules/edit_action_editor" type="com.liferay.portlet.mobiledevicerules.action.EditActionAction" />
+
 		<action path="/mobile_device_rules/edit_rule" type="com.liferay.portlet.mobiledevicerules.action.EditRuleAction">
 			<forward name="portlet.mobile_device_rules.edit_rule" path="portlet.mobile_device_rules.edit_rule" />
 			<forward name="portlet.mobile_device_rules.error" path="portlet.mobile_device_rules.error" />
 		</action>
+
+		<action path="/mobile_device_rules/edit_rule_editor" type="com.liferay.portlet.mobiledevicerules.action.EditRuleAction" />
 
 		<action path="/mobile_device_rules/edit_rule_group" type="com.liferay.portlet.mobiledevicerules.action.EditRuleGroupAction">
 			<forward name="portlet.mobile_device_rules.edit_rule_group" path="portlet.mobile_device_rules.edit_rule_group" />
@@ -1201,17 +1205,13 @@
 			<forward name="portlet.mobile_device_rules.error" path="portlet.mobile_device_rules.error" />
 		</action>
 
-		<action path="/mobile_device_rules/edit_action_editor" type="com.liferay.portlet.mobiledevicerules.action.EditActionAction" />
-
-		<action path="/mobile_device_rules/edit_rule_editor" type="com.liferay.portlet.mobiledevicerules.action.EditRuleAction" />
-
 		<action path="/mobile_device_rules/edit_rule_group_instance_editor" type="com.liferay.portlet.mobiledevicerules.action.EditRuleGroupInstanceAction" />
+
+		<action path="/mobile_device_rules/site_url_layouts" type="com.liferay.portlet.mobiledevicerules.action.SiteURLLayoutsAction" />
 
 		<action path="/mobile_device_rules/view" forward="portlet.mobile_device_rules.view" />
 
 		<action path="/mobile_device_rules/view_actions" forward="portlet.mobile_device_rules.view_actions" />
-
-		<action path="/mobile_device_rules/view_group_layouts" type="com.liferay.portlet.mobiledevicerules.action.SiteResourceAction" />
 
 		<action path="/mobile_device_rules/view_rules" forward="portlet.mobile_device_rules.view_rules" />
 
@@ -1464,6 +1464,10 @@
 
 		<action path="/portlet_configuration/add_asset_redirect" forward="portlet.asset_publisher.add_asset_redirect" />
 
+		<action path="/portlet_configuration/add_group_statistics_activity_counter" forward="portlet.group_statistics.add_activity_counter" />
+
+		<action path="/portlet_configuration/add_user_statistics_activity_counter" forward="portlet.user_statistics.add_activity_counter" />
+
 		<action path="/portlet_configuration/edit_archived_setups" type="com.liferay.portlet.portletconfiguration.action.EditArchivedSetupsAction">
 			<forward name="portlet.portlet_configuration.edit_archived_setups" path="portlet.portlet_configuration.edit_archived_setups" />
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
@@ -1500,8 +1504,6 @@
 			<forward name="portlet.portlet_configuration.edit_supported_clients" path="portlet.portlet_configuration.edit_supported_clients" />
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
 		</action>
-
-		<action path="/portlet_configuration/edit_user_statistics_display_counters" forward="portlet.user_statistics.edit_display_counters" />
 
 		<action path="/portlet_configuration/export_import" type="com.liferay.portlet.portletconfiguration.action.ExportImportAction">
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />

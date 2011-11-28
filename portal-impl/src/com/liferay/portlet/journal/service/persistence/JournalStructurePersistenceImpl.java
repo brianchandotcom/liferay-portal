@@ -278,6 +278,23 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(journalStructure);
+	}
+
+	@Override
+	public void clearCache(List<JournalStructure> journalStructures) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (JournalStructure journalStructure : journalStructures) {
+			EntityCacheUtil.removeResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
+				JournalStructureImpl.class, journalStructure.getPrimaryKey());
+
+			clearUniqueFindersCache(journalStructure);
+		}
+	}
+
+	protected void clearUniqueFindersCache(JournalStructure journalStructure) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				journalStructure.getUuid(),
@@ -316,24 +333,11 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 *
 	 * @param primaryKey the primary key of the journal structure
 	 * @return the journal structure that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal structure with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchStructureException if a journal structure with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalStructure remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the journal structure with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param id the primary key of the journal structure
-	 * @return the journal structure that was removed
-	 * @throws com.liferay.portlet.journal.NoSuchStructureException if a journal structure with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalStructure remove(long id)
 		throws NoSuchStructureException, SystemException {
 		Session session = null;
 
@@ -341,18 +345,18 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			session = openSession();
 
 			JournalStructure journalStructure = (JournalStructure)session.get(JournalStructureImpl.class,
-					Long.valueOf(id));
+					primaryKey);
 
 			if (journalStructure == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + id);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchStructureException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					id);
+					primaryKey);
 			}
 
-			return journalStructurePersistence.remove(journalStructure);
+			return remove(journalStructure);
 		}
 		catch (NoSuchStructureException nsee) {
 			throw nsee;
@@ -366,16 +370,16 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	}
 
 	/**
-	 * Removes the journal structure from the database. Also notifies the appropriate model listeners.
+	 * Removes the journal structure with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param journalStructure the journal structure
+	 * @param id the primary key of the journal structure
 	 * @return the journal structure that was removed
+	 * @throws com.liferay.portlet.journal.NoSuchStructureException if a journal structure with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public JournalStructure remove(JournalStructure journalStructure)
-		throws SystemException {
-		return super.remove(journalStructure);
+	public JournalStructure remove(long id)
+		throws NoSuchStructureException, SystemException {
+		return remove(Long.valueOf(id));
 	}
 
 	@Override
@@ -397,26 +401,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		JournalStructureModelImpl journalStructureModelImpl = (JournalStructureModelImpl)journalStructure;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				journalStructureModelImpl.getUuid(),
-				Long.valueOf(journalStructureModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_S,
-			new Object[] {
-				Long.valueOf(journalStructureModelImpl.getGroupId()),
-				
-			journalStructureModelImpl.getStructureId()
-			});
-
-		EntityCacheUtil.removeResult(JournalStructureModelImpl.ENTITY_CACHE_ENABLED,
-			JournalStructureImpl.class, journalStructure.getPrimaryKey());
+		clearCache(journalStructure);
 
 		return journalStructure;
 	}
@@ -3306,7 +3291,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (JournalStructure journalStructure : findByUuid(uuid)) {
-			journalStructurePersistence.remove(journalStructure);
+			remove(journalStructure);
 		}
 	}
 
@@ -3321,7 +3306,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		throws NoSuchStructureException, SystemException {
 		JournalStructure journalStructure = findByUUID_G(uuid, groupId);
 
-		journalStructurePersistence.remove(journalStructure);
+		remove(journalStructure);
 	}
 
 	/**
@@ -3332,7 +3317,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (JournalStructure journalStructure : findByGroupId(groupId)) {
-			journalStructurePersistence.remove(journalStructure);
+			remove(journalStructure);
 		}
 	}
 
@@ -3345,7 +3330,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	public void removeByStructureId(String structureId)
 		throws SystemException {
 		for (JournalStructure journalStructure : findByStructureId(structureId)) {
-			journalStructurePersistence.remove(journalStructure);
+			remove(journalStructure);
 		}
 	}
 
@@ -3360,7 +3345,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		throws NoSuchStructureException, SystemException {
 		JournalStructure journalStructure = findByG_S(groupId, structureId);
 
-		journalStructurePersistence.remove(journalStructure);
+		remove(journalStructure);
 	}
 
 	/**
@@ -3374,7 +3359,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 		throws SystemException {
 		for (JournalStructure journalStructure : findByG_P(groupId,
 				parentStructureId)) {
-			journalStructurePersistence.remove(journalStructure);
+			remove(journalStructure);
 		}
 	}
 
@@ -3385,7 +3370,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 	 */
 	public void removeAll() throws SystemException {
 		for (JournalStructure journalStructure : findAll()) {
-			journalStructurePersistence.remove(journalStructure);
+			remove(journalStructure);
 		}
 	}
 

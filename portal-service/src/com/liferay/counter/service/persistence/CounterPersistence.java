@@ -16,7 +16,6 @@ package com.liferay.counter.service.persistence;
 
 import com.liferay.counter.model.Counter;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
@@ -160,6 +159,4 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Counter remove(Counter counter) throws SystemException;
 }

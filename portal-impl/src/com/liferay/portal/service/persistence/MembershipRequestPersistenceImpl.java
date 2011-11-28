@@ -243,6 +243,17 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<MembershipRequest> membershipRequests) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MembershipRequest membershipRequest : membershipRequests) {
+			EntityCacheUtil.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+				MembershipRequestImpl.class, membershipRequest.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new membership request with the primary key. Does not add the membership request to the database.
 	 *
@@ -263,24 +274,11 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 *
 	 * @param primaryKey the primary key of the membership request
 	 * @return the membership request that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a membership request with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MembershipRequest remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param membershipRequestId the primary key of the membership request
-	 * @return the membership request that was removed
-	 * @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MembershipRequest remove(long membershipRequestId)
 		throws NoSuchMembershipRequestException, SystemException {
 		Session session = null;
 
@@ -288,19 +286,18 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			session = openSession();
 
 			MembershipRequest membershipRequest = (MembershipRequest)session.get(MembershipRequestImpl.class,
-					Long.valueOf(membershipRequestId));
+					primaryKey);
 
 			if (membershipRequest == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						membershipRequestId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchMembershipRequestException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					membershipRequestId);
+					primaryKey);
 			}
 
-			return membershipRequestPersistence.remove(membershipRequest);
+			return remove(membershipRequest);
 		}
 		catch (NoSuchMembershipRequestException nsee) {
 			throw nsee;
@@ -314,16 +311,16 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	}
 
 	/**
-	 * Removes the membership request from the database. Also notifies the appropriate model listeners.
+	 * Removes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param membershipRequest the membership request
+	 * @param membershipRequestId the primary key of the membership request
 	 * @return the membership request that was removed
+	 * @throws com.liferay.portal.NoSuchMembershipRequestException if a membership request with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MembershipRequest remove(MembershipRequest membershipRequest)
-		throws SystemException {
-		return super.remove(membershipRequest);
+	public MembershipRequest remove(long membershipRequestId)
+		throws NoSuchMembershipRequestException, SystemException {
+		return remove(Long.valueOf(membershipRequestId));
 	}
 
 	@Override
@@ -345,11 +342,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-			MembershipRequestImpl.class, membershipRequest.getPrimaryKey());
+		clearCache(membershipRequest);
 
 		return membershipRequest;
 	}
@@ -2185,7 +2178,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (MembershipRequest membershipRequest : findByGroupId(groupId)) {
-			membershipRequestPersistence.remove(membershipRequest);
+			remove(membershipRequest);
 		}
 	}
 
@@ -2197,7 +2190,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (MembershipRequest membershipRequest : findByUserId(userId)) {
-			membershipRequestPersistence.remove(membershipRequest);
+			remove(membershipRequest);
 		}
 	}
 
@@ -2211,7 +2204,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public void removeByG_S(long groupId, int statusId)
 		throws SystemException {
 		for (MembershipRequest membershipRequest : findByG_S(groupId, statusId)) {
-			membershipRequestPersistence.remove(membershipRequest);
+			remove(membershipRequest);
 		}
 	}
 
@@ -2227,7 +2220,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		throws SystemException {
 		for (MembershipRequest membershipRequest : findByG_U_S(groupId, userId,
 				statusId)) {
-			membershipRequestPersistence.remove(membershipRequest);
+			remove(membershipRequest);
 		}
 	}
 
@@ -2238,7 +2231,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	public void removeAll() throws SystemException {
 		for (MembershipRequest membershipRequest : findAll()) {
-			membershipRequestPersistence.remove(membershipRequest);
+			remove(membershipRequest);
 		}
 	}
 

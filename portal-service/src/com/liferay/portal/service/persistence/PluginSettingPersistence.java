@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PluginSetting;
 
 /**
@@ -352,7 +351,4 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public PluginSetting remove(PluginSetting pluginSetting)
-		throws SystemException;
 }

@@ -186,6 +186,23 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(shoppingCoupon);
+	}
+
+	@Override
+	public void clearCache(List<ShoppingCoupon> shoppingCoupons) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ShoppingCoupon shoppingCoupon : shoppingCoupons) {
+			EntityCacheUtil.removeResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
+				ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey());
+
+			clearUniqueFindersCache(shoppingCoupon);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ShoppingCoupon shoppingCoupon) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
 			new Object[] { shoppingCoupon.getCode() });
 	}
@@ -210,24 +227,11 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param primaryKey the primary key of the shopping coupon
 	 * @return the shopping coupon that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a shopping coupon with the primary key could not be found
+	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param couponId the primary key of the shopping coupon
-	 * @return the shopping coupon that was removed
-	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ShoppingCoupon remove(long couponId)
 		throws NoSuchCouponException, SystemException {
 		Session session = null;
 
@@ -235,18 +239,18 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			session = openSession();
 
 			ShoppingCoupon shoppingCoupon = (ShoppingCoupon)session.get(ShoppingCouponImpl.class,
-					Long.valueOf(couponId));
+					primaryKey);
 
 			if (shoppingCoupon == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + couponId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCouponException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					couponId);
+					primaryKey);
 			}
 
-			return shoppingCouponPersistence.remove(shoppingCoupon);
+			return remove(shoppingCoupon);
 		}
 		catch (NoSuchCouponException nsee) {
 			throw nsee;
@@ -260,16 +264,16 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	}
 
 	/**
-	 * Removes the shopping coupon from the database. Also notifies the appropriate model listeners.
+	 * Removes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param shoppingCoupon the shopping coupon
+	 * @param couponId the primary key of the shopping coupon
 	 * @return the shopping coupon that was removed
+	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ShoppingCoupon remove(ShoppingCoupon shoppingCoupon)
-		throws SystemException {
-		return super.remove(shoppingCoupon);
+	public ShoppingCoupon remove(long couponId)
+		throws NoSuchCouponException, SystemException {
+		return remove(Long.valueOf(couponId));
 	}
 
 	@Override
@@ -291,16 +295,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE,
-			new Object[] { shoppingCouponModelImpl.getCode() });
-
-		EntityCacheUtil.removeResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey());
+		clearCache(shoppingCoupon);
 
 		return shoppingCoupon;
 	}
@@ -1126,7 +1121,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (ShoppingCoupon shoppingCoupon : findByGroupId(groupId)) {
-			shoppingCouponPersistence.remove(shoppingCoupon);
+			remove(shoppingCoupon);
 		}
 	}
 
@@ -1140,7 +1135,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		throws NoSuchCouponException, SystemException {
 		ShoppingCoupon shoppingCoupon = findByCode(code);
 
-		shoppingCouponPersistence.remove(shoppingCoupon);
+		remove(shoppingCoupon);
 	}
 
 	/**
@@ -1150,7 +1145,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 */
 	public void removeAll() throws SystemException {
 		for (ShoppingCoupon shoppingCoupon : findAll()) {
-			shoppingCouponPersistence.remove(shoppingCoupon);
+			remove(shoppingCoupon);
 		}
 	}
 

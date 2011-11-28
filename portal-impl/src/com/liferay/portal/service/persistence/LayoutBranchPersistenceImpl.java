@@ -234,6 +234,23 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(layoutBranch);
+	}
+
+	@Override
+	public void clearCache(List<LayoutBranch> layoutBranchs) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (LayoutBranch layoutBranch : layoutBranchs) {
+			EntityCacheUtil.removeResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
+
+			clearUniqueFindersCache(layoutBranch);
+		}
+	}
+
+	protected void clearUniqueFindersCache(LayoutBranch layoutBranch) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_N,
 			new Object[] {
 				Long.valueOf(layoutBranch.getLayoutSetBranchId()),
@@ -270,24 +287,11 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 *
 	 * @param primaryKey the primary key of the layout branch
 	 * @return the layout branch that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a layout branch with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutBranch remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param LayoutBranchId the primary key of the layout branch
-	 * @return the layout branch that was removed
-	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutBranch remove(long LayoutBranchId)
 		throws NoSuchLayoutBranchException, SystemException {
 		Session session = null;
 
@@ -295,19 +299,18 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			session = openSession();
 
 			LayoutBranch layoutBranch = (LayoutBranch)session.get(LayoutBranchImpl.class,
-					Long.valueOf(LayoutBranchId));
+					primaryKey);
 
 			if (layoutBranch == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						LayoutBranchId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLayoutBranchException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					LayoutBranchId);
+					primaryKey);
 			}
 
-			return layoutBranchPersistence.remove(layoutBranch);
+			return remove(layoutBranch);
 		}
 		catch (NoSuchLayoutBranchException nsee) {
 			throw nsee;
@@ -321,16 +324,16 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	}
 
 	/**
-	 * Removes the layout branch from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutBranch the layout branch
+	 * @param LayoutBranchId the primary key of the layout branch
 	 * @return the layout branch that was removed
+	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public LayoutBranch remove(LayoutBranch layoutBranch)
-		throws SystemException {
-		return super.remove(layoutBranch);
+	public LayoutBranch remove(long LayoutBranchId)
+		throws NoSuchLayoutBranchException, SystemException {
+		return remove(Long.valueOf(LayoutBranchId));
 	}
 
 	@Override
@@ -352,28 +355,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		LayoutBranchModelImpl layoutBranchModelImpl = (LayoutBranchModelImpl)layoutBranch;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_N,
-			new Object[] {
-				Long.valueOf(layoutBranchModelImpl.getLayoutSetBranchId()),
-				Long.valueOf(layoutBranchModelImpl.getPlid()),
-				
-			layoutBranchModelImpl.getName()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_P_M,
-			new Object[] {
-				Long.valueOf(layoutBranchModelImpl.getLayoutSetBranchId()),
-				Long.valueOf(layoutBranchModelImpl.getPlid()),
-				Boolean.valueOf(layoutBranchModelImpl.getMaster())
-			});
-
-		EntityCacheUtil.removeResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
+		clearCache(layoutBranch);
 
 		return layoutBranch;
 	}
@@ -1789,7 +1771,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		throws SystemException {
 		for (LayoutBranch layoutBranch : findByLayoutSetBranchId(
 				layoutSetBranchId)) {
-			layoutBranchPersistence.remove(layoutBranch);
+			remove(layoutBranch);
 		}
 	}
 
@@ -1803,7 +1785,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	public void removeByL_P(long layoutSetBranchId, long plid)
 		throws SystemException {
 		for (LayoutBranch layoutBranch : findByL_P(layoutSetBranchId, plid)) {
-			layoutBranchPersistence.remove(layoutBranch);
+			remove(layoutBranch);
 		}
 	}
 
@@ -1819,7 +1801,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		throws NoSuchLayoutBranchException, SystemException {
 		LayoutBranch layoutBranch = findByL_P_N(layoutSetBranchId, plid, name);
 
-		layoutBranchPersistence.remove(layoutBranch);
+		remove(layoutBranch);
 	}
 
 	/**
@@ -1834,7 +1816,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		throws NoSuchLayoutBranchException, SystemException {
 		LayoutBranch layoutBranch = findByL_P_M(layoutSetBranchId, plid, master);
 
-		layoutBranchPersistence.remove(layoutBranch);
+		remove(layoutBranch);
 	}
 
 	/**
@@ -1844,7 +1826,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	public void removeAll() throws SystemException {
 		for (LayoutBranch layoutBranch : findAll()) {
-			layoutBranchPersistence.remove(layoutBranch);
+			remove(layoutBranch);
 		}
 	}
 

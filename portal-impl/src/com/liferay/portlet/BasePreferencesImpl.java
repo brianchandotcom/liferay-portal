@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -29,7 +30,7 @@ import javax.portlet.ValidatorException;
 /**
  * @author Alexander Chow
  */
-public abstract class BasePreferencesImpl {
+public abstract class BasePreferencesImpl implements Serializable {
 
 	public BasePreferencesImpl(
 		long companyId, long ownerId, int ownerType,

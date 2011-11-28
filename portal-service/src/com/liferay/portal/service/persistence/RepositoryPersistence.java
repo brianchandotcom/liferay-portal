@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Repository;
 
 /**
@@ -282,6 +281,4 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Repository remove(Repository repository) throws SystemException;
 }

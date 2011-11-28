@@ -29,6 +29,9 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.layoutsadmin.action.EditLayoutsAction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -76,6 +79,14 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 					actionRequest,
 					portletConfig.getPortletName() + ".doRefresh",
 					PortletKeys.STAGING_BAR);
+
+				Map<String, String> data = new HashMap<String, String>();
+
+				data.put("preventNotification", Boolean.TRUE.toString());
+
+				SessionMessages.add(
+					actionRequest,
+					portletConfig.getPortletName() + ".doRefreshData", data);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

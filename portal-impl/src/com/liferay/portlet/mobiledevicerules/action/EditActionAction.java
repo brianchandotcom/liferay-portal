@@ -186,8 +186,7 @@ public class EditActionAction extends EditRuleAction {
 	protected void registerEditorJSP(Class<?> clazz, String jspPrefix) {
 		_editorJSPs.put(
 			clazz,
-			"/html/portlet/mobile_device_rules/action/" + jspPrefix +
-				"_action.jsp");
+			"/html/portlet/mobile_device_rules/action/" + jspPrefix + ".jsp");
 	}
 
 	protected void updateAction(ActionRequest actionRequest) throws Exception {

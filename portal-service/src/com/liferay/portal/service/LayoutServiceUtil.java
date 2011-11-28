@@ -413,6 +413,13 @@ public class LayoutServiceUtil {
 			preferencesValue);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Layout> getLayouts(
+		long groupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayouts(groupId, privateLayout);
+	}
+
 	/**
 	* Imports the layouts from the byte array.
 	*

@@ -17,7 +17,7 @@ package com.liferay.portalweb.portlet.addapplication.social;
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portlet.addapplication.social.searchactivities.SearchActivitiesTests;
 import com.liferay.portalweb.portlet.addapplication.social.searchrequests.SearchRequestsTests;
-import com.liferay.portalweb.portlet.addapplication.social.searchtopusers.SearchTopUsersTests;
+import com.liferay.portalweb.portlet.addapplication.social.searchuserstatistics.SearchUserStatisticsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ public class SocialTests extends BaseTests {
 
 		testSuite.addTest(SearchActivitiesTests.suite());
 		testSuite.addTest(SearchRequestsTests.suite());
-		testSuite.addTest(SearchTopUsersTests.suite());
+		testSuite.addTest(SearchUserStatisticsTests.suite());
 
 		return testSuite;
 	}

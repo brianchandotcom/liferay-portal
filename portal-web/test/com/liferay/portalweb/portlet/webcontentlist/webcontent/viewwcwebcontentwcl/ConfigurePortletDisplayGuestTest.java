@@ -47,6 +47,9 @@ public class ConfigurePortletDisplayGuestTest extends BaseTestCase {
 				"Please configure this portlet to make it visible to all users."),
 			selenium.getText(
 				"//div[@class='portlet-configuration portlet-msg-info']/a"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {

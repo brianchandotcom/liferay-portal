@@ -182,6 +182,23 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(resource);
+	}
+
+	@Override
+	public void clearCache(List<Resource> resources) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Resource resource : resources) {
+			EntityCacheUtil.removeResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceImpl.class, resource.getPrimaryKey());
+
+			clearUniqueFindersCache(resource);
+		}
+	}
+
+	protected void clearUniqueFindersCache(Resource resource) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 			new Object[] {
 				Long.valueOf(resource.getCodeId()),
@@ -210,24 +227,11 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 *
 	 * @param primaryKey the primary key of the resource
 	 * @return the resource that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceException if a resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Resource remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceId the primary key of the resource
-	 * @return the resource that was removed
-	 * @throws com.liferay.portal.NoSuchResourceException if a resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Resource remove(long resourceId)
 		throws NoSuchResourceException, SystemException {
 		Session session = null;
 
@@ -235,18 +239,18 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 			session = openSession();
 
 			Resource resource = (Resource)session.get(ResourceImpl.class,
-					Long.valueOf(resourceId));
+					primaryKey);
 
 			if (resource == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + resourceId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceId);
+					primaryKey);
 			}
 
-			return resourcePersistence.remove(resource);
+			return remove(resource);
 		}
 		catch (NoSuchResourceException nsee) {
 			throw nsee;
@@ -260,15 +264,16 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	}
 
 	/**
-	 * Removes the resource from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resource the resource
+	 * @param resourceId the primary key of the resource
 	 * @return the resource that was removed
+	 * @throws com.liferay.portal.NoSuchResourceException if a resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Resource remove(Resource resource) throws SystemException {
-		return super.remove(resource);
+	public Resource remove(long resourceId)
+		throws NoSuchResourceException, SystemException {
+		return remove(Long.valueOf(resourceId));
 	}
 
 	@Override
@@ -289,20 +294,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceModelImpl resourceModelImpl = (ResourceModelImpl)resource;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
-			new Object[] {
-				Long.valueOf(resourceModelImpl.getCodeId()),
-				
-			resourceModelImpl.getPrimKey()
-			});
-
-		EntityCacheUtil.removeResult(ResourceModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceImpl.class, resource.getPrimaryKey());
+		clearCache(resource);
 
 		return resource;
 	}
@@ -1118,7 +1110,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 */
 	public void removeByCodeId(long codeId) throws SystemException {
 		for (Resource resource : findByCodeId(codeId)) {
-			resourcePersistence.remove(resource);
+			remove(resource);
 		}
 	}
 
@@ -1133,7 +1125,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 		throws NoSuchResourceException, SystemException {
 		Resource resource = findByC_P(codeId, primKey);
 
-		resourcePersistence.remove(resource);
+		remove(resource);
 	}
 
 	/**
@@ -1143,7 +1135,7 @@ public class ResourcePersistenceImpl extends BasePersistenceImpl<Resource>
 	 */
 	public void removeAll() throws SystemException {
 		for (Resource resource : findAll()) {
-			resourcePersistence.remove(resource);
+			remove(resource);
 		}
 	}
 

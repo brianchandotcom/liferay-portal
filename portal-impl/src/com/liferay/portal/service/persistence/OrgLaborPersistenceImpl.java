@@ -167,6 +167,17 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<OrgLabor> orgLabors) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (OrgLabor orgLabor : orgLabors) {
+			EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+				OrgLaborImpl.class, orgLabor.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new org labor with the primary key. Does not add the org labor to the database.
 	 *
@@ -187,24 +198,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 *
 	 * @param primaryKey the primary key of the org labor
 	 * @return the org labor that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a org labor with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param orgLaborId the primary key of the org labor
-	 * @return the org labor that was removed
-	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public OrgLabor remove(long orgLaborId)
 		throws NoSuchOrgLaborException, SystemException {
 		Session session = null;
 
@@ -212,18 +210,18 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			session = openSession();
 
 			OrgLabor orgLabor = (OrgLabor)session.get(OrgLaborImpl.class,
-					Long.valueOf(orgLaborId));
+					primaryKey);
 
 			if (orgLabor == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + orgLaborId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchOrgLaborException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					orgLaborId);
+					primaryKey);
 			}
 
-			return orgLaborPersistence.remove(orgLabor);
+			return remove(orgLabor);
 		}
 		catch (NoSuchOrgLaborException nsee) {
 			throw nsee;
@@ -237,15 +235,16 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	}
 
 	/**
-	 * Removes the org labor from the database. Also notifies the appropriate model listeners.
+	 * Removes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param orgLabor the org labor
+	 * @param orgLaborId the primary key of the org labor
 	 * @return the org labor that was removed
+	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public OrgLabor remove(OrgLabor orgLabor) throws SystemException {
-		return super.remove(orgLabor);
+	public OrgLabor remove(long orgLaborId)
+		throws NoSuchOrgLaborException, SystemException {
+		return remove(Long.valueOf(orgLaborId));
 	}
 
 	@Override
@@ -266,11 +265,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-			OrgLaborImpl.class, orgLabor.getPrimaryKey());
+		clearCache(orgLabor);
 
 		return orgLabor;
 	}
@@ -939,7 +934,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public void removeByOrganizationId(long organizationId)
 		throws SystemException {
 		for (OrgLabor orgLabor : findByOrganizationId(organizationId)) {
-			orgLaborPersistence.remove(orgLabor);
+			remove(orgLabor);
 		}
 	}
 
@@ -950,7 +945,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	public void removeAll() throws SystemException {
 		for (OrgLabor orgLabor : findAll()) {
-			orgLaborPersistence.remove(orgLabor);
+			remove(orgLabor);
 		}
 	}
 

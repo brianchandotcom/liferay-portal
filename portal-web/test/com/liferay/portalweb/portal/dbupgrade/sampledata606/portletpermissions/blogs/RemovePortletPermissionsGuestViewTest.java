@@ -48,7 +48,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Blogs Portlet Permissions Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
@@ -93,7 +93,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Permissions",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Permissions"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean guestViewChecked = selenium.isChecked("15_ACTION_VIEW");
@@ -104,16 +104,18 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("15_ACTION_VIEW", RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@name='15_ACTION_VIEW']",
+					RuntimeVariables.replace("Guest View Checkbox"));
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request processed successfully."),
 					selenium.getText("//div[@id='p_p_id_86_']/div/div[1]"));
-				assertFalse(selenium.isChecked("15_ACTION_VIEW"));
+				assertFalse(selenium.isChecked(
+						"//input[@name='15_ACTION_VIEW']"));
 
 			case 100:
 				label = -1;

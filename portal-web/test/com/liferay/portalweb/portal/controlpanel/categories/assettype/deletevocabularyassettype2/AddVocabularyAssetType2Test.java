@@ -146,7 +146,7 @@ public class AddVocabularyAssetType2Test extends BaseTestCase {
 				}
 
 				selenium.select("//select[@id='_147_classNameId2']",
-					RuntimeVariables.replace("Message Boards Category"));
+					RuntimeVariables.replace("Web Content"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 

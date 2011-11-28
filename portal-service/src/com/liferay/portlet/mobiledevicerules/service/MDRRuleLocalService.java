@@ -297,6 +297,12 @@ public interface MDRRuleLocalService extends PersistedModelLocalService {
 		long ruleId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.mobiledevicerules.model.MDRRule getRule(
+		long ruleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> getRules(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -69,10 +69,12 @@ public class AddDLFolderImageTitleNullTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -134,10 +136,29 @@ public class AddDLFolderImageTitleNullTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("test_image.jpg"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("test_image.jpg")
+										.equals(selenium.getText(
+								"//h2[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("test_image.jpg"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='lfr-preview-file-content lfr-preview-image-content']/img"));
+				"//div[@class='lfr-preview-file-image-container']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image Description"),
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),

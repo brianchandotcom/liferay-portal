@@ -966,6 +966,19 @@ release was successful.</echo>
 			</fileset>
 		</chmod>
 
+		<replace file="${app.server.jboss.dir}/modules/javax/activation/api/main/module.xml">
+			<replacetoken><![CDATA[<resources>]]></replacetoken>
+			<replacevalue><![CDATA[
+					<dependencies>
+						<module name="javax.api" />
+						<module name="javax.mail.api">
+							<imports><include path="META-INF" /></imports>
+						</module>
+					</dependencies>
+				<resources>]]>
+			</replacevalue>
+		</replace>
+
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
 			<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>

@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertCannotEditAPEntryTest extends BaseTestCase {
 	public void testAssertCannotEditAPEntry() throws Exception {
-		selenium.open("/web/staging/");
+		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

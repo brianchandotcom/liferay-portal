@@ -200,6 +200,23 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(lock);
+	}
+
+	@Override
+	public void clearCache(List<Lock> locks) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Lock lock : locks) {
+			EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+				LockImpl.class, lock.getPrimaryKey());
+
+			clearUniqueFindersCache(lock);
+		}
+	}
+
+	protected void clearUniqueFindersCache(Lock lock) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
 			new Object[] { lock.getClassName(), lock.getKey() });
 	}
@@ -228,41 +245,29 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 *
 	 * @param primaryKey the primary key of the lock
 	 * @return the lock that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a lock with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Lock remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the lock with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param lockId the primary key of the lock
-	 * @return the lock that was removed
-	 * @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Lock remove(long lockId) throws NoSuchLockException, SystemException {
+		throws NoSuchLockException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Lock lock = (Lock)session.get(LockImpl.class, Long.valueOf(lockId));
+			Lock lock = (Lock)session.get(LockImpl.class, primaryKey);
 
 			if (lock == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + lockId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLockException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					lockId);
+					primaryKey);
 			}
 
-			return lockPersistence.remove(lock);
+			return remove(lock);
 		}
 		catch (NoSuchLockException nsee) {
 			throw nsee;
@@ -276,15 +281,15 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	/**
-	 * Removes the lock from the database. Also notifies the appropriate model listeners.
+	 * Removes the lock with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param lock the lock
+	 * @param lockId the primary key of the lock
 	 * @return the lock that was removed
+	 * @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Lock remove(Lock lock) throws SystemException {
-		return super.remove(lock);
+	public Lock remove(long lockId) throws NoSuchLockException, SystemException {
+		return remove(Long.valueOf(lockId));
 	}
 
 	@Override
@@ -305,16 +310,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		LockModelImpl lockModelImpl = (LockModelImpl)lock;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
-			new Object[] { lockModelImpl.getClassName(), lockModelImpl.getKey() });
-
-		EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-			LockImpl.class, lock.getPrimaryKey());
+		clearCache(lock);
 
 		return lock;
 	}
@@ -1540,7 +1536,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (Lock lock : findByUuid(uuid)) {
-			lockPersistence.remove(lock);
+			remove(lock);
 		}
 	}
 
@@ -1553,7 +1549,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	public void removeByLtExpirationDate(Date expirationDate)
 		throws SystemException {
 		for (Lock lock : findByLtExpirationDate(expirationDate)) {
-			lockPersistence.remove(lock);
+			remove(lock);
 		}
 	}
 
@@ -1568,7 +1564,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		throws NoSuchLockException, SystemException {
 		Lock lock = findByC_K(className, key);
 
-		lockPersistence.remove(lock);
+		remove(lock);
 	}
 
 	/**
@@ -1578,7 +1574,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	public void removeAll() throws SystemException {
 		for (Lock lock : findAll()) {
-			lockPersistence.remove(lock);
+			remove(lock);
 		}
 	}
 

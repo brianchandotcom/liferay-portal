@@ -318,6 +318,13 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		return _mdrActionLocalService.fetchAction(actionId);
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction getAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionLocalService.getAction(actionId);
+	}
+
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getActions(
 		long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {

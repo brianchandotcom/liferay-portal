@@ -98,11 +98,12 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"Media Gallery Permissions Test Folder"),
+				"Media Gallery Permissions Test Folder 2 Edited"),
 			selenium.getText(
 				"//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']"));
 		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 Edited - ']",
-			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
+			RuntimeVariables.replace(
+				"Media Gallery Permissions Test Folder 2 Edited"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(

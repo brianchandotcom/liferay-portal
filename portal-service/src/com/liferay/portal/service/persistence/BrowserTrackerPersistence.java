@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BrowserTracker;
 
 /**
@@ -213,7 +212,4 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public BrowserTracker remove(BrowserTracker browserTracker)
-		throws SystemException;
 }

@@ -43,7 +43,7 @@ public class ViewFolderEntryMyEntriesTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Entries", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Mine", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("link=Test Folder Entry"));
 		assertTrue(selenium.isElementPresent("link=http://www.liferay.com"));

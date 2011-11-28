@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.OrgLabor;
 
 /**
@@ -280,6 +279,4 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public OrgLabor remove(OrgLabor orgLabor) throws SystemException;
 }

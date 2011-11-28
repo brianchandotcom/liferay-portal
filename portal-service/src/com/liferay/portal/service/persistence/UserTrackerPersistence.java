@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserTracker;
 
 /**
@@ -528,7 +527,4 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public UserTracker remove(UserTracker userTracker)
-		throws SystemException;
 }

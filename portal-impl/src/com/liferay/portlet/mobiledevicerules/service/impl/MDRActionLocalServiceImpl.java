@@ -107,6 +107,12 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		return mdrActionPersistence.fetchByPrimaryKey(actionId);
 	}
 
+	public MDRAction getAction(long actionId)
+		throws PortalException, SystemException {
+
+		return mdrActionPersistence.findByPrimaryKey(actionId);
+	}
+
 	public List<MDRAction> getActions(long ruleGroupInstanceId)
 		throws SystemException {
 

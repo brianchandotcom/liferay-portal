@@ -158,6 +158,23 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(release);
+	}
+
+	@Override
+	public void clearCache(List<Release> releases) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Release release : releases) {
+			EntityCacheUtil.removeResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+				ReleaseImpl.class, release.getPrimaryKey());
+
+			clearUniqueFindersCache(release);
+		}
+	}
+
+	protected void clearUniqueFindersCache(Release release) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
 			new Object[] { release.getServletContextName() });
 	}
@@ -182,43 +199,29 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 *
 	 * @param primaryKey the primary key of the release
 	 * @return the release that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a release with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchReleaseException if a release with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Release remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the release with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param releaseId the primary key of the release
-	 * @return the release that was removed
-	 * @throws com.liferay.portal.NoSuchReleaseException if a release with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Release remove(long releaseId)
 		throws NoSuchReleaseException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Release release = (Release)session.get(ReleaseImpl.class,
-					Long.valueOf(releaseId));
+			Release release = (Release)session.get(ReleaseImpl.class, primaryKey);
 
 			if (release == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + releaseId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchReleaseException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					releaseId);
+					primaryKey);
 			}
 
-			return releasePersistence.remove(release);
+			return remove(release);
 		}
 		catch (NoSuchReleaseException nsee) {
 			throw nsee;
@@ -232,15 +235,16 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	/**
-	 * Removes the release from the database. Also notifies the appropriate model listeners.
+	 * Removes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param release the release
+	 * @param releaseId the primary key of the release
 	 * @return the release that was removed
+	 * @throws com.liferay.portal.NoSuchReleaseException if a release with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Release remove(Release release) throws SystemException {
-		return super.remove(release);
+	public Release remove(long releaseId)
+		throws NoSuchReleaseException, SystemException {
+		return remove(Long.valueOf(releaseId));
 	}
 
 	@Override
@@ -261,16 +265,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-			new Object[] { releaseModelImpl.getServletContextName() });
-
-		EntityCacheUtil.removeResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
-			ReleaseImpl.class, release.getPrimaryKey());
+		clearCache(release);
 
 		return release;
 	}
@@ -719,7 +714,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		throws NoSuchReleaseException, SystemException {
 		Release release = findByServletContextName(servletContextName);
 
-		releasePersistence.remove(release);
+		remove(release);
 	}
 
 	/**
@@ -729,7 +724,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	public void removeAll() throws SystemException {
 		for (Release release : findAll()) {
-			releasePersistence.remove(release);
+			remove(release);
 		}
 	}
 

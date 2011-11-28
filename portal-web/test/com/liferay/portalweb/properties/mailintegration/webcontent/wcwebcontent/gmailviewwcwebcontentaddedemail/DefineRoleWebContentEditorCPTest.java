@@ -51,13 +51,13 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Editor"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//td/a"));
 		assertEquals(RuntimeVariables.replace("Regular"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Editors are users who have full permissions and usage over all available Web Content"),
 			selenium.getText("//td[3]/a"));
-		selenium.clickAt("//td[1]/a",
+		selenium.clickAt("//td/a",
 			RuntimeVariables.replace("Web Content Editor"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Editor"),

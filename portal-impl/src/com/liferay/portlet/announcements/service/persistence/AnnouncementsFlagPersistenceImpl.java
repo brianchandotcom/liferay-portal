@@ -200,6 +200,23 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(announcementsFlag);
+	}
+
+	@Override
+	public void clearCache(List<AnnouncementsFlag> announcementsFlags) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
+			EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+				AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
+
+			clearUniqueFindersCache(announcementsFlag);
+		}
+	}
+
+	protected void clearUniqueFindersCache(AnnouncementsFlag announcementsFlag) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
 			new Object[] {
 				Long.valueOf(announcementsFlag.getUserId()),
@@ -228,24 +245,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 *
 	 * @param primaryKey the primary key of the announcements flag
 	 * @return the announcements flag that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a announcements flag with the primary key could not be found
+	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsFlag remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the announcements flag with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param flagId the primary key of the announcements flag
-	 * @return the announcements flag that was removed
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AnnouncementsFlag remove(long flagId)
 		throws NoSuchFlagException, SystemException {
 		Session session = null;
 
@@ -253,18 +257,18 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			session = openSession();
 
 			AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)session.get(AnnouncementsFlagImpl.class,
-					Long.valueOf(flagId));
+					primaryKey);
 
 			if (announcementsFlag == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + flagId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFlagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					flagId);
+					primaryKey);
 			}
 
-			return announcementsFlagPersistence.remove(announcementsFlag);
+			return remove(announcementsFlag);
 		}
 		catch (NoSuchFlagException nsee) {
 			throw nsee;
@@ -278,16 +282,16 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	}
 
 	/**
-	 * Removes the announcements flag from the database. Also notifies the appropriate model listeners.
+	 * Removes the announcements flag with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param announcementsFlag the announcements flag
+	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag that was removed
+	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AnnouncementsFlag remove(AnnouncementsFlag announcementsFlag)
-		throws SystemException {
-		return super.remove(announcementsFlag);
+	public AnnouncementsFlag remove(long flagId)
+		throws NoSuchFlagException, SystemException {
+		return remove(Long.valueOf(flagId));
 	}
 
 	@Override
@@ -309,20 +313,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_E_V,
-			new Object[] {
-				Long.valueOf(announcementsFlagModelImpl.getUserId()),
-				Long.valueOf(announcementsFlagModelImpl.getEntryId()),
-				Integer.valueOf(announcementsFlagModelImpl.getValue())
-			});
-
-		EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
+		clearCache(announcementsFlag);
 
 		return announcementsFlag;
 	}
@@ -1158,7 +1149,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	public void removeByEntryId(long entryId) throws SystemException {
 		for (AnnouncementsFlag announcementsFlag : findByEntryId(entryId)) {
-			announcementsFlagPersistence.remove(announcementsFlag);
+			remove(announcementsFlag);
 		}
 	}
 
@@ -1174,7 +1165,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		throws NoSuchFlagException, SystemException {
 		AnnouncementsFlag announcementsFlag = findByU_E_V(userId, entryId, value);
 
-		announcementsFlagPersistence.remove(announcementsFlag);
+		remove(announcementsFlag);
 	}
 
 	/**
@@ -1184,7 +1175,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	public void removeAll() throws SystemException {
 		for (AnnouncementsFlag announcementsFlag : findAll()) {
-			announcementsFlagPersistence.remove(announcementsFlag);
+			remove(announcementsFlag);
 		}
 	}
 

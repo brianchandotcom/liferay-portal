@@ -309,6 +309,23 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(ddmTemplate);
+	}
+
+	@Override
+	public void clearCache(List<DDMTemplate> ddmTemplates) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			EntityCacheUtil.removeResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+				DDMTemplateImpl.class, ddmTemplate.getPrimaryKey());
+
+			clearUniqueFindersCache(ddmTemplate);
+		}
+	}
+
+	protected void clearUniqueFindersCache(DDMTemplate ddmTemplate) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				ddmTemplate.getUuid(), Long.valueOf(ddmTemplate.getGroupId())
@@ -339,24 +356,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param primaryKey the primary key of the d d m template
 	 * @return the d d m template that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a d d m template with the primary key could not be found
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the d d m template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param templateId the primary key of the d d m template
-	 * @return the d d m template that was removed
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMTemplate remove(long templateId)
 		throws NoSuchTemplateException, SystemException {
 		Session session = null;
 
@@ -364,18 +368,18 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			session = openSession();
 
 			DDMTemplate ddmTemplate = (DDMTemplate)session.get(DDMTemplateImpl.class,
-					Long.valueOf(templateId));
+					primaryKey);
 
 			if (ddmTemplate == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + templateId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchTemplateException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					templateId);
+					primaryKey);
 			}
 
-			return ddmTemplatePersistence.remove(ddmTemplate);
+			return remove(ddmTemplate);
 		}
 		catch (NoSuchTemplateException nsee) {
 			throw nsee;
@@ -389,16 +393,16 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
-	 * Removes the d d m template from the database. Also notifies the appropriate model listeners.
+	 * Removes the d d m template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ddmTemplate the d d m template
+	 * @param templateId the primary key of the d d m template
 	 * @return the d d m template that was removed
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public DDMTemplate remove(DDMTemplate ddmTemplate)
-		throws SystemException {
-		return super.remove(ddmTemplate);
+	public DDMTemplate remove(long templateId)
+		throws NoSuchTemplateException, SystemException {
+		return remove(Long.valueOf(templateId));
 	}
 
 	@Override
@@ -420,19 +424,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		DDMTemplateModelImpl ddmTemplateModelImpl = (DDMTemplateModelImpl)ddmTemplate;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				ddmTemplateModelImpl.getUuid(),
-				Long.valueOf(ddmTemplateModelImpl.getGroupId())
-			});
-
-		EntityCacheUtil.removeResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			DDMTemplateImpl.class, ddmTemplate.getPrimaryKey());
+		clearCache(ddmTemplate);
 
 		return ddmTemplate;
 	}
@@ -3927,7 +3919,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (DDMTemplate ddmTemplate : findByUuid(uuid)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -3942,7 +3934,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		throws NoSuchTemplateException, SystemException {
 		DDMTemplate ddmTemplate = findByUUID_G(uuid, groupId);
 
-		ddmTemplatePersistence.remove(ddmTemplate);
+		remove(ddmTemplate);
 	}
 
 	/**
@@ -3953,7 +3945,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (DDMTemplate ddmTemplate : findByGroupId(groupId)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -3965,7 +3957,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public void removeByStructureId(long structureId) throws SystemException {
 		for (DDMTemplate ddmTemplate : findByStructureId(structureId)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -3977,7 +3969,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public void removeByType(String type) throws SystemException {
 		for (DDMTemplate ddmTemplate : findByType(type)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -3989,7 +3981,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public void removeByLanguage(String language) throws SystemException {
 		for (DDMTemplate ddmTemplate : findByLanguage(language)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -4003,7 +3995,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public void removeByS_T(long structureId, String type)
 		throws SystemException {
 		for (DDMTemplate ddmTemplate : findByS_T(structureId, type)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -4018,7 +4010,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public void removeByS_T_M(long structureId, String type, String mode)
 		throws SystemException {
 		for (DDMTemplate ddmTemplate : findByS_T_M(structureId, type, mode)) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 
@@ -4029,7 +4021,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	public void removeAll() throws SystemException {
 		for (DDMTemplate ddmTemplate : findAll()) {
-			ddmTemplatePersistence.remove(ddmTemplate);
+			remove(ddmTemplate);
 		}
 	}
 

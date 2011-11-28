@@ -332,6 +332,13 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		return _mdrRuleLocalService.fetchRule(ruleId);
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRRule getRule(
+		long ruleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleLocalService.getRule(ruleId);
+	}
+
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> getRules(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {

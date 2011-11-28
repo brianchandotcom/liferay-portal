@@ -234,6 +234,23 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(mbStatsUser);
+	}
+
+	@Override
+	public void clearCache(List<MBStatsUser> mbStatsUsers) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (MBStatsUser mbStatsUser : mbStatsUsers) {
+			EntityCacheUtil.removeResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+				MBStatsUserImpl.class, mbStatsUser.getPrimaryKey());
+
+			clearUniqueFindersCache(mbStatsUser);
+		}
+	}
+
+	protected void clearUniqueFindersCache(MBStatsUser mbStatsUser) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
 			new Object[] {
 				Long.valueOf(mbStatsUser.getGroupId()),
@@ -261,24 +278,11 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 *
 	 * @param primaryKey the primary key of the message boards stats user
 	 * @return the message boards stats user that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a message boards stats user with the primary key could not be found
+	 * @throws com.liferay.portlet.messageboards.NoSuchStatsUserException if a message boards stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBStatsUser remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param statsUserId the primary key of the message boards stats user
-	 * @return the message boards stats user that was removed
-	 * @throws com.liferay.portlet.messageboards.NoSuchStatsUserException if a message boards stats user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public MBStatsUser remove(long statsUserId)
 		throws NoSuchStatsUserException, SystemException {
 		Session session = null;
 
@@ -286,18 +290,18 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			session = openSession();
 
 			MBStatsUser mbStatsUser = (MBStatsUser)session.get(MBStatsUserImpl.class,
-					Long.valueOf(statsUserId));
+					primaryKey);
 
 			if (mbStatsUser == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + statsUserId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchStatsUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					statsUserId);
+					primaryKey);
 			}
 
-			return mbStatsUserPersistence.remove(mbStatsUser);
+			return remove(mbStatsUser);
 		}
 		catch (NoSuchStatsUserException nsee) {
 			throw nsee;
@@ -311,16 +315,16 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	}
 
 	/**
-	 * Removes the message boards stats user from the database. Also notifies the appropriate model listeners.
+	 * Removes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param mbStatsUser the message boards stats user
+	 * @param statsUserId the primary key of the message boards stats user
 	 * @return the message boards stats user that was removed
+	 * @throws com.liferay.portlet.messageboards.NoSuchStatsUserException if a message boards stats user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public MBStatsUser remove(MBStatsUser mbStatsUser)
-		throws SystemException {
-		return super.remove(mbStatsUser);
+	public MBStatsUser remove(long statsUserId)
+		throws NoSuchStatsUserException, SystemException {
+		return remove(Long.valueOf(statsUserId));
 	}
 
 	@Override
@@ -342,19 +346,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		MBStatsUserModelImpl mbStatsUserModelImpl = (MBStatsUserModelImpl)mbStatsUser;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
-			new Object[] {
-				Long.valueOf(mbStatsUserModelImpl.getGroupId()),
-				Long.valueOf(mbStatsUserModelImpl.getUserId())
-			});
-
-		EntityCacheUtil.removeResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			MBStatsUserImpl.class, mbStatsUser.getPrimaryKey());
+		clearCache(mbStatsUser);
 
 		return mbStatsUser;
 	}
@@ -1953,7 +1945,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (MBStatsUser mbStatsUser : findByGroupId(groupId)) {
-			mbStatsUserPersistence.remove(mbStatsUser);
+			remove(mbStatsUser);
 		}
 	}
 
@@ -1965,7 +1957,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (MBStatsUser mbStatsUser : findByUserId(userId)) {
-			mbStatsUserPersistence.remove(mbStatsUser);
+			remove(mbStatsUser);
 		}
 	}
 
@@ -1980,7 +1972,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		throws NoSuchStatsUserException, SystemException {
 		MBStatsUser mbStatsUser = findByG_U(groupId, userId);
 
-		mbStatsUserPersistence.remove(mbStatsUser);
+		remove(mbStatsUser);
 	}
 
 	/**
@@ -1995,7 +1987,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		throws SystemException {
 		for (MBStatsUser mbStatsUser : findByG_NotU_NotM(groupId, userId,
 				messageCount)) {
-			mbStatsUserPersistence.remove(mbStatsUser);
+			remove(mbStatsUser);
 		}
 	}
 
@@ -2006,7 +1998,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	public void removeAll() throws SystemException {
 		for (MBStatsUser mbStatsUser : findAll()) {
-			mbStatsUserPersistence.remove(mbStatsUser);
+			remove(mbStatsUser);
 		}
 	}
 

@@ -394,6 +394,16 @@ public class SocialActivityCounterLocalServiceImpl
 			return true;
 		}
 
+		AssetEntry assetEntry = activity.getAssetEntry();
+
+		String name = activityCounterDefinition.getName();
+
+		if ((user.getUserId() == assetEntry.getUserId()) &&
+			!name.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+
+			return false;
+		}
+
 		SocialActivityLimit activityLimit =
 			socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
 				activity.getGroupId(), user.getUserId(),

@@ -206,6 +206,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<UserTracker> userTrackers) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (UserTracker userTracker : userTrackers) {
+			EntityCacheUtil.removeResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+				UserTrackerImpl.class, userTracker.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new user tracker with the primary key. Does not add the user tracker to the database.
 	 *
@@ -226,24 +237,11 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 *
 	 * @param primaryKey the primary key of the user tracker
 	 * @return the user tracker that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user tracker with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserTracker remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userTrackerId the primary key of the user tracker
-	 * @return the user tracker that was removed
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker remove(long userTrackerId)
 		throws NoSuchUserTrackerException, SystemException {
 		Session session = null;
 
@@ -251,18 +249,18 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			session = openSession();
 
 			UserTracker userTracker = (UserTracker)session.get(UserTrackerImpl.class,
-					Long.valueOf(userTrackerId));
+					primaryKey);
 
 			if (userTracker == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + userTrackerId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserTrackerException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userTrackerId);
+					primaryKey);
 			}
 
-			return userTrackerPersistence.remove(userTracker);
+			return remove(userTracker);
 		}
 		catch (NoSuchUserTrackerException nsee) {
 			throw nsee;
@@ -276,16 +274,16 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	}
 
 	/**
-	 * Removes the user tracker from the database. Also notifies the appropriate model listeners.
+	 * Removes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userTracker the user tracker
+	 * @param userTrackerId the primary key of the user tracker
 	 * @return the user tracker that was removed
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public UserTracker remove(UserTracker userTracker)
-		throws SystemException {
-		return super.remove(userTracker);
+	public UserTracker remove(long userTrackerId)
+		throws NoSuchUserTrackerException, SystemException {
+		return remove(Long.valueOf(userTrackerId));
 	}
 
 	@Override
@@ -307,11 +305,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerImpl.class, userTracker.getPrimaryKey());
+		clearCache(userTracker);
 
 		return userTracker;
 	}
@@ -1698,7 +1692,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (UserTracker userTracker : findByCompanyId(companyId)) {
-			userTrackerPersistence.remove(userTracker);
+			remove(userTracker);
 		}
 	}
 
@@ -1710,7 +1704,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (UserTracker userTracker : findByUserId(userId)) {
-			userTrackerPersistence.remove(userTracker);
+			remove(userTracker);
 		}
 	}
 
@@ -1722,7 +1716,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public void removeBySessionId(String sessionId) throws SystemException {
 		for (UserTracker userTracker : findBySessionId(sessionId)) {
-			userTrackerPersistence.remove(userTracker);
+			remove(userTracker);
 		}
 	}
 
@@ -1733,7 +1727,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public void removeAll() throws SystemException {
 		for (UserTracker userTracker : findAll()) {
-			userTrackerPersistence.remove(userTracker);
+			remove(userTracker);
 		}
 	}
 

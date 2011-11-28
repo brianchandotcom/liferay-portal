@@ -28,6 +28,14 @@ if (selLayout != null) {
 
 	selTheme = selLayout.getTheme();
 }
+
+String layoutTemplateId = StringPool.BLANK;
+
+if (selLayoutTypePortlet != null) {
+	layoutTemplateId = selLayoutTypePortlet.getLayoutTemplateId();
+}
+
+List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
 %>
 
 <liferay-ui:error-marker key="errorSection" value="layout" />
@@ -36,51 +44,4 @@ if (selLayout != null) {
 
 <h3><liferay-ui:message key="layout" /></h3>
 
-<aui:fieldset>
-	<aui:layout cssClass="lfr-page-layouts">
-
-		<%
-		List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-
-		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
-
-		int i = 0;
-
-		for (int j = 0; j < _COLUMNS_COUNT; j++) {
-			int columnLayoutTemplatesCount = layoutTemplates.size() / _COLUMNS_COUNT;
-
-			if (j < (layoutTemplates.size() % _COLUMNS_COUNT)) {
-				columnLayoutTemplatesCount++;
-			}
-		%>
-
-			<aui:column columnWidth="<%= 100 / _COLUMNS_COUNT %>" cssClass="lfr-layout-template-column">
-
-				<%
-				for (int k = 0; k < columnLayoutTemplatesCount; k++) {
-					LayoutTemplate layoutTemplate = (LayoutTemplate)layoutTemplates.get(i);
-				%>
-
-					<div class="lfr-layout-template">
-						<img alt="" class="layout-template-entry modify-link <%= selLayoutTypePortlet.getLayoutTemplateId().equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" onclick="document.getElementById('<portlet:namespace />layoutTemplateId<%= i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= layoutTemplate.getThumbnailPath() %>" />
-
-						<aui:input checked="<%= selLayoutTypePortlet.getLayoutTemplateId().equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= "layoutTemplateId" + i %>' label="<%= layoutTemplate.getName() %>" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
-					</div>
-
-				<%
-					i++;
-				}
-				%>
-
-			</aui:column>
-
-		<%
-		}
-		%>
-
-	</aui:layout>
-</aui:fieldset>
-
-<%!
-private static final int _COLUMNS_COUNT = 3;
-%>
+<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>

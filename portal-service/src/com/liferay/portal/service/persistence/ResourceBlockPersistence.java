@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceBlock;
 
 /**
@@ -510,7 +509,4 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ResourceBlock remove(ResourceBlock resourceBlock)
-		throws SystemException;
 }

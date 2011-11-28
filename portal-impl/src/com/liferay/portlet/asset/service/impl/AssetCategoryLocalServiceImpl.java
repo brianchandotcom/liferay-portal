@@ -497,7 +497,7 @@ public class AssetCategoryLocalServiceImpl
 			ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
 	}
 
-	protected void updateChildrenVocabularyId (
+	protected void updateChildrenVocabularyId(
 			AssetCategory category, long vocabularyId)
 		throws SystemException {
 

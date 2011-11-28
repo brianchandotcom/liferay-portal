@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.shopping.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.shopping.model.ShoppingItem;
@@ -677,7 +676,4 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public boolean containsShoppingItemPrices(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ShoppingItem remove(ShoppingItem shoppingItem)
-		throws SystemException;
 }

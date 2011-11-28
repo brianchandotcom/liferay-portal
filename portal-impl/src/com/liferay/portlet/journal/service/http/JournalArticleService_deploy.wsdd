@@ -67,6 +67,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="layoutUuid" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getDisplayArticleByUrlTitle" qname="operNS:getDisplayArticleByUrlTitle" returnQName="getDisplayArticleByUrlTitleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="urlTitle" type="tns:string"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getLatestArticle" qname="operNS:getLatestArticle" returnQName="getLatestArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourcePrimKey" type="tns:long"></parameter>
 		</operation>
@@ -227,7 +231,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="copyArticle deleteArticle expireArticle getArticle getArticleByUrlTitle getArticlesByLayoutUuid getLatestArticle removeArticleLocale search searchCount subscribe unsubscribe updateArticle updateArticleTranslation updateContent" />
+		<parameter name="allowedMethods" value="copyArticle deleteArticle expireArticle getArticle getArticleByUrlTitle getArticlesByLayoutUuid getDisplayArticleByUrlTitle getLatestArticle removeArticleLocale search searchCount subscribe unsubscribe updateArticle updateArticleTranslation updateContent" />
 		<parameter name="className" value="com.liferay.portlet.journal.service.http.JournalArticleServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.journal.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.journal.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

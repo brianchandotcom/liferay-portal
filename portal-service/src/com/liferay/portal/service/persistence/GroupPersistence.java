@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 
 /**
@@ -1745,6 +1744,4 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	public void setUsers(long pk,
 		java.util.List<com.liferay.portal.model.User> users)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Group remove(Group group) throws SystemException;
 }

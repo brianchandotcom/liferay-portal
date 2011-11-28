@@ -52,7 +52,6 @@ public class PageTests extends BaseTests {
 		testSuite.addTest(SavePageTypePanelTests.suite());
 		testSuite.addTest(SavePageTypePortletTests.suite());
 		testSuite.addTest(SavePageTypeURLTests.suite());
-		//testSuite.addTest(SavePageTypeWebContentTests.suite());
 		testSuite.addTest(SetDisplayOrderTests.suite());
 
 		return testSuite;

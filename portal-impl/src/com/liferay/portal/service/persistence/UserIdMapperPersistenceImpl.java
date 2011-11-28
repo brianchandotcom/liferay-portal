@@ -199,6 +199,23 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(userIdMapper);
+	}
+
+	@Override
+	public void clearCache(List<UserIdMapper> userIdMappers) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (UserIdMapper userIdMapper : userIdMappers) {
+			EntityCacheUtil.removeResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
+				UserIdMapperImpl.class, userIdMapper.getPrimaryKey());
+
+			clearUniqueFindersCache(userIdMapper);
+		}
+	}
+
+	protected void clearUniqueFindersCache(UserIdMapper userIdMapper) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
 			new Object[] {
 				Long.valueOf(userIdMapper.getUserId()),
@@ -234,24 +251,11 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param primaryKey the primary key of the user ID mapper
 	 * @return the user ID mapper that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a user ID mapper with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userIdMapperId the primary key of the user ID mapper
-	 * @return the user ID mapper that was removed
-	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserIdMapper remove(long userIdMapperId)
 		throws NoSuchUserIdMapperException, SystemException {
 		Session session = null;
 
@@ -259,19 +263,18 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			session = openSession();
 
 			UserIdMapper userIdMapper = (UserIdMapper)session.get(UserIdMapperImpl.class,
-					Long.valueOf(userIdMapperId));
+					primaryKey);
 
 			if (userIdMapper == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						userIdMapperId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchUserIdMapperException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					userIdMapperId);
+					primaryKey);
 			}
 
-			return userIdMapperPersistence.remove(userIdMapper);
+			return remove(userIdMapper);
 		}
 		catch (NoSuchUserIdMapperException nsee) {
 			throw nsee;
@@ -285,16 +288,16 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	/**
-	 * Removes the user ID mapper from the database. Also notifies the appropriate model listeners.
+	 * Removes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userIdMapper the user ID mapper
+	 * @param userIdMapperId the primary key of the user ID mapper
 	 * @return the user ID mapper that was removed
+	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public UserIdMapper remove(UserIdMapper userIdMapper)
-		throws SystemException {
-		return super.remove(userIdMapper);
+	public UserIdMapper remove(long userIdMapperId)
+		throws NoSuchUserIdMapperException, SystemException {
+		return remove(Long.valueOf(userIdMapperId));
 	}
 
 	@Override
@@ -316,27 +319,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		UserIdMapperModelImpl userIdMapperModelImpl = (UserIdMapperModelImpl)userIdMapper;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T,
-			new Object[] {
-				Long.valueOf(userIdMapperModelImpl.getUserId()),
-				
-			userIdMapperModelImpl.getType()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_E,
-			new Object[] {
-				userIdMapperModelImpl.getType(),
-				
-			userIdMapperModelImpl.getExternalUserId()
-			});
-
-		EntityCacheUtil.removeResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-			UserIdMapperImpl.class, userIdMapper.getPrimaryKey());
+		clearCache(userIdMapper);
 
 		return userIdMapper;
 	}
@@ -1352,7 +1335,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	public void removeByUserId(long userId) throws SystemException {
 		for (UserIdMapper userIdMapper : findByUserId(userId)) {
-			userIdMapperPersistence.remove(userIdMapper);
+			remove(userIdMapper);
 		}
 	}
 
@@ -1367,7 +1350,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		throws NoSuchUserIdMapperException, SystemException {
 		UserIdMapper userIdMapper = findByU_T(userId, type);
 
-		userIdMapperPersistence.remove(userIdMapper);
+		remove(userIdMapper);
 	}
 
 	/**
@@ -1381,7 +1364,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		throws NoSuchUserIdMapperException, SystemException {
 		UserIdMapper userIdMapper = findByT_E(type, externalUserId);
 
-		userIdMapperPersistence.remove(userIdMapper);
+		remove(userIdMapper);
 	}
 
 	/**
@@ -1391,7 +1374,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	public void removeAll() throws SystemException {
 		for (UserIdMapper userIdMapper : findAll()) {
-			userIdMapperPersistence.remove(userIdMapper);
+			remove(userIdMapper);
 		}
 	}
 

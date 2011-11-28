@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Shard;
 
 /**
@@ -270,6 +269,4 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Shard remove(Shard shard) throws SystemException;
 }

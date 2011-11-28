@@ -40,15 +40,17 @@ public class AddPagePageLayoutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Layout Community"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/span", RuntimeVariables.replace(""));
+		selenium.clickAt("//strong/span", RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,12 +68,13 @@ public class AddPagePageLayoutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Manage Pages", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Manage Pages",
+			RuntimeVariables.replace("Manage Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name_en_US",
+		selenium.type("//input[@name='_134_name_en_US']",
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.clickAt("//input[@value='Add Page']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("link=Page Layout Page"));
 	}

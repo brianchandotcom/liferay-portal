@@ -40,20 +40,22 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Scope Community"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td[1]/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Public Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Blogs Page Scope Current Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Scope Current Page"),
 			selenium.getText("//div[@class='entry-title']/a"));
@@ -78,7 +80,7 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Page Scope Default",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Page Scope Default"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("Blogs Entry Scope Current Page"));
 		assertFalse(selenium.isElementPresent("//div[@class='entry-title']/a"));

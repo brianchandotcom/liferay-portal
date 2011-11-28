@@ -234,6 +234,23 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(assetTagProperty);
+	}
+
+	@Override
+	public void clearCache(List<AssetTagProperty> assetTagProperties) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (AssetTagProperty assetTagProperty : assetTagProperties) {
+			EntityCacheUtil.removeResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
+				AssetTagPropertyImpl.class, assetTagProperty.getPrimaryKey());
+
+			clearUniqueFindersCache(assetTagProperty);
+		}
+	}
+
+	protected void clearUniqueFindersCache(AssetTagProperty assetTagProperty) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K,
 			new Object[] {
 				Long.valueOf(assetTagProperty.getTagId()),
@@ -262,24 +279,11 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param primaryKey the primary key of the asset tag property
 	 * @return the asset tag property that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a asset tag property with the primary key could not be found
+	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the asset tag property with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param tagPropertyId the primary key of the asset tag property
-	 * @return the asset tag property that was removed
-	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetTagProperty remove(long tagPropertyId)
 		throws NoSuchTagPropertyException, SystemException {
 		Session session = null;
 
@@ -287,18 +291,18 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			session = openSession();
 
 			AssetTagProperty assetTagProperty = (AssetTagProperty)session.get(AssetTagPropertyImpl.class,
-					Long.valueOf(tagPropertyId));
+					primaryKey);
 
 			if (assetTagProperty == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + tagPropertyId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchTagPropertyException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					tagPropertyId);
+					primaryKey);
 			}
 
-			return assetTagPropertyPersistence.remove(assetTagProperty);
+			return remove(assetTagProperty);
 		}
 		catch (NoSuchTagPropertyException nsee) {
 			throw nsee;
@@ -312,16 +316,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	}
 
 	/**
-	 * Removes the asset tag property from the database. Also notifies the appropriate model listeners.
+	 * Removes the asset tag property with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param assetTagProperty the asset tag property
+	 * @param tagPropertyId the primary key of the asset tag property
 	 * @return the asset tag property that was removed
+	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public AssetTagProperty remove(AssetTagProperty assetTagProperty)
-		throws SystemException {
-		return super.remove(assetTagProperty);
+	public AssetTagProperty remove(long tagPropertyId)
+		throws NoSuchTagPropertyException, SystemException {
+		return remove(Long.valueOf(tagPropertyId));
 	}
 
 	@Override
@@ -343,20 +347,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		AssetTagPropertyModelImpl assetTagPropertyModelImpl = (AssetTagPropertyModelImpl)assetTagProperty;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_K,
-			new Object[] {
-				Long.valueOf(assetTagPropertyModelImpl.getTagId()),
-				
-			assetTagPropertyModelImpl.getKey()
-			});
-
-		EntityCacheUtil.removeResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagPropertyImpl.class, assetTagProperty.getPrimaryKey());
+		clearCache(assetTagProperty);
 
 		return assetTagProperty;
 	}
@@ -1983,7 +1974,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (AssetTagProperty assetTagProperty : findByCompanyId(companyId)) {
-			assetTagPropertyPersistence.remove(assetTagProperty);
+			remove(assetTagProperty);
 		}
 	}
 
@@ -1995,7 +1986,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 */
 	public void removeByTagId(long tagId) throws SystemException {
 		for (AssetTagProperty assetTagProperty : findByTagId(tagId)) {
-			assetTagPropertyPersistence.remove(assetTagProperty);
+			remove(assetTagProperty);
 		}
 	}
 
@@ -2009,7 +2000,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public void removeByC_K(long companyId, String key)
 		throws SystemException {
 		for (AssetTagProperty assetTagProperty : findByC_K(companyId, key)) {
-			assetTagPropertyPersistence.remove(assetTagProperty);
+			remove(assetTagProperty);
 		}
 	}
 
@@ -2024,7 +2015,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		throws NoSuchTagPropertyException, SystemException {
 		AssetTagProperty assetTagProperty = findByT_K(tagId, key);
 
-		assetTagPropertyPersistence.remove(assetTagProperty);
+		remove(assetTagProperty);
 	}
 
 	/**
@@ -2034,7 +2025,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 */
 	public void removeAll() throws SystemException {
 		for (AssetTagProperty assetTagProperty : findAll()) {
-			assetTagPropertyPersistence.remove(assetTagProperty);
+			remove(assetTagProperty);
 		}
 	}
 

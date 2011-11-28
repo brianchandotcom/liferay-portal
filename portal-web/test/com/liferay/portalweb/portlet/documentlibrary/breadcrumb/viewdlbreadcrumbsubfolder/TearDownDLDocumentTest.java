@@ -119,6 +119,24 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 
 			case 3:
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='portlet-msg-info']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace(
 						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

@@ -326,9 +326,16 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getRuleGroupInstance(
+		long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstance(ruleGroupInstanceId);
+	}
+
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getRuleGroupInstance(
 		java.lang.String className, long classPK, long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstance(className,
 			classPK, ruleGroupId);
 	}

@@ -266,6 +266,23 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(role);
+	}
+
+	@Override
+	public void clearCache(List<Role> roles) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Role role : roles) {
+			EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+				RoleImpl.class, role.getPrimaryKey());
+
+			clearUniqueFindersCache(role);
+		}
+	}
+
+	protected void clearUniqueFindersCache(Role role) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { Long.valueOf(role.getCompanyId()), role.getName() });
 
@@ -297,41 +314,29 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 *
 	 * @param primaryKey the primary key of the role
 	 * @return the role that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a role with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchRoleException if a role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Role remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param roleId the primary key of the role
-	 * @return the role that was removed
-	 * @throws com.liferay.portal.NoSuchRoleException if a role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Role remove(long roleId) throws NoSuchRoleException, SystemException {
+		throws NoSuchRoleException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Role role = (Role)session.get(RoleImpl.class, Long.valueOf(roleId));
+			Role role = (Role)session.get(RoleImpl.class, primaryKey);
 
 			if (role == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + roleId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchRoleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					roleId);
+					primaryKey);
 			}
 
-			return rolePersistence.remove(role);
+			return remove(role);
 		}
 		catch (NoSuchRoleException nsee) {
 			throw nsee;
@@ -345,15 +350,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	/**
-	 * Removes the role from the database. Also notifies the appropriate model listeners.
+	 * Removes the role with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param role the role
+	 * @param roleId the primary key of the role
 	 * @return the role that was removed
+	 * @throws com.liferay.portal.NoSuchRoleException if a role with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Role remove(Role role) throws SystemException {
-		return super.remove(role);
+	public Role remove(long roleId) throws NoSuchRoleException, SystemException {
+		return remove(Long.valueOf(roleId));
 	}
 
 	@Override
@@ -404,27 +409,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		RoleModelImpl roleModelImpl = (RoleModelImpl)role;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
-			new Object[] {
-				Long.valueOf(roleModelImpl.getCompanyId()),
-				
-			roleModelImpl.getName()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C,
-			new Object[] {
-				Long.valueOf(roleModelImpl.getCompanyId()),
-				Long.valueOf(roleModelImpl.getClassNameId()),
-				Long.valueOf(roleModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-			RoleImpl.class, role.getPrimaryKey());
+		clearCache(role);
 
 		return role;
 	}
@@ -3922,7 +3907,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Role role : findByCompanyId(companyId)) {
-			rolePersistence.remove(role);
+			remove(role);
 		}
 	}
 
@@ -3934,7 +3919,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public void removeByName(String name) throws SystemException {
 		for (Role role : findByName(name)) {
-			rolePersistence.remove(role);
+			remove(role);
 		}
 	}
 
@@ -3946,7 +3931,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public void removeBySubtype(String subtype) throws SystemException {
 		for (Role role : findBySubtype(subtype)) {
-			rolePersistence.remove(role);
+			remove(role);
 		}
 	}
 
@@ -3961,7 +3946,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		throws NoSuchRoleException, SystemException {
 		Role role = findByC_N(companyId, name);
 
-		rolePersistence.remove(role);
+		remove(role);
 	}
 
 	/**
@@ -3973,7 +3958,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public void removeByT_S(int type, String subtype) throws SystemException {
 		for (Role role : findByT_S(type, subtype)) {
-			rolePersistence.remove(role);
+			remove(role);
 		}
 	}
 
@@ -3989,7 +3974,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		throws NoSuchRoleException, SystemException {
 		Role role = findByC_C_C(companyId, classNameId, classPK);
 
-		rolePersistence.remove(role);
+		remove(role);
 	}
 
 	/**
@@ -3999,7 +3984,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	public void removeAll() throws SystemException {
 		for (Role role : findAll()) {
-			rolePersistence.remove(role);
+			remove(role);
 		}
 	}
 
@@ -6077,23 +6062,23 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		containsGroup = new ContainsGroup(this);
+		containsGroup = new ContainsGroup();
 
-		addGroup = new AddGroup(this);
-		clearGroups = new ClearGroups(this);
-		removeGroup = new RemoveGroup(this);
+		addGroup = new AddGroup();
+		clearGroups = new ClearGroups();
+		removeGroup = new RemoveGroup();
 
-		containsPermission = new ContainsPermission(this);
+		containsPermission = new ContainsPermission();
 
-		addPermission = new AddPermission(this);
-		clearPermissions = new ClearPermissions(this);
-		removePermission = new RemovePermission(this);
+		addPermission = new AddPermission();
+		clearPermissions = new ClearPermissions();
+		removePermission = new RemovePermission();
 
-		containsUser = new ContainsUser(this);
+		containsUser = new ContainsUser();
 
-		addUser = new AddUser(this);
-		clearUsers = new ClearUsers(this);
-		removeUser = new RemoveUser(this);
+		addUser = new AddUser();
+		clearUsers = new ClearUsers();
+		removeUser = new RemoveUser();
 	}
 
 	public void destroy() {
@@ -6246,9 +6231,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected RemoveUser removeUser;
 
 	protected class ContainsGroup {
-		protected ContainsGroup(RolePersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSGROUP,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6275,15 +6258,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected class AddGroup {
-		protected AddGroup(RolePersistenceImpl persistenceImpl) {
+		protected AddGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Groups_Roles (roleId, groupId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long roleId, long groupId) throws SystemException {
-			if (!_persistenceImpl.containsGroup.contains(roleId, groupId)) {
+			if (!containsGroup.contains(roleId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<Role> listener : listeners) {
@@ -6313,11 +6295,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private RolePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearGroups {
-		protected ClearGroups(RolePersistenceImpl persistenceImpl) {
+		protected ClearGroups() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Roles WHERE roleId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6367,16 +6348,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected class RemoveGroup {
-		protected RemoveGroup(RolePersistenceImpl persistenceImpl) {
+		protected RemoveGroup() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Groups_Roles WHERE roleId = ? AND groupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long roleId, long groupId)
 			throws SystemException {
-			if (_persistenceImpl.containsGroup.contains(roleId, groupId)) {
+			if (containsGroup.contains(roleId, groupId)) {
 				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
 
 				for (ModelListener<Role> listener : listeners) {
@@ -6406,13 +6386,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private RolePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsPermission {
-		protected ContainsPermission(RolePersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsPermission() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSPERMISSION,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6439,17 +6416,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected class AddPermission {
-		protected AddPermission(RolePersistenceImpl persistenceImpl) {
+		protected AddPermission() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Roles_Permissions (roleId, permissionId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long roleId, long permissionId)
 			throws SystemException {
-			if (!_persistenceImpl.containsPermission.contains(roleId,
-						permissionId)) {
+			if (!containsPermission.contains(roleId, permissionId)) {
 				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
 					permissionPersistence.getListeners();
 
@@ -6482,11 +6457,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private RolePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearPermissions {
-		protected ClearPermissions(RolePersistenceImpl persistenceImpl) {
+		protected ClearPermissions() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Roles_Permissions WHERE roleId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6537,17 +6511,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected class RemovePermission {
-		protected RemovePermission(RolePersistenceImpl persistenceImpl) {
+		protected RemovePermission() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Roles_Permissions WHERE roleId = ? AND permissionId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long roleId, long permissionId)
 			throws SystemException {
-			if (_persistenceImpl.containsPermission.contains(roleId,
-						permissionId)) {
+			if (containsPermission.contains(roleId, permissionId)) {
 				ModelListener<com.liferay.portal.model.Permission>[] permissionListeners =
 					permissionPersistence.getListeners();
 
@@ -6580,13 +6552,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private RolePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ContainsUser {
-		protected ContainsUser(RolePersistenceImpl persistenceImpl) {
-			super();
-
+		protected ContainsUser() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
 					_SQL_CONTAINSUSER,
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
@@ -6613,15 +6582,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected class AddUser {
-		protected AddUser(RolePersistenceImpl persistenceImpl) {
+		protected AddUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"INSERT INTO Users_Roles (roleId, userId) VALUES (?, ?)",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void add(long roleId, long userId) throws SystemException {
-			if (!_persistenceImpl.containsUser.contains(roleId, userId)) {
+			if (!containsUser.contains(roleId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Role> listener : listeners) {
@@ -6651,11 +6619,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private RolePersistenceImpl _persistenceImpl;
 	}
 
 	protected class ClearUsers {
-		protected ClearUsers(RolePersistenceImpl persistenceImpl) {
+		protected ClearUsers() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Roles WHERE roleId = ?",
 					new int[] { java.sql.Types.BIGINT });
@@ -6705,16 +6672,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	protected class RemoveUser {
-		protected RemoveUser(RolePersistenceImpl persistenceImpl) {
+		protected RemoveUser() {
 			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
 					"DELETE FROM Users_Roles WHERE roleId = ? AND userId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-			_persistenceImpl = persistenceImpl;
 		}
 
 		protected void remove(long roleId, long userId)
 			throws SystemException {
-			if (_persistenceImpl.containsUser.contains(roleId, userId)) {
+			if (containsUser.contains(roleId, userId)) {
 				ModelListener<com.liferay.portal.model.User>[] userListeners = userPersistence.getListeners();
 
 				for (ModelListener<Role> listener : listeners) {
@@ -6744,7 +6710,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		private SqlUpdate _sqlUpdate;
-		private RolePersistenceImpl _persistenceImpl;
 	}
 
 	private static final String _SQL_SELECT_ROLE = "SELECT role FROM Role role";

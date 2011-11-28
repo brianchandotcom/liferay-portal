@@ -1030,21 +1030,32 @@ if (themeDisplay.isStatePopUp()) {
 		if (Validator.isNull(doRefreshPortletId) && (portletResourcePortlet != null)) {
 			doRefreshPortletId = portletResourcePortlet.getPortletId();
 		}
+
+		Map<String, String> data = (Map<String, String>)SessionMessages.get(renderRequestImpl, portletConfig.getPortletName() + ".doRefreshData");
 %>
 
 		<aui:script position="inline" use="aui-base">
 			if (window.parent) {
-				var data = null;
+				var data = {
+					portletAjaxable: <%= !((portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable")) %>
 
-				var curPortletBoundaryId = '#p_p_id_<%= doRefreshPortletId %>_';
+					<c:if test="<%= data != null && data.size() > 0 %>">
 
-				<c:if test='<%= (portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletConfig.getPortletName() + ".notAjaxable") %>'>
-					data = {
-						portletAjaxable: false
-					};
-				</c:if>
+						<%
+						for (String key : data.keySet()) {
+						%>
 
-				Liferay.Util.getOpener().Liferay.Portlet.refresh(curPortletBoundaryId, data);
+							, '<%= key %>': <%= data.get(key) %>
+
+						<%
+						}
+						%>
+
+					</c:if>
+
+				};
+
+				Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= doRefreshPortletId %>_', data);
 			}
 		</aui:script>
 

@@ -32,5 +32,5 @@ Boolean hasLock = (Boolean)objArray[5];
 	image='<%= "../file_system/small/" + fileVersion.getIcon() %>'
 	label="<%= true %>"
 	message="<%= fileVersion.getExtension().toUpperCase() %>"
-	url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + fileEntry.getFolderId() + StringPool.SLASH + HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())) + "?version=" + fileVersion.getVersion() %>'
+	url="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 />

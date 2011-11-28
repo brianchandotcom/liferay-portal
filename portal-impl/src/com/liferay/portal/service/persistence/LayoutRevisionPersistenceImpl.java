@@ -359,6 +359,23 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(layoutRevision);
+	}
+
+	@Override
+	public void clearCache(List<LayoutRevision> layoutRevisions) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (LayoutRevision layoutRevision : layoutRevisions) {
+			EntityCacheUtil.removeResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutRevisionImpl.class, layoutRevision.getPrimaryKey());
+
+			clearUniqueFindersCache(layoutRevision);
+		}
+	}
+
+	protected void clearUniqueFindersCache(LayoutRevision layoutRevision) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_H_P,
 			new Object[] {
 				Long.valueOf(layoutRevision.getLayoutSetBranchId()),
@@ -387,24 +404,11 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 *
 	 * @param primaryKey the primary key of the layout revision
 	 * @return the layout revision that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a layout revision with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutRevision remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the layout revision with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutRevisionId the primary key of the layout revision
-	 * @return the layout revision that was removed
-	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public LayoutRevision remove(long layoutRevisionId)
 		throws NoSuchLayoutRevisionException, SystemException {
 		Session session = null;
 
@@ -412,19 +416,18 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			session = openSession();
 
 			LayoutRevision layoutRevision = (LayoutRevision)session.get(LayoutRevisionImpl.class,
-					Long.valueOf(layoutRevisionId));
+					primaryKey);
 
 			if (layoutRevision == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						layoutRevisionId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLayoutRevisionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					layoutRevisionId);
+					primaryKey);
 			}
 
-			return layoutRevisionPersistence.remove(layoutRevision);
+			return remove(layoutRevision);
 		}
 		catch (NoSuchLayoutRevisionException nsee) {
 			throw nsee;
@@ -438,16 +441,16 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
-	 * Removes the layout revision from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout revision with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutRevision the layout revision
+	 * @param layoutRevisionId the primary key of the layout revision
 	 * @return the layout revision that was removed
+	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public LayoutRevision remove(LayoutRevision layoutRevision)
-		throws SystemException {
-		return super.remove(layoutRevision);
+	public LayoutRevision remove(long layoutRevisionId)
+		throws NoSuchLayoutRevisionException, SystemException {
+		return remove(Long.valueOf(layoutRevisionId));
 	}
 
 	@Override
@@ -469,20 +472,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		LayoutRevisionModelImpl layoutRevisionModelImpl = (LayoutRevisionModelImpl)layoutRevision;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_L_H_P,
-			new Object[] {
-				Long.valueOf(layoutRevisionModelImpl.getLayoutSetBranchId()),
-				Boolean.valueOf(layoutRevisionModelImpl.getHead()),
-				Long.valueOf(layoutRevisionModelImpl.getPlid())
-			});
-
-		EntityCacheUtil.removeResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutRevisionImpl.class, layoutRevision.getPrimaryKey());
+		clearCache(layoutRevision);
 
 		return layoutRevision;
 	}
@@ -4160,7 +4150,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		throws SystemException {
 		for (LayoutRevision layoutRevision : findByLayoutSetBranchId(
 				layoutSetBranchId)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4172,7 +4162,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 */
 	public void removeByPlid(long plid) throws SystemException {
 		for (LayoutRevision layoutRevision : findByPlid(plid)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4186,7 +4176,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public void removeByL_H(long layoutSetBranchId, boolean head)
 		throws SystemException {
 		for (LayoutRevision layoutRevision : findByL_H(layoutSetBranchId, head)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4200,7 +4190,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public void removeByL_P(long layoutSetBranchId, long plid)
 		throws SystemException {
 		for (LayoutRevision layoutRevision : findByL_P(layoutSetBranchId, plid)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4214,7 +4204,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public void removeByL_S(long layoutSetBranchId, int status)
 		throws SystemException {
 		for (LayoutRevision layoutRevision : findByL_S(layoutSetBranchId, status)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4230,7 +4220,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		long plid) throws SystemException {
 		for (LayoutRevision layoutRevision : findByL_L_P(layoutSetBranchId,
 				layoutBranchId, plid)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4246,7 +4236,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		long parentLayoutRevisionId, long plid) throws SystemException {
 		for (LayoutRevision layoutRevision : findByL_P_P(layoutSetBranchId,
 				parentLayoutRevisionId, plid)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4263,7 +4253,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		LayoutRevision layoutRevision = findByL_H_P(layoutSetBranchId, head,
 				plid);
 
-		layoutRevisionPersistence.remove(layoutRevision);
+		remove(layoutRevision);
 	}
 
 	/**
@@ -4278,7 +4268,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		throws SystemException {
 		for (LayoutRevision layoutRevision : findByL_P_S(layoutSetBranchId,
 				plid, status)) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 
@@ -4289,7 +4279,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 */
 	public void removeAll() throws SystemException {
 		for (LayoutRevision layoutRevision : findAll()) {
-			layoutRevisionPersistence.remove(layoutRevision);
+			remove(layoutRevision);
 		}
 	}
 

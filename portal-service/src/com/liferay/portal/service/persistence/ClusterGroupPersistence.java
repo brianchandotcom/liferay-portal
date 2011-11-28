@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ClusterGroup;
 
 /**
@@ -158,7 +157,4 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ClusterGroup remove(ClusterGroup clusterGroup)
-		throws SystemException;
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.social.model.SocialRelation;
@@ -1377,7 +1376,4 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public SocialRelation remove(SocialRelation socialRelation)
-		throws SystemException;
 }

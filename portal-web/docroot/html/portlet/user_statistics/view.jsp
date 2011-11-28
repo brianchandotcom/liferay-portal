@@ -43,9 +43,9 @@ if (!rankingNamesList.isEmpty()) {
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
-	if (displayAdditionalCounters) {
-		for (int displayCounterNameIndex : displayCounterNameIndexes) {
-			selectedNamesList.add(PrefsParamUtil.getString(preferences, request, "displayCounterName" + displayCounterNameIndex));
+	if (displayAdditionalActivityCounters) {
+		for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
+			selectedNamesList.add(PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex));
 		}
 	}
 

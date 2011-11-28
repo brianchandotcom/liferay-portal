@@ -15,7 +15,6 @@
 package com.liferay.portlet.language.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -109,9 +108,7 @@ public class ViewAction extends PortletAction {
 			redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
 
 			if (themeDisplay.isI18n()) {
-				int pos = redirect.indexOf(CharPool.SLASH, 1);
-
-				redirect = redirect.substring(pos);
+				redirect = layout.getFriendlyURL();
 			}
 		}
 		else {

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.LiferayFilter;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalLifecycle;
+import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -207,6 +209,12 @@ public class InvokerFilterHelper {
 			_filters.put(filterName, filter);
 		}
 		else {
+			if (filter instanceof PortalLifecycle) {
+				PortalLifecycle portalLifecycle = (PortalLifecycle)filter;
+
+				PortalLifecycleUtil.removeDestroy(portalLifecycle);
+			}
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Removing disabled filter " + filter.getClass());
 			}

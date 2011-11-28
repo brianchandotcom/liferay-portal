@@ -186,10 +186,6 @@ public class DLFileEntryLocalServiceImpl
 				false, is);
 		}
 
-		// Index
-
-		reindex(dlFileEntry);
-
 		return dlFileEntry;
 	}
 
@@ -297,10 +293,6 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(),
 			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
-
-		// Index
-
-		reindex(dlFileEntry);
 
 		if (serviceContext.getWorkflowAction() ==
 		 		WorkflowConstants.ACTION_PUBLISH) {
@@ -422,10 +414,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 				fileEntryId, dlFileVersionId, dlFileVersion.getFileVersionId(),
 				serviceContext);
-
-			// Index
-
-			reindex(dlFileEntry);
 		}
 
 		return dlFileEntry;
@@ -974,10 +962,6 @@ public class DLFileEntryLocalServiceImpl
 
 				dlFileEntryPersistence.update(dlFileEntry, false);
 			}
-
-			// Indexer
-
-			reindex(dlFileEntry);
 		}
 		else {
 
@@ -1017,6 +1001,12 @@ public class DLFileEntryLocalServiceImpl
 		dlAppHelperLocalService.updateStatus(
 			userId, new LiferayFileEntry(dlFileEntry),
 			new LiferayFileVersion(dlFileVersion), status, workflowContext);
+
+		// Indexer
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			reindex(dlFileEntry);
+		}
 
 		return dlFileEntry;
 	}
@@ -1541,10 +1531,6 @@ public class DLFileEntryLocalServiceImpl
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
 						false, version, sourceFileName, is);
 				}
-
-				// Index
-
-				reindex(dlFileEntry);
 			}
 
 			if (autoCheckIn) {

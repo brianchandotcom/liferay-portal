@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -1107,7 +1106,4 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	public void setDDMStructures(long pk,
 		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public DLFileEntryType remove(DLFileEntryType dlFileEntryType)
-		throws SystemException;
 }

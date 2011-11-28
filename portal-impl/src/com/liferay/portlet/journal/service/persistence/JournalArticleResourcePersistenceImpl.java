@@ -234,6 +234,25 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(journalArticleResource);
+	}
+
+	@Override
+	public void clearCache(List<JournalArticleResource> journalArticleResources) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (JournalArticleResource journalArticleResource : journalArticleResources) {
+			EntityCacheUtil.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
+				JournalArticleResourceImpl.class,
+				journalArticleResource.getPrimaryKey());
+
+			clearUniqueFindersCache(journalArticleResource);
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		JournalArticleResource journalArticleResource) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				journalArticleResource.getUuid(),
@@ -272,24 +291,11 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 *
 	 * @param primaryKey the primary key of the journal article resource
 	 * @return the journal article resource that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a journal article resource with the primary key could not be found
+	 * @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleResource remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourcePrimKey the primary key of the journal article resource
-	 * @return the journal article resource that was removed
-	 * @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public JournalArticleResource remove(long resourcePrimKey)
 		throws NoSuchArticleResourceException, SystemException {
 		Session session = null;
 
@@ -297,19 +303,18 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			session = openSession();
 
 			JournalArticleResource journalArticleResource = (JournalArticleResource)session.get(JournalArticleResourceImpl.class,
-					Long.valueOf(resourcePrimKey));
+					primaryKey);
 
 			if (journalArticleResource == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourcePrimKey);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchArticleResourceException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourcePrimKey);
+					primaryKey);
 			}
 
-			return journalArticleResourcePersistence.remove(journalArticleResource);
+			return remove(journalArticleResource);
 		}
 		catch (NoSuchArticleResourceException nsee) {
 			throw nsee;
@@ -323,17 +328,16 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	}
 
 	/**
-	 * Removes the journal article resource from the database. Also notifies the appropriate model listeners.
+	 * Removes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param journalArticleResource the journal article resource
+	 * @param resourcePrimKey the primary key of the journal article resource
 	 * @return the journal article resource that was removed
+	 * @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public JournalArticleResource remove(
-		JournalArticleResource journalArticleResource)
-		throws SystemException {
-		return super.remove(journalArticleResource);
+	public JournalArticleResource remove(long resourcePrimKey)
+		throws NoSuchArticleResourceException, SystemException {
+		return remove(Long.valueOf(resourcePrimKey));
 	}
 
 	@Override
@@ -356,27 +360,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		JournalArticleResourceModelImpl journalArticleResourceModelImpl = (JournalArticleResourceModelImpl)journalArticleResource;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				journalArticleResourceModelImpl.getUuid(),
-				Long.valueOf(journalArticleResourceModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_A,
-			new Object[] {
-				Long.valueOf(journalArticleResourceModelImpl.getGroupId()),
-				
-			journalArticleResourceModelImpl.getArticleId()
-			});
-
-		EntityCacheUtil.removeResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceImpl.class,
-			journalArticleResource.getPrimaryKey());
+		clearCache(journalArticleResource);
 
 		return journalArticleResource;
 	}
@@ -1765,7 +1749,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (JournalArticleResource journalArticleResource : findByUuid(uuid)) {
-			journalArticleResourcePersistence.remove(journalArticleResource);
+			remove(journalArticleResource);
 		}
 	}
 
@@ -1781,7 +1765,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		JournalArticleResource journalArticleResource = findByUUID_G(uuid,
 				groupId);
 
-		journalArticleResourcePersistence.remove(journalArticleResource);
+		remove(journalArticleResource);
 	}
 
 	/**
@@ -1793,7 +1777,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (JournalArticleResource journalArticleResource : findByGroupId(
 				groupId)) {
-			journalArticleResourcePersistence.remove(journalArticleResource);
+			remove(journalArticleResource);
 		}
 	}
 
@@ -1809,7 +1793,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		JournalArticleResource journalArticleResource = findByG_A(groupId,
 				articleId);
 
-		journalArticleResourcePersistence.remove(journalArticleResource);
+		remove(journalArticleResource);
 	}
 
 	/**
@@ -1819,7 +1803,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	 */
 	public void removeAll() throws SystemException {
 		for (JournalArticleResource journalArticleResource : findAll()) {
-			journalArticleResourcePersistence.remove(journalArticleResource);
+			remove(journalArticleResource);
 		}
 	}
 

@@ -40,20 +40,24 @@ public class AddPortletNavigationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Communities",
+			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
+		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Group Page Layout Community"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Public Pages"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Page Layout Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Page Layout Page",
+			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add Application", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add Application",
+			RuntimeVariables.replace("Add Application"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,7 +77,7 @@ public class AddPortletNavigationTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@id='ContentManagement-Navigation']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

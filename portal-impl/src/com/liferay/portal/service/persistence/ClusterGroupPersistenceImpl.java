@@ -145,6 +145,17 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@Override
+	public void clearCache(List<ClusterGroup> clusterGroups) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ClusterGroup clusterGroup : clusterGroups) {
+			EntityCacheUtil.removeResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
+				ClusterGroupImpl.class, clusterGroup.getPrimaryKey());
+		}
+	}
+
 	/**
 	 * Creates a new cluster group with the primary key. Does not add the cluster group to the database.
 	 *
@@ -165,24 +176,11 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 *
 	 * @param primaryKey the primary key of the cluster group
 	 * @return the cluster group that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a cluster group with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchClusterGroupException if a cluster group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ClusterGroup remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param clusterGroupId the primary key of the cluster group
-	 * @return the cluster group that was removed
-	 * @throws com.liferay.portal.NoSuchClusterGroupException if a cluster group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ClusterGroup remove(long clusterGroupId)
 		throws NoSuchClusterGroupException, SystemException {
 		Session session = null;
 
@@ -190,19 +188,18 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			session = openSession();
 
 			ClusterGroup clusterGroup = (ClusterGroup)session.get(ClusterGroupImpl.class,
-					Long.valueOf(clusterGroupId));
+					primaryKey);
 
 			if (clusterGroup == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						clusterGroupId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchClusterGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					clusterGroupId);
+					primaryKey);
 			}
 
-			return clusterGroupPersistence.remove(clusterGroup);
+			return remove(clusterGroup);
 		}
 		catch (NoSuchClusterGroupException nsee) {
 			throw nsee;
@@ -216,16 +213,16 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	}
 
 	/**
-	 * Removes the cluster group from the database. Also notifies the appropriate model listeners.
+	 * Removes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clusterGroup the cluster group
+	 * @param clusterGroupId the primary key of the cluster group
 	 * @return the cluster group that was removed
+	 * @throws com.liferay.portal.NoSuchClusterGroupException if a cluster group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ClusterGroup remove(ClusterGroup clusterGroup)
-		throws SystemException {
-		return super.remove(clusterGroup);
+	public ClusterGroup remove(long clusterGroupId)
+		throws NoSuchClusterGroupException, SystemException {
+		return remove(Long.valueOf(clusterGroupId));
 	}
 
 	@Override
@@ -247,11 +244,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		EntityCacheUtil.removeResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
-			ClusterGroupImpl.class, clusterGroup.getPrimaryKey());
+		clearCache(clusterGroup);
 
 		return clusterGroup;
 	}
@@ -526,7 +519,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	 */
 	public void removeAll() throws SystemException {
 		for (ClusterGroup clusterGroup : findAll()) {
-			clusterGroupPersistence.remove(clusterGroup);
+			remove(clusterGroup);
 		}
 	}
 

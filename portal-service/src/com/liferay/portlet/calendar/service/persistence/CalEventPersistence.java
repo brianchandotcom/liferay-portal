@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.calendar.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -1703,6 +1702,4 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public CalEvent remove(CalEvent calEvent) throws SystemException;
 }

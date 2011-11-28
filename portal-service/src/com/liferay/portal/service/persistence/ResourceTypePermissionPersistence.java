@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceTypePermission;
 
 /**
@@ -500,8 +499,4 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public ResourceTypePermission remove(
-		ResourceTypePermission resourceTypePermission)
-		throws SystemException;
 }

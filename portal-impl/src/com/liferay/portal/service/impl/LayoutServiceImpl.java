@@ -549,6 +549,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			companyId, portletId, preferencesKey, preferencesValue);
 	}
 
+	public List<Layout> getLayouts(long groupId, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			groupId, privateLayout);
+
+		return filterLayouts(layouts);
+	}
+
 	/**
 	 * Imports the layouts from the byte array.
 	 *
@@ -1159,6 +1168,23 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		return layoutLocalService.updatePriority(plid, priority);
+	}
+
+	protected List<Layout> filterLayouts(List<Layout> layouts)
+		throws PortalException, SystemException {
+
+		List<Layout> filteredLayouts = new ArrayList<Layout>();
+
+		for (Layout layout : layouts) {
+			if (LayoutPermissionUtil.contains(
+					getPermissionChecker(), layout.getLayoutId(),
+					ActionKeys.VIEW)) {
+
+				filteredLayouts.add(layout);
+			}
+		}
+
+		return filteredLayouts;
 	}
 
 }

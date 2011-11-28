@@ -198,7 +198,7 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 				selenium.selectFrame("relative=top");
 				assertEquals(RuntimeVariables.replace("Chinese (China)"),
 					selenium.getText(
-						"//a[@class='journal-article-translation journal-article-translation-zh_CN']"));
+						"//a[@class='lfr-token journal-article-translation-zh_CN']"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));

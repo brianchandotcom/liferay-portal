@@ -15,17 +15,6 @@
 --%>
 
 <%
-int total = 0;
-
-if (searchTerms.isAdvancedSearch()) {
-	total = JournalTemplateServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getTemplateId(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
-}
-else {
-	total = JournalTemplateServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator());
-}
-
-searchContainer.setTotal(total);
-
 List results = null;
 
 if (searchTerms.isAdvancedSearch()) {
@@ -36,4 +25,15 @@ else {
 }
 
 searchContainer.setResults(results);
+
+int total = 0;
+
+if (searchTerms.isAdvancedSearch()) {
+	total = JournalTemplateServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getTemplateId(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+}
+else {
+	total = JournalTemplateServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupIds(), searchTerms.getKeywords(), searchTerms.getStructureId(), searchTerms.getStructureIdComparator());
+}
+
+searchContainer.setTotal(total);
 %>

@@ -135,12 +135,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
 			sb.append("companyId, userId, userName, createDate, ");
-			sb.append("repositoryId, folderId, fileEntryId, extension, ");
-			sb.append("mimeType, title, description, changeLog, ");
+			sb.append("modifiedDate, repositoryId, folderId, fileEntryId, ");
+			sb.append("extension, mimeType, title, description, changeLog, ");
 			sb.append("extraSettings, fileEntryTypeId, version, size_, ");
 			sb.append("status, statusByUserId, statusByUserName, statusDate) ");
 			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?)");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -152,22 +152,23 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setLong(4, userId);
 			ps.setString(5, userName);
 			ps.setDate(6, createDate);
-			ps.setLong(7, repositoryId);
-			ps.setLong(8, folderId);
-			ps.setLong(9, fileEntryId);
-			ps.setString(10, extension);
-			ps.setString(11, mimeType);
-			ps.setString(12, title);
-			ps.setString(13, description);
-			ps.setString(14, changeLog);
-			ps.setString(15, extraSettings);
-			ps.setLong(16, fileEntryTypeId);
-			ps.setString(17, version);
-			ps.setLong(18, size);
-			ps.setInt(19, status);
-			ps.setLong(20, statusByUserId);
-			ps.setString(21, statusByUserName);
-			ps.setDate(22, statusDate);
+			ps.setDate(7, statusDate);
+			ps.setLong(8, repositoryId);
+			ps.setLong(9, folderId);
+			ps.setLong(10, fileEntryId);
+			ps.setString(11, extension);
+			ps.setString(12, mimeType);
+			ps.setString(13, title);
+			ps.setString(14, description);
+			ps.setString(15, changeLog);
+			ps.setString(16, extraSettings);
+			ps.setLong(17, fileEntryTypeId);
+			ps.setString(18, version);
+			ps.setLong(19, size);
+			ps.setInt(20, status);
+			ps.setLong(21, statusByUserId);
+			ps.setString(22, statusByUserName);
+			ps.setDate(23, statusDate);
 
 			ps.executeUpdate();
 		}

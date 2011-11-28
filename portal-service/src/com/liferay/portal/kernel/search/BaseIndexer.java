@@ -202,7 +202,13 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	public String getSortField(String orderByCol) {
-		return doGetSortField(orderByCol);
+		String sortField = doGetSortField(orderByCol);
+
+		if (DocumentImpl.isSortableTextField(sortField)) {
+			return DocumentImpl.getSortableFieldName(sortField);
+		}
+
+		return sortField;
 	}
 
 	public Summary getSummary(

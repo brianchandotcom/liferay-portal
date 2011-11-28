@@ -386,6 +386,23 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(layout);
+	}
+
+	@Override
+	public void clearCache(List<Layout> layouts) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Layout layout : layouts) {
+			EntityCacheUtil.removeResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
+				LayoutImpl.class, layout.getPrimaryKey());
+
+			clearUniqueFindersCache(layout);
+		}
+	}
+
+	protected void clearUniqueFindersCache(Layout layout) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { layout.getUuid(), Long.valueOf(layout.getGroupId()) });
 
@@ -440,43 +457,29 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 *
 	 * @param primaryKey the primary key of the layout
 	 * @return the layout that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a layout with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Layout remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the layout with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param plid the primary key of the layout
-	 * @return the layout that was removed
-	 * @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Layout remove(long plid)
 		throws NoSuchLayoutException, SystemException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Layout layout = (Layout)session.get(LayoutImpl.class,
-					Long.valueOf(plid));
+			Layout layout = (Layout)session.get(LayoutImpl.class, primaryKey);
 
 			if (layout == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + plid);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchLayoutException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					plid);
+					primaryKey);
 			}
 
-			return layoutPersistence.remove(layout);
+			return remove(layout);
 		}
 		catch (NoSuchLayoutException nsee) {
 			throw nsee;
@@ -490,15 +493,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	/**
-	 * Removes the layout from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layout the layout
+	 * @param plid the primary key of the layout
 	 * @return the layout that was removed
+	 * @throws com.liferay.portal.NoSuchLayoutException if a layout with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public Layout remove(Layout layout) throws SystemException {
-		return super.remove(layout);
+	public Layout remove(long plid)
+		throws NoSuchLayoutException, SystemException {
+		return remove(Long.valueOf(plid));
 	}
 
 	@Override
@@ -519,45 +523,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		LayoutModelImpl layoutModelImpl = (LayoutModelImpl)layout;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				layoutModelImpl.getUuid(),
-				Long.valueOf(layoutModelImpl.getGroupId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ICONIMAGEID,
-			new Object[] { Long.valueOf(layoutModelImpl.getIconImageId()) });
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_L,
-			new Object[] {
-				Long.valueOf(layoutModelImpl.getGroupId()),
-				Boolean.valueOf(layoutModelImpl.getPrivateLayout()),
-				Long.valueOf(layoutModelImpl.getLayoutId())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_F,
-			new Object[] {
-				Long.valueOf(layoutModelImpl.getGroupId()),
-				Boolean.valueOf(layoutModelImpl.getPrivateLayout()),
-				
-			layoutModelImpl.getFriendlyURL()
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_TLU,
-			new Object[] {
-				Long.valueOf(layoutModelImpl.getGroupId()),
-				Boolean.valueOf(layoutModelImpl.getPrivateLayout()),
-				
-			layoutModelImpl.getTemplateLayoutUuid()
-			});
-
-		EntityCacheUtil.removeResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutImpl.class, layout.getPrimaryKey());
+		clearCache(layout);
 
 		return layout;
 	}
@@ -5459,7 +5425,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	public void removeByUuid(String uuid) throws SystemException {
 		for (Layout layout : findByUuid(uuid)) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 
@@ -5474,7 +5440,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByUUID_G(uuid, groupId);
 
-		layoutPersistence.remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -5485,7 +5451,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	public void removeByGroupId(long groupId) throws SystemException {
 		for (Layout layout : findByGroupId(groupId)) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 
@@ -5497,7 +5463,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	public void removeByCompanyId(long companyId) throws SystemException {
 		for (Layout layout : findByCompanyId(companyId)) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 
@@ -5511,7 +5477,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByIconImageId(iconImageId);
 
-		layoutPersistence.remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -5524,7 +5490,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public void removeByG_P(long groupId, boolean privateLayout)
 		throws SystemException {
 		for (Layout layout : findByG_P(groupId, privateLayout)) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 
@@ -5540,7 +5506,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_L(groupId, privateLayout, layoutId);
 
-		layoutPersistence.remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -5554,7 +5520,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public void removeByG_P_P(long groupId, boolean privateLayout,
 		long parentLayoutId) throws SystemException {
 		for (Layout layout : findByG_P_P(groupId, privateLayout, parentLayoutId)) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 
@@ -5570,7 +5536,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		String friendlyURL) throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_F(groupId, privateLayout, friendlyURL);
 
-		layoutPersistence.remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -5584,7 +5550,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public void removeByG_P_T(long groupId, boolean privateLayout, String type)
 		throws SystemException {
 		for (Layout layout : findByG_P_T(groupId, privateLayout, type)) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 
@@ -5601,7 +5567,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		throws NoSuchLayoutException, SystemException {
 		Layout layout = findByG_P_TLU(groupId, privateLayout, templateLayoutUuid);
 
-		layoutPersistence.remove(layout);
+		remove(layout);
 	}
 
 	/**
@@ -5611,7 +5577,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	public void removeAll() throws SystemException {
 		for (Layout layout : findAll()) {
-			layoutPersistence.remove(layout);
+			remove(layout);
 		}
 	}
 

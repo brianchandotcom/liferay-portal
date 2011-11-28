@@ -395,6 +395,13 @@ public class LayoutServiceWrapper implements LayoutService,
 			preferencesKey, preferencesValue);
 	}
 
+	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
+		long groupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.getLayouts(groupId, privateLayout);
+	}
+
 	/**
 	* Imports the layouts from the byte array.
 	*

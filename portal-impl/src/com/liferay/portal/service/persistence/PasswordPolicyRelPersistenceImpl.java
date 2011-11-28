@@ -212,6 +212,23 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(passwordPolicyRel);
+	}
+
+	@Override
+	public void clearCache(List<PasswordPolicyRel> passwordPolicyRels) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (PasswordPolicyRel passwordPolicyRel : passwordPolicyRels) {
+			EntityCacheUtil.removeResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
+				PasswordPolicyRelImpl.class, passwordPolicyRel.getPrimaryKey());
+
+			clearUniqueFindersCache(passwordPolicyRel);
+		}
+	}
+
+	protected void clearUniqueFindersCache(PasswordPolicyRel passwordPolicyRel) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
 			new Object[] {
 				Long.valueOf(passwordPolicyRel.getClassNameId()),
@@ -246,24 +263,11 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param primaryKey the primary key of the password policy rel
 	 * @return the password policy rel that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a password policy rel with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param passwordPolicyRelId the primary key of the password policy rel
-	 * @return the password policy rel that was removed
-	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PasswordPolicyRel remove(long passwordPolicyRelId)
 		throws NoSuchPasswordPolicyRelException, SystemException {
 		Session session = null;
 
@@ -271,19 +275,18 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 			session = openSession();
 
 			PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)session.get(PasswordPolicyRelImpl.class,
-					Long.valueOf(passwordPolicyRelId));
+					primaryKey);
 
 			if (passwordPolicyRel == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						passwordPolicyRelId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchPasswordPolicyRelException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					passwordPolicyRelId);
+					primaryKey);
 			}
 
-			return passwordPolicyRelPersistence.remove(passwordPolicyRel);
+			return remove(passwordPolicyRel);
 		}
 		catch (NoSuchPasswordPolicyRelException nsee) {
 			throw nsee;
@@ -297,16 +300,16 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	}
 
 	/**
-	 * Removes the password policy rel from the database. Also notifies the appropriate model listeners.
+	 * Removes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param passwordPolicyRel the password policy rel
+	 * @param passwordPolicyRelId the primary key of the password policy rel
 	 * @return the password policy rel that was removed
+	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public PasswordPolicyRel remove(PasswordPolicyRel passwordPolicyRel)
-		throws SystemException {
-		return super.remove(passwordPolicyRel);
+	public PasswordPolicyRel remove(long passwordPolicyRelId)
+		throws NoSuchPasswordPolicyRelException, SystemException {
+		return remove(Long.valueOf(passwordPolicyRelId));
 	}
 
 	@Override
@@ -328,26 +331,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		PasswordPolicyRelModelImpl passwordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)passwordPolicyRel;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-			new Object[] {
-				Long.valueOf(passwordPolicyRelModelImpl.getClassNameId()),
-				Long.valueOf(passwordPolicyRelModelImpl.getClassPK())
-			});
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_C_C,
-			new Object[] {
-				Long.valueOf(passwordPolicyRelModelImpl.getPasswordPolicyId()),
-				Long.valueOf(passwordPolicyRelModelImpl.getClassNameId()),
-				Long.valueOf(passwordPolicyRelModelImpl.getClassPK())
-			});
-
-		EntityCacheUtil.removeResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
-			PasswordPolicyRelImpl.class, passwordPolicyRel.getPrimaryKey());
+		clearCache(passwordPolicyRel);
 
 		return passwordPolicyRel;
 	}
@@ -1352,7 +1336,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		throws SystemException {
 		for (PasswordPolicyRel passwordPolicyRel : findByPasswordPolicyId(
 				passwordPolicyId)) {
-			passwordPolicyRelPersistence.remove(passwordPolicyRel);
+			remove(passwordPolicyRel);
 		}
 	}
 
@@ -1367,7 +1351,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		throws NoSuchPasswordPolicyRelException, SystemException {
 		PasswordPolicyRel passwordPolicyRel = findByC_C(classNameId, classPK);
 
-		passwordPolicyRelPersistence.remove(passwordPolicyRel);
+		remove(passwordPolicyRel);
 	}
 
 	/**
@@ -1383,7 +1367,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		PasswordPolicyRel passwordPolicyRel = findByP_C_C(passwordPolicyId,
 				classNameId, classPK);
 
-		passwordPolicyRelPersistence.remove(passwordPolicyRel);
+		remove(passwordPolicyRel);
 	}
 
 	/**
@@ -1393,7 +1377,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	public void removeAll() throws SystemException {
 		for (PasswordPolicyRel passwordPolicyRel : findAll()) {
-			passwordPolicyRelPersistence.remove(passwordPolicyRel);
+			remove(passwordPolicyRel);
 		}
 	}
 

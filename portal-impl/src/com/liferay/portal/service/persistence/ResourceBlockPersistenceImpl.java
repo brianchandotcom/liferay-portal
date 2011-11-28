@@ -228,6 +228,23 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		clearUniqueFindersCache(resourceBlock);
+	}
+
+	@Override
+	public void clearCache(List<ResourceBlock> resourceBlocks) {
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (ResourceBlock resourceBlock : resourceBlocks) {
+			EntityCacheUtil.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+				ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
+
+			clearUniqueFindersCache(resourceBlock);
+		}
+	}
+
+	protected void clearUniqueFindersCache(ResourceBlock resourceBlock) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
 			new Object[] {
 				Long.valueOf(resourceBlock.getCompanyId()),
@@ -259,24 +276,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 *
 	 * @param primaryKey the primary key of the resource block
 	 * @return the resource block that was removed
-	 * @throws com.liferay.portal.NoSuchModelException if a resource block with the primary key could not be found
+	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock remove(Serializable primaryKey)
-		throws NoSuchModelException, SystemException {
-		return remove(((Long)primaryKey).longValue());
-	}
-
-	/**
-	 * Removes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceBlockId the primary key of the resource block
-	 * @return the resource block that was removed
-	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public ResourceBlock remove(long resourceBlockId)
 		throws NoSuchResourceBlockException, SystemException {
 		Session session = null;
 
@@ -284,19 +288,18 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			session = openSession();
 
 			ResourceBlock resourceBlock = (ResourceBlock)session.get(ResourceBlockImpl.class,
-					Long.valueOf(resourceBlockId));
+					primaryKey);
 
 			if (resourceBlock == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-						resourceBlockId);
+					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchResourceBlockException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					resourceBlockId);
+					primaryKey);
 			}
 
-			return resourceBlockPersistence.remove(resourceBlock);
+			return remove(resourceBlock);
 		}
 		catch (NoSuchResourceBlockException nsee) {
 			throw nsee;
@@ -310,16 +313,16 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	/**
-	 * Removes the resource block from the database. Also notifies the appropriate model listeners.
+	 * Removes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param resourceBlock the resource block
+	 * @param resourceBlockId the primary key of the resource block
 	 * @return the resource block that was removed
+	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
-	public ResourceBlock remove(ResourceBlock resourceBlock)
-		throws SystemException {
-		return super.remove(resourceBlock);
+	public ResourceBlock remove(long resourceBlockId)
+		throws NoSuchResourceBlockException, SystemException {
+		return remove(Long.valueOf(resourceBlockId));
 	}
 
 	@Override
@@ -341,23 +344,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		ResourceBlockModelImpl resourceBlockModelImpl = (ResourceBlockModelImpl)resourceBlock;
-
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
-			new Object[] {
-				Long.valueOf(resourceBlockModelImpl.getCompanyId()),
-				Long.valueOf(resourceBlockModelImpl.getGroupId()),
-				
-			resourceBlockModelImpl.getName(),
-				
-			resourceBlockModelImpl.getPermissionsHash()
-			});
-
-		EntityCacheUtil.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
+		clearCache(resourceBlock);
 
 		return resourceBlock;
 	}
@@ -1724,7 +1711,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public void removeByC_N(long companyId, String name)
 		throws SystemException {
 		for (ResourceBlock resourceBlock : findByC_N(companyId, name)) {
-			resourceBlockPersistence.remove(resourceBlock);
+			remove(resourceBlock);
 		}
 	}
 
@@ -1739,7 +1726,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public void removeByC_G_N(long companyId, long groupId, String name)
 		throws SystemException {
 		for (ResourceBlock resourceBlock : findByC_G_N(companyId, groupId, name)) {
-			resourceBlockPersistence.remove(resourceBlock);
+			remove(resourceBlock);
 		}
 	}
 
@@ -1758,7 +1745,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		ResourceBlock resourceBlock = findByC_G_N_P(companyId, groupId, name,
 				permissionsHash);
 
-		resourceBlockPersistence.remove(resourceBlock);
+		remove(resourceBlock);
 	}
 
 	/**
@@ -1768,7 +1755,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	public void removeAll() throws SystemException {
 		for (ResourceBlock resourceBlock : findAll()) {
-			resourceBlockPersistence.remove(resourceBlock);
+			remove(resourceBlock);
 		}
 	}
 

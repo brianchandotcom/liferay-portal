@@ -801,6 +801,10 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_SCORING_ENABLED = "index.search.scoring.enabled";
 
+	public static final String INDEX_SORTABLE_TEXT_FIELDS = "index.sortable.text.fields";
+
+	public static final String INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = "index.sortable.text.fields.truncated.length";
+
 	public static final String INDEX_WITH_THREAD = "index.with.thread";
 
 	public static final String INVITATION_EMAIL_MAX_RECIPIENTS = "invitation.email.max.recipients";

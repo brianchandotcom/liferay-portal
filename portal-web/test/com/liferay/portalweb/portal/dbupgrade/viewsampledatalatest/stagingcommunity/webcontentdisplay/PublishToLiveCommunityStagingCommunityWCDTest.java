@@ -92,6 +92,7 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 					selenium.getText("//span[@class='workflow-status']"));
 
 			case 2:
+				Thread.sleep(5000);
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging Dropdown"));
 

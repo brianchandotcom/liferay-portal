@@ -39,7 +39,7 @@ if (group == null) {
 		<a href="<%= assignMembersURL %>"><liferay-ui:message key="view-members" /></a>
 	</span>
 
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button " + (toolbarItem.equals("add-role") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add-members">
 
 			<liferay-portlet:renderURL varImpl="assignMembersURL">

@@ -42,9 +42,12 @@ public class AddPortletBlogsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -63,7 +66,7 @@ public class AddPortletBlogsTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@title='Blogs']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

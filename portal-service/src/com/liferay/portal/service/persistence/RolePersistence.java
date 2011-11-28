@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Role;
 
 /**
@@ -1649,6 +1648,4 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public void setUsers(long pk,
 		java.util.List<com.liferay.portal.model.User> users)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public Role remove(Role role) throws SystemException;
 }

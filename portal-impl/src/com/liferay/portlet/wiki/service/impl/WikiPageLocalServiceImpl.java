@@ -53,6 +53,7 @@ import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
@@ -239,18 +240,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId = page.getUserId();
 		}
 
-		long companyId = page.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = page.getAttachmentsDir();
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			page.getAttachmentsDir() + "/" + fileName, 0);
 
 		try {
-			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
+			DLStoreUtil.addDirectory(
+				page.getCompanyId(), CompanyConstants.SYSTEM,
+				page.getAttachmentsDir());
 		}
 		catch (DuplicateDirectoryException dde) {
 		}
 
 		DLStoreUtil.addFile(
-			companyId, repositoryId, dirName + "/" + fileName, file);
+			page.getCompanyId(), CompanyConstants.SYSTEM,
+			page.getAttachmentsDir() + "/" + fileName, file);
 	}
 
 	public void addPageAttachment(
@@ -268,18 +274,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId = page.getUserId();
 		}
 
-		long companyId = page.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = page.getAttachmentsDir();
+		socialActivityLocalService.addActivity(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			page.getAttachmentsDir() + "/" + fileName, 0);
 
 		try {
-			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
+			DLStoreUtil.addDirectory(
+				page.getCompanyId(), CompanyConstants.SYSTEM,
+				page.getAttachmentsDir());
 		}
 		catch (DuplicateDirectoryException dde) {
 		}
 
 		DLStoreUtil.addFile(
-			companyId, repositoryId, dirName + "/" + fileName, inputStream);
+			page.getCompanyId(), CompanyConstants.SYSTEM,
+			page.getAttachmentsDir() + "/" + fileName, inputStream);
 	}
 
 	public void addPageAttachment(

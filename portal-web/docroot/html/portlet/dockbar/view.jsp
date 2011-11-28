@@ -155,13 +155,13 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() %>">
-								<li class="manage-site-memberships use-dialog">
+								<li class="manage-site-memberships use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
 								</li>
 							</c:if>
 
 							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
-								<li class="manage-site-content use-dialog">
+								<li class="manage-site-content use-dialog full-dialog">
 									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
 								</li>
 							</c:if>
@@ -170,7 +170,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				</div>
 			</li>
 
-			<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() && !group.isLayoutSetPrototype() %>">
+			<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
 				<div class="aui-helper-hidden layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
 					<span title='<liferay-ui:message key="customizable-help" />'>
 						<aui:input helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' inputCssClass="layout-customizable-checkbox" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />

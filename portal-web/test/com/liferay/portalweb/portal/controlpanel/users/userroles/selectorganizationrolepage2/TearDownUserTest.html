@@ -29,48 +29,8 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Search All Users</td>
-	<td>Search All Users</td>
-</tr>
-<tr>
-	<td>storeVisible</td>
-	<td>link=« Basic</td>
-	<td>basicVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${basicVisible}</td>
-	<td>BasicNotVisible</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>Key Words</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>BasicNotVisible</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td>test01@liferay.com</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>usersPresent</td>
 </tr>
 <tr>
@@ -80,21 +40,21 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>Select All</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
@@ -104,14 +64,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>UsersNotPresent</td>
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>advancedVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${advancedVisible}</td>
+	<td>AdvancedNotVisible</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>link=Advanced »</td>
 	<td>Advanced</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AdvancedNotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -154,7 +144,7 @@
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
@@ -164,15 +154,41 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>UsersDeleted</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No users were found.</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>link=« Basic</td>
 	<td>Basic</td>
 </tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

@@ -15,6 +15,7 @@
 package com.liferay.portalweb.stagingcommunity.sites;
 
 import com.liferay.portalweb.portal.BaseTests;
+import com.liferay.portalweb.stagingcommunity.sites.event.EventTests;
 import com.liferay.portalweb.stagingcommunity.sites.pagevariation.PageVariationTests;
 import com.liferay.portalweb.stagingcommunity.sites.site.SiteTests;
 import com.liferay.portalweb.stagingcommunity.sites.sitepagesvariation.SitePagesVariationTests;
@@ -30,6 +31,7 @@ public class SitesTests extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(EventTests.suite());
 		testSuite.addTest(PageVariationTests.suite());
 		testSuite.addTest(SiteTests.suite());
 		testSuite.addTest(SitePagesVariationTests.suite());

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingcommunity.sites.site;
+package com.liferay.portalweb.stagingcommunity.sites.event.addeventrepeatdailysptl;
 
 import com.liferay.portalweb.portal.BaseTests;
-import com.liferay.portalweb.stagingcommunity.sites.site.activatestaging.ActivateStagingTests;
-import com.liferay.portalweb.stagingcommunity.sites.site.deactivatestaging.DeactivateStagingTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +22,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SiteTests extends BaseTests {
+public class AddEventRepeatDailySPTLTests extends BaseTests {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ActivateStagingTests.suite());
-		testSuite.addTest(DeactivateStagingTests.suite());
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(AddSitePublicPageTest.class);
+		testSuite.addTestSuite(ActivateStagingTest.class);
+		testSuite.addTestSuite(AddEventRepeatDailySPTLTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

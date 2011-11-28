@@ -91,7 +91,7 @@ public class EditFriendlyURLSlashesTest extends BaseTestCase {
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"The friendly url has too many slashes."),
+				"The friendly URL has too many slashes."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

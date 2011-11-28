@@ -42,10 +42,10 @@ public class SRq_AddPortletRequestsTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("More\u2026"),
+		assertEquals(RuntimeVariables.replace("More"),
 			selenium.getText("//a[@id='_145_addApplication']"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More\u2026"));
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -72,7 +72,7 @@ public class SRq_AddPortletRequestsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/div/div[1]/span[1]")) {
+				if (selenium.isVisible("//div[4]/div/div[2]/div/div")) {
 					break;
 				}
 			}
@@ -82,6 +82,6 @@ public class SRq_AddPortletRequestsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//div/div/div[1]/span[1]"));
+		assertTrue(selenium.isVisible("//div[4]/div/div[2]/div/div"));
 	}
 }

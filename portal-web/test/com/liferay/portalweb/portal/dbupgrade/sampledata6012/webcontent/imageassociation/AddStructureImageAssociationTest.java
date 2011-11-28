@@ -92,8 +92,7 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("TEST_IMAGE"),
-			selenium.getText(
+		assertTrue(selenium.isElementPresent(
 				"//tr[@class='portlet-section-body results-row last']/td[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Image Structure Test\nThis is an image structure test."),

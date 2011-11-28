@@ -64,9 +64,14 @@
 	<td>Image Web Content Test</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>_15_changeStructureButton</td>
+	<td>Choose</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>_15_changeStructureBtn</td>
-	<td></td>
+	<td>_15_changeStructureButton</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
@@ -84,14 +89,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=TEST_IMAGE</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//td[2]/a</td>
+	<td>Image Structure Test</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[2]/a</td>
+	<td>Image Structure Test</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=TEST_IMAGE</td>
-	<td></td>
+	<td>//td[2]/a</td>
+	<td>Image Structure Test</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -116,7 +126,12 @@
 <tr>
 	<td>type</td>
 	<td>image-test</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata6011\webcontent\imageassociation\dependencies\Image.jpg</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata6012\webcontent\imageassociation\dependencies\Image.jpg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>image-test</td>
+	<td>L:\projects\trunk-portal\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata6012\webcontent\imageassociation\dependencies\Image.jpg</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -186,26 +201,21 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
+	<td>//td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[7]/a</td>
+	<td>//td[6]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[8]/a</td>
+	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 </tbody></table>

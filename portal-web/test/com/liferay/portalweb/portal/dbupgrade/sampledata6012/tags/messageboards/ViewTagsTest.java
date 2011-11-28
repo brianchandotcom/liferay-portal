@@ -81,7 +81,7 @@ public class ViewTagsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("selenium")
 										.equals(selenium.getText(
-								"//div[4]/ul/li[1]/span/a"))) {
+								"//li[1]/div/span/a"))) {
 					break;
 				}
 			}
@@ -92,12 +92,12 @@ public class ViewTagsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("selenium"),
-			selenium.getText("//div[4]/ul/li[1]/span/a"));
+			selenium.getText("//li[1]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium1"),
-			selenium.getText("//div[4]/ul/li[2]/span/a"));
+			selenium.getText("//li[2]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium2"),
-			selenium.getText("//div[4]/ul/li[3]/span/a"));
+			selenium.getText("//li[3]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium3"),
-			selenium.getText("//div[4]/ul/li[4]/span/a"));
+			selenium.getText("//li[4]/div/span/a"));
 	}
 }

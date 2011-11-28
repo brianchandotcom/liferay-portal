@@ -69,24 +69,8 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 		selenium.click("//input[@value='Select']");
 		selenium.waitForPopUp("structure", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=structure");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=TEST_IMAGE")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.click("link=TEST_IMAGE");
+		assertTrue(selenium.isPartialText("//td[2]/a", "Image Structure Test"));
+		selenium.click("//td[2]/a");
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -138,8 +122,7 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("TEST_IMAGE"),
-			selenium.getText(
+		assertTrue(selenium.isElementPresent(
 				"//tr[@class='portlet-section-body results-row last']/td[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Image Template Test\n This is an image template test."),

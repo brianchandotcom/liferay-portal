@@ -45,15 +45,15 @@ public class SelectWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue live-view controls-visible signed-in public-page']"));
+				"//body[@class='blue live-view controls-visible signed-in public-page dockbar-ready']"));
 		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
+				"//body[@class='blue staging controls-visible signed-in public-page dockbar-ready']"));
 		selenium.clickAt("link=View Staged Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue live-view controls-visible signed-in public-page']"));
+				"//body[@class='blue live-view controls-visible signed-in public-page dockbar-ready']"));
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
+				"//body[@class='blue staging controls-visible signed-in public-page dockbar-ready']"));
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace(""));
 
@@ -76,12 +76,10 @@ public class SelectWebContentTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[3]/a"));
+		assertTrue(selenium.isElementPresent("//td[3]/a"));
 		assertTrue(selenium.isElementPresent("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//td[5]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("WC Web Content Name"));
 

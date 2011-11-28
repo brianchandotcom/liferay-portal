@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//body[@class='blue staging controls-visible signed-in public-page']</td>
+	<td>//body[@class='blue staging controls-visible signed-in public-page dockbar-ready']</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,23 +94,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_15_structure_el_TextAreaField_content</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>cke_contents_CKEditor1</td>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[@id='_15_structure_el_TextAreaField_content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents_CKEditor1']/iframe</td>
+	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
 	<td></td>
 </tr>
 <tr>
@@ -146,26 +136,21 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
+	<td>//td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//td[7]/a</td>
+	<td>//td[6]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[8]/a</td>
+	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 </tbody></table>

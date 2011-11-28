@@ -82,7 +82,7 @@ public class AddIGFolderImageTest extends BaseTestCase {
 		selenium.click("link=Use the classic uploader.");
 		selenium.type("_31_file",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6011\\webcontent\\imageassociation\\dependencies\\ImageGallery.jpg"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\webcontent\\imageassociation\\dependencies\\ImageGallery.jpg"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);

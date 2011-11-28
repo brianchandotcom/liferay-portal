@@ -55,7 +55,9 @@ public class AddUserSRl2PasswordTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("socialrelationfn2"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a[@id='passwordLink']",
+		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
+				"Password"));
+		selenium.clickAt("//a[@id='_125_passwordLink']",
 			RuntimeVariables.replace("Password"));
 
 		for (int second = 0;; second++) {

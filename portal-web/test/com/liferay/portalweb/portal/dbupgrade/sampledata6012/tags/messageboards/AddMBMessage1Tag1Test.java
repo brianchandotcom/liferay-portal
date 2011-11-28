@@ -61,7 +61,7 @@ public class AddMBMessage1Tag1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_19_subject",
 			RuntimeVariables.replace("Message1 Tag1 Test1"));
-		selenium.type("_19_textArea",
+		selenium.type("_19_editor",
 			RuntimeVariables.replace("This is a message1 tag1 test1."));
 		selenium.type("//li/span/span/input",
 			RuntimeVariables.replace("selenium1"));
@@ -71,11 +71,6 @@ public class AddMBMessage1Tag1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Message1 Tag1 Test1"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
-			RuntimeVariables.replace("Message1 Tag1 Test1"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Message1 Tag1 Test1"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("selenium1"),

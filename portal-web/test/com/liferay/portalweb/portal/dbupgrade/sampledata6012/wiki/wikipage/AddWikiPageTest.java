@@ -73,9 +73,28 @@ public class AddWikiPageTest extends BaseTestCase {
 		selenium.clickAt("link=This page is empty. Edit it to add some text.",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_36_content", RuntimeVariables.replace("Front Page Text"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("_36_content"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__36_editor']/iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
+		selenium.type("//body", RuntimeVariables.replace("Front Page Text"));
+		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

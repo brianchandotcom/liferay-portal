@@ -76,7 +76,7 @@ public class AddWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
+				"//body[@class='blue staging controls-visible signed-in public-page dockbar-ready']"));
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
@@ -97,24 +97,8 @@ public class AddWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"_15_structure_el_TextAreaField_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("cke_contents_CKEditor1")) {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe")) {
 					break;
 				}
 			}
@@ -125,8 +109,7 @@ public class AddWebContentTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame(
-			"//iframe[@id='_15_structure_el_TextAreaField_content']");
-		selenium.selectFrame("//td[@id='cke_contents_CKEditor1']/iframe");
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("WC Web Content Content"));
 		selenium.selectFrame("relative=top");
@@ -139,13 +122,11 @@ public class AddWebContentTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertTrue(selenium.isElementPresent("//td[7]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[8]/a"));
+			selenium.getText("//td[7]/a"));
 	}
 }

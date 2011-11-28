@@ -60,7 +60,10 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_15_title",
 			RuntimeVariables.replace("Image Web Content Test"));
-		selenium.clickAt("_15_changeStructureBtn", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Choose"),
+			selenium.getText("_15_changeStructureButton"));
+		selenium.clickAt("_15_changeStructureButton",
+			RuntimeVariables.replace("Choose"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
 		selenium.waitForPopUp("ChangeStructure",
@@ -73,7 +76,7 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=TEST_IMAGE")) {
+				if (selenium.isVisible("//td[2]/a")) {
 					break;
 				}
 			}
@@ -83,7 +86,8 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("link=TEST_IMAGE");
+		assertTrue(selenium.isPartialText("//td[2]/a", "Image Structure Test"));
+		selenium.click("//td[2]/a");
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -111,7 +115,10 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.type("text-test", RuntimeVariables.replace("Text Test"));
 		selenium.type("image-test",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6011\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
+		selenium.type("image-test",
+			RuntimeVariables.replace(
+				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
 		selenium.click("//input[@value='Select']");
 		selenium.waitForPopUp("ImageGallery", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=ImageGallery");
@@ -147,13 +154,11 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Image Web Content Test"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertTrue(selenium.isElementPresent("//td[7]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[8]/a"));
+			selenium.getText("//td[7]/a"));
 	}
 }

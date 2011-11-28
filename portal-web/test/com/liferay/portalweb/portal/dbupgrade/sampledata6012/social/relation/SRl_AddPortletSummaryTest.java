@@ -42,10 +42,11 @@ public class SRl_AddPortletSummaryTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("More\u2026"),
-			selenium.getText("//a[@id='_145_addApplication']"));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More\u2026"));
+			RuntimeVariables.replace("More"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

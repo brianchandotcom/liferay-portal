@@ -33,12 +33,12 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
-	public java.lang.String getCssClass() {
-		return _cssClass;
-	}
-
 	public int getColumnWidth() {
 		return _columnWidth;
+	}
+
+	public java.lang.String getCssClass() {
+		return _cssClass;
 	}
 
 	public boolean getFirst() {
@@ -49,16 +49,16 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 		return _last;
 	}
 
-	public void setCssClass(java.lang.String cssClass) {
-		_cssClass = cssClass;
-
-		setScopedAttribute("cssClass", cssClass);
-	}
-
 	public void setColumnWidth(int columnWidth) {
 		_columnWidth = columnWidth;
 
 		setScopedAttribute("columnWidth", columnWidth);
+	}
+
+	public void setCssClass(java.lang.String cssClass) {
+		_cssClass = cssClass;
+
+		setScopedAttribute("cssClass", cssClass);
 	}
 
 	public void setFirst(boolean first) {
@@ -75,8 +75,8 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
 		_columnWidth = 0;
+		_cssClass = null;
 		_first = false;
 		_last = false;
 	}
@@ -93,8 +93,8 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "columnWidth", _columnWidth);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "first", _first);
 		setNamespacedAttribute(request, "last", _last);
 	}
@@ -107,8 +107,8 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/aui/column/start.jsp";
 
-	private java.lang.String _cssClass = null;
 	private int _columnWidth = 0;
+	private java.lang.String _cssClass = null;
 	private boolean _first = false;
 	private boolean _last = false;
 

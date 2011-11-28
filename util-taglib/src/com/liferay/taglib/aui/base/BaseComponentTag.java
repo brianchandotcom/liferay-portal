@@ -53,7 +53,7 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		return _name;
 	}
 
-	public java.util.Map<String, Object> getOptions() {
+	public java.util.Map<java.lang.String,java.lang.Object> getOptions() {
 		return _options;
 	}
 
@@ -95,7 +95,7 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("name", name);
 	}
 
-	public void setOptions(java.util.Map<String, Object> options) {
+	public void setOptions(java.util.Map<java.lang.String,java.lang.Object> options) {
 		_options = options;
 
 		setScopedAttribute("options", options);
@@ -152,7 +152,7 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _javaScriptAttributes = null;
 	private java.lang.String _module = null;
 	private java.lang.String _name = null;
-	private java.util.Map<String, Object> _options = null;
+	private java.util.Map<java.lang.String,java.lang.Object> _options = null;
 	private javax.servlet.jsp.JspContext _tagPageContext = null;
 	private java.lang.String _var = null;
 

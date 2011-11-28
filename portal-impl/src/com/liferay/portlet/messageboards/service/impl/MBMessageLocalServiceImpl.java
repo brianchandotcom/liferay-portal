@@ -1823,7 +1823,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_BODY$]", message.getBody(true),
 			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
-			userName, "[$CONTENT_URL$]", contentURL);
+			userName, "[$CONTENT_URL$]", contentURL,
+			"[$PORTAL_URL$]", serviceContext.getPortalURL());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
@@ -1996,7 +1997,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"[$MESSAGE_ID$]", message.getMessageId(), "[$MESSAGE_SUBJECT$]",
 			message.getSubject(), "[$MESSAGE_URL$]", messageURL,
 			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
-			fullName);
+			fullName, "[$PORTAL_URL$]", serviceContext.getPortalURL());
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(
 			MBUtil.getEmailHtmlFormat(preferences));

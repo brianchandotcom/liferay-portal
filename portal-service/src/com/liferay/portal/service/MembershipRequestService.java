@@ -44,7 +44,8 @@ public interface MembershipRequestService {
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestServiceUtil} to access the membership request remote service. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long groupId, java.lang.String comments)
+		long groupId, java.lang.String comments,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -59,7 +60,8 @@ public interface MembershipRequestService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateStatus(long membershipRequestId,
-		java.lang.String reviewComments, int statusId)
+		java.lang.String reviewComments, int statusId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

@@ -257,11 +257,12 @@ public class MembershipRequestLocalServiceWrapper
 	}
 
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments)
+		long userId, long groupId, java.lang.String comments,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _membershipRequestLocalService.addMembershipRequest(userId,
-			groupId, comments);
+			groupId, comments, serviceContext);
 	}
 
 	public void deleteMembershipRequests(long groupId)
@@ -305,11 +306,13 @@ public class MembershipRequestLocalServiceWrapper
 	}
 
 	public void updateStatus(long replierUserId, long membershipRequestId,
-		java.lang.String replyComments, int statusId, boolean addUserToGroup)
+		java.lang.String replyComments, int statusId, boolean addUserToGroup,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_membershipRequestLocalService.updateStatus(replierUserId,
-			membershipRequestId, replyComments, statusId, addUserToGroup);
+			membershipRequestId, replyComments, statusId, addUserToGroup,
+			serviceContext);
 	}
 
 	/**

@@ -80,6 +80,8 @@ import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.MembershipRequest;
+import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.ResourceConstants;
@@ -100,6 +102,7 @@ import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
 import com.liferay.portal.security.auth.FullNameValidatorFactory;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.auth.ScreenNameValidator;
@@ -109,7 +112,9 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
+import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.base.PrincipalBean;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -303,10 +308,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void addGroupUsers(long groupId, long[] userIds)
+	public void addGroupUsers(
+			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		groupPersistence.addUsers(groupId, userIds);
+
+		for (long userId : userIds) {
+			updateMembershipRequestStatus(userId, groupId, serviceContext);
+		}
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
@@ -3350,6 +3360,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$EMAIL_VERIFICATION_CODE$]", ticket.getKey(),
 			"[$EMAIL_VERIFICATION_URL$]", verifyEmailAddressURL,
+			"[$PORTAL_URL$]", serviceContext.getPortalURL(),
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
 			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(), "[$USER_AGENT$]",
 			serviceContext.getUserAgent(), "[$USER_ID$]", user.getUserId(),
@@ -3496,7 +3507,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(companyId);
 		subscriptionSender.setContextAttributes(
-			"[$PASSWORD_RESET_URL$]", passwordResetURL, "[$REMOTE_ADDRESS$]",
+			"[$PASSWORD_RESET_URL$]", passwordResetURL, "[$PORTAL_URL$]",
+			serviceContext.getPortalURL(), "[$REMOTE_ADDRESS$]",
 			serviceContext.getRemoteAddr(), "[$REMOTE_HOST$]",
 			serviceContext.getRemoteHost(), "[$USER_AGENT$]",
 			serviceContext.getUserAgent(), "[$USER_ID$]", user.getUserId(),
@@ -3565,7 +3577,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void unsetGroupUsers(long groupId, long[] userIds)
+	public void unsetGroupUsers(
+			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
@@ -3936,13 +3949,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			oldGroupIds.add(oldGroupId);
 
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
-				unsetGroupUsers(oldGroupId, new long[] {userId});
+				unsetGroupUsers(
+					oldGroupId, new long[] {userId}, serviceContext);
 			}
 		}
 
 		for (long newGroupId : newGroupIds) {
 			if (!oldGroupIds.contains(newGroupId)) {
-				addGroupUsers(newGroupId, new long[] {userId});
+				addGroupUsers(newGroupId, new long[] {userId}, serviceContext);
 			}
 		}
 
@@ -5210,6 +5224,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(user.getCompanyId());
 		subscriptionSender.setContextAttributes(
+			"[$PORTAL_URL$]", serviceContext.getPortalURL(),
 			"[$USER_ID$]", user.getUserId(), "[$USER_PASSWORD$]", password,
 			"[$USER_SCREENNAME$]", user.getScreenName());
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -5371,6 +5386,29 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				userGroupRoleLocalService.addUserGroupRole(userGroupRole);
 			}
+		}
+	}
+
+	protected void updateMembershipRequestStatus(
+			long userId, long groupId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long principalUserId = GetterUtil.getLong(
+			PrincipalThreadLocal.getName());
+
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		List<MembershipRequest> membershipRequests =
+			MembershipRequestLocalServiceUtil.getMembershipRequests(
+				userId, groupId, MembershipRequestConstants.STATUS_PENDING);
+
+		for (MembershipRequest membershipRequest : membershipRequests) {
+			MembershipRequestLocalServiceUtil.updateStatus(
+				principalUserId, membershipRequest.getMembershipRequestId(),
+				LanguageUtil.get(
+					user.getLocale(), "your-membership-has-been-approved"),
+				MembershipRequestConstants.STATUS_APPROVED, false,
+				serviceContext);
 		}
 	}
 

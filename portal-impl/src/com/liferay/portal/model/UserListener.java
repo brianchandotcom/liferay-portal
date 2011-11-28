@@ -43,17 +43,6 @@ public class UserListener extends BaseModelListener<User> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		try {
-			if (associationClassName.equals(Group.class.getName())) {
-				long userId = ((Long)classPK).longValue();
-				long groupId = ((Long)associationClassPK).longValue();
-
-				updateMembershipRequestStatus(userId, groupId);
-			}
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
 	}
 
 	@Override
@@ -94,27 +83,6 @@ public class UserListener extends BaseModelListener<User> {
 		}
 
 		PortalLDAPExporterUtil.exportToLDAP(user, expandoBridgeAttributes);
-	}
-
-	protected void updateMembershipRequestStatus(long userId, long groupId)
-		throws Exception {
-
-		long principalUserId = GetterUtil.getLong(
-			PrincipalThreadLocal.getName());
-
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		List<MembershipRequest> membershipRequests =
-			MembershipRequestLocalServiceUtil.getMembershipRequests(
-				userId, groupId, MembershipRequestConstants.STATUS_PENDING);
-
-		for (MembershipRequest membershipRequest : membershipRequests) {
-			MembershipRequestLocalServiceUtil.updateStatus(
-				principalUserId, membershipRequest.getMembershipRequestId(),
-				LanguageUtil.get(
-					user.getLocale(), "your-membership-has-been-approved"),
-				MembershipRequestConstants.STATUS_APPROVED, false);
-		}
 	}
 
 }

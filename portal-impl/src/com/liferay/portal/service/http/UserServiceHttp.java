@@ -53,7 +53,7 @@ import com.liferay.portal.service.UserServiceUtil;
  */
 public class UserServiceHttp {
 	public static void addGroupUsers(HttpPrincipal httpPrincipal, long groupId,
-		long[] userIds)
+		long[] userIds, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -61,7 +61,7 @@ public class UserServiceHttp {
 					"addGroupUsers", _addGroupUsersParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userIds);
+					userIds, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1120,7 +1120,8 @@ public class UserServiceHttp {
 	}
 
 	public static void unsetGroupUsers(HttpPrincipal httpPrincipal,
-		long groupId, long[] userIds)
+		long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1128,7 +1129,7 @@ public class UserServiceHttp {
 					"unsetGroupUsers", _unsetGroupUsersParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userIds);
+					userIds, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1827,7 +1828,8 @@ public class UserServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(UserServiceHttp.class);
 	private static final Class<?>[] _addGroupUsersParameterTypes0 = new Class[] {
-			long.class, long[].class
+			long.class, long[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrganizationUsersParameterTypes1 = new Class[] {
 			long.class, long[].class
@@ -1952,7 +1954,8 @@ public class UserServiceHttp {
 			long.class, long[].class
 		};
 	private static final Class<?>[] _unsetGroupUsersParameterTypes28 = new Class[] {
-			long.class, long[].class
+			long.class, long[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _unsetOrganizationUsersParameterTypes29 = new Class[] {
 			long.class, long[].class

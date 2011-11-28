@@ -46,7 +46,8 @@ public interface ShoppingOrderService {
 	public void completeOrder(long groupId, java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail)
+		java.lang.String ppPayerEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -60,7 +61,9 @@ public interface ShoppingOrderService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void sendEmail(long groupId, long orderId, java.lang.String emailType)
+	public void sendEmail(long groupId, long orderId,
+		java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

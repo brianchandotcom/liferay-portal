@@ -27,6 +27,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.MembershipRequestLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.SubscriptionSender;
@@ -42,7 +43,8 @@ public class MembershipRequestLocalServiceImpl
 	extends MembershipRequestLocalServiceBaseImpl {
 
 	public MembershipRequest addMembershipRequest(
-			long userId, long groupId, String comments)
+			long userId, long groupId, String comments,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -65,7 +67,7 @@ public class MembershipRequestLocalServiceImpl
 
 		membershipRequestPersistence.update(membershipRequest, false);
 
-		notifyGroupAdministrators(membershipRequest);
+		notifyGroupAdministrators(membershipRequest, serviceContext);
 
 		return membershipRequest;
 	}
@@ -162,7 +164,7 @@ public class MembershipRequestLocalServiceImpl
 
 	public void updateStatus(
 			long replierUserId, long membershipRequestId, String replyComments,
-			int statusId, boolean addUserToGroup)
+			int statusId, boolean addUserToGroup, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(replyComments);
@@ -193,14 +195,15 @@ public class MembershipRequestLocalServiceImpl
 			long[] addUserIds = new long[] {membershipRequest.getUserId()};
 
 			userLocalService.addGroupUsers(
-				membershipRequest.getGroupId(), addUserIds);
+				membershipRequest.getGroupId(), addUserIds, serviceContext);
 		}
 
 		if (replierUserId != 0) {
 			notify(
 				membershipRequest.getUserId(), membershipRequest,
 				PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_SUBJECT,
-				PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_BODY);
+				PropsKeys.SITES_EMAIL_MEMBERSHIP_REPLY_BODY,
+				serviceContext);
 		}
 	}
 
@@ -268,7 +271,8 @@ public class MembershipRequestLocalServiceImpl
 
 	protected void notify(
 			long userId, MembershipRequest membershipRequest,
-			String subjectProperty, String bodyProperty)
+			String subjectProperty, String bodyProperty,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -315,6 +319,7 @@ public class MembershipRequestLocalServiceImpl
 		subscriptionSender.setCompanyId(membershipRequest.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS$]", membershipRequest.getComments(),
+			"[$PORTAL_URL$]", serviceContext.getPortalURL(),
 			"[$REPLY_COMMENTS$]", membershipRequest.getReplyComments(),
 			"[$REQUEST_USER_ADDRESS$]", requestUser.getEmailAddress(),
 			"[$REQUEST_USER_NAME$]", requestUser.getFullName(), "[$STATUS$]",
@@ -333,7 +338,7 @@ public class MembershipRequestLocalServiceImpl
 	}
 
 	protected void notifyGroupAdministrators(
-			MembershipRequest membershipRequest)
+			MembershipRequest membershipRequest, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<Long> userIds = getGroupAdministratorUserIds(
@@ -343,7 +348,8 @@ public class MembershipRequestLocalServiceImpl
 			notify(
 				userId, membershipRequest,
 				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT,
-				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_BODY);
+				PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_BODY,
+				serviceContext);
 		}
 	}
 

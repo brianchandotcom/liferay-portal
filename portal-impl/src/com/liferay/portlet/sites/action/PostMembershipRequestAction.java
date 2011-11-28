@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 
 import javax.portlet.ActionRequest;
@@ -48,8 +50,11 @@ public class PostMembershipRequestAction extends PortletAction {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String comments = ParamUtil.getString(actionRequest, "comments");
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
 			MembershipRequestServiceUtil.addMembershipRequest(
-				groupId, comments);
+				groupId, comments, serviceContext);
 
 			SessionMessages.add(actionRequest, "membership_request_sent");
 

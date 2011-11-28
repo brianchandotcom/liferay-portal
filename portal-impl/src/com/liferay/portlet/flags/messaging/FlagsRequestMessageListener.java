@@ -230,7 +230,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.setContextAttributes(
 			"[$CONTENT_ID$]", contentId, "[$CONTENT_TITLE$]", contentTitle,
 			"[$CONTENT_TYPE$]", contentType, "[$CONTENT_URL$]", contentURL,
-			"[$DATE$]", now.toString(), "[$REASON$]", reason,
+			"[$DATE$]", now.toString(), "[$PORTAL_URL$]",
+			serviceContext.getPortalURL(), "[$REASON$]", reason,
 			"[$REPORTED_USER_ADDRESS$]", reportedEmailAddress,
 			"[$REPORTED_USER_NAME$]", reportedUserName, "[$REPORTED_USER_URL$]",
 			reportedUserURL, "[$REPORTER_USER_ADDRESS$]", reporterEmailAddress,

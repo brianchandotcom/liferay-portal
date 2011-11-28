@@ -148,6 +148,21 @@ public class AddUserAddress3Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("1220 Brea Canyon Rd",
+			selenium.getValue("//input[@id='_125_addressStreet1_2']"));
+		assertEquals("Business",
+			selenium.getSelectedLabel("//select[@id='_125_addressTypeId2']"));
+		assertEquals("Ste 12",
+			selenium.getValue("//input[@id='_125_addressStreet2_2']"));
+		assertEquals("91789",
+			selenium.getValue("//input[@id='_125_addressZip2']"));
+		assertEquals("Walnut",
+			selenium.getValue("//input[@id='_125_addressStreet3_2']"));
+		assertEquals("Los Angeles",
+			selenium.getValue("//input[@id='_125_addressCity2']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -166,6 +181,9 @@ public class AddUserAddress3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals("United States",
+			selenium.getSelectedLabel("//select[@id='_125_addressCountryId2']"));
+
 		for (int second = 0;; second++) {
 			if (second >= 90) {
 				fail("timeout");
@@ -183,39 +201,6 @@ public class AddUserAddress3Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("1220 Brea Canyon Rd",
-			selenium.getValue("//input[@id='_125_addressStreet1_2']"));
-		assertEquals("Business",
-			selenium.getSelectedLabel("//select[@id='_125_addressTypeId2']"));
-		assertEquals("Ste 12",
-			selenium.getValue("//input[@id='_125_addressStreet2_2']"));
-		assertEquals("91789",
-			selenium.getValue("//input[@id='_125_addressZip2']"));
-		assertEquals("Walnut",
-			selenium.getValue("//input[@id='_125_addressStreet3_2']"));
-		assertEquals("Los Angeles",
-			selenium.getValue("//input[@id='_125_addressCity2']"));
-		assertEquals("United States",
-			selenium.getSelectedLabel("//select[@id='_125_addressCountryId2']"));
 		assertEquals("California",
 			selenium.getSelectedLabel("//select[@id='_125_addressRegionId2']"));
 	}

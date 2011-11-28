@@ -124,21 +124,6 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForSelectedLabel</td>
-	<td>//select[@id='_125_addressCountryId1']</td>
-	<td>Canada</td>
-</tr>
-<tr>
-	<td>waitForSelectedLabel</td>
-	<td>//select[@id='_125_addressRegionId1']</td>
-	<td>Ontario</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -174,16 +159,25 @@
 	<td>Works</td>
 </tr>
 <tr>
+	<td>waitForSelectedLabel</td>
+	<td>//select[@id='_125_addressCountryId1']</td>
+	<td>Canada</td>
+</tr>
+<tr>
 	<td>assertSelectedLabel</td>
 	<td>//select[@id='_125_addressCountryId1']</td>
 	<td>Canada</td>
+</tr>
+<tr>
+	<td>waitForSelectedLabel</td>
+	<td>//select[@id='_125_addressRegionId1']</td>
+	<td>Ontario</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>//select[@id='_125_addressRegionId1']</td>
 	<td>Ontario</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -348,8 +348,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 				groupId, userId, folderIdsLst, status, mimeTypes, start, end);
 	}
 
-
-
 	public int getGroupFileEntriesCount(
 			long groupId, long userId, long rootFolderId)
 		throws SystemException {

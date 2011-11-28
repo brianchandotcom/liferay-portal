@@ -1628,7 +1628,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	public int getGroupFileEntriesCount(long groupId, long userId,
-			long rootFolderId, int status, String [] mimeTypes)
+			long rootFolderId, int status, String[] mimeTypes)
 		throws PortalException, SystemException {
 		Repository repository = getRepository(groupId);
 

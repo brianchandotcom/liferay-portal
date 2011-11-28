@@ -180,7 +180,7 @@ public interface Repository {
 		throws SystemException;
 
 	public int getRepositoryFileEntriesCount(
-			long userId, long rootFolderId, int status, String [] mimeTypes)
+			long userId, long rootFolderId, int status, String[] mimeTypes)
 		throws SystemException;
 
 	public long getRepositoryId();

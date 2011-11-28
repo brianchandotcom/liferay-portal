@@ -32,7 +32,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -168,7 +167,7 @@ public class DLFileEntryFinderImpl
 				List<String> mimeTypesLst = ListUtil.fromArray(mimeTypes);
 				sb.append(getMimeTypes(mimeTypesLst, table));
 
-			    sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
@@ -315,7 +314,7 @@ public class DLFileEntryFinderImpl
 				List<String> mimeTypesLst = ListUtil.fromArray(mimeTypes);
 				sb.append(getMimeTypes(mimeTypesLst, table));
 
-			    sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
@@ -323,8 +322,6 @@ public class DLFileEntryFinderImpl
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
-
-
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

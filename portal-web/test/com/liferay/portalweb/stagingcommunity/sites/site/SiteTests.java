@@ -17,6 +17,11 @@ package com.liferay.portalweb.stagingcommunity.sites.site;
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.stagingcommunity.sites.site.activatestaging.ActivateStagingTests;
 import com.liferay.portalweb.stagingcommunity.sites.site.deactivatestaging.DeactivateStagingTests;
+import com.liferay.portalweb.stagingcommunity.sites.site.schedulepublicationtoliveaddeventrepeatdaily.SchedulePublicationToLiveAddEventRepeatDailyTests;
+import com.liferay.portalweb.stagingcommunity.sites.site.schedulepublicationtoliveaddeventrepeatmonthly.SchedulePublicationToLiveAddEventRepeatMonthlyTests;
+import com.liferay.portalweb.stagingcommunity.sites.site.schedulepublicationtoliveaddeventrepeatnever.SchedulePublicationToLiveAddEventRepeatNeverTests;
+import com.liferay.portalweb.stagingcommunity.sites.site.schedulepublicationtoliveaddeventrepeatweekly.SchedulePublicationToLiveAddEventRepeatWeeklyTests;
+import com.liferay.portalweb.stagingcommunity.sites.site.schedulepublicationtoliveaddeventrepeatyearly.SchedulePublicationToLiveAddEventRepeatYearlyTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,6 +36,16 @@ public class SiteTests extends BaseTests {
 
 		testSuite.addTest(ActivateStagingTests.suite());
 		testSuite.addTest(DeactivateStagingTests.suite());
+		testSuite.addTest(
+			SchedulePublicationToLiveAddEventRepeatDailyTests.suite());
+		testSuite.addTest(
+			SchedulePublicationToLiveAddEventRepeatMonthlyTests.suite());
+		testSuite.addTest(
+			SchedulePublicationToLiveAddEventRepeatNeverTests.suite());
+		testSuite.addTest(
+			SchedulePublicationToLiveAddEventRepeatWeeklyTests.suite());
+		testSuite.addTest(
+			SchedulePublicationToLiveAddEventRepeatYearlyTests.suite());
 
 		return testSuite;
 	}

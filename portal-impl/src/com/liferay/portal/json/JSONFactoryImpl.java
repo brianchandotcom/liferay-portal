@@ -188,6 +188,16 @@ public class JSONFactoryImpl implements JSONFactory {
 		return jsonSerializer.serializeDeep(object);
 	}
 
+	public String looseSerializeDeep(
+		Object object, JSONTransformer jsonTransformer, Class<?> clazz) {
+
+		JSONSerializer jsonSerializer = createJSONSerializer();
+
+		jsonSerializer.transform(jsonTransformer, clazz);
+
+		return jsonSerializer.serializeDeep(object);
+	}
+
 	public String serialize(Object object) {
 		try {
 			return _jsonSerializer.toJSON(object);

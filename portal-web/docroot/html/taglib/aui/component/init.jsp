@@ -38,7 +38,7 @@ java.lang.String excludeAttributes = GetterUtil.getString((java.lang.String)requ
 java.lang.String javaScriptAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:javaScriptAttributes"));
 java.lang.String module = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:module"));
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:name"));
-java.util.Map options = (java.util.Map)request.getAttribute("aui:component:options");
+java.util.Map<java.lang.String,java.lang.Object> options = (java.util.Map<java.lang.String,java.lang.Object>)request.getAttribute("aui:component:options");
 javax.servlet.jsp.JspContext tagPageContext = (javax.servlet.jsp.JspContext)request.getAttribute("aui:component:tagPageContext");
 java.lang.String var = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:var"));
 

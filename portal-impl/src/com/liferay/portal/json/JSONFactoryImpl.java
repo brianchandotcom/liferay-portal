@@ -48,16 +48,6 @@ public class JSONFactoryImpl implements JSONFactory {
 		 }
 	}
 
-	public String looseSerializeDeep(
-		Object object, JSONTransformer jsonTransformer, Class<?> clazz) {
-
-		JSONSerializer jsonSerializer = createJSONSerializer();
-
-		jsonSerializer.transform(jsonTransformer, clazz);
-
-		return jsonSerializer.serializeDeep(object);
-	}
-
 	public String convertJSONMLArrayToXML(String jsonml) {
 		try {
 			org.json.JSONArray jsonArray = new org.json.JSONArray(jsonml);
@@ -194,6 +184,16 @@ public class JSONFactoryImpl implements JSONFactory {
 
 	public String looseSerializeDeep(Object object) {
 		JSONSerializer jsonSerializer = createJSONSerializer();
+
+		return jsonSerializer.serializeDeep(object);
+	}
+
+	public String looseSerializeDeep(
+		Object object, JSONTransformer jsonTransformer, Class<?> clazz) {
+
+		JSONSerializer jsonSerializer = createJSONSerializer();
+
+		jsonSerializer.transform(jsonTransformer, clazz);
 
 		return jsonSerializer.serializeDeep(object);
 	}

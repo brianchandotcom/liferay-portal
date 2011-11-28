@@ -121,7 +121,7 @@ public class LayoutFinderImpl
 
 			qPos.add(companyId);
 			qPos.add(portletId);
-			qPos.add(portletId + "_INSTANCE_%");
+			qPos.add(portletId.concat("_INSTANCE_%"));
 			qPos.add(preferences);
 
 			List<LayoutReference> layoutReferences =

@@ -183,12 +183,7 @@ if (folder != null) {
 			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm2, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
 
 			if (actionsButton) {
-				if (hide) {
-					actionsButton.hide();
-				}
-				else {
-					actionsButton.show();
-				}
+				actionsButton.toggle(!hide);
 			}
 		},
 		['liferay-util-list-fields']

@@ -78,7 +78,7 @@ html > .lfr-dockbar-pinned {
 .variation-selector {
 }
 
-.layout-revision-container {	}
+.layout-revision-container {
 
 	.current-version {	}
 
@@ -91,7 +91,6 @@ html > .lfr-dockbar-pinned {
 	.real-date {	}
 
 	.taglib-workflow-status .workflow-status {	}
-	}
 }
 
 .layout-revision-container-root {

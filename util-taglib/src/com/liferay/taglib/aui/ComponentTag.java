@@ -14,136 +14,132 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.alloy.util.ReservedAttributeUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.taglib.aui.base.BaseComponentTag;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.liferay.alloy.util.ReservedAttributeUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.taglib.aui.base.BaseComponentTag;
-
 /**
  * @author Eduardo Lundgren
  * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
  */
 public class ComponentTag extends BaseComponentTag {
-	
+
+	protected boolean isEventAttribute(String key) {
+		if (StringUtil.startsWith(key, "after") ||
+			StringUtil.startsWith(key, "on")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isValidAttribute(String key) {
+		String excludeAttributes = getExcludeAttributes();
+
+		if (excludeAttributes == null) {
+			return true;
+		}
+
+		List<String> excludeAttributesList = Arrays.asList(
+			StringUtil.split(excludeAttributes));
+
+		if (key.equals("dynamicAttributes") ||
+			excludeAttributesList.contains(key)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected void proccessAttributes(
+		Map<String, Object> options, Map<String, Object> newOptions) {
+
+		Map<String, String> afterEventOptions = new HashMap<String, String>();
+
+		Map<String, String> onEventOptions = new HashMap<String, String>();
+
+		for (String key : options.keySet()) {
+			if (!isValidAttribute(key)) {
+				continue;
+			}
+
+			Object optionValue = options.get(key);
+
+			String originalKey = ReservedAttributeUtil.getOriginalName(
+				getName(), key);
+
+			if (optionValue instanceof Map) {
+				Map<String, Object> childOptions =
+					new HashMap<String, Object>();
+
+				proccessAttributes((Map)optionValue, childOptions);
+
+				newOptions.put(originalKey, childOptions);
+
+				continue;
+			}
+
+			if (isEventAttribute(key)) {
+				processEventAttribute(
+					key, String.valueOf(optionValue), afterEventOptions,
+					onEventOptions);
+			} else {
+				newOptions.put(originalKey, optionValue);
+			}
+		}
+
+		if (afterEventOptions.size() > 0) {
+			newOptions.put("after", afterEventOptions);
+		}
+
+		if (onEventOptions.size() > 0) {
+			newOptions.put("on", onEventOptions);
+		}
+	}
+
+	protected void processEventAttribute(
+			String key, String value, Map<String, String> afterEventOptionsMap,
+			Map<String, String> onEventsOptionsMap) {
+
+		if (key.startsWith("after")) {
+			String eventName = StringUtils.uncapitalize(
+				StringUtil.remove(key, "after", StringPool.BLANK));
+
+			afterEventOptionsMap.put(eventName, value);
+		} else {
+			String eventName = StringUtils.uncapitalize(
+				StringUtil.remove(key, "on", StringPool.BLANK));
+
+			eventName = StringUtils.uncapitalize(eventName);
+
+			onEventsOptionsMap.put(eventName, value);
+		}
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
-		
 		Map<String, Object> options = getOptions();
+
 		HashMap<String, Object> optionsJSON = new HashMap<String, Object>();
 
-		_proccessAttributes(options, optionsJSON);
+		proccessAttributes(options, optionsJSON);
 
 		super.setAttributes(request);
 
 		setNamespacedAttribute(request, "options", options);
 		setNamespacedAttribute(request, "optionsJSON", optionsJSON);
 	}
-	
-	private boolean _isEventAttribute(String key) {
-		Matcher afterMatcher = _EVENT_AFTER_REGEX.matcher(key);
-		Matcher onMatcher = _EVENT_ON_REGEX.matcher(key);
 
-		return (afterMatcher.find() || onMatcher.find());
-	}
-
-	private boolean _isValidAttribute(String key) {
-		List<String> excludeAttributes = Collections.EMPTY_LIST;
-
-		if (getExcludeAttributes() != null) {
-			excludeAttributes = Arrays.asList(
-				getExcludeAttributes().split(StringPool.COMMA));
-		}
-
-		return !(excludeAttributes.contains(key) ||
-			key.equals(_DYNAMIC_ATTRIBUTES));
-	}
-
-	private void _proccessAttributes(Map<String, Object> options,
-		Map<String, Object> newOptions) {
-
-		Map<String, String> afterEventOptionsMap =
-			new HashMap<String, String>();
-
-		Map<String, String> onEventOptionsMap =	new HashMap<String, String>();
-
-		for (String key : options.keySet()) {
-			if (!_isValidAttribute(key)) {
-				continue;
-			}
-
-			Object value = options.get(key);
-
-			String originalKey =
-				ReservedAttributeUtil.getOriginalName(getName(), key);
-
-			if (value instanceof Map) {
-				Map<String, Object> childOptionsMap =
-					new HashMap<String, Object>();
-
-				_proccessAttributes((Map)value, childOptionsMap);
-
-				newOptions.put(originalKey, childOptionsMap);
-
-				continue;
-			}
-
-			if (_isEventAttribute(key)) {
-				_processEventAttribute(
-					key, String.valueOf(value), afterEventOptionsMap,
-						onEventOptionsMap);
-			} else {
-				newOptions.put(originalKey, value);
-			}
-		}
-
-		if (afterEventOptionsMap.size() > 0) {
-			newOptions.put(_AFTER, afterEventOptionsMap);
-		}
-
-		if (onEventOptionsMap.size() > 0) {
-			newOptions.put(_ON, onEventOptionsMap);
-		}
-	}
-
-	private void _processEventAttribute(String key, String value,
-		Map<String, String> afterEventOptionsMap,
-		Map<String, String> onEventsOptionsMap) {
-
-		if (key.startsWith(_AFTER)) {
-			String event = StringUtils.uncapitalize(
-				key.replaceFirst(_AFTER, StringPool.BLANK));
-
-			afterEventOptionsMap.put(event, value);
-		} else {
-			String event = StringUtils.uncapitalize(
-				key.replaceFirst(_ON, StringPool.BLANK));
-
-			onEventsOptionsMap.put(event, value);
-		}
-	}
-
-	private static final String _AFTER = "after";
-
-	private static final String _DYNAMIC_ATTRIBUTES = "dynamicAttributes";
-
-	private static final Pattern _EVENT_AFTER_REGEX = Pattern
-		.compile("after[A-Z]");
-
-	private static final Pattern _EVENT_ON_REGEX = Pattern.compile("on[A-Z]");
-
-	private static final String _ON = "on";
 }

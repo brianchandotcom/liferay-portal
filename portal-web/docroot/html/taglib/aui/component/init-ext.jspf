@@ -14,10 +14,14 @@
  */
 --%>
 
-<%@ page import="com.liferay.alloy.util.json.StringTransformer"%>
+<%@ page import="com.liferay.alloy.util.json.StringTransformer" %>
 
 <%
 HashMap<String, Object> optionsJSON = (HashMap<String, Object>)request.getAttribute("aui:component:optionsJSON");
+
+String scriptPosition = GetterUtil.getString((Serializable)_options.get("scriptPosition"), "inline");
+
+boolean useJavaScript = GetterUtil.getBoolean((Serializable)_options.get("useJavaScript"), true);
 
 Object render = String.valueOf(_options.get("render"));
 
@@ -25,20 +29,10 @@ if (Validator.isNull(render)) {
 	render = true;
 }
 else if (render.equals("true") || render.equals("false")) {
-	render = GetterUtil.getBoolean((Serializable)render);
+	render = GetterUtil.getBoolean((String)render);
 }
 
 optionsJSON.put("render", render);
-
-String scriptPosition = GetterUtil.getString((Serializable)_options.get("scriptPosition"), "inline");
-
-boolean useJavaScript = GetterUtil.getBoolean((Serializable)_options.get("useJavaScript"), true);
-
-defineVar = GetterUtil.getBoolean((Serializable)_options.get("defineVar"), defineVar);
-
-if (Validator.isNull(var)) {
-	var = (String)_options.get("var");
-}
 %>
 
 <%!

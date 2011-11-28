@@ -58,6 +58,9 @@ public interface JSONFactory {
 
 	public String looseSerializeDeep(Object object);
 
+	public String looseSerializeDeep(
+		Object object, JSONTransformer jsonTransformer, Class<?> clazz);
+
 	public String serialize(Object object);
 
 	public String serializeException(Exception exception);

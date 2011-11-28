@@ -292,6 +292,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//div[contains(@class,'aui-fileupload-cell-editor-focused')]/form/div[2]/span/span/button[1]"));
 		selenium.clickAt("//div[contains(@class,'aui-fileupload-cell-editor-focused')]/form/div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Save"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
 				"//thead[@class='yui3-datatable-columns']/tr/th[6]/div/a"));

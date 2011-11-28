@@ -80,7 +80,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         group members
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void addGroupUsers(long groupId, long[] userIds)
+	public void addGroupUsers(
+			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		try {
@@ -969,7 +970,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         modify group assignments
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void unsetGroupUsers(long groupId, long[] userIds)
+	public void unsetGroupUsers(
+			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		try {
@@ -1008,7 +1010,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		userLocalService.unsetGroupUsers(groupId, userIds);
+		userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**

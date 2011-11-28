@@ -42,6 +42,7 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
@@ -238,6 +239,44 @@ public class SubscriptionSender implements Serializable {
 		return this.mailId;
 	}
 
+	public String getPortalURL(String virtualHostname) throws Exception {
+		String portalURL = PortalUtil.getPortalURL(
+			virtualHostname, Http.HTTP_PORT, false);
+
+		if ((serviceContext != null) &&
+			Validator.isNotNull(serviceContext.getPortalURL())) {
+
+			return serviceContext.getPortalURL();
+		}
+
+		if (groupId <= 0) {
+			return portalURL;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.hasPublicLayouts()) {
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, false);
+
+			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+				portalURL = PortalUtil.getPortalURL(
+					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
+			}
+		}
+		else if (group.hasPrivateLayouts()) {
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, true);
+
+			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+				portalURL = PortalUtil.getPortalURL(
+					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
+			}
+		}
+
+		return portalURL;
+	}
+
 	public void setBody(String body) {
 		this.body = body;
 	}
@@ -334,6 +373,10 @@ public class SubscriptionSender implements Serializable {
 		this.scopeGroupId = scopeGroupId;
 	}
 
+	public void setServiceContext(ServiceContext serviceContext) {
+		this.serviceContext = serviceContext;
+	}
+
 	public void setSMTPAccount(SMTPAccount smtpAccount) {
 		this.smtpAccount = smtpAccount;
 	}
@@ -351,38 +394,6 @@ public class SubscriptionSender implements Serializable {
 
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			subscription.getSubscriptionId());
-	}
-
-	protected String getPortalURL(String virtualHostname) throws Exception {
-		String portalURL = PortalUtil.getPortalURL(
-			virtualHostname, Http.HTTP_PORT, false);
-
-		if (groupId <= 0) {
-			return portalURL;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.hasPublicLayouts()) {
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				groupId, false);
-
-			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
-				portalURL = PortalUtil.getPortalURL(
-					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
-			}
-		}
-		else if (group.hasPrivateLayouts()) {
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				groupId, true);
-
-			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
-				portalURL = PortalUtil.getPortalURL(
-					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
-			}
-		}
-
-		return portalURL;
 	}
 
 	protected boolean hasPermission(Subscription subscription, User user)
@@ -647,6 +658,7 @@ public class SubscriptionSender implements Serializable {
 	protected String mailId;
 	protected String portletId;
 	protected String replyToAddress;
+	protected ServiceContext serviceContext;
 	protected long scopeGroupId;
 	protected SMTPAccount smtpAccount;
 	protected String subject;

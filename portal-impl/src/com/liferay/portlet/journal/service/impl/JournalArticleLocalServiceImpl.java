@@ -300,7 +300,8 @@ public class JournalArticleLocalServiceImpl
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
-		sendEmail(article, articleURL, preferences, "requested");
+		sendEmail(
+			article, articleURL, preferences, "requested", serviceContext);
 
 		// Workflow
 
@@ -455,7 +456,9 @@ public class JournalArticleLocalServiceImpl
 					article.getCompanyId(), ownerId, ownerType, plid,
 					portletId);
 
-			sendEmail(article, articleURL, preferences, "review");
+			sendEmail(
+				article, articleURL, preferences, "review",
+				new ServiceContext());
 		}
 	}
 
@@ -612,7 +615,8 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), article.getArticleId(),
 				article.getVersion())) {
 
-			sendEmail(article, articleURL, preferences, "denied");
+			sendEmail(
+				article, articleURL, preferences, "denied", serviceContext);
 		}
 
 		// Images
@@ -2064,7 +2068,8 @@ public class JournalArticleLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
-			sendEmail(article, articleURL, preferences, "requested");
+			sendEmail(
+				article, articleURL, preferences, "requested", serviceContext);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
@@ -2433,7 +2438,8 @@ public class JournalArticleLocalServiceImpl
 						ServiceContextUtil.getPortletPreferences(
 							serviceContext);
 
-					sendEmail(article, articleURL, preferences, msg);
+					sendEmail(
+						article, articleURL, preferences, msg, serviceContext);
 				}
 				catch (Exception e) {
 					_log.error(
@@ -3065,6 +3071,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
@@ -3091,7 +3098,8 @@ public class JournalArticleLocalServiceImpl
 
 	protected void sendEmail(
 			JournalArticle article, String articleURL,
-			PortletPreferences preferences, String emailType)
+			PortletPreferences preferences, String emailType,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (preferences == null) {
@@ -3185,6 +3193,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 

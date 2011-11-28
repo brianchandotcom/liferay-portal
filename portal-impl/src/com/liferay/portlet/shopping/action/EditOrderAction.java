@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
@@ -123,8 +125,11 @@ public class EditOrderAction extends PortletAction {
 
 		String emailType = ParamUtil.getString(actionRequest, "emailType");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		ShoppingOrderServiceUtil.sendEmail(
-			themeDisplay.getScopeGroupId(), orderId, emailType);
+			themeDisplay.getScopeGroupId(), orderId, emailType, serviceContext);
 	}
 
 	protected void updateOrder(ActionRequest actionRequest) throws Exception {
@@ -142,9 +147,12 @@ public class EditOrderAction extends PortletAction {
 		String ppPayerEmail = ParamUtil.getString(
 			actionRequest, "ppPayerEmail");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		ShoppingOrderServiceUtil.completeOrder(
 			themeDisplay.getScopeGroupId(), number, ppTxnId, ppPaymentStatus,
-			ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+			ppPaymentGross, ppReceiverEmail, ppPayerEmail, serviceContext);
 	}
 
 }

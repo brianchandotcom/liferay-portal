@@ -3357,6 +3357,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("user", user.getUserId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(user.getUserId());
 
@@ -3505,6 +3506,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("user", user.getUserId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(user.getUserId());
 
@@ -3565,7 +3567,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void unsetGroupUsers(long groupId, long[] userIds)
+	public void unsetGroupUsers(
+			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
@@ -3936,7 +3939,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			oldGroupIds.add(oldGroupId);
 
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
-				unsetGroupUsers(oldGroupId, new long[] {userId});
+				unsetGroupUsers(
+					oldGroupId, new long[] {userId}, serviceContext);
 			}
 		}
 
@@ -5215,6 +5219,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("user", user.getUserId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(user.getUserId());
 

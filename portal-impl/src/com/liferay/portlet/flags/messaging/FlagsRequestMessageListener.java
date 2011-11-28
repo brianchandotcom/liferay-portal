@@ -239,6 +239,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("flags_request", contentId);
 		subscriptionSender.setPortletId(PortletKeys.FLAGS);
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);

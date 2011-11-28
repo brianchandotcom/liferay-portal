@@ -35,11 +35,13 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 	public void completeOrder(long groupId, java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail)
+		java.lang.String ppPayerEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_shoppingOrderService.completeOrder(groupId, number, ppTxnId,
-			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
+			serviceContext);
 	}
 
 	public void deleteOrder(long groupId, long orderId)
@@ -55,10 +57,13 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		return _shoppingOrderService.getOrder(groupId, orderId);
 	}
 
-	public void sendEmail(long groupId, long orderId, java.lang.String emailType)
+	public void sendEmail(long groupId, long orderId,
+		java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_shoppingOrderService.sendEmail(groupId, orderId, emailType);
+		_shoppingOrderService.sendEmail(groupId, orderId, emailType,
+			serviceContext);
 	}
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(

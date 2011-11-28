@@ -2244,10 +2244,11 @@ public class UserLocalServiceUtil {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void unsetGroupUsers(long groupId, long[] userIds)
+	public static void unsetGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().unsetGroupUsers(groupId, userIds);
+		getService().unsetGroupUsers(groupId, userIds, serviceContext);
 	}
 
 	/**

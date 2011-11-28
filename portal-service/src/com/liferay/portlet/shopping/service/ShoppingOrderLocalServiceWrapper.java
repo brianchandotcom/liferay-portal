@@ -267,12 +267,13 @@ public class ShoppingOrderLocalServiceWrapper
 	public void completeOrder(java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, boolean updateInventory)
+		java.lang.String ppPayerEmail, boolean updateInventory,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_shoppingOrderLocalService.completeOrder(number, ppTxnId,
 			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
-			updateInventory);
+			updateInventory, serviceContext);
 	}
 
 	public void deleteOrder(long orderId)
@@ -356,18 +357,20 @@ public class ShoppingOrderLocalServiceWrapper
 			shippingEmailAddress, ppPaymentStatus, andOperator);
 	}
 
-	public void sendEmail(long orderId, java.lang.String emailType)
+	public void sendEmail(long orderId, java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_shoppingOrderLocalService.sendEmail(orderId, emailType);
+		_shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
 	}
 
 	public void sendEmail(
 		com.liferay.portlet.shopping.model.ShoppingOrder order,
-		java.lang.String emailType)
+		java.lang.String emailType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_shoppingOrderLocalService.sendEmail(order, emailType);
+		_shoppingOrderLocalService.sendEmail(order, emailType, serviceContext);
 	}
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder updateLatestOrder(

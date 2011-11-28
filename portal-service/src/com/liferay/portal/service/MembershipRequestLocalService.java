@@ -237,7 +237,8 @@ public interface MembershipRequestLocalService
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments)
+		long userId, long groupId, java.lang.String comments,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -269,7 +270,8 @@ public interface MembershipRequestLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateStatus(long replierUserId, long membershipRequestId,
-		java.lang.String replyComments, int statusId, boolean addUserToGroup)
+		java.lang.String replyComments, int statusId, boolean addUserToGroup,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

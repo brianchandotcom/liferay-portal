@@ -75,10 +75,11 @@ public class UserServiceSoap {
 	group members
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void addGroupUsers(long groupId, long[] userIds)
+	public static void addGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			UserServiceUtil.addGroupUsers(groupId, userIds);
+			UserServiceUtil.addGroupUsers(groupId, userIds, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1036,10 +1037,11 @@ public class UserServiceSoap {
 	modify group assignments
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void unsetGroupUsers(long groupId, long[] userIds)
+	public static void unsetGroupUsers(long groupId, long[] userIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			UserServiceUtil.unsetGroupUsers(groupId, userIds);
+			UserServiceUtil.unsetGroupUsers(groupId, userIds, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -20,6 +20,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
 
+import java.util.Map;
+
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PreferencesValidator;
@@ -98,6 +100,11 @@ public interface PortletPreferencesFactory {
 
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
 		throws PortalException, SystemException;
+
+	public Map<Long, PortletPreferences> getPortletSetupMap(
+			long companyId, long groupId, long ownerId, int ownerType,
+			String portletId, boolean privateLayout)
+		throws SystemException;
 
 	public PortletPreferences getPortletSetup(
 			PortletRequest portletRequest, String portletId)

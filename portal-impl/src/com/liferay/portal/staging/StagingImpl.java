@@ -40,13 +40,11 @@ import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -391,21 +389,6 @@ public class StagingImpl implements Staging {
 		deleteLastImportSettings(liveGroup, false);
 
 		if (liveGroup.hasStagingGroup()) {
-			if ((portletRequest != null) &&
-				(scopeGroup.getGroupId() != liveGroup.getGroupId())) {
-
-				String redirect = ParamUtil.getString(
-					portletRequest, "redirect");
-
-				redirect = HttpUtil.removeParameter(redirect, "refererPlid");
-
-				redirect = StringUtil.replace(
-					redirect, String.valueOf(scopeGroup.getGroupId()),
-					String.valueOf(liveGroup.getGroupId()));
-
-				portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
-			}
-
 			Group stagingGroup = liveGroup.getStagingGroup();
 
 			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(

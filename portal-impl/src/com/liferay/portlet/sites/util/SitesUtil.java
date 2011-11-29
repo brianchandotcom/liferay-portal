@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -284,6 +285,8 @@ public class SitesUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
+		long validPlid = layout.getParentPlid();
+
 		Group layoutSetGroup = layoutSet.getGroup();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -316,7 +319,17 @@ public class SitesUtil {
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);
 
-		return new Object[] {group, oldFriendlyURL, plid};
+		if ((validPlid <= 0)) {
+			Layout firstLayout = LayoutLocalServiceUtil.getFirstLayout(
+				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (firstLayout != null) {
+				validPlid = firstLayout.getPlid();
+			}
+		}
+
+		return new Object[] {group, oldFriendlyURL, validPlid};
 	}
 
 	public static void deleteLayout(

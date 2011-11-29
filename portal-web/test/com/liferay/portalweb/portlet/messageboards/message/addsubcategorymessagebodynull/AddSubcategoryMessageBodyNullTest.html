@@ -90,13 +90,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>//div[@class='subject']/a/strong</td>
+	<td>MB Subcategory Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td>Please enter a valid message.</td>
+	<td>//div[@class='thread-body']</td>
+	<td>MB Subcategory Thread Message Subject</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -126,12 +126,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[3]/a</td>
-	<td>0</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
-	<td>0</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -151,12 +151,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[3]/a</td>
-	<td>0</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
-	<td>0</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -164,14 +164,9 @@
 	<td>MB Subcategory Name</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
 	<td>MB Subcategory Thread Message Subject</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//td[7]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
 </tr>
 
 </tbody></table>

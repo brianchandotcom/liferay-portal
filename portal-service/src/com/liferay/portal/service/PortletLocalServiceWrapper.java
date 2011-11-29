@@ -364,6 +364,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 			showPortal);
 	}
 
+	public java.util.List<com.liferay.portal.model.Portlet> getScopablePortlets() {
+		return _portletLocalService.getScopablePortlets();
+	}
+
 	public com.liferay.portal.model.PortletCategory getWARDisplay(
 		java.lang.String servletContextName, java.lang.String xml)
 		throws com.liferay.portal.kernel.exception.SystemException {

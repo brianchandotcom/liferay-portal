@@ -1573,14 +1573,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	public List<FileEntry> getGroupFileEntries(
-			long groupId, long userId, long rootFolderId, int status,
-			String[] mimeTypes, int start, int end, OrderByComparator obc)
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		Repository repository = getRepository(groupId);
 
 		return repository.getRepositoryFileEntries(
-			userId, rootFolderId, status, mimeTypes, start, end, obc);
+			userId, rootFolderId, mimeTypes, status, start, end, obc);
 	}
 
 	/**
@@ -1627,13 +1627,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return repository.getRepositoryFileEntriesCount(userId, rootFolderId);
 	}
 
-	public int getGroupFileEntriesCount(long groupId, long userId,
-			long rootFolderId, int status, String[] mimeTypes)
+	public int getGroupFileEntriesCount(
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status)
 		throws PortalException, SystemException {
+
 		Repository repository = getRepository(groupId);
 
 		return repository.getRepositoryFileEntriesCount(
-				userId, rootFolderId, status, mimeTypes);
+			userId, rootFolderId, mimeTypes, status);
 	}
 
 	/**

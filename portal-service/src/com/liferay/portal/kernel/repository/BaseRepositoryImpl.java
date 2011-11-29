@@ -196,7 +196,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	public List<FileEntry> getRepositoryFileEntries(
-			long userId, long rootFolderId, int status, String[] mimeTypes,
+			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
@@ -210,7 +210,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	public int getRepositoryFileEntriesCount(
-			long userId, long rootFolderId, int status, String[] mimeTypes)
+			long userId, long rootFolderId, String[] mimeTypes, int status)
 		throws SystemException {
 
 		return getRepositoryFileEntriesCount(userId, rootFolderId);

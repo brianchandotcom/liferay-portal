@@ -257,11 +257,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
 
-		int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, status, mediaGalleryMimeTypes);
+		int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status);
 
 		searchContainer.setTotal(total);
 
-		List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, status, mediaGalleryMimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 		%>

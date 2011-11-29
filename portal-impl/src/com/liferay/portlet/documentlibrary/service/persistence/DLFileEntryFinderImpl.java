@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,6 +30,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
@@ -119,33 +120,35 @@ public class DLFileEntryFinderImpl
 		return doCountByG_F_S(groupId, folderIds, status, false);
 	}
 
-	public int countByG_U_F_S(
-			long groupId, long userId, List<Long> folderIds, int status,
-			String[] mimeTypes)
-		throws SystemException{
+	public int countByG_U_F_M_S(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			int status)
+		throws SystemException {
+
 		Session session = null;
 
-		String table = "DLFileVersion";
+		String table = DLFileVersionImpl.TABLE_NAME;
 
 		try {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_F_S);
 
-			if (userId <=0) {
+			if (userId <= 0) {
 				if (status == WorkflowConstants.STATUS_ANY) {
-					table = "DLFileEntry";
+					table = DLFileEntryImpl.TABLE_NAME;
 
 					sql = CustomSQLUtil.get(COUNT_BY_G_F);
 				}
 				else {
 					sql = CustomSQLUtil.get(COUNT_BY_G_F_S);
+
 					sql = StringUtil.replace(sql, "[$JOIN$]", "");
 				}
 			}
-			else{
+			else {
 				if (status == WorkflowConstants.STATUS_ANY) {
-					table = "DLFileEntry";
+					table = DLFileEntryImpl.TABLE_NAME;
 
 					sql = CustomSQLUtil.get(COUNT_BY_G_U_F);
 				}
@@ -164,8 +167,7 @@ public class DLFileEntryFinderImpl
 			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
 				sb.append(WHERE_AND).append(StringPool.OPEN_PARENTHESIS);
 
-				List<String> mimeTypesLst = ListUtil.fromArray(mimeTypes);
-				sb.append(getMimeTypes(mimeTypesLst, table));
+				sb.append(getMimeTypes(mimeTypes, table));
 
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -267,22 +269,23 @@ public class DLFileEntryFinderImpl
 			"No DLFileEntry exists with the imageId " + imageId);
 	}
 
-	public List<DLFileEntry> findByG_U_F_S(
-			long groupId, long userId, List<Long> folderIds, int status,
-			String[] mimeTypes, int start, int end)
-		throws SystemException{
+	public List<DLFileEntry> findByG_U_F_M_S(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			int status, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
 		Session session = null;
 
-		String table = "DLFileVersion";
+		String table = DLFileVersionImpl.TABLE_NAME;
 
 		try {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_F_S);
 
-			if (userId <=0) {
+			if (userId <= 0) {
 				if (status == WorkflowConstants.STATUS_ANY) {
-					table = "DLFileEntry";
+					table = DLFileEntryImpl.TABLE_NAME;
 
 					sql = CustomSQLUtil.get(FIND_BY_G_F);
 				}
@@ -290,9 +293,9 @@ public class DLFileEntryFinderImpl
 					sql = CustomSQLUtil.get(FIND_BY_G_F_S);
 				}
 			}
-			else{
+			else {
 				if (status == WorkflowConstants.STATUS_ANY) {
-					table = "DLFileEntry";
+					table = DLFileEntryImpl.TABLE_NAME;
 
 					sql = CustomSQLUtil.get(FIND_BY_G_U_F);
 				}
@@ -311,8 +314,7 @@ public class DLFileEntryFinderImpl
 			if ((mimeTypes != null) && (mimeTypes.length > 0)) {
 				sb.append(WHERE_AND).append(StringPool.OPEN_PARENTHESIS);
 
-				List<String> mimeTypesLst = ListUtil.fromArray(mimeTypes);
-				sb.append(getMimeTypes(mimeTypesLst, table));
+				sb.append(getMimeTypes(mimeTypes, table));
 
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -513,28 +515,28 @@ public class DLFileEntryFinderImpl
 			sb.append(".folderId = ? ");
 
 			if ((i + 1) != folderIds.size()) {
-				sb.append("OR ");
+				sb.append(WHERE_OR);
 			}
 		}
 
 		return sb.toString();
 	}
 
-	protected String getMimeTypes(List<String> mimeTypes, String table) {
-		if (mimeTypes.isEmpty()) {
+	protected String getMimeTypes(String[] mimeTypes, String table) {
+		if (mimeTypes.length == 0) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(mimeTypes.size() * 2 - 1);
+		StringBundler sb = new StringBundler(mimeTypes.length * 2 - 1);
 
-		for (int i = 0; i < mimeTypes.size(); i++) {
+		for (int i = 0; i < mimeTypes.length; i++) {
 			sb.append(table);
 
 			sb.append(".mimeType = '");
-			sb.append(mimeTypes.get(i));
+			sb.append(mimeTypes[i]);
 			sb.append("'");
 
-			if ((i + 1) != mimeTypes.size()) {
+			if ((i + 1) != mimeTypes.length) {
 				sb.append(WHERE_OR);
 			}
 		}

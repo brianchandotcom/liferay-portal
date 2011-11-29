@@ -78,7 +78,7 @@
 				(DLFileEntry.custom2ImageId = ?)
 		]]>
 	</sql>
-   	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
 		<![CDATA[
 			SELECT
 				DISTINCT {DLFileEntry.*}

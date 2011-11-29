@@ -366,12 +366,12 @@ public class BaseRepositoryProxyBean
 	}
 
 	public List<FileEntry> getRepositoryFileEntries(
-			long userId, long rootFolderId, int status, String[] mimeTypes,
+			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		List<FileEntry> fileEntries = _baseRepository.getRepositoryFileEntries(
-				userId, rootFolderId, status, mimeTypes, start, end, obc);
+			userId, rootFolderId, mimeTypes, status, start, end, obc);
 
 		return toFileEntryProxyBeans(fileEntries);
 	}
@@ -384,11 +384,11 @@ public class BaseRepositoryProxyBean
 	}
 
 	public int getRepositoryFileEntriesCount(
-			long userId, long rootFolderId, int status, String[] mimeTypes)
+			long userId, long rootFolderId, String[] mimeTypes, int status)
 		throws SystemException {
 
 		return _baseRepository.getRepositoryFileEntriesCount(
-			userId, rootFolderId, status, mimeTypes);
+			userId, rootFolderId, mimeTypes, status);
 	}
 
 	public long getRepositoryId() {

@@ -332,8 +332,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	public List<DLFileEntry> getGroupFileEntries(
-			long groupId, long userId, long rootFolderId, int status,
-			String[] mimeTypes, int start, int end, OrderByComparator obc)
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
@@ -342,10 +342,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<Long> folderIdsLst = ListUtil.toList(folderIds);
+		List<Long> folderIdsList = ListUtil.toList(folderIds);
 
-		return dlFileEntryFinder.findByG_U_F_S(
-				groupId, userId, folderIdsLst, status, mimeTypes, start, end);
+		return dlFileEntryFinder.findByG_U_F_M_S(
+			groupId, userId, folderIdsList, mimeTypes, status, start, end, obc);
 	}
 
 	public int getGroupFileEntriesCount(
@@ -367,8 +367,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	public int getGroupFileEntriesCount(
-			long groupId, long userId, long rootFolderId, int status,
-			String[] mimeTypes)
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status)
 		throws SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
@@ -377,10 +377,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return 0;
 		}
 
-		List<Long> folderIdsLst = ListUtil.toList(folderIds);
+		List<Long> folderIdsList = ListUtil.toList(folderIds);
 
-		return dlFileEntryFinder.countByG_U_F_S(
-				groupId, userId, folderIdsLst, status, mimeTypes);
+		return dlFileEntryFinder.countByG_U_F_M_S(
+			groupId, userId, folderIdsList, mimeTypes, status);
 	}
 
 	public boolean hasFileEntryLock(long fileEntryId)

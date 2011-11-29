@@ -120,14 +120,12 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	public VideoProcessor() {
 		boolean valid = true;
 
-		if ((_videoMimeTypes.size() == 0) || (_videoMimeTypes.size() > 2)) {
+		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
 			valid = false;
 		}
 		else {
-			for (String videoMimeType : _videoMimeTypes) {
-				if (!videoMimeType.equals("mp4") ||
-					!videoMimeType.equals("ogv")) {
-
+			for (String previewType : _PREVIEW_TYPES) {
+				if (!previewType.equals("mp4") && !previewType.equals("ogv")) {
 					valid = false;
 
 					break;

@@ -49,7 +49,8 @@ public class AddGadgetTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=OpenSocial")) {
+				if (selenium.isElementPresent(
+							"link=OpenSocial Gadget Publisher")) {
 					break;
 				}
 			}
@@ -59,8 +60,8 @@ public class AddGadgetTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=OpenSocial",
-			RuntimeVariables.replace("OpenSocial"));
+		selenium.clickAt("link=OpenSocial Gadget Publisher",
+			RuntimeVariables.replace("OpenSocial Gadget Publisher"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

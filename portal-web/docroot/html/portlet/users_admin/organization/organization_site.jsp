@@ -20,25 +20,27 @@
 Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+
+boolean site = false;
+
+if (organization != null) {
+	Group organizationGroup = organization.getGroup();
+
+	site = organizationGroup.isSite();
+}
 %>
 
 <h3><liferay-ui:message key="organization-site" /></h3>
 
 <aui:fieldset>
-	<c:if test="<%= (organization == null) || ((organization.getPublicLayoutsPageCount() == 0) && (organization.getPrivateLayoutsPageCount() == 0)) %>">
-
-		<%
-		boolean site = false;
-
-		if (organization != null) {
-			Group organizationGroup = organization.getGroup();
-
-			site = organizationGroup.isSite();
-		}
-		%>
-
-		<aui:input label="create-site" name="site" type="checkbox" value="<%= site %>" />
-	</c:if>
+	<c:choose>
+		<c:when test="<%= (organization == null) || ((organization.getPublicLayoutsPageCount() == 0) && (organization.getPrivateLayoutsPageCount() == 0)) %>">
+			<aui:input label="create-site" name="site" type="checkbox" value="<%= site %>" />
+		</c:when>
+		<c:otherwise>
+			<aui:input label="create-site" name="site" type="hidden" value="<%= site %>" />
+		</c:otherwise>
+	</c:choose>
 
 	<div id="<portlet:namespace />siteTemplates">
 		<c:choose>

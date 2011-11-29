@@ -322,22 +322,13 @@ String[][] categorySections = {mainSections};
 			action = action || '<%= Constants.UPDATE %>';
 
 			if (action == '<%= Constants.DELETE %>') {
-				<c:choose>
-					<c:when test="<%= (selPlid == themeDisplay.getPlid()) || (selPlid == refererPlid) || parentPlids.contains(selPlid) %>">
-						alert('<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-this-page-because-you-are-currently-accessing-this-page") %>');
+                    if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+                        return false;
+                    }
 
-						return false;
-					</c:when>
-					<c:otherwise>
-						if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
-							return false;
-						}
-
-						<c:if test="<%= layoutRevision == null || incomplete %>">
-							document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
-						</c:if>
-					</c:otherwise>
-				</c:choose>
+                    <c:if test="<%= layoutRevision == null || incomplete %>">
+                        document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
+                    </c:if>
 			}
 			else {
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value += Liferay.Util.getHistoryParam('<portlet:namespace />');

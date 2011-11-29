@@ -36,7 +36,7 @@ public class BaseATag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
-	public java.util.Map<java.lang.String,java.lang.Object> getData() {
+	public java.util.Map<java.lang.String, java.lang.Object> getData() {
 		return _data;
 	}
 
@@ -74,7 +74,7 @@ public class BaseATag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("cssClass", cssClass);
 	}
 
-	public void setData(java.util.Map<java.lang.String,java.lang.Object> data) {
+	public void setData(java.util.Map<java.lang.String, java.lang.Object> data) {
 		_data = data;
 
 		setScopedAttribute("data", data);
@@ -154,7 +154,7 @@ public class BaseATag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/a/start.jsp";
 
 	private java.lang.String _cssClass = null;
-	private java.util.Map<java.lang.String,java.lang.Object> _data = null;
+	private java.util.Map<java.lang.String, java.lang.Object> _data = null;
 	private java.lang.String _href = null;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;

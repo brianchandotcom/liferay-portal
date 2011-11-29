@@ -80,7 +80,7 @@ public class LayoutPrototypeLocalServiceImpl
 		layoutLocalService.addLayout(
 			userId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			String.valueOf(layoutPrototype.getLayoutPrototypeId()), null, null,
+			layoutPrototype.getName(LocaleUtil.getDefault()), null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/layout", false,
 			serviceContext);
 

@@ -40,25 +40,52 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Organizations", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Organizations",
+			RuntimeVariables.replace("Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_126_name",
+		selenium.type("//input[@id='_126_name']",
 			RuntimeVariables.replace("Organization Sample Test"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Organizations",
+			RuntimeVariables.replace("Organizations"));
+		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_126_keywords']",
 			RuntimeVariables.replace("Organization Sample Test"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization Sample Test"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText("//tr[3]/td[2]/a"));
 	}
 }

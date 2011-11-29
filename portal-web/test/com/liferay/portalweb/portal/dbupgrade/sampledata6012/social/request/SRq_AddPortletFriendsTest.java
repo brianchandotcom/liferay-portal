@@ -42,8 +42,8 @@ public class SRq_AddPortletFriendsTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Friends Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("More"),
-			selenium.getText("//a[@id='_145_addApplication']"));
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 

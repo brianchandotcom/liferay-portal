@@ -866,6 +866,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		return sb.toString();
 	}
 
+	/**
+	 * @see {@link PortletImporter#getAssetCategoryName(String, long, String,
+	 *      int)}
+	 * @see {@link PortletImporter#getAssetVocabularyName(String, long, String,
+	 *      int)}
+	 */
 	protected static String getFolderName(
 			String uuid, long companyId, long groupId, long parentFolderId,
 			String name, int count)

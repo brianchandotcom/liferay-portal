@@ -44,6 +44,7 @@ public class ViewRatePage2BlogsEntry2Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -341,6 +342,23 @@ public class ViewRatePage2BlogsEntry2Comment1Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Scope: Blogs Test Page2"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_161_keywords']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@id='_161_keywords']",
 			RuntimeVariables.replace("Entry2"));
 

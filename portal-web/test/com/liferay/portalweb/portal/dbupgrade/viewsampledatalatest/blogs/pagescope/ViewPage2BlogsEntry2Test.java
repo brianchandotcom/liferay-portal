@@ -416,6 +416,23 @@ public class ViewPage2BlogsEntry2Test extends BaseTestCase {
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry2 Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry2 Content"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_161_keywords']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@id='_161_keywords']",
 			RuntimeVariables.replace("Entry2"));
 
@@ -548,6 +565,23 @@ public class ViewPage2BlogsEntry2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Scope: Blogs Test Page2"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_161_keywords']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@id='_161_keywords']",
 			RuntimeVariables.replace("Entry2"));
 

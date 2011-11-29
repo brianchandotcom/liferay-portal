@@ -86,6 +86,6 @@ public class AddOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization Sample Test"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText("//td[2]/a"));
 	}
 }

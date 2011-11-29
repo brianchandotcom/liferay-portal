@@ -208,6 +208,7 @@ public class Guest_ViewPage2BlogsEntry4Test extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertFalse(selenium.isTextPresent("Blogs Entry4 Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry4 Content"));
 
@@ -351,6 +352,7 @@ public class Guest_ViewPage2BlogsEntry4Test extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertFalse(selenium.isTextPresent("Blogs Entry4 Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry4 Content"));
 

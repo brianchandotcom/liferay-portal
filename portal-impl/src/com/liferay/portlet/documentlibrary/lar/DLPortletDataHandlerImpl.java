@@ -867,8 +867,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected static String getFolderName(
-			String uuid, long companyId, long groupId, long parentFolderId,
-			String name, int count)
+			String uuid, long groupId, long parentFolderId, String name,
+			int count)
 		throws Exception {
 
 		Folder folder = FolderUtil.fetchByR_P_N(groupId, parentFolderId, name);
@@ -897,8 +897,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		name = sb.toString();
 
-		return getFolderName(
-			uuid, companyId, groupId, parentFolderId, name, ++count);
+		return getFolderName(uuid, groupId, parentFolderId, name, ++count);
 	}
 
 	protected static String getFolderPath(
@@ -1175,8 +1174,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if (existingFolder == null) {
 				String name = getFolderName(
-					null, portletDataContext.getCompanyId(),
-					portletDataContext.getScopeGroupId(), parentFolderId,
+					null, portletDataContext.getScopeGroupId(), parentFolderId,
 					folder.getName(), 2);
 
 				serviceContext.setUuid(folder.getUuid());
@@ -1188,9 +1186,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 			else {
 				String name = getFolderName(
-					folder.getUuid(), portletDataContext.getCompanyId(),
-					portletDataContext.getScopeGroupId(), parentFolderId,
-					folder.getName(), 2);
+					folder.getUuid(), portletDataContext.getScopeGroupId(),
+					parentFolderId, folder.getName(), 2);
 
 				importedFolder = DLAppLocalServiceUtil.updateFolder(
 					existingFolder.getFolderId(), parentFolderId, name,
@@ -1199,8 +1196,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		else {
 			String name = getFolderName(
-				null, portletDataContext.getCompanyId(),
-				portletDataContext.getScopeGroupId(), parentFolderId,
+				null, portletDataContext.getScopeGroupId(), parentFolderId,
 				folder.getName(), 2);
 
 			importedFolder = DLAppLocalServiceUtil.addFolder(

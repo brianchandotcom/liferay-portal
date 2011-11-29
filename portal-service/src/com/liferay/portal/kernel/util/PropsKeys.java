@@ -537,6 +537,12 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS = "dl.file.entry.preview.video.containers";
 
+	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_BIT_RATE = "dl.file.entry.preview.video.bit.rate";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_DENOMINATOR = "dl.file.entry.preview.video.frame.rate.denominator";
+
+	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_NUMERATOR = "dl.file.entry.preview.video.frame.rate.numerator";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT = "dl.file.entry.preview.video.height";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES = "dl.file.entry.preview.video.mime.types";

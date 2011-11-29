@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.lang.time.StopWatch;
+
 /**
  * @author Juan González
  * @author Sergio González
@@ -165,6 +167,14 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 			FileVersion fileVersion, File srcFile, File destFile)
 		throws Exception {
 
+		StopWatch stopWatch = null;
+
+		if (_log.isInfoEnabled()) {
+			stopWatch = new StopWatch();
+
+			stopWatch.start();
+		}
+
 		try {
 			LiferayAudioConverter liferayAudioConverter =
 				new LiferayAudioConverter(
@@ -183,7 +193,7 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Xuggler generated a preview audio for " +
-					fileVersion.getFileVersionId());
+					fileVersion.getTitle() + " in " + stopWatch);
 		}
 	}
 

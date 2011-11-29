@@ -61,7 +61,7 @@ public class AddCategoryItemTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Item']",
 			RuntimeVariables.replace("Add Item"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_34_sku']", RuntimeVariables.replace("1111"));
+		selenium.type("//input[@id='_34_sku']", RuntimeVariables.replace("1112"));
 		selenium.type("//input[@id='_34_name']",
 			RuntimeVariables.replace("Item Test"));
 		selenium.type("//textarea[@id='_34_description']",

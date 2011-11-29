@@ -35,17 +35,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
@@ -137,11 +127,16 @@ public class EditLayoutsAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long plid = themeDisplay.getPlid();
+		long refererPlid = themeDisplay.getRefererPlid();
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
 			String closeRedirect = ParamUtil.getString(
 				actionRequest, "closeRedirect");
+
+            String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			Layout layout = null;
 			String oldFriendlyURL = StringPool.BLANK;
@@ -154,7 +149,10 @@ public class EditLayoutsAction extends PortletAction {
 				oldFriendlyURL = (String)returnValue[1];
 
 				closeRedirect = updateCloseRedirect(
-					closeRedirect, null, layout, oldFriendlyURL);
+					closeRedirect, null, layout, oldFriendlyURL, 0, 0);
+
+                redirect = updateCloseRedirect(
+                    redirect, null, layout, oldFriendlyURL, 0, 0);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				Object[] returnValue = SitesUtil.deleteLayout(
@@ -164,7 +162,11 @@ public class EditLayoutsAction extends PortletAction {
 				oldFriendlyURL = (String)returnValue[1];
 
 				closeRedirect = updateCloseRedirect(
-					closeRedirect, group, null, oldFriendlyURL);
+					closeRedirect, group, null, oldFriendlyURL,
+						plid, refererPlid);
+
+                redirect = updateCloseRedirect(
+                    redirect, group, null, oldFriendlyURL, plid, refererPlid);
 			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
@@ -222,8 +224,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("update_layout_revision")) {
 				updateLayoutRevision(actionRequest);
 			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(closeRedirect)) {
 				SessionMessages.add(
@@ -700,13 +700,18 @@ public class EditLayoutsAction extends PortletAction {
 
 	protected String updateCloseRedirect(
 		String closeRedirect, Group group, Layout layout,
-		String oldLayoutFriendlyURL) {
+		String oldLayoutFriendlyURL, long plid, long refererPlid) {
 
 		if (Validator.isNull(closeRedirect) ||
 			Validator.isNull(oldLayoutFriendlyURL)) {
 
 			return closeRedirect;
 		}
+
+        if ((plid == 0 || refererPlid == 0) && plid == refererPlid) {
+			closeRedirect = HttpUtil.removeParameter(
+				closeRedirect, "refererPlid");
+        }
 
 		if (layout != null) {
 			String oldPath = oldLayoutFriendlyURL;

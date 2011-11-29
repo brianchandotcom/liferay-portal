@@ -316,7 +316,7 @@ public class SitesUtil {
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);
 
-		return new Object[] {group, oldFriendlyURL};
+		return new Object[] {group, oldFriendlyURL, plid};
 	}
 
 	public static void deleteLayout(

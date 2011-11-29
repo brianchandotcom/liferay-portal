@@ -84,6 +84,9 @@ public class EditGroupAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long plid = themeDisplay.getPlid();
+		long refererPlid = themeDisplay.getRefererPlid();
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -101,9 +104,10 @@ public class EditGroupAction extends PortletAction {
 
 				redirect = HttpUtil.setParameter(
 					redirect, "doAsGroupId", group.getGroupId());
+
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, group, themeDisplay, oldFriendlyURL,
-					oldStagingFriendlyURL);
+					oldStagingFriendlyURL, 0, 0);
 			}
 			else if (cmd.equals(Constants.DEACTIVATE) ||
 					 cmd.equals(Constants.RESTORE)) {
@@ -111,7 +115,15 @@ public class EditGroupAction extends PortletAction {
 				updateActive(actionRequest, cmd);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteGroup(actionRequest);
+				Object[] returnValue = deleteGroup(actionRequest);
+
+				Group group = (Group)returnValue[0];
+				String oldFriendlyURL = (String)returnValue[1];
+				String oldStagingFriendlyURL = (String)returnValue[2];
+
+				redirect = updateCloseRedirect(
+					closeRedirect, group, themeDisplay, oldFriendlyURL,
+					oldStagingFriendlyURL, plid, refererPlid);
 			}
 
 			if (Validator.isNotNull(closeRedirect)) {
@@ -186,22 +198,28 @@ public class EditGroupAction extends PortletAction {
 			getForward(renderRequest, "portlet.sites_admin.edit_site"));
 	}
 
-	protected void deleteGroup(ActionRequest actionRequest) throws Exception {
+	protected Object[] deleteGroup(ActionRequest actionRequest)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		if ((groupId == themeDisplay.getDoAsGroupId()) ||
-			(groupId == themeDisplay.getScopeGroupId()) ||
-			(groupId == getRefererGroupId(themeDisplay))) {
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		String oldFriendlyURL = group.getFriendlyURL();
+		String oldStagingFriendlyURL = "";
 
-			throw new RequiredGroupException(String.valueOf(groupId));
+		
+		if (group.hasStagingGroup()) {
+			oldStagingFriendlyURL = group.getStagingGroup().getFriendlyURL();
 		}
 
 		GroupServiceUtil.deleteGroup(groupId);
 
 		LiveUsers.deleteGroup(themeDisplay.getCompanyId(), groupId);
+
+		return new Object[] {group, oldFriendlyURL, oldStagingFriendlyURL};
 	}
 
 	protected long getRefererGroupId(ThemeDisplay themeDisplay)
@@ -254,12 +272,18 @@ public class EditGroupAction extends PortletAction {
 
 	protected String updateCloseRedirect(
 			String closeRedirect, Group group, ThemeDisplay themeDisplay,
-			String oldFriendlyURL, String oldStagingFriendlyURL)
+			String oldFriendlyURL, String oldStagingFriendlyURL, long plid,
+			long refererPlid)
 		throws SystemException, PortalException {
 
 		if (Validator.isNull(closeRedirect) || (group == null)) {
 			return closeRedirect;
 		}
+
+		if ((plid == 0 || refererPlid == 0) && plid == refererPlid) {
+			closeRedirect = HttpUtil.removeParameter(
+				closeRedirect, "refererPlid");
+        }
 
 		String oldPath = null;
 		String newPath = null;

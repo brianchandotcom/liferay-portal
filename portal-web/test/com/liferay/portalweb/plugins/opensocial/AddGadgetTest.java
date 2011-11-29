@@ -107,5 +107,13 @@ public class AddGadgetTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Hello World!"),
+			selenium.getText("//tr[3]/td"));
+		assertEquals(RuntimeVariables.replace(
+				"http://opensocial-resources.googlecode.com/svn/samples/tutorial/tags/api-0.8/helloworld.xml"),
+			selenium.getText("//td[2]/a"));
 	}
 }

@@ -94,9 +94,9 @@
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>MB Thread Message Subject</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no threads in this category.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -104,9 +104,29 @@
 	<td>My Posts</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
 	<td>MB Thread Message Subject</td>
-	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[1]/a</td>
+	<td>MB Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='subject']/a/strong</td>
+	<td>MB Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//strong[@class='workflow-status-draft']</td>
+	<td>Draft</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
+	<td>MB Thread Message Body</td>
 </tr>
 
 </tbody></table>

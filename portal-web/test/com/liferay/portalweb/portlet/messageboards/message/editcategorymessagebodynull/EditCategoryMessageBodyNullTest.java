@@ -105,9 +105,48 @@ public class EditCategoryMessageBodyNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='thread-body']"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Message Boards Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//a/strong"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//td[4]/a"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
 	}
 }

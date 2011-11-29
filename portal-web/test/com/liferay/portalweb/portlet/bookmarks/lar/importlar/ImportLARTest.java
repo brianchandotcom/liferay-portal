@@ -43,6 +43,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {

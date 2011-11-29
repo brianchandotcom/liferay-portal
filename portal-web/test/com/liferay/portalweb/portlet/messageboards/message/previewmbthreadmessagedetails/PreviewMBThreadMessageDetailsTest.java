@@ -101,9 +101,21 @@ public class PreviewMBThreadMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("MB Thread Message Subject"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no threads in this category."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("link=My Posts", RuntimeVariables.replace("My Posts"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("MB Thread Message Subject"));
+		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Thread Message Subject"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace("Draft"),
+			selenium.getText("//strong[@class='workflow-status-draft']"));
+		assertEquals(RuntimeVariables.replace("MB Thread Message Body"),
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

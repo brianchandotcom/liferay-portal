@@ -86,10 +86,11 @@ public class AddSubcategoryMessageBodyNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"MB Subcategory Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Subcategory Thread Message Subject"),
+			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -115,9 +116,9 @@ public class AddSubcategoryMessageBodyNullTest extends BaseTestCase {
 			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
@@ -126,16 +127,15 @@ public class AddSubcategoryMessageBodyNullTest extends BaseTestCase {
 			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent(
-				"MB Subcategory Thread Message Subject"));
-		assertFalse(selenium.isElementPresent(
-				"//td[7]/span/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Subcategory Thread Message Subject"),
+			selenium.getText("//td[1]/a"));
 	}
 }

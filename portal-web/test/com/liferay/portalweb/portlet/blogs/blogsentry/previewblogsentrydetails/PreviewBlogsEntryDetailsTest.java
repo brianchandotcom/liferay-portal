@@ -96,7 +96,11 @@ public class PreviewBlogsEntryDetailsTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
-		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
+		assertEquals(RuntimeVariables.replace("Draft"),
+			selenium.getText("//div[@class='entry-content']/h3"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
+			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//div[@class='entry-body']/p"));
 	}
 }

@@ -57,29 +57,29 @@ public class DLFileEntryFinderImpl
 	public static String COUNT_BY_G_U_F_S =
 		DLFileEntryFinder.class.getName() + ".countByG_U_F_S";
 
-	public static String FIND_BY_G_U_F =
-		DLFileEntryFinder.class.getName() + ".findFE_ByG_U_F";
-
-	public static String FIND_BY_G_U_F_S =
-		DLFileEntryFinder.class.getName() + ".findFE_ByG_U_F_S";
-
 	public static String FIND_BY_ANY_IMAGE_ID =
 		DLFileEntryFinder.class.getName() + ".findByAnyImageId";
 
 	public static String FIND_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".findByExtraSettings";
 
+	public static String FIND_BY_G_F =
+		DLFileEntryFinder.class.getName() + ".findByG_F";
+
+	public static String FIND_BY_G_F_S =
+		DLFileEntryFinder.class.getName() + ".findByG_F_S";
+
+	public static String FIND_BY_G_U_F =
+		DLFileEntryFinder.class.getName() + ".findByG_U_F";
+
+	public static String FIND_BY_G_U_F_S =
+		DLFileEntryFinder.class.getName() + ".findByG_U_F_S";
+
 	public static String FIND_BY_NO_ASSETS =
 		DLFileEntryFinder.class.getName() + ".findByNoAssets";
 
 	public static String FIND_BY_ORPHANED_FILE_ENTRIES =
 		DLFileEntryFinder.class.getName() + ".findByOrphanedFileEntries";
-
-	public static String FIND_FE_BY_G_F =
-		DLFileEntryFinder.class.getName() + ".findFE_ByG_F";
-
-	public static String FIND_FE_BY_G_F_S =
-		DLFileEntryFinder.class.getName() + ".findFE_ByG_F_S";
 
 	public int countByExtraSettings() throws SystemException {
 		Session session = null;
@@ -284,10 +284,10 @@ public class DLFileEntryFinderImpl
 				if (status == WorkflowConstants.STATUS_ANY) {
 					table = "DLFileEntry";
 
-					sql = CustomSQLUtil.get(FIND_FE_BY_G_F);
+					sql = CustomSQLUtil.get(FIND_BY_G_F);
 				}
 				else {
-					sql = CustomSQLUtil.get(FIND_FE_BY_G_F_S);
+					sql = CustomSQLUtil.get(FIND_BY_G_F_S);
 				}
 			}
 			else{

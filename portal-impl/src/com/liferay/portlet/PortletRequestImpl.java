@@ -75,6 +75,7 @@ import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -401,7 +402,19 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public String getRequestedSessionId() {
-		return _request.getSession().getId();
+		if (_session != null) {
+			return _session.getId();
+		}
+		else {
+			// do not create a new session if one does not exist!
+			HttpSession session = _request.getSession(false);
+			if (session == null) {
+				return StringPool.BLANK;
+			}
+			else {
+				return session.getId();
+			}
+		}
 	}
 
 	public String getResponseContentType() {

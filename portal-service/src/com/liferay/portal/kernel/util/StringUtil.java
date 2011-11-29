@@ -82,8 +82,26 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String appendCount(String s, int count) {
+		if (Pattern.matches(".* \\(\\d+\\)", s)) {
+			int pos = s.lastIndexOf(" (");
+
+			s = s.substring(0, pos);
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(s);
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(count);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	public static String bytesToHexString(byte[] bytes) {
-		StringBuilder sb = new StringBuilder(bytes.length * 2);
+		StringBundler sb = new StringBundler(bytes.length * 2);
 
 		for (byte b : bytes) {
 			String hex = Integer.toHexString(
@@ -175,7 +193,7 @@ public class StringUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		char[] chars = s.toCharArray();
 
@@ -193,7 +211,7 @@ public class StringUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		char[] chars = s.toCharArray();
 
@@ -762,7 +780,7 @@ public class StringUtil {
 		// The number 5 is arbitrary and is used as extra padding to reduce
 		// buffer expansion
 
-		StringBuilder sb = new StringBuilder(s.length() + 5 * newSub.length());
+		StringBundler sb = new StringBundler(s.length() + 5 * newSub.length());
 
 		char[] chars = s.toCharArray();
 
@@ -1449,7 +1467,7 @@ public class StringUtil {
 
 		int y = 0;
 
-		StringBuilder sb = new StringBuilder(s.length());
+		StringBundler sb = new StringBundler(s.length());
 
 		while (x >= 0) {
 			sb.append(s.subSequence(y, x));
@@ -1469,7 +1487,7 @@ public class StringUtil {
 			return s;
 		}
 
-		StringBuilder sb = new StringBuilder(s.length());
+		StringBundler sb = new StringBundler(s.length());
 
 		int pos = 0;
 

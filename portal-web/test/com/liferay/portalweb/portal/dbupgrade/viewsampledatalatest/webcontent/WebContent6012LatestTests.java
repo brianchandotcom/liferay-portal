@@ -16,7 +16,6 @@ package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.webcontent;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.webcontent.imageassociation.ImageAssociationTests;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.webcontent.journalfeed.JournalFeedTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,7 +29,6 @@ public class WebContent6012LatestTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(ImageAssociationTests.suite());
-		testSuite.addTest(JournalFeedTests.suite());
 
 		return testSuite;
 	}

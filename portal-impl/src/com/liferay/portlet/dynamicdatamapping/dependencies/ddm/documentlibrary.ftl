@@ -24,8 +24,10 @@
 
 			<#assign fileEntry = getFileEntry(fileJSONObject)>
 
-			<#assign fileEntryTitle = fileEntry.getTitle()>
-			<#assign fileEntryURL = getFileEntryURL(fileEntry)>
+			<#if (fileEntry != "")>
+				<#assign fileEntryTitle = fileEntry.getTitle()>
+				<#assign fileEntryURL = getFileEntryURL(fileEntry)>
+			</#if>
 		</#if>
 
 		<a href="${fileEntryURL}">${fileEntryTitle}</a>

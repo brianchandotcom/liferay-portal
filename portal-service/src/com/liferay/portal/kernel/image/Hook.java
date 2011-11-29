@@ -25,7 +25,7 @@ import java.io.InputStream;
  */
 public interface Hook {
 
-	public void deleteImage(Image imageId)
+	public void deleteImage(Image image)
 		throws PortalException, SystemException;
 
 	public byte[] getImageAsBytes(Image image)

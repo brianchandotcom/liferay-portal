@@ -40,12 +40,15 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import java.util.Map;
+
 import javax.imageio.ImageIO;
 
 /**
  * @author Juan González
  * @author Sergio González
  * @author Brian Wing Shun Chan
+ * @author Alexander Chow
  */
 public abstract class LiferayConverter {
 
@@ -257,8 +260,7 @@ public abstract class LiferayConverter {
 						inputIVideoPicture);
 				}
 
-				bufferedImage = _videoIConverter.toImage(
-					inputIVideoPicture);
+				bufferedImage = _videoIConverter.toImage(inputIVideoPicture);
 
 				thumbnailFile.createNewFile();
 
@@ -287,7 +289,7 @@ public abstract class LiferayConverter {
 			if (stopDecoding) {
 				break;
 			}
-        }
+		}
 
 		return 1;
 	}
@@ -735,6 +737,10 @@ public abstract class LiferayConverter {
 	protected static final int VIDEO_BIT_RATE_DEFAULT = 250000;
 
 	protected static final int VIDEO_BIT_RATE_MAX = 1200000;
+
+	protected static Map<String, Integer> VIDEO_BIT_RATE_MAP;
+
+	protected static Map<String, IRational> VIDEO_FRAME_RATE_MAP;
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayConverter.class);
 

@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.Filter;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -36,6 +38,17 @@ public class PortalLifecycleUtil {
 
 	@SuppressWarnings("deprecation")
 	public static void flushInits() {
+		if (_portalLifecycleFiltersInit != null) {
+			List<PortalLifecycle> portalLifecycleFiltersInit =
+				_portalLifecycleFiltersInit;
+
+			_portalLifecycleFiltersInit = null;
+
+			for (PortalLifecycle portalLifecycle : portalLifecycleFiltersInit) {
+				portalLifecycle.portalInit();
+			}
+		}
+
 		if (_portalLifecyclesInit != null) {
 			List<PortalLifecycle> portalLifecyclesInit = _portalLifecyclesInit;
 
@@ -57,11 +70,21 @@ public class PortalLifecycleUtil {
 		if ((method == PortalLifecycle.METHOD_ALL) ||
 			(method == PortalLifecycle.METHOD_INIT)) {
 
-			if (_portalLifecyclesInit == null) {
-				portalLifecycle.portalInit();
+			if (portalLifecycle instanceof Filter) {
+				if (_portalLifecycleFiltersInit == null) {
+					portalLifecycle.portalInit();
+				}
+				else {
+					_portalLifecycleFiltersInit.add(portalLifecycle);
+				}
 			}
 			else {
-				_portalLifecyclesInit.add(portalLifecycle);
+				if (_portalLifecyclesInit == null) {
+					portalLifecycle.portalInit();
+				}
+				else {
+					_portalLifecyclesInit.add(portalLifecycle);
+				}
 			}
 		}
 
@@ -79,6 +102,8 @@ public class PortalLifecycleUtil {
 	}
 
 	private static boolean _inFlushDestroys;
+	private static List<PortalLifecycle> _portalLifecycleFiltersInit =
+		new ArrayList<PortalLifecycle>();
 	private static List<PortalLifecycle> _portalLifecyclesDestroy =
 		new ArrayList<PortalLifecycle>();
 	private static List<PortalLifecycle> _portalLifecyclesInit =

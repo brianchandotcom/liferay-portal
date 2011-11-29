@@ -1009,6 +1009,34 @@ public class SourceFormatter {
 					if (line.contains(" [")) {
 						line = StringUtil.replace(line, " [", "[");
 					}
+
+					for (int x = -1;;) {
+						x = line.indexOf(StringPool.COMMA, x + 1);
+
+						if (x == -1) {
+							break;
+						}
+
+						if (line.length() > (x + 1)) {
+							char nextChar = line.charAt(x + 1);
+
+							if ((nextChar != CharPool.SPACE) && 
+								(nextChar != CharPool.APOSTROPHE)) {
+
+								line = StringUtil.insert(
+									line, StringPool.SPACE, x + 1);
+							}
+						}
+
+						if (x > 0) {
+							char previousChar = line.charAt(x - 1);
+
+							if (previousChar == CharPool.SPACE) {
+								line = line.substring(0, x - 1).concat(
+									line.substring(x));
+							}
+						}
+					}
 				}
 			}
 

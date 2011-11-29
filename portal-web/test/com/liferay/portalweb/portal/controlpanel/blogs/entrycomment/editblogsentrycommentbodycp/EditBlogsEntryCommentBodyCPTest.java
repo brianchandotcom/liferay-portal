@@ -83,6 +83,7 @@ public class EditBlogsEntryCommentBodyCPTest extends BaseTestCase {
 			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

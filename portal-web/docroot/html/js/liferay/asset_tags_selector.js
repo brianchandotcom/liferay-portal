@@ -523,6 +523,8 @@ AUI().add(
 
 						if (contentCallback) {
 							context = contentCallback();
+
+							context = String(context);
 						}
 
 						var length = context.length;

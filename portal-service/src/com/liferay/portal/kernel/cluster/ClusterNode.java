@@ -31,13 +31,24 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 	}
 
 	public int compareTo(ClusterNode clusterNode) {
-		InetAddress inetAddress = clusterNode.getInetAddress();
+		InetAddress inetAddress = clusterNode._inetAddress;
 
 		String ipAddress = inetAddress.getHostAddress();
 
 		String curIpAddress = _inetAddress.getHostAddress();
 
-		return curIpAddress.compareTo(ipAddress);
+		int result = curIpAddress.compareTo(ipAddress);
+
+		if (result == 0) {
+			if (_port > clusterNode._port) {
+				result = 1;
+			}
+			else if (_port < clusterNode._port) {
+				result = -1;
+			}
+		}
+
+		return result;
 	}
 
 	@Override

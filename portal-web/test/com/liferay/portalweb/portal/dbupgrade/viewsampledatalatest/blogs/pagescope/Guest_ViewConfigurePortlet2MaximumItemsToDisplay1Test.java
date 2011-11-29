@@ -45,6 +45,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

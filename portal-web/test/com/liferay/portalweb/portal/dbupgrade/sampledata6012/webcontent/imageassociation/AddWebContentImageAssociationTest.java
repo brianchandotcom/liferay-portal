@@ -116,9 +116,6 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.type("image-test",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
-		selenium.type("image-test",
-			RuntimeVariables.replace(
-				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
 		selenium.click("//input[@value='Select']");
 		selenium.waitForPopUp("ImageGallery", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=ImageGallery");

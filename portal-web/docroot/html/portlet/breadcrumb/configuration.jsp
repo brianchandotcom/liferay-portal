@@ -66,7 +66,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	var toggleCustomFields = function() {
 		var data = {};
 
-		data['_<%= portletResource %>_display-style'] = selectDisplayStyle.val();
+		data['_<%= portletResource %>_displayStyle'] = selectDisplayStyle.val();
 
 		Liferay.Portlet.refresh(curPortletBoundaryId, data);
 	}

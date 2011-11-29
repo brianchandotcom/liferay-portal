@@ -47,11 +47,11 @@ public class StringResourceRepositoryImpl implements StringResourceRepository {
 
 	public void putStringResource(String key, String body) {
 		_portalCache.put(
-			key , new SerializableStringResource(body, getEncoding()));
+			key, new SerializableStringResource(body, getEncoding()));
 	}
 
 	public void putStringResource(String key, String body, String encoding) {
-		_portalCache.put(key , new SerializableStringResource(body, encoding));
+		_portalCache.put(key, new SerializableStringResource(body, encoding));
 	}
 
 	public void removeStringResource(String key) {

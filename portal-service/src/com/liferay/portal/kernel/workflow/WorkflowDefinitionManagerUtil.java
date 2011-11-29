@@ -58,7 +58,7 @@ public class WorkflowDefinitionManagerUtil {
 		throws WorkflowException {
 
 		return _workflowDefinitionManager.getActiveWorkflowDefinitions(
-			companyId, start, end,orderByComparator);
+			companyId, start, end, orderByComparator);
 	}
 
 	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
@@ -67,7 +67,7 @@ public class WorkflowDefinitionManagerUtil {
 		throws WorkflowException {
 
 		return _workflowDefinitionManager.getActiveWorkflowDefinitions(
-			companyId, name, start, end,orderByComparator);
+			companyId, name, start, end, orderByComparator);
 	}
 
 	public static WorkflowDefinition getLatestKaleoDefinition(

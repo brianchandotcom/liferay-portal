@@ -459,7 +459,7 @@ public class SearchEngineUtil {
 		_searchEngines.put(SYSTEM_ENGINE_ID, searchEngine);
 	}
 
-	public void setSearchEngines(Map<String,SearchEngine> searchEngines) {
+	public void setSearchEngines(Map<String, SearchEngine> searchEngines) {
 		_searchEngines.putAll(searchEngines);
 	}
 
@@ -474,7 +474,7 @@ public class SearchEngineUtil {
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
 	private static Map<String, SearchEngine> _searchEngines =
-		new ConcurrentHashMap<String,SearchEngine>();
+		new ConcurrentHashMap<String, SearchEngine>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
 }

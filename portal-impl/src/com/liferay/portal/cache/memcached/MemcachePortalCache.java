@@ -59,7 +59,7 @@ public class MemcachePortalCache implements PortalCache {
 			processedKeys.add(processedKey);
 		}
 
-		Future<Map<String,Object>> future = null;
+		Future<Map<String, Object>> future = null;
 
 		try {
 			future = _memcachedClient.asyncGetBulk(processedKeys);

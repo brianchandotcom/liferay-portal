@@ -552,7 +552,7 @@ public class GroupFinderImpl
 
 		return findByC_C_N_D(
 			companyId, _getGroupOrganizationClassNameIds(), name, realName,
-			description,params, start, end, obc);
+			description, params, start, end, obc);
 	}
 
 	public List<Group> findByC_C_N_D(

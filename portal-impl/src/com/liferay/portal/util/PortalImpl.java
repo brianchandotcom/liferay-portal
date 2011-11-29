@@ -5192,7 +5192,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected long getDefaultScopeGroupId(long companyId)
-		throws PortalException , SystemException {
+		throws PortalException, SystemException {
 
 		long doAsGroupId = 0;
 

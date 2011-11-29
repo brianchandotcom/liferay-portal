@@ -116,7 +116,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	public List<DDLRecordSet> findByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator,int start, int end,
+			int scope, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 

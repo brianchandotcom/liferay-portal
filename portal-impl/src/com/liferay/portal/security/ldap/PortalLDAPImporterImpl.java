@@ -1050,7 +1050,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		ExpandoBridge contactExpandoBridge = contact.getExpandoBridge();
 
 		populateExpandoAttributes(
-			contactExpandoBridge , ldapUser.getContactExpandoAttributes());
+			contactExpandoBridge, ldapUser.getContactExpandoAttributes());
 	}
 
 	protected User updateUser(

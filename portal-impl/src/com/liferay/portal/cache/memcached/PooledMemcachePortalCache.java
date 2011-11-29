@@ -75,7 +75,7 @@ public class PooledMemcachePortalCache implements PortalCache {
 		Map<String, Object> values = null;
 
 		try {
-			Future<Map<String,Object>> future = null;
+			Future<Map<String, Object>> future = null;
 
 			try {
 				future = memcachedClient.asyncGetBulk(processedKeys);

@@ -51,7 +51,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 		throws CacheException {
 
 		return _liferayEhcacheRegionFactory.buildCollectionRegion(
-			regionName,properties, cacheDataDescription);
+			regionName, properties, cacheDataDescription);
 	}
 
 	public EntityRegion buildEntityRegion(

@@ -145,7 +145,7 @@ public class SearchContainerColumnTextTag<R>
 			headerNames.add(name);
 
 			if (_orderable) {
-				Map<String,String> orderableHeaders =
+				Map<String, String> orderableHeaders =
 					searchContainerRowTag.getOrderableHeaders();
 
 				if (Validator.isNotNull(_orderableProperty)) {

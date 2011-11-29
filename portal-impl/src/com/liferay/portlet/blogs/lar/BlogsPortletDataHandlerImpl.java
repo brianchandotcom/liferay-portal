@@ -125,7 +125,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		for (BlogsEntry entry : entries) {
 			exportEntry(
 				portletDataContext, entriesElement, dlFileEntryTypesElement,
-				dlFoldersElement, dlFileEntriesElement,dlFileRanksElement,
+				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
 				igFoldersElement, igImagesElement, entry, false);
 		}
 

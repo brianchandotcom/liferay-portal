@@ -75,15 +75,15 @@ public class MatchesFunction implements Function {
 	public static Boolean evaluate(
 		String string, String regex, int flags, Navigator navigator) {
 
-		ThreadLocalCache<Map<String,Pattern>> threadLocalPatterns =
+		ThreadLocalCache<Map<String, Pattern>> threadLocalPatterns =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.ETERNAL, MatchesFunction.class.getName());
 
-		Map<String,Pattern> patterns = threadLocalPatterns.get(
+		Map<String, Pattern> patterns = threadLocalPatterns.get(
 			_THREAD_LOCAL_PATTERNS_KEY);
 
 		if (patterns == null) {
-			patterns = new HashMap<String,Pattern>();
+			patterns = new HashMap<String, Pattern>();
 		}
 
 		Pattern pattern = patterns.get(regex);

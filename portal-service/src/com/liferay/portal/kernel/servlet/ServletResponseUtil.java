@@ -249,7 +249,7 @@ public class ServletResponseUtil {
 
 				response.setContentType(contentType);
 
-				setHeaders(request, response,fileName, contentType, range);
+				setHeaders(request, response, fileName, contentType, range);
 
 				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
 

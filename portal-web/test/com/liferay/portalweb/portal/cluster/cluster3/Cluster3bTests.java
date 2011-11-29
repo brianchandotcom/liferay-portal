@@ -29,6 +29,7 @@ public class Cluster3bTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AssertLBFailoverToNodeTwoTest.class);
+		testSuite.addTestSuite(AddMBCategoryNodeTwoTest.class);
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

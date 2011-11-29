@@ -164,6 +164,12 @@ public class SQLTransformer {
 		if (_vendorDB2 || _vendorDerby) {
 			return matcher.replaceAll("CAST($1 AS CHAR(254))");
 		}
+		else if (_vendorOracle) {
+
+			// Using CLOBS in string comparision requires a CAST in Oracle
+
+			return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
+		}
 		else if (_vendorPostgreSQL) {
 			return matcher.replaceAll("CAST($1 AS TEXT)");
 		}

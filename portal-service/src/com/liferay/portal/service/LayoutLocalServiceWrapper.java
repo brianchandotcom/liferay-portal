@@ -684,6 +684,14 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			friendlyURL);
 	}
 
+	public com.liferay.portal.model.Layout getFirstLayout(long groupId,
+		boolean privateLayout, long parentLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getFirstLayout(groupId, privateLayout,
+			parentLayoutId);
+	}
+
 	/**
 	* Returns the layout matching the primary key, group, and privacy; throws a
 	* {@link com.liferay.portal.NoSuchLayoutException} otherwise.

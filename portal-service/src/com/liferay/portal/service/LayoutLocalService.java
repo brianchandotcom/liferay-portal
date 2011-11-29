@@ -627,6 +627,12 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Layout getFirstLayout(long groupId,
+		boolean privateLayout, long parentLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the layout matching the primary key, group, and privacy; throws a
 	* {@link com.liferay.portal.NoSuchLayoutException} otherwise.

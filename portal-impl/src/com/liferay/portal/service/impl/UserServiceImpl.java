@@ -103,9 +103,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				if (user.getUserId() == userIds[0]) {
 					Group group = groupPersistence.findByPrimaryKey(groupId);
 
-					if (!group.isOrganization() &&
-						(user.getCompanyId() == group.getCompanyId())) {
-
+					if (user.getCompanyId() == group.getCompanyId()) {
 						int type = group.getType();
 
 						if (type == GroupConstants.TYPE_SITE_OPEN) {

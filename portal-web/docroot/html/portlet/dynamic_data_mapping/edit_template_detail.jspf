@@ -47,6 +47,7 @@ while (itr.hasNext()) {
 
 	fieldJSONObject.put("id", fieldName);
 	fieldJSONObject.put("label", structure.getFieldLabel(fieldName, languageId));
+	fieldJSONObject.put("name", fieldName);
 	fieldJSONObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
 	fieldJSONObject.put("required", structure.getFieldRequired(fieldName));
 	fieldJSONObject.put("type", structure.getFieldType(fieldName));

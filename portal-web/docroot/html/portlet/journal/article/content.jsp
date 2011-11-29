@@ -867,7 +867,7 @@ private void _format(long groupId, Element contentParentElement, Element xsdPare
 
 			String elContent = GetterUtil.getString(contentElement.elementText("dynamic-content"));
 
-			if (!elType.equals("document_library") && !elType.equals("image_gallery") && !elType.equals("text") && !elType.equals("text_area") && !elType.equals("text_box")) {
+			if (!elType.equals("document_library") && !elType.equals("image_gallery") && !elType.equals("image") && !elType.equals("text") && !elType.equals("text_area") && !elType.equals("text_box")) {
 				elContent = HtmlUtil.toInputSafe(elContent);
 			}
 

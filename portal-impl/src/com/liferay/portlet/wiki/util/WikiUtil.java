@@ -89,7 +89,7 @@ public class WikiUtil {
 
 		if (sourcePage != null) {
 			sourceContent = WikiUtil.convert(
-				sourcePage, viewPageURL, editPageURL,attachmentURLPrefix);
+				sourcePage, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
 
 		if (targetPage != null) {

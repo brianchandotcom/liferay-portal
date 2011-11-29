@@ -32,7 +32,7 @@ public class PerFieldAnalyzerWrapper
 	extends org.apache.lucene.analysis.PerFieldAnalyzerWrapper {
 
 	public PerFieldAnalyzerWrapper(
-		Analyzer defaultAnalyzer, Map<String,Analyzer> analyzerMap) {
+		Analyzer defaultAnalyzer, Map<String, Analyzer> analyzerMap) {
 
 		super(defaultAnalyzer, analyzerMap);
 

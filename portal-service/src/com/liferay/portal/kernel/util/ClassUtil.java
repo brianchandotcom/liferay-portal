@@ -282,7 +282,7 @@ public class ClassUtil {
 				tokens.add(annotationName.replace("@", ""));
 
 				tokens = _processAnnotationParameters(
-					annotationParameters,tokens);
+					annotationParameters, tokens);
 			}
 		}
 

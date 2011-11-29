@@ -92,7 +92,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		// byte[]
 
 		ByteArrayFileInputStream byteArrayFileInputStream =
-			new ByteArrayFileInputStream(_testFile,2048);
+			new ByteArrayFileInputStream(_testFile, 2048);
 
 		byte[] buffer = new byte[17];
 

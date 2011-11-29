@@ -49,7 +49,7 @@ public class Netlogon {
 		try {
 
 			netlogonConnection.connect(
-				_domainController,_domainControllerName, _ntlmServiceAccount,
+				_domainController, _domainControllerName, _ntlmServiceAccount,
 				_secureRandom);
 
 			NetlogonAuthenticator netlogonAuthenticator =

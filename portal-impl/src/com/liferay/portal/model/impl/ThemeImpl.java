@@ -155,7 +155,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		Map<String, ThemeSetting> configurableSettings =
 			new LinkedHashMap<String, ThemeSetting>();
 
-		for (Map.Entry<String,ThemeSetting> entry :
+		for (Map.Entry<String, ThemeSetting> entry :
 				_themeSettingsMap.entrySet()) {
 
 			ThemeSetting themeSetting = entry.getValue();
@@ -624,9 +624,9 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	private boolean _loadFromServletContext;
 	private String _name;
 	private Map<String, Boolean> _resourceExistsMap =
-		new ConcurrentHashMap<String,Boolean>();
+		new ConcurrentHashMap<String, Boolean>();
 	private Map<String, String> _resourcePathsMap =
-		new ConcurrentHashMap<String,String>();
+		new ConcurrentHashMap<String, String>();
 	private String _rootPath = "/";
 	private String _servletContextName = StringPool.BLANK;
 	private Map<String, ThemeSetting> _themeSettingsMap =

@@ -432,7 +432,7 @@ public class JCRStore extends BaseStore {
 			Binary binary = value.getBinary();
 
 			if ((session instanceof Map)) {
-				Map<String,Binary> mapSession = (Map<String,Binary>)session;
+				Map<String, Binary> mapSession = (Map<String, Binary>)session;
 
 				mapSession.put(fileName, binary);
 			}

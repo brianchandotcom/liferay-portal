@@ -298,7 +298,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 				new QueryTermImpl(field, String.valueOf(value)));
 		}
 
-		add(query , BooleanClauseOccur.SHOULD);
+		add(query, BooleanClauseOccur.SHOULD);
 	}
 
 	public void addTerm(

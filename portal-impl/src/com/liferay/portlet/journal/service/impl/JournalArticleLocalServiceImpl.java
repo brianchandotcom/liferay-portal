@@ -3363,7 +3363,7 @@ public class JournalArticleLocalServiceImpl
 
 		validate(
 			companyId, groupId, classNameId, titleMap, content, type,
-			structureId,templateId, smallImage, smallImageURL, smallImageFile,
+			structureId, templateId, smallImage, smallImageURL, smallImageFile,
 			smallImageBytes);
 	}
 

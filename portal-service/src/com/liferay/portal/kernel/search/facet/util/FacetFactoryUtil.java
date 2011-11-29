@@ -50,7 +50,7 @@ public class FacetFactoryUtil {
 		return facet;
 	}
 
-	private static Map<String,Constructor<?>> _constructorCache =
-		new ConcurrentHashMap<String,Constructor<?>>();
+	private static Map<String, Constructor<?>> _constructorCache =
+		new ConcurrentHashMap<String, Constructor<?>>();
 
 }

@@ -763,10 +763,10 @@ public class HttpImpl implements Http {
 
 	public String removeProtocol(String url) {
 		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
-			return url.substring(Http.HTTP_WITH_SLASH.length() , url.length());
+			return url.substring(Http.HTTP_WITH_SLASH.length(), url.length());
 		}
 		else if (url.startsWith(Http.HTTPS_WITH_SLASH)) {
-			return url.substring(Http.HTTPS_WITH_SLASH.length() , url.length());
+			return url.substring(Http.HTTPS_WITH_SLASH.length(), url.length());
 		}
 		else {
 			return url;

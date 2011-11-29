@@ -91,7 +91,7 @@ public class OrgLaborServiceImpl extends OrgLaborServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return orgLaborLocalService.updateOrgLabor(
-			orgLaborId, typeId ,sunOpen, sunClose, monOpen, monClose, tueOpen,
+			orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
 			tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen, friClose,
 			satOpen, satClose);
 	}

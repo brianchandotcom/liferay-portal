@@ -433,7 +433,7 @@ public class OSGiServiceUtil {
 			return;
 		}
 
-		Hashtable<String,Object> properties = new Hashtable<String, Object>();
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
 		properties.put(OSGiConstants.BEAN_ID, beanName);
 		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);

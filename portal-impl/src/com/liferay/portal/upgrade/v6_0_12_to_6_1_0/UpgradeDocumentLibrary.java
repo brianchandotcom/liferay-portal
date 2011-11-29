@@ -111,7 +111,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		}
 		finally {
-			DataAccess.cleanUp(con,ps, rs);
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

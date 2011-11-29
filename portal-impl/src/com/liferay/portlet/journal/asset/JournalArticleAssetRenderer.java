@@ -179,13 +179,13 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		return JournalArticlePermission.contains(
-			permissionChecker,_article, ActionKeys.UPDATE);
+			permissionChecker, _article, ActionKeys.UPDATE);
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		return JournalArticlePermission.contains(
-			permissionChecker,_article, ActionKeys.VIEW);
+			permissionChecker, _article, ActionKeys.VIEW);
 	}
 
 	@Override

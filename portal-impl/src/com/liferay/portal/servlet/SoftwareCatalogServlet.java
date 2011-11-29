@@ -191,7 +191,7 @@ public class SoftwareCatalogServlet extends HttpServlet {
 				String value = ParamUtil.getString(request, name);
 
 				if (Validator.isNotNull(value)) {
-					repoSettings.setProperty(settingName , value);
+					repoSettings.setProperty(settingName, value);
 				}
 			}
 		}

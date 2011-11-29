@@ -595,7 +595,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder srcFolder = repository.getFolder(sourceFolderId);
 
 		Folder destFolder = repository.addFolder(
-			parentFolderId, name,description, serviceContext);
+			parentFolderId, name, description, serviceContext);
 
 		copyFolder(repository, srcFolder, destFolder, serviceContext);
 

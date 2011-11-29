@@ -77,7 +77,7 @@ public class Entity {
 
 	public Entity(String name) {
 		this(
-			null, null, null, name, null,null, null, false, false, false, true,
+			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, null, null, null, null,
 			null, null, null, null, null);
 	}

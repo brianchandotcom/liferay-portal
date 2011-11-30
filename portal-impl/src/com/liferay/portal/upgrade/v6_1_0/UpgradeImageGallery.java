@@ -14,12 +14,13 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.image.DLHook;
+import com.liferay.portal.image.DatabaseHook;
 import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -49,6 +50,19 @@ import java.util.Map;
  * @author Miguel Pastor
  */
 public class UpgradeImageGallery extends UpgradeProcess {
+
+	public UpgradeImageGallery() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		_sourceHookClassName = FileSystemHook.class.getName();
+
+		if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
+			_sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
+		}
+
+		_sourceHook = (Hook)classLoader.loadClass(
+			_sourceHookClassName).newInstance();
+	}
 
 	protected void addDLFileEntry(
 			String uuid, long fileEntryId, long groupId, long companyId,
@@ -270,18 +284,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			long repositoryId, long companyId, String name, Image image)
 		throws Exception {
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		String sourceHookClassName = FileSystemHook.class.getName();
-
-		if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
-			sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
-		}
-
-		Hook sourceHook = (Hook)classLoader.loadClass(
-			sourceHookClassName).newInstance();
-
-		InputStream is = sourceHook.getImageAsStream(image);
+		InputStream is = _sourceHook.getImageAsStream(image);
 
 		byte[] bytes = FileUtil.getBytes(is);
 
@@ -350,26 +353,16 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					}
 				}
 				else {
-					ClassLoader classLoader =
-						PortalClassLoaderUtil.getClassLoader();
-
-					String sourceHookClassName = FileSystemHook.class.getName();
-
-					if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
-						sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
-					}
-
-					Hook sourceHook = (Hook)InstanceFactory.newInstance(
-						classLoader, sourceHookClassName);
-
-					InputStream is = sourceHook.getImageAsStream(image);
+					InputStream is = _sourceHook.getImageAsStream(image);
 
 					ImageProcessor.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						custom1ImageId, custom2ImageId, is, image.getType());
 				}
+
+				_sourceHook.deleteImage(image);
 			}
-			else {
+			else if (!_sourceHookClassName.equals(DLHook.class.getName())) {
 				Image image = ImageLocalServiceUtil.getImage(imageId);
 
 				try {
@@ -377,6 +370,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				}
 				catch (Exception e) {
 				}
+
+				_sourceHook.deleteImage(image);
 			}
 		}
 		finally {
@@ -400,6 +395,20 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				long imageId = rs.getLong("imageId");
 
 				migrateImage(imageId);
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("delete from Image where imageId in (select ");
+			sb.append("smallImageId from DLFileEntry) or imageId in (select ");
+			sb.append("largeImageId from DLFileEntry) or imageId in (select ");
+			sb.append("custom1ImageId from DLFileEntry) or imageId in ");
+			sb.append("(select custom2ImageId from DLFileEntry)");
+
+			runSQL(sb.toString());
+
+			if (_sourceHookClassName.equals(DatabaseHook.class.getName())) {
+				runSQL("update Image set text_ = ''");
 			}
 		}
 		finally {
@@ -611,5 +620,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	private static final String _IG_IMAGE_CLASS_NAME =
 		"com.liferay.portlet.imagegallery.model.IGImage";
+
+	private Hook _sourceHook;
+
+	private String _sourceHookClassName;
 
 }

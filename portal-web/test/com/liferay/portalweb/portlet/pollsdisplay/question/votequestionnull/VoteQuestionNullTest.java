@@ -46,10 +46,7 @@ public class VoteQuestionNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Vote']",
 			RuntimeVariables.replace("Vote"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Please select an option."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

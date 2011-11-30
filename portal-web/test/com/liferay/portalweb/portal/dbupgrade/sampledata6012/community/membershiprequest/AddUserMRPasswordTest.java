@@ -40,7 +40,8 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -59,15 +60,34 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users", RuntimeVariables.replace("Users"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_125_keywords",
+		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("requestmembersn"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("_125_screenName");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//td[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("requestmemberfn"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("requestmemberfn"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[@id='_125_passwordLink']",
 			RuntimeVariables.replace("Password Link"));
@@ -78,7 +98,7 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("_125_password1")) {
+				if (selenium.isVisible("//input[@id='_125_password1']")) {
 					break;
 				}
 			}
@@ -88,9 +108,12 @@ public class AddUserMRPasswordTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("_125_password1", RuntimeVariables.replace("test"));
-		selenium.type("_125_password2", RuntimeVariables.replace("test"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.type("//input[@id='_125_password1']",
+			RuntimeVariables.replace("test"));
+		selenium.type("//input[@id='_125_password2']",
+			RuntimeVariables.replace("test"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),

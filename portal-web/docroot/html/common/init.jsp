@@ -57,7 +57,6 @@ page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.JSPSearchEntry" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
-page import="com.liferay.portal.kernel.dao.search.ScoreSearchEntry" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchEntry" %><%@
 page import="com.liferay.portal.kernel.dao.search.TextSearchEntry" %><%@

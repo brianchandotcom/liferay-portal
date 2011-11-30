@@ -180,18 +180,6 @@ public class ResultRow {
 			path, servletContext, request, response);
 	}
 
-	public void addScore(float score) {
-		addScore(_searchEntries.size(), score);
-	}
-
-	public void addScore(int index, float score) {
-		ScoreSearchEntry scoreSearchEntry = new ScoreSearchEntry();
-
-		scoreSearchEntry.setScore(score);
-
-		_searchEntries.add(index, scoreSearchEntry);
-	}
-
 	public void addSearchEntry(int index, SearchEntry searchEntry) {
 		_searchEntries.add(index, searchEntry);
 	}

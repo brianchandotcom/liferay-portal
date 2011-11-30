@@ -759,7 +759,7 @@ numberFormat.setMinimumIntegerDigits(2);
 						</tr>
 						<tr>
 							<td>
-								<liferay-ui:message key="reset-document-library-preview-and-thumbnail-files" />
+								<liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media-portlet" />
 							</td>
 							<td>
 								<input type="button" value="<liferay-ui:message key="execute" />" onClick="<portlet:namespace />saveServer('dlPreviews');" />

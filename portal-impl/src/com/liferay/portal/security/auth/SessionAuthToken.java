@@ -14,10 +14,13 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -90,6 +93,8 @@ public class SessionAuthToken implements AuthToken {
 	}
 
 	protected boolean isIgnoreAction(HttpServletRequest request) {
+		long companyId = PortalUtil.getCompanyId(request);
+
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
 		String portletNamespace = PortalUtil.getPortletNamespace(ppid);
@@ -97,14 +102,36 @@ public class SessionAuthToken implements AuthToken {
 		String strutsAction = ParamUtil.getString(
 			request, portletNamespace + "struts_action");
 
-		return isIgnoreAction(strutsAction);
+		return isIgnoreAction(companyId, ppid, strutsAction);
 	}
 
-	protected boolean isIgnoreAction(String strutsAction) {
+	protected boolean isIgnoreAction(
+		long companyId, String ppid, String strutsAction) {
+
 		Set<String> authTokenIgnoreActions =
 			PortalUtil.getAuthTokenIgnoreActions();
 
-		return authTokenIgnoreActions.contains(strutsAction);
+		if (!authTokenIgnoreActions.contains(strutsAction)) {
+			return false;
+		}
+
+		try {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				companyId, ppid);
+
+			String strutsPath = strutsAction.substring(
+				1, strutsAction.lastIndexOf(CharPool.SLASH));
+
+			if (strutsPath.equals(portlet.getStrutsPath()) ||
+				strutsPath.equals(portlet.getParentStrutsPath())) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	protected boolean isIgnorePortlet(HttpServletRequest request) {

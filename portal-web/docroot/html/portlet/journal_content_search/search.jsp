@@ -48,7 +48,6 @@
 			headerNames.add("#");
 			headerNames.add("name");
 			headerNames.add("content");
-			headerNames.add("score");
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
@@ -99,10 +98,6 @@
 					// Content
 
 					row.addJSP("/html/portlet/journal_content_search/article_content.jsp");
-
-					// Score
-
-					row.addScore(results.score(i));
 
 					// Add result row
 

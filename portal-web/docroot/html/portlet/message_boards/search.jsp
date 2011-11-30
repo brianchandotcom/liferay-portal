@@ -73,7 +73,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 	headerNames.add("message");
 	headerNames.add("thread-posts");
 	headerNames.add("thread-views");
-	headerNames.add("score");
 
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-messages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
@@ -170,10 +169,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 			row.addText(HtmlUtil.escape(message.getSubject()), rowURL);
 			row.addText(String.valueOf(thread.getMessageCount()), rowURL);
 			row.addText(String.valueOf(thread.getViewCount()), rowURL);
-
-			// Score
-
-			row.addScore(results.score(i));
 
 			// Add result row
 

@@ -73,7 +73,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 	headerNames.add("#");
 	headerNames.add("folder");
 	headerNames.add("entry");
-	headerNames.add("score");
 	headerNames.add(StringPool.BLANK);
 
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
@@ -143,10 +142,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 			rowTextEntry.setName(entry.getName());
 
 			row.addText(rowTextEntry);
-
-			// Score
-
-			row.addScore(results.score(i));
 
 			// Action
 

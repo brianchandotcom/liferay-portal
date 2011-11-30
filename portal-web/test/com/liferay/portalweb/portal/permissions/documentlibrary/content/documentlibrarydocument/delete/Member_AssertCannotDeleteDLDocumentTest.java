@@ -51,9 +51,7 @@ public class Member_AssertCannotDeleteDLDocumentTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 			RuntimeVariables.replace("All Rows"));
 		assertTrue(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("link=Actions"));
-		selenium.clickAt("link=Actions", RuntimeVariables.replace("Actions"));
+		assertFalse(selenium.isVisible("link=Actions"));
 		assertFalse(selenium.isVisible("link=Delete"));
 	}
 }

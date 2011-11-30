@@ -83,16 +83,18 @@ public class StringUtil {
 	}
 
 	public static String appendParentheticalSuffix(String s, int suffix) {
-		return appendParentheticalSuffix(s, String.valueOf(suffix));
-	}
+		if (Pattern.matches(
+				".* \\(" + String.valueOf(suffix - 1) + "\\)", s)) {
 
-	public static String appendParentheticalSuffix(String s, String suffix) {
-		if (Pattern.matches(".* \\(\\d+\\)", s)) {
 			int pos = s.lastIndexOf(" (");
 
 			s = s.substring(0, pos);
 		}
 
+		return appendParentheticalSuffix(s, String.valueOf(suffix));
+	}
+
+	public static String appendParentheticalSuffix(String s, String suffix) {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(s);

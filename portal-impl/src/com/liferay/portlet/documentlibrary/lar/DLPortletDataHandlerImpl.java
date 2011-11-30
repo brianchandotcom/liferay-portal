@@ -787,6 +787,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		return sb.toString();
 	}
 
+	/**
+	 * @see {@link PortletImporter#getAssetCategoryName(String, long, String,
+	 *      int)}
+	 * @see {@link PortletImporter#getAssetVocabularyName(String, long, String,
+	 *      int)}
+	 */
 	protected static String getFileEntryTypeName(
 			String uuid, long companyId, long groupId, String name, int count)
 		throws Exception {
@@ -804,21 +810,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			return name;
 		}
 
-		if (Pattern.matches(".* \\(\\d+\\)", name)) {
-			int pos = name.lastIndexOf(" (");
-
-			name = name.substring(0, pos);
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(name);
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(count);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		name = sb.toString();
+		name = StringUtil.appendParentheticalSuffix(name, count);
 
 		return getFileEntryTypeName(uuid, companyId, groupId, name, ++count);
 	}

@@ -451,18 +451,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		repository.checkInFileEntry(
 			fileEntryId, majorVersion, changeLog, serviceContext);
 
-		final FileEntry fileEntry = getFileEntry(fileEntryId);
+		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
+		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
-
-					return null;
-				}
-
-			});
+		dlAppHelperLocalService.updateFileEntry(
+			getUserId(), fileEntry, fileVersion, fileVersion.getFileVersionId());
 	}
 
 	/**
@@ -501,8 +495,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, fileEntry.getFileVersion(), serviceContext);
+			getUserId(), fileEntry, fileVersion, fileEntryId);
 	}
 
 	/**
@@ -532,9 +528,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.checkOutFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.updateAsset(
-			getUserId(), fileEntry, fileEntry.getLatestFileVersion(),
-			fileEntryId);
+		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+		dlAppHelperLocalService.updateFileEntry(
+			getUserId(), fileEntry, fileVersion, fileEntryId);
 	}
 
 	/**
@@ -572,9 +569,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime);
 
-		dlAppHelperLocalService.updateAsset(
-			getUserId(), fileEntry, fileEntry.getLatestFileVersion(),
-			fileEntryId);
+		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+		dlAppHelperLocalService.updateFileEntry(
+			getUserId(), fileEntry, fileVersion, fileEntryId);
 
 		return fileEntry;
 	}

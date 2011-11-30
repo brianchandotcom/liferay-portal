@@ -495,7 +495,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, fileVersion, fileEntryId);
+			getUserId(), fileEntry, fileVersion,
+			fileVersion.getFileVersionId());
 	}
 
 	/**

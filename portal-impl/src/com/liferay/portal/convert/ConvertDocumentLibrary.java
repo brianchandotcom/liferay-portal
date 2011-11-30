@@ -112,6 +112,21 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		PropsValues.DL_STORE_IMPL = targetStoreClassName;
 	}
 
+	protected List<DLFileVersion> getSortedDLFileVersions(
+		DLFileEntry fileEntry, boolean ascending) throws SystemException {
+
+		List<DLFileVersion> dlFileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_ANY);
+
+		List<DLFileVersion> sortedDlFileVersions =
+			new ArrayList<DLFileVersion>(dlFileVersions);
+
+		Collections.sort(
+			sortedDlFileVersions, new FileVersionVersionComparator(ascending));
+
+		return sortedDlFileVersions;
+	}
+
 	protected void migrateDL() throws Exception {
 		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
 		int pages = count / Indexer.DEFAULT_INTERVAL;
@@ -254,21 +269,6 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 					wikiPage.getAttachmentsFiles());
 			}
 		}
-	}
-
-	protected List<DLFileVersion> getSortedDLFileVersions(
-		DLFileEntry fileEntry, boolean ascending) throws SystemException {
-
-		List<DLFileVersion> dlFileVersions = fileEntry.getFileVersions(
-			WorkflowConstants.STATUS_ANY);
-
-		List<DLFileVersion> sortedDlFileVersions =
-			new ArrayList<DLFileVersion>(dlFileVersions);
-
-		Collections.sort(
-			sortedDlFileVersions, new FileVersionVersionComparator(ascending));
-
-		return sortedDlFileVersions;
 	}
 
 	private static final String[] _HOOKS = new String[] {

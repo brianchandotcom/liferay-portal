@@ -77,8 +77,8 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("No"),
 			selenium.getText("//td[contains(.,'No')]"));
 		assertEquals(RuntimeVariables.replace("Resubmit"),
-			selenium.getText("//tr[4]/td[4]/span/a/span"));
-		selenium.clickAt("//tr[4]/td[4]/span/a/span",
+			selenium.getText("//td[4]/span/a/span"));
+		selenium.clickAt("//td[4]/span/a/span",
 			RuntimeVariables.replace("Resubmit"));
 
 		for (int second = 0;; second++) {

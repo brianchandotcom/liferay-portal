@@ -69,6 +69,25 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Tags Blog Entry2 Title")
+										.equals(selenium.getText(
+								"xPath=(//div[@class='entry-title']/h2/a)[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Tags Blog Entry2 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
@@ -95,6 +114,25 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Tags Blog Entry3 Title")
+										.equals(selenium.getText(
+								"xPath=(//div[@class='entry-title']/h2/a)[1]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Tags Blog Entry3 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",

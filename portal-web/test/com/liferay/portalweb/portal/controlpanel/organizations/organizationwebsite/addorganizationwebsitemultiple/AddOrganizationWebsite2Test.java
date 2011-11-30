@@ -168,6 +168,23 @@ public class AddOrganizationWebsite2Test extends BaseTestCase {
 			selenium.getValue("//input[@id='_125_websiteUrl1']"));
 		assertEquals("Public",
 			selenium.getSelectedLabel("//select[@id='_125_websiteTypeId1']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_125_websitePrimary1']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isChecked("//input[@id='_125_websitePrimary1']"));
 	}
 }

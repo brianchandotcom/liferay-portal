@@ -19,8 +19,55 @@ import com.liferay.portal.kernel.test.TestCase;
 /**
  * @author Alexander Chow
  * @author Shuyang Zhou
+ * @author Hugo Huijser
  */
 public class StringUtilTest extends TestCase {
+
+	public void testAppendParentheticalSuffixInteger() throws Exception {
+		String original = "Hello World";
+		String expected = "Hello World (2)";
+
+		String actual = StringUtil.appendParentheticalSuffix(original, 2);
+
+		assertEquals(expected, actual);
+
+		original = "Hello (World)";
+		expected = "Hello (World) (2)";
+
+		actual = StringUtil.appendParentheticalSuffix(original, 2);
+
+		assertEquals(expected, actual);
+
+		original = "Hello World (2)";
+		expected = "Hello World (3)";
+
+		actual = StringUtil.appendParentheticalSuffix(original, 3);
+
+		assertEquals(expected, actual);
+
+		original = "Hello World (2)";
+		expected = "Hello World (2) (4)";
+
+		actual = StringUtil.appendParentheticalSuffix(original, 4);
+
+		assertEquals(expected, actual);
+	}
+
+	public void testAppendParentheticalSuffixString() throws Exception {
+		String original = "Hello";
+		String expected = "Hello (World)";
+
+		String actual = StringUtil.appendParentheticalSuffix(original, "World");
+
+		assertEquals(expected, actual);
+
+		original = "Hello (World)";
+		expected = "Hello (World) (Liferay)";
+
+		actual = StringUtil.appendParentheticalSuffix(original, "Liferay");
+
+		assertEquals(expected, actual);
+	}
 
 	public void testHighlight() throws Exception {
 		String original = "Hello World Liferay";

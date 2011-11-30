@@ -177,21 +177,33 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupPersistence.countByGroupId(groupId);
 	}
 
-	public List<MDRRuleGroup> search(long groupId, String name)
-		throws SystemException {
-
-		return mdrRuleGroupFinder.findByG_N(groupId, name);
-	}
-
 	public List<MDRRuleGroup> search(
-			long groupId, String name, int start, int end)
+			long groupId, String name, boolean andOperator, int start, int end)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.findByG_N(groupId, name, start, end);
+		return mdrRuleGroupFinder.findByG_N(
+			groupId, name, andOperator, start, end);
 	}
 
-	public int searchCount(long groupId, String name) throws SystemException {
-		return mdrRuleGroupFinder.countByG_N(groupId, name);
+	public List<MDRRuleGroup> searchByKeywords(
+			long groupId, String keywords, boolean andOperator, int start,
+			int end)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.findByKeywords(groupId, keywords, start, end);
+	}
+
+	public int searchByKeywordsCount(
+			long groupId, String keywords, boolean andOperator)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.countByKeywords(groupId, keywords);
+	}
+
+	public int searchCount(long groupId, String name, boolean andOperator)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.countByG_N(groupId, name, andOperator);
 	}
 
 	public MDRRuleGroup updateRuleGroup(

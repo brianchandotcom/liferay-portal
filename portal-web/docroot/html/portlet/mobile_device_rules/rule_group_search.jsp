@@ -36,11 +36,11 @@ if (displayTerms.getGroupId() == 0) {
 	id="toggle_id_mobile_device_rules_rule_group_search"
 >
 	<aui:fieldset>
-		<aui:input label="name" inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input label="name" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(chooseCallback) && MDRPermissionUtil.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.VIEW) %>">
-				<aui:select name="<%= displayTerms.GROUP_ID %>" label="scope" inlineField="<%= true %>">
+				<aui:select name="<%= displayTerms.GROUP_ID %>" label="scope">
 					<aui:option label="global" selected="<%= displayTerms.getGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
 
 					<%

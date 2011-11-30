@@ -340,6 +340,12 @@
 	top: 5px;
 }
 
+/* ---------- Tabs ---------- */
+
+.aui-tab-active strong {
+	font-weight: normal;
+}
+
 /* ---------- Misc. ---------- */
 
 .lfr-panel-container {

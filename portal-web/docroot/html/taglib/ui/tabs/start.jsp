@@ -198,7 +198,15 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 							</c:otherwise>
 						</c:choose>
 
+						<c:if test="<%= selected %>">
+							<strong>
+						</c:if>
+
 						<%= LanguageUtil.get(pageContext, names[i]) %>
+
+						<c:if test="<%= selected %>">
+							</strong>
+						</c:if>
 
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(curURL) %>">

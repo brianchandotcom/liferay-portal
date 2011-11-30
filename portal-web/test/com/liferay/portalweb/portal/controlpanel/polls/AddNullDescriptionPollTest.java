@@ -60,10 +60,7 @@ public class AddNullDescriptionPollTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid description."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

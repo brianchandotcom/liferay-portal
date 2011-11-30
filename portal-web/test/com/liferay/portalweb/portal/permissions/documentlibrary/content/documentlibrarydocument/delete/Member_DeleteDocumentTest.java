@@ -50,6 +50,7 @@ public class Member_DeleteDocumentTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 			RuntimeVariables.replace("All Rows"));
 		assertTrue(selenium.isChecked("//input[@id='_20_allRowIdsCheckbox']"));
+		assertTrue(selenium.isVisible("//span[@title='Actions']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",

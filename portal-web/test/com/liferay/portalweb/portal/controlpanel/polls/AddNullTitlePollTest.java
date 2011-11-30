@@ -59,10 +59,7 @@ public class AddNullTitlePollTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

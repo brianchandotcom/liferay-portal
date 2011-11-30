@@ -116,9 +116,13 @@
 				}
 				%>
 
-				<aui:input label="<%= loginLabel %>" name="login" type="text" value="<%= login %>" />
+				<aui:input label="<%= loginLabel %>" name="login" type="text" value="<%= login %>">
+					<aui:validator name="required" />
+				</aui:input>
 
-				<aui:input name="password" type="password" value="<%= password %>" />
+				<aui:input name="password" type="password" value="<%= password %>">
+					<aui:validator name="required" />
+				</aui:input>
 
 				<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 

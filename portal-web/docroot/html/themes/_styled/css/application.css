@@ -346,6 +346,10 @@
 	font-weight: normal;
 }
 
+.aui-tab-back {
+	float: right;
+}
+
 /* ---------- Misc. ---------- */
 
 .lfr-panel-container {

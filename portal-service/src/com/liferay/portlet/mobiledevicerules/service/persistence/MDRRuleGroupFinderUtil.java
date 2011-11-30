@@ -21,21 +21,45 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Edward C. Han
  */
 public class MDRRuleGroupFinderUtil {
-	public static int countByG_N(long groupId, java.lang.String name)
+	public static int countByG_N(long groupId, java.lang.String name,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByG_N(groupId, name);
+		return getFinder().countByG_N(groupId, name, andOperator);
+	}
+
+	public static int countByG_N(long groupId, java.lang.String[] names,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByG_N(groupId, names, andOperator);
+	}
+
+	public static int countByKeywords(long groupId, java.lang.String keywords)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByKeywords(groupId, keywords);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String name)
+		long groupId, java.lang.String name, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByG_N(groupId, name);
+		return getFinder().findByG_N(groupId, name, andOperator);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String name, int start, int end)
+		long groupId, java.lang.String name, boolean andOperator, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByG_N(groupId, name, andOperator, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByG_N(
+		long groupId, java.lang.String[] names, boolean andOperator, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByG_N(groupId, names, andOperator, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByKeywords(
+		long groupId, java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByG_N(groupId, name, start, end);
+		return getFinder().findByKeywords(groupId, keywords, start, end);
 	}
 
 	public static MDRRuleGroupFinder getFinder() {

@@ -94,6 +94,25 @@ public class AddCommentTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Pending (Review)")
+										.equals(selenium.getText(
+								"//strong[@class='workflow-status-pending']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Pending (Review)"),
 			selenium.getText("//strong[@class='workflow-status-pending']"));
 		assertEquals(RuntimeVariables.replace("PC Comment"),

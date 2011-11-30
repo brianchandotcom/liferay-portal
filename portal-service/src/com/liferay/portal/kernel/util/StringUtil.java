@@ -83,9 +83,7 @@ public class StringUtil {
 	}
 
 	public static String appendParentheticalSuffix(String s, int suffix) {
-		if (Pattern.matches(
-				".* \\(" + String.valueOf(suffix - 1) + "\\)", s)) {
-
+		if (Pattern.matches(".* \\(" + String.valueOf(suffix - 1) + "\\)", s)) {
 			int pos = s.lastIndexOf(" (");
 
 			s = s.substring(0, pos);

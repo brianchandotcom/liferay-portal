@@ -306,6 +306,16 @@ public class DLAppHelperLocalServiceImpl
 
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
+			long assetClassPk)
+		throws PortalException, SystemException {
+
+		updateAsset(userId, fileEntry, fileVersion, assetClassPk);
+
+		registerDLProcessorCallback(fileEntry);
+	}
+
+	public void updateFileEntry(
+			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

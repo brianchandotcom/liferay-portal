@@ -803,7 +803,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	);
 </aui:script>
 
-<aui:script use="aui-base">
+<aui:script use="aui-base,aui-toolbar">
 	var showURLFile = A.one('.show-url-file');
 	var showWebDavFile = A.one('.show-webdav-url-file');
 

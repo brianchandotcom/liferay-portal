@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,14 +106,10 @@ public class ActionCommandCache {
 
 		actionCommands = new ArrayList<ActionCommand>();
 
-		int nextSeparator = actionCommandChain.indexOf(CharPool.COMMA);
+		String[] actionCommandNames = StringUtil.split(
+			actionCommandChain, CharPool.COMMA);
 
-		int currentIndex = 0;
-
-		while (currentIndex < actionCommandChain.length()) {
-			String actionCommandName = actionCommandChain.substring(
-				currentIndex, nextSeparator);
-
+		for (String actionCommandName : actionCommandNames) {
 			ActionCommand actionCommand = getActionCommand(actionCommandName);
 
 			if (actionCommand != EMPTY) {
@@ -123,15 +120,6 @@ public class ActionCommandCache {
 					_log.warn(
 						"Unable to find ActionCommand " + actionCommandChain);
 				}
-			}
-
-			currentIndex = nextSeparator + 1;
-
-			nextSeparator = actionCommandChain.indexOf(
-				CharPool.COMMA, currentIndex);
-
-			if (nextSeparator == -1) {
-				break;
 			}
 		}
 

@@ -42,8 +42,15 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	public void checkRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_repositoryService.checkRepository(repositoryId);
+	}
+
+	public void deleteRepository(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_repositoryService.deleteRepository(repositoryId);
 	}
 
 	public com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
@@ -99,18 +106,6 @@ public class RepositoryServiceWrapper implements RepositoryService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _repositoryService.getTypeSettingsProperties(repositoryId);
-	}
-
-	public void unmountRepositories(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_repositoryService.unmountRepositories(groupId);
-	}
-
-	public void unmountRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_repositoryService.unmountRepository(repositoryId);
 	}
 
 	public void updateRepository(long repositoryId, java.lang.String name,

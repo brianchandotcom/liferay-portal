@@ -14,7 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Repository service. Represents a row in the &quot;Repository&quot; database table, with each column mapped to a property of this class.
@@ -35,4 +37,7 @@ public abstract class RepositoryBaseImpl extends RepositoryModelImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a repository model instance should use the {@link Repository} interface instead.
 	 */
+	public void persist() throws SystemException {
+		RepositoryLocalServiceUtil.updateRepository(this);
+	}
 }

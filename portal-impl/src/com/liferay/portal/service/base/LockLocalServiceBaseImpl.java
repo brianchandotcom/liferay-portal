@@ -97,6 +97,7 @@ import com.liferay.portal.service.QuartzLocalService;
 import com.liferay.portal.service.RegionService;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
+import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.ResourceBlockLocalService;
@@ -2521,6 +2522,25 @@ public abstract class LockLocalServiceBaseImpl implements LockLocalService,
 	}
 
 	/**
+	 * Returns the repository local service.
+	 *
+	 * @return the repository local service
+	 */
+	public RepositoryLocalService getRepositoryLocalService() {
+		return repositoryLocalService;
+	}
+
+	/**
+	 * Sets the repository local service.
+	 *
+	 * @param repositoryLocalService the repository local service
+	 */
+	public void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+		this.repositoryLocalService = repositoryLocalService;
+	}
+
+	/**
 	 * Returns the repository remote service.
 	 *
 	 * @return the repository remote service
@@ -4247,6 +4267,8 @@ public abstract class LockLocalServiceBaseImpl implements LockLocalService,
 	protected ReleaseLocalService releaseLocalService;
 	@BeanReference(type = ReleasePersistence.class)
 	protected ReleasePersistence releasePersistence;
+	@BeanReference(type = RepositoryLocalService.class)
+	protected RepositoryLocalService repositoryLocalService;
 	@BeanReference(type = RepositoryService.class)
 	protected RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)

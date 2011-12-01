@@ -329,6 +329,11 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		return _repository.toXmlString();
 	}
 
+	public void persist()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_repository.persist();
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return _repository.getTypeSettingsProperties();
 	}

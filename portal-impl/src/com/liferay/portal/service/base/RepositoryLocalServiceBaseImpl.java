@@ -16,14 +16,21 @@ package com.liferay.portal.service.base;
 
 import com.liferay.counter.service.CounterLocalService;
 
-import com.liferay.mail.service.MailService;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.AccountLocalService;
 import com.liferay.portal.service.AccountService;
 import com.liferay.portal.service.AddressLocalService;
@@ -73,6 +80,7 @@ import com.liferay.portal.service.PasswordPolicyService;
 import com.liferay.portal.service.PasswordTrackerLocalService;
 import com.liferay.portal.service.PermissionLocalService;
 import com.liferay.portal.service.PermissionService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.PhoneService;
 import com.liferay.portal.service.PluginSettingLocalService;
@@ -213,62 +221,297 @@ import com.liferay.portal.service.persistence.WebsitePersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService;
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryService;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsDeliveryPersistence;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetEntryService;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
-import com.liferay.portlet.blogs.service.BlogsStatsUserLocalService;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
-import com.liferay.portlet.documentlibrary.service.DLFileRankLocalService;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankPersistence;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueService;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
-import com.liferay.portlet.messageboards.service.MBBanLocalService;
-import com.liferay.portlet.messageboards.service.MBBanService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageService;
-import com.liferay.portlet.messageboards.service.MBStatsUserLocalService;
-import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
-import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
-import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
-import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;
-import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence;
-import com.liferay.portlet.shopping.service.ShoppingCartLocalService;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
-import com.liferay.portlet.social.service.SocialActivityLocalService;
-import com.liferay.portlet.social.service.SocialRequestLocalService;
-import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
-import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
-import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 import javax.sql.DataSource;
 
 /**
- * The base implementation of the user remote service.
+ * The base implementation of the repository local service.
  *
  * <p>
- * This implementation exists only as a container for the default service methods generated by ServiceBuilder. All custom service methods should be put in {@link com.liferay.portal.service.impl.UserServiceImpl}.
+ * This implementation exists only as a container for the default service methods generated by ServiceBuilder. All custom service methods should be put in {@link com.liferay.portal.service.impl.RepositoryLocalServiceImpl}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.impl.UserServiceImpl
- * @see com.liferay.portal.service.UserServiceUtil
+ * @see com.liferay.portal.service.impl.RepositoryLocalServiceImpl
+ * @see com.liferay.portal.service.RepositoryLocalServiceUtil
  * @generated
  */
-public abstract class UserServiceBaseImpl extends PrincipalBean
-	implements UserService, IdentifiableBean {
+public abstract class RepositoryLocalServiceBaseImpl
+	implements RepositoryLocalService, IdentifiableBean {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.UserServiceUtil} to access the user remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.service.RepositoryLocalServiceUtil} to access the repository local service.
 	 */
+
+	/**
+	 * Adds the repository to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @return the repository that was added
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Repository addRepository(Repository repository)
+		throws SystemException {
+		repository.setNew(true);
+
+		repository = repositoryPersistence.update(repository, false);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(repository);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+
+		return repository;
+	}
+
+	/**
+	 * Creates a new repository with the primary key. Does not add the repository to the database.
+	 *
+	 * @param repositoryId the primary key for the new repository
+	 * @return the new repository
+	 */
+	public Repository createRepository(long repositoryId) {
+		return repositoryPersistence.create(repositoryId);
+	}
+
+	/**
+	 * Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param repositoryId the primary key of the repository
+	 * @throws PortalException if a repository with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteRepository(long repositoryId)
+		throws PortalException, SystemException {
+		Repository repository = repositoryPersistence.remove(repositoryId);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.delete(repository);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Deletes the repository from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteRepository(Repository repository)
+		throws SystemException {
+		repositoryPersistence.remove(repository);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.delete(repository);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return repositoryPersistence.findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return repositoryPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end);
+	}
+
+	/**
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return repositoryPersistence.findWithDynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return repositoryPersistence.countWithDynamicQuery(dynamicQuery);
+	}
+
+	public Repository fetchRepository(long repositoryId)
+		throws SystemException {
+		return repositoryPersistence.fetchByPrimaryKey(repositoryId);
+	}
+
+	/**
+	 * Returns the repository with the primary key.
+	 *
+	 * @param repositoryId the primary key of the repository
+	 * @return the repository
+	 * @throws PortalException if a repository with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Repository getRepository(long repositoryId)
+		throws PortalException, SystemException {
+		return repositoryPersistence.findByPrimaryKey(repositoryId);
+	}
+
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return repositoryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns a range of all the repositories.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of repositories
+	 * @param end the upper bound of the range of repositories (not inclusive)
+	 * @return the range of repositories
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Repository> getRepositories(int start, int end)
+		throws SystemException {
+		return repositoryPersistence.findAll(start, end);
+	}
+
+	/**
+	 * Returns the number of repositories.
+	 *
+	 * @return the number of repositories
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getRepositoriesCount() throws SystemException {
+		return repositoryPersistence.countAll();
+	}
+
+	/**
+	 * Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @return the repository that was updated
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Repository updateRepository(Repository repository)
+		throws SystemException {
+		return updateRepository(repository, true);
+	}
+
+	/**
+	 * Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @param merge whether to merge the repository with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
+	 * @return the repository that was updated
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Repository updateRepository(Repository repository, boolean merge)
+		throws SystemException {
+		repository.setNew(false);
+
+		repository = repositoryPersistence.update(repository, merge);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(getModelClassName());
+
+		if (indexer != null) {
+			try {
+				indexer.reindex(repository);
+			}
+			catch (SearchException se) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(se, se);
+				}
+			}
+		}
+
+		return repository;
+	}
 
 	/**
 	 * Returns the account local service.
@@ -3779,81 +4022,6 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
-	 * Returns the mail remote service.
-	 *
-	 * @return the mail remote service
-	 */
-	public MailService getMailService() {
-		return mailService;
-	}
-
-	/**
-	 * Sets the mail remote service.
-	 *
-	 * @param mailService the mail remote service
-	 */
-	public void setMailService(MailService mailService) {
-		this.mailService = mailService;
-	}
-
-	/**
-	 * Returns the announcements delivery local service.
-	 *
-	 * @return the announcements delivery local service
-	 */
-	public AnnouncementsDeliveryLocalService getAnnouncementsDeliveryLocalService() {
-		return announcementsDeliveryLocalService;
-	}
-
-	/**
-	 * Sets the announcements delivery local service.
-	 *
-	 * @param announcementsDeliveryLocalService the announcements delivery local service
-	 */
-	public void setAnnouncementsDeliveryLocalService(
-		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
-		this.announcementsDeliveryLocalService = announcementsDeliveryLocalService;
-	}
-
-	/**
-	 * Returns the announcements delivery remote service.
-	 *
-	 * @return the announcements delivery remote service
-	 */
-	public AnnouncementsDeliveryService getAnnouncementsDeliveryService() {
-		return announcementsDeliveryService;
-	}
-
-	/**
-	 * Sets the announcements delivery remote service.
-	 *
-	 * @param announcementsDeliveryService the announcements delivery remote service
-	 */
-	public void setAnnouncementsDeliveryService(
-		AnnouncementsDeliveryService announcementsDeliveryService) {
-		this.announcementsDeliveryService = announcementsDeliveryService;
-	}
-
-	/**
-	 * Returns the announcements delivery persistence.
-	 *
-	 * @return the announcements delivery persistence
-	 */
-	public AnnouncementsDeliveryPersistence getAnnouncementsDeliveryPersistence() {
-		return announcementsDeliveryPersistence;
-	}
-
-	/**
-	 * Sets the announcements delivery persistence.
-	 *
-	 * @param announcementsDeliveryPersistence the announcements delivery persistence
-	 */
-	public void setAnnouncementsDeliveryPersistence(
-		AnnouncementsDeliveryPersistence announcementsDeliveryPersistence) {
-		this.announcementsDeliveryPersistence = announcementsDeliveryPersistence;
-	}
-
-	/**
 	 * Returns the asset entry local service.
 	 *
 	 * @return the asset entry local service
@@ -3928,116 +4096,226 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
-	 * Returns the blogs stats user local service.
+	 * Returns the d l app helper local service.
 	 *
-	 * @return the blogs stats user local service
+	 * @return the d l app helper local service
 	 */
-	public BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
-		return blogsStatsUserLocalService;
+	public DLAppHelperLocalService getDLAppHelperLocalService() {
+		return dlAppHelperLocalService;
 	}
 
 	/**
-	 * Sets the blogs stats user local service.
+	 * Sets the d l app helper local service.
 	 *
-	 * @param blogsStatsUserLocalService the blogs stats user local service
+	 * @param dlAppHelperLocalService the d l app helper local service
 	 */
-	public void setBlogsStatsUserLocalService(
-		BlogsStatsUserLocalService blogsStatsUserLocalService) {
-		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
+	public void setDLAppHelperLocalService(
+		DLAppHelperLocalService dlAppHelperLocalService) {
+		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
 
 	/**
-	 * Returns the blogs stats user persistence.
+	 * Returns the document library file entry local service.
 	 *
-	 * @return the blogs stats user persistence
+	 * @return the document library file entry local service
 	 */
-	public BlogsStatsUserPersistence getBlogsStatsUserPersistence() {
-		return blogsStatsUserPersistence;
+	public DLFileEntryLocalService getDLFileEntryLocalService() {
+		return dlFileEntryLocalService;
 	}
 
 	/**
-	 * Sets the blogs stats user persistence.
+	 * Sets the document library file entry local service.
 	 *
-	 * @param blogsStatsUserPersistence the blogs stats user persistence
+	 * @param dlFileEntryLocalService the document library file entry local service
 	 */
-	public void setBlogsStatsUserPersistence(
-		BlogsStatsUserPersistence blogsStatsUserPersistence) {
-		this.blogsStatsUserPersistence = blogsStatsUserPersistence;
+	public void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+		this.dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
 	/**
-	 * Returns the blogs stats user finder.
+	 * Returns the document library file entry remote service.
 	 *
-	 * @return the blogs stats user finder
+	 * @return the document library file entry remote service
 	 */
-	public BlogsStatsUserFinder getBlogsStatsUserFinder() {
-		return blogsStatsUserFinder;
+	public DLFileEntryService getDLFileEntryService() {
+		return dlFileEntryService;
 	}
 
 	/**
-	 * Sets the blogs stats user finder.
+	 * Sets the document library file entry remote service.
 	 *
-	 * @param blogsStatsUserFinder the blogs stats user finder
+	 * @param dlFileEntryService the document library file entry remote service
 	 */
-	public void setBlogsStatsUserFinder(
-		BlogsStatsUserFinder blogsStatsUserFinder) {
-		this.blogsStatsUserFinder = blogsStatsUserFinder;
+	public void setDLFileEntryService(DLFileEntryService dlFileEntryService) {
+		this.dlFileEntryService = dlFileEntryService;
 	}
 
 	/**
-	 * Returns the document library file rank local service.
+	 * Returns the document library file entry persistence.
 	 *
-	 * @return the document library file rank local service
+	 * @return the document library file entry persistence
 	 */
-	public DLFileRankLocalService getDLFileRankLocalService() {
-		return dlFileRankLocalService;
+	public DLFileEntryPersistence getDLFileEntryPersistence() {
+		return dlFileEntryPersistence;
 	}
 
 	/**
-	 * Sets the document library file rank local service.
+	 * Sets the document library file entry persistence.
 	 *
-	 * @param dlFileRankLocalService the document library file rank local service
+	 * @param dlFileEntryPersistence the document library file entry persistence
 	 */
-	public void setDLFileRankLocalService(
-		DLFileRankLocalService dlFileRankLocalService) {
-		this.dlFileRankLocalService = dlFileRankLocalService;
+	public void setDLFileEntryPersistence(
+		DLFileEntryPersistence dlFileEntryPersistence) {
+		this.dlFileEntryPersistence = dlFileEntryPersistence;
 	}
 
 	/**
-	 * Returns the document library file rank persistence.
+	 * Returns the document library file entry finder.
 	 *
-	 * @return the document library file rank persistence
+	 * @return the document library file entry finder
 	 */
-	public DLFileRankPersistence getDLFileRankPersistence() {
-		return dlFileRankPersistence;
+	public DLFileEntryFinder getDLFileEntryFinder() {
+		return dlFileEntryFinder;
 	}
 
 	/**
-	 * Sets the document library file rank persistence.
+	 * Sets the document library file entry finder.
 	 *
-	 * @param dlFileRankPersistence the document library file rank persistence
+	 * @param dlFileEntryFinder the document library file entry finder
 	 */
-	public void setDLFileRankPersistence(
-		DLFileRankPersistence dlFileRankPersistence) {
-		this.dlFileRankPersistence = dlFileRankPersistence;
+	public void setDLFileEntryFinder(DLFileEntryFinder dlFileEntryFinder) {
+		this.dlFileEntryFinder = dlFileEntryFinder;
 	}
 
 	/**
-	 * Returns the document library file rank finder.
+	 * Returns the document library file version local service.
 	 *
-	 * @return the document library file rank finder
+	 * @return the document library file version local service
 	 */
-	public DLFileRankFinder getDLFileRankFinder() {
-		return dlFileRankFinder;
+	public DLFileVersionLocalService getDLFileVersionLocalService() {
+		return dlFileVersionLocalService;
 	}
 
 	/**
-	 * Sets the document library file rank finder.
+	 * Sets the document library file version local service.
 	 *
-	 * @param dlFileRankFinder the document library file rank finder
+	 * @param dlFileVersionLocalService the document library file version local service
 	 */
-	public void setDLFileRankFinder(DLFileRankFinder dlFileRankFinder) {
-		this.dlFileRankFinder = dlFileRankFinder;
+	public void setDLFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+		this.dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	/**
+	 * Returns the document library file version remote service.
+	 *
+	 * @return the document library file version remote service
+	 */
+	public DLFileVersionService getDLFileVersionService() {
+		return dlFileVersionService;
+	}
+
+	/**
+	 * Sets the document library file version remote service.
+	 *
+	 * @param dlFileVersionService the document library file version remote service
+	 */
+	public void setDLFileVersionService(
+		DLFileVersionService dlFileVersionService) {
+		this.dlFileVersionService = dlFileVersionService;
+	}
+
+	/**
+	 * Returns the document library file version persistence.
+	 *
+	 * @return the document library file version persistence
+	 */
+	public DLFileVersionPersistence getDLFileVersionPersistence() {
+		return dlFileVersionPersistence;
+	}
+
+	/**
+	 * Sets the document library file version persistence.
+	 *
+	 * @param dlFileVersionPersistence the document library file version persistence
+	 */
+	public void setDLFileVersionPersistence(
+		DLFileVersionPersistence dlFileVersionPersistence) {
+		this.dlFileVersionPersistence = dlFileVersionPersistence;
+	}
+
+	/**
+	 * Returns the document library folder local service.
+	 *
+	 * @return the document library folder local service
+	 */
+	public DLFolderLocalService getDLFolderLocalService() {
+		return dlFolderLocalService;
+	}
+
+	/**
+	 * Sets the document library folder local service.
+	 *
+	 * @param dlFolderLocalService the document library folder local service
+	 */
+	public void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+		this.dlFolderLocalService = dlFolderLocalService;
+	}
+
+	/**
+	 * Returns the document library folder remote service.
+	 *
+	 * @return the document library folder remote service
+	 */
+	public DLFolderService getDLFolderService() {
+		return dlFolderService;
+	}
+
+	/**
+	 * Sets the document library folder remote service.
+	 *
+	 * @param dlFolderService the document library folder remote service
+	 */
+	public void setDLFolderService(DLFolderService dlFolderService) {
+		this.dlFolderService = dlFolderService;
+	}
+
+	/**
+	 * Returns the document library folder persistence.
+	 *
+	 * @return the document library folder persistence
+	 */
+	public DLFolderPersistence getDLFolderPersistence() {
+		return dlFolderPersistence;
+	}
+
+	/**
+	 * Sets the document library folder persistence.
+	 *
+	 * @param dlFolderPersistence the document library folder persistence
+	 */
+	public void setDLFolderPersistence(DLFolderPersistence dlFolderPersistence) {
+		this.dlFolderPersistence = dlFolderPersistence;
+	}
+
+	/**
+	 * Returns the document library folder finder.
+	 *
+	 * @return the document library folder finder
+	 */
+	public DLFolderFinder getDLFolderFinder() {
+		return dlFolderFinder;
+	}
+
+	/**
+	 * Sets the document library folder finder.
+	 *
+	 * @param dlFolderFinder the document library folder finder
+	 */
+	public void setDLFolderFinder(DLFolderFinder dlFolderFinder) {
+		this.dlFolderFinder = dlFolderFinder;
 	}
 
 	/**
@@ -4096,347 +4374,14 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 		this.expandoValuePersistence = expandoValuePersistence;
 	}
 
-	/**
-	 * Returns the message boards ban local service.
-	 *
-	 * @return the message boards ban local service
-	 */
-	public MBBanLocalService getMBBanLocalService() {
-		return mbBanLocalService;
-	}
-
-	/**
-	 * Sets the message boards ban local service.
-	 *
-	 * @param mbBanLocalService the message boards ban local service
-	 */
-	public void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
-		this.mbBanLocalService = mbBanLocalService;
-	}
-
-	/**
-	 * Returns the message boards ban remote service.
-	 *
-	 * @return the message boards ban remote service
-	 */
-	public MBBanService getMBBanService() {
-		return mbBanService;
-	}
-
-	/**
-	 * Sets the message boards ban remote service.
-	 *
-	 * @param mbBanService the message boards ban remote service
-	 */
-	public void setMBBanService(MBBanService mbBanService) {
-		this.mbBanService = mbBanService;
-	}
-
-	/**
-	 * Returns the message boards ban persistence.
-	 *
-	 * @return the message boards ban persistence
-	 */
-	public MBBanPersistence getMBBanPersistence() {
-		return mbBanPersistence;
-	}
-
-	/**
-	 * Sets the message boards ban persistence.
-	 *
-	 * @param mbBanPersistence the message boards ban persistence
-	 */
-	public void setMBBanPersistence(MBBanPersistence mbBanPersistence) {
-		this.mbBanPersistence = mbBanPersistence;
-	}
-
-	/**
-	 * Returns the message-boards message local service.
-	 *
-	 * @return the message-boards message local service
-	 */
-	public MBMessageLocalService getMBMessageLocalService() {
-		return mbMessageLocalService;
-	}
-
-	/**
-	 * Sets the message-boards message local service.
-	 *
-	 * @param mbMessageLocalService the message-boards message local service
-	 */
-	public void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-		this.mbMessageLocalService = mbMessageLocalService;
-	}
-
-	/**
-	 * Returns the message-boards message remote service.
-	 *
-	 * @return the message-boards message remote service
-	 */
-	public MBMessageService getMBMessageService() {
-		return mbMessageService;
-	}
-
-	/**
-	 * Sets the message-boards message remote service.
-	 *
-	 * @param mbMessageService the message-boards message remote service
-	 */
-	public void setMBMessageService(MBMessageService mbMessageService) {
-		this.mbMessageService = mbMessageService;
-	}
-
-	/**
-	 * Returns the message-boards message persistence.
-	 *
-	 * @return the message-boards message persistence
-	 */
-	public MBMessagePersistence getMBMessagePersistence() {
-		return mbMessagePersistence;
-	}
-
-	/**
-	 * Sets the message-boards message persistence.
-	 *
-	 * @param mbMessagePersistence the message-boards message persistence
-	 */
-	public void setMBMessagePersistence(
-		MBMessagePersistence mbMessagePersistence) {
-		this.mbMessagePersistence = mbMessagePersistence;
-	}
-
-	/**
-	 * Returns the message-boards message finder.
-	 *
-	 * @return the message-boards message finder
-	 */
-	public MBMessageFinder getMBMessageFinder() {
-		return mbMessageFinder;
-	}
-
-	/**
-	 * Sets the message-boards message finder.
-	 *
-	 * @param mbMessageFinder the message-boards message finder
-	 */
-	public void setMBMessageFinder(MBMessageFinder mbMessageFinder) {
-		this.mbMessageFinder = mbMessageFinder;
-	}
-
-	/**
-	 * Returns the message boards stats user local service.
-	 *
-	 * @return the message boards stats user local service
-	 */
-	public MBStatsUserLocalService getMBStatsUserLocalService() {
-		return mbStatsUserLocalService;
-	}
-
-	/**
-	 * Sets the message boards stats user local service.
-	 *
-	 * @param mbStatsUserLocalService the message boards stats user local service
-	 */
-	public void setMBStatsUserLocalService(
-		MBStatsUserLocalService mbStatsUserLocalService) {
-		this.mbStatsUserLocalService = mbStatsUserLocalService;
-	}
-
-	/**
-	 * Returns the message boards stats user persistence.
-	 *
-	 * @return the message boards stats user persistence
-	 */
-	public MBStatsUserPersistence getMBStatsUserPersistence() {
-		return mbStatsUserPersistence;
-	}
-
-	/**
-	 * Sets the message boards stats user persistence.
-	 *
-	 * @param mbStatsUserPersistence the message boards stats user persistence
-	 */
-	public void setMBStatsUserPersistence(
-		MBStatsUserPersistence mbStatsUserPersistence) {
-		this.mbStatsUserPersistence = mbStatsUserPersistence;
-	}
-
-	/**
-	 * Returns the message boards thread flag local service.
-	 *
-	 * @return the message boards thread flag local service
-	 */
-	public MBThreadFlagLocalService getMBThreadFlagLocalService() {
-		return mbThreadFlagLocalService;
-	}
-
-	/**
-	 * Sets the message boards thread flag local service.
-	 *
-	 * @param mbThreadFlagLocalService the message boards thread flag local service
-	 */
-	public void setMBThreadFlagLocalService(
-		MBThreadFlagLocalService mbThreadFlagLocalService) {
-		this.mbThreadFlagLocalService = mbThreadFlagLocalService;
-	}
-
-	/**
-	 * Returns the message boards thread flag persistence.
-	 *
-	 * @return the message boards thread flag persistence
-	 */
-	public MBThreadFlagPersistence getMBThreadFlagPersistence() {
-		return mbThreadFlagPersistence;
-	}
-
-	/**
-	 * Sets the message boards thread flag persistence.
-	 *
-	 * @param mbThreadFlagPersistence the message boards thread flag persistence
-	 */
-	public void setMBThreadFlagPersistence(
-		MBThreadFlagPersistence mbThreadFlagPersistence) {
-		this.mbThreadFlagPersistence = mbThreadFlagPersistence;
-	}
-
-	/**
-	 * Returns the shopping cart local service.
-	 *
-	 * @return the shopping cart local service
-	 */
-	public ShoppingCartLocalService getShoppingCartLocalService() {
-		return shoppingCartLocalService;
-	}
-
-	/**
-	 * Sets the shopping cart local service.
-	 *
-	 * @param shoppingCartLocalService the shopping cart local service
-	 */
-	public void setShoppingCartLocalService(
-		ShoppingCartLocalService shoppingCartLocalService) {
-		this.shoppingCartLocalService = shoppingCartLocalService;
-	}
-
-	/**
-	 * Returns the shopping cart persistence.
-	 *
-	 * @return the shopping cart persistence
-	 */
-	public ShoppingCartPersistence getShoppingCartPersistence() {
-		return shoppingCartPersistence;
-	}
-
-	/**
-	 * Sets the shopping cart persistence.
-	 *
-	 * @param shoppingCartPersistence the shopping cart persistence
-	 */
-	public void setShoppingCartPersistence(
-		ShoppingCartPersistence shoppingCartPersistence) {
-		this.shoppingCartPersistence = shoppingCartPersistence;
-	}
-
-	/**
-	 * Returns the social activity local service.
-	 *
-	 * @return the social activity local service
-	 */
-	public SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
-	}
-
-	/**
-	 * Sets the social activity local service.
-	 *
-	 * @param socialActivityLocalService the social activity local service
-	 */
-	public void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-		this.socialActivityLocalService = socialActivityLocalService;
-	}
-
-	/**
-	 * Returns the social activity persistence.
-	 *
-	 * @return the social activity persistence
-	 */
-	public SocialActivityPersistence getSocialActivityPersistence() {
-		return socialActivityPersistence;
-	}
-
-	/**
-	 * Sets the social activity persistence.
-	 *
-	 * @param socialActivityPersistence the social activity persistence
-	 */
-	public void setSocialActivityPersistence(
-		SocialActivityPersistence socialActivityPersistence) {
-		this.socialActivityPersistence = socialActivityPersistence;
-	}
-
-	/**
-	 * Returns the social activity finder.
-	 *
-	 * @return the social activity finder
-	 */
-	public SocialActivityFinder getSocialActivityFinder() {
-		return socialActivityFinder;
-	}
-
-	/**
-	 * Sets the social activity finder.
-	 *
-	 * @param socialActivityFinder the social activity finder
-	 */
-	public void setSocialActivityFinder(
-		SocialActivityFinder socialActivityFinder) {
-		this.socialActivityFinder = socialActivityFinder;
-	}
-
-	/**
-	 * Returns the social request local service.
-	 *
-	 * @return the social request local service
-	 */
-	public SocialRequestLocalService getSocialRequestLocalService() {
-		return socialRequestLocalService;
-	}
-
-	/**
-	 * Sets the social request local service.
-	 *
-	 * @param socialRequestLocalService the social request local service
-	 */
-	public void setSocialRequestLocalService(
-		SocialRequestLocalService socialRequestLocalService) {
-		this.socialRequestLocalService = socialRequestLocalService;
-	}
-
-	/**
-	 * Returns the social request persistence.
-	 *
-	 * @return the social request persistence
-	 */
-	public SocialRequestPersistence getSocialRequestPersistence() {
-		return socialRequestPersistence;
-	}
-
-	/**
-	 * Sets the social request persistence.
-	 *
-	 * @param socialRequestPersistence the social request persistence
-	 */
-	public void setSocialRequestPersistence(
-		SocialRequestPersistence socialRequestPersistence) {
-		this.socialRequestPersistence = socialRequestPersistence;
-	}
-
 	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.model.Repository",
+			repositoryLocalService);
 	}
 
 	public void destroy() {
+		persistedModelLocalServiceRegistry.unregister(
+			"com.liferay.portal.model.Repository");
 	}
 
 	/**
@@ -4458,11 +4403,11 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 	}
 
 	protected Class<?> getModelClass() {
-		return User.class;
+		return Repository.class;
 	}
 
 	protected String getModelClassName() {
-		return User.class.getName();
+		return Repository.class.getName();
 	}
 
 	/**
@@ -4472,7 +4417,7 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = userPersistence.getDataSource();
+			DataSource dataSource = repositoryPersistence.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -4862,14 +4807,6 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
-	@BeanReference(type = MailService.class)
-	protected MailService mailService;
-	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
-	protected AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
-	@BeanReference(type = AnnouncementsDeliveryService.class)
-	protected AnnouncementsDeliveryService announcementsDeliveryService;
-	@BeanReference(type = AnnouncementsDeliveryPersistence.class)
-	protected AnnouncementsDeliveryPersistence announcementsDeliveryPersistence;
 	@BeanReference(type = AssetEntryLocalService.class)
 	protected AssetEntryLocalService assetEntryLocalService;
 	@BeanReference(type = AssetEntryService.class)
@@ -4878,59 +4815,38 @@ public abstract class UserServiceBaseImpl extends PrincipalBean
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = BlogsStatsUserLocalService.class)
-	protected BlogsStatsUserLocalService blogsStatsUserLocalService;
-	@BeanReference(type = BlogsStatsUserPersistence.class)
-	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
-	@BeanReference(type = BlogsStatsUserFinder.class)
-	protected BlogsStatsUserFinder blogsStatsUserFinder;
-	@BeanReference(type = DLFileRankLocalService.class)
-	protected DLFileRankLocalService dlFileRankLocalService;
-	@BeanReference(type = DLFileRankPersistence.class)
-	protected DLFileRankPersistence dlFileRankPersistence;
-	@BeanReference(type = DLFileRankFinder.class)
-	protected DLFileRankFinder dlFileRankFinder;
+	@BeanReference(type = DLAppHelperLocalService.class)
+	protected DLAppHelperLocalService dlAppHelperLocalService;
+	@BeanReference(type = DLFileEntryLocalService.class)
+	protected DLFileEntryLocalService dlFileEntryLocalService;
+	@BeanReference(type = DLFileEntryService.class)
+	protected DLFileEntryService dlFileEntryService;
+	@BeanReference(type = DLFileEntryPersistence.class)
+	protected DLFileEntryPersistence dlFileEntryPersistence;
+	@BeanReference(type = DLFileEntryFinder.class)
+	protected DLFileEntryFinder dlFileEntryFinder;
+	@BeanReference(type = DLFileVersionLocalService.class)
+	protected DLFileVersionLocalService dlFileVersionLocalService;
+	@BeanReference(type = DLFileVersionService.class)
+	protected DLFileVersionService dlFileVersionService;
+	@BeanReference(type = DLFileVersionPersistence.class)
+	protected DLFileVersionPersistence dlFileVersionPersistence;
+	@BeanReference(type = DLFolderLocalService.class)
+	protected DLFolderLocalService dlFolderLocalService;
+	@BeanReference(type = DLFolderService.class)
+	protected DLFolderService dlFolderService;
+	@BeanReference(type = DLFolderPersistence.class)
+	protected DLFolderPersistence dlFolderPersistence;
+	@BeanReference(type = DLFolderFinder.class)
+	protected DLFolderFinder dlFolderFinder;
 	@BeanReference(type = ExpandoValueLocalService.class)
 	protected ExpandoValueLocalService expandoValueLocalService;
 	@BeanReference(type = ExpandoValueService.class)
 	protected ExpandoValueService expandoValueService;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
-	@BeanReference(type = MBBanLocalService.class)
-	protected MBBanLocalService mbBanLocalService;
-	@BeanReference(type = MBBanService.class)
-	protected MBBanService mbBanService;
-	@BeanReference(type = MBBanPersistence.class)
-	protected MBBanPersistence mbBanPersistence;
-	@BeanReference(type = MBMessageLocalService.class)
-	protected MBMessageLocalService mbMessageLocalService;
-	@BeanReference(type = MBMessageService.class)
-	protected MBMessageService mbMessageService;
-	@BeanReference(type = MBMessagePersistence.class)
-	protected MBMessagePersistence mbMessagePersistence;
-	@BeanReference(type = MBMessageFinder.class)
-	protected MBMessageFinder mbMessageFinder;
-	@BeanReference(type = MBStatsUserLocalService.class)
-	protected MBStatsUserLocalService mbStatsUserLocalService;
-	@BeanReference(type = MBStatsUserPersistence.class)
-	protected MBStatsUserPersistence mbStatsUserPersistence;
-	@BeanReference(type = MBThreadFlagLocalService.class)
-	protected MBThreadFlagLocalService mbThreadFlagLocalService;
-	@BeanReference(type = MBThreadFlagPersistence.class)
-	protected MBThreadFlagPersistence mbThreadFlagPersistence;
-	@BeanReference(type = ShoppingCartLocalService.class)
-	protected ShoppingCartLocalService shoppingCartLocalService;
-	@BeanReference(type = ShoppingCartPersistence.class)
-	protected ShoppingCartPersistence shoppingCartPersistence;
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService socialActivityLocalService;
-	@BeanReference(type = SocialActivityPersistence.class)
-	protected SocialActivityPersistence socialActivityPersistence;
-	@BeanReference(type = SocialActivityFinder.class)
-	protected SocialActivityFinder socialActivityFinder;
-	@BeanReference(type = SocialRequestLocalService.class)
-	protected SocialRequestLocalService socialRequestLocalService;
-	@BeanReference(type = SocialRequestPersistence.class)
-	protected SocialRequestPersistence socialRequestPersistence;
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	private static Log _log = LogFactoryUtil.getLog(RepositoryLocalServiceBaseImpl.class);
 	private String _beanIdentifier;
 }

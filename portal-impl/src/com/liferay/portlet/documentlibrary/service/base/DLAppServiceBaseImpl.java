@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.LockLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
+import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
@@ -744,6 +745,25 @@ public abstract class DLAppServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the repository local service.
+	 *
+	 * @return the repository local service
+	 */
+	public RepositoryLocalService getRepositoryLocalService() {
+		return repositoryLocalService;
+	}
+
+	/**
+	 * Sets the repository local service.
+	 *
+	 * @param repositoryLocalService the repository local service
+	 */
+	public void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+		this.repositoryLocalService = repositoryLocalService;
+	}
+
+	/**
 	 * Returns the repository remote service.
 	 *
 	 * @return the repository remote service
@@ -1076,6 +1096,8 @@ public abstract class DLAppServiceBaseImpl extends PrincipalBean
 	protected LockPersistence lockPersistence;
 	@BeanReference(type = LockFinder.class)
 	protected LockFinder lockFinder;
+	@BeanReference(type = RepositoryLocalService.class)
+	protected RepositoryLocalService repositoryLocalService;
 	@BeanReference(type = RepositoryService.class)
 	protected RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)

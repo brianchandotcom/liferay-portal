@@ -313,14 +313,13 @@ Liferay.Service.registerClass(
 	{
 		addRepository: true,
 		checkRepository: true,
+		deleteRepository: true,
 		getLocalRepositoryImpl: true,
 		getRepository: true,
 		getRepositoryImpl: true,
 		getSupportedConfigurations: true,
 		getSupportedParameters: true,
 		getTypeSettingsProperties: true,
-		unmountRepositories: true,
-		unmountRepository: true,
 		updateRepository: true
 	}
 );

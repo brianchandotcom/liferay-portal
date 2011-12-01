@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.dbupgrade.sampledata606.expando.ExpandoTests;
-import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata606.login.LoginTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

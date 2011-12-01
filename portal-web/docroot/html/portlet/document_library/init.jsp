@@ -84,6 +84,7 @@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.RequiredStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearch" %><%@

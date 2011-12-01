@@ -104,7 +104,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 						actionPlid: document.<portlet:namespace />fm.<portlet:namespace />actionPlid.value
 					},
 					on: {
-						complete: function(id, obj) {
+						success: function(id, obj) {
 							var layouts = A.one('#<portlet:namespace />layouts');
 
 							if (layouts) {
@@ -136,7 +136,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 						<%= "actionId" %>: <%= actionId %>
 					},
 					on: {
-						complete: function(id, obj) {
+						success: function(id, obj) {
 							var typeSettings = A.one('#<portlet:namespace />typeSettings');
 
 							if (typeSettings) {

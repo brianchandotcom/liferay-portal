@@ -54,7 +54,7 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 								draggable: true,
 								modal: true,
 								stack: true,
-								title: '<liferay-ui:message key="report-inappropriate-content" />',
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>',
 								width: 435
 							}
 						).render();
@@ -93,7 +93,7 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 								bodyContent: A.one('#<%= randomNamespace %>signIn').html(),
 								centered: true,
 								destroyOnClose: true,
-								title: '<liferay-ui:message key="report-inappropriate-content" />',
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>',
 								modal: true,
 								width: 500
 							}

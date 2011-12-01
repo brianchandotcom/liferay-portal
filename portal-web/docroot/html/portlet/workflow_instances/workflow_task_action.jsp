@@ -110,13 +110,13 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 						handler: function() {
 							submitForm(form);
 						},
-						label: '<liferay-ui:message key="ok" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
 					},
 					{
 						handler: function() {
 							dialog.close();
 						},
-						label: '<liferay-ui:message key="cancel" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
 					}
 				],
 				centered: true,

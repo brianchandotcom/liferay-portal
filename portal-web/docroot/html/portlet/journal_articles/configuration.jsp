@@ -190,7 +190,7 @@ if (Validator.isNotNull(structureId)) {
 
 			document.<portlet:namespace />fm1.<portlet:namespace />structureId.value = "";
 
-			A.one('#<portlet:namespace />structure').html('<liferay-ui:message key="any" />');
+			A.one('#<portlet:namespace />structure').html('<%= UnicodeLanguageUtil.get(pageContext, "any") %>');
 		},
 		['aui-base']
 	);

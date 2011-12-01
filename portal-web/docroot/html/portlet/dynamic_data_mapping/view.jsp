@@ -137,7 +137,7 @@ portletURL.setParameter("tabs1", tabs1);
 					width: 600
 				},
 				refreshWindow: window,
-				title: '<liferay-ui:message key="copy-structure" />',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-structure") %>',
 				uri: uri
 			}
 		);

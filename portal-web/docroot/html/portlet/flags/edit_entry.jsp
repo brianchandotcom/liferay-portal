@@ -92,7 +92,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 		if (reason == 'other') {
 			var otherReasonNode = A.one('#<portlet:namespace />otherReason');
 
-			reason = (otherReasonNode && otherReasonNode.val()) || '<liferay-ui:message key="no-reason-specified" />';
+			reason = (otherReasonNode && otherReasonNode.val()) || '<%= UnicodeLanguageUtil.get(pageContext, "no-reason-specified") %>';
 		}
 
 		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');

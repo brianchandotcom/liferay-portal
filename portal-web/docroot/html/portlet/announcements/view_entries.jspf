@@ -110,7 +110,7 @@ hasResults = hasResults || (total > 0);
 				}
 
 				if (control) {
-					control.html('<liferay-ui:message key="show" />');
+					control.html('<%= UnicodeLanguageUtil.get(pageContext, "show") %>');
 				}
 			}
 			else {
@@ -121,7 +121,7 @@ hasResults = hasResults || (total > 0);
 				}
 
 				if (control) {
-					control.html('<liferay-ui:message key="hide" />');
+					control.html('<%= UnicodeLanguageUtil.get(pageContext, "hide") %>');
 				}
 			}
 		},

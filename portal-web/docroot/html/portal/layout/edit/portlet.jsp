@@ -89,7 +89,7 @@
 							{
 								bodyContent: content.show(),
 								centered: true,
-								title: '<liferay-ui:message key="copy-portlets-from-page" />',
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>',
 								modal: true,
 								width: 500
 							}
@@ -118,7 +118,7 @@
 					}
 				},
 				icon: 'copy',
-				label: '<liferay-ui:message key="copy-portlets-from-page" />'
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>'
 			}
 		);
 

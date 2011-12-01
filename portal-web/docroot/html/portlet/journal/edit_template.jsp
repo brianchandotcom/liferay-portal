@@ -264,7 +264,7 @@ if (template == null) {
 					stack: false,
 					width: 680
 				},
-				title: '<liferay-ui:message key="structure" />',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_structure" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:renderURL>'
 			}
 		);
@@ -318,7 +318,7 @@ if (template == null) {
 			button: '#<portlet:namespace />editorButton',
 			id: '<portlet:namespace />xslContentIFrame',
 			textarea: '<portlet:namespace />xslContent',
-			title: '<liferay-ui:message key="editor" />',
+			title: '<%= UnicodeLanguageUtil.get(pageContext, "editor") %>',
 			uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_template_xsl" /><portlet:param name="langType" value="<%= langType %>" /><portlet:param name="editorContentInputElement" value='<%= \"#\" + renderResponse.getNamespace() + \"editorContentInput\" %>' /><portlet:param name="editorContentOutputElement" value='<%= \"#\" + renderResponse.getNamespace() + \"xslContent\" %>' /></portlet:renderURL>'
 		}
 	);

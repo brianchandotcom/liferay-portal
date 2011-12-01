@@ -163,7 +163,7 @@ if (Validator.isNotNull(ddmStructureId)) {
 				structureName: 'data-definition',
 				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
 				struts_action: strutsAction,
-				title: '<liferay-ui:message key="data-definitions" />'
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
 			}
 		);
 	}

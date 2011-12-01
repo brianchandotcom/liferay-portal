@@ -59,11 +59,11 @@ String collapsed = GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_C
 					newestOnTop: false,
 					plugins: [A.Plugin.ConsoleFilters],
 					strings: {
-						clear: '<liferay-ui:message key="clear" />',
-						collapse: '<liferay-ui:message key="collapse" />',
-						expand: '<liferay-ui:message key="expand" />',
-						pause: '<liferay-ui:message key="pause" />',
-						title: '<liferay-ui:message key="console" />'
+						clear: '<%= UnicodeLanguageUtil.get(pageContext, "clear") %>',
+						collapse: '<%= UnicodeLanguageUtil.get(pageContext, "collapse") %>',
+						expand: '<%= UnicodeLanguageUtil.get(pageContext, "expand") %>',
+						pause: '<%= UnicodeLanguageUtil.get(pageContext, "pause") %>',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "console") %>'
 					},
 					style: 'block',
 					width: '100%'

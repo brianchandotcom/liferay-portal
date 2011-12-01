@@ -217,7 +217,7 @@
 
 						var loadingMask = new A.LoadingMask(
 							{
-								'strings.loading': '<liferay-ui:message key="liferay-is-being-installed" />',
+								'strings.loading': '<%= UnicodeLanguageUtil.get(pageContext, "liferay-is-being-installed") %>',
 								target: A.getBody()
 							}
 						);

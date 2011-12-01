@@ -391,7 +391,7 @@ int tabIndex = 1;
 					stack: false,
 					width: 680
 				},
-				title: '<liferay-ui:message key="structure" />',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_structure" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:renderURL>'
 			}
 		);
@@ -473,7 +473,7 @@ int tabIndex = 1;
 			},
 			id: '<portlet:namespace />xsdContentIFrame',
 			textarea: '<portlet:namespace />xsdContent',
-			title: '<liferay-ui:message key="editor" />',
+			title: '<%= UnicodeLanguageUtil.get(pageContext, "editor") %>',
 			uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/edit_template_xsl" /><portlet:param name="langType" value="xsd" /><portlet:param name="editorContentInputElement" value='<%= "#" + renderResponse.getNamespace() + "xsd" %>' /><portlet:param name="editorContentOutputElement" value='<%= "#" + renderResponse.getNamespace() + "xsd" %>' /></portlet:renderURL>'
 		}
 	);

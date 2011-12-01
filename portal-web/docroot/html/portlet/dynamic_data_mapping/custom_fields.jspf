@@ -70,7 +70,7 @@
 								collection[index] = {
 									attributeName: attributeName,
 									editor: new A.DateCellEditor(),
-									name: '<liferay-ui:message key="predefined-value" />'
+									name: '<%= UnicodeLanguageUtil.get(pageContext, "predefined-value") %>'
 								};
 							}
 						}
@@ -147,7 +147,7 @@
 				},
 
 				_uiSetValue: function() {
-					return '<liferay-ui:message key="select" />';
+					return '<%= UnicodeLanguageUtil.get(pageContext, "select") %>';
 				}
 
 			}
@@ -181,7 +181,7 @@
 					},
 					value: {
 						folderId: <%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>,
-						folderName: '<liferay-ui:message key="home" />'
+						folderName: '<%= UnicodeLanguageUtil.get(pageContext, "home") %>'
 					}
 				},
 				tip: {
@@ -207,7 +207,7 @@
 					model.push(
 						{
 							attributeName: 'acceptFiles',
-							name: '<liferay-ui:message key="allowed-file-extensions" />'
+							name: '<%= UnicodeLanguageUtil.get(pageContext, "allowed-file-extensions") %>'
 						}
 					);
 
@@ -283,17 +283,17 @@
 						{
 							attributeName: 'type',
 							editor: false,
-							name: '<liferay-ui:message key="type" />'
+							name: '<%= UnicodeLanguageUtil.get(pageContext, "type") %>'
 						},
 						{
 							attributeName: 'label',
 							editor: new A.TextAreaCellEditor(),
-							name: '<liferay-ui:message key="text" />'
+							name: '<%= UnicodeLanguageUtil.get(pageContext, "text") %>'
 						},
 						{
 							attributeName: 'style',
 							editor: new A.TextAreaCellEditor(),
-							name: '<liferay-ui:message key="style" />'
+							name: '<%= UnicodeLanguageUtil.get(pageContext, "style") %>'
 						}
 					];
 				},
@@ -359,7 +359,7 @@
 						{
 							attributeName: 'type',
 							editor: false,
-							name: '<liferay-ui:message key="type" />'
+							name: '<%= UnicodeLanguageUtil.get(pageContext, "type") %>'
 						}
 					];
 				}

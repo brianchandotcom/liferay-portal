@@ -844,7 +844,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							location.href = '<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
 						},
 						icon: 'download',
-						label: '<liferay-ui:message key="download" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 					},
 
 				</c:if>
@@ -863,7 +863,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							location.href = '<%= editURL.toString() %>';
 						},
 						icon: 'edit',
-						label: '<liferay-ui:message key="edit" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>'
 					},
 					{
 
@@ -877,7 +877,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							location.href = '<%= moveURL.toString() %>';
 						},
 						icon: 'move',
-						label: '<liferay-ui:message key="move" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "move") %>'
 					},
 
 					<c:if test="<%= !fileEntry.isCheckedOut() %>">
@@ -889,7 +889,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								submitForm(document.<portlet:namespace />fm);
 							},
 							icon: 'lock',
-							label: '<liferay-ui:message key="checkout" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout") %>'
 						},
 
 					</c:if>
@@ -903,7 +903,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								submitForm(document.<portlet:namespace />fm);
 							},
 							icon: 'undo',
-							label: '<liferay-ui:message key="cancel-checkout" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout") %>'
 						},
 
 						{
@@ -913,7 +913,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								submitForm(document.<portlet:namespace />fm);
 							},
 							icon: 'unlock',
-							label: '<liferay-ui:message key="checkin" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>'
 						},
 
 					</c:if>
@@ -934,7 +934,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							location.href = '<%= permissionsURL.toString() %>';
 						},
 						icon: 'permissions',
-						label: '<liferay-ui:message key="permissions" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>'
 					},
 
 				</c:if>
@@ -956,7 +956,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 						},
 						icon: 'delete',
-						label: '<liferay-ui:message key="delete" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
 					}
 
 				</c:if>

@@ -52,7 +52,7 @@ String language = BeanParamUtil.getString(template, request, "language", DDMTemp
 			button: '#<portlet:namespace />editorButton',
 			id: '<portlet:namespace />scriptContentIFrame',
 			textarea: '<portlet:namespace />scriptContent',
-			title: '<liferay-ui:message key="editor" />',
+			title: '<%= UnicodeLanguageUtil.get(pageContext, "editor") %>',
 
 			<%
 			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.CONTROL_PANEL);

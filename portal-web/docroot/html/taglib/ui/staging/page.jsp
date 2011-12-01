@@ -225,7 +225,7 @@ else {
 												width: 820
 											},
 										id: '<portlet:namespace />',
-										title: '<liferay-ui:message key="manage-site-pages-variations" />',
+										title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
 										uri: event.currentTarget.attr('href')
 									}
 								);

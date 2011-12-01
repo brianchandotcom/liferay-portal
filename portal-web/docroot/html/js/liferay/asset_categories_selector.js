@@ -9,6 +9,8 @@ AUI().add(
 
 		var EMPTY_FN = Lang.emptyFn;
 
+		var ID = 'id';
+
 		var NAME = 'categoriesselector';
 
 		var STR_EXPANDED = 'expanded';
@@ -145,7 +147,9 @@ AUI().add(
 						var labelNode = instance.get('labelNode');
 
 						if (labelNode) {
-							boundingBox.attr('aria-labelledby', labelNode.get('id'));
+							boundingBox.attr('aria-labelledby', labelNode.attr(ID));
+
+							labelNode.attr('for', boundingBox.attr(ID));
 						}
 					},
 
@@ -219,13 +223,13 @@ AUI().add(
 						var vocabularyIds = instance.get('vocabularyIds');
 
 						var serviceParameterTypesGetVocabularies = [
- 						 	'[J'
- 						];
+							'[J'
+						];
 
 						var serviceParameterTypesGetGroupVocabularies = [
- 						 	'[J',
- 						 	'java.lang.String'
- 						];
+							'[J',
+							'java.lang.String'
+						];
 
 						if (vocabularyIds.length > 0) {
 							Liferay.Service.Asset.AssetVocabulary.getVocabularies(
@@ -255,14 +259,14 @@ AUI().add(
 					},
 
 					_getTreeNodeAssetId: function(treeNode) {
-						var treeId = treeNode.get('id');
+						var treeId = treeNode.get(ID);
 						var match = treeId.match(/(\d+)$/);
 
 						return (match ? match[1] : null);
 					},
 
 					_getTreeNodeAssetType: function(treeNode) {
-						var treeId = treeNode.get('id');
+						var treeId = treeNode.get(ID);
 						var match = treeId.match(/^(vocabulary|category)/);
 
 						return (match ? match[1] : null);

@@ -399,7 +399,7 @@ if (Validator.isNotNull(content)) {
 											}
 
 											String taglibEditArticleURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", LocaleUtil.toLanguageId(locales[i]));
-											String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + LanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "'});";
+											String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + LanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "', cache: false});";
 										%>
 
 											<liferay-ui:icon

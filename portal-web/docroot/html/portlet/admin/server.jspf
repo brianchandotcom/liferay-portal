@@ -448,7 +448,7 @@ numberFormat.setMinimumIntegerDigits(2);
 					</liferay-ui:panel-container>
 
 					<liferay-ui:panel-container extended="<%= true %>" id="adminDocumentLibraryPanelContainer" persistState="<%= true %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminDocumentLibraryPanel" persistState="<%= true %>" title="document-library">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminDocumentLibraryPanel" persistState="<%= true %>" title="documents-and-media">
 							<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="dlFileMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>" />
 
 							<aui:input cssClass="lfr-input-text-container" label="maximum-thumbnail-height" name="dlFileEntryThumbnailMaxHeight" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>" />

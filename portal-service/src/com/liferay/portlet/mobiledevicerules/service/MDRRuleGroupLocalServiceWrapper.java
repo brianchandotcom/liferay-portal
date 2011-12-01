@@ -348,20 +348,31 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	}
 
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrRuleGroupLocalService.search(groupId, name);
+		long groupId, java.lang.String name, boolean andOperator, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.search(groupId, name, andOperator,
+			start, end);
 	}
 
-	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name, int start, int end)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> searchByKeywords(
+		long groupId, java.lang.String keywords, boolean andOperator,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrRuleGroupLocalService.search(groupId, name, start, end);
+		return _mdrRuleGroupLocalService.searchByKeywords(groupId, keywords,
+			andOperator, start, end);
 	}
 
-	public int searchCount(long groupId, java.lang.String name)
+	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrRuleGroupLocalService.searchCount(groupId, name);
+		return _mdrRuleGroupLocalService.searchByKeywordsCount(groupId,
+			keywords, andOperator);
+	}
+
+	public int searchCount(long groupId, java.lang.String name,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.searchCount(groupId, name, andOperator);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(

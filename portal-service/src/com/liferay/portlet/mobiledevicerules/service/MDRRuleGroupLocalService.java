@@ -308,16 +308,23 @@ public interface MDRRuleGroupLocalService extends PersistedModelLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name)
+		long groupId, java.lang.String name, boolean andOperator, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> searchByKeywords(
+		long groupId, java.lang.String keywords, boolean andOperator,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name, int start, int end)
+	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String name)
+	public int searchCount(long groupId, java.lang.String name,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(

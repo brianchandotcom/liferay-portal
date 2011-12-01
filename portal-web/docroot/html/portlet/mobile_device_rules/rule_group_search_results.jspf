@@ -16,12 +16,12 @@
 
 <%
 if (Validator.isNotNull(searchTerms.getName())) {
-	results = MDRRuleGroupLocalServiceUtil.search(searchTerms.getGroupId(), searchTerms.getName(), searchContainer.getStart(), searchContainer.getEnd());
-	total = MDRRuleGroupLocalServiceUtil.searchCount(searchTerms.getGroupId(), searchTerms.getName());
+	results = MDRRuleGroupLocalServiceUtil.search(searchTerms.getGroupId(), searchTerms.getName(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	total = MDRRuleGroupLocalServiceUtil.searchCount(searchTerms.getGroupId(), searchTerms.getName(), searchTerms.isAndOperator());
 }
 else {
-	results = MDRRuleGroupLocalServiceUtil.getRuleGroups(searchTerms.getGroupId(), searchContainer.getStart(), searchContainer.getEnd());
-	total = MDRRuleGroupLocalServiceUtil.getRuleGroupsCount(searchTerms.getGroupId());
+	results = MDRRuleGroupLocalServiceUtil.searchByKeywords(searchTerms.getGroupId(), searchTerms.getKeywords(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	total = MDRRuleGroupLocalServiceUtil.searchByKeywordsCount(searchTerms.getGroupId(), searchTerms.getKeywords(), searchTerms.isAndOperator());
 }
 
 pageContext.setAttribute("results", results);

@@ -104,6 +104,7 @@
 
 	<target name="test-db-upgrade-smoke-${test.ant.script.version}-tomcat-sybase-firefox">
 		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />
 			<param name="vm.host" value="${vm.host.db}" />

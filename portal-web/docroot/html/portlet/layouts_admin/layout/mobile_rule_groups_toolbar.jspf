@@ -47,16 +47,23 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 </liferay-portlet:renderURL>
 
 <aui:script>
-	function <portlet:namespace />processDialog(dialog) {
-		if (dialog) {
-			if (Liferay.Util.getTop() == window) {
-				dialog.plug(A.LoadingMask).render();
+	Liferay.provide(
+		window,
+		'<portlet:namespace />processDialog',
+		function(dialog) {
+			var A = AUI();
+
+			if (dialog) {
+				if (Liferay.Util.getTop() == window) {
+					dialog.plug(A.LoadingMask).render();
+				}
+				else {
+					dialog.close();
+				}
 			}
-			else {
-				dialog.close();
-			}
-		}
-	}
+		},
+		['aui-loading-mask']
+	);
 
 	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
 		<portlet:namespace />processDialog(dialog);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.convert;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -36,6 +37,7 @@ import com.liferay.portlet.documentlibrary.store.JCRStore;
 import com.liferay.portlet.documentlibrary.store.S3Store;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
+import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -43,6 +45,8 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -108,6 +112,21 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		PropsValues.DL_STORE_IMPL = targetStoreClassName;
 	}
 
+	protected List<DLFileVersion> getSortedDLFileVersions(
+		DLFileEntry fileEntry, boolean ascending) throws SystemException {
+
+		List<DLFileVersion> dlFileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_ANY);
+
+		List<DLFileVersion> sortedDlFileVersions =
+			new ArrayList<DLFileVersion>(dlFileVersions);
+
+		Collections.sort(
+			sortedDlFileVersions, new FileVersionVersionComparator(ascending));
+
+		return sortedDlFileVersions;
+	}
+
 	protected void migrateDL() throws Exception {
 		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
 		int pages = count / Indexer.DEFAULT_INTERVAL;
@@ -137,8 +156,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 		String fileName = fileEntry.getName();
 
-		List<DLFileVersion> dlFileVersions = fileEntry.getFileVersions(
-			WorkflowConstants.STATUS_ANY);
+		List<DLFileVersion> dlFileVersions = getSortedDLFileVersions(
+			fileEntry, true);
 
 		if (dlFileVersions.isEmpty()) {
 			String versionNumber = Store.VERSION_DEFAULT;

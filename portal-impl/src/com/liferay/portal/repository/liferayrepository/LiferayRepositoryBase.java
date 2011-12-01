@@ -16,22 +16,15 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
+import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
@@ -56,6 +49,7 @@ import java.util.Set;
 public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	public LiferayRepositoryBase(
+		RepositoryLocalService repositoryLocalService,
 		RepositoryService repositoryService,
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
@@ -65,6 +59,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService, long repositoryId) {
 
+		this.repositoryLocalService = repositoryLocalService;
 		this.repositoryService = repositoryService;
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
@@ -78,6 +73,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 	}
 
 	public LiferayRepositoryBase(
+		RepositoryLocalService repositoryLocalService,
 		RepositoryService repositoryService,
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
@@ -88,6 +84,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLFolderService dlFolderService, long folderId, long fileEntryId,
 		long fileVersionId) {
 
+		this.repositoryLocalService = repositoryLocalService;
 		this.repositoryService = repositoryService;
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
@@ -200,76 +197,24 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		return longList;
 	}
 
-	protected void initByFileEntryId(long fileEntryId) {
-		try {
-			DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-				fileEntryId);
+	protected abstract void initByFileEntryId(long fileEntryId);
 
-			initByRepositoryId(dlFileEntry.getRepositoryId());
-		}
-		catch (Exception e) {
-			if (_log.isTraceEnabled()) {
-				if (e instanceof NoSuchFileEntryException) {
-					_log.trace(e.getMessage());
-				}
-				else {
-					_log.trace(e, e);
-				}
-			}
-		}
-	}
+	protected abstract void initByFileVersionId(long fileVersionId);
 
-	protected void initByFileVersionId(long fileVersionId) {
-		try {
-			DLFileVersion dlFileVersion =
-				dlFileVersionLocalService.getFileVersion(fileVersionId);
+	protected abstract void initByFolderId(long folderId);
 
-			initByRepositoryId(dlFileVersion.getRepositoryId());
-		}
-		catch (Exception e) {
-			if (_log.isTraceEnabled()) {
-				if (e instanceof NoSuchFileVersionException) {
-					_log.trace(e.getMessage());
-				}
-				else {
-					_log.trace(e, e);
-				}
-			}
-		}
-	}
+	protected abstract void initByRepositoryId(long repositoryId);
 
-	protected void initByFolderId(long folderId) {
-		try {
-			DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
-			initByRepositoryId(dlFolder.getRepositoryId());
-		}
-		catch (Exception e) {
-			if (_log.isTraceEnabled()) {
-				if (e instanceof NoSuchFolderException) {
-					_log.trace(e.getMessage());
-				}
-				else {
-					_log.trace(e, e);
-				}
-			}
-		}
-	}
-
-	protected void initByRepositoryId(long repositoryId) {
+	protected void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
-		_groupId = repositoryId;
+	}
 
-		try {
-			Repository repository = repositoryService.getRepository(
-				repositoryId);
+	protected void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
 
-			_repositoryId = repository.getRepositoryId();
-			_groupId = repository.getGroupId();
-			_dlFolderId = repository.getDlFolderId();
-		}
-		catch (Exception e) {
-		}
+	protected void setDlFolderId(long dlFolderId) {
+		_dlFolderId = dlFolderId;
 	}
 
 	protected boolean isDefaultRepository() {
@@ -307,10 +252,8 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 	protected DLFileVersionService dlFileVersionService;
 	protected DLFolderLocalService dlFolderLocalService;
 	protected DLFolderService dlFolderService;
+	protected RepositoryLocalService repositoryLocalService;
 	protected RepositoryService repositoryService;
-
-	private static Log _log = LogFactoryUtil.getLog(
-		LiferayRepositoryBase.class);
 
 	private long _dlFolderId;
 	private long _groupId;

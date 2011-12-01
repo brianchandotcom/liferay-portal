@@ -77,7 +77,7 @@ public class CMISRepositoryLocalServiceImpl
 	protected CMISRepository getCmisRepository(long repositoryId)
 		throws PortalException, SystemException {
 
-		Repository repositoryImpl = repositoryService.getRepositoryImpl(
+		Repository repositoryImpl = repositoryLocalService.getRepositoryImpl(
 			repositoryId);
 
 		CMISRepositoryHandler cmisRepositoryHandler = null;

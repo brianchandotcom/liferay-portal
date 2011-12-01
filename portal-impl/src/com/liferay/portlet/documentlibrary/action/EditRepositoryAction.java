@@ -123,7 +123,7 @@ public class EditRepositoryAction extends PortletAction {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
-		RepositoryServiceUtil.unmountRepository(repositoryId);
+		RepositoryServiceUtil.deleteRepository(repositoryId);
 	}
 
 	protected void updateRepository(ActionRequest actionRequest)

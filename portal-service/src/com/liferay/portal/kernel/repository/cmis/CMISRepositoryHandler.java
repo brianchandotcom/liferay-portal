@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
@@ -232,6 +233,10 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 	public String getLogin() throws SystemException {
 		String login = PrincipalThreadLocal.getName();
+
+		if (Validator.isNull(login)) {
+			return login;
+		}
 
 		try {
 			String authType =

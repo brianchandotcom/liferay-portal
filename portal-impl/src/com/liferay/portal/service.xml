@@ -1461,7 +1461,7 @@
 			<finder-column name="servletContextName" />
 		</finder>
 	</entity>
-	<entity name="Repository" local-service="false" remote-service="true">
+	<entity name="Repository" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

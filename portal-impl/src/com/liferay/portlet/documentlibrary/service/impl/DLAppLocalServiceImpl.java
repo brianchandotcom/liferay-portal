@@ -61,7 +61,7 @@ import java.util.List;
  * primary key of the specific repository. If the repository is a default
  * Liferay repository, the <code>repositoryId</code> is the <code>groupId</code>
  * or <code>scopeGroupId</code>. Otherwise, the <code>repositoryId</code> will
- * correspond to values obtained from {@link RepositoryServiceUtil}.
+ * correspond to values obtained from {@link RepositoryLocalServiceUtil}.
  * </p>
  *
  * @author Alexander Chow
@@ -1711,14 +1711,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	protected LocalRepository getLocalRepository(long repositoryId)
 		throws PortalException, SystemException {
 
-		return repositoryService.getLocalRepositoryImpl(repositoryId);
+		return repositoryLocalService.getLocalRepositoryImpl(repositoryId);
 	}
 
 	protected LocalRepository getLocalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		return repositoryService.getLocalRepositoryImpl(
+		return repositoryLocalService.getLocalRepositoryImpl(
 			folderId, fileEntryId, fileVersionId);
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.cmis.Session;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 
 import java.util.HashMap;
@@ -55,11 +56,15 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 
 		String password = PrincipalThreadLocal.getPassword();
 
-		parameters.put(SessionParameter.PASSWORD, password);
+		if (Validator.isNotNull(password)) {
+			parameters.put(SessionParameter.PASSWORD, password);
+		}
 
 		String login = getLogin();
 
-		parameters.put(SessionParameter.USER, login);
+		if (Validator.isNotNull(login)) {
+			parameters.put(SessionParameter.USER, login);
+		}
 
 		CMISRepositoryUtil.checkRepository(
 			getRepositoryId(), parameters, getTypeSettingsProperties(),

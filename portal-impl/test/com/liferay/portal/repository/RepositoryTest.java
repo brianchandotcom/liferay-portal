@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -66,7 +67,8 @@ public class RepositoryTest extends TestCase {
 
 		// Delete repositories
 
-		RepositoryServiceUtil.unmountRepositories(TestPropsValues.getGroupId());
+		RepositoryLocalServiceUtil.deleteRepositories(
+			TestPropsValues.getGroupId());
 
 		for (long repositoryId : repositoryIds) {
 			try {
@@ -157,7 +159,8 @@ public class RepositoryTest extends TestCase {
 
 		// Delete repositories
 
-		RepositoryServiceUtil.unmountRepositories(TestPropsValues.getGroupId());
+		RepositoryLocalServiceUtil.deleteRepositories(
+			TestPropsValues.getGroupId());
 
 		for (int i = 0; i < repositoryIds.length; i++) {
 			long repositoryId = repositoryIds[i];

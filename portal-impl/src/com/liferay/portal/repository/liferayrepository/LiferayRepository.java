@@ -16,6 +16,8 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -35,8 +37,12 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -63,6 +69,7 @@ public class LiferayRepository
 	extends LiferayRepositoryBase implements Repository {
 
 	public LiferayRepository(
+		RepositoryLocalService repositoryLocalService,
 		RepositoryService repositoryService,
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
@@ -73,12 +80,14 @@ public class LiferayRepository
 		DLFolderService dlFolderService, long repositoryId) {
 
 		super(
-			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
-			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
+			repositoryLocalService, repositoryService, dlAppHelperLocalService,
+			dlFileEntryLocalService, dlFileEntryService,
+			dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, repositoryId);
 	}
 
 	public LiferayRepository(
+		RepositoryLocalService repositoryLocalService,
 		RepositoryService repositoryService,
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
@@ -90,8 +99,9 @@ public class LiferayRepository
 		long fileEntryId, long fileVersionId) {
 
 		super(
-			repositoryService, dlAppHelperLocalService, dlFileEntryLocalService,
-			dlFileEntryService, dlFileVersionLocalService, dlFileVersionService,
+			repositoryLocalService, repositoryService, dlAppHelperLocalService,
+			dlFileEntryLocalService, dlFileEntryService,
+			dlFileVersionLocalService, dlFileVersionService,
 			dlFolderLocalService, dlFolderService, folderId, fileEntryId,
 			fileVersionId);
 	}
@@ -630,5 +640,79 @@ public class LiferayRepository
 		return dlFolderService.verifyInheritableLock(
 			toFolderId(folderId), lockUuid);
 	}
+
+	protected void initByFileEntryId(long fileEntryId) {
+		try {
+			DLFileEntry dlFileEntry = dlFileEntryService.getFileEntry(
+				fileEntryId);
+
+			initByRepositoryId(dlFileEntry.getRepositoryId());
+		}
+		catch (Exception e) {
+			if (_log.isTraceEnabled()) {
+				if (e instanceof NoSuchFileEntryException) {
+					_log.trace(e.getMessage());
+				}
+				else {
+					_log.trace(e, e);
+				}
+			}
+		}
+	}
+
+	protected void initByFileVersionId(long fileVersionId) {
+		try {
+			DLFileVersion dlFileVersion =
+				dlFileVersionService.getFileVersion(fileVersionId);
+
+			initByRepositoryId(dlFileVersion.getRepositoryId());
+		}
+		catch (Exception e) {
+			if (_log.isTraceEnabled()) {
+				if (e instanceof NoSuchFileVersionException) {
+					_log.trace(e.getMessage());
+				}
+				else {
+					_log.trace(e, e);
+				}
+			}
+		}
+	}
+
+	protected void initByFolderId(long folderId) {
+		try {
+			DLFolder dlFolder = dlFolderService.getFolder(folderId);
+
+			initByRepositoryId(dlFolder.getRepositoryId());
+		}
+		catch (Exception e) {
+			if (_log.isTraceEnabled()) {
+				if (e instanceof NoSuchFolderException) {
+					_log.trace(e.getMessage());
+				}
+				else {
+					_log.trace(e, e);
+				}
+			}
+		}
+	}
+
+	protected void initByRepositoryId(long repositoryId) {
+		setRepositoryId(repositoryId);
+		setGroupId(repositoryId);
+
+		try {
+			com.liferay.portal.model.Repository repository =
+				repositoryService.getRepository(repositoryId);
+
+			setRepositoryId(repository.getRepositoryId());
+			setGroupId(repository.getGroupId());
+			setDlFolderId(repository.getDlFolderId());
+		}
+		catch (Exception e) {
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LiferayRepository.class);
 
 }

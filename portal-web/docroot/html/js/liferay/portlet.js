@@ -522,11 +522,11 @@
 			portlet = A.one(portlet);
 
 			if (portlet) {
-				data = data || {
-					portletAjaxable: true
-				};
+				data = data || {};
 
-				var ajaxable = data.portletAjaxable;
+                if (!A.Object.owns(data, 'portletAjaxable')) {
+                    data.portletAjaxable = true;
+                }
 
 				var id = portlet.attr('portlet');
 
@@ -534,7 +534,7 @@
 
 				var placeHolder = A.Node.create('<div class="loading-animation" id="p_load' + id + '" />');
 
-				if (ajaxable && url) {
+				if (data.portletAjaxable && url) {
 					portlet.placeBefore(placeHolder);
 
 					portlet.remove(true);

@@ -1500,7 +1500,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		List<Locale> modifiedLocales = getLocalesModifiedByName(layout,nameMap);
+		List<Locale> modifiedLocales = getLocalesModifiedByName(
+			layout, nameMap);
 
 		if (parentLayoutId != layout.getParentLayoutId()) {
 			layout.setPriority(
@@ -1985,12 +1986,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			if (scopablePortlet.isInstanceable()) {
 				junction.add(
 					RestrictionsFactoryUtil.like("portletId",
-						scopablePortlet.getPortletId() + StringPool.UNDERLINE +
+						scopablePortlet.getPortletId() +
+						PortletConstants.INSTANCE_SEPARATOR +
 						StringPool.PERCENT));
 			}
 			else{
 				junction.add(
-					RestrictionsFactoryUtil.like("portletId",
+					RestrictionsFactoryUtil.eq("portletId",
 						scopablePortlet.getPortletId()));
 			}
 		}
@@ -2104,15 +2106,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> curNameMap = layout.getNameMap();
+		Map<Locale, String> currentNameMap = layout.getNameMap();
 
-		for (Locale locale : locales)
-		{
-			String curName = curNameMap.get(locale);
+		for (Locale locale : locales) {
+			String currentName = currentNameMap.get(locale);
 
 			String newName = nameMap.get(locale);
 
-			if (!curName.equals(newName)) {
+			if (!currentName.equals(newName)) {
 				modifiedLocales.add(locale);
 			}
 		}

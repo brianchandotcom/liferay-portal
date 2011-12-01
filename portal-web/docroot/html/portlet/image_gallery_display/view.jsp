@@ -46,9 +46,6 @@ if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGr
 	status = WorkflowConstants.STATUS_ANY;
 }
 
-int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId);
-int imagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
-
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
@@ -156,6 +153,26 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				/>
 			</c:if>
 
+			<%
+			SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+			String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
+
+			int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, false);
+
+			int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, false);
+
+			int imagesCount = total - foldersCount;
+
+			searchContainer.setTotal(total);
+
+			List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+			searchContainer.setResults(results);
+
+			List scores = null;
+			%>
+
 			<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
 				<div id="<portlet:namespace />imageGalleryAssetInfo">
 					<c:if test="<%= folder != null %>">
@@ -187,22 +204,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						</liferay-ui:custom-attributes-available>
 					</c:if>
 
-					<%
-					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-					String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
-
-					int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, mediaGalleryMimeTypes, false);
-
-					searchContainer.setTotal(total);
-
-					List results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, mediaGalleryMimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-					searchContainer.setResults(results);
-
-					List scores = null;
-					%>
-
 					<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 
 				</div>
@@ -213,7 +214,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<div class="lfr-asset-summary">
 						<liferay-ui:icon
 							cssClass="lfr-asset-avatar"
-							image='<%= "../file_system/large/" + (((foldersCount + imagesCount) > 0) ? "folder_full_image" : "folder_empty") %>'
+							image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
 							message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %>'
 						/>
 

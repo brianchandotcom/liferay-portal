@@ -105,7 +105,7 @@
 		}
 
 		.lfr-layout-template-column:before {
-			border-right: none;
+			border-right-width: 0;
 		}
 
 		.lfr-layout-template-column-content {

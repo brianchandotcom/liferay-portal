@@ -170,6 +170,10 @@ public class AssetEntryQuery {
 		return _anyTagIds;
 	}
 
+	public boolean isEnablePermissions() {
+		return _enablePermissions;
+	}
+
 	public long[] getClassNameIds() {
 		return _classNameIds;
 	}
@@ -276,6 +280,10 @@ public class AssetEntryQuery {
 		_anyTagIds = anyTagIds;
 
 		_toString = null;
+	}
+
+	public void setEnablePermissions(boolean enablePermissions) {
+		this._enablePermissions = enablePermissions;
 	}
 
 	public void setClassName(String className) {
@@ -495,6 +503,7 @@ public class AssetEntryQuery {
 	private long[] _anyTagIds = new long[0];
 	private long[] _classNameIds = new long[0];
 	private long[] _classTypeIds = new long[0];
+	private boolean _enablePermissions;
 	private Layout _layout;
 	private int _end = QueryUtil.ALL_POS;
 	private boolean _excludeZeroViewCount;

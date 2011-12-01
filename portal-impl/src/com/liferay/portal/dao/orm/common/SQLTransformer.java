@@ -134,10 +134,7 @@ public class SQLTransformer {
 	private String _replaceBitwiseCheck(String sql) {
 		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
 
-		if (_vendorDB2 || _vendorHypersonic || _vendorOracle) {
-			return matcher.replaceAll("BITAND($1, $2)");
-		}
-		else if (_vendorDerby) {
+		if (_vendorDerby) {
 			return matcher.replaceAll("MOD($1 / $2, 2) != 0");
 		}
 		else if (_vendorInformix || _vendorIngres) {
@@ -145,6 +142,9 @@ public class SQLTransformer {
 		}
 		else if (_vendorFirebird || _vendorInterbase) {
 			return matcher.replaceAll("BIN_AND($1, $2)");
+		}
+		else if (_vendorMySQL) {
+			return matcher.replaceAll("($1 & $2)");
 		}
 		else {
 			return sql;
@@ -346,7 +346,7 @@ public class SQLTransformer {
 	private static SQLTransformer _instance = new SQLTransformer();
 
 	private static Pattern _bitwiseCheckPattern = Pattern.compile(
-		"\\(\\((.+?) & (.+?)\\)\\)");
+		"BITAND\\((.+?),(.+?)\\)");
 	private static Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(

@@ -147,9 +147,9 @@ AUI().add(
 						var labelNode = instance.get('labelNode');
 
 						if (labelNode) {
-							boundingBox.attr('aria-labelledby', labelNode.get(ID));
+							boundingBox.attr('aria-labelledby', labelNode.attr(ID));
 
-							labelNode.attr('for', boundingBox.get(ID));
+							labelNode.attr('for', boundingBox.attr(ID));
 						}
 					},
 
@@ -223,13 +223,13 @@ AUI().add(
 						var vocabularyIds = instance.get('vocabularyIds');
 
 						var serviceParameterTypesGetVocabularies = [
- 						 	'[J'
- 						];
+							'[J'
+						];
 
 						var serviceParameterTypesGetGroupVocabularies = [
- 						 	'[J',
- 						 	'java.lang.String'
- 						];
+							'[J',
+							'java.lang.String'
+						];
 
 						if (vocabularyIds.length > 0) {
 							Liferay.Service.Asset.AssetVocabulary.getVocabularies(

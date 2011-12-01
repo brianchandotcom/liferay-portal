@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.dbupgrade.sampledata523.groups.GroupsTests;
-import com.liferay.portalweb.portal.login.Login52xTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata523.login.LoginTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class DBUpgradeGroups523TestSuite extends BaseTests {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(Login52xTests.suite());
+		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(GroupsTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);

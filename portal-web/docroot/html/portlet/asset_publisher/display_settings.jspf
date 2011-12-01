@@ -107,6 +107,8 @@
 
 	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
 
+	<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= enablePermissions %>" />
+
 	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
 	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />

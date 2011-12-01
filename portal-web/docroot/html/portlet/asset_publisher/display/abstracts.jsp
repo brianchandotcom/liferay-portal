@@ -75,7 +75,7 @@ String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() 
 viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 %>
 
-<c:if test="<%= show && assetRenderer.hasViewPermission(permissionChecker) %>">
+<c:if test="<%= show %>">
 	<div class="asset-abstract <%= defaultAssetPublisher ? "default-asset-publisher" : StringPool.BLANK %>">
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 

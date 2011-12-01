@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MethodCache;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -141,9 +142,7 @@ public class NavItem implements Serializable {
 
 		Object velocityTaglib = request.getAttribute(WebKeys.VELOCITY_TAGLIB);
 
-		Method method = MethodCache.get(
-			_VELOCITY_TAGLIB_CLASS, _VELOCITY_TAGLIB_LAYOUT_ICON_METHOD,
-			_VELOCITY_TAGLIB_LAYOUT_ICON_PARAMS);
+		Method method = MethodCache.get(_LAYOUT_ICON_METHOD_KEY);
 
 		method.invoke(velocityTaglib, _layout);
 	}
@@ -163,14 +162,9 @@ public class NavItem implements Serializable {
 			_vars.getAncestorPlid());
 	}
 
-	private static final String _VELOCITY_TAGLIB_CLASS =
-		"com.liferay.taglib.util.VelocityTaglib";
-
-	private static final String _VELOCITY_TAGLIB_LAYOUT_ICON_METHOD =
-		"layoutIcon";
-
-	private static final Class<?>[] _VELOCITY_TAGLIB_LAYOUT_ICON_PARAMS =
-		new Class[] {Layout.class};
+	private static final MethodKey _LAYOUT_ICON_METHOD_KEY =
+		new MethodKey("com.liferay.taglib.util.VelocityTaglib", "layoutIcon",
+			new Class[] {Layout.class});
 
 	private RequestVars _vars;
 	private Layout _layout;

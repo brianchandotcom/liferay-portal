@@ -1593,9 +1593,16 @@
 							showBox.show();
 						}
 
-						if (hideBoxIds) {
-							A.all('#' + hideBoxIds.join(',#')).hide();
+						var selector = null;
+
+						if (hideBoxIds.join) {
+							selector = '#' + hideBoxIds.join(',#');
 						}
+						else {
+							selector = '#' + hideBoxIds;
+						}
+
+						A.all(selector).hide();
 					}
 				);
 			}

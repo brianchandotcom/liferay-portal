@@ -41,6 +41,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liferay.portal.util.PropsValues;
 import jodd.io.findfile.ClassFinder;
 import jodd.io.findfile.FindFile;
 import jodd.io.findfile.WildcardFindFile;
@@ -375,6 +376,23 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 
 		String httpMethod = _jsonWebServiceMappingResolver.resolveHttpMethod(
 			method);
+
+		String[] allowedHttpMethods = PropsValues.JSONWS_HTTP_METHODS;
+
+		if (allowedHttpMethods != null && allowedHttpMethods.length > 0) {
+			boolean allowMethod = false;
+
+			for (String allowedHttpMethod : allowedHttpMethods) {
+				if (allowedHttpMethod.equals(httpMethod)) {
+					allowMethod = true;
+					break;
+				}
+			}
+
+			if (!allowMethod) {
+				return;
+			}
+		}
 
 		Class<?> utilClass = _loadUtilClass(implementationClass);
 

@@ -717,6 +717,8 @@ public class PropsValues {
 
 	public static final boolean JSONWS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JSONWS_ENABLED));
 
+	public static final String[] JSONWS_HTTP_METHODS = PropsUtil.getArray(PropsKeys.JSONWS_HTTP_METHODS);
+
 	public static final String LAYOUT_CLONE_IMPL = PropsUtil.get(PropsKeys.LAYOUT_CLONE_IMPL);
 
 	public static final boolean LAYOUT_COMMENTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_COMMENTS_ENABLED));

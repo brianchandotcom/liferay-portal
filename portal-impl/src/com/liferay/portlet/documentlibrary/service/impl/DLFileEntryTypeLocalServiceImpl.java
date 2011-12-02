@@ -274,12 +274,19 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntry dlFileEntry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
+		long groupId = serviceContext.getScopeGroupId();
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		DLFolder dlFolder = dlFolderPersistence.fetchByPrimaryKey(
 			dlFileEntry.getFolderId());
 
+		if (dlFolder != null) {
+			groupId = dlFolder.getGroupId();
+			folderId = dlFolder.getFolderId();
+		}
+
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			DLUtil.getGroupIds(dlFolder.getGroupId()), dlFolder.getFolderId(),
-			true);
+			DLUtil.getGroupIds(groupId), folderId, true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 
@@ -287,8 +294,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			return dlFileEntry;
 		}
 
-		long defaultFileEntryTypeId = getDefaultFileEntryTypeId(
-			dlFolder.getFolderId());
+		long defaultFileEntryTypeId = getDefaultFileEntryTypeId(folderId);
 
 		DLFileVersion dlFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(
@@ -297,8 +303,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		if (dlFileVersion.isPending()) {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 				dlFileVersion.getCompanyId(), dlFileEntry.getGroupId(),
-				DLFileEntry.class.getName(),
-				dlFileVersion.getFileVersionId());
+				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId());
 		}
 
 		return dlFileEntryLocalService.updateFileEntry(

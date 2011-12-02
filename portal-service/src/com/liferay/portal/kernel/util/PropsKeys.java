@@ -985,6 +985,8 @@ public interface PropsKeys {
 
 	public static final String JSONWS_HTTP_METHODS = "jsonws.http_methods";
 
+	public static final String JSONWS_HTTP_METHODS_IGNORE = "jsonws.http_methods.ignore";
+
 	public static final String JSP_WRITER_BUFFER_SIZE = "jsp.writer.buffer.size";
 
 	public static final String LAYOUT_CLONE_IMPL = "layout.clone.impl";

@@ -72,10 +72,12 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		_registeredActionsCount -= count;
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Removed " + count +
-					" existing JSON Web Service actions that belonged to " +
-						_servletContextName);
+			if (count != 0) {
+				_log.debug(
+					"Removed " + count +
+						" existing JSON Web Service actions that belonged to " +
+							_servletContextName);
+			}
 		}
 	}
 

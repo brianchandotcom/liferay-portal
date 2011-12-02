@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portal.util.PropsValues" %>
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -18,9 +19,21 @@
 List<JSONWebServiceActionMapping> jsonWebServiceActionMappings = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings();
 %>
 
+<%
+if (PropsValues.JSONWS_ENABLED) {
+%>
 <p>
 	Total Methods: <b><%= jsonWebServiceActionMappings.size() %></b>
 </p>
+<%
+} else {
+%>
+<h2>
+	JSON Web Services are disabled on this server.
+</h2>
+<%
+}
+%>
 
 <%
 String previousActionClassName = null;

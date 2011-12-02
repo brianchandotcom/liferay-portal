@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.util.PropsValues;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -40,11 +41,18 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 		_jsonWebServiceConfigurator.clean();
 
-		try {
-			_jsonWebServiceConfigurator.configure(classLoader);
+		if (PropsValues.JSONWS_ENABLED) {
+			try {
+				_jsonWebServiceConfigurator.configure(classLoader);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("JSONWS disabled.");
+			}
 		}
 	}
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
 
@@ -80,6 +81,10 @@ public class JSONWebServiceActionsManagerImpl
 
 		String[] parameterNames =
 			jsonWebServiceActionParameters.getParameterNames();
+
+		if (PropsValues.JSONWS_HTTP_METHODS_IGNORE) {
+			method = null;
+		}
 
 		int jsonWebServiceActionConfigIndex =
 			_getJSONWebServiceActionConfigIndex(path, method, parameterNames);

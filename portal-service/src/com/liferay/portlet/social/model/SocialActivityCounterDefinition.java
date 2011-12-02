@@ -36,8 +36,9 @@ public class SocialActivityCounterDefinition implements Serializable {
 			new SocialActivityCounterDefinition();
 
 		activityCounterDefinition.setIncrement(_increment);
-		activityCounterDefinition.setLimitValue(_limitValue);
+		activityCounterDefinition.setLimitEnabled(_limitEnabled);
 		activityCounterDefinition.setLimitPeriod(_limitPeriod);
+		activityCounterDefinition.setLimitValue(_limitValue);
 		activityCounterDefinition.setName(_name);
 		activityCounterDefinition.setOwnerType(_ownerType);
 
@@ -51,6 +52,8 @@ public class SocialActivityCounterDefinition implements Serializable {
 			Validator.equals(_enabled, activityCounterDefinition._enabled) &&
 			Validator.equals(
 				_increment, activityCounterDefinition._increment) &&
+			Validator.equals(
+				_limitEnabled, activityCounterDefinition._limitEnabled) &&
 			Validator.equals(
 				_limitPeriod, activityCounterDefinition._limitPeriod) &&
 			Validator.equals(
@@ -94,12 +97,20 @@ public class SocialActivityCounterDefinition implements Serializable {
 		return _enabled;
 	}
 
+	public boolean isLimitEnabled() {
+		return _limitEnabled;
+	}
+
 	public void setEnabled(boolean enabled) {
 		_enabled = enabled;
 	}
 
 	public void setIncrement(int increment) {
 		_increment = increment;
+	}
+
+	public void setLimitEnabled(boolean limitEnabled) {
+		_limitEnabled = limitEnabled;
 	}
 
 	public void setLimitPeriod(int limitPeriod) {
@@ -144,6 +155,7 @@ public class SocialActivityCounterDefinition implements Serializable {
 
 	private boolean _enabled = true;
 	private int _increment;
+	private boolean _limitEnabled = true;
 	private int _limitPeriod;
 	private int _limitValue;
 	private String _name;

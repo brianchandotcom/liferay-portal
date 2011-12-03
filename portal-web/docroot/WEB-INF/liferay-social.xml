@@ -1,3 +1,4 @@
+
 <?xml version="1.0"?>
 <!DOCTYPE liferay-social PUBLIC "-//Liferay//DTD Social 6.1.0//EN" "http://www.liferay.com/dtd/liferay-social_6_1_0.dtd">
 
@@ -28,6 +29,7 @@
 		<activity-type>${com.liferay.portlet.blogs.social.BlogsActivityKeys.ADD_ENTRY}</activity-type>
 		<language-key>ADD_ENTRY</language-key>
 		<log-activity>true</log-activity>
+		<contribution-limit enabled="false" />
 		<participation-value>5</participation-value>
 		<participation-limit period="lifetime">1</participation-limit>
 		<counter>
@@ -41,7 +43,7 @@
 		<language-key>ADD_VOTE</language-key>
 		<log-activity>false</log-activity>
 		<contribution-value>5</contribution-value>
-		<contribution-limit period="day">1</contribution-limit>
+		<contribution-limit enabled="false" />
 		<counter>
 			<name>asset.voted-on</name>
 			<owner-type>asset</owner-type>
@@ -57,9 +59,8 @@
 		<language-key>SUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
-		<contribution-limit period="period">1</contribution-limit>
+		<contribution-limit enabled="false" />
 		<participation-value>2</participation-value>
-		<participation-limit period="period">1</participation-limit>
 		<counter>
 			<name>asset.subscribed-to</name>
 			<owner-type>asset</owner-type>
@@ -78,6 +79,7 @@
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_UNSUBSCRIBE}</activity-type>
 		<language-key>UNSUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
+		<contribution-limit enabled="false" />
 		<counter>
 			<name>asset.unsubscribed-from</name>
 			<owner-type>asset</owner-type>
@@ -115,6 +117,7 @@
 		<activity-type>${com.liferay.portlet.messageboards.social.MBActivityKeys.ADD_MESSAGE}</activity-type>
 		<language-key>ADD_MESSAGE</language-key>
 		<log-activity>true</log-activity>
+		<contribution-limit enabled="false" />
 		<participation-value>5</participation-value>
 		<counter>
 			<name>user.message-posted</name>
@@ -138,7 +141,7 @@
 		<language-key>ADD_VOTE</language-key>
 		<log-activity>false</log-activity>
 		<contribution-value>5</contribution-value>
-		<contribution-limit period="day">1</contribution-limit>
+		<contribution-limit enabled="false" />
 		<counter>
 			<name>asset.voted-on</name>
 			<owner-type>asset</owner-type>
@@ -161,9 +164,8 @@
 		<language-key>SUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
-		<contribution-limit period="period">1</contribution-limit>
+		<contribution-limit enabled="false" />
 		<participation-value>2</participation-value>
-		<participation-limit period="period">1</participation-limit>
 		<counter>
 			<name>asset.subscribed-to</name>
 			<owner-type>asset</owner-type>
@@ -218,7 +220,6 @@
 		<log-activity>true</log-activity>
 		<contribution-value>2</contribution-value>
 		<participation-value>2</participation-value>
-		<participation-limit period="day">10</participation-limit>
 		<counter>
 			<name>asset.commented-on</name>
 			<owner-type>asset</owner-type>
@@ -237,8 +238,8 @@
 		<activity-type>${com.liferay.portlet.wiki.social.WikiActivityKeys.ADD_PAGE}</activity-type>
 		<language-key>ADD_PAGE</language-key>
 		<log-activity>true</log-activity>
+		<contribution-limit enabled="false" />
 		<participation-value>5</participation-value>
-		<participation-limit period="lifetime">1</participation-limit>
 		<counter>
 			<name>user.wiki-created</name>
 			<owner-type>actor</owner-type>
@@ -250,9 +251,8 @@
 		<language-key>SUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
-		<contribution-limit period="period">1</contribution-limit>
+		<contribution-limit enabled="false" />
 		<participation-value>2</participation-value>
-		<participation-limit period="period">1</participation-limit>
 		<counter>
 			<name>asset.subscribed-to</name>
 			<owner-type>asset</owner-type>

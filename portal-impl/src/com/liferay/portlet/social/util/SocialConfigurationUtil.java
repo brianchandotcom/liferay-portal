@@ -293,39 +293,53 @@ public class SocialConfigurationUtil {
 		Element contributionValueElement = activityElement.element(
 			"contribution-value");
 
-		if (contributionValueElement == null) {
-			return;
-		}
-
-		SocialActivityCounterDefinition contributionActivityCounterDefinition =
-			new SocialActivityCounterDefinition();
-
-		contributionActivityCounterDefinition.setName(
-			SocialActivityCounterConstants.NAME_CONTRIBUTION);
-		contributionActivityCounterDefinition.setOwnerType(
-			SocialActivityCounterConstants.TYPE_CREATOR);
-
-		int increment = GetterUtil.getInteger(
-			contributionValueElement.getText());
-
-		contributionActivityCounterDefinition.setIncrement(increment);
-
 		Element contributionLimitElement = activityElement.element(
 			"contribution-limit");
 
+		if ((contributionValueElement == null) &&
+			(contributionLimitElement == null)) {
+
+			return;
+		}
+
+		SocialActivityCounterDefinition activityCounterDefinition =
+			new SocialActivityCounterDefinition();
+
+		activityCounterDefinition.setName(
+			SocialActivityCounterConstants.NAME_CONTRIBUTION);
+		activityCounterDefinition.setOwnerType(
+			SocialActivityCounterConstants.TYPE_CREATOR);
+
+		if (contributionValueElement != null) {
+			int increment = GetterUtil.getInteger(
+				contributionValueElement.getText());
+
+			activityCounterDefinition.setIncrement(increment);
+		}
+
 		if (contributionLimitElement != null) {
+			String limitEnabled = contributionLimitElement.attributeValue(
+				"enabled");
+
+			if (Validator.isNotNull(limitEnabled)) {
+				activityCounterDefinition.setLimitEnabled(
+					GetterUtil.getBoolean(limitEnabled));
+			}
+
 			String limitPeriod = contributionLimitElement.attributeValue(
 				"period");
 
-			contributionActivityCounterDefinition.setLimitPeriod(limitPeriod);
+			if (Validator.isNotNull(limitPeriod)) {
+				activityCounterDefinition.setLimitPeriod(limitPeriod);
+			}
 
 			int limitValue = GetterUtil.getInteger(
 				contributionLimitElement.getText());
 
-			contributionActivityCounterDefinition.setLimitValue(limitValue);
+			activityCounterDefinition.setLimitValue(limitValue);
 		}
 
-		activityDefinition.addCounter(contributionActivityCounterDefinition);
+		activityDefinition.addCounter(activityCounterDefinition);
 
 		SocialActivityCounterDefinition popularityActivityCounterDefinition =
 			new SocialActivityCounterDefinition();
@@ -335,11 +349,13 @@ public class SocialConfigurationUtil {
 		popularityActivityCounterDefinition.setOwnerType(
 			SocialActivityCounterConstants.TYPE_ASSET);
 		popularityActivityCounterDefinition.setIncrement(
-			contributionActivityCounterDefinition.getIncrement());
+			activityCounterDefinition.getIncrement());
+		popularityActivityCounterDefinition.setLimitEnabled(
+			activityCounterDefinition.isLimitEnabled());
 		popularityActivityCounterDefinition.setLimitPeriod(
-			contributionActivityCounterDefinition.getLimitPeriod());
+			activityCounterDefinition.getLimitPeriod());
 		popularityActivityCounterDefinition.setLimitValue(
-			contributionActivityCounterDefinition.getLimitValue());
+			activityCounterDefinition.getLimitValue());
 
 		activityDefinition.addCounter(popularityActivityCounterDefinition);
 	}
@@ -350,7 +366,11 @@ public class SocialConfigurationUtil {
 		Element participationValueElement = activityElement.element(
 			"participation-value");
 
-		if (participationValueElement == null) {
+		Element participationLimitElement = activityElement.element(
+				"participation-limit");
+
+		if ((participationValueElement == null) &&
+			(participationLimitElement == null)) {
 			return;
 		}
 
@@ -362,19 +382,28 @@ public class SocialConfigurationUtil {
 		activityCounterDefinition.setOwnerType(
 			SocialActivityCounterConstants.TYPE_ACTOR);
 
-		int increment = GetterUtil.getInteger(
-			participationValueElement.getText());
+		if (participationValueElement != null) {
+			int increment = GetterUtil.getInteger(
+				participationValueElement.getText());
 
-		activityCounterDefinition.setIncrement(increment);
-
-		Element participationLimitElement = activityElement.element(
-			"participation-limit");
+			activityCounterDefinition.setIncrement(increment);
+		}
 
 		if (participationLimitElement != null) {
+			String limitEnabled = participationLimitElement.attributeValue(
+				"enabled");
+
+			if (Validator.isNotNull(limitEnabled)) {
+				activityCounterDefinition.setLimitEnabled(
+					GetterUtil.getBoolean(limitEnabled));
+			}
+
 			String limitPeriod = participationLimitElement.attributeValue(
 				"period");
 
-			activityCounterDefinition.setLimitPeriod(limitPeriod);
+			if (Validator.isNotNull(limitPeriod)) {
+				activityCounterDefinition.setLimitPeriod(limitPeriod);
+			}
 
 			int limitValue = GetterUtil.getInteger(
 				participationLimitElement.getText());

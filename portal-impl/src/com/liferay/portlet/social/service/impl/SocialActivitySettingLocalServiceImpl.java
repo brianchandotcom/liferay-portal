@@ -284,6 +284,8 @@ public class SocialActivitySettingLocalServiceImpl
 					jsonObject.getBoolean("enabled"));
 				activityCounterDefinition.setIncrement(
 					jsonObject.getInt("value"));
+				activityCounterDefinition.setLimitEnabled(
+					jsonObject.getBoolean("limitEnabled"));
 				activityCounterDefinition.setLimitPeriod(
 					jsonObject.getInt("limitPeriod"));
 				activityCounterDefinition.setLimitValue(
@@ -315,6 +317,8 @@ public class SocialActivitySettingLocalServiceImpl
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("enabled", activityCounterDefinition.isEnabled());
+		jsonObject.put(
+			"limitEnabled", activityCounterDefinition.isLimitEnabled());
 		jsonObject.put(
 			"limitPeriod", activityCounterDefinition.getLimitPeriod());
 		jsonObject.put("limitValue", activityCounterDefinition.getLimitValue());

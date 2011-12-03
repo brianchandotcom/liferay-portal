@@ -112,7 +112,7 @@
 
 		.settings-header {
 			border-bottom: 1px solid #ccc;
-			padding: 10px 0;
+			padding: 10px 0 5px 0;
 
 			.actions-conjunction {
 				display: inline-block;
@@ -124,6 +124,12 @@
 			.settings-actions {
 				display: inline-block;
 				margin: 0px;
+			}
+
+			.settings-container-label {
+				font-weight: bold;
+				margin-top: 10px;
+				padding: 0 5px;
 			}
 
 			.settings-header-label {

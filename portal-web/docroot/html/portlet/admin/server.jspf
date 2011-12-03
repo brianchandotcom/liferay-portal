@@ -670,7 +670,7 @@ numberFormat.setMinimumIntegerDigits(2);
 					JFreeChart chart = _getChart(LanguageUtil.get(pageContext, "used-memory") + " / " + LanguageUtil.get(pageContext, "total-memory"), plot);
 					%>
 
-					<img border="0" src="<%= themeDisplay.getPathContext() %>/display_chart?filename=<%= ServletUtilities.saveChartAsPNG(chart, 280, 180, null, null) %>" />
+					<img border="0" src="<%= themeDisplay.getPathContext() %>/display_chart/?filename=<%= ServletUtilities.saveChartAsPNG(chart, 280, 180, null, null) %>" />
 
 					<%
 					dataset = new DefaultValueDataset(usedMemory * 100 / runtime.maxMemory());
@@ -680,7 +680,7 @@ numberFormat.setMinimumIntegerDigits(2);
 					chart = _getChart(LanguageUtil.get(pageContext, "used-memory") + " / " + LanguageUtil.get(pageContext, "maximum-memory"), plot);
 					%>
 
-					<img border="0" src="<%= themeDisplay.getPathContext() %>/display_chart?filename=<%= ServletUtilities.saveChartAsPNG(chart, 280, 180, null, null) %>" />
+					<img border="0" src="<%= themeDisplay.getPathContext() %>/display_chart/?filename=<%= ServletUtilities.saveChartAsPNG(chart, 280, 180, null, null) %>" />
 				</div>
 
 				<br />

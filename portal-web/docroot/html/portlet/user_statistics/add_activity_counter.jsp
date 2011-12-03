@@ -17,14 +17,14 @@
 <%@ include file="/html/portlet/user_statistics/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
+	int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
 
 String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + index);
 
 Collection<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 
 activityCounterNames.addAll(SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_CREATOR));
-activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENT);
+activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
 %>
 
 <div class="aui-field-row query-row">

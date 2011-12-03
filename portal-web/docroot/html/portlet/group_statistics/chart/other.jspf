@@ -64,7 +64,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 		<div class="group-statistics-info">
 			<liferay-ui:message key="current-value" />: <%= currentValue %><br />
 
-			<liferay-ui:message key="average-activity-per-day" />: <%= Math.round(totalValue / totalDays * 100) / 100 %><br />
+			<liferay-ui:message key="average-activities-per-day" />: <%= Math.round(totalValue / totalDays * 100) / 100 %><br />
 
 			<liferay-ui:message key="highest-activity-period" />: <span class="group-statistics-activity-period">
 				<strong>

@@ -17,17 +17,18 @@
 <%@ include file="/html/portlet/group_statistics/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
+	int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
 
 String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + index);
 String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + index);
 String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + index);
 
-Collection<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames();
+Collection<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
+activityCounterNames.addAll(SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ASSET));
 
-activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENT);
-activityCounterNames.add(SocialActivityCounterConstants.NAME_ASSET_ACTIVITY);
-activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITY);
+activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
+activityCounterNames.add(SocialActivityCounterConstants.NAME_ASSET_ACTIVITIES);
+activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
 %>
 
 <div class="aui-field-row">
@@ -44,7 +45,7 @@ activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITY);
 			}
 		%>
 
-			<aui:option label='<%= LanguageUtil.format(pageContext, "social.counter."+ activityCounterName, new Object[] {LanguageUtil.get(pageContext, "assets")}) %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
+			<aui:option label='<%= LanguageUtil.get(pageContext, "social.counter."+ activityCounterName) %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
 
 		<%
 		}

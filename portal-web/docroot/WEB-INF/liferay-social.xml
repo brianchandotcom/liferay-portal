@@ -11,15 +11,15 @@
 		<participation-value>2</participation-value>
 		<participation-limit period="day">10</participation-limit>
 		<counter>
-			<name>asset.commented-on</name>
+			<name>asset.comments</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.commented-on</name>
+			<name>creator.comments</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.commented</name>
+			<name>user.comments</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -31,7 +31,7 @@
 		<participation-value>5</participation-value>
 		<participation-limit period="lifetime">1</participation-limit>
 		<counter>
-			<name>user.blog-created</name>
+			<name>user.blogs</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -43,11 +43,11 @@
 		<contribution-value>5</contribution-value>
 		<contribution-limit period="day">1</contribution-limit>
 		<counter>
-			<name>asset.voted-on</name>
+			<name>asset.votes</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>user.voted</name>
+			<name>user.votes</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -61,15 +61,15 @@
 		<participation-value>2</participation-value>
 		<participation-limit period="period">1</participation-limit>
 		<counter>
-			<name>asset.subscribed-to</name>
+			<name>asset.subscriptions</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.subscribed-to</name>
+			<name>creator.subscriptions</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.subscribed</name>
+			<name>user.subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -79,15 +79,15 @@
 		<language-key>UNSUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
 		<counter>
-			<name>asset.unsubscribed-from</name>
+			<name>asset.cancelled-subscriptions</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.unsubscribed-from</name>
+			<name>creator.cancelled-subscriptions</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.unsubscribed</name>
+			<name>user.cancelled-subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -99,7 +99,7 @@
 		<participation-value>1</participation-value>
 		<participation-limit period="period">10</participation-limit>
 		<counter>
-			<name>user.blog-updated</name>
+			<name>user.blog-updates</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -117,7 +117,7 @@
 		<log-activity>true</log-activity>
 		<participation-value>5</participation-value>
 		<counter>
-			<name>user.message-posted</name>
+			<name>user.message-posts</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -128,7 +128,7 @@
 		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
 		<counter>
-			<name>asset.replied-to-message</name>
+			<name>asset.replies</name>
 			<owner-type>asset</owner-type>
 		</counter>
 	</activity>
@@ -140,11 +140,11 @@
 		<contribution-value>5</contribution-value>
 		<contribution-limit period="day">1</contribution-limit>
 		<counter>
-			<name>asset.voted-on</name>
+			<name>asset.votes</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>user.voted</name>
+			<name>user.votes</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -165,15 +165,15 @@
 		<participation-value>2</participation-value>
 		<participation-limit period="period">1</participation-limit>
 		<counter>
-			<name>asset.subscribed-to</name>
+			<name>asset.subscriptions</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.subscribed-to</name>
+			<name>creator.subscriptions</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.subscribed</name>
+			<name>user.subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -183,15 +183,15 @@
 		<language-key>UNSUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
 		<counter>
-			<name>asset.unsubscribed-from</name>
+			<name>asset.cancelled-subscriptions</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.unsubscribed-from</name>
+			<name>creator.cancelled-subscriptions</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.unsubscribed</name>
+			<name>user.cancelled-subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -203,11 +203,11 @@
 		<contribution-value>2</contribution-value>
 		<participation-value>2</participation-value>
 		<counter>
-			<name>asset.attachment-added-to</name>
+			<name>asset.attachments</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>user.attachment-added</name>
+			<name>user.attachments</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -220,15 +220,15 @@
 		<participation-value>2</participation-value>
 		<participation-limit period="day">10</participation-limit>
 		<counter>
-			<name>asset.commented-on</name>
+			<name>asset.comments</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.commented-on</name>
+			<name>creator.comments</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.commented</name>
+			<name>user.comments</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -240,7 +240,7 @@
 		<participation-value>5</participation-value>
 		<participation-limit period="lifetime">1</participation-limit>
 		<counter>
-			<name>user.wiki-created</name>
+			<name>user.wikis</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -254,15 +254,15 @@
 		<participation-value>2</participation-value>
 		<participation-limit period="period">1</participation-limit>
 		<counter>
-			<name>asset.subscribed-to</name>
+			<name>asset.subscriptions</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.subscribed-to</name>
+			<name>creator.subscriptions</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.subscribed</name>
+			<name>user.subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -272,15 +272,15 @@
 		<language-key>UNSUBSCRIBE</language-key>
 		<log-activity>false</log-activity>
 		<counter>
-			<name>asset.unsubscribed-from</name>
+			<name>asset.cancelled-subscriptions</name>
 			<owner-type>asset</owner-type>
 		</counter>
 		<counter>
-			<name>creator.unsubscribed-from</name>
+			<name>creator.cancelled-subscriptions</name>
 			<owner-type>creator</owner-type>
 		</counter>
 		<counter>
-			<name>user.unsubscribed</name>
+			<name>user.cancelled-subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
@@ -292,7 +292,7 @@
 		<participation-value>1</participation-value>
 		<participation-limit period="period">10</participation-limit>
 		<counter>
-			<name>user.wiki-updated</name>
+			<name>user.wiki-updates</name>
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>

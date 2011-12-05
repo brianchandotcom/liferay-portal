@@ -84,9 +84,15 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertTrue(selenium.isTextPresent("Edit"));
+		assertEquals(RuntimeVariables.replace("Download"),
+			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button"));
-		selenium.clickAt("//div[@id='_20_fileEntryToolbar']/span/button",
+			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[2]"));
+		assertEquals(RuntimeVariables.replace("Move"),
+			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[3]"));
+		assertEquals(RuntimeVariables.replace("Checkout"),
+			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[4]"));
+		selenium.clickAt("//div[@id='_20_fileEntryToolbar']/span/button[2]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_title']",

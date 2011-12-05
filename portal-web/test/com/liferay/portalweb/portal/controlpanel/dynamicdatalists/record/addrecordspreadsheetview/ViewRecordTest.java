@@ -129,7 +129,7 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Boolean true"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
-		assertEquals(RuntimeVariables.replace("Date 11/10/11"),
+		assertEquals(RuntimeVariables.replace("Date 12/10/11"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
 		assertEquals(RuntimeVariables.replace("Decimal 1.23"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));

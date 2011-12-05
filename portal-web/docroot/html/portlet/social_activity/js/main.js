@@ -622,7 +622,7 @@ AUI().add(
 						value: 0
 					},
 
-					participationLimitEnabeld: {
+					participationLimitEnabled: {
 						value: true
 					},
 

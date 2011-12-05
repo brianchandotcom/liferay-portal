@@ -21,6 +21,8 @@ import com.liferay.portal.model.LayoutSet;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing LayoutSet in entity cache.
  *
@@ -31,7 +33,7 @@ import java.io.Serializable;
 public class LayoutSetCacheModel implements CacheModel<LayoutSet>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{layoutSetId=");
 		sb.append(layoutSetId);
@@ -39,6 +41,10 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>, Serializable 
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", privateLayout=");
 		sb.append(privateLayout);
 		sb.append(", logo=");
@@ -74,6 +80,21 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>, Serializable 
 		layoutSetImpl.setLayoutSetId(layoutSetId);
 		layoutSetImpl.setGroupId(groupId);
 		layoutSetImpl.setCompanyId(companyId);
+
+		if (createDate == Long.MIN_VALUE) {
+			layoutSetImpl.setCreateDate(null);
+		}
+		else {
+			layoutSetImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			layoutSetImpl.setModifiedDate(null);
+		}
+		else {
+			layoutSetImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		layoutSetImpl.setPrivateLayout(privateLayout);
 		layoutSetImpl.setLogo(logo);
 		layoutSetImpl.setLogoId(logoId);
@@ -139,6 +160,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>, Serializable 
 	public long layoutSetId;
 	public long groupId;
 	public long companyId;
+	public long createDate;
+	public long modifiedDate;
 	public boolean privateLayout;
 	public boolean logo;
 	public long logoId;

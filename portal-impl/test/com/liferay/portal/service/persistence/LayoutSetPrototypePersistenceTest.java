@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 
@@ -69,6 +70,10 @@ public class LayoutSetPrototypePersistenceTest extends BasePersistenceTestCase {
 
 		newLayoutSetPrototype.setCompanyId(nextLong());
 
+		newLayoutSetPrototype.setCreateDate(nextDate());
+
+		newLayoutSetPrototype.setModifiedDate(nextDate());
+
 		newLayoutSetPrototype.setName(randomString());
 
 		newLayoutSetPrototype.setDescription(randomString());
@@ -87,6 +92,12 @@ public class LayoutSetPrototypePersistenceTest extends BasePersistenceTestCase {
 			newLayoutSetPrototype.getLayoutSetPrototypeId());
 		assertEquals(existingLayoutSetPrototype.getCompanyId(),
 			newLayoutSetPrototype.getCompanyId());
+		assertEquals(Time.getShortTimestamp(
+				existingLayoutSetPrototype.getCreateDate()),
+			Time.getShortTimestamp(newLayoutSetPrototype.getCreateDate()));
+		assertEquals(Time.getShortTimestamp(
+				existingLayoutSetPrototype.getModifiedDate()),
+			Time.getShortTimestamp(newLayoutSetPrototype.getModifiedDate()));
 		assertEquals(existingLayoutSetPrototype.getName(),
 			newLayoutSetPrototype.getName());
 		assertEquals(existingLayoutSetPrototype.getDescription(),
@@ -213,6 +224,10 @@ public class LayoutSetPrototypePersistenceTest extends BasePersistenceTestCase {
 		layoutSetPrototype.setUuid(randomString());
 
 		layoutSetPrototype.setCompanyId(nextLong());
+
+		layoutSetPrototype.setCreateDate(nextDate());
+
+		layoutSetPrototype.setModifiedDate(nextDate());
 
 		layoutSetPrototype.setName(randomString());
 

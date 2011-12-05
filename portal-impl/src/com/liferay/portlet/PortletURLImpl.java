@@ -42,6 +42,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -61,14 +62,14 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import java.security.Key;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import java.security.Key;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
@@ -127,6 +128,14 @@ public class PortletURLImpl
 				portletApp.getContainerRuntimeOptions(),
 				LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
 				PropsValues.PORTLET_URL_ESCAPE_XML);
+		}
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		if ((layout != null) && (layout instanceof VirtualLayout) &&
+			(layout.getPlid() == _plid)) {
+
+			_layout = layout;
 		}
 	}
 

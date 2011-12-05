@@ -48,10 +48,13 @@ import java.util.Set;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
+import org.springframework.core.annotation.Order;
+
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
+@Order(1)
 public class LayoutLocalServiceStagingAdvice
 	extends LayoutLocalServiceImpl implements MethodInterceptor {
 

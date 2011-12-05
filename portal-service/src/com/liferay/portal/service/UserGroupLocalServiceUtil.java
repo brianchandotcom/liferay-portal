@@ -300,22 +300,15 @@ public class UserGroupLocalServiceUtil {
 	* @param companyId the primary key of the user group's company
 	* @param name the user group's name
 	* @param description the user group's description
-	* @param publicLayoutSetPrototypeId the primary key of the user group's
-	public layout set
-	* @param privateLayoutSetPrototypeId the primary key of the user group's
-	private layout set
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
-		long companyId, java.lang.String name, java.lang.String description,
-		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
+		long companyId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addUserGroup(userId, companyId, name, description,
-			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
+		return getService().addUserGroup(userId, companyId, name, description);
 	}
 
 	/**
@@ -343,6 +336,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws PortalException if any one of the users could not be found or if
 	a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated
 	*/
 	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -358,6 +352,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws PortalException if a user with the primary key could not be found
 	or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated
 	*/
 	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -373,6 +368,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws PortalException if a user with the primary key could not be found
 	or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated
 	*/
 	public static void copyUserGroupLayouts(long userGroupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -571,10 +567,6 @@ public class UserGroupLocalServiceUtil {
 	* @param userGroupId the primary key of the user group
 	* @param name the user group's name
 	* @param description the user group's description
-	* @param publicLayoutSetPrototypeId the primary key of the user group's
-	public layout set
-	* @param privateLayoutSetPrototypeId the primary key of the user group's
-	private layout set
 	* @return the user group
 	* @throws PortalException if a user group with the primary key could not be
 	found or if the new information was invalid
@@ -582,13 +574,11 @@ public class UserGroupLocalServiceUtil {
 	*/
 	public static com.liferay.portal.model.UserGroup updateUserGroup(
 		long companyId, long userGroupId, java.lang.String name,
-		java.lang.String description, long publicLayoutSetPrototypeId,
-		long privateLayoutSetPrototypeId)
+		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateUserGroup(companyId, userGroupId, name, description,
-			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
+				   .updateUserGroup(companyId, userGroupId, name, description);
 	}
 
 	public static UserGroupLocalService getService() {

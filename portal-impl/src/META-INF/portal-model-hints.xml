@@ -347,6 +347,8 @@
 		<field name="layoutSetId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="privateLayout" type="boolean" />
 		<field name="logo" type="boolean" />
 		<field name="logoId" type="long" />
@@ -386,6 +388,8 @@
 		<field name="uuid" type="String" />
 		<field name="layoutSetPrototypeId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" localized="true">
 			<hint name="max-length">4000</hint>
 			<validator name="required" />
@@ -873,8 +877,6 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="publicLayoutSetPrototypeId" type="long" />
-		<field name="privateLayoutSetPrototypeId" type="long" />
 		<field name="addedByLDAPImport" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroupGroupRole">

@@ -118,23 +118,17 @@ public class UserGroupServiceSoap {
 	*
 	* @param name the user group's name
 	* @param description the user group's description
-	* @param publicLayoutSetPrototypeId the primary key of the user group's
-	public layout set
-	* @param privateLayoutSetPrototypeId the primary key of the user group's
-	private layout set
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid or if
 	the user did not have permission to add the user group
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserGroupSoap addUserGroup(
-		java.lang.String name, java.lang.String description,
-		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
+		java.lang.String name, java.lang.String description)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.UserGroup returnValue = UserGroupServiceUtil.addUserGroup(name,
-					description, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId);
+					description);
 
 			return com.liferay.portal.model.UserGroupSoap.toSoapModel(returnValue);
 		}
@@ -282,10 +276,6 @@ public class UserGroupServiceSoap {
 	* @param userGroupId the primary key of the user group
 	* @param name the user group's name
 	* @param description the the user group's description
-	* @param publicLayoutSetPrototypeId the primary key of the user group's
-	public layout set
-	* @param privateLayoutSetPrototypeId the primary key of the user group's
-	private layout set
 	* @return the user group
 	* @throws PortalException if a user group with the primary key was not
 	found, if the new information was invalid, or if the user did not
@@ -293,13 +283,11 @@ public class UserGroupServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserGroupSoap updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description,
-		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
+		long userGroupId, java.lang.String name, java.lang.String description)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.UserGroup returnValue = UserGroupServiceUtil.updateUserGroup(userGroupId,
-					name, description, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId);
+					name, description);
 
 			return com.liferay.portal.model.UserGroupSoap.toSoapModel(returnValue);
 		}

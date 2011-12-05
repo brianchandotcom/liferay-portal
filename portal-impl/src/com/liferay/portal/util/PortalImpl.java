@@ -104,6 +104,7 @@ import com.liferay.portal.model.TicketConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.AuthTokenUtil;
@@ -747,16 +748,29 @@ public class PortalImpl implements Portal {
 
 		String actualURL = null;
 
-		if ((friendlyURL != null) &&
-			friendlyURL.startsWith(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR)) {
+		if (friendlyURL != null) {
+			if (friendlyURL.startsWith(
+					JournalArticleConstants.CANONICAL_URL_SEPARATOR)) {
 
-			try {
-				actualURL = getJournalArticleActualURL(
-					groupId, mainPath, friendlyURL, params, requestContext);
+				try {
+					actualURL = getJournalArticleActualURL(
+						groupId, mainPath, friendlyURL, params, requestContext);
+				}
+				catch (Exception e) {
+					friendlyURL = null;
+				}
 			}
-			catch (Exception e) {
-				friendlyURL = null;
+			else if (friendlyURL.startsWith(
+						VirtualLayout.CANONICAL_URL_SEPARATOR)) {
+
+				try {
+					actualURL = getVirtualLayoutActualURL(
+						groupId, privateLayout, mainPath, friendlyURL, params,
+						requestContext);
+				}
+				catch (Exception e) {
+					friendlyURL = null;
+				}
 			}
 		}
 
@@ -2018,6 +2032,12 @@ public class PortalImpl implements Portal {
 		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
 		variables.put("liferay:mainPath", mainPath);
 		variables.put("liferay:plid", String.valueOf(layout.getPlid()));
+		variables.put("liferay:hostGroupId", "0");
+
+		if (layout instanceof VirtualLayout) {
+			variables.put(
+				"liferay:hostGroupId", String.valueOf(layout.getGroupId()));
+		}
 
 		LayoutType layoutType = layout.getLayoutType();
 
@@ -2132,9 +2152,9 @@ public class PortalImpl implements Portal {
 		try {
 			String tempI18nLanguageId = null;
 
-			if ((I18nFilter.getLanguageIds().contains(locale.toString())) &&
+			if (((I18nFilter.getLanguageIds().contains(locale.toString())) &&
 				((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-				 (!locale.equals(LocaleUtil.getDefault()))) ||
+				 (!locale.equals(LocaleUtil.getDefault())))) ||
 				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
 
 				tempI18nLanguageId = locale.toString();
@@ -3981,6 +4001,60 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	public String getVirtualLayoutActualURL(
+			long groupId, boolean privateLayout, String mainPath,
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		// Group friendly URL
+
+		String groupFriendlyURL = null;
+
+		int pos = friendlyURL.indexOf(CharPool.SLASH, 3);
+
+		if (pos != -1) {
+			groupFriendlyURL = friendlyURL.substring(2, pos);
+		}
+
+		if (Validator.isNull(groupFriendlyURL)) {
+			return mainPath;
+		}
+
+		HttpServletRequest request = (HttpServletRequest)requestContext.get(
+			"request");
+
+		long companyId = PortalInstances.getCompanyId(request);
+
+		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			companyId, groupFriendlyURL);
+
+		if (group == null) {
+			return mainPath;
+		}
+
+		// Layout friendly URL
+
+		String layoutFriendlyURL = null;
+
+		if ((pos != -1) && ((pos + 1) != friendlyURL.length())) {
+			layoutFriendlyURL = friendlyURL.substring(
+				pos, friendlyURL.length());
+		}
+
+		if (Validator.isNull(layoutFriendlyURL)) {
+			return mainPath;
+		}
+
+		String actualURL = getActualURL(
+			group.getGroupId(), privateLayout, mainPath, layoutFriendlyURL,
+			params, requestContext);
+
+		return HttpUtil.addParameter(
+			HttpUtil.removeParameter(actualURL, "hostGroupId"), "hostGroupId",
+			groupId);
+	}
+
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
@@ -4760,7 +4834,7 @@ public class PortalImpl implements Portal {
 
 		String redirect = PATH_MAIN + "/portal/status";
 
-		if (e instanceof NoSuchLayoutException &&
+		if ((e instanceof NoSuchLayoutException) &&
 			Validator.isNotNull(
 				PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
@@ -4876,7 +4950,7 @@ public class PortalImpl implements Portal {
 		LayoutTypePortlet layoutType =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		if (portletMode == null || Validator.isNull(portletMode.toString())) {
+		if ((portletMode == null) || Validator.isNull(portletMode.toString())) {
 			if (layoutType.hasModeAboutPortletId(portletId)) {
 				return LiferayPortletMode.ABOUT;
 			}

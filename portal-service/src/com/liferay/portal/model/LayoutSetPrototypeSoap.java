@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setLayoutSetPrototypeId(model.getLayoutSetPrototypeId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
@@ -116,6 +119,22 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -155,6 +174,8 @@ public class LayoutSetPrototypeSoap implements Serializable {
 	private String _uuid;
 	private long _layoutSetPrototypeId;
 	private long _companyId;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private String _name;
 	private String _description;
 	private String _settings;

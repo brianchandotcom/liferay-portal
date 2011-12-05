@@ -35,8 +35,6 @@ public class UserGroupSoap implements Serializable {
 		soapModel.setParentUserGroupId(model.getParentUserGroupId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setPublicLayoutSetPrototypeId(model.getPublicLayoutSetPrototypeId());
-		soapModel.setPrivateLayoutSetPrototypeId(model.getPrivateLayoutSetPrototypeId());
 		soapModel.setAddedByLDAPImport(model.getAddedByLDAPImport());
 
 		return soapModel;
@@ -130,22 +128,6 @@ public class UserGroupSoap implements Serializable {
 		_description = description;
 	}
 
-	public long getPublicLayoutSetPrototypeId() {
-		return _publicLayoutSetPrototypeId;
-	}
-
-	public void setPublicLayoutSetPrototypeId(long publicLayoutSetPrototypeId) {
-		_publicLayoutSetPrototypeId = publicLayoutSetPrototypeId;
-	}
-
-	public long getPrivateLayoutSetPrototypeId() {
-		return _privateLayoutSetPrototypeId;
-	}
-
-	public void setPrivateLayoutSetPrototypeId(long privateLayoutSetPrototypeId) {
-		_privateLayoutSetPrototypeId = privateLayoutSetPrototypeId;
-	}
-
 	public boolean getAddedByLDAPImport() {
 		return _addedByLDAPImport;
 	}
@@ -163,7 +145,5 @@ public class UserGroupSoap implements Serializable {
 	private long _parentUserGroupId;
 	private String _name;
 	private String _description;
-	private long _publicLayoutSetPrototypeId;
-	private long _privateLayoutSetPrototypeId;
 	private boolean _addedByLDAPImport;
 }

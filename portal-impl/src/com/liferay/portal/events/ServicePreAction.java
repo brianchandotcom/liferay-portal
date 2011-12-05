@@ -58,7 +58,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
-import com.liferay.portal.model.impl.LayoutTypePortletImpl;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -98,12 +98,10 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -369,9 +367,16 @@ public class ServicePreAction extends Action {
 		List<Layout> layouts = null;
 
 		long plid = ParamUtil.getLong(request, "p_l_id");
+		long hostGroupId = ParamUtil.getLong(request, "hostGroupId");
 
 		if (plid > 0) {
 			layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (hostGroupId > 0) {
+				Group hostGroup = GroupLocalServiceUtil.getGroup(hostGroupId);
+
+				layout = new VirtualLayout(layout, hostGroup);
+			}
 		}
 		else {
 			long groupId = ParamUtil.getLong(request, "groupId");
@@ -379,25 +384,9 @@ public class ServicePreAction extends Action {
 				request, "privateLayout");
 			long layoutId = ParamUtil.getLong(request, "layoutId");
 
-			if ((groupId > 0) && layoutId > 0) {
+			if ((groupId > 0) && (layoutId > 0)) {
 				layout = LayoutLocalServiceUtil.getLayout(
 					groupId, privateLayout, layoutId);
-			}
-		}
-
-		// Dynamic Site Template
-
-		if (layout != null) {
-			try {
-				if (processLayoutSetPrototype(user, layout)) {
-					layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-				}
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Failed to process dynamic site templates: " +
-						e.getMessage());
-				}
 			}
 		}
 
@@ -2013,32 +2002,6 @@ public class ServicePreAction extends Action {
 		if (deleteDefaultUserPublicLayouts && user.hasPublicLayouts()) {
 			deleteDefaultUserPublicLayouts(user);
 		}
-	}
-
-	protected boolean processLayoutSetPrototype(User user, Layout layout)
-		throws Exception {
-
-		if (SitesUtil.isLayoutToBeUpdatedFromTemplate(layout)) {
-			Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(
-				layout);
-
-			SitesUtil.copyLayout(
-				user.getUserId(), templateLayout, layout, new ServiceContext());
-
-			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-
-			UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
-
-			typeSettings.put(
-				"layoutSetPrototypeLastCopyDate",
-				String.valueOf((new Date()).getTime()));
-
-			LayoutLocalServiceUtil.updateLayout(layout);
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected File privateLARFile;

@@ -224,6 +224,7 @@ AUI().add(
 							data: {
 								cmd: cmd,
 								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+								hostGroupId: themeDisplay.getGroupId(),
 								layoutRevisionId: layoutRevisionId,
 								layoutSetBranchId: layoutSetBranchId,
 								p_l_id: themeDisplay.getPlid()

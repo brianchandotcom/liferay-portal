@@ -347,7 +347,15 @@ create table LayoutRevision (
 	statusDate DATE null
 );
 
+alter table LayoutSet add createDate DATE null;
+alter table LayoutSet add modifiedDate DATE null;
+
 drop index IX_5ABC2905 on LayoutSet;
+
+COMMIT_TRANSACTION;
+
+update LayoutSet set createDate = CURRENT_TIMESTAMP;
+update LayoutSet set modifiedDate = CURRENT_TIMESTAMP;
 
 create table LayoutSetBranch (
 	layoutSetBranchId LONG not null primary key,
@@ -363,7 +371,14 @@ create table LayoutSetBranch (
 	master BOOLEAN
 );
 
+alter table LayoutSetPrototype add createDate DATE null;
+alter table LayoutSetPrototype add modifiedDate DATE null;
 alter table LayoutSetPrototype add uuid_ VARCHAR(75) null;
+
+COMMIT_TRANSACTION;
+
+update LayoutSetPrototype set createDate = CURRENT_TIMESTAMP;
+update LayoutSetPrototype set modifiedDate = CURRENT_TIMESTAMP;
 
 alter table MBCategory add displayStyle VARCHAR(75) null;
 
@@ -587,10 +602,6 @@ update User_ set status = 0;
 update User_ set status = 5 where active_ = FALSE;
 
 alter table User_ drop column active_;
-
-alter table UserGroup add publicLayoutSetPrototypeId LONG;
-alter table UserGroup add privateLayoutSetPrototypeId LONG;
-alter table UserGroup add addedByLDAPImport BOOLEAN;
 
 create table UserGroups_Teams (
 	userGroupId LONG not null,

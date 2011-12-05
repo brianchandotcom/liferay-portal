@@ -24,6 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -251,6 +252,13 @@ public class PortletPermissionImpl implements PortletPermission {
 		name = PortletConstants.getRootPortletId(portletId);
 		primKey = getPrimaryKey(layout.getPlid(), portletId);
 
+		if ((!actionId.equals(ActionKeys.VIEW)) &&
+			(layout instanceof VirtualLayout)) {
+
+			return hasCustomizablePermission(
+				permissionChecker, layout, portletId, actionId);
+		}
+
 		if (!group.isLayoutSetPrototype() &&
 			SitesUtil.isLayoutLocked(layout) &&
 			actionId.equals(ActionKeys.CONFIGURATION)) {
@@ -270,7 +278,9 @@ public class PortletPermissionImpl implements PortletPermission {
 			(layout.isPublicLayout() &&
 			 !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_MODIFIABLE)) {
 
-			if (actionId.equals(ActionKeys.CONFIGURATION) && group.isUser()) {
+			if (actionId.equals(ActionKeys.CONFIGURATION) &&
+				group.isUser()) {
+
 				return false;
 			}
 		}
@@ -283,6 +293,21 @@ public class PortletPermissionImpl implements PortletPermission {
 			return permissionChecker.hasPermission(
 				groupId, name, primKey, actionId);
 		}
+
+		if (hasCustomizablePermission(
+				permissionChecker, layout, portletId, actionId)) {
+
+			return true;
+		}
+
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
+	}
+
+	private boolean hasCustomizablePermission(
+			PermissionChecker permissionChecker, Layout layout, String portletId,
+			String actionId)
+		throws PortalException , SystemException {
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -305,8 +330,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			}
 		}
 
-		return permissionChecker.hasPermission(
-			groupId, name, primKey, actionId);
+		return false;
 	}
 
 	public boolean contains(

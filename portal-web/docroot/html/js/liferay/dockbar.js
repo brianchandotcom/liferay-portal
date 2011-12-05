@@ -745,6 +745,7 @@ AUI().add(
 				var data = {
 					cmd: 'update_type_settings',
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+					hostGroupId: themeDisplay.getGroupId(),
 					p_l_id: themeDisplay.getPlid()
 				};
 

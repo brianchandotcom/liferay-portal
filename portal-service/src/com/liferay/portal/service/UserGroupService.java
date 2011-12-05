@@ -82,18 +82,13 @@ public interface UserGroupService {
 	*
 	* @param name the user group's name
 	* @param description the user group's description
-	* @param publicLayoutSetPrototypeId the primary key of the user group's
-	public layout set
-	* @param privateLayoutSetPrototypeId the primary key of the user group's
-	private layout set
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid or if
 	the user did not have permission to add the user group
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup addUserGroup(
-		java.lang.String name, java.lang.String description,
-		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
+		java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -183,10 +178,6 @@ public interface UserGroupService {
 	* @param userGroupId the primary key of the user group
 	* @param name the user group's name
 	* @param description the the user group's description
-	* @param publicLayoutSetPrototypeId the primary key of the user group's
-	public layout set
-	* @param privateLayoutSetPrototypeId the primary key of the user group's
-	private layout set
 	* @return the user group
 	* @throws PortalException if a user group with the primary key was not
 	found, if the new information was invalid, or if the user did not
@@ -194,8 +185,7 @@ public interface UserGroupService {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserGroup updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description,
-		long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
+		long userGroupId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

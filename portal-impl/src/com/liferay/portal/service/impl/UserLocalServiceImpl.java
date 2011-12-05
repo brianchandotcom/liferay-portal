@@ -284,8 +284,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long[] userGroupIds = ArrayUtil.toArray(
 			userGroupIdSet.toArray(new Long[userGroupIdSet.size()]));
 
-		for (long userGroupId : userGroupIds) {
-			userGroupLocalService.copyUserGroupLayouts(userGroupId, userId);
+		if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+			for (long userGroupId : userGroupIds) {
+				userGroupLocalService.copyUserGroupLayouts(userGroupId, userId);
+			}
 		}
 
 		userPersistence.addUserGroups(userId, userGroupIds);
@@ -480,7 +482,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
-		userGroupLocalService.copyUserGroupLayouts(userGroupId, userIds);
+		if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+			userGroupLocalService.copyUserGroupLayouts(userGroupId, userIds);
+		}
 
 		userGroupPersistence.addUsers(userGroupId, userIds);
 
@@ -754,9 +758,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// User groups
 
 		if (userGroupIds != null) {
-			for (long userGroupId : userGroupIds) {
-				userGroupLocalService.copyUserGroupLayouts(
-					userGroupId, new long[] {userId});
+			if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+				for (long userGroupId : userGroupIds) {
+					userGroupLocalService.copyUserGroupLayouts(
+						userGroupId, new long[] {userId});
+				}
 			}
 
 			userPersistence.setUserGroups(userId, userGroupIds);
@@ -3524,7 +3530,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void setUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
-		userGroupLocalService.copyUserGroupLayouts(userGroupId, userIds);
+		if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+			userGroupLocalService.copyUserGroupLayouts(userGroupId, userIds);
+		}
 
 		userGroupPersistence.setUsers(userGroupId, userIds);
 
@@ -4741,7 +4749,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// User groups
 
 		if (userGroupIds != null) {
-			userGroupLocalService.copyUserGroupLayouts(userGroupIds, userId);
+			if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+				userGroupLocalService.copyUserGroupLayouts(
+					userGroupIds, userId);
+			}
 
 			userPersistence.setUserGroups(userId, userGroupIds);
 		}

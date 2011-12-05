@@ -34,6 +34,7 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,6 +63,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "layoutSetId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "privateLayout", Types.BOOLEAN },
 			{ "logo", Types.BOOLEAN },
 			{ "logoId", Types.BIGINT },
@@ -75,7 +78,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "layoutSetPrototypeUuid", Types.VARCHAR },
 			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -105,6 +108,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setLayoutSetId(soapModel.getLayoutSetId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setPrivateLayout(soapModel.getPrivateLayout());
 		model.setLogo(soapModel.getLogo());
 		model.setLogoId(soapModel.getLogoId());
@@ -204,6 +209,24 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	@JSON
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@JSON
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -421,6 +444,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetImpl.setLayoutSetId(getLayoutSetId());
 		layoutSetImpl.setGroupId(getGroupId());
 		layoutSetImpl.setCompanyId(getCompanyId());
+		layoutSetImpl.setCreateDate(getCreateDate());
+		layoutSetImpl.setModifiedDate(getModifiedDate());
 		layoutSetImpl.setPrivateLayout(getPrivateLayout());
 		layoutSetImpl.setLogo(getLogo());
 		layoutSetImpl.setLogoId(getLogoId());
@@ -510,6 +535,24 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetCacheModel.companyId = getCompanyId();
 
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			layoutSetCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			layoutSetCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			layoutSetCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			layoutSetCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
 		layoutSetCacheModel.privateLayout = getPrivateLayout();
 
 		layoutSetCacheModel.logo = getLogo();
@@ -582,7 +625,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{layoutSetId=");
 		sb.append(getLayoutSetId());
@@ -590,6 +633,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", privateLayout=");
 		sb.append(getPrivateLayout());
 		sb.append(", logo=");
@@ -620,7 +667,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSet");
@@ -637,6 +684,14 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
@@ -701,6 +756,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

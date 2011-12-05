@@ -109,6 +109,42 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	/**
+	* Returns the create date of this layout set.
+	*
+	* @return the create date of this layout set
+	*/
+	public java.util.Date getCreateDate() {
+		return _layoutSet.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this layout set.
+	*
+	* @param createDate the create date of this layout set
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_layoutSet.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this layout set.
+	*
+	* @return the modified date of this layout set
+	*/
+	public java.util.Date getModifiedDate() {
+		return _layoutSet.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this layout set.
+	*
+	* @param modifiedDate the modified date of this layout set
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_layoutSet.setModifiedDate(modifiedDate);
+	}
+
+	/**
 	* Returns the private layout of this layout set.
 	*
 	* @return the private layout of this layout set

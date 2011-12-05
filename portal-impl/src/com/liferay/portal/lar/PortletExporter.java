@@ -760,11 +760,11 @@ public class PortletExporter {
 
 		// Data
 
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				layout, portletId, StringPool.BLANK);
-
 		if (exportPortletData) {
+			javax.portlet.PortletPreferences jxPreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					layout, portletId, StringPool.BLANK);
+
 			if (!portlet.isPreferencesUniquePerLayout()) {
 				StringBundler sb = new StringBundler(5);
 

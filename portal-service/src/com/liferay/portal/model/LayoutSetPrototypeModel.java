@@ -21,6 +21,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -100,6 +101,34 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype> {
 	 * @param companyId the company ID of this layout set prototype
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create date of this layout set prototype.
+	 *
+	 * @return the create date of this layout set prototype
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this layout set prototype.
+	 *
+	 * @param createDate the create date of this layout set prototype
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this layout set prototype.
+	 *
+	 * @return the modified date of this layout set prototype
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this layout set prototype.
+	 *
+	 * @param modifiedDate the modified date of this layout set prototype
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the name of this layout set prototype.

@@ -110,6 +110,42 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	}
 
 	/**
+	* Returns the create date of this layout set prototype.
+	*
+	* @return the create date of this layout set prototype
+	*/
+	public java.util.Date getCreateDate() {
+		return _layoutSetPrototype.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this layout set prototype.
+	*
+	* @param createDate the create date of this layout set prototype
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_layoutSetPrototype.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this layout set prototype.
+	*
+	* @return the modified date of this layout set prototype
+	*/
+	public java.util.Date getModifiedDate() {
+		return _layoutSetPrototype.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this layout set prototype.
+	*
+	* @param modifiedDate the modified date of this layout set prototype
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_layoutSetPrototype.setModifiedDate(modifiedDate);
+	}
+
+	/**
 	* Returns the name of this layout set prototype.
 	*
 	* @return the name of this layout set prototype

@@ -25,6 +25,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -153,6 +154,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, String actionId)
 		throws PortalException, SystemException {
+
+		if ((!actionId.equals(ActionKeys.VIEW)) &&
+			(layout instanceof VirtualLayout)) {
+
+			return false;
+		}
 
 		if ((layout.isPrivateLayout() &&
 			 !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_MODIFIABLE) ||

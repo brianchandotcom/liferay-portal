@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetPrototypeLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +45,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 			boolean allowLayoutAddition, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		Date now = new Date();
+
 		// Layout set prototype
 
 		long layoutSetPrototypeId = counterLocalService.increment();
@@ -53,6 +56,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 		layoutSetPrototype.setUuid(serviceContext.getUuid());
 		layoutSetPrototype.setCompanyId(companyId);
+		layoutSetPrototype.setCreateDate(serviceContext.getCreateDate(now));
+		layoutSetPrototype.setModifiedDate(serviceContext.getModifiedDate(now));
 		layoutSetPrototype.setNameMap(nameMap);
 		layoutSetPrototype.setDescription(description);
 		layoutSetPrototype.setActive(active);
@@ -180,6 +185,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 			layoutSetPrototypePersistence.findByPrimaryKey(
 				layoutSetPrototypeId);
 
+		layoutSetPrototype.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		layoutSetPrototype.setNameMap(nameMap);
 		layoutSetPrototype.setDescription(description);
 		layoutSetPrototype.setActive(active);
@@ -218,6 +225,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 			layoutSetPrototypePersistence.findByPrimaryKey(
 				layoutSetPrototypeId);
 
+		layoutSetPrototype.setModifiedDate(new Date());
 		layoutSetPrototype.setSettings(settings);
 
 		layoutSetPrototypePersistence.update(layoutSetPrototype, false);

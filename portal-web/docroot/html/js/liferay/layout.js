@@ -432,6 +432,7 @@ AUI().add(
 			saveLayout: function(options) {
 				var data = {
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+					hostGroupId: themeDisplay.getGroupId(),
 					p_l_id: themeDisplay.getPlid()
 				};
 

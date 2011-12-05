@@ -82,18 +82,12 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *
 	 * @param  name the user group's name
 	 * @param  description the user group's description
-	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
-	 *         public layout set
-	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
-	 *         private layout set
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid or if
 	 *         the user did not have permission to add the user group
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserGroup addUserGroup(
-			String name, String description, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId)
+	public UserGroup addUserGroup(String name, String description)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(
@@ -102,8 +96,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		User user = getUser();
 
 		return userGroupLocalService.addUserGroup(
-			user.getUserId(), user.getCompanyId(), name, description,
-			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
+			user.getUserId(), user.getCompanyId(), name, description);
 	}
 
 	/**
@@ -223,10 +216,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @param  userGroupId the primary key of the user group
 	 * @param  name the user group's name
 	 * @param  description the the user group's description
-	 * @param  publicLayoutSetPrototypeId the primary key of the user group's
-	 *         public layout set
-	 * @param  privateLayoutSetPrototypeId the primary key of the user group's
-	 *         private layout set
 	 * @return the user group
 	 * @throws PortalException if a user group with the primary key was not
 	 *         found, if the new information was invalid, or if the user did not
@@ -234,8 +223,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup updateUserGroup(
-			long userGroupId, String name, String description,
-			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId)
+			long userGroupId, String name, String description)
 		throws PortalException, SystemException {
 
 		UserGroupPermissionUtil.check(
@@ -244,8 +232,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		User user = getUser();
 
 		return userGroupLocalService.updateUserGroup(
-			user.getCompanyId(), userGroupId, name, description,
-			publicLayoutSetPrototypeId, privateLayoutSetPrototypeId);
+			user.getCompanyId(), userGroupId, name, description);
 	}
 
 }

@@ -38,7 +38,6 @@ import com.liferay.portal.upgrade.v6_1_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeScopes;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeSubscription;
-import com.liferay.portal.upgrade.v6_1_0.UpgradeUserGroup;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeUserName;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeVirtualHost;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeWorkflow;
@@ -79,7 +78,6 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeScopes.class);
 		upgrade(UpgradeSocial.class);
 		upgrade(UpgradeSubscription.class);
-		upgrade(UpgradeUserGroup.class);
 		upgrade(UpgradeVirtualHost.class);
 		upgrade(UpgradeWorkflow.class);
 		upgrade(UpgradeAsset.class);

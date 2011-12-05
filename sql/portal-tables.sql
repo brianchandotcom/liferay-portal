@@ -987,6 +987,8 @@ create table LayoutSet (
 	layoutSetId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
 	privateLayout BOOLEAN,
 	logo BOOLEAN,
 	logoId LONG,
@@ -1019,6 +1021,8 @@ create table LayoutSetPrototype (
 	uuid_ VARCHAR(75) null,
 	layoutSetPrototypeId LONG not null primary key,
 	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
@@ -2022,8 +2026,6 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	publicLayoutSetPrototypeId LONG,
-	privateLayoutSetPrototypeId LONG,
 	addedByLDAPImport BOOLEAN
 );
 

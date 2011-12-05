@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,7 +43,9 @@ public class RowChecker {
 	public RowChecker(PortletResponse portletResponse) {
 		_portletResponse = portletResponse;
 
-		_allRowIds = _portletResponse.getNamespace() + ALL_ROW_IDS;
+		_allRowIds = _portletResponse.getNamespace() + ALL_ROW_IDS
+						+ StringPool.UNDERLINE
+						+ DeterminateKeyGenerator.generate(ALL_ROW_IDS);
 		_formName = _portletResponse.getNamespace() + FORM_NAME;
 		_rowIds = _portletResponse.getNamespace() + ROW_IDS;
 	}
@@ -97,7 +100,7 @@ public class RowChecker {
 
 		return getRowCheckBox(
 			checked, disabled, _rowIds, primaryKey, "'" + _rowIds + "'",
-			_allRowIds, StringPool.BLANK);
+			"'" + _allRowIds + "'", StringPool.BLANK);
 	}
 
 	public String getRowId() {

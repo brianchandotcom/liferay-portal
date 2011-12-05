@@ -72,43 +72,14 @@ public class EditMessageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent("T\u00e9st M\u00e9ssag\u00e9 Edited")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent("T\u00e9st M\u00e9ssag\u00e9 Edited"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"This is edited test M\u00e9ssag\u00e9!")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isTextPresent(
-				"This is edited test M\u00e9ssag\u00e9!"));
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st M\u00e9ssag\u00e9 Edited"),
+			selenium.getText("//div[@class='subject']/a"));
+		assertEquals(RuntimeVariables.replace(
+				"This is edited test M\u00e9ssag\u00e9!"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertNotEquals(RuntimeVariables.replace(
+				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

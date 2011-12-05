@@ -111,7 +111,6 @@
 		}
 
 		.settings-header {
-			border-bottom: 1px solid #ccc;
 			padding: 10px 0 5px 0;
 
 			.actions-conjunction {
@@ -126,12 +125,6 @@
 				margin: 0px;
 			}
 
-			.settings-container-label {
-				font-weight: bold;
-				margin-top: 10px;
-				padding: 0 5px;
-			}
-
 			.settings-header-label {
 				font-weight: bold;
 				padding: 0 5px;
@@ -143,6 +136,14 @@
 				background-repeat: no-repeat;
 				padding-left: 25px;
 			}
+		}
+
+		.settings-container-label {
+			border-bottom: 1px solid #ccc;
+			font-size: 1.2em;
+			font-weight: bold;
+			margin-top: 10px;
+			padding: 0 5px;
 		}
 
 		.settings-field-buttons {

@@ -123,6 +123,6 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 			).render();
 
 		},
-		['aui-base']
+		['aui-dialog']
 	);
 </aui:script>

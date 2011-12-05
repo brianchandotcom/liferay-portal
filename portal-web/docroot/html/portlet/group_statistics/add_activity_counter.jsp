@@ -34,7 +34,7 @@ activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
 
 <div class="aui-field-row">
 	<span class="aui-field aui-field-inline inline-text">
-		<liferay-ui:message key="show" />
+		<liferay-ui:message key="group-statistics-add-counter-first-text" />
 	</span>
 
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>'>
@@ -55,22 +55,22 @@ activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
 	</aui:select>
 
 	<span class="aui-field aui-field-inline inline-text">
-		<liferay-ui:message key="as" />
+		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>'>
-		<aui:option label="area-diagram" selected='<%= chartType.equals("area") %>' value="area" />
-		<aui:option label="column-diagram" selected='<%= chartType.equals("column") %>' value="column" />
-		<aui:option label="activity-distribution" selected='<%= chartType.equals("pie") %>' value="pie" />
-		<aui:option label="tag-cloud" selected='<%= chartType.equals("tagCloud") %>' value="tagCloud" />
+		<aui:option label="group-statistics-chart-type-area-diagram" selected='<%= chartType.equals("area") %>' value="area" />
+		<aui:option label="group-statistics-chart-type-column-diagram" selected='<%= chartType.equals("column") %>' value="column" />
+		<aui:option label="group-statistics-chart-type-activity-distribution" selected='<%= chartType.equals("pie") %>' value="pie" />
+		<aui:option label="group-statistics-chart-type-tag-cloud" selected='<%= chartType.equals("tagCloud") %>' value="tagCloud" />
 	</aui:select>
 
 	<span class="aui-field aui-field-inline inline-text">
-		<liferay-ui:message key="in" />
+		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>'>
-		<aui:option label="this-year" selected='<%= dataRange.equals("year") %>' value="year" />
-		<aui:option label="last-12-months" selected='<%= dataRange.equals("12months") %>' value="12months" />
+		<aui:option label="group-statistics-data-range-this-year" selected='<%= dataRange.equals("year") %>' value="year" />
+		<aui:option label="group-statistics-data-range-last-12-months" selected='<%= dataRange.equals("12months") %>' value="12months" />
 	</aui:select>
 </div>

@@ -13,7 +13,7 @@ AUI().add(
 
 		var CSS_TOKEN = 'lfr-token';
 
-		var COL_LIMIT_TYPE = [Liferay.Language.get('times-a-day'), Liferay.Language.get('times'), Liferay.Language.get('times-per-period')];
+		var COL_LIMIT_TYPE = [Liferay.Language.get('social-activity-limit-type-times-a-day'), Liferay.Language.get('social-activity-limit-type-times'), Liferay.Language.get('social-activity-limit-type-times-per-period')];
 
 		var STR_ACTION_FIELD = 'action-field';
 

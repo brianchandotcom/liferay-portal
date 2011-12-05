@@ -1079,7 +1079,7 @@
 			FROM
 				ResourcePermission
 			WHERE
-				(ResourcePermission.companyID = ?) AND
+				(ResourcePermission.companyId = ?) AND
 				(ResourcePermission.name = ?) AND
 				(
 					(

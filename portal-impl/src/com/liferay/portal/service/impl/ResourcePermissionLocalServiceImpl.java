@@ -1087,6 +1087,10 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		for (String actionId : actionIds) {
+			if (actionId == null) {
+				break;
+			}
+
 			ResourceAction resourceAction =
 				resourceActionLocalService.getResourceAction(name, actionId);
 

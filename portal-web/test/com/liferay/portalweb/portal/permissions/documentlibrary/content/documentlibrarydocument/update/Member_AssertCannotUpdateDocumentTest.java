@@ -48,14 +48,24 @@ public class Member_AssertCannotUpdateDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertFalse(selenium.isElementPresent("link=Move"));
+		assertFalse(selenium.isElementPresent("link=Checkout"));
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Download"),
+			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[1]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@id='_20_fileEntryToolbar']/span/button"));
+				"//div[@id='_20_fileEntryToolbar']/span/button[2]"));
+		assertFalse(selenium.isElementPresent(
+				"//div[@id='_20_fileEntryToolbar']/span/button[3]"));
+		assertFalse(selenium.isElementPresent(
+				"//div[@id='_20_fileEntryToolbar']/span/button[4]"));
 		assertFalse(selenium.isTextPresent("Edit"));
+		assertFalse(selenium.isTextPresent("Move"));
+		assertFalse(selenium.isTextPresent("Checkout"));
 	}
 }

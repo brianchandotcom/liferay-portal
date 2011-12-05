@@ -34,6 +34,16 @@
 	<td>Edit</td>
 </tr>
 <tr>
+	<td>assertElementNotPresent</td>
+	<td>link=Move</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>link=Checkout</td>
+	<td>Checkout</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
 	<td>TestDocument.txt</td>
@@ -44,13 +54,38 @@
 	<td>TestDocument.txt</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@id='_20_fileEntryToolbar']/span/button[1]</td>
+	<td>Download</td>
+</tr>
+<tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@id='_20_fileEntryToolbar']/span/button</td>
+	<td>//div[@id='_20_fileEntryToolbar']/span/button[2]</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@id='_20_fileEntryToolbar']/span/button[3]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@id='_20_fileEntryToolbar']/span/button[4]</td>
+	<td>Checkout</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Move</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Checkout</td>
 	<td></td>
 </tr>
 </tbody></table>

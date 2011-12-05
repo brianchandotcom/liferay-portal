@@ -81,8 +81,8 @@ public class SiteAdmin_DeleteImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//img[@alt='Delete']",
-			RuntimeVariables.replace("Delete"));
+		selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

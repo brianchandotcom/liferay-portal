@@ -66,10 +66,24 @@ public class Portlet_DeleteCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//li[@class='lfr-discussion-delete']/span/a"));
-		selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a",
-			RuntimeVariables.replace("Delete"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+		selenium.click("//li[@class='lfr-discussion-delete']/span/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if ("Are you sure you want to delete this?".equals(
+							selenium.getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

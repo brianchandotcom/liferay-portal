@@ -16,8 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
-
 <%
 int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_sites:max"));
 
@@ -25,7 +23,7 @@ if (max <= 0) {
 	max = PropsValues.MY_SITES_MAX_ELEMENTS;
 }
 
-List<Group> mySites = user.getMySites(max);
+List<Group> mySites = user.getMySites(max, true);
 %>
 
 <c:if test="<%= !mySites.isEmpty() %>">

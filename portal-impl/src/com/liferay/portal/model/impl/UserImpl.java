@@ -260,16 +260,29 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	public List<Group> getMySites() throws PortalException, SystemException {
-		return getMySites(null, QueryUtil.ALL_POS);
+		return getMySites(null, false, QueryUtil.ALL_POS);
 	}
 
 	public List<Group> getMySites(int max)
 		throws PortalException, SystemException {
 
-		return getMySites(null, max);
+		return getMySites(null, false, max);
+	}
+
+	public List<Group> getMySites(int max, boolean includeControlPanel)
+		throws PortalException, SystemException {
+
+		return getMySites(null, includeControlPanel, max);
 	}
 
 	public List<Group> getMySites(String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getMySites(classNames, false, max);
+	}
+
+	public List<Group> getMySites(
+			String[] classNames, boolean includeControlPanel, int max)
 		throws PortalException, SystemException {
 
 		ThreadLocalCache<List<Group>> threadLocalCache =
@@ -283,13 +296,16 @@ public class UserImpl extends UserBaseImpl {
 				key);
 		}
 
+		key = key.concat(String.valueOf(includeControlPanel));
+
 		List<Group> myPlaces = threadLocalCache.get(key);
 
 		if (myPlaces != null) {
 			return myPlaces;
 		}
 
-		myPlaces = GroupServiceUtil.getUserPlaces(getUserId(), classNames, max);
+		myPlaces = GroupServiceUtil.getUserPlaces(
+			getUserId(), classNames, includeControlPanel, max);
 
 		threadLocalCache.put(key, myPlaces);
 

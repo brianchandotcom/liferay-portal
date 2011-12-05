@@ -341,6 +341,43 @@ public class GroupServiceWrapper implements GroupService,
 	}
 
 	/**
+	* Returns the user's group &quot;places&quot; associated with the group
+	* entity class names, including the control panel group if the user is
+	* permitted to view the control panel.
+	*
+	* <p>
+	* <ul> <li> Class name &quot;User&quot; includes the user's layout set
+	* group. </li> <li> Class name &quot;Organization&quot; includes the user's
+	* immediate organization groups and inherited organization groups. </li>
+	* <li> Class name &quot;Group&quot; includes the user's immediate
+	* organization groups and site groups. </li> <li> A <code>classNames</code>
+	* value of <code>null</code> includes the user's layout set group,
+	* organization groups, inherited organization groups, and site groups.
+	* </li> </ul>
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param classNames the group entity class names (optionally
+	<code>null</code>). For more information see {@link
+	#getUserPlaces(long, String[], int)}
+	* @param includeControlPanel <code>true</code> if the control panel
+	should be included as part of user's group &quot;places&quot;,
+	assuming the user has permissions to access the control panel
+	* @param max the maximum number of groups to return
+	* @return the user's group &quot;places&quot;
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
+		long userId, java.lang.String[] classNames,
+		boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupService.getUserPlaces(userId, classNames,
+			includeControlPanel, max);
+	}
+
+	/**
 	* Returns <code>true</code> if the user is associated with the group,
 	* including the user's inherited organizations and user groups. System and
 	* staged groups are not included.

@@ -234,7 +234,7 @@ if (layout != null) {
 												width: 820
 											},
 										id: '<portlet:namespace />layoutSetBranches',
-										title: '<liferay-ui:message key="manage-site-pages-variations" />',
+										title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
 										uri: event.currentTarget.attr('href')
 									}
 								);
@@ -449,7 +449,7 @@ if (layout != null) {
 													width: 820
 												},
 											id: '<portlet:namespace />layoutRevisions',
-											title: '<liferay-ui:message key="manage-page-variations" />',
+											title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-page-variations") %>',
 											uri: event.currentTarget.attr('href')
 										}
 									);

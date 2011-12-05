@@ -166,7 +166,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 					width: 820
 				},
 				id: 'asset_browser',
-				title: '<liferay-ui:message key="asset-browser" />',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "asset-browser") %>',
 				uri: url
 			}
 		);

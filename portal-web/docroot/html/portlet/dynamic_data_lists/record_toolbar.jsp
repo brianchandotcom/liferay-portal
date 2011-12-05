@@ -45,7 +45,7 @@ long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 							window.location = '<%= viewHistoryURL %>';
 						},
 						icon: 'clock',
-						label: '<liferay-ui:message key="view-history" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>'
 					}
 				</c:if>
 			]

@@ -44,7 +44,7 @@ if ((article != null) && article.isDraft()) {
 					{
 						icon: 'search',
 						id: '<portlet:namespace />previewArticleButton',
-						label: '<liferay-ui:message key="preview" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>'
 					},
 				</c:if>
 
@@ -52,7 +52,7 @@ if ((article != null) && article.isDraft()) {
 					{
 						icon: 'arrowreturnthick-1-b',
 						id: '<portlet:namespace />downloadArticleContentButton',
-						label: '<liferay-ui:message key="download" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 					},
 				</c:if>
 
@@ -74,7 +74,7 @@ if ((article != null) && article.isDraft()) {
 										cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
 										width: 700
 									},
-									title: '<liferay-ui:message key="permissions" />',
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 									uri: '<%= permissionsURL %>'
 								}
 							);
@@ -88,7 +88,7 @@ if ((article != null) && article.isDraft()) {
 
 					},
 					icon: 'key',
-					label: '<liferay-ui:message key="permissions" />'
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>'
 				},
 				</c:if>
 
@@ -98,7 +98,7 @@ if ((article != null) && article.isDraft()) {
 							<portlet:namespace />expireArticle();
 						},
 						icon: 'minusthick',
-						label: '<liferay-ui:message key="expire-this-version" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "expire-this-version") %>'
 					},
 				</c:if>
 
@@ -125,7 +125,7 @@ if ((article != null) && article.isDraft()) {
 							window.location = '<%= viewHistoryURL %>';
 						},
 						icon: 'clock',
-						label: '<liferay-ui:message key="view-history" />'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>'
 					}
 				</c:if>
 			]

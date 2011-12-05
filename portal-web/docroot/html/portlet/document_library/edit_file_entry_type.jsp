@@ -151,10 +151,10 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				showManageTemplates: false,
 				showToolbar: true,
 				storageType: 'xml',
-				structureName: '<liferay-ui:message key="metadata-sets" />',
+				structureName: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',
 				struts_action: '/dynamic_data_mapping/select_structure',
-				title: '<liferay-ui:message key="metadata-sets" />'
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
 			}
 		);
 	}

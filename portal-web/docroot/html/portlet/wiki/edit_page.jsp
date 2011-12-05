@@ -441,7 +441,7 @@ if (Validator.isNull(redirect)) {
 
 		var newFormat = formatSelect.options[formatSelect.selectedIndex].text;
 
-		var confirmMessage = '<liferay-ui:message key="you-may-lose-formatting-when-switching-from-x-to-x" />';
+		var confirmMessage = '<%= UnicodeLanguageUtil.get(pageContext, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 
 		confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
 

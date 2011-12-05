@@ -86,7 +86,7 @@ String[][] categorySections = {mainSections};
 								bodyContent: A.one('#<portlet:namespace />importPage').show(),
 								centered: true,
 								modal: true,
-								title: '<liferay-ui:message key="import" />',
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
 								width: 600
 							}
 						).render();
@@ -143,7 +143,7 @@ String[][] categorySections = {mainSections};
 										{
 											bodyContent: content.show(),
 											centered: true,
-											title: '<liferay-ui:message key="add-page" />',
+											title: '<%= UnicodeLanguageUtil.get(pageContext, "add-page") %>',
 											modal: true,
 											width: 500
 										}
@@ -155,7 +155,7 @@ String[][] categorySections = {mainSections};
 								Liferay.Util.focusFormField(content.one('input:text'));
 							},
 							icon: 'add',
-							label: '<liferay-ui:message key="add-page" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "add-page") %>'
 						},
 					</c:if>
 
@@ -171,7 +171,7 @@ String[][] categorySections = {mainSections};
 								window.open('<%= viewPagesURL %>').focus();
 							},
 							icon: 'search',
-							label: '<liferay-ui:message key="view-pages" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "view-pages") %>'
 						},
 					</c:if>
 
@@ -188,7 +188,7 @@ String[][] categorySections = {mainSections};
 											constrain: true,
 											cssClass: 'lfr-export-dialog',
 											modal: true,
-											title: '<liferay-ui:message key="export" />',
+											title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
 											width: 600
 										}
 									).render();
@@ -222,7 +222,7 @@ String[][] categorySections = {mainSections};
 								exportPopup.io.start();
 							},
 							icon: 'export',
-							label: '<liferay-ui:message key="export" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>'
 						},
 						{
 							handler: function(event) {
@@ -233,7 +233,7 @@ String[][] categorySections = {mainSections};
 											constrain: true,
 											cssClass: 'lfr-import-dialog',
 											modal: true,
-											title: '<liferay-ui:message key="import" />',
+											title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
 											width: 600
 										}
 									).render();
@@ -278,7 +278,7 @@ String[][] categorySections = {mainSections};
 								importPopup.io.start();
 							},
 							icon: 'arrowthick-1-t',
-							label: '<liferay-ui:message key="import" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>'
 						}
 					</c:if>
 				]

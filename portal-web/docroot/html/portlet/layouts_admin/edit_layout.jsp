@@ -195,7 +195,7 @@ String[][] categorySections = {mainSections};
 															{
 																bodyContent: content.show(),
 																centered: true,
-																title: '<liferay-ui:message key="add-child-page" />',
+																title: '<%= UnicodeLanguageUtil.get(pageContext, "add-child-page") %>',
 																modal: true,
 																width: 500
 															}
@@ -207,7 +207,7 @@ String[][] categorySections = {mainSections};
 													Liferay.Util.focusFormField(content.one('input:text'));
 												},
 												icon: 'add',
-												label: '<liferay-ui:message key="add-child-page" />'
+												label: '<%= UnicodeLanguageUtil.get(pageContext, "add-child-page") %>'
 											},
 										</c:if>
 
@@ -221,13 +221,13 @@ String[][] categorySections = {mainSections};
 																width: 700
 															},
 															id: '<portlet:namespace /><%= selPlid %>_permissions',
-															title: '<liferay-ui:message key="permissions" />',
+															title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 															uri: '<%= permissionURL %>'
 														}
 													);
 												},
 												icon: 'permissions',
-												label: '<liferay-ui:message key="permissions" />'
+												label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>'
 											},
 										</c:if>
 
@@ -237,7 +237,7 @@ String[][] categorySections = {mainSections};
 													<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
 												},
 												icon: 'delete',
-												label: '<liferay-ui:message key="delete" />'
+												label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
 											},
 										</c:if>
 
@@ -254,7 +254,7 @@ String[][] categorySections = {mainSections};
 																constrain: true,
 																cssClass: 'lfr-export-dialog',
 																modal: true,
-																title: '<liferay-ui:message key="export" />',
+																title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
 																width: 600
 															}
 														).render();
@@ -289,7 +289,7 @@ String[][] categorySections = {mainSections};
 													exportPopup.io.start();
 												},
 												icon: 'export',
-												label: '<liferay-ui:message key="export" />'
+												label: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>'
 											}
 										</c:if>
 									]

@@ -124,7 +124,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 		saveInstance.on(
 			'click',
 			function(event) {
-				config.dialog.title = '<liferay-ui:message key="rule-groups" />';
+				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-groups") %>';
 
 				config.uri = '<%= selectRuleGroupURL %>';
 
@@ -139,7 +139,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 		managePriorities.on(
 			'click',
 			function(event) {
-				config.dialog.title = '<liferay-ui:message key="rule-groups-priorities" />';
+				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-groups-priorities") %>';
 				config.dialog.width = 460;
 
 				config.uri = '<%= managePrioritiesURL %>';

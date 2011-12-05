@@ -72,7 +72,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 
 			var TPL_TAB_VIEW = '<div id="<portlet:namespace />{pagesTabViewId}"></div>' +
 				'<div class="selected-page-message portlet-msg-alert" id="<portlet:namespace />selectedPageMessage">' +
-					'<liferay-ui:message key="there-is-no-selected-page" />' +
+					'<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>' +
 				'</div>';
 
 			var dialog;
@@ -189,19 +189,19 @@ Group parentGroup = themeDisplay.getParentGroup();
 								{
 									disabled: true,
 									handler: setDisplayPage,
-									label: '<liferay-ui:message key="ok" />'
+									label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
 								},
 								{
 									handler: function(event) {
 										dialog.hide();
 									},
-									label: '<liferay-ui:message key="cancel" />'
+									label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
 								}
 							],
 							bodyContent: bodyContent,
 							cssClass: 'display-page-dialog',
 							resizable: false,
-							title: '<liferay-ui:message key="choose-a-display-page" />',
+							title: '<%= UnicodeLanguageUtil.get(pageContext, "choose-a-display-page") %>',
 							visible: false,
 							width: 450
 						}
@@ -219,7 +219,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 					<c:if test="<%= parentGroup.getPublicLayoutsPageCount() > 0 %>">
 						tabs.push(
 							{
-								label: '<liferay-ui:message key="public-pages" />',
+								label: '<%= UnicodeLanguageUtil.get(pageContext, "public-pages") %>',
 								content: Lang.sub(
 									TPL_TAB_CONTENT,
 									{
@@ -234,7 +234,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 					<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
 						tabs.push(
 							{
-								label: '<liferay-ui:message key="private-pages" />',
+								label: '<%= UnicodeLanguageUtil.get(pageContext, "private-pages") %>',
 								content: Lang.sub(
 									TPL_TAB_CONTENT,
 									{
@@ -351,7 +351,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 						treeContainer.purge(true);
 					}
 
-					displayPageMessage('<liferay-ui:message key="there-is-no-selected-page" />', 'alert');
+					displayPageMessage('<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>', 'alert');
 				}
 				else {
 					loadPages();
@@ -459,7 +459,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 			var setSelectedPage = function(lastSelectedNode) {
 				var disabled = true;
 
-				var messageText = '<liferay-ui:message key="there-is-no-selected-page" />';
+				var messageText = '<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>';
 				var messageType = 'alert';
 
 				if (lastSelectedNode) {
@@ -496,7 +496,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 							icon: 'search',
 							id: '<portlet:namespace />chooseDisplayPage',
 							handler: onSelectDisplayPage,
-							label: '<liferay-ui:message key="select" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "select") %>'
 						}
 					]
 				}

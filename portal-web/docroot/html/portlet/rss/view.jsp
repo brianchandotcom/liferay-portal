@@ -54,9 +54,9 @@ for (int i = 0; i < urls.length; i++) {
 </c:if>
 
 <aui:script use="aui-base">
-	var minusAlt = '<liferay-ui:message key="collapse" />';
+	var minusAlt = '<%= UnicodeLanguageUtil.get(pageContext, "collapse") %>';
 	var minusImage = '01_minus.png';
-	var plusAlt = '<liferay-ui:message key="expand" />';
+	var plusAlt = '<%= UnicodeLanguageUtil.get(pageContext, "expand") %>';
 	var plusImage = '01_plus.png';
 
 	A.all('.<portlet:namespace />entry-expander').on(

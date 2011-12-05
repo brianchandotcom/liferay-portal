@@ -57,7 +57,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 				storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
 				structureName: 'data-definition',
 				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
-				title: '<liferay-ui:message key="data-definitions" />'
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
 			}
 		);
 	});

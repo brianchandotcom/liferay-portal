@@ -47,7 +47,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 		);
 	};
 
-	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<liferay-ui:message key="please-fill-out-all-required-fields" />';
+	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<%= UnicodeLanguageUtil.get(pageContext, "please-fill-out-all-required-fields") %>';
 
 	var DLFileEntryCellEditor = A.Component.create(
 		{
@@ -78,7 +78,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 					instance.toolbar.add(
 						{
 							handler: A.bind(instance._handleChooseEvent, instance),
-							label: '<liferay-ui:message key="choose" />'
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "choose") %>'
 						},
 						1
 					);
@@ -294,7 +294,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 						errorMessage = '<%= LanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>';
 					}
 					else {
-						errorMessage = '<liferay-ui:message key="an-unexpected-error-occurred" />';
+						errorMessage = '<%= UnicodeLanguageUtil.get(pageContext, "an-unexpected-error-occurred") %>';
 					}
 
 					instance._showErrorMessage(errorMessage);
@@ -384,7 +384,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 								{
 									handler: A.bind(instance._handleDownloadEvent, instance),
 									id: 'downloadEvent',
-									label: '<liferay-ui:message key="download" />'
+									label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 								}
 							);
 
@@ -400,7 +400,7 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 										{
 											handler: A.bind(instance._handleDeleteEvent, instance),
 											id: 'deleteEvent',
-											label: '<liferay-ui:message key="delete" />'
+											label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
 										}
 									);
 								}

@@ -174,6 +174,8 @@ public class EditDiscussionAction extends PortletAction {
 			actionRequest, "permissionClassPK");
 		long permissionOwnerId = ParamUtil.getLong(
 			actionRequest, "permissionOwnerId");
+		boolean assetEntryVisible = ParamUtil.getBoolean(
+			actionRequest, "assetEntryVisible", true);
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
@@ -185,6 +187,8 @@ public class EditDiscussionAction extends PortletAction {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBMessage.class.getName(), actionRequest);
+
+		serviceContext.setAssetEntryVisible(assetEntryVisible);
 
 		MBMessage message = null;
 

@@ -264,6 +264,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 				</portlet:actionURL>
 
 				<liferay-ui:discussion
+					assetEntryVisible="<%= false %>"
 					className="<%= WorkflowInstance.class.getName() %>"
 					classPK="<%= workflowTask.getWorkflowInstanceId() %>"
 					formAction="<%= discussionURL %>"

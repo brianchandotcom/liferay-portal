@@ -331,10 +331,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			if (rs.next()) {
 				long fileVersionId = rs.getLong("fileVersionId");
-				long fileEntryId = rs.getLong("fileEntry.fileEntryId");
-				long companyId = rs.getLong("fileEntry.companyId");
-				long groupId = rs.getLong("fileEntry.groupId");
-				long folderId = rs.getLong("fileEntry.folderId");
+				long fileEntryId = rs.getLong("fileEntryId");
+				long companyId = rs.getLong("companyId");
+				long groupId = rs.getLong("groupId");
+				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
 				long largeImageId = rs.getLong("largeImageId");
 				long custom1ImageId = rs.getLong("custom1ImageId");

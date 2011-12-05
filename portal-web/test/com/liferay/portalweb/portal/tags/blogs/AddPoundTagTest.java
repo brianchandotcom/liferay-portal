@@ -85,6 +85,7 @@ public class AddPoundTagTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				selenium.clickAt("//div[3]/div/div/span",
 					RuntimeVariables.replace("Categorization"));
 

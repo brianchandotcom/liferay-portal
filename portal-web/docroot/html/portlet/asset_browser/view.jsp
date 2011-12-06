@@ -26,7 +26,9 @@ String callback = ParamUtil.getString(request, "callback");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_browser/view");
+portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);
+portletURL.setParameter("callback", callback);
 %>
 
 <liferay-ui:header
@@ -84,27 +86,27 @@ portletURL.setParameter("typeSelection", typeSelection);
 				continue;
 			}
 
-			if ((assetEntry.getEntryId() == refererAssetEntryId) || !assetEntry.isVisible()) {
-				continue;
-			}
-
 			assetEntry = assetEntry.toEscapedModel();
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-			StringBundler sb = new StringBundler(9);
+			String rowHREF = null;
 
-			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(callback);
-			sb.append("('");
-			sb.append(assetEntry.getEntryId());
-			sb.append("', '");
-			sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
-			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(assetRenderer.getTitle(locale)));
-			sb.append("');Liferay.Util.getWindow().close();");
+			if ((assetEntry.getEntryId() != refererAssetEntryId) && assetEntry.isVisible()) {
+				StringBundler sb = new StringBundler(9);
 
-			String rowHREF = sb.toString();
+				sb.append("javascript:Liferay.Util.getOpener().");
+				sb.append(callback);
+				sb.append("('");
+				sb.append(assetEntry.getEntryId());
+				sb.append("', '");
+				sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
+				sb.append("', '");
+				sb.append(HtmlUtil.escapeJS(assetRenderer.getTitle(locale)));
+				sb.append("');Liferay.Util.getWindow().close();");
+
+				rowHREF = sb.toString();
+			}
 
 			// Title
 

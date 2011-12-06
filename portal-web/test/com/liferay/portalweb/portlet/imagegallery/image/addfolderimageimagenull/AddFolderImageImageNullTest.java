@@ -97,7 +97,7 @@ public class AddFolderImageImageNullTest extends BaseTestCase {
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"Media files must be one of the following formats: audio/basic, audio/mid, audio/midi, audio/mod, audio/mp3, audio/mpeg, audio/mpeg3, audio/ogg, audio/vorbis, audio/wav, audio/webm, audio/x-mid, audio/x-midi, audio/x-mod, audio/x-mpeg, audio/x-pn-realaudio, audio/x-realaudio, audio/x-wav, image/bmp, image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/x-tiff, video/avi, video/mp4, video/mpeg, video/ogg, video/quicktime, video/webm, video/x-flv, video/x-ms-wmv, video/x-msvideo."),
+				"Media files must be one of the following formats: audio/basic, audio/mid, audio/midi, audio/mod, audio/mp3, audio/mpeg, audio/mpeg3, audio/ogg, audio/vorbis, audio/wav, audio/x-mid, audio/x-midi, audio/x-mod, audio/x-mpeg, audio/x-pn-realaudio, audio/x-realaudio, audio/x-wav, image/bmp, image/gif, image/jpeg, image/png, image/tiff, image/x-ms-bmp, image/x-tiff, video/avi, video/mp4, video/mpeg, video/ogg, video/quicktime, video/x-flv, video/x-ms-wmv, video/x-msvideo."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

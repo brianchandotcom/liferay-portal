@@ -56,7 +56,9 @@ public class LayoutSetBranchLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		validate(groupId, privateLayout, name, master);
+		validate(
+			groupId, LayoutSetBranchConstants.NO_BRANCHES, privateLayout, name,
+			master);
 
 		long layoutSetBranchId = counterLocalService.increment();
 
@@ -301,8 +303,10 @@ public class LayoutSetBranchLocalServiceImpl
 			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
 		validate(
-			layoutSetBranch.getGroupId(), layoutSetBranch.getPrivateLayout(),
-			name, layoutSetBranch.isMaster());
+			layoutSetBranch.getGroupId(),
+			layoutSetBranch.getLayoutSetBranchId(),
+			layoutSetBranch.getPrivateLayout(), name,
+			layoutSetBranch.isMaster());
 
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);
@@ -313,7 +317,8 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, boolean privateLayout, String name, boolean master)
+			long groupId, long layoutSetBranchId, boolean privateLayout,
+			String name, boolean master)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(name) || (name.length() < 4)) {
@@ -338,10 +343,15 @@ public class LayoutSetBranchLocalServiceImpl
 
 		if (master) {
 			try {
-				layoutSetBranchFinder.findByMaster(groupId, privateLayout);
+				LayoutSetBranch masterLayoutSetBranch =
+					layoutSetBranchFinder.findByMaster(groupId, privateLayout);
 
-				throw new LayoutSetBranchNameException(
-					LayoutSetBranchNameException.MASTER);
+				if (layoutSetBranchId !=
+					masterLayoutSetBranch.getLayoutSetBranchId()) {
+
+					throw new LayoutSetBranchNameException(
+						LayoutSetBranchNameException.MASTER);
+				}
 			}
 			catch (NoSuchLayoutSetBranchException nsbe) {
 			}

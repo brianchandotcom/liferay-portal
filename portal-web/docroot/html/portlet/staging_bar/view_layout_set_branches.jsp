@@ -39,6 +39,10 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 		<liferay-ui:message key="a-site-pages-variation-with-that-name-already-exists" />
 	</c:if>
 
+	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.MASTER %>">
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="only-one-site-pages-variation-can-be-the-main-one" />
+	</c:if>
+
 	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_LONG %>">
 		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" />
 	</c:if>

@@ -77,7 +77,7 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		newDLSync.setFileId(nextLong());
 
-		newDLSync.setFileUuid(nextLong());
+		newDLSync.setFileUuid(randomString());
 
 		newDLSync.setRepositoryId(nextLong());
 
@@ -244,7 +244,7 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		dlSync.setFileId(nextLong());
 
-		dlSync.setFileUuid(nextLong());
+		dlSync.setFileUuid(randomString());
 
 		dlSync.setRepositoryId(nextLong());
 

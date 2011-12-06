@@ -86,7 +86,14 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		}
 
 		dlSyncImpl.setFileId(fileId);
-		dlSyncImpl.setFileUuid(fileUuid);
+
+		if (fileUuid == null) {
+			dlSyncImpl.setFileUuid(StringPool.BLANK);
+		}
+		else {
+			dlSyncImpl.setFileUuid(fileUuid);
+		}
+
 		dlSyncImpl.setRepositoryId(repositoryId);
 		dlSyncImpl.setParentFolderId(parentFolderId);
 
@@ -128,7 +135,7 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	public long createDate;
 	public long modifiedDate;
 	public long fileId;
-	public long fileUuid;
+	public String fileUuid;
 	public long repositoryId;
 	public long parentFolderId;
 	public String name;

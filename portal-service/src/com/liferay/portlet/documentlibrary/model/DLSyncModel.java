@@ -134,14 +134,15 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	 *
 	 * @return the file uuid of this d l sync
 	 */
-	public long getFileUuid();
+	@AutoEscape
+	public String getFileUuid();
 
 	/**
 	 * Sets the file uuid of this d l sync.
 	 *
 	 * @param fileUuid the file uuid of this d l sync
 	 */
-	public void setFileUuid(long fileUuid);
+	public void setFileUuid(String fileUuid);
 
 	/**
 	 * Returns the repository ID of this d l sync.

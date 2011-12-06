@@ -151,7 +151,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*
 	* @return the file uuid of this d l sync
 	*/
-	public long getFileUuid() {
+	public java.lang.String getFileUuid() {
 		return _dlSync.getFileUuid();
 	}
 
@@ -160,7 +160,7 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*
 	* @param fileUuid the file uuid of this d l sync
 	*/
-	public void setFileUuid(long fileUuid) {
+	public void setFileUuid(java.lang.String fileUuid) {
 		_dlSync.setFileUuid(fileUuid);
 	}
 

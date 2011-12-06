@@ -522,7 +522,7 @@
 		<!-- Other fields -->
 
 		<column name="fileId" type="long" />
-		<column name="fileUuid" type="long" />
+		<column name="fileUuid" type="String" />
 		<column name="repositoryId" type="long" />
 		<column name="parentFolderId" type="long" />
 		<column name="name" type="String" />

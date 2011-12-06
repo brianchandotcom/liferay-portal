@@ -1559,7 +1559,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="fileId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="fileUuid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fileUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />

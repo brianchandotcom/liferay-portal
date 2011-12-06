@@ -44,6 +44,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setCreateDate(now);
 		dlSync.setModifiedDate(now);
 		dlSync.setFileId(fileId);
+		dlSync.setFileUuid(fileUuid);
 		dlSync.setRepositoryId(repositoryId);
 		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setEvent(DLSyncConstants.EVENT_ADD);

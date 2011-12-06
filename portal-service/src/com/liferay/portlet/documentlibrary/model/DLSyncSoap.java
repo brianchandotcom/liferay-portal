@@ -135,11 +135,11 @@ public class DLSyncSoap implements Serializable {
 		_fileId = fileId;
 	}
 
-	public long getFileUuid() {
+	public String getFileUuid() {
 		return _fileUuid;
 	}
 
-	public void setFileUuid(long fileUuid) {
+	public void setFileUuid(String fileUuid) {
 		_fileUuid = fileUuid;
 	}
 
@@ -196,7 +196,7 @@ public class DLSyncSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _fileId;
-	private long _fileUuid;
+	private String _fileUuid;
 	private long _repositoryId;
 	private long _parentFolderId;
 	private String _name;

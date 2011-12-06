@@ -1076,9 +1076,7 @@ public class PortletURLImpl
 			result = HtmlUtil.escape(result);
 		}
 
-		if (BrowserSnifferUtil.isIe(_request) &&
-			(result.length() > _URL_IE_MAXIMUM_LENGTH)) {
-
+		if (result.length() > _URL_MAXIMUM_LENGTH) {
 			result = shortenURL(result, 2);
 		}
 
@@ -1363,7 +1361,7 @@ public class PortletURLImpl
 		return sb.toString();
 	}
 
-	private static final long _URL_IE_MAXIMUM_LENGTH = 2083;
+	private static final long _URL_MAXIMUM_LENGTH = 2083;
 
 	private static Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 

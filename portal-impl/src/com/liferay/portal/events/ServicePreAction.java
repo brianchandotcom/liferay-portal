@@ -269,6 +269,11 @@ public class ServicePreAction extends Action {
 			request, "doAsUserLanguageId");
 		long doAsGroupId = ParamUtil.getLong(request, "doAsGroupId");
 		long refererPlid = ParamUtil.getLong(request, "refererPlid");
+
+		if (LayoutLocalServiceUtil.fetchLayout(refererPlid) == null) {
+			refererPlid = 0;
+		}
+
 		String controlPanelCategory = ParamUtil.getString(
 			request, "controlPanelCategory");
 

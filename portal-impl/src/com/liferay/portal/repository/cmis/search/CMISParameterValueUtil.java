@@ -14,6 +14,8 @@
 
 package com.liferay.portal.repository.cmis.search;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,21 +39,25 @@ public class CMISParameterValueUtil {
 	public static String formatParameterValue(
 		String field, String value, boolean wildcard) {
 
-		if (field.equals(Field.CREATE_DATE)) {
+		if (field.equals(Field.CREATE_DATE) ||
+			field.equals(Field.MODIFIED_DATE)) {
+
 			try {
 				DateFormat searchSimpleDateFormat =
 					DateFormatFactoryUtil.getSimpleDateFormat(
 						PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
-				Date createDate = searchSimpleDateFormat.parse(value);
+				Date date = searchSimpleDateFormat.parse(value);
 
 				DateFormat cmisSimpleDateFormat =
 					DateFormatFactoryUtil.getSimpleDateFormat(
-						"yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
+						"yyyy-MM-dd'T'HH:mm:ss.000'Z'");
 
-				value = cmisSimpleDateFormat.format(createDate);
+				value = cmisSimpleDateFormat.format(date);
 			}
 			catch (ParseException pe) {
+				_log.warn(
+					"Unable to parse date " + value + " for field" + field);
 			}
 		}
 		else {
@@ -60,12 +66,15 @@ public class CMISParameterValueUtil {
 
 			if (wildcard) {
 				value = StringUtil.replace(value, StringPool.PERCENT, "\\%");
-				value = StringPool.PERCENT.concat(value).concat(
-					StringPool.PERCENT);
+				value = StringUtil.replace(
+					value, StringPool.STAR, StringPool.PERCENT);
 			}
 		}
 
 		return value;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CMISParameterValueUtil.class);
 
 }

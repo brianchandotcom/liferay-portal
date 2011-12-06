@@ -234,6 +234,14 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		LuceneHelperUtil.addTerm(_booleanQuery, field, value, like);
 	}
 
+	public void addTerm(
+		String field, String value, boolean like,
+		BooleanClauseOccur booleanClauseOccur) {
+
+		LuceneHelperUtil.addTerm(
+			_booleanQuery, field, value, like, booleanClauseOccur);
+	}
+
 	public List<BooleanClause> clauses() {
 		List<org.apache.lucene.search.BooleanClause> luceneClauses =
 			_booleanQuery.clauses();

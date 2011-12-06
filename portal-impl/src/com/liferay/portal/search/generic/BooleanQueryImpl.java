@@ -287,6 +287,13 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	public void addTerm(String field, String value, boolean like) {
+		addTerm(field, value, like, BooleanClauseOccur.SHOULD);
+	}
+
+	public void addTerm(
+		String field, String value, boolean like,
+		BooleanClauseOccur booleanClauseOccur) {
+
 		Query query = null;
 
 		if (like) {
@@ -298,7 +305,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 				new QueryTermImpl(field, String.valueOf(value)));
 		}
 
-		add(query, BooleanClauseOccur.SHOULD);
+		add(query, booleanClauseOccur);
 	}
 
 	public void addTerm(

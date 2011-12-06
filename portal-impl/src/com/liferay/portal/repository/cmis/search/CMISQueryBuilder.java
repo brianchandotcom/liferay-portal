@@ -37,8 +37,10 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.chemistry.opencmis.commons.PropertyIds;
@@ -82,24 +84,20 @@ public class CMISQueryBuilder {
 		}
 
 		if ((sorts != null) && (sorts.length > 0)) {
-			for (int i = 0; i < sorts.length; i++) {
-				Sort sort = sorts[i];
+			int i = 0;
+
+			for (Sort sort : sorts) {
+				String fieldName = sort.getFieldName();
+
+				if (!_supportedFields.contains(fieldName)) {
+					continue;
+				}
 
 				if (i > 0) {
 					sb.append(", ");
 				}
 
-				String fieldName = sort.getFieldName();
-
-				if (fieldName.equals(Field.CREATE_DATE)) {
-					sb.append(PropertyIds.CREATION_DATE);
-				}
-				else if (fieldName.equals(Field.MODIFIED_DATE)) {
-					sb.append(PropertyIds.LAST_MODIFICATION_DATE);
-				}
-				else if (fieldName.equals(Field.TITLE)) {
-					sb.append(PropertyIds.NAME);
-				}
+				sb.append(_fieldNameMap.get(fieldName));
 
 				if (sort.isReverse()) {
 					sb.append(" DESC");
@@ -107,6 +105,8 @@ public class CMISQueryBuilder {
 				else {
 					sb.append(" ASC");
 				}
+
+				i++;
 			}
 		}
 		else if (queryConfig.isScoreEnabled()) {
@@ -151,13 +151,6 @@ public class CMISQueryBuilder {
 				_log.error(se, se);
 			}
 		}
-		else if (field.equals(Field.TITLE)) {
-			value = CMISParameterValueUtil.formatParameterValue(
-				field, value, wildcard);
-
-			cmisCriterion = new CMISSimpleExpression(
-				PropertyIds.NAME, value, cmisSimpleExpressionOperator);
-		}
 		else if (field.equals(Field.USER_ID)) {
 			try {
 				long userId = GetterUtil.getLong(value);
@@ -180,12 +173,12 @@ public class CMISQueryBuilder {
 				_log.error(se, se);
 			}
 		}
-		else if (field.equals(Field.USER_NAME)) {
+		else {
 			value = CMISParameterValueUtil.formatParameterValue(
 				field, value, wildcard);
 
 			cmisCriterion = new CMISSimpleExpression(
-				PropertyIds.CREATED_BY, value, cmisSimpleExpressionOperator);
+				_fieldNameMap.get(field), value, cmisSimpleExpressionOperator);
 		}
 
 		return cmisCriterion;
@@ -257,10 +250,17 @@ public class CMISQueryBuilder {
 				return;
 			}
 
+			String fieldName = termRangeQuery.getField();
+
+			String cmisField = _fieldNameMap.get(fieldName);
+			String cmisLowerTerm = CMISParameterValueUtil.formatParameterValue(
+				fieldName, termRangeQuery.getLowerTerm());
+			String cmisUpperTerm = CMISParameterValueUtil.formatParameterValue(
+				fieldName, termRangeQuery.getUpperTerm());
+
 			CMISCriterion cmisCriterion = new CMISBetweenExpression(
-				termRangeQuery.getField(), termRangeQuery.getLowerTerm(),
-				termRangeQuery.getUpperTerm(), termRangeQuery.includesLower(),
-				termRangeQuery.includesUpper());
+				cmisField, cmisLowerTerm, cmisUpperTerm,
+				termRangeQuery.includesLower(), termRangeQuery.includesUpper());
 
 			criterion.add(cmisCriterion);
 		}
@@ -285,13 +285,24 @@ public class CMISQueryBuilder {
 
 	private static Log _log = LogFactoryUtil.getLog(CMISQueryBuilder.class);
 
+	private static Map<String, String> _fieldNameMap;
 	private static Set<String> _supportedFields;
 
 	static {
+		_fieldNameMap = new HashMap<String, String>();
+
+		_fieldNameMap.put(Field.CREATE_DATE, PropertyIds.CREATION_DATE);
+		_fieldNameMap.put(
+			Field.MODIFIED_DATE, PropertyIds.LAST_MODIFICATION_DATE);
+		_fieldNameMap.put(Field.NAME, PropertyIds.NAME);
+		_fieldNameMap.put(Field.TITLE, PropertyIds.NAME);
+		_fieldNameMap.put(Field.USER_NAME, PropertyIds.CREATED_BY);
+
 		_supportedFields = new HashSet<String>();
 
 		_supportedFields.add(Field.CREATE_DATE);
 		_supportedFields.add(Field.FOLDER_ID);
+		_supportedFields.add(Field.MODIFIED_DATE);
 		_supportedFields.add(Field.NAME);
 		_supportedFields.add(Field.TITLE);
 		_supportedFields.add(Field.USER_ID);

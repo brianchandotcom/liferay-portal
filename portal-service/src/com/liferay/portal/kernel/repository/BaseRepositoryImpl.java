@@ -19,10 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -34,7 +33,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 
 import java.io.File;
@@ -214,12 +212,10 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		throws PortalException, SystemException;
 
 	public Hits search(SearchContext searchContext) throws SearchException {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
-			DLFileEntryConstants.getClassName());
-
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
 
-		BooleanQuery fullQuery = indexer.getFullQuery(searchContext);
+		BooleanQuery fullQuery = RepositorySearchQueryBuilderUtil.getFullQuery(
+			searchContext);
 
 		return search(searchContext, fullQuery);
 	}

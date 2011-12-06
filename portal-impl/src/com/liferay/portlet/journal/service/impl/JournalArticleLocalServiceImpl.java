@@ -1638,6 +1638,8 @@ public class JournalArticleLocalServiceImpl
 		String content = null;
 		boolean andOperator = false;
 
+		params.put("keywords", keywords);
+
 		if (Validator.isNotNull(keywords)) {
 			articleId = keywords;
 			title = keywords;
@@ -1687,6 +1689,12 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setGroupIds(new long[] {groupId});
 			searchContext.setEnd(end);
 			searchContext.setSorts(new Sort[] {sort});
+
+			String keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
 
 			QueryConfig queryConfig = new QueryConfig();
 
@@ -2077,7 +2085,7 @@ public class JournalArticleLocalServiceImpl
 				article, serviceContext);
 		}
 		else if (article.getVersion() ==
-				 	JournalArticleConstants.VERSION_DEFAULT) {
+					 JournalArticleConstants.VERSION_DEFAULT) {
 
 			// Indexer
 
@@ -2800,7 +2808,7 @@ public class JournalArticleLocalServiceImpl
 
 			byte[] bytes = images.get(elInstanceId + "_" + elName + elLanguage);
 
-			if (bytes != null && (bytes.length > 0)) {
+			if ((bytes != null) && (bytes.length > 0)) {
 				dynamicContent.setText(elContent);
 				dynamicContent.addAttribute("id", String.valueOf(imageId));
 

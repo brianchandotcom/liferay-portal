@@ -628,6 +628,13 @@ public interface ResourcePermissionLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean[] hasResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on the resource.

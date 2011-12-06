@@ -230,15 +230,25 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		List<Role> roles = ResourceActionsUtil.getRoles(
 			companyId, group, className, null);
 
+		long[] roleIdsArray = new long[roles.size()];
+
+		for (int i = 0; i < roleIdsArray.length; i++) {
+			roleIdsArray[i] = roles.get(i).getRoleId();
+		}
+
+		boolean[] hasRoles =
+			ResourcePermissionLocalServiceUtil.hasResourcePermissions(
+				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+				classPK, roleIdsArray, ActionKeys.VIEW);
+
 		List<Long> roleIds = new ArrayList<Long>();
 		List<String> groupRoleIds = new ArrayList<String>();
 
-		for (Role role : roles) {
-			long roleId = role.getRoleId();
+		for (int i = 0; i < hasRoles.length; i++) {
+			if (hasRoles[i]) {
+				Role role = roles.get(i);
 
-			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
-					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-					classPK, roleId, ActionKeys.VIEW)) {
+				long roleId = role.getRoleId();
 
 				if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 					(role.getType() == RoleConstants.TYPE_SITE)) {

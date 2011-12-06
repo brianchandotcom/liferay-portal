@@ -34,6 +34,7 @@ public class UpgradeExpando extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		updateColumnTypeSettingsIndexable();
 		updateColumnTypeSettingsSelection();
+		updateColumnTypes();
 	}
 
 	protected void updateColumnTypeSettings(long columnId, String typeSettings)
@@ -147,6 +148,35 @@ public class UpgradeExpando extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateColumnTypes() throws Exception {
+		updateColumnTypes(13, 15);
+		updateColumnTypes(14, 16);
+		updateColumnTypes(15, 17);
+		updateColumnTypes(16, 18);
+	}
+
+	protected void updateColumnTypes(int oldColumnType, int newColumnType)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update ExpandoColumn set type_ = ? where type_ = ?");
+
+			ps.setInt(1, newColumnType);
+			ps.setInt(2, oldColumnType);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 

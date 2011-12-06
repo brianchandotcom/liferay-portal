@@ -211,7 +211,7 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("True"),
 			selenium.getText("//td[1]/div"));
-		assertEquals(RuntimeVariables.replace("2011-11-10"),
+		assertEquals(RuntimeVariables.replace("2011-12-10"),
 			selenium.getText("//td[2]/div"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//td[3]/div"));

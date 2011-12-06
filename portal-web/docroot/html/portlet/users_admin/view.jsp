@@ -92,7 +92,7 @@ String portletURLString = portletURL.toString();
 	function <portlet:namespace />doDeleteOrganization(className, id) {
 		var ids = id;
 
-		var status = <%= WorkflowConstants.STATUS_INACTIVE %>
+		var status = <%= WorkflowConstants.STATUS_INACTIVE %>;
 
 		<portlet:namespace />getUsersCount(
 			className, ids, status,

@@ -173,8 +173,6 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 	</liferay-util:buffer>
 
 	<liferay-util:buffer var="organizationsTree">
-		<aui:input name="deleteOrganizationIds" type="hidden" />
-		<aui:input name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 		<%
 		SearchContainer organizationSearch = new OrganizationSearch(renderRequest, currentURLObj);
@@ -305,6 +303,9 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 				}
 			}
 			%>
+
+			<aui:input name="deleteOrganizationIds" type="hidden" />
+			<aui:input name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 			<c:if test="<%= showOrganizations %>">
 				<liferay-util:buffer var="organizationsPanelTitle">
@@ -452,6 +453,7 @@ private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Lo
 	return leftAndRightParentOrganizationIds;
 }
 %>
+
 <c:if test="<%= organization == null %>">
 	<aui:script use="liferay-panel">
 		var panelContainer = Liferay.Panel.get('usersAdminOrganizationPanelContainer');

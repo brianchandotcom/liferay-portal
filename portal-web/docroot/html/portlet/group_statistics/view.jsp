@@ -20,6 +20,7 @@
 for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
 	String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + displayActivityCounterNameIndex, "area");
+	int chartWidth = PrefsParamUtil.getInteger(preferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
 	String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
 
 	List<AssetTag> assetTags = null;
@@ -31,7 +32,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	int dataSize = 0;
 	int displayHeight = 80;
 
-	if (chartType.equals("tagCloud")) {
+	if (chartType.equals("tag-cloud")) {
 		if (dataRange.equals("year")) {
 			assetTags = AssetTagLocalServiceUtil.getTags(scopeGroupId, displayActivityCounterName, SocialCounterPeriodUtil.getFirstActivityDayOfYear(), SocialCounterPeriodUtil.getEndPeriod());
 		}
@@ -73,14 +74,14 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 
 	<div class="group-statistics-container">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "groupStatisticsPanel" + displayActivityCounterNameIndex %>' persistState="<%= true %>" title="<%= title %>">
-			<div class="group-statistics-body" style="height: <%= displayHeight %>px;">
+			<div class="group-statistics-body chart-<%= chartType %>" style="height: <%= displayHeight %>px;">
 				<c:choose>
 					<c:when test="<%= dataSize > 0 %>">
 						<c:choose>
 							<c:when test='<%= chartType.equals("pie") %>'>
 								<%@ include file="/html/portlet/group_statistics/chart/pie.jspf" %>
 							</c:when>
-							<c:when test='<%= chartType.equals("tagCloud") %>'>
+							<c:when test='<%= chartType.equals("tag-cloud") %>'>
 								<%@ include file="/html/portlet/group_statistics/chart/tag_cloud.jspf" %>
 							</c:when>
 							<c:otherwise>

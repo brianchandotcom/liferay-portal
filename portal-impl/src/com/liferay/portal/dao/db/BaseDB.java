@@ -964,7 +964,7 @@ public abstract class BaseDB implements DB {
 	protected static String[] TEMPLATE = {
 		"##", "TRUE", "FALSE",
 		"'01/01/1970'", "CURRENT_TIMESTAMP",
-		" BLOB", " BOOLEAN", " DATE",
+		" BLOB", " SBLOB", " BOOLEAN", " DATE",
 		" DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR",
 		" IDENTITY", "COMMIT_TRANSACTION"

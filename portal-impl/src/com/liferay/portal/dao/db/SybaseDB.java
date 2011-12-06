@@ -165,7 +165,7 @@ public class SybaseDB extends BaseDB {
 	private static String[] _SYBASE = {
 		"--", "1", "0",
 		"'19700101'", "getdate()",
-		" image", " int", " datetime",
+		" image", " image", " int", " datetime",
 		" float", " int", " decimal(20,0)",
 		" varchar(1000)", " text", " varchar",
 		"  identity(1,1)", "go"

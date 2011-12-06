@@ -110,7 +110,7 @@ public class HypersonicDB extends BaseDB {
 	private static String[] _HYPERSONIC = {
 		"//", "true", "false",
 		"'1970-01-01 00:00:00'", "now()",
-		" blob", " bit", " timestamp",
+		" blob", " blob", " bit", " timestamp",
 		" double", " int", " bigint",
 		" longvarchar", " longvarchar", " varchar",
 		"", "commit"

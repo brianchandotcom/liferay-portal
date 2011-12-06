@@ -179,7 +179,7 @@ public class InformixDB extends BaseDB {
 	private static String[] _INFORMIX_TEMPLATE = {
 		"--", "'T'", "'F'",
 		"'1970-01-01'", "CURRENT YEAR TO FRACTION",
-		" blob", " boolean", " datetime YEAR TO FRACTION",
+		" blob", " blob", " boolean", " datetime YEAR TO FRACTION",
 		" float", " int", " int8",
 		" lvarchar", " text", " varchar",
 		"", "commit"

@@ -224,7 +224,7 @@ public class DB2DB extends BaseDB {
 	private static String[] _DB2 = {
 		"--", "1", "0",
 		"'1970-01-01-00.00.00.000000'", "current timestamp",
-		" blob", " smallint", " timestamp",
+		" blob", " blob", " smallint", " timestamp",
 		" double", " integer", " bigint",
 		" varchar(500)", " clob", " varchar",
 		" generated always as identity", "commit"

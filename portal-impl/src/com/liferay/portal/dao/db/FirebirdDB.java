@@ -132,7 +132,7 @@ public class FirebirdDB extends BaseDB {
 	private static String[] _FIREBIRD = {
 		"--", "1", "0",
 		"'01/01/1970'", "current_timestamp",
-		" blob", " smallint", " timestamp",
+		" blob", " blob", " smallint", " timestamp",
 		" double precision", " integer", " int64",
 		" varchar(4000)", " blob", " varchar",
 		"", "commit"

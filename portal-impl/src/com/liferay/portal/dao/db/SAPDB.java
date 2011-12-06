@@ -101,7 +101,7 @@ public class SAPDB extends BaseDB {
 	private static String[] _SAP = {
 		"##", "TRUE", "FALSE",
 		"'1970-01-01 00:00:00.000000'", "timestamp",
-		" blob", " boolean", " timestamp",
+		" blob", " blob", " boolean", " timestamp",
 		" float", " int", " bigint",
 		" varchar", " varchar", " varchar",
 		"", "commit"

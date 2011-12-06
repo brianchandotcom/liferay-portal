@@ -7,7 +7,7 @@ create table QUARTZ_JOB_DETAILS (
 	IS_VOLATILE BOOLEAN not null,
 	IS_STATEFUL BOOLEAN not null,
 	REQUESTS_RECOVERY BOOLEAN not null,
-	JOB_DATA BLOB null,
+	JOB_DATA SBLOB null,
 	primary key (JOB_NAME, JOB_GROUP)
 );
 
@@ -34,7 +34,7 @@ create table QUARTZ_TRIGGERS (
 	END_TIME LONG null,
 	CALENDAR_NAME VARCHAR(80) null,
 	MISFIRE_INSTR INTEGER null,
-	JOB_DATA BLOB null,
+	JOB_DATA SBLOB null,
 	primary key (TRIGGER_NAME, TRIGGER_GROUP)
 );
 
@@ -58,7 +58,7 @@ create table QUARTZ_CRON_TRIGGERS (
 create table QUARTZ_BLOB_TRIGGERS (
 	TRIGGER_NAME VARCHAR(80) not null,
 	TRIGGER_GROUP VARCHAR(80) not null,
-	BLOB_DATA BLOB null,
+	BLOB_DATA SBLOB null,
 	primary key (TRIGGER_NAME, TRIGGER_GROUP)
 );
 
@@ -71,7 +71,7 @@ create table QUARTZ_TRIGGER_LISTENERS (
 
 create table QUARTZ_CALENDARS (
 	CALENDAR_NAME VARCHAR(80) not null primary key,
-	CALENDAR BLOB not null
+	CALENDAR SBLOB not null
 );
 
 create table QUARTZ_PAUSED_TRIGGER_GRPS (

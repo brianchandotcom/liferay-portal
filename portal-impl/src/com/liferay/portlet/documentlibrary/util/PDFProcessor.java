@@ -366,7 +366,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"ImageMagick generated a thumbnail for " +
-						fileVersion.getTitle() + " in " + stopWatch.getTime());
+						fileVersion.getTitle() + " in " + stopWatch);
 			}
 		}
 	}

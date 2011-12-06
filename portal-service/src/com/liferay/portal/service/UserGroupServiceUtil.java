@@ -48,7 +48,7 @@ public class UserGroupServiceUtil {
 	assign group members
 	* @throws SystemException if a system exception occurred
 	*/
- 	public static void addGroupUserGroups(long groupId, long[] userGroupIds)
+	public static void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().addGroupUserGroups(groupId, userGroupIds);

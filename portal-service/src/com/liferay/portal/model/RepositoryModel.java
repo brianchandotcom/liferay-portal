@@ -15,6 +15,7 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -36,7 +37,7 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.RepositoryModelImpl
  * @generated
  */
-public interface RepositoryModel extends BaseModel<Repository> {
+public interface RepositoryModel extends BaseModel<Repository>, GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -56,6 +57,21 @@ public interface RepositoryModel extends BaseModel<Repository> {
 	 * @param primaryKey the primary key of this repository
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this repository.
+	 *
+	 * @return the uuid of this repository
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this repository.
+	 *
+	 * @param uuid the uuid of this repository
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the repository ID of this repository.
@@ -98,6 +114,50 @@ public interface RepositoryModel extends BaseModel<Repository> {
 	 * @param companyId the company ID of this repository
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this repository.
+	 *
+	 * @return the user ID of this repository
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this repository.
+	 *
+	 * @param userId the user ID of this repository
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this repository.
+	 *
+	 * @return the user uuid of this repository
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this repository.
+	 *
+	 * @param userUuid the user uuid of this repository
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this repository.
+	 *
+	 * @return the user name of this repository
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this repository.
+	 *
+	 * @param userName the user name of this repository
+	 */
+	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this repository.

@@ -560,6 +560,8 @@ create index IX_11FB3E42 on Region (countryId, active_);
 create index IX_8BD6BCA7 on Release_ (servletContextName);
 
 create index IX_5253B1FA on Repository (groupId);
+create index IX_74C17B04 on Repository (uuid_);
+create unique index IX_11641E26 on Repository (uuid_, groupId);
 
 create index IX_B7034B27 on RepositoryEntry (repositoryId);
 create unique index IX_9BDCF489 on RepositoryEntry (repositoryId, mappedId);

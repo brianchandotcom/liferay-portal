@@ -445,6 +445,20 @@ public abstract class RepositoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the repository with the UUID in the group.
+	 *
+	 * @param uuid the UUID of repository
+	 * @param groupId the group id of the repository
+	 * @return the repository
+	 * @throws PortalException if a repository with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Repository getRepositoryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException, SystemException {
+		return repositoryPersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the repositories.
 	 *
 	 * <p>

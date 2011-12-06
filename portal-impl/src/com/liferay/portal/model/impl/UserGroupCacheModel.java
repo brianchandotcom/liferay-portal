@@ -31,7 +31,7 @@ import java.io.Serializable;
 public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{userGroupId=");
 		sb.append(userGroupId);
@@ -43,6 +43,10 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable 
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", publicLayoutSetPrototypeId=");
+		sb.append(publicLayoutSetPrototypeId);
+		sb.append(", privateLayoutSetPrototypeId=");
+		sb.append(privateLayoutSetPrototypeId);
 		sb.append(", addedByLDAPImport=");
 		sb.append(addedByLDAPImport);
 		sb.append("}");
@@ -71,6 +75,8 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable 
 			userGroupImpl.setDescription(description);
 		}
 
+		userGroupImpl.setPublicLayoutSetPrototypeId(publicLayoutSetPrototypeId);
+		userGroupImpl.setPrivateLayoutSetPrototypeId(privateLayoutSetPrototypeId);
 		userGroupImpl.setAddedByLDAPImport(addedByLDAPImport);
 
 		userGroupImpl.resetOriginalValues();
@@ -83,5 +89,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable 
 	public long parentUserGroupId;
 	public String name;
 	public String description;
+	public long publicLayoutSetPrototypeId;
+	public long privateLayoutSetPrototypeId;
 	public boolean addedByLDAPImport;
 }

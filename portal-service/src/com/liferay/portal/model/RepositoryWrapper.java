@@ -55,6 +55,24 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	/**
+	* Returns the uuid of this repository.
+	*
+	* @return the uuid of this repository
+	*/
+	public java.lang.String getUuid() {
+		return _repository.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this repository.
+	*
+	* @param uuid the uuid of this repository
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_repository.setUuid(uuid);
+	}
+
+	/**
 	* Returns the repository ID of this repository.
 	*
 	* @return the repository ID of this repository
@@ -106,6 +124,62 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	*/
 	public void setCompanyId(long companyId) {
 		_repository.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this repository.
+	*
+	* @return the user ID of this repository
+	*/
+	public long getUserId() {
+		return _repository.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this repository.
+	*
+	* @param userId the user ID of this repository
+	*/
+	public void setUserId(long userId) {
+		_repository.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this repository.
+	*
+	* @return the user uuid of this repository
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repository.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this repository.
+	*
+	* @param userUuid the user uuid of this repository
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_repository.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this repository.
+	*
+	* @return the user name of this repository
+	*/
+	public java.lang.String getUserName() {
+		return _repository.getUserName();
+	}
+
+	/**
+	* Sets the user name of this repository.
+	*
+	* @param userName the user name of this repository
+	*/
+	public void setUserName(java.lang.String userName) {
+		_repository.setUserName(userName);
 	}
 
 	/**

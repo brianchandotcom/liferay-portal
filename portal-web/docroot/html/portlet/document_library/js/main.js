@@ -80,6 +80,8 @@ AUI().add(
 
 		var SRC_HISTORY = 2;
 
+		var TOUCH = A.UA.touch;
+
 		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
 
 		var VIEW_ADD_BUTTON = 'viewAddButton';
@@ -495,7 +497,7 @@ AUI().add(
 							]
 						);
 
-						if (A.UA.mobile) {
+						if (TOUCH) {
 							instance._dragTask = A.debounce(
 								function(entryLink){
 									if (entryLink) {
@@ -725,7 +727,7 @@ AUI().add(
 					_onDragStart: function(event) {
 						var instance = this;
 
-						if (A.UA.mobile) {
+						if (instance._dragTask) {
 							instance._dragTask.cancel();
 						}
 

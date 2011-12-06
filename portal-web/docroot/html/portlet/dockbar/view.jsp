@@ -198,28 +198,31 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			String backURL = null;
 
 			if (themeDisplay.getRefererPlid() > 0) {
-				Layout refererLayout = LayoutLocalServiceUtil.getLayout(themeDisplay.getRefererPlid());
+				Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(themeDisplay.getRefererPlid());
 
-				Group refererGroup = refererLayout.getGroup();
+				if (refererLayout != null) {
+					Group refererGroup = refererLayout.getGroup();
 
-				refererGroupDescriptiveName = refererGroup.getDescriptiveName();
+					refererGroupDescriptiveName = refererGroup.getDescriptiveName();
 
-				if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
-					if (refererLayout.isPublicLayout()) {
-						refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-public-pages");
+					if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
+						if (refererLayout.isPublicLayout()) {
+							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-public-pages");
+						}
+						else {
+							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-private-pages");
+						}
 					}
-					else {
-						refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-private-pages");
+
+					backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
+
+					if (!CookieKeys.hasSessionId(request)) {
+						backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());
 					}
-				}
-
-				backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
-
-				if (!CookieKeys.hasSessionId(request)) {
-					backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());
 				}
 			}
-			else {
+
+			if (Validator.isNull(refererGroupDescriptiveName) || Validator.isNull(backURL)) {
 				refererGroupDescriptiveName = themeDisplay.getAccount().getName();
 				backURL = themeDisplay.getURLHome();
 			}

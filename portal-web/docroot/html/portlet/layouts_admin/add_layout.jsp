@@ -89,12 +89,12 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 				</aui:select>
 
-				<aui:input id="addLayoutHidden" name="hidden" />
-
 				<c:if test="<%= (selLayout != null) && selLayout.isTypePortlet() %>">
 					<aui:input label="copy-parent" name="inheritFromParentLayoutId" type="checkbox" />
 				</c:if>
 			</div>
+
+			<aui:input id="addLayoutHidden" name="hidden" />
 		</aui:fieldset>
 
 		<aui:button-row>

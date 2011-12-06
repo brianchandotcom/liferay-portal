@@ -309,13 +309,14 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(8);
 
-			sb.append("select fileVersionId, fileEntry.fileEntryId, ");
-			sb.append("fileEntry.groupId, fileEntry.companyId, ");
-			sb.append("fileEntry.folderId, name, largeImageId, smallImageId, ");
-			sb.append("custom1ImageId, custom2ImageId from DLFileVersion ");
-			sb.append("fileVersion, DLFileEntry fileEntry where ");
-			sb.append("fileEntry.fileEntryId = fileVersion.fileEntryId and ");
-			sb.append("(largeImageId = ? or smallImageId = ? or ");
+			sb.append("select fileVersionId, fileEntry.fileEntryId ");
+			sb.append("as fileEntryId, fileEntry.groupId as groupId, ");
+			sb.append("fileEntry.companyId as companyId, fileEntry.folderId ");
+			sb.append("as folderId, name, largeImageId, smallImageId, ");
+			sb.append("custom1ImageId, custom2ImageId from ");
+			sb.append("DLFileVersion fileVersion, DLFileEntry fileEntry ");
+			sb.append("where fileEntry.fileEntryId = fileVersion.fileEntryId ");
+			sb.append("and (largeImageId = ? or smallImageId = ? or ");
 			sb.append("custom1ImageId = ? or custom2ImageId = ?)");
 
 			String sql = sb.toString();

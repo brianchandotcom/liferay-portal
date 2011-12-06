@@ -26,6 +26,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Resource;
+import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceCode;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
@@ -251,11 +252,23 @@ public class VerifyPermission extends VerifyProcess {
 						resourcePermission.getRoleId());
 			}
 			catch (Exception e) {
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(
-					resourcePermission.getCompanyId(), Group.class.getName(),
-					resourcePermission.getScope(),
-					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId(), new String[0]);
+				List<ResourceAction> resourceActions =
+					ResourceActionLocalServiceUtil.getResourceActions(
+						Group.class.getName());
+
+				if (resourceActions.size() > 0) {
+					String[] actionIds = new String[resourceActions.size()];
+
+					for (int i = 0; i < resourceActions.size(); i++) {
+						actionIds[i] = resourceActions.get(i).getActionId();
+					}
+
+					ResourcePermissionLocalServiceUtil.setResourcePermissions(
+						resourcePermission.getCompanyId(),
+						Group.class.getName(), resourcePermission.getScope(),
+						resourcePermission.getPrimKey(),
+						resourcePermission.getRoleId(), actionIds);
+				}
 
 				groupResourcePermission =
 					ResourcePermissionLocalServiceUtil.getResourcePermission(

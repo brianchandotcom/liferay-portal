@@ -239,6 +239,8 @@ public class VerifyPermission extends VerifyProcess {
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
 
+		String[] actionIds = new String[] {null};
+
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			ResourcePermission groupResourcePermission = null;
 
@@ -255,7 +257,7 @@ public class VerifyPermission extends VerifyProcess {
 					resourcePermission.getCompanyId(), Group.class.getName(),
 					resourcePermission.getScope(),
 					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId(), new String[0]);
+					resourcePermission.getRoleId(), actionIds);
 
 				groupResourcePermission =
 					ResourcePermissionLocalServiceUtil.getResourcePermission(

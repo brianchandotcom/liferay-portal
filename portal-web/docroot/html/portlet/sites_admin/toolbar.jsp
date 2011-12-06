@@ -18,6 +18,8 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+
+String redirect = HttpUtil.removeParameter(currentURL, renderResponse.getNamespace() + "redirect");
 %>
 
 <div class="lfr-portlet-toolbar">
@@ -38,7 +40,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<liferay-portlet:renderURL varImpl="addSiteURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 		</liferay-portlet:renderURL>
 
 		<c:choose>
@@ -75,8 +77,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 					<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
 						<liferay-portlet:renderURL varImpl="manageSiteTemplateURL" portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>">
 							<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="backURL" value="<%= currentURL %>" />
+							<portlet:param name="redirect" value="<%= redirect %>" />
+							<portlet:param name="backURL" value="<%= redirect %>" />
 						</liferay-portlet:renderURL>
 
 						<liferay-ui:icon

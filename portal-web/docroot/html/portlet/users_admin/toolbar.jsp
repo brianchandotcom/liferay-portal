@@ -18,6 +18,8 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
+
+String redirect = HttpUtil.removeParameter(currentURL, renderResponse.getNamespace() + "redirect");
 %>
 
 <div class="lfr-portlet-toolbar">
@@ -36,7 +38,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) %>">
 				<portlet:renderURL var="addUserURL">
 					<portlet:param name="struts_action" value="/users_admin/edit_user" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
 				</portlet:renderURL>
 
 				<liferay-ui:icon
@@ -54,7 +56,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 
 					<portlet:renderURL var="addOrganizationURL">
 						<portlet:param name="struts_action" value="/users_admin/edit_organization" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="type" value="<%= organizationType %>" />
 					</portlet:renderURL>
 
@@ -75,7 +77,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.EXPORT_USER) %>">
 		<portlet:renderURL var="addUserURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button export-button"><a href="javascript:<portlet:namespace />exportUsers();"><liferay-ui:message key="export-all-users" /></a></span>

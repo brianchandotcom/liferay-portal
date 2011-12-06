@@ -50,7 +50,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		extension = PhoneNumberUtil.strip(extension);
 
 		validate(
-			0, user.getCompanyId(), classNameId, classPK, number, extension, 
+			0, user.getCompanyId(), classNameId, classPK, number, extension,
 			typeId, primary);
 
 		long phoneId = counterLocalService.increment();
@@ -151,8 +151,8 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		if (Validator.isNull(number)) {
 			throw new PhoneNumberException(PhoneNumberException.PHONE_NUMBER);
 		}
-		
-		if (!Validator.isNumber(extension)) {
+
+		if (Validator.isNotNull(extension) && !Validator.isNumber(extension)) {
 			throw new PhoneNumberException(
 				PhoneNumberException.PHONE_EXCEPTION);
 		}

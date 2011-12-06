@@ -24,7 +24,7 @@ public class PhoneNumberException extends PortalException {
 	public static final int PHONE_NUMBER = 1;
 
 	public static final int PHONE_EXCEPTION = 2;
-	
+
 	public PhoneNumberException(int type) {
 		_type = type;
 	}
@@ -34,4 +34,5 @@ public class PhoneNumberException extends PortalException {
 	}
 
 	private int _type;
+
 }

@@ -576,7 +576,7 @@ public class JSONServiceAction extends JSONAction {
 		}
 	}
 
-	private static final String _REROUTE_PATH = "/json";
+	private static final String _REROUTE_PATH = "/api/json";
 
 	private static Log _log = LogFactoryUtil.getLog(JSONServiceAction.class);
 

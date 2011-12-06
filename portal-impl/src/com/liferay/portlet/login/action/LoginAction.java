@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.login.action;
 
+import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.CookieNotSupportedException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.PasswordExpiredException;
@@ -111,7 +112,8 @@ public class LoginAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass().getName());
 				}
 			}
-			else if (e instanceof CookieNotSupportedException ||
+			else if (e instanceof CompanyMaxUsersException ||
+					 e instanceof CookieNotSupportedException ||
 					 e instanceof NoSuchUserException ||
 					 e instanceof PasswordExpiredException ||
 					 e instanceof UserEmailAddressException ||

@@ -1456,6 +1456,8 @@
 		<field name="parentFolderId" type="long" />
 		<field name="event" type="String" />
 		<field name="type" type="String" />
+		<field name="version" type="String" />
+		<field name="name" type="String" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />

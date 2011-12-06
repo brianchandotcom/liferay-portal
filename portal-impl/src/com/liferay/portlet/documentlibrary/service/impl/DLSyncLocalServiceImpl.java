@@ -1,4 +1,6 @@
 /**
+
+
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -29,7 +31,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 	public DLSync addSync(
 			long fileId, long companyId, long repositoryId, long parentFolderId,
-			String type)
+			String type, String name, String version)
 		throws SystemException {
 
 		Date now = new Date();
@@ -46,13 +48,16 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
 		dlSync.setType(type);
+		dlSync.setName(name);
+		dlSync.setVersion(version);
 
 		dlSyncPersistence.update(dlSync, false);
 
 		return dlSync;
 	}
 
-	public DLSync updateSync(long fileId, long parentFolderId, String event)
+	public DLSync updateSync(long fileId, long parentFolderId, String event, 
+			String name, String version)
 		throws PortalException, SystemException {
 
 		DLSync dlSync = null;
@@ -71,7 +76,9 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setModifiedDate(new Date());
 		dlSync.setParentFolderId(parentFolderId);
 		dlSync.setEvent(event);
-
+		dlSync.setName(name);
+		dlSync.setVersion(version);
+		
 		dlSyncPersistence.update(dlSync, false);
 
 		return dlSync;

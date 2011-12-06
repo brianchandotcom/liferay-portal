@@ -260,7 +260,9 @@ create table DLSync (
 	repositoryId LONG,
 	parentFolderId LONG,
 	event VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	version VARCHAR(75) null,
+	name VARCHAR(75) null
 );
 
 alter table Group_ add site BOOLEAN;

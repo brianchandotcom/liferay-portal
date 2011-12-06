@@ -218,6 +218,42 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 		_dlSync.setType(type);
 	}
 
+	/**
+	* Returns the version of this d l sync.
+	*
+	* @return the version of this d l sync
+	*/
+	public java.lang.String getVersion() {
+		return _dlSync.getVersion();
+	}
+
+	/**
+	* Sets the version of this d l sync.
+	*
+	* @param version the version of this d l sync
+	*/
+	public void setVersion(java.lang.String version) {
+		_dlSync.setVersion(version);
+	}
+
+	/**
+	* Returns the name of this d l sync.
+	*
+	* @return the name of this d l sync
+	*/
+	public java.lang.String getName() {
+		return _dlSync.getName();
+	}
+
+	/**
+	* Sets the name of this d l sync.
+	*
+	* @param name the name of this d l sync
+	*/
+	public void setName(java.lang.String name) {
+		_dlSync.setName(name);
+	}
+
 	public boolean isNew() {
 		return _dlSync.isNew();
 	}

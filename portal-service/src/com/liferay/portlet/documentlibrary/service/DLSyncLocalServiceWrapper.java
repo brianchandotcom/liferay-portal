@@ -254,17 +254,19 @@ public class DLSyncLocalServiceWrapper implements DLSyncLocalService,
 
 	public com.liferay.portlet.documentlibrary.model.DLSync addSync(
 		long fileId, long companyId, long repositoryId, long parentFolderId,
-		java.lang.String type)
+		java.lang.String type, java.lang.String name, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlSyncLocalService.addSync(fileId, companyId, repositoryId,
-			parentFolderId, type);
+			parentFolderId, type, name, version);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLSync updateSync(
-		long fileId, long parentFolderId, java.lang.String event)
+		long fileId, long parentFolderId, java.lang.String event,
+		java.lang.String name, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlSyncLocalService.updateSync(fileId, parentFolderId, event);
+		return _dlSyncLocalService.updateSync(fileId, parentFolderId, event,
+			name, version);
 	}
 
 	/**

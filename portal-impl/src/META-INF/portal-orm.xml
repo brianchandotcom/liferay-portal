@@ -1949,6 +1949,8 @@
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>
+			<basic name="version" />
+			<basic name="name" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>

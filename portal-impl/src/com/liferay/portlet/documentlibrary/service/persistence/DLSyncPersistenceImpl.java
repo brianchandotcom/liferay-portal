@@ -403,6 +403,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		dlSyncImpl.setParentFolderId(dlSync.getParentFolderId());
 		dlSyncImpl.setEvent(dlSync.getEvent());
 		dlSyncImpl.setType(dlSync.getType());
+		dlSyncImpl.setVersion(dlSync.getVersion());
+		dlSyncImpl.setName(dlSync.getName());
 
 		return dlSyncImpl;
 	}

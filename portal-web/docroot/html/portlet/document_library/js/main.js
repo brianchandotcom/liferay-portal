@@ -441,7 +441,7 @@ AUI().add(
 						var instance = this;
 
 						if (!Lang.isValue(page)) {
-							var page = 0;
+							page = 0;
 
 							var curPage = paginator.get('page') - 1;
 

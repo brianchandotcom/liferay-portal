@@ -45,7 +45,6 @@ import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -219,11 +218,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			CalEvent.class.getName(),
 			"CalEvent",
 			"eventId"
-		},
-		new String[] {
-			DDMContent.class.getName(),
-			"DDMContent",
-			"contentId"
 		},
 		new String[] {
 			DDMStructure.class.getName(),

@@ -178,7 +178,6 @@
 							}
 
 							var beforePortletLoaded = null;
-							var onComplete = null;
 							var placeHolder = A.Node.create('<div class="loading-animation" />');
 
 							if (options) {
@@ -211,14 +210,6 @@
 
 							var portletOptions = {
 								beforePortletLoaded: beforePortletLoaded,
-								onComplete: function(portletBoundary) {
-									Layout.syncDraggableClassUI();
-									Layout.updatePortletDropZones(portletBoundary);
-
-									if (onComplete) {
-										onComplete.apply(this, arguments);
-									}
-								},
 								plid: plid,
 								placeHolder: placeHolder,
 								portletId: portletId,

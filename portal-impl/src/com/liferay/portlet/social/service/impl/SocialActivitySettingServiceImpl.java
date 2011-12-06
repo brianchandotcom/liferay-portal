@@ -43,9 +43,12 @@ public class SocialActivitySettingServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isGroupAdmin(groupId)) {
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
 			throw new PrincipalException();
 		}
+
 
 		return socialActivitySettingLocalService.getActivityDefinition(
 			groupId, className, activityType);
@@ -57,7 +60,9 @@ public class SocialActivitySettingServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isGroupAdmin(groupId)) {
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
 			throw new PrincipalException();
 		}
 
@@ -67,6 +72,14 @@ public class SocialActivitySettingServiceImpl
 
 	public JSONArray getJSONActivityDefinitions(long groupId, String className)
 		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
+			throw new PrincipalException();
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -116,9 +129,12 @@ public class SocialActivitySettingServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isGroupAdmin(groupId)) {
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
 			throw new PrincipalException();
 		}
+
 
 		socialActivitySettingLocalService.updateActivitySetting(
 			groupId, className, enabled);
@@ -131,7 +147,9 @@ public class SocialActivitySettingServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isGroupAdmin(groupId)) {
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
 			throw new PrincipalException();
 		}
 
@@ -146,7 +164,9 @@ public class SocialActivitySettingServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!permissionChecker.isGroupAdmin(groupId)) {
+		if (!permissionChecker.isGroupAdmin(groupId) &&
+			!permissionChecker.isGroupOwner(groupId)) {
+
 			throw new PrincipalException();
 		}
 

@@ -198,11 +198,6 @@ public class JavadocFormatter {
 
 			if (name.equals("author") || name.equals("see") ||
 				name.equals("since") || name.equals("version")) {
-
-				/*if (value.startsWith("Raymond Aug")) {
-					value = new String(
-						"Raymond Aug\u00c3\u00a9".getBytes(), StringPool.UTF8);
-				}*/
 			}
 
 			Element element = parentElement.addElement(name);
@@ -351,6 +346,10 @@ public class JavadocFormatter {
 		String name = javaParameter.getName();
 		String type = javaParameter.getType().getValue();
 		String value = null;
+
+		if (javaParameter.getType().isArray()) {
+			type += "[]";
+		}
 
 		for (DocletTag paramDocletTag : paramDocletTags) {
 			String curValue = paramDocletTag.getValue();
@@ -1001,7 +1000,7 @@ public class JavadocFormatter {
 
 		inputStream.close();
 
-		String originalContent = new String(bytes);
+		String originalContent = new String(bytes, "UTF-8");
 
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
@@ -1249,7 +1248,7 @@ public class JavadocFormatter {
 		if (!originalContent.equals(formattedContent)) {
 			File file = new File(_basedir + fileName);
 
-			_fileUtil.write(file, formattedContent.getBytes());
+			_fileUtil.write(file, formattedContent.getBytes("UTF-8"));
 
 			System.out.println("Writing " + file);
 		}

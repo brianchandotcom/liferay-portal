@@ -309,7 +309,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
-		long lastMergeTime = GetterUtil.getInteger(
+		long lastMergeTime = GetterUtil.getLong(
 			settingsProperties.getProperty("lastMergeTime"));
 
 		Date modifiedDate = layoutSetPrototype.getModifiedDate();
@@ -330,9 +330,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		importLayoutSetPrototype(
 			permissionChecker, layoutSetPrototype, layoutSet.getGroupId(),
 			layoutSet.isPrivateLayout(), parameterMap);
-
-		settingsProperties.setProperty(
-			"lastMergeTime", String.valueOf(modifiedDate.getTime()));
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
 	}

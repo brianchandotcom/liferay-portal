@@ -76,7 +76,7 @@
 			</c:if>
 			<c:choose>
 				<c:when test='<%= displayStyle.startsWith("abstract") %>'>
-					<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getContent()), 200, StringPool.BLANK) %>
+					<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getDescription()), 200, StringPool.BLANK) %>
 				</c:when>
 				<c:when test='<%= displayStyle.startsWith("quote") %>'>
 					<span class="quote">

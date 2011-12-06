@@ -254,12 +254,17 @@
 
 				portletBoundary = portletBound;
 
-				if (Liferay.Layout && Liferay.Layout.INITIALIZED) {
-					Liferay.Layout.updateCurrentPortletInfo(portletBoundary);
+				var Layout = Liferay.Layout;
+
+				if (Layout && Layout.INITIALIZED) {
+					Layout.updateCurrentPortletInfo(portletBoundary);
 
 					if (container) {
-						Liferay.Layout.syncEmptyColumnClassUI(container);
+						Layout.syncEmptyColumnClassUI(container);
 					}
+
+					Layout.syncDraggableClassUI();
+					Layout.updatePortletDropZones(portletBoundary);
 				}
 
 				if (onComplete) {

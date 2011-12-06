@@ -156,7 +156,7 @@ public class SocialActivityCounterDefinition implements Serializable {
 	private boolean _enabled = true;
 	private int _increment;
 	private boolean _limitEnabled = true;
-	private int _limitPeriod;
+	private int _limitPeriod = LIMIT_PERIOD_DAY;
 	private int _limitValue;
 	private String _name;
 	private int _ownerType;

@@ -469,6 +469,18 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		_expandoValue.setLongArray(data);
 	}
 
+	public void setNumber(java.lang.Number data)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_expandoValue.setNumber(data);
+	}
+
+	public void setNumberArray(java.lang.Number[] data)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_expandoValue.setNumberArray(data);
+	}
+
 	public void setShort(short data)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

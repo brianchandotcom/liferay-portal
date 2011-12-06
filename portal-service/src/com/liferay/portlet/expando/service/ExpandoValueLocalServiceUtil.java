@@ -392,6 +392,26 @@ public class ExpandoValueLocalServiceUtil {
 
 	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK, java.lang.Number data)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addValue(companyId, className, tableName, columnName,
+			classPK, data);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK, java.lang.Number[] data)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addValue(companyId, className, tableName, columnName,
+			classPK, data);
+	}
+
+	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
+		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, java.lang.Object data)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

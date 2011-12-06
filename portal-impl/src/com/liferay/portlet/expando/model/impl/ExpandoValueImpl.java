@@ -312,6 +312,22 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		setData(StringUtil.merge(data));
 	}
 
+	public void setNumber(Number data)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.NUMBER);
+
+		setData(String.valueOf(data));
+	}
+
+	public void setNumberArray(Number[] data)
+		throws PortalException, SystemException {
+
+		validate(ExpandoColumnConstants.NUMBER_ARRAY);
+
+		setData(StringUtil.merge(data));
+	}
+
 	public void setShort(short data) throws PortalException, SystemException {
 		validate(ExpandoColumnConstants.SHORT);
 

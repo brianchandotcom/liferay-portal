@@ -49,6 +49,8 @@ public class FieldConstants {
 
 	public static final String NAME = "name";
 
+	public static final String NUMBER = "number";
+
 	public static final String PREDIFINED_VALUE = "predefinedValue";
 
 	public static final String REQUIRED = "required";
@@ -85,6 +87,9 @@ public class FieldConstants {
 		}
 		else if (type.equals(LONG)) {
 			return GetterUtil.getLong(value);
+		}
+		else if (type.equals(NUMBER)) {
+			return GetterUtil.getNumber(value);
 		}
 		else if (type.equals(SHORT)) {
 			return GetterUtil.getShort(value);

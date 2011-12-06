@@ -241,7 +241,7 @@
 
 			ATTRS: {
 				dataType: {
-					value: 'double'
+					value: 'number'
 				}
 			}
 		}

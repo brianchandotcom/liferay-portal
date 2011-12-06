@@ -30,6 +30,7 @@ public class SmokeTests extends BaseTests {
 		testSuite.addTestSuite(AddPage1Test.class);
 		testSuite.addTestSuite(AddPage2Test.class);
 		testSuite.addTestSuite(AddPage3Test.class);
+		testSuite.addTestSuite(AddPortletTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(ViewTearDownPageTest.class);
 

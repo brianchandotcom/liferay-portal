@@ -143,6 +143,19 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<c:when test='<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) && !strutsAction.equals("/blogs/view_entry") %>'>
 						<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getDescription()), pageAbstractLength) %>
 
+						<c:if test="<%= entry.isSmallImage() %>">
+							<%
+							String src = StringPool.BLANK;
+
+							if (Validator.isNotNull(entry.getSmallImageURL())) {
+								src = entry.getSmallImageURL();
+							}
+							%>
+
+							<div class="asset-small-image">
+								<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(src) %>" width="150" />
+							</div>
+						</c:if>
 						<br />
 
 						 <aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"aui-helper-hidden-accessible", entry.getTitle()} %>' key="read-more-x-about-x" /> &raquo;</aui:a>

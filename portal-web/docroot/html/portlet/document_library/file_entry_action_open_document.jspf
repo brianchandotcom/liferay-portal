@@ -72,7 +72,7 @@
 		<liferay-ui:icon
 			image="../document_library/msoffice"
 			message="open-in-ms-office"
-			url='<%= "javascript:" + renderResponse.getNamespace() + "openDocument();" %>'
+			url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "openDocument();" %>'
 		/>
 	</c:if>
 

@@ -84,7 +84,7 @@ if (!permissionChecker.isCompanyAdmin()) {
 
 boolean viewInContext = GetterUtil.getBoolean(portletPreferences.getValue("viewInContext", null), true);
 boolean displayMainQuery = GetterUtil.getBoolean(portletPreferences.getValue("displayMainQuery", null));
-boolean displayOpenSearchResults = GetterUtil.getBoolean(portletPreferences.getValue("displayOpenSearchResults", null), true);
+boolean displayOpenSearchResults = GetterUtil.getBoolean(portletPreferences.getValue("displayOpenSearchResults", null), false);
 
 String searchConfiguration = portletPreferences.getValue("searchConfiguration", StringPool.BLANK);
 

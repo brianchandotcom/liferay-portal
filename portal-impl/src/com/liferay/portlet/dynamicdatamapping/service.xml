@@ -187,6 +187,7 @@
 		<exception>Content</exception>
 		<exception>ContentName</exception>
 		<exception>ContentXml</exception>
+		<exception>NoSuchStructureField</exception>
 		<exception>RequiredStructure</exception>
 		<exception>Storage</exception>
 		<exception>StorageFieldName</exception>

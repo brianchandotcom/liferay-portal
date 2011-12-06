@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -39,7 +40,7 @@ public class Field implements Serializable {
 		this(0, name, value);
 	}
 
-	public String getDataType() throws SystemException {
+	public String getDataType() throws PortalException, SystemException {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		return ddmStructure.getFieldDataType(_name);
@@ -58,7 +59,7 @@ public class Field implements Serializable {
 	}
 
 	public String getRenderedValue(ThemeDisplay themeDisplay)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		DDMStructure ddmStructure = getDDMStructure();
 
@@ -74,7 +75,7 @@ public class Field implements Serializable {
 		return fieldrenderer.render(themeDisplay, _value);
 	}
 
-	public String getType() throws SystemException {
+	public String getType() throws PortalException, SystemException {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		return ddmStructure.getFieldType(_name);

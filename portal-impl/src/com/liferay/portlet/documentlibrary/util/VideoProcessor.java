@@ -55,10 +55,6 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		_instance._generateVideo(fileVersion);
 	}
 
-	public static DLProcessor getInstance() {
-		return _instance;
-	}
-
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
@@ -117,6 +113,14 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		return hasVideo;
 	}
 
+	public static boolean isVideoSupported(FileVersion fileVersion) {
+		return _instance.isSupported(fileVersion);
+	}
+
+	public static boolean isVideoSupported(String mimeType) {
+		return _instance.isSupported(mimeType);
+	}
+
 	public VideoProcessor() {
 		boolean valid = true;
 
@@ -150,8 +154,17 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	public boolean isSupported(String mimeType) {
-		return _videoMimeTypes.contains(mimeType);
-	}
+		try {
+			if (PrefsPropsUtil.getBoolean(
+				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
+
+				return _videoMimeTypes.contains(mimeType);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false; }
 
 	public void trigger(FileVersion fileVersion) {
 		_instance._queueGeneration(fileVersion);

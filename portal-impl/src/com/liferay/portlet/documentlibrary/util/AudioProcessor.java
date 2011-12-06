@@ -56,10 +56,6 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		return _instance._audioMimeTypes;
 	}
 
-	public static DLProcessor getInstance() {
-		return _instance;
-	}
-
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
@@ -89,12 +85,30 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		return hasAudio;
 	}
 
+	public static boolean isAudioSupported(FileVersion fileVersion) {
+		return _instance.isSupported(fileVersion);
+	}
+
+	public static boolean isAudioSupported(String mimeType) {
+		return _instance.isSupported(mimeType);
+	}
+
 	public AudioProcessor() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 	}
 
 	public boolean isSupported(String mimeType) {
-		return _audioMimeTypes.contains(mimeType);
+		try {
+			if (PrefsPropsUtil.getBoolean(
+				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
+
+				return _audioMimeTypes.contains(mimeType);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	public void trigger(FileVersion fileVersion) {

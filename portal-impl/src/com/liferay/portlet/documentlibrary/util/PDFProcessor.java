@@ -158,6 +158,14 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		return hasImages;
 	}
 
+	public static boolean isDocumentSupported(FileVersion fileVersion) {
+		return _instance.isSupported(fileVersion);
+	}
+
+	public static boolean isDocumentSupported(String mimeType) {
+		return _instance.isSupported(mimeType);
+	}
+
 	public static boolean isImageMagickEnabled() throws Exception {
 		if (PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED)) {
 			return true;

@@ -110,6 +110,7 @@ boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
 boolean hasImages = ImageProcessor.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessor.hasImages(fileVersion);
 boolean hasVideo = VideoProcessor.hasVideo(fileVersion);
+boolean isPreviewSupported = AudioProcessor.isAudioSupported(fileVersion) || ImageProcessor.isImageSupported(fileVersion) || PDFProcessor.isDocumentSupported(fileVersion) || VideoProcessor.isVideoSupported(fileVersion);
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
@@ -346,9 +347,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
-								<div class="portlet-msg-info">
-									<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
-								</div>
+								<c:if test="<%= isPreviewSupported %>">
+									<div class="portlet-msg-info">
+										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
+									</div>
+								</c:if>
 							</c:when>
 							<c:otherwise>
 								<c:choose>

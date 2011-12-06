@@ -140,6 +140,14 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		return _instance._hasThumbnailImage(fileVersion);
 	}
 
+	public static boolean isImageSupported(FileVersion fileVersion) {
+		return _instance.isSupported(fileVersion);
+	}
+
+	public static boolean isImageSupported(String mimeType) {
+		return _instance.isSupported(mimeType);
+	}
+
 	public static void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
 			long custom1ImageId, long custom2ImageId,

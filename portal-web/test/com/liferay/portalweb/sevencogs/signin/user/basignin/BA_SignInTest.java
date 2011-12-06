@@ -45,13 +45,6 @@ public class BA_SignInTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='express_login']",
 			RuntimeVariables.replace("Login as Bruno."));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@id='password2']",
-			RuntimeVariables.replace("password"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Bruno Admin"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(

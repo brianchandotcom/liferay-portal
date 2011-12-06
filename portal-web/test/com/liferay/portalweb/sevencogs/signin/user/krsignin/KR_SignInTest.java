@@ -45,13 +45,6 @@ public class KR_SignInTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//a[@class='express_login'])[4]",
 			RuntimeVariables.replace("Login as Kendra."));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@id='password2']",
-			RuntimeVariables.replace("password"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Kendra Regular"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(

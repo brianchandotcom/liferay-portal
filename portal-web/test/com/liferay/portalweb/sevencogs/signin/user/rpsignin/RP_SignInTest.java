@@ -45,13 +45,6 @@ public class RP_SignInTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//a[@class='express_login'])[2]",
 			RuntimeVariables.replace("Login as Richard."));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@id='password2']",
-			RuntimeVariables.replace("password"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Richard Publisher"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(

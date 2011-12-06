@@ -35,6 +35,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portlet
 PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
 
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+String layoutTemplateId = ParamUtil.getString(request, "layoutTemplateId", PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
@@ -108,6 +109,7 @@ String[][] categorySections = {mainSections};
 	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutId %>" />
+	<aui:input name="layoutTemplateId" type="hidden" value="<%= layoutTemplateId %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= layoutRevision != null && !incomplete%>">

@@ -163,6 +163,15 @@ public class SplitThreadAction extends PortletAction {
 			body = StringUtil.replace(
 				body,
 				new String[] {
+					"[url=]"
+				},
+				new String[] {
+					"[url=" + newThreadURL + "]"
+				});
+
+			body = StringUtil.replace(
+				body,
+				new String[] {
 					"${newThreadURL}",
 				},
 				new String[] {

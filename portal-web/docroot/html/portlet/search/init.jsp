@@ -56,6 +56,7 @@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" 
 page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
+page import="com.liferay.taglib.aui.ScriptTag" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
 <%@ page import="java.util.Comparator" %><%@

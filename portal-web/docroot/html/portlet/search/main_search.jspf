@@ -52,17 +52,17 @@ String[] queryTerms = hits.getQueryTerms();
 request.setAttribute("search.jsp-queryTerms", queryTerms);
 
 boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayModifiedRangeFacet;
+
+List<Facet> facets = ListUtil.fromCollection(searchContext.getFacets().values());
+
+facets = ListUtil.sort(facets, new PropertyComparator("facetConfiguration.weight", false, false));
 %>
 
 <aui:layout cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
 	<c:if test="<%= showMenu %>">
-		<aui:column cssClass="menu" first="<%= true %>">
+		<aui:column cssClass="menu" first="<%= true %>" id="facetNavigation">
 
 			<%
-			List<Facet> facets = ListUtil.fromCollection(searchContext.getFacets().values());
-
-			facets = ListUtil.sort(facets, new PropertyComparator("facetConfiguration.weight", false, false));
-
 			for (Facet facet : facets) {
 				if (facet.isStatic()) {
 					continue;
@@ -79,49 +79,84 @@ boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAsse
 			}
 			%>
 
+			<aui:script use="aui-base">
+				var container = A.one('#<portlet:namespace />facetNavigation');
+
+				if (container) {
+					container.delegate(
+						'click',
+						function(event) {
+							var term = event.currentTarget;
+
+							var facetValue = term.ancestor('.facet-value');
+
+							if (facetValue) {
+								var currentTerm = facetValue.hasClass('current-term');
+
+								facetValue.radioClass('current-term');
+
+								if (!currentTerm) {
+									facetValue.radioClass('current-term');
+
+									var searchFacet = facetValue.ancestor('.search-facet');
+
+									if (searchFacet) {
+										var field = document.<portlet:namespace />fm['<portlet:namespace />' + searchFacet.attr('data-facetFieldName')];
+
+										if (field) {
+											field.value = term.attr('data-value');
+
+											
+
+											submitForm(document.<portlet:namespace />fm);
+										}
+									}
+								}
+
+								event.preventDefault();
+							}
+						},
+						'.facet-value a'
+					);
+				}
+			</aui:script>
 		</aui:column>
 	</c:if>
 
 	<aui:column cssClass="result" first="<%= !showMenu %>" last="<%= showMenu %>">
-		<c:if test="<%= (hits != null) && (hits.getLength() > 0) %>">
-			<liferay-ui:search-container
-				searchContainer="<%= mainSearchSearchContainer %>"
+		<liferay-ui:search-container
+			searchContainer="<%= mainSearchSearchContainer %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= hits.toList() %>"
+				total="<%= hits.getLength() %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.search.Document"
+				escapedModel="<%= false %>"
+				modelVar="document"
+				keyProperty="UID"
+				stringKey="<%= true %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= hits.toList() %>"
-					total="<%= hits.getLength() %>"
-				/>
+				<liferay-ui:search-container-column-jsp path='<%= displayResultsInDocumentForm ? "/html/portlet/search/main_search_document_form.jsp" : "/html/portlet/search/main_search_result_form.jsp" %>' />
+			</liferay-ui:search-container-row>
 
-				<liferay-ui:search-container-row
-					className="com.liferay.portal.kernel.search.Document"
-					escapedModel="<%= false %>"
-					modelVar="document"
-					keyProperty="UID"
-					stringKey="<%= true %>"
-				>
-					<liferay-ui:search-container-column-jsp path='<%= displayResultsInDocumentForm ? "/html/portlet/search/main_search_document_form.jsp" : "/html/portlet/search/main_search_result_form.jsp" %>' />
-				</liferay-ui:search-container-row>
+			<liferay-ui:search-iterator type="more" />
 
-				<liferay-ui:search-iterator type="more" />
-
-				<em class="taglib-page-iterator">
-					<span class="search-results"><liferay-ui:message arguments="<%= hits.getSearchTime() %>" key="completed-in-x-seconds" /></span>
-				</em>
-
-				<c:if test="<%= displayMainQuery && (hits.getQuery() != null) %>">
-					<table class="full-query">
-						<tr>
-							<td valign="top">
-								<div class="container">
-									<code>
-										<%= HtmlUtil.escape(hits.getQuery().toString()) %>
-									</code>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</c:if>
-			</liferay-ui:search-container>
-		</c:if>
+			<c:if test="<%= displayMainQuery && (hits.getQuery() != null) %>">
+				<table class="full-query">
+					<tr>
+						<td valign="top">
+							<div class="container">
+								<code>
+									<%= HtmlUtil.escape(hits.getQuery().toString()) %>
+								</code>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</c:if>
+		</liferay-ui:search-container>
 	</aui:column>
 </aui:layout>

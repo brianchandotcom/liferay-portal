@@ -27,44 +27,19 @@ int maxTerms = dataJSONObject.getInt("maxTerms", 10);
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 %>
 
-<div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
+<div class="asset-tags <%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<aui:field-wrapper cssClass='<%= randomNamespace + "asset-tags asset-tags" %>' label="" name="assetTags">
-		<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %>">
-			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-				<a href="#" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/<%= facetConfiguration.getLabel() %>.png" /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
-			</li>
+	<ul class="lfr-component <%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %>">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+			<a href="javascript:;" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/<%= facetConfiguration.getLabel() %>.png" /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
+		</li>
 
-			<%
-			int maxCount = 1;
-			int minCount = 1;
+		<%
+		int maxCount = 1;
+		int minCount = 1;
 
-			if (showAssetCount && displayStyle.equals("cloud")) {
-				for (int i = 0; i < termCollectors.size(); i++) {
-					if (i >= maxTerms) {
-						break;
-					}
-
-					TermCollector termCollector = termCollectors.get(i);
-
-					int frequency = termCollector.getFrequency();
-
-					if (frequencyThreshold > frequency) {
-						continue;
-					}
-
-					maxCount = Math.max(maxCount, frequency);
-					minCount = Math.min(minCount, frequency);
-				}
-			}
-
-			double multiplier = 1;
-
-			if (maxCount != minCount) {
-				multiplier = (double)5 / (maxCount - minCount);
-			}
-
+		if (showAssetCount && displayStyle.equals("cloud")) {
 			for (int i = 0; i < termCollectors.size(); i++) {
 				if (i >= maxTerms) {
 					break;
@@ -72,78 +47,61 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 				TermCollector termCollector = termCollectors.get(i);
 
-				int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
+				int frequency = termCollector.getFrequency();
 
-				if (frequencyThreshold > termCollector.getFrequency()) {
+				if (frequencyThreshold > frequency) {
 					continue;
 				}
-			%>
 
-				<li class="facet-value tag-popularity-"<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-					<a href="#" data-value="<%= termCollector.getTerm() %>"><%= termCollector.getTerm() %></a>
-
-					<c:if test="<%= showAssetCount %>">
-						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-					</c:if>
-				</li>
-
-			<%
+				maxCount = Math.max(maxCount, frequency);
+				minCount = Math.min(minCount, frequency);
 			}
-			%>
+		}
 
-		</ul>
-	</aui:field-wrapper>
-</div>
+		double multiplier = 1;
 
-<aui:script position="inline" use="aui-base">
-	var container = A.one('<%= cssClassSelector %> .<%= randomNamespace %>asset-tags');
+		if (maxCount != minCount) {
+			multiplier = (double)5 / (maxCount - minCount);
+		}
 
-	if (container) {
-		container.delegate(
-			'click',
-			function(event) {
-				var term = event.currentTarget;
+		for (int i = 0; i < termCollectors.size(); i++) {
+			if (i >= maxTerms) {
+				break;
+			}
 
-				var wasSelfSelected = false;
+			TermCollector termCollector = termCollectors.get(i);
+		%>
 
-				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
-
-				var currentTerms = A.all('<%= cssClassSelector %> .<%= randomNamespace %>asset-tags .facet-value.current-term a');
-
-				if (currentTerms) {
-					currentTerms.each(
-						function(item, index, collection) {
-							item.ancestor('.facet-value').removeClass('current-term');
-
-							if (item == term) {
-								wasSelfSelected = true;
+				<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
+					<aui:script use="liferay-token-list">
+						Liferay.Search.tokenList.add(
+							{
+								clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
+								text: '<%= UnicodeFormatter.toString(termCollector.getTerm()) %>'
 							}
-						}
-					);
+						);
+					</aui:script>
+				</c:if>
 
-					field.value = '';
-				}
+		<%
+			int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
 
-				if (!wasSelfSelected) {
-					term.ancestor('.facet-value').addClass('current-term');
+			if (frequencyThreshold > termCollector.getFrequency()) {
+				continue;
+			}
+		%>
 
-					field.value = term.attr('data-value');
-				}
+			<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
+				<a href="javascript:;" data-value="<%= termCollector.getTerm() %>"><%= termCollector.getTerm() %></a>
 
-				submitForm(document.<portlet:namespace />fm);
-			},
-			'.facet-value a'
-		);
-	}
+				<c:if test="<%= showAssetCount %>">
+					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+				</c:if>
+			</li>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>clearFacet',
-		function() {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = '';
+		<%
+		}
+		%>
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
-</aui:script>
+	</ul>
+</div>

@@ -25,98 +25,54 @@ int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 %>
 
-<div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
+<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<aui:field-wrapper cssClass='<%= randomNamespace + "range range" %>' label="" name="<%= facet.getFieldName() %>">
-		<ul class="range">
-			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-				<a href="#" data-value=""><liferay-ui:message key="any-range" /></a>
-			</li>
+	<ul class="lfr-component range">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+			<a href="javascript:;" data-value=""><liferay-ui:message key="any-range" /></a>
+		</li>
 
-			<%
-			for (int i = 0; i < rangesJSONArray.length(); i++) {
-				JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
+		<%
+		for (int i = 0; i < rangesJSONArray.length(); i++) {
+			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
 
-				String label = rangeJSONObject.getString("label");
-				String range = rangeJSONObject.getString("range");
+			String label = rangeJSONObject.getString("label");
+			String range = rangeJSONObject.getString("range");
 
-				TermCollector termCollector = facetCollector.getTermCollector(range);
+			TermCollector termCollector = facetCollector.getTermCollector(range);
+		%>
 
-				int frequency = 0;
-
-				if (termCollector != null) {
-					frequency = termCollector.getFrequency();
-				}
-
-				if (frequencyThreshold > frequency) {
-					continue;
-				}
-			%>
-
-				<li class="facet-value" <%= fieldParam.equals(range) ? "current-term" : StringPool.BLANK %>">
-					<a href="#" data-value="<%= HtmlUtil.escapeAttribute(range) %>"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
-				</li>
-
-			<%
-			}
-			%>
-
-		</ul>
-	</aui:field-wrapper>
-
-	<liferay-ui:message key="<%= facetConfiguration.getLabel() %>" />: <aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "clearFacet();" %>'><liferay-ui:message key="clear" /></aui:a>
-</div>
-
-<aui:script position="inline" use="aui-base">
-	var container = A.one('<%= cssClassSelector %> .<%= randomNamespace %>range');
-
-	if (container) {
-		container.delegate(
-			'click',
-			function(event) {
-				var term = event.currentTarget;
-
-				var wasSelfSelected = false;
-
-				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
-
-				var currentTerms = A.all('<%= cssClassSelector %> .<%= randomNamespace %>range .facet-value.current-term a');
-
-				if (currentTerms) {
-					currentTerms.each(
-						function(item, index, collection) {
-							item.ancestor('.facet-value').removeClass('current-term');
-
-							if (item == term) {
-								wasSelfSelected = true;
-							}
+			<c:if test="<%= fieldParam.equals(range) %>">
+				<aui:script use="liferay-token-list">
+					Liferay.Search.tokenList.add(
+						{
+							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
+							text: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
 						}
 					);
+				</aui:script>
+			</c:if>
 
-					field.value = '';
-				}
+		<%
+			int frequency = 0;
 
-				if (!wasSelfSelected) {
-					term.ancestor('.facet-value').addClass('current-term');
+			if (termCollector != null) {
+				frequency = termCollector.getFrequency();
+			}
 
-					field.value = term.attr('data-value');
-				}
+			if (frequencyThreshold > frequency) {
+				continue;
+			}
+		%>
 
-				submitForm(document.<portlet:namespace />fm);
-			},
-			'.facet-value a'
-		);
-	}
+			<li class="facet-value <%= fieldParam.equals(range) ? "current-term" : StringPool.BLANK %>">
+				<a href="javascript:;" data-value="<%= HtmlUtil.escapeAttribute(range) %>"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
+			</li>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>clearFacet',
-		function() {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = '';
+		<%
+		}
+		%>
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
-</aui:script>
+	</ul>
+</div>

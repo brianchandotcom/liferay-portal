@@ -73,8 +73,49 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 			<portlet:param name="groupId" value="0" />
 		</portlet:renderURL>
 
-		<aui:button align="absmiddle" border="0" href="<%= clearSearchURL %>" name="clear-search" src='<%= themeDisplay.getPathThemeImages() + "/common/undo.png" %>' title="clear-search" type="image" />
+		<aui:button align="absmiddle" border="0" href="<%= clearSearchURL %>" name="clear-search" src='<%= themeDisplay.getPathThemeImages() + "/common/close.png" %>' title="clear-search" type="image" />
 	</aui:fieldset>
+
+	<div class="lfr-token-list" id="<portlet:namespace />searchTokens">
+		<div class="lfr-token-list-content" id="<portlet:namespace />searchTokensContent"></div>
+	</div>
+
+	<aui:script use="liferay-token-list">
+		Liferay.namespace('Search').tokenList = new Liferay.TokenList(
+			{
+				after: {
+					close: function(event) {
+						var item = event.item;
+
+						var fieldValues = item.attr('data-fieldValues').split();
+
+						A.Array.each(
+							fieldValues,
+							function(item, index, collection) {
+								var values = item.split('|');
+
+								var field = A.one('#' + values[0]);
+
+								if (field) {
+									field.val(values[1]);
+								}
+							}
+						);
+
+						var clearFields = A.all('#' + event.item.attr('data-clearFields').split().join(',#'));
+
+						clearFields.remove();
+
+						if (fieldValues.length || clearFields.size()) {
+							submitForm(document.<portlet:namespace />fm);
+						}
+					}
+				},
+				boundingBox: '#<portlet:namespace />searchTokens',
+				contentBox: '#<portlet:namespace />searchTokensContent'
+			}
+		).render();
+	</aui:script>
 
 	<%@ include file="/html/portlet/search/main_search.jspf" %>
 

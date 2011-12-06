@@ -4712,6 +4712,8 @@ public class PortalImpl implements Portal {
 			}
 		}
 		else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
 			return StringPool.BLANK;
 		}
 	}

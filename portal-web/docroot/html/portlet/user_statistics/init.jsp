@@ -22,6 +22,8 @@ page import="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" %>
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
 
+<%@ page import="java.util.Comparator" %>
+
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 

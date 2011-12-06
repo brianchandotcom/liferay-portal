@@ -30,6 +30,25 @@ activityCounterNames.addAll(SocialConfigurationUtil.getActivityCounterNames(Soci
 activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
 activityCounterNames.add(SocialActivityCounterConstants.NAME_ASSET_ACTIVITIES);
 activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
+
+List<Tuple> activityCounterNameList = new ArrayList<Tuple>();
+
+for (String activityCounterName : activityCounterNames) {
+	if (activityCounterName.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) || activityCounterName.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+		continue;
+	}
+
+	activityCounterNameList.add(new Tuple(activityCounterName, LanguageUtil.get(pageContext, "social.counter."+ activityCounterName)));
+}
+
+Collections.sort(activityCounterNameList, new Comparator<Tuple>() {
+	public int compare(Tuple t1, Tuple t2) {
+		String s1 = (String)t1.getObject(1);
+		String s2 = (String)t2.getObject(1);
+
+		return s1.compareTo(s2);
+	}
+});
 %>
 
 <div class="aui-field-row">
@@ -40,13 +59,11 @@ activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>'>
 
 		<%
-		for (String activityCounterName : activityCounterNames) {
-			if (activityCounterName.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) || activityCounterName.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
-				continue;
-			}
+		for (Tuple tuple : activityCounterNameList) {
+			String activityCounterName = (String)tuple.getObject(0);
 		%>
 
-			<aui:option label='<%= LanguageUtil.get(pageContext, "social.counter."+ activityCounterName) %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
+			<aui:option label='<%= tuple.getObject(1).toString() %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
 
 		<%
 		}

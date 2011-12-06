@@ -433,7 +433,7 @@ AUI().add(
 				var data = {
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_l_id: themeDisplay.getPlid(),
-					p_v_g_id: themeDisplay.getGroupId()
+					p_v_g_id: themeDisplay.getParentGroupId()
 				};
 
 				A.mix(data, options);

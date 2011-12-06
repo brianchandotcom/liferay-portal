@@ -110,7 +110,7 @@ public JSONArray _addDetailTemplateFieldAttributes(DDMStructure structure, JSONA
 	return scriptJSONArray;
 }
 
-public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) throws NoSuchStructureFieldException {
+public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) throws StructureFieldException {
 	JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
 
 	readOnlyAttributesJSONArray.put("name");

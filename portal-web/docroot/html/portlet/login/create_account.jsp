@@ -58,7 +58,20 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 	<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 	<liferay-ui:error exception="<%= NoSuchListTypeException.class %>" message="please-select-a-type" />
 	<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
-	<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
+	<liferay-ui:error exception="<%= PhoneNumberException.class %>">
+
+		<%
+		PhoneNumberException pne = (PhoneNumberException)errorException;
+		%>
+
+		<c:if test="<%= pne.getType() == PhoneNumberException.PHONE_NUMBER %>">
+			<%= LanguageUtil.get(pageContext, "please-enter-a-valid-phone-number") %>
+		</c:if>
+
+		<c:if test="<%= pne.getType() == PhoneNumberException.PHONE_EXCEPTION %>">
+			<%= LanguageUtil.get(pageContext, "please-enter-a-valid-extension") %>
+		</c:if>
+	</liferay-ui:error>
 	<liferay-ui:error exception="<%= RequiredFieldException.class %>" message="please-fill-out-all-required-fields" />
 	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" message="the-email-address-you-requested-is-reserved" />
 	<liferay-ui:error exception="<%= ReservedUserIdException.class %>" message="the-user-id-you-requested-is-reserved" />

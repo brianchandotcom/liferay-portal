@@ -1517,6 +1517,10 @@ public class CMISRepository extends BaseCmisRepository {
 
 		String queryString = CMISQueryBuilder.buildQuery(searchContext, query);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("CMIS search query: " + queryString);
+		}
+
 		ItemIterable<QueryResult> queryResults = session.query(
 			queryString, false);
 

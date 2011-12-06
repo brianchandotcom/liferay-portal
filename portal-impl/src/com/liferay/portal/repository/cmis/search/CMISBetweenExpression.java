@@ -33,9 +33,8 @@ public class CMISBetweenExpression implements CMISCriterion {
 	}
 
 	public String toQueryFragment() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("(");
 		sb.append(_field);
 
 		if (_includesLower) {
@@ -45,7 +44,7 @@ public class CMISBetweenExpression implements CMISCriterion {
 			sb.append(" > ");
 		}
 
-		sb.append(CMISParameterValueUtil.formatParameterValue(_field, _lower));
+		sb.append(_lower);
 		sb.append(" AND ");
 		sb.append(_field);
 
@@ -56,8 +55,7 @@ public class CMISBetweenExpression implements CMISCriterion {
 			sb.append(" < ");
 		}
 
-		sb.append(CMISParameterValueUtil.formatParameterValue(_field, _upper));
-		sb.append(")");
+		sb.append(_upper);
 
 		return sb.toString();
 	}

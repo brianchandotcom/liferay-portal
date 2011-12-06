@@ -34,6 +34,10 @@ public class CMISConjunction extends CMISJunction {
 
 		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 - 1);
 
+		if (cmisCriterions.size() > 1) {
+			sb.append("(");
+		}
+
 		for (int i = 0; i < cmisCriterions.size(); i++) {
 			CMISCriterion cmisCriterion = cmisCriterions.get(i);
 
@@ -42,6 +46,10 @@ public class CMISConjunction extends CMISJunction {
 			}
 
 			sb.append(cmisCriterion.toQueryFragment());
+		}
+
+		if (cmisCriterions.size() > 1) {
+			sb.append(")");
 		}
 
 		return sb.toString();

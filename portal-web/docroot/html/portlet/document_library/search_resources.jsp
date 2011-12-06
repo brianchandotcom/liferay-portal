@@ -68,7 +68,7 @@ int total = 0;
 <div id="<portlet:namespace />searchResults">
 	<div class="search-info">
 		<span class="keywords">
-			<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {keywords, folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-in-every-folder", keywords) %>
+			<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-in-every-folder", HtmlUtil.escape(keywords)) %>
 		</span>
 
 		<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
@@ -299,10 +299,6 @@ int total = 0;
 			Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
 		</aui:script>
 	</c:if>
-
-	<%
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
-	%>
 
 	<aui:script>
 		function <portlet:namespace />changeSearchFolder() {

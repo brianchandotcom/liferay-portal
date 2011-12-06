@@ -39,6 +39,7 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 public class ExpandoValueLocalServiceImpl
 	extends ExpandoValueLocalServiceBaseImpl {
@@ -321,6 +322,50 @@ public class ExpandoValueLocalServiceImpl
 
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
+			String columnName, long classPK, Number data)
+		throws PortalException, SystemException {
+
+		ExpandoTable table = expandoTableLocalService.getTable(
+			companyId, className, tableName);
+
+		ExpandoColumn column = expandoColumnLocalService.getColumn(
+			table.getTableId(), columnName);
+
+		ExpandoValue value = new ExpandoValueImpl();
+
+		value.setCompanyId(table.getCompanyId());
+		value.setColumnId(column.getColumnId());
+		value.setNumber(data);
+
+		return expandoValueLocalService.addValue(
+			table.getClassNameId(), table.getTableId(), column.getColumnId(),
+			classPK, value.getData());
+	}
+
+	public ExpandoValue addValue(
+			long companyId, String className, String tableName,
+			String columnName, long classPK, Number[] data)
+		throws PortalException, SystemException {
+
+		ExpandoTable table = expandoTableLocalService.getTable(
+			companyId, className, tableName);
+
+		ExpandoColumn column = expandoColumnLocalService.getColumn(
+			table.getTableId(), columnName);
+
+		ExpandoValue value = new ExpandoValueImpl();
+
+		value.setCompanyId(table.getCompanyId());
+		value.setColumnId(column.getColumnId());
+		value.setNumberArray(data);
+
+		return expandoValueLocalService.addValue(
+			table.getClassNameId(), table.getTableId(), column.getColumnId(),
+			classPK, value.getData());
+	}
+
+	public ExpandoValue addValue(
+			long companyId, String className, String tableName,
 			String columnName, long classPK, Object data)
 		throws PortalException, SystemException {
 
@@ -388,6 +433,16 @@ public class ExpandoValueLocalServiceImpl
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
 				(long[])data);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			return expandoValueLocalService.addValue(
+				companyId, className, tableName, columnName, classPK,
+				(Number)data);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return expandoValueLocalService.addValue(
+				companyId, className, tableName, columnName, classPK,
+				(Number[])data);
 		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			return expandoValueLocalService.addValue(

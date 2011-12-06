@@ -358,6 +358,9 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		else if (fieldDataType.equals(FieldConstants.LONG)) {
 			return ExpandoColumnConstants.LONG;
 		}
+		else if (fieldDataType.equals(FieldConstants.NUMBER)) {
+			return ExpandoColumnConstants.NUMBER;
+		}
 		else if (fieldDataType.equals(FieldConstants.SHORT)) {
 			return ExpandoColumnConstants.SHORT;
 		}

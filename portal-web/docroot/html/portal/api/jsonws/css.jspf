@@ -106,7 +106,7 @@ h3 {
 
 div.actionmethod {
 	color: #555;
-	font-size: 1.2em;
+	font-size: 1.3em;
 }
 
 div.actionmethod span.classname {
@@ -118,6 +118,26 @@ div.actionmethod span.methodname {
 	font-weight: bold;
 }
 
+div.comment {
+	margin: 3px 0;
+	padding: 6px;
+	font-size: 1.2em;
+	background-color: #fafaf0;
+	color: #888;
+	font-style: italic;
+	border: 1px dotted #aaa;
+}
+
+div.comment-param {
+	margin: 3px 50px 10px 10px;
+	padding: 3px 6px;
+	font-size: 0.8em;
+	background-color: #fafaf0;
+	color: #888;
+	font-style: italic;
+	border: 1px dotted #ccc;
+}
+
 div.method {
 	color: #0A0;
 	font-size: 1.2em;
@@ -127,6 +147,7 @@ div.method {
 div.param {
 	font-size: 1.2em;
 	margin-left: 10px;
+	color: #696;
 }
 
 div.param span {

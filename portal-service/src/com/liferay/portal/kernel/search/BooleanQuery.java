@@ -111,6 +111,11 @@ public interface BooleanQuery extends Query {
 	public void addTerm(String field, String value, boolean like)
 		throws ParseException;
 
+	public void addTerm(
+			String field, String value, boolean like,
+			BooleanClauseOccur booleanClauseOccur)
+		throws ParseException;
+
 	public void addTerms(String[] fields, String values) throws ParseException;
 
 	public void addTerms(String[] fields, String value, boolean like)

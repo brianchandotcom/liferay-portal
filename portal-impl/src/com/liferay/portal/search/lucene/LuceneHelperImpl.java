@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -174,6 +175,22 @@ public class LuceneHelperImpl implements LuceneHelper {
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String value, boolean like) {
 
+		addTerm(booleanQuery, field, value, like, BooleanClauseOccur.SHOULD);
+	}
+
+	public void addTerm(
+		BooleanQuery booleanQuery, String field, String[] values,
+		boolean like) {
+
+		for (String value : values) {
+			addTerm(booleanQuery, field, value, like);
+		}
+	}
+
+	public void addTerm(
+		BooleanQuery booleanQuery, String field, String value, boolean like,
+		BooleanClauseOccur booleanClauseOccur) {
+
 		if (Validator.isNull(value)) {
 			return;
 		}
@@ -189,20 +206,22 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			Query query = queryParser.parse(value);
 
-			_includeIfUnique(
-				booleanQuery, query, BooleanClause.Occur.SHOULD, like);
+			BooleanClause.Occur occur = null;
+
+			if (booleanClauseOccur == BooleanClauseOccur.MUST) {
+				occur = BooleanClause.Occur.MUST;
+			}
+			else if (booleanClauseOccur == BooleanClauseOccur.MUST_NOT) {
+				occur = BooleanClause.Occur.MUST_NOT;
+			}
+			else {
+				occur = BooleanClause.Occur.SHOULD;
+			}
+
+			_includeIfUnique(booleanQuery, query, occur, like);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-	}
-
-	public void addTerm(
-		BooleanQuery booleanQuery, String field, String[] values,
-		boolean like) {
-
-		for (String value : values) {
-			addTerm(booleanQuery, field, value, like);
 		}
 	}
 

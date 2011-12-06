@@ -28,7 +28,7 @@ String snippet = (String)objArray[2];
 String content = snippet;
 
 if (Validator.isNull(snippet)) {
-	content = StringUtil.shorten(doc.get(Field.CONTENT), 200);
+	content = StringUtil.shorten(doc.get(locale, Field.CONTENT), 200);
 }
 
 content = StringUtil.highlight(content, queryTerms);

@@ -1160,9 +1160,8 @@ public class StagingImpl implements Staging {
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
-		String lastImportDate = String.valueOf(System.currentTimeMillis());
-
-		typeSettingsProperties.setProperty("last-import-date", lastImportDate);
+		typeSettingsProperties.setProperty(
+			"last-import-date", String.valueOf(System.currentTimeMillis()));
 
 		String layoutRevisionId = GetterUtil.getString(
 			layoutElement.attributeValue("layout-revision-id"));
@@ -1205,14 +1204,6 @@ public class StagingImpl implements Staging {
 
 		typeSettingsProperties.setProperty(
 			"last-import-layout-branch-name", layoutBranchName);
-
-		if (MapUtil.getBoolean(
-				parameterMap,
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_INHERITED)) {
-
-			typeSettingsProperties.setProperty(
-				"last-merge-time", lastImportDate);
-		}
 
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 	}

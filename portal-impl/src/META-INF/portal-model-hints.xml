@@ -1452,12 +1452,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="fileId" type="long" />
+		<field name="fileUuid" type="long" />
 		<field name="repositoryId" type="long" />
 		<field name="parentFolderId" type="long" />
+		<field name="name" type="String" />
 		<field name="event" type="String" />
 		<field name="type" type="String" />
 		<field name="version" type="String" />
-		<field name="name" type="String" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />

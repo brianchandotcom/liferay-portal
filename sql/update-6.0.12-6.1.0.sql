@@ -242,12 +242,13 @@ create table DLSync (
 	createDate DATE null,
 	modifiedDate DATE null,
 	fileId LONG,
+	fileUuid LONG,
 	repositoryId LONG,
 	parentFolderId LONG,
+	name VARCHAR(75) null,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null,
-	version VARCHAR(75) null,
-	name VARCHAR(75) null
+	version VARCHAR(75) null
 );
 
 alter table Group_ add site BOOLEAN;

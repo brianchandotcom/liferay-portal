@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{syncId=");
 		sb.append(syncId);
@@ -46,18 +46,20 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		sb.append(modifiedDate);
 		sb.append(", fileId=");
 		sb.append(fileId);
+		sb.append(", fileUuid=");
+		sb.append(fileUuid);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", event=");
 		sb.append(event);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", version=");
 		sb.append(version);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -84,8 +86,16 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		}
 
 		dlSyncImpl.setFileId(fileId);
+		dlSyncImpl.setFileUuid(fileUuid);
 		dlSyncImpl.setRepositoryId(repositoryId);
 		dlSyncImpl.setParentFolderId(parentFolderId);
+
+		if (name == null) {
+			dlSyncImpl.setName(StringPool.BLANK);
+		}
+		else {
+			dlSyncImpl.setName(name);
+		}
 
 		if (event == null) {
 			dlSyncImpl.setEvent(StringPool.BLANK);
@@ -108,13 +118,6 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 			dlSyncImpl.setVersion(version);
 		}
 
-		if (name == null) {
-			dlSyncImpl.setName(StringPool.BLANK);
-		}
-		else {
-			dlSyncImpl.setName(name);
-		}
-
 		dlSyncImpl.resetOriginalValues();
 
 		return dlSyncImpl;
@@ -125,10 +128,11 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	public long createDate;
 	public long modifiedDate;
 	public long fileId;
+	public long fileUuid;
 	public long repositoryId;
 	public long parentFolderId;
+	public String name;
 	public String event;
 	public String type;
 	public String version;
-	public String name;
 }

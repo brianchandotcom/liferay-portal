@@ -130,6 +130,20 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	public void setFileId(long fileId);
 
 	/**
+	 * Returns the file uuid of this d l sync.
+	 *
+	 * @return the file uuid of this d l sync
+	 */
+	public long getFileUuid();
+
+	/**
+	 * Sets the file uuid of this d l sync.
+	 *
+	 * @param fileUuid the file uuid of this d l sync
+	 */
+	public void setFileUuid(long fileUuid);
+
+	/**
 	 * Returns the repository ID of this d l sync.
 	 *
 	 * @return the repository ID of this d l sync
@@ -156,6 +170,21 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	 * @param parentFolderId the parent folder ID of this d l sync
 	 */
 	public void setParentFolderId(long parentFolderId);
+
+	/**
+	 * Returns the name of this d l sync.
+	 *
+	 * @return the name of this d l sync
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this d l sync.
+	 *
+	 * @param name the name of this d l sync
+	 */
+	public void setName(String name);
 
 	/**
 	 * Returns the event of this d l sync.
@@ -201,21 +230,6 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 	 * @param version the version of this d l sync
 	 */
 	public void setVersion(String version);
-
-	/**
-	 * Returns the name of this d l sync.
-	 *
-	 * @return the name of this d l sync
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this d l sync.
-	 *
-	 * @param name the name of this d l sync
-	 */
-	public void setName(String name);
 
 	public boolean isNew();
 

@@ -147,6 +147,24 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	}
 
 	/**
+	* Returns the file uuid of this d l sync.
+	*
+	* @return the file uuid of this d l sync
+	*/
+	public long getFileUuid() {
+		return _dlSync.getFileUuid();
+	}
+
+	/**
+	* Sets the file uuid of this d l sync.
+	*
+	* @param fileUuid the file uuid of this d l sync
+	*/
+	public void setFileUuid(long fileUuid) {
+		_dlSync.setFileUuid(fileUuid);
+	}
+
+	/**
 	* Returns the repository ID of this d l sync.
 	*
 	* @return the repository ID of this d l sync
@@ -180,6 +198,24 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*/
 	public void setParentFolderId(long parentFolderId) {
 		_dlSync.setParentFolderId(parentFolderId);
+	}
+
+	/**
+	* Returns the name of this d l sync.
+	*
+	* @return the name of this d l sync
+	*/
+	public java.lang.String getName() {
+		return _dlSync.getName();
+	}
+
+	/**
+	* Sets the name of this d l sync.
+	*
+	* @param name the name of this d l sync
+	*/
+	public void setName(java.lang.String name) {
+		_dlSync.setName(name);
 	}
 
 	/**
@@ -234,24 +270,6 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 	*/
 	public void setVersion(java.lang.String version) {
 		_dlSync.setVersion(version);
-	}
-
-	/**
-	* Returns the name of this d l sync.
-	*
-	* @return the name of this d l sync
-	*/
-	public java.lang.String getName() {
-		return _dlSync.getName();
-	}
-
-	/**
-	* Sets the name of this d l sync.
-	*
-	* @param name the name of this d l sync
-	*/
-	public void setName(java.lang.String name) {
-		_dlSync.setName(name);
 	}
 
 	public boolean isNew() {

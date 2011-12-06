@@ -36,12 +36,13 @@ public class DLSyncSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setFileId(model.getFileId());
+		soapModel.setFileUuid(model.getFileUuid());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setParentFolderId(model.getParentFolderId());
+		soapModel.setName(model.getName());
 		soapModel.setEvent(model.getEvent());
 		soapModel.setType(model.getType());
 		soapModel.setVersion(model.getVersion());
-		soapModel.setName(model.getName());
 
 		return soapModel;
 	}
@@ -134,6 +135,14 @@ public class DLSyncSoap implements Serializable {
 		_fileId = fileId;
 	}
 
+	public long getFileUuid() {
+		return _fileUuid;
+	}
+
+	public void setFileUuid(long fileUuid) {
+		_fileUuid = fileUuid;
+	}
+
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -148,6 +157,14 @@ public class DLSyncSoap implements Serializable {
 
 	public void setParentFolderId(long parentFolderId) {
 		_parentFolderId = parentFolderId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getEvent() {
@@ -174,23 +191,16 @@ public class DLSyncSoap implements Serializable {
 		_version = version;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	private long _syncId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _fileId;
+	private long _fileUuid;
 	private long _repositoryId;
 	private long _parentFolderId;
+	private String _name;
 	private String _event;
 	private String _type;
 	private String _version;
-	private String _name;
 }

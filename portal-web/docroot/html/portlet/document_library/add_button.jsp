@@ -30,7 +30,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 }
 %>
 
-<liferay-ui:icon-menu align="left" icon="" direction="down" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu align="left" icon="" direction="down" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 		<portlet:renderURL var="addFolderURL">
 			<portlet:param name="struts_action" value="/document_library/edit_folder" />

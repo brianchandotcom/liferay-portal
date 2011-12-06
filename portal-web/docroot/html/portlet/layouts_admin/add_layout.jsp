@@ -95,7 +95,6 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			</div>
 
 			<aui:input id="addLayoutHidden" name="hidden" />
-
 		</aui:fieldset>
 
 		<aui:button-row>

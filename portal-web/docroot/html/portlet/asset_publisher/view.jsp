@@ -147,17 +147,6 @@ if (!paginationType.equals("none")) {
 			</c:if>
 		</c:otherwise>
 	</c:choose>
-
-	<c:if test='<%= portletName.equals(PortletKeys.RELATED_ASSETS) && (assetEntryQuery.getLinkedAssetEntryId() > 0) %>'>
-		<h1 class="related-assets-title">
-
-			<%
-			AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(assetEntryQuery.getLinkedAssetEntryId());
-			%>
-
-			<liferay-ui:message arguments="<%= assetEntry.getTitle(locale) %>" key="content-related-to-x" />
-		</h1>
-	</c:if>
 </c:if>
 
 <c:choose>

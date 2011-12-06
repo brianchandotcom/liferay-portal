@@ -99,14 +99,18 @@ public JSONArray _addDetailTemplateFieldAttributes(DDMStructure structure, JSONA
 
 		String fieldName = jsonObject.getString("name");
 
-		jsonObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
-		jsonObject.put("unique", true);
+		try {
+			jsonObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
+			jsonObject.put("unique", true);
+		}
+		catch (NoSuchStructureFieldException nssfe) {
+		}
 	}
 
 	return scriptJSONArray;
 }
 
-public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) {
+public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) throws NoSuchStructureFieldException {
 	JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
 
 	readOnlyAttributesJSONArray.put("name");

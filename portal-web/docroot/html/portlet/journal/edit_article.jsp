@@ -205,7 +205,10 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 				if ((article != null) && (version > 0)) {
 					approved = article.isApproved();
-					pending = article.isPending();
+
+					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
+						pending = article.isPending();
+					}
 				}
 				%>
 

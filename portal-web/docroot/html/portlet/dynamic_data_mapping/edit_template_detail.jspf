@@ -100,6 +100,7 @@ public JSONArray _addDetailTemplateFieldAttributes(DDMStructure structure, JSONA
 		String fieldName = jsonObject.getString("name");
 
 		jsonObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
+		jsonObject.put("unique", true);
 	}
 
 	return scriptJSONArray;

@@ -373,7 +373,9 @@ public class ServicePreAction extends Action {
 
 			long virtualGroupId = ParamUtil.getLong(request, "p_v_g_id");
 
-			if (virtualGroupId > 0) {
+			if ((virtualGroupId > 0) &&
+				(virtualGroupId != layout.getGroupId())) {
+
 				Group virtualGroup = GroupLocalServiceUtil.getGroup(
 					virtualGroupId);
 

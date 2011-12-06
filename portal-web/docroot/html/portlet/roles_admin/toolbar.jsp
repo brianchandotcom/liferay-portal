@@ -18,6 +18,8 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+
+String redirect = HttpUtil.removeParameter(currentURL, renderResponse.getNamespace() + "redirect");
 %>
 
 <div class="lfr-portlet-toolbar">
@@ -32,7 +34,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
 		<liferay-portlet:renderURL varImpl="addRoleURL">
 			<portlet:param name="struts_action" value="/roles_admin/edit_role" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">

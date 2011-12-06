@@ -18,6 +18,8 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+
+String redirect = HttpUtil.removeParameter(currentURL, renderResponse.getNamespace() + "redirect");
 %>
 
 <div class="lfr-portlet-toolbar">
@@ -33,8 +35,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	<portlet:renderURL var="addWorkflowDefinitionURL">
 		<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
 		<portlet:param name="tabs1" value="workflow-definitions" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="backURL" value="<%= redirect %>" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

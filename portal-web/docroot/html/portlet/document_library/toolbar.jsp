@@ -139,7 +139,7 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 			{
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
-					width:820
+					width: 820
 				},
 				showGlobalScope: 'true',
 				showManageTemplates: 'false',

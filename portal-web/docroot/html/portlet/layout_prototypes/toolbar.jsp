@@ -18,6 +18,8 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+
+String redirect = HttpUtil.removeParameter(currentURL, renderResponse.getNamespace() + "redirect");
 %>
 
 <div class="lfr-portlet-toolbar">
@@ -32,8 +34,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_PROTOTYPE) %>">
 		<portlet:renderURL var="addLayoutPrototypeURL">
 			<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="backURL" value="<%= redirect %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

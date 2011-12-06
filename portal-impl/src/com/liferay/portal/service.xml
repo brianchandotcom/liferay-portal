@@ -1465,7 +1465,7 @@
 			<finder-column name="servletContextName" />
 		</finder>
 	</entity>
-	<entity name="Repository" local-service="true" remote-service="true">
+	<entity name="Repository" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1478,6 +1478,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 

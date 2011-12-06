@@ -70,6 +70,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		repository.setGroupId(groupId);
 		repository.setCompanyId(user.getCompanyId());
+		repository.setUserId(user.getUserId());
+		repository.setUserName(user.getFullName());
 		repository.setCreateDate(now);
 		repository.setModifiedDate(now);
 		repository.setClassNameId(classNameId);

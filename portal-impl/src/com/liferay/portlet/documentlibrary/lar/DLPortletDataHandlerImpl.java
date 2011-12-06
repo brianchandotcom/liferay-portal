@@ -41,7 +41,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.RepositoryServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -762,6 +762,12 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			Repository repository)
 		throws Exception {
 
+		if (!portletDataContext.isWithinDateRange(
+				repository.getModifiedDate())) {
+
+			return;
+		}
+
 		Element repositoryElement =
 			repositoriesElement.addElement("repository");
 
@@ -776,7 +782,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.addClassedModel(
 			repositoryElement, path, repository, _NAMESPACE);
-
 	}
 
 	protected static String getFileEntryBinPath(
@@ -1346,14 +1351,16 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		String repositoryPath = getImportRepositoryPath(
 			portletDataContext, repository.getRepositoryId());
 
+		long userId = portletDataContext.getUserId(repository.getUserUuid());
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			repositoryPath, repository, _NAMESPACE);
 
 		long classNameId = PortalUtil.getClassNameId(
 			repositoryElement.attributeValue("repositoryClassName"));
 
-		RepositoryServiceUtil.addRepository(
-			portletDataContext.getScopeGroupId(), classNameId,
+		RepositoryLocalServiceUtil.addRepository(
+			userId, portletDataContext.getScopeGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, repository.getName(),
 			repository.getDescription(), repository.getPortletId(),
 			repository.getTypeSettingsProperties(), serviceContext);
@@ -1537,17 +1544,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			importFileEntryType(portletDataContext, fileEntryTypeElement);
 		}
 
-		if (portletDataContext.getBooleanParameter(
-			_NAMESPACE, "repositories")) {
-
-			List<Element> repositoryElements =
-				rootElement.element("repositories").elements("repository");
-
-			for (Element repositoryElement : repositoryElements) {
-				importRepository(portletDataContext, repositoryElement);
-			}
-		}
-
 		Element foldersElement = rootElement.element("folders");
 
 		List<Element> folderElements = foldersElement.elements("folder");
@@ -1582,6 +1578,17 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			for (Element fileRankElement : fileRankElements) {
 				importFileRank(portletDataContext, fileRankElement);
+			}
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				_NAMESPACE, "repositories")) {
+
+			List<Element> repositoryElements = rootElement.element(
+				"repositories").elements("repository");
+
+			for (Element repositoryElement : repositoryElements) {
+				importRepository(portletDataContext, repositoryElement);
 			}
 		}
 

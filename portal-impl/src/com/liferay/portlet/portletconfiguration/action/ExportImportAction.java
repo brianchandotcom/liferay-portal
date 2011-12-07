@@ -97,6 +97,8 @@ public class ExportImportAction extends EditConfigurationAction {
 			}
 			else if (cmd.equals(Constants.EXPORT)) {
 				exportData(actionRequest, actionResponse, portlet);
+
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
 				importData(actionRequest, actionResponse, portlet);
@@ -252,7 +254,11 @@ public class ExportImportAction extends EditConfigurationAction {
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			SessionErrors.add(actionRequest, e.getClass().getName());
 		}
 	}
 

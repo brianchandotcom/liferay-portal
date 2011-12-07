@@ -36,6 +36,7 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -128,6 +129,9 @@ public class LayoutLocalServiceStagingAdvice
 			}
 			catch (NoSuchMethodException nsme) {
 				throw new SystemException(nsme);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getTargetException();
 			}
 		}
 

@@ -440,7 +440,7 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("downloads")) {
-							row.addText(String.valueOf(0));
+							row.addText("--");
 						}
 
 						if (columnName.equals("modified-date")) {
@@ -456,7 +456,7 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("size")) {
-							row.addText(String.valueOf(0) + "k");
+							row.addText("--");
 						}
 					}
 

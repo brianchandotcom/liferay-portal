@@ -79,6 +79,8 @@ public class PortletKeys {
 
 	public static final String GROUP_PAGES = "156";
 
+	public static final String GROUP_STATISTICS = "181";
+
 	public static final String IFRAME = "48";
 
 	public static final String MEDIA_GALLERY_DISPLAY = "31";

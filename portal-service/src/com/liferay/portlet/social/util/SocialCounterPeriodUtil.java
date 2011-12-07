@@ -14,13 +14,14 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.ibm.icu.util.Calendar;
-import com.liferay.ibm.icu.util.GregorianCalendar;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.util.PropsValues;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author Zsolt Berentey
@@ -125,7 +126,7 @@ public class SocialCounterPeriodUtil {
 
 		if (_periodLength == 0) {
 			_periodLength = GetterUtil.getInteger(
-				PropsValues.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
+				_SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
 		}
 
 		return _periodLength;
@@ -187,7 +188,7 @@ public class SocialCounterPeriodUtil {
 	}
 
 	private static boolean _isMonthlyPeriod() {
-		if (PropsValues.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month")) {
+		if (_SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month")) {
 			return true;
 		}
 		else {
@@ -208,6 +209,9 @@ public class SocialCounterPeriodUtil {
 
 	private static final long _BASE_TIME =
 		new GregorianCalendar(2011, Calendar.JANUARY, 1).getTimeInMillis();
+
+	private static final String _SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH =
+		PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
 
 	private static int _endPeriod;
 	private static int _periodLength = -1;

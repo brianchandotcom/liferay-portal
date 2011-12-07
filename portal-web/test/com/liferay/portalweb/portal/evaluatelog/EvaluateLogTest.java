@@ -50,6 +50,12 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			if (line.contains(
+					"Resource Destroyer in BasicResourcePool.close()")) {
+
+				continue;
+			}
+
 			if (line.matches(
 					".*The web application \\[.*\\] appears to have started " +
 						"a thread.*")) {

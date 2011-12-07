@@ -85,8 +85,10 @@ public class AddAtTagTest extends BaseTestCase {
 					continue;
 				}
 
-				Thread.sleep(5000);
-				selenium.clickAt("//div[3]/div/div/span",
+				assertEquals(RuntimeVariables.replace("Categorization"),
+					selenium.getText(
+						"xPath=(//div[@class='lfr-panel-title'])[2]/span"));
+				selenium.clickAt("xPath=(//div[@class='lfr-panel-title'])[2]/span",
 					RuntimeVariables.replace("Categorization"));
 
 				for (int second = 0;; second++) {

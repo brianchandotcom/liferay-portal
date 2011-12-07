@@ -83,8 +83,8 @@ public class DefineMemberRoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Media Gallery"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//td/input"));
-		assertTrue(selenium.isChecked("//tr[10]/td/input"));
+		assertTrue(selenium.isChecked("//tr[3]/td/input"));
+		assertTrue(selenium.isChecked("//tr[11]/td/input"));
 		selenium.typeKeys("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("mmm"));
 		selenium.keyPress("//select[@id='_128_add-permissions']",

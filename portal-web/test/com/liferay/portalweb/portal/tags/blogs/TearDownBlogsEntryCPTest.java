@@ -60,19 +60,13 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				}
 
 				selenium.click("//th/input");
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
-				assertEquals(RuntimeVariables.replace("No entries were found."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
-
 			case 100:
 				label = -1;
 			}

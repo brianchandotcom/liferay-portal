@@ -141,7 +141,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			<div class="entry-body">
 				<c:choose>
 					<c:when test='<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) && !strutsAction.equals("/blogs/view_entry") %>'>
-						<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getContent()), pageAbstractLength) %>
+						<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getDescription()), pageAbstractLength) %>
 
 						<br />
 

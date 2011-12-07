@@ -364,16 +364,9 @@ public class SitesUtil {
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()});
-
-		String siteTemplateRelationship = ParamUtil.getString(
-			serviceContext, "siteTemplateRelationship");
-
-		if (siteTemplateRelationship.equals("inherited")) {
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_INHERITED,
-				new String[] {Boolean.TRUE.toString()});
-		}
-
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_INHERITED,
+			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
 			new String[] {

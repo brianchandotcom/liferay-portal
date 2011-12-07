@@ -59,8 +59,6 @@ if (group != null) {
 %>
 
 <aui:fieldset>
-	<aui:input name="siteTemplateRelationship" type="hidden" value="inherited" />
-
 	<c:choose>
 		<c:when test="<%= (group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null)) %>">
 			<aui:fieldset label="public-pages">

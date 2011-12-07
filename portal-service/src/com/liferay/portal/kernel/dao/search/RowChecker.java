@@ -43,16 +43,7 @@ public class RowChecker {
 
 	public RowChecker(PortletResponse portletResponse) {
 		_portletResponse = portletResponse;
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_portletResponse.getNamespace());
-		sb.append(ALL_ROW_IDS);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(DeterminateKeyGenerator.generate(ALL_ROW_IDS));
-
-		_allRowIds = sb.toString();
-
+		_allRowIds = _portletResponse.getNamespace() + ALL_ROW_IDS;
 		_formName = _portletResponse.getNamespace() + FORM_NAME;
 		_rowIds = _portletResponse.getNamespace() + ROW_IDS;
 	}

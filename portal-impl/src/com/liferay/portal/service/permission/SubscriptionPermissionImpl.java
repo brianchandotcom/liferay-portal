@@ -21,6 +21,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
@@ -60,12 +62,25 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 		}
 
 		if (className.equals(BlogsEntry.class.getName())) {
-			BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-				classPK);
+			AssetEntry assetEntry =
+				AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
+
+			if (assetEntry == null) {
+				return false;
+			}
+
+			long groupId = classPK;
+			String title = assetEntry.getTitle();
+
+			if (!title.equals(String.valueOf(classPK))) {
+				BlogsEntry blogsEntry =
+					BlogsEntryLocalServiceUtil.getBlogsEntry(classPK);
+
+				groupId = blogsEntry.getGroupId();
+			}
 
 			return BlogsPermission.contains(
-				permissionChecker, blogsEntry.getGroupId(),
-				ActionKeys.SUBSCRIBE);
+				permissionChecker, groupId, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
 			return JournalPermission.contains(

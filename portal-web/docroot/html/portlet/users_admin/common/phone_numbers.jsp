@@ -67,7 +67,20 @@ else {
 <h3><liferay-ui:message key="phone-numbers" /></h3>
 
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
-<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
+<liferay-ui:error exception="<%= PhoneNumberException.class %>">
+
+	<%
+	PhoneNumberException pne = (PhoneNumberException)errorException;
+	%>
+
+	<c:if test="<%= pne.getType() == PhoneNumberException.PHONE_NUMBER %>">
+		<%= LanguageUtil.get(pageContext, "please-enter-a-valid-phone-number") %>
+	</c:if>
+
+	<c:if test="<%= pne.getType() == PhoneNumberException.PHONE_EXCEPTION %>">
+		<%= LanguageUtil.get(pageContext, "please-enter-a-valid-extension") %>
+	</c:if>
+</liferay-ui:error>
 
 <aui:fieldset>
 

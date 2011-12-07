@@ -82,3 +82,5 @@ for (int i = 0; i < results.size(); i++) {
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:input helpMessage="delete-missing-layouts-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />

@@ -265,7 +265,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="2" />
+		<property name="build-test-ant-scripts.version" value="3" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1899,19 +1899,19 @@
 		</if>
 
 		<if>
-			<available file="${vm.drive}\${vm.host.cluster-node-2}\${vm.host.cluster-node-2}.vmdk.lck" />
+			<available file="${vm.drive}\${vm.cluster-node-2.host}\${vm.cluster-node-2.host}.vmdk.lck" />
 			<then>
 				<antcall target="stop-vm">
-					<param name="vm.host" value="${vm.host.cluster-node-2}" />
+					<param name="vm.host" value="${vm.cluster-node-2.host}" />
 				</antcall>
 			</then>
 		</if>
 
 		<if>
-			<available file="${vm.drive}\${vm.host.db}\${vm.host.db}.vmdk.lck" />
+			<available file="${vm.drive}\${vm.db.host}\${vm.db.host}.vmdk.lck" />
 			<then>
 				<antcall target="stop-vm">
-					<param name="vm.host" value="${vm.host.db}" />
+					<param name="vm.host" value="${vm.db.host}" />
 				</antcall>
 			</then>
 		</if>

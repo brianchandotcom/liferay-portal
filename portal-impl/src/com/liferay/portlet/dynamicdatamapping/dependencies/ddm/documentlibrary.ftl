@@ -41,14 +41,11 @@
 </@>
 
 <@aui.script>
-	Liferay.provide(
-		window,
-		'${portletNamespace}${namespacedFieldName}clearFileEntry',
-		function() {
-			window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', '');
-		},
-		[]
-	);
+	window['${portletNamespace}${namespacedFieldName}clearFileEntry'] = function() {
+		window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', '');
+	};
+
+	window['${portalUtil.getPortletNamespace("15")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
 
 	Liferay.provide(
 		window,
@@ -67,15 +64,6 @@
 			}
 		},
 		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'${portalUtil.getPortletNamespace("15")}selectDocumentLibrary',
-		function(url, uuid, title, version) {
-			window['${portletNamespace}${namespacedFieldName}setFileEntry'](url, uuid, title, version);
-		},
-		[]
 	);
 
 	Liferay.provide(

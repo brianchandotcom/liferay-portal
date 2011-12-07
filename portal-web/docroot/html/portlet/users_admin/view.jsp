@@ -148,6 +148,12 @@ String portletURLString = portletURL.toString();
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>");
 	}
 
+	function <portlet:namespace />search() {
+		document.<portlet:namespace />fm.method = "get";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "";
+		submitForm(document.<portlet:namespace />fm, '<%= portletURLString %>');
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteOrganizations',

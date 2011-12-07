@@ -612,6 +612,8 @@ update User_ set status = 5 where active_ = FALSE;
 
 alter table User_ drop column active_;
 
+alter table UserGroup add addedByLDAPImport BOOLEAN;
+
 create table UserGroups_Teams (
 	userGroupId LONG not null,
 	teamId LONG not null,

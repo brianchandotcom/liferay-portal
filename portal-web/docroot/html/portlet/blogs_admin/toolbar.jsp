@@ -40,12 +40,4 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<a href="<%= addEntryURL %>"><liferay-ui:message key="add" /></a>
 		</span>
 	</c:if>
-
-	<c:if test="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>">
-		<liferay-portlet:renderURL var="expandoURL" portletName="<%= PortletKeys.EXPANDO %>">
-			<portlet:param name="struts_action" value="/expando/view_attributes" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="modelResource" value="<%= BlogsEntry.class.getName() %>" />
-		</liferay-portlet:renderURL>
-	</c:if>
 </div>

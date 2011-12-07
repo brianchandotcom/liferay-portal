@@ -346,10 +346,10 @@ public class AnnouncementsEntryLocalServiceImpl
 		long classPK = entry.getClassPK();
 
 		String fromName = PrefsPropsUtil.getStringFromNames(
-			entry.getCompanyId(), PropsValues.ANNOUNCEMENTS_EMAIL_FROM_NAME,
+			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 		String fromAddress = PrefsPropsUtil.getStringFromNames(
-			entry.getCompanyId(), PropsValues.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
+			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
 		String toName = PropsValues.ANNOUNCEMENTS_EMAIL_TO_NAME;

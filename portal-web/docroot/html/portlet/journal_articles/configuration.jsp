@@ -117,16 +117,7 @@ if (Validator.isNotNull(structureId)) {
 						</c:if>
 					</div>
 
-					<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="selectStructureURL">
-						<portlet:param name="struts_action" value="/journal/select_structure" />
-						<portlet:param name="structureId" value="<%= structureId %>" />
-					</liferay-portlet:renderURL>
-
-					<%
-					String taglibOpenStructureWindow = "var folderWindow = window.open('" + selectStructureURL + "','structure', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); folderWindow.focus();";
-					%>
-
-					<aui:button onClick="<%= taglibOpenStructureWindow %>" value="select" />
+					<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 
 					<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
 				</aui:field-wrapper>
@@ -184,6 +175,23 @@ if (Validator.isNotNull(structureId)) {
 <aui:script>
 	Liferay.provide(
 		window,
+		'<portlet:namespace />openStructureSelector',
+		function() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						stack: false,
+						width: 680
+					},
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',
+					uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/select_structure" /><portlet:param name="structureId" value="<%= structureId %>" /></liferay-portlet:renderURL>'
+				}
+			);
+		}
+	);
+
+	Liferay.provide(
+		window,
 		'<portlet:namespace />removeStructure',
 		function() {
 			var A = AUI();
@@ -198,12 +206,16 @@ if (Validator.isNotNull(structureId)) {
 	Liferay.provide(
 		window,
 		'<%= PortalUtil.getPortletNamespace(PortletKeys.JOURNAL) %>selectStructure',
-		function(structureId, name) {
+		function(structureId, name, dialog) {
 			var A = AUI();
 
 			document.<portlet:namespace />fm1.<portlet:namespace />structureId.value = structureId;
 
 			A.one('#<portlet:namespace />structure').html(structureId + ' <em>(' + name + ')</em>');
+
+			if (dialog) {
+				dialog.close();
+			}
 		},
 		['aui-base']
 	);

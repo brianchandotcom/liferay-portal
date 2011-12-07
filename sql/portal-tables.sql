@@ -2032,8 +2032,6 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	publicLayoutSetPrototypeId LONG,
-	privateLayoutSetPrototypeId LONG,
 	addedByLDAPImport BOOLEAN
 );
 

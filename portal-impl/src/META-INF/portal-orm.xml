@@ -1111,8 +1111,6 @@
 			<basic name="parentUserGroupId" />
 			<basic name="name" />
 			<basic name="description" />
-			<basic name="publicLayoutSetPrototypeId" />
-			<basic name="privateLayoutSetPrototypeId" />
 			<basic name="addedByLDAPImport" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

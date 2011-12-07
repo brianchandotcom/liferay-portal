@@ -573,8 +573,7 @@ update User_ set status = 5 where active_ = FALSE;
 
 alter table User_ drop column active_;
 
-alter table UserGroup add publicLayoutSetPrototypeId LONG;
-alter table UserGroup add privateLayoutSetPrototypeId LONG;
+alter table UserGroup add addedByLDAPImport BOOLEAN;
 
 alter table UserNotificationEvent add archived BOOLEAN;
 

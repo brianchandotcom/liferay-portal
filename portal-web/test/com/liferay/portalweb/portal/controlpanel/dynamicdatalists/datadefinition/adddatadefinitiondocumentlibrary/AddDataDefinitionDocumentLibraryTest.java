@@ -108,8 +108,8 @@ public class AddDataDefinitionDocumentLibraryTest extends BaseTestCase {
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_166_name_en_US']",
-			RuntimeVariables.replace("Data Definition Document Library"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+			RuntimeVariables.replace("Data Definition Documents and Media"));
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div",

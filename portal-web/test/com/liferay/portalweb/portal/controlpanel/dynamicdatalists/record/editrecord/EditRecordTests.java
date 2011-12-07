@@ -32,6 +32,7 @@ public class EditRecordTests extends BaseTests {
 		testSuite.addTestSuite(AddDMDocumentTest.class);
 		testSuite.addTestSuite(AddRecordTest.class);
 		testSuite.addTestSuite(EditRecordTest.class);
+		testSuite.addTestSuite(ViewEditRecordTest.class);
 		testSuite.addTestSuite(TearDownListTest.class);
 		testSuite.addTestSuite(TearDownDataDefinitionTest.class);
 		testSuite.addTestSuite(TearDownDMContentTest.class);

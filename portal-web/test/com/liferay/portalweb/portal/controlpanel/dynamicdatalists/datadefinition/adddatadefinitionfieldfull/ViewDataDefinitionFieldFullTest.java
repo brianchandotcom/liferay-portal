@@ -145,7 +145,7 @@ public class ViewDataDefinitionFieldFullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label"));
 		assertEquals(RuntimeVariables.replace("File Upload"),

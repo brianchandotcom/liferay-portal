@@ -72,7 +72,7 @@ public class FindEntryAction extends FindAction {
 	@Override
 	protected String[] initPortletIds() {
 		return new String[] {
-			PortletKeys.BLOGS, PortletKeys.BLOGS_ADMIN,
+			PortletKeys.BLOGS_ADMIN, PortletKeys.BLOGS,
 			PortletKeys.BLOGS_AGGREGATOR
 		};
 	}

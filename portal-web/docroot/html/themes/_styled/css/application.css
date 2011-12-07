@@ -340,6 +340,21 @@
 	top: 5px;
 }
 
+/* ---------- Tabs ---------- */
+
+.aui-tab-active strong {
+	font-weight: normal;
+}
+
+.aui-tab-back {
+	float: right;
+}
+
+.aui-tab-back-content {
+	border-width: 0;
+	padding: 1px;
+}
+
 /* ---------- Misc. ---------- */
 
 .lfr-panel-container {

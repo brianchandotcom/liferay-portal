@@ -168,7 +168,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 			cssClassName += " first";
 		}
 
-		if ((i == values.length - 1) && Validator.isNull(backURL)) {
+		if (i == values.length - 1) {
 			cssClassName += " last";
 		}
 	%>
@@ -198,7 +198,15 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 							</c:otherwise>
 						</c:choose>
 
+						<c:if test="<%= selected %>">
+							<strong>
+						</c:if>
+
 						<%= LanguageUtil.get(pageContext, names[i]) %>
+
+						<c:if test="<%= selected %>">
+							</strong>
+						</c:if>
 
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(curURL) %>">
@@ -228,8 +236,8 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 				/>
 			</c:when>
 			<c:otherwise>
-				<li class="aui-tab toggle last">
-					<span class="aui-tab-content">
+				<li class="aui-tab aui-tab-back toggle last">
+					<span class="aui-tab-content aui-tab-back-content">
 						<span class="aui-tab-label">
 							<a href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? backLabel : "&laquo;" + LanguageUtil.get(pageContext, "back") %></a>
 						</span>

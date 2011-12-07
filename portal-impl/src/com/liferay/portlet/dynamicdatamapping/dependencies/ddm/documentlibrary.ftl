@@ -54,7 +54,7 @@
 			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
 
 			if (titleNode) {
-				var url = titleNode.getAttribute('url');
+				var url = titleNode.attr('url');
 
 				if (url) {
 					location.href = url;
@@ -87,7 +87,7 @@
 			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
 
 			if (titleNode) {
-				titleNode.setAttribute('url', url);
+				titleNode.attr('url', url);
 				titleNode.val(title);
 			}
 		},

@@ -934,6 +934,8 @@ AUI().add(
 						if (sortButton) {
 							var sortButtonContainer = instance.byId('sortButtonContainer');
 
+							sortButtonContainer.plug(A.Plugin.ParseContent);
+
 							sortButtonContainer.setContent(sortButton);
 						}
 					},

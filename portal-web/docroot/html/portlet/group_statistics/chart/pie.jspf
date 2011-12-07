@@ -115,7 +115,13 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 	var chartContainer = A.one('#groupStatisticsChart<%= displayActivityCounterNameIndex %>');
 
-	chartContainer.setStyle("height", chartContainer.width() *.7);
+	var getContainerWidth = function(container) {
+		return container.width() * 0.7;
+	};
+
+	var containerWidth = getContainerWidth(chartContainer);
+
+	chartContainer.setStyle('height', dynamicWidth);
 
 	var chart = new A.Chart(
 		{
@@ -136,27 +142,26 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 					valueKey: 'values'
 				}
 			],
-			height: chartContainer.width() * .7,
+			height: containerWidth,
 			tooltip: tooltip,
 			type: 'pie',
-			width: chartContainer.width() * .7
+			width: containerWidth
 		}
 	).render(chartContainer);
 
-	Liferay.after(
-		['portletMoved', 'liferaypanel:collapse'],
-		function(event) {
-			var width = chartContainer.width() *.7;
+	// To be fixed pending fix in http://yuilibrary.com/projects/yui3/ticket/2531555
+	//Liferay.after(
+	//	['portletMoved', 'liferaypanel:collapse'],
+	//	function(event) {
+	//		var width = getContainerWidth(chartContainer);
 
-			if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
-				(event.type == 'liferaypanel:collapse' && event.panelId == 'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')) {
+	//		if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
+	//			(event.type == 'liferaypanel:collapse' && event.panelId == 'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')) {
 
-				// To be fixed in YUI
-
-				// chart.set('width', width);
-			}
-		}
-	);
+	//			chart.set('width', width);
+	//		}
+	//	}
+	//);
 </aui:script>
 
 <%!

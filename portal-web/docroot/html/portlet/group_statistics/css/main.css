@@ -8,10 +8,8 @@
 		width: 100%;
 	}
 
-	.chart-pie {
-		.chart-column-content {
-			text-align: center;
-		}
+	.chart-pie .chart-column-content {
+		text-align: center;
 	}
 
 	.group-statistics-chart {

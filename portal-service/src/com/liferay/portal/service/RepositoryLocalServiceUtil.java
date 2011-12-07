@@ -187,6 +187,22 @@ public class RepositoryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the repository with the UUID in the group.
+	*
+	* @param uuid the UUID of repository
+	* @param groupId the group id of the repository
+	* @return the repository
+	* @throws PortalException if a repository with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository getRepositoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRepositoryByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the repositories.
 	*
 	* <p>

@@ -31,9 +31,12 @@ public class RepositorySoap implements Serializable {
 	public static RepositorySoap toSoapModel(Repository model) {
 		RepositorySoap soapModel = new RepositorySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
@@ -94,6 +97,14 @@ public class RepositorySoap implements Serializable {
 		setRepositoryId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -116,6 +127,22 @@ public class RepositorySoap implements Serializable {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	public Date getCreateDate() {
@@ -182,9 +209,12 @@ public class RepositorySoap implements Serializable {
 		_dlFolderId = dlFolderId;
 	}
 
+	private String _uuid;
 	private long _repositoryId;
 	private long _groupId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;

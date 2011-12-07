@@ -819,8 +819,13 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.RepositoryModelImpl">
 		<attributes>
 			<id name="repositoryId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="groupId" />
 			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -835,6 +840,7 @@
 			<basic name="dlFolderId" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.RepositoryEntryModelImpl">
@@ -1105,6 +1111,8 @@
 			<basic name="parentUserGroupId" />
 			<basic name="name" />
 			<basic name="description" />
+			<basic name="publicLayoutSetPrototypeId" />
+			<basic name="privateLayoutSetPrototypeId" />
 			<basic name="addedByLDAPImport" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

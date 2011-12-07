@@ -295,8 +295,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
-	* @throws PortalException if any one of the users could not be found or if
-	a portal exception occurred
+	* @throws PortalException if any one of the users could not be found or
+	if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	* @deprecated
 	*/
@@ -309,8 +309,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be found
-	or if a portal exception occurred
+	* @throws PortalException if a user with the primary key could not be
+	found or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	* @deprecated
 	*/
@@ -323,8 +323,8 @@ public interface UserGroupLocalService extends PersistedModelLocalService {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be found
-	or if a portal exception occurred
+	* @throws PortalException if a user with the primary key could not be
+	found or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	* @deprecated
 	*/

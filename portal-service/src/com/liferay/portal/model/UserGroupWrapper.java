@@ -145,6 +145,42 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	/**
+	* Returns the public layout set prototype ID of this user group.
+	*
+	* @return the public layout set prototype ID of this user group
+	*/
+	public long getPublicLayoutSetPrototypeId() {
+		return _userGroup.getPublicLayoutSetPrototypeId();
+	}
+
+	/**
+	* Sets the public layout set prototype ID of this user group.
+	*
+	* @param publicLayoutSetPrototypeId the public layout set prototype ID of this user group
+	*/
+	public void setPublicLayoutSetPrototypeId(long publicLayoutSetPrototypeId) {
+		_userGroup.setPublicLayoutSetPrototypeId(publicLayoutSetPrototypeId);
+	}
+
+	/**
+	* Returns the private layout set prototype ID of this user group.
+	*
+	* @return the private layout set prototype ID of this user group
+	*/
+	public long getPrivateLayoutSetPrototypeId() {
+		return _userGroup.getPrivateLayoutSetPrototypeId();
+	}
+
+	/**
+	* Sets the private layout set prototype ID of this user group.
+	*
+	* @param privateLayoutSetPrototypeId the private layout set prototype ID of this user group
+	*/
+	public void setPrivateLayoutSetPrototypeId(long privateLayoutSetPrototypeId) {
+		_userGroup.setPrivateLayoutSetPrototypeId(privateLayoutSetPrototypeId);
+	}
+
+	/**
 	* Returns the added by l d a p import of this user group.
 	*
 	* @return the added by l d a p import of this user group

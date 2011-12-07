@@ -461,9 +461,12 @@ alter table PollsVote add createDate DATE null;
 alter table PollsVote add modifiedDate DATE null;
 
 create table Repository (
+	uuid_ VARCHAR(75) null,
 	repositoryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,

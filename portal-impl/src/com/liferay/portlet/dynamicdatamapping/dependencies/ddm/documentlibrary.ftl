@@ -45,8 +45,6 @@
 		window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', '');
 	};
 
-	window['${portalUtil.getPortletNamespace("15")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
-
 	Liferay.provide(
 		window,
 		'${portletNamespace}${namespacedFieldName}downloadFileEntry',
@@ -120,6 +118,8 @@
 						uri: portletURL.toString()
 					}
 				);
+
+				window['${portalUtil.getPortletNamespace("15")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
 			}
 		);
 	}

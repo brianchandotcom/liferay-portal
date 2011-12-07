@@ -205,6 +205,23 @@ public class DLAppHelperLocalServiceImpl
 		return null;
 	}
 
+	public void moveFileEntry(FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		dlSyncLocalService.updateSync(
+			fileEntry.getFileEntryId(), fileEntry.getFolderId(),
+			fileEntry.getTitle(), DLSyncConstants.EVENT_UPDATE,
+			fileEntry.getVersion());
+	}
+
+	public void moveFolder(Folder folder)
+		throws PortalException, SystemException {
+
+		dlSyncLocalService.updateSync(
+			folder.getFolderId(), folder.getParentFolderId(),
+			folder.getName(), DLSyncConstants.EVENT_UPDATE, "-1");
+	}
+
 	public AssetEntry updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long assetClassPk)

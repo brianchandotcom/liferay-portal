@@ -57,7 +57,7 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 					'<portlet:namespace />struts_action': '/document_library/search',
 					'<portlet:namespace />repositoryId': '<%= String.valueOf(repositoryId) %>',
 					'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
-					'<portlet:namespace />searchFolderIds': '<%= String.valueOf(folderId) %>',
+					'<portlet:namespace />searchFolderId': '<%= String.valueOf(folderId) %>',
 					'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
 					'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>
 				}

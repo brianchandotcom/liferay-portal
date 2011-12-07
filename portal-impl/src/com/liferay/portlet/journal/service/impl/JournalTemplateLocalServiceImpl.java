@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -630,7 +631,11 @@ public class JournalTemplateLocalServiceImpl
 			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
-		if (nameMap.isEmpty()) {
+		Locale locale = LocaleUtil.getDefault();
+
+		if (nameMap.isEmpty() ||
+			Validator.isNull(nameMap.get(locale))) {
+
 			throw new TemplateNameException();
 		}
 		else if (Validator.isNull(xsl)) {

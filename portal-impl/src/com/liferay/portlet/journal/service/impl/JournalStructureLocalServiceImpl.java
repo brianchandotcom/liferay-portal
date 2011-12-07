@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -572,7 +573,11 @@ public class JournalStructureLocalServiceImpl
 			String xsd)
 		throws PortalException {
 
-		 if (nameMap.entrySet().isEmpty()) {
+		Locale locale = LocaleUtil.getDefault();
+
+		if (nameMap.entrySet().isEmpty() ||
+			Validator.isNull(nameMap.get(locale))) {
+
 			throw new StructureNameException();
 		}
 

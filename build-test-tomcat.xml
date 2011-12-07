@@ -63,6 +63,8 @@ net.sf.ehcache.configurationResourceName=/ehcache/hibernate-clustered.xml
 
 ehcache.multi.vm.config.location=/ehcache/liferay-multi-vm-clustered.xml
 
+redirect.url.ips.allowed=127.0.0.1,SERVER_IP,${vm.cluster-node-1.ip}
+
 cluster.link.enabled=true
 
 web.server.display.node=true</echo>

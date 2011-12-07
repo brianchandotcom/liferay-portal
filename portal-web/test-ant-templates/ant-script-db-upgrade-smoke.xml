@@ -8,7 +8,7 @@
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="db2-9.7" />
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
 		<antcall target="prepare-db-db2-common">
@@ -21,7 +21,7 @@
 		</antcall>
 
 		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 	</target>
 
@@ -41,7 +41,7 @@
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="oracle-10.2.0.1.0" />
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
 		<antcall target="prepare-db-oracle-common">
@@ -54,7 +54,7 @@
 		</antcall>
 
 		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 	</target>
 
@@ -63,7 +63,7 @@
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="postgresql-8.4.2-1" />
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
 		<antcall target="prepare-db-postgresql-common">
@@ -76,7 +76,7 @@
 		</antcall>
 
 		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 	</target>
 
@@ -85,7 +85,7 @@
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="sql-server-2005-sp2" />
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-common">
@@ -98,7 +98,7 @@
 		</antcall>
 
 		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 	</target>
 
@@ -107,7 +107,7 @@
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
 		<antcall target="prepare-db-sybase-common">
@@ -120,7 +120,7 @@
 		</antcall>
 
 		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.host.db}" />
+			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 	</target>
 </project>

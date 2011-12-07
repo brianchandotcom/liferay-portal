@@ -28,14 +28,14 @@ file.
 		</if>
 
 		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${apache.http.win32.dir}${apache.http.win32.install} ${vm.username}@${vm.host.cluster-node-1}:/" />
+			<arg line="-pw ${vm.password} ${apache.http.win32.dir}${apache.http.win32.install} ${vm.username}@${vm.cluster-node-1.host}:/" />
 		</exec>
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host.cluster-node-1} cmd.exe /c msiexec /i C:\${apache.http.win32.install} /quiet" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.cluster-node-1.host} cmd.exe /c msiexec /i C:\${apache.http.win32.install} /quiet" />
 		</exec>
 
-		<property name="remote.host" value="${vm.host.cluster-node-1}" />
+		<property name="remote.host" value="${vm.cluster-node-1.host}" />
 		<property name="remote.file" value="/Progra~1/Apache~1/Apache2.2/conf/httpd.conf" />
 
 		<tstamp>
@@ -60,7 +60,7 @@ file.
 		<delete file="${tstamp.value}" />
 
 		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${apache.http.win32.dir}${apache.http.win32.modjk} ${vm.username}@${vm.host.cluster-node-1}:/Progra~1/Apache~1/Apache2.2/modules" />
+			<arg line="-pw ${vm.password} ${apache.http.win32.dir}${apache.http.win32.modjk} ${vm.username}@${vm.cluster-node-1.host}:/Progra~1/Apache~1/Apache2.2/modules" />
 		</exec>
 
 		<tstamp>
@@ -73,12 +73,12 @@ file.
 		<echo file="${tstamp.value}/conf/workers.properties">worker.list=node-1,node-2,loadbalancer
 
 worker.node-1.port=8009
-worker.node-1.host=${vm.host.cluster-node-1}
+worker.node-1.host=${vm.cluster-node-1.host}
 worker.node-1.type=ajp13
 worker.node-1.connection_pool_size=10
 
 worker.node-2.port=8009
-worker.node-2.host=${vm.host.cluster-node-2}
+worker.node-2.host=${vm.cluster-node-2.host}
 worker.node-2.type=ajp13
 worker.node-2.connection_pool_size=10
 
@@ -101,17 +101,17 @@ JkShmFile logs/jk-runtime-status</echo>
 </VirtualHost>]]></echo>
 
 		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} -r ${tstamp.value}/conf ${vm.username}@${vm.host.cluster-node-1}:/Progra~1/Apache~1/Apache2.2" />
+			<arg line="-pw ${vm.password} -r ${tstamp.value}/conf ${vm.username}@${vm.cluster-node-1.host}:/Progra~1/Apache~1/Apache2.2" />
 		</exec>
 
 		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} -r ${tstamp.value}/conf.d ${vm.username}@${vm.host.cluster-node-1}:/Progra~1/Apache~1/Apache2.2" />
+			<arg line="-pw ${vm.password} -r ${tstamp.value}/conf.d ${vm.username}@${vm.cluster-node-1.host}:/Progra~1/Apache~1/Apache2.2" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host.cluster-node-1} C:\Progra~1\Apache~1\Apache2.2\bin\httpd.exe -k install -n Apache2.2 -f C:\Progra~1\Apache~1\Apache2.2\conf\httpd.conf" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.cluster-node-1.host} C:\Progra~1\Apache~1\Apache2.2\bin\httpd.exe -k install -n Apache2.2 -f C:\Progra~1\Apache~1\Apache2.2\conf\httpd.conf" />
 		</exec>
 	</target>
 
@@ -122,14 +122,14 @@ JkShmFile logs/jk-runtime-status</echo>
 
 	<target name="prepare-cluster-tomcat-node-1">
 		<ant antfile="build-test-tomcat.xml" target="prepare-cluster-tomcat-node">
-			<property name="cluster-node.host" value="${vm.host.cluster-node-1}" />
+			<property name="cluster-node.host" value="${vm.cluster-node-1.host}" />
 			<property name="cluster-node.value" value="node-1" />
 		</ant>
 	</target>
 
 	<target name="prepare-cluster-tomcat-node-2">
 		<ant antfile="build-test-tomcat.xml" target="prepare-cluster-tomcat-node">
-			<property name="cluster-node.host" value="${vm.host.cluster-node-2}" />
+			<property name="cluster-node.host" value="${vm.cluster-node-2.host}" />
 			<property name="cluster-node.value" value="node-2" />
 		</ant>
 	</target>
@@ -162,13 +162,13 @@ JkShmFile logs/jk-runtime-status</echo>
 
 	<target name="prepare-cluster-vm-node-1">
 		<antcall target="prepare-cluster-vm-node">
-			<param name="cluster-node.host" value="${vm.host.cluster-node-1}" />
+			<param name="cluster-node.host" value="${vm.cluster-node-1.host}" />
 		</antcall>
 	</target>
 
 	<target name="prepare-cluster-vm-node-2">
 		<antcall target="prepare-cluster-vm-node">
-			<param name="cluster-node.host" value="${vm.host.cluster-node-2}" />
+			<param name="cluster-node.host" value="${vm.cluster-node-2.host}" />
 		</antcall>
 	</target>
 
@@ -189,7 +189,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		<antcall target="rebuild-database" inheritAll="false" />
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host.cluster-node-1} cmd.exe /c net start Apache2.2" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.cluster-node-1.host} cmd.exe /c net start Apache2.2" />
 		</exec>
 
 		<antcall target="startup-tomcat-cluster-node-1" />
@@ -205,10 +205,10 @@ JkShmFile logs/jk-runtime-status</echo>
 		<replace
 			file="portal-web/test/test-portal-web.properties"
 			token="localhost:8080"
-			value="${vm.host.cluster-node-1}"
+			value="${vm.cluster-node-1.host}"
 		/>
 
-		<echo file="portal-web/test/test-portal-web.properties" append="true">${line.separator}${line.separator}cluster.node1=${vm.host.cluster-node-1}${line.separator}cluster.node2=${vm.host.cluster-node-2}</echo>
+		<echo file="portal-web/test/test-portal-web.properties" append="true">${line.separator}${line.separator}cluster.node1=${vm.cluster-node-1.host}${line.separator}cluster.node2=${vm.cluster-node-2.host}</echo>
 
 		<antcall target="start-selenium" />
 
@@ -223,7 +223,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		<sleep seconds="30" />
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host.cluster-node-2} TASKKILL /f /im java.exe" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.cluster-node-2.host} TASKKILL /f /im java.exe" />
 		</exec>
 
 		<antcall target="start-selenium" />
@@ -241,7 +241,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		<sleep seconds="30" />
 
 		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host.cluster-node-1} TASKKILL /f /im java.exe" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.cluster-node-1.host} TASKKILL /f /im java.exe" />
 		</exec>
 
 		<sleep seconds="30" />
@@ -254,12 +254,12 @@ JkShmFile logs/jk-runtime-status</echo>
 
 		<antcall target="stop-selenium" />
 
-		<exec dir="${vm.drive}/${vm.host.cluster-node-1}" executable="${vmware-cmd.executable}">
-			<arg line="${vm.drive}\${vm.host.cluster-node-1}\${vm.host.cluster-node-1}.vmx stop hard" />
+		<exec dir="${vm.drive}/${vm.cluster-node-1.host}" executable="${vmware-cmd.executable}">
+			<arg line="${vm.drive}\${vm.cluster-node-1.host}\${vm.cluster-node-1.host}.vmx stop hard" />
 		</exec>
 
-		<exec dir="${vm.drive}/${vm.host.cluster-node-2}" executable="${vmware-cmd.executable}">
-			<arg line="${vm.drive}\${vm.host.cluster-node-2}\${vm.host.cluster-node-2}.vmx stop hard" />
+		<exec dir="${vm.drive}/${vm.cluster-node-2.host}" executable="${vmware-cmd.executable}">
+			<arg line="${vm.drive}\${vm.cluster-node-2.host}\${vm.cluster-node-2.host}.vmx stop hard" />
 		</exec>
 	</target>
 
@@ -271,7 +271,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		</echo>
 
 		<antcall target="execute-remote-command">
-			<param name="vm.host" value="${vm.host.cluster-node-1}" />
+			<param name="vm.host" value="${vm.cluster-node-1.host}" />
 		</antcall>
 	</target>
 
@@ -283,7 +283,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		</echo>
 
 		<antcall target="execute-remote-command">
-			<param name="vm.host" value="${vm.host.cluster-node-2}" />
+			<param name="vm.host" value="${vm.cluster-node-2.host}" />
 		</antcall>
 	</target>
 
@@ -295,7 +295,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		</echo>
 
 		<antcall target="execute-remote-command">
-			<param name="vm.host" value="${vm.host.cluster-node-1}" />
+			<param name="vm.host" value="${vm.cluster-node-1.host}" />
 		</antcall>
 	</target>
 
@@ -307,7 +307,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		</echo>
 
 		<antcall target="execute-remote-command">
-			<param name="vm.host" value="${vm.host.cluster-node-2}" />
+			<param name="vm.host" value="${vm.cluster-node-2.host}" />
 		</antcall>
 	</target>
 </project>

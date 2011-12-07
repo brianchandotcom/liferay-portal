@@ -50,8 +50,8 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		extension = PhoneNumberUtil.strip(extension);
 
 		validate(
-			0, user.getCompanyId(), classNameId, classPK, number, extension,
-			typeId, primary);
+			0, user.getCompanyId(), classNameId, classPK, number, typeId,
+			primary);
 
 		long phoneId = counterLocalService.increment();
 
@@ -128,7 +128,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		number = PhoneNumberUtil.strip(number);
 		extension = PhoneNumberUtil.strip(extension);
 
-		validate(phoneId, 0, 0, 0, number, extension, typeId, primary);
+		validate(phoneId, 0, 0, 0, number, typeId, primary);
 
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
 
@@ -145,15 +145,11 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 	protected void validate(
 			long phoneId, long companyId, long classNameId, long classPK,
-			String number, String extension, int typeId, boolean primary)
+			String number, int typeId, boolean primary)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(number)) {
-			throw new PhoneNumberException(PhoneNumberException.NUMBER);
-		}
-
-		if (Validator.isNotNull(extension) && !Validator.isNumber(extension)) {
-			throw new PhoneNumberException(PhoneNumberException.EXTENSION);
+			throw new PhoneNumberException();
 		}
 
 		if (phoneId > 0) {

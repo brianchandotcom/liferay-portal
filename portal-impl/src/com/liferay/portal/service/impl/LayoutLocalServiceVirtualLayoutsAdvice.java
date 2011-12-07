@@ -331,6 +331,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			permissionChecker, layoutSetPrototype, layoutSet.getGroupId(),
 			layoutSet.isPrivateLayout(), parameterMap);
 
+		settingsProperties.setProperty(
+			"last-merge-time", String.valueOf(modifiedDate.getTime()));
+
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
 	}
 

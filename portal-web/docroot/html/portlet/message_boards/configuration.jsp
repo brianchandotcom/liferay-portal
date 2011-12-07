@@ -651,7 +651,7 @@ else if (tabs2.equals("message-updated-email")) {
 
 						var ranksTemp = A.one('#<portlet:namespace />ranks_temp');
 
-						if (selLanguageId != 'null') {
+						if (selLanguageId != '' && selLanguageId != 'null') {
 							<portlet:namespace />updateLanguageTemps(selLanguageId);
 
 							ranksTemp.show();

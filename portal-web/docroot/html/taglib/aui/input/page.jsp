@@ -41,7 +41,7 @@
 				<span class="aui-prefix"><liferay-ui:message key="<%= prefix %>" /></span>
 			</c:if>
 
-			<span class='aui-field-element <%= Validator.isNotNull(label) && inlineLabel.equals("right") ? "aui-field-label-right" : StringPool.BLANK %>'>
+			<span class='aui-field-element <%= Validator.isNotNull(label) && inlineLabel.equals("right") ? "aui-field-label-right" : (inlineLabel.equals("left") ? "aui-field-label-left" : StringPool.BLANK) %>'>
 </c:if>
 
 <c:choose>

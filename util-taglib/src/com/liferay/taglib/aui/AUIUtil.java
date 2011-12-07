@@ -133,7 +133,7 @@ public class AUIUtil {
 
 		sb.append("class=\"" + LABEL_PREFIX);
 
-		if (Validator.isNotNull(inlineLabel) && !inlineLabel.equals("right")) {
+		if (Validator.isNotNull(inlineLabel)) {
 			sb.append("-inline-label");
 		}
 

@@ -20,6 +20,8 @@ import com.liferay.portal.GroupNameException;
 import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.RemoteExportException;
+import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -136,7 +138,10 @@ public class EditGroupAction extends PortletAction {
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof GroupNameException ||
 					 e instanceof LayoutSetVirtualHostException ||
-					 e instanceof RequiredGroupException) {
+					 e instanceof RemoteExportException ||
+					 e instanceof RemoteOptionsException ||
+					 e instanceof RequiredGroupException ||
+					 e instanceof SystemException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName(), e);
 

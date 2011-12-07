@@ -65,6 +65,7 @@ import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -2112,6 +2113,14 @@ public class StagingImpl implements Staging {
 		catch (NoSuchGroupException nsge) {
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_GROUP);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (PrincipalException pe) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_PERMISSIONS);
 
 			ree.setGroupId(remoteGroupId);
 

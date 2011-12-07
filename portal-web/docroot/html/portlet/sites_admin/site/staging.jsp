@@ -69,6 +69,10 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 				<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
 					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="no-site-exists-on-the-remote-server-with-site-id-x" />
 				</c:if>
+
+				<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
+					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-don't-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
+				</c:if>
 			</liferay-ui:error>
 
 			<aui:fieldset label="remote-live-connection-settings">

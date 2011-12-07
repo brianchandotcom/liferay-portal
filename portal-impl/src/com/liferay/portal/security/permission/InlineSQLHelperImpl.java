@@ -438,15 +438,19 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		long userId = getUserId();
 
+		boolean hasPreviousPermissionGroup = false;
+
 		for (int j = 0; j < groupIds.length; j++) {
 			long groupId = groupIds[j];
 
 			if (!permissionChecker.hasPermission(
 					groupId, className, 0, ActionKeys.VIEW)) {
 
-				if (j > 0) {
+				if ((j > 0) && hasPreviousPermissionGroup) {
 					sb.append(" OR ");
 				}
+
+				hasPreviousPermissionGroup = true;
 
 				sb.append("(");
 				sb.append(

@@ -96,39 +96,19 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				cal.setTime(date);
 			}
 
-			int month = ParamUtil.getInteger(request, fieldParam + "Month", -1);
-
-			if ((month == -1) && (cal != null)) {
-				month = cal.get(Calendar.MONTH);
-			}
-
-			int defaultMonthDelta = 0;
-
-			if (checkDefaultDelta && (hints != null)) {
-				defaultMonthDelta = GetterUtil.getInteger(hints.get("default-month-delta"), defaultMonthDelta);
-			}
-
-			month = month + defaultMonthDelta;
-
-			boolean monthNullable = false;
-
-			if (hints != null) {
-				monthNullable = GetterUtil.getBoolean(hints.get("month-nullable"), monthNullable);
-			}
-
 			int day = ParamUtil.getInteger(request, fieldParam + "Day", -1);
 
 			if ((day == -1) && (cal != null)) {
 				day = cal.get(Calendar.DATE);
+
+				if (checkDefaultDelta && (hints != null)) {
+					int defaultDayDelta = GetterUtil.getInteger(hints.get("default-day-delta"));
+
+					cal.add(Calendar.DATE, defaultDayDelta);
+
+					day = cal.get(Calendar.DATE);
+				}
 			}
-
-			int defaultDayDelta = 0;
-
-			if (checkDefaultDelta && (hints != null)) {
-				defaultDayDelta = GetterUtil.getInteger(hints.get("default-day-delta"), defaultDayDelta);
-			}
-
-			day = day + defaultDayDelta;
 
 			boolean dayNullable = false;
 
@@ -136,19 +116,39 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				dayNullable = GetterUtil.getBoolean(hints.get("day-nullable"), dayNullable);
 			}
 
+			int month = ParamUtil.getInteger(request, fieldParam + "Month", -1);
+
+			if ((month == -1) && (cal != null)) {
+				month = cal.get(Calendar.MONTH);
+
+				if (checkDefaultDelta && (hints != null)) {
+					int defaultMonthDelta = GetterUtil.getInteger(hints.get("default-month-delta"));
+
+					cal.add(Calendar.MONTH, defaultMonthDelta);
+
+					month = cal.get(Calendar.MONTH);
+				}
+			}
+
+			boolean monthNullable = false;
+
+			if (hints != null) {
+				monthNullable = GetterUtil.getBoolean(hints.get("month-nullable"), monthNullable);
+			}
+
 			int year = ParamUtil.getInteger(request, fieldParam + "Year", -1);
 
 			if ((year == -1) && (cal != null)) {
 				year = cal.get(Calendar.YEAR);
+
+				if (checkDefaultDelta && (hints != null)) {
+					int defaultYearDelta = GetterUtil.getInteger(hints.get("default-year-delta"));
+
+					cal.add(Calendar.YEAR, defaultYearDelta);
+
+					year = cal.get(Calendar.YEAR);
+				}
 			}
-
-			int defaultYearDelta = 0;
-
-			if (checkDefaultDelta && (hints != null)) {
-				defaultYearDelta = GetterUtil.getInteger(hints.get("default-year-delta"), defaultYearDelta);
-			}
-
-			year = year + defaultYearDelta;
 
 			boolean yearNullable = false;
 

@@ -29,6 +29,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	String title = LanguageUtil.format(pageContext, "social.counter." + displayActivityCounterName, new Object[] {LanguageUtil.get(pageContext, "assets")});
 
 	int displayHeight = 80;
+	int dataSize = 0;
 
 	if (chartType.equals("tagCloud")) {
 		if (dataRange.equals("year")) {
@@ -38,9 +39,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 			assetTags = AssetTagLocalServiceUtil.getTags(scopeGroupId, displayActivityCounterName, 11, true);
 		}
 
-		if (assetTags.isEmpty()) {
-			continue;
-		}
+		dataSize = assetTags.size();
 
 		title = LanguageUtil.format(pageContext, "tag-cloud-based-on-x", new Object[] {title});
 	}
@@ -64,26 +63,35 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 			}
 		}
 
-		if (activityCounters.isEmpty()) {
-			continue;
-		}
+		dataSize = activityCounters.size();
+	}
+
+	if (dataSize == 0) {
+		displayHeight = 40;
 	}
 %>
 
 	<div class="group-statistics-container">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "groupStatisticsPanel" + displayActivityCounterNameIndex %>' persistState="<%= true %>" title="<%= title %>">
 			<div class="group-statistics-body" style="height: <%= displayHeight %>px;">
-				<c:choose>
-					<c:when test='<%= chartType.equals("pie") %>'>
-						<%@ include file="/html/portlet/group_statistics/chart/pie.jspf" %>
-					</c:when>
-					<c:when test='<%= chartType.equals("tagCloud") %>'>
-						<%@ include file="/html/portlet/group_statistics/chart/tag_cloud.jspf" %>
-					</c:when>
-					<c:otherwise>
-						<%@ include file="/html/portlet/group_statistics/chart/other.jspf" %>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="<%= (dataSize > 0) %>">
+					<c:choose>
+						<c:when test='<%= chartType.equals("pie") %>'>
+							<%@ include file="/html/portlet/group_statistics/chart/pie.jspf" %>
+						</c:when>
+						<c:when test='<%= chartType.equals("tagCloud") %>'>
+							<%@ include file="/html/portlet/group_statistics/chart/tag_cloud.jspf" %>
+						</c:when>
+						<c:otherwise>
+							<%@ include file="/html/portlet/group_statistics/chart/other.jspf" %>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+				<c:if test="<%= (dataSize == 0) %>">
+					<div class="portlet-configuration portlet-msg-info">
+						<liferay-ui:message key="there-is-not-enough-data-to-display-for-this-counter" />
+					</div>
+				</c:if>
 			</div>
 		</liferay-ui:panel>
 	</div>

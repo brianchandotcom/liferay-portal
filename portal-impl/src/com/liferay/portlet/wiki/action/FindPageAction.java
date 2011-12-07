@@ -62,7 +62,7 @@ public class FindPageAction extends FindAction {
 	@Override
 	protected String[] initPortletIds() {
 		return new String[] {
-			PortletKeys.WIKI, PortletKeys.WIKI_ADMIN, PortletKeys.WIKI_DISPLAY
+			PortletKeys.WIKI_ADMIN, PortletKeys.WIKI, PortletKeys.WIKI_DISPLAY
 		};
 	}
 

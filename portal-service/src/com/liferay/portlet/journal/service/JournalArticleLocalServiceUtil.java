@@ -647,13 +647,6 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticles(groupId, articleId);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, java.lang.String articleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getArticles(groupId, articleId, start, end, obc);
-	}
-
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesBySmallImageId(
 		long smallImageId)
 		throws com.liferay.portal.kernel.exception.SystemException {

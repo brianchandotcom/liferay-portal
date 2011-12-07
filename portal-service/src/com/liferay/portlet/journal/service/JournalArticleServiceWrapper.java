@@ -164,21 +164,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		return _journalArticleService.getArticle(groupId, className, classPK);
 	}
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
-		long groupId, java.lang.String articleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.getArticles(groupId, articleId, start,
-			end, obc);
-	}
-
-	public int getArticlesCount(long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.getArticlesCount(groupId, articleId);
-	}
-
 	public com.liferay.portlet.journal.model.JournalArticle getArticleByUrlTitle(
 		long groupId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -205,11 +190,28 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			languageId, themeDisplay);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByArticleId(
+		long groupId, java.lang.String articleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesByArticleId(groupId,
+			articleId, start, end, obc);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByLayoutUuid(
 		long groupId, java.lang.String layoutUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getArticlesByLayoutUuid(groupId,
 			layoutUuid);
+	}
+
+	public int getArticlesCountByArticleId(long groupId,
+		java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesCountByArticleId(groupId,
+			articleId);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle getDisplayArticleByUrlTitle(

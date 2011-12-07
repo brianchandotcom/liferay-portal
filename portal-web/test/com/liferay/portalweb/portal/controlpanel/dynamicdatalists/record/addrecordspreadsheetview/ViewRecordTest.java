@@ -68,7 +68,7 @@ public class ViewRecordTest extends BaseTestCase {
 			selenium.getText("//tr[1]/th[3]"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//tr[1]/th[4]"));
 		assertEquals(RuntimeVariables.replace("document.txt"),
 			selenium.getText("//tr[3]/td[4]"));

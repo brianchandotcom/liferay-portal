@@ -136,9 +136,9 @@ public class ViewDataDefinitionDocumentLibraryTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"Data Definition Document Library"),
+				"Data Definition Documents and Media"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div/div/label"));
 		selenium.selectFrame("relative=top");

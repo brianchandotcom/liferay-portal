@@ -123,7 +123,7 @@ public class AddDataDefinitionFieldFullTest extends BaseTestCase {
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div",

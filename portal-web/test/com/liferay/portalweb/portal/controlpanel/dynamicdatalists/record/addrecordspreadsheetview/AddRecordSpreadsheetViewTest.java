@@ -184,7 +184,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//div[contains(@class,'aui-textcelleditor-focused')]/form/div[2]/span/span/button[1]"));
 		selenium.clickAt("//div[contains(@class,'aui-textcelleditor-focused')]/form/div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Save"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
 				"//thead[@class='yui3-datatable-columns']/tr/th[4]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[4]",

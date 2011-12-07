@@ -68,41 +68,37 @@ public class ViewEditRecordTest extends BaseTestCase {
 			selenium.getText("//tr[1]/th[3]"));
 		assertEquals(RuntimeVariables.replace("8.91"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Document Library"),
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//tr[1]/th[4]"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[4]", "File Upload"));
+		assertEquals(RuntimeVariables.replace("document.txt"),
+			selenium.getText("//tr[3]/td[4]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText("//tr[1]/th[5]"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[5]", "File Upload"));
+		assertTrue(selenium.isPartialText("//tr[3]/td[5]", "document.txt"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText("//tr[1]/th[6]"));
 		assertEquals(RuntimeVariables.replace("8910"),
 			selenium.getText("//tr[3]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText("//tr[1]/th[7]"));
-		assertEquals(RuntimeVariables.replace("111213.0"),
+		assertEquals(RuntimeVariables.replace("111213"),
 			selenium.getText("//tr[3]/td[7]"));
-		assertEquals(RuntimeVariables.replace("Password"),
-			selenium.getText("//tr[1]/th[8]"));
-		assertEquals(RuntimeVariables.replace(
-				"\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf"),
-			selenium.getText("//tr[3]/td[8]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
-			selenium.getText("//tr[1]/th[9]"));
-		assertEquals(RuntimeVariables.replace("option 3"),
-			selenium.getText("//tr[3]/td[9]"));
+			selenium.getText("//tr[1]/th[8]"));
+		assertEquals(RuntimeVariables.replace("option 2"),
+			selenium.getText("//tr[3]/td[8]"));
 		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText("//tr[1]/th[10]"));
+			selenium.getText("//tr[1]/th[9]"));
 		assertEquals(RuntimeVariables.replace("option 1"),
-			selenium.getText("//tr[3]/td[10]"));
+			selenium.getText("//tr[3]/td[9]"));
 		assertEquals(RuntimeVariables.replace("Text"),
-			selenium.getText("//tr[1]/th[11]"));
+			selenium.getText("//tr[1]/th[10]"));
 		assertEquals(RuntimeVariables.replace("Text Field Edited"),
-			selenium.getText("//tr[3]/td[11]"));
+			selenium.getText("//tr[3]/td[10]"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
-			selenium.getText("//tr[1]/th[12]"));
+			selenium.getText("//tr[1]/th[11]"));
 		assertEquals(RuntimeVariables.replace("Text Box Edited"),
-			selenium.getText("//tr[3]/td[12]"));
+			selenium.getText("//tr[3]/td[11]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -137,26 +133,104 @@ public class ViewEditRecordTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
 		assertEquals(RuntimeVariables.replace("Decimal 8.91"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[4]",
-				"Document Library File Upload"));
+		assertEquals(RuntimeVariables.replace(
+				"Documents and Media document.txt"),
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[4]"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-fieldset-content ']/div[5]",
-				"File Upload File Upload"));
+				"File Upload document.txt"));
 		assertEquals(RuntimeVariables.replace("Integer 8910"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
-		assertEquals(RuntimeVariables.replace("Number 111213.0"),
+		assertEquals(RuntimeVariables.replace("Number 111213"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[7]"));
-		assertEquals(RuntimeVariables.replace(
-				"Password \u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf"),
+		assertEquals(RuntimeVariables.replace("Radio option 2"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));
-		assertEquals(RuntimeVariables.replace("Radio option 3"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Select option 1"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[10]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Text Text Field Edited"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Text Box Text Box Edited"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[12]"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
+		selenium.open("/web/guest/home/");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Dynamic Data Lists",
+			RuntimeVariables.replace("Dynamic Data Lists"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@name='_167_keywords']",
+			RuntimeVariables.replace("List Name"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("List Name"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Spreadsheet View"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("False"),
+			selenium.getText("//td[1]/div"));
+		assertEquals(RuntimeVariables.replace("1910-08-09"),
+			selenium.getText("//td[2]/div"));
+		assertEquals(RuntimeVariables.replace("8.91"),
+			selenium.getText("//td[3]/div"));
+		assertEquals(RuntimeVariables.replace("(File)"),
+			selenium.getText("//td[4]/div"));
+		assertEquals(RuntimeVariables.replace("document.txt"),
+			selenium.getText("//td[5]/div"));
+		assertEquals(RuntimeVariables.replace("8910"),
+			selenium.getText("//td[6]/div"));
+		assertEquals(RuntimeVariables.replace("111213"),
+			selenium.getText("//td[7]/div"));
+		assertEquals(RuntimeVariables.replace("option 2"),
+			selenium.getText("//td[8]/div"));
+		assertEquals(RuntimeVariables.replace("option 1"),
+			selenium.getText("//td[9]/div"));
+		assertEquals(RuntimeVariables.replace("Text Field Edited"),
+			selenium.getText("//td[10]/div"));
+		assertEquals(RuntimeVariables.replace("Text Box Edited"),
+			selenium.getText("//td[11]/div"));
 	}
 }

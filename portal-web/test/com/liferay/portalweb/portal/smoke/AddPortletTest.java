@@ -73,7 +73,7 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//section")) {
+				if (selenium.isVisible("//form[@id='_33_fm1']")) {
 					break;
 				}
 			}
@@ -83,6 +83,6 @@ public class AddPortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//section"));
+		assertTrue(selenium.isVisible("//form[@id='_33_fm1']"));
 	}
 }

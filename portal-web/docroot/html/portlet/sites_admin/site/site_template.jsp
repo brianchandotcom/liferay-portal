@@ -43,6 +43,8 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 }
 %>
 
+<liferay-ui:error-marker key="errorSection" value="siteTempate" />
+
 <c:if test="<%= (publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null) %>">
 	<div class="portlet-msg-info">
 		<liferay-ui:message key="there-are-no-templates-used-on-this-site" />

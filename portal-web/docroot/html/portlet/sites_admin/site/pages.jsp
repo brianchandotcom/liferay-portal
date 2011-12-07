@@ -58,6 +58,8 @@ if (group != null) {
 }
 %>
 
+<liferay-ui:error-marker key="errorSection" value="pages" />
+
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= (group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null)) %>">

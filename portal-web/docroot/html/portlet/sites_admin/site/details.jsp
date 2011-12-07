@@ -20,6 +20,8 @@
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
 
+<liferay-ui:error-marker key="errorSection" value="details" />
+
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />

@@ -22,6 +22,8 @@ long liveGroupId = ((Long)request.getAttribute("site.liveGroupId")).longValue();
 UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribute("site.liveGroupTypeSettings");
 %>
 
+<liferay-ui:error-marker key="errorSection" value="staging" />
+
 <c:choose>
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_STAGING) %>">
 		<liferay-ui:error exception="<%= SystemException.class %>">

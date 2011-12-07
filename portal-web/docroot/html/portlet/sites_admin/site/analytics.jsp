@@ -29,6 +29,8 @@ else {
 }
 %>
 
+<liferay-ui:error-marker key="errorSection" value="analytics" />
+
 <liferay-ui:message key="set-the-google-analytics-id-that-will-be-used-for-this-set-of-pages" />
 
 <aui:field-wrapper label="google-analytics-id">

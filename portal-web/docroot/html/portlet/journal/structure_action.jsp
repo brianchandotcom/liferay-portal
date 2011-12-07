@@ -89,7 +89,6 @@ JournalStructure structure = (JournalStructure)row.getObject();
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(structure.getGroupId()) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(JournalStructure.class.getName())) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getId()) %>" />
 			<portlet:param name="structureId" value="<%= structure.getStructureId() %>" />
 		</portlet:renderURL>

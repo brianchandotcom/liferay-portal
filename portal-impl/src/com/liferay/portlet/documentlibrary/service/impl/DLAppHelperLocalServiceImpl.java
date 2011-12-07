@@ -309,7 +309,17 @@ public class DLAppHelperLocalServiceImpl
 			long assetClassPk)
 		throws PortalException, SystemException {
 
-		updateAsset(userId, fileEntry, fileVersion, assetClassPk);
+		boolean updateAsset = true;
+
+		if (fileEntry instanceof LiferayFileEntry &&
+			fileEntry.getVersion().equals(fileVersion.getVersion())) {
+
+			updateAsset = false;
+		}
+
+		if (updateAsset) {
+			updateAsset(userId, fileEntry, fileVersion, assetClassPk);
+		}
 
 		registerDLProcessorCallback(fileEntry);
 	}

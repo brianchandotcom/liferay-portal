@@ -271,13 +271,6 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileVersionPersistence.update(dlFileVersion, false);
 
-		// App helper
-
-		dlAppHelperLocalService.updateAsset(
-			userId, new LiferayFileEntry(dlFileEntry),
-			new LiferayFileVersion(dlFileVersion),
-			dlFileVersion.getFileVersionId());
-
 		// Folder
 
 		if (dlFileEntry.getFolderId() !=

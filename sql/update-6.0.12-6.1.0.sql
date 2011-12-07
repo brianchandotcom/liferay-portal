@@ -245,7 +245,7 @@ create table DLSync (
 	fileUuid VARCHAR(75) null,
 	repositoryId LONG,
 	parentFolderId LONG,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	event VARCHAR(75) null,
 	type_ VARCHAR(75) null,
 	version VARCHAR(75) null

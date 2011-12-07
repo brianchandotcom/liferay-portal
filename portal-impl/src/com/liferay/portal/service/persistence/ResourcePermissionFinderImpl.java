@@ -190,7 +190,7 @@ public class ResourcePermissionFinderImpl
 			qPos.add(companyId);
 			qPos.add(name);
 			qPos.add(primKey);
-			qPos.add(groupId);
+			qPos.add(Long.toString(groupId));
 
 			return (List<ResourcePermission>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

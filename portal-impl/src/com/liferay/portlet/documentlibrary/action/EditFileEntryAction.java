@@ -61,7 +61,9 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -621,6 +623,17 @@ public class EditFileEntryAction extends PortletAction {
 			uploadPortletRequest, "changeLog");
 		boolean majorVersion = ParamUtil.getBoolean(
 			uploadPortletRequest, "majorVersion");
+
+		if (folderId > 0) {
+			DLFolder folder = DLFolderLocalServiceUtil.getFolder(folderId);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
+				throw new NoSuchFolderException();
+			}
+		}
 
 		InputStream inputStream = null;
 

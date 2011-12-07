@@ -155,6 +155,10 @@ String[][] categorySections = {mainSections};
 						<c:if test="<%= ree.getType() == RemoteExportException.NO_LAYOUTS %>">
 							<liferay-ui:message key="no-pages-are-selected-for-export" />
 						</c:if>
+
+						<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
+							<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-don't-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
+						</c:if>
 					</liferay-ui:error>
 
 					<div class="portlet-msg-alert">

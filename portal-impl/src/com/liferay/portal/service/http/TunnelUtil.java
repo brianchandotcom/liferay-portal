@@ -156,11 +156,11 @@ public class TunnelUtil {
 		if (Validator.isNull(httpPrincipal.getLogin()) ||
 			Validator.isNull(httpPrincipal.getPassword())) {
 
-			url = new URL(httpPrincipal.getUrl() + "/tunnel-web/liferay/do");
+			url = new URL(httpPrincipal.getUrl() + "/api/liferay/do");
 		}
 		else {
 			url = new URL(
-				httpPrincipal.getUrl() + "/tunnel-web/secure/liferay/do");
+				httpPrincipal.getUrl() + "/api/secure/liferay/do");
 		}
 
 		HttpURLConnection httpURLConnection =

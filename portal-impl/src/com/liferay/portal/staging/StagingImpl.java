@@ -65,6 +65,7 @@ import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -1258,11 +1259,24 @@ public class StagingImpl implements Staging {
 			boolean secureConnection = ParamUtil.getBoolean(
 				portletRequest, "secureConnection");
 
+			remoteAddress = processRemoteAddress(remoteAddress);
+
 			enableRemoteStaging(
 				userId, scopeGroup, liveGroup, branchingPublic,
 				branchingPrivate, remoteAddress, remoteGroupId, remotePort,
 				secureConnection, serviceContext);
 		}
+	}
+
+	protected String processRemoteAddress(String remoteAddress) {
+		if (remoteAddress.startsWith(Http.HTTP_WITH_SLASH)) {
+			remoteAddress = remoteAddress.substring(Http.HTTP_WITH_SLASH.length());
+		}
+		else if(remoteAddress.startsWith(Http.HTTPS_WITH_SLASH)) {
+			remoteAddress = remoteAddress.substring(Http.HTTPS_WITH_SLASH.length());
+		}
+
+		return remoteAddress;
 	}
 
 	protected void addWeeklyDayPos(
@@ -1846,6 +1860,8 @@ public class StagingImpl implements Staging {
 			GetterUtil.getBoolean(
 				groupTypeSettingsProperties.getProperty("secureConnection")));
 
+		remoteAddress = processRemoteAddress(remoteAddress);
+
 		validate(remoteAddress, remoteGroupId, remotePort, secureConnection);
 
 		String range = ParamUtil.getString(portletRequest, "range");
@@ -2097,6 +2113,14 @@ public class StagingImpl implements Staging {
 		catch (NoSuchGroupException nsge) {
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_GROUP);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (PrincipalException pe) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_PERMISSIONS);
 
 			ree.setGroupId(remoteGroupId);
 

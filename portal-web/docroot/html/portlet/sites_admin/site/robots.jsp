@@ -32,6 +32,8 @@ String defaultPrivateRobots = RobotsUtil.getRobots(privateLayoutSet);
 String privateRobots = ParamUtil.getString(request, "robots", defaultPrivateRobots);
 %>
 
+<liferay-ui:error-marker key="errorSection" value="robots" />
+
 <aui:fieldset label="public-pages">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(publicLayoutSet.getVirtualHostname()) %>">

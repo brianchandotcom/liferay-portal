@@ -211,21 +211,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return article;
 	}
 
-	public List<JournalArticle> getArticlesByArticleId(
-			long groupId, String articleId, int start, int end,
-			OrderByComparator obc)
-		throws PortalException, SystemException {
-
-		return journalArticlePersistence.filterFindByG_A(
-			groupId, articleId, start, end, obc);
-	}
-
-	public int getArticlesCountByArticleId(long groupId, String articleId)
-		throws PortalException, SystemException {
-
-		return journalArticlePersistence.filterCountByG_A(groupId, articleId);
-	}
-
 	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
 		throws PortalException, SystemException {
 
@@ -263,11 +248,26 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, null, languageId, themeDisplay);
 	}
 
+	public List<JournalArticle> getArticlesByArticleId(
+			long groupId, String articleId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return journalArticlePersistence.filterFindByG_A(
+			groupId, articleId, start, end, obc);
+	}
+
 	public List<JournalArticle> getArticlesByLayoutUuid(
 			long groupId, String layoutUuid)
 		throws SystemException {
 
 		return journalArticlePersistence.filterFindByG_L(groupId, layoutUuid);
+	}
+
+	public int getArticlesCountByArticleId(long groupId, String articleId)
+		throws PortalException, SystemException {
+
+		return journalArticlePersistence.filterCountByG_A(groupId, articleId);
 	}
 
 	public JournalArticle getDisplayArticleByUrlTitle(

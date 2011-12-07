@@ -73,11 +73,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 	</c:if>
 
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.EXPORT_USER) %>">
-		<portlet:renderURL var="addUserURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
 		<span class="lfr-toolbar-button export-button"><a href="javascript:<portlet:namespace />exportUsers();"><liferay-ui:message key="export-all-users" /></a></span>
 	</c:if>
 </div>

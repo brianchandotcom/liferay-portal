@@ -134,16 +134,20 @@ AUI().add(
 						var newData = event.newVal;
 
 						if (useTransition) {
-							instance._dataContainer.plug(A.Plugin.ParseContent);
+							var dataContainer = instance._dataContainer;
 
-							instance._dataContainer.setContent(newData);
+							dataContainer.plug(A.Plugin.ParseContent);
+
+							dataContainer.setContent(newData);
 
 							instance._moveContainer();
 						}
 						else {
-							instance.get(CONTENT_BOX).plug(A.Plugin.ParseContent);
+							var contentBox = instance.get(CONTENT_BOX);
 
-							instance.get(CONTENT_BOX).setContent(newData);
+							contentBox.plug(A.Plugin.ParseContent);
+
+							contentBox.setContent(newData);
 						}
 					},
 

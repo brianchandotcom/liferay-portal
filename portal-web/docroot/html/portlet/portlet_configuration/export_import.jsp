@@ -89,6 +89,8 @@ if (layout.isTypeControlPanel()) {
 		<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 		<liferay-ui:error exception="<%= NoSuchLayoutException.class %>" message="an-error-occurred-because-the-live-group-does-not-have-the-current-page" />
 		<liferay-ui:error exception="<%= PortletIdException.class %>" message="please-import-a-lar-file-for-the-current-portlet" />
+		<liferay-ui:error exception="<%= PortletDataFutureDateException.class %>" message="dates-must-not-be-in-the-future" />
+		<liferay-ui:error exception="<%= PortletDataStartEndDateException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
 
 		<portlet:actionURL var="exportImportPagesURL">
 			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />

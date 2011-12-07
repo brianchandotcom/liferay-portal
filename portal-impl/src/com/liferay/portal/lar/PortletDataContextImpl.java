@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextListener;
 import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.PortletDataFutureDateException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.PortletDataStartEndDateException;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1463,14 +1465,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (startDate != null) {
 			if (startDate.after(endDate) || startDate.equals(endDate)) {
-				throw new PortletDataException(
+				throw new PortletDataStartEndDateException(
 					"The start date cannot be after the end date");
 			}
 
 			Date now = new Date();
 
 			if (startDate.after(now) || endDate.after(now)) {
-				throw new PortletDataException(
+				throw new PortletDataFutureDateException(
 					"Dates must not be in the future");
 			}
 		}

@@ -8,38 +8,65 @@
 
 <#assign controlPanelPlid = layoutLocalService.getDefaultPlid(controlPanelGroup.getGroupId(), true)>
 
-<@aui["field-wrapper"] label=label>
-	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue>
+<#assign fileEntryTitle = "">
+<#assign fileEntryURL = "">
+
+<#if (fields??) && (fieldValue != "")>
+	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
+
+	<#assign fileEntry = getFileEntry(fileJSONObject)>
+
+	<#if (fileEntry != "")>
+		<#assign fileEntryTitle = fileEntry.getTitle()>
+		<#assign fileEntryURL = getFileEntryURL(fileEntry)>
+	</#if>
+</#if>
+
+<@aui["field-wrapper"]>
+	<@aui.input inlineField=true label=label name="${namespacedFieldName}Title" readonly="readonly" type="text" url=fileEntryURL value=fileEntryTitle>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>
 	</@aui.input>
 
-	<label id="${namespacedFieldName}Label">
-		<#assign fileEntryTitle = "">
-		<#assign fileEntryURL = "">
+	<@aui["button-row"]>
+		<@aui.button id=namespacedFieldName value="select" />
 
-		<#if (fields??) && (fieldValue != "")>
-			<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
+		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}downloadFileEntry']();" value="download" />
 
-			<#assign fileEntry = getFileEntry(fileJSONObject)>
+		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}clearFileEntry']();" value="clear" />
+	</@>
 
-			<#if (fileEntry != "")>
-				<#assign fileEntryTitle = fileEntry.getTitle()>
-				<#assign fileEntryURL = getFileEntryURL(fileEntry)>
-			</#if>
-		</#if>
-
-		<a href="${fileEntryURL}">${fileEntryTitle}</a>
-	</label>
-
-	<@aui.button id=namespacedFieldName value="select" />
+	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
 </@>
 
 <@aui.script>
+	window['${portletNamespace}${namespacedFieldName}clearFileEntry'] = function() {
+		window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', '');
+	};
+
 	Liferay.provide(
 		window,
-		'${portalUtil.getPortletNamespace("15")}selectDocumentLibrary',
+		'${portletNamespace}${namespacedFieldName}downloadFileEntry',
+		function() {
+			var A = AUI();
+
+			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
+
+			if (titleNode) {
+				var url = titleNode.attr('url');
+
+				if (url) {
+					location.href = url;
+				}
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'${portletNamespace}${namespacedFieldName}setFileEntry',
 		function(url, uuid, title, version) {
 			var A = AUI();
 
@@ -57,10 +84,11 @@
 				);
 			}
 
-			var labelNode = A.one('#${namespacedFieldName}Label');
+			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
 
-			if (labelNode) {
-				labelNode.setContent('<a href="' + url + '">' + title + '</a>');
+			if (titleNode) {
+				titleNode.attr('url', url);
+				titleNode.val(title);
 			}
 		},
 		['json']
@@ -90,6 +118,8 @@
 						uri: portletURL.toString()
 					}
 				);
+
+				window['${portalUtil.getPortletNamespace("15")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
 			}
 		);
 	}

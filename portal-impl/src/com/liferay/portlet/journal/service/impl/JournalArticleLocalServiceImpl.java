@@ -1199,15 +1199,6 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
-	public List<JournalArticle> getArticles(
-			long groupId, String articleId, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
-
-		return journalArticlePersistence.findByG_A(
-			groupId, articleId, start, end, obc);
-	}
-
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId)
 		throws SystemException {
 

@@ -67,11 +67,12 @@ portletURL.setParameter("articleId", article.getArticleId());
 	searchTerms.setAdvancedSearch(true);
 	searchTerms.setArticleId(article.getArticleId());
 
-	List<JournalArticle> results = JournalArticleServiceUtil.getArticles(searchTerms.getGroupId(), searchTerms.getArticleId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-	int total = JournalArticleServiceUtil.getArticlesCount(searchTerms.getGroupId(), searchTerms.getArticleId());
+	List<JournalArticle> results = JournalArticleServiceUtil.getArticlesByArticleId(searchTerms.getGroupId(), searchTerms.getArticleId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 	searchContainer.setResults(results);
+
+	int total = JournalArticleServiceUtil.getArticlesCountByArticleId(searchTerms.getGroupId(), searchTerms.getArticleId());
+
 	searchContainer.setTotal(total);
 	%>
 

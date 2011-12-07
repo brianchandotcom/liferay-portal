@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.impl.RepositoryModelImpl;
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -66,9 +69,15 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 
 		Repository newRepository = _persistence.create(pk);
 
+		newRepository.setUuid(randomString());
+
 		newRepository.setGroupId(nextLong());
 
 		newRepository.setCompanyId(nextLong());
+
+		newRepository.setUserId(nextLong());
+
+		newRepository.setUserName(randomString());
 
 		newRepository.setCreateDate(nextDate());
 
@@ -90,11 +99,15 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
+		assertEquals(existingRepository.getUuid(), newRepository.getUuid());
 		assertEquals(existingRepository.getRepositoryId(),
 			newRepository.getRepositoryId());
 		assertEquals(existingRepository.getGroupId(), newRepository.getGroupId());
 		assertEquals(existingRepository.getCompanyId(),
 			newRepository.getCompanyId());
+		assertEquals(existingRepository.getUserId(), newRepository.getUserId());
+		assertEquals(existingRepository.getUserName(),
+			newRepository.getUserName());
 		assertEquals(Time.getShortTimestamp(existingRepository.getCreateDate()),
 			Time.getShortTimestamp(newRepository.getCreateDate()));
 		assertEquals(Time.getShortTimestamp(
@@ -218,14 +231,37 @@ public class RepositoryPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(0, result.size());
 	}
 
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		Repository newRepository = addRepository();
+
+		_persistence.clearCache();
+
+		RepositoryModelImpl existingRepositoryModelImpl = (RepositoryModelImpl)_persistence.findByPrimaryKey(newRepository.getPrimaryKey());
+
+		assertTrue(Validator.equals(existingRepositoryModelImpl.getUuid(),
+				existingRepositoryModelImpl.getOriginalUuid()));
+		assertEquals(existingRepositoryModelImpl.getGroupId(),
+			existingRepositoryModelImpl.getOriginalGroupId());
+	}
+
 	protected Repository addRepository() throws Exception {
 		long pk = nextLong();
 
 		Repository repository = _persistence.create(pk);
 
+		repository.setUuid(randomString());
+
 		repository.setGroupId(nextLong());
 
 		repository.setCompanyId(nextLong());
+
+		repository.setUserId(nextLong());
+
+		repository.setUserName(randomString());
 
 		repository.setCreateDate(nextDate());
 

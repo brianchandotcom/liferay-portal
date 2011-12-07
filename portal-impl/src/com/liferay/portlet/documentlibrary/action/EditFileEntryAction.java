@@ -615,18 +615,6 @@ public class EditFileEntryAction extends PortletAction {
 		long repositoryId = ParamUtil.getLong(
 			uploadPortletRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (folderId > 0) {
-			DLFolder folder = DLFolderLocalServiceUtil.getFolder(folderId);
-
-			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
-				throw new NoSuchFolderException();
-			}
-		}
-
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 		String title = ParamUtil.getString(uploadPortletRequest, "title");
 		String description = ParamUtil.getString(
@@ -635,6 +623,17 @@ public class EditFileEntryAction extends PortletAction {
 			uploadPortletRequest, "changeLog");
 		boolean majorVersion = ParamUtil.getBoolean(
 			uploadPortletRequest, "majorVersion");
+
+		if (folderId > 0) {
+			DLFolder folder = DLFolderLocalServiceUtil.getFolder(folderId);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
+				throw new NoSuchFolderException();
+			}
+		}
 
 		InputStream inputStream = null;
 

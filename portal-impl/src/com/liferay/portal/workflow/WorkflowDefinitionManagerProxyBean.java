@@ -113,4 +113,8 @@ public class WorkflowDefinitionManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	public void validateWorkflowDefinition(InputStream inputStream) {
+		throw new UnsupportedOperationException();
+	}
+
 }

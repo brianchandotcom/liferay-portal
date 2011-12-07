@@ -147,6 +147,12 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, name, version, title);
 	}
 
+	public static void validateWorkflowDefinition(InputStream inputStream)
+		throws WorkflowException {
+
+		_workflowDefinitionManager.validateWorkflowDefinition(inputStream);
+	}
+
 	public void setWorkflowDefinitionManager(
 		WorkflowDefinitionManager workflowDefinitionManager) {
 

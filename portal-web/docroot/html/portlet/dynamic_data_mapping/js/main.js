@@ -673,7 +673,7 @@ AUI().add(
 				},
 				{
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-document',
-					label: Liferay.Language.get('document-library'),
+					label: Liferay.Language.get('documents-and-media'),
 					type: 'ddm-documentlibrary'
 				},
 				{

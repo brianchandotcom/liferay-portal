@@ -1070,7 +1070,7 @@ public class JavadocFormatter {
 		if (!javadocsXmlFile.exists()) {
 			_fileUtil.write(
 				javadocsXmlFile,
-				"<?xml version=\"1.0\"?>\n\n<javadocs>\n</javadocs>");
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<javadocs>\n</javadocs>");
 		}
 
 		String javadocsXmlContent = _fileUtil.read(javadocsXmlFile);

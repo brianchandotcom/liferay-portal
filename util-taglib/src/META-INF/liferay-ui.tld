@@ -2243,26 +2243,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>search-container-column-score</name>
-		<tag-class>com.liferay.taglib.ui.SearchContainerColumnScoreTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>index</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>name</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>score</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>search-container-column-text</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnTextTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerColumnTextTei</tei-class>

@@ -70,7 +70,6 @@ boolean createNewPage = true;
 	headerNames.add("#");
 	headerNames.add("wiki");
 	headerNames.add("page");
-	headerNames.add("score");
 
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
@@ -133,10 +132,6 @@ boolean createNewPage = true;
 			row.addText(curNode.getName(), rowURL);
 
 			row.addText(title, rowURL);
-
-			// Score
-
-			row.addScore(results.score(i));
 
 			// Add result row
 

@@ -252,12 +252,14 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			Layout layout = (Layout)_portletRequestImpl.getAttribute(
 				WebKeys.LAYOUT);
 
-			PortletPreferences portletSetup =
-				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-					layout, _portletName);
+			if (_portletSetup == null) {
+				_portletSetup =
+					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+						layout, _portletName);
+			}
 
 			String linkToLayoutUuid = GetterUtil.getString(
-				portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
+				_portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
 			if (Validator.isNotNull(linkToLayoutUuid)) {
 				try {
@@ -680,6 +682,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	private Portlet _portlet;
 	private String _portletName;
 	private PortletRequestImpl _portletRequestImpl;
+	private PortletPreferences _portletSetup;
 	private HttpServletResponse _response;
 	private URLEncoder _urlEncoder;
 	private boolean _wsrp;

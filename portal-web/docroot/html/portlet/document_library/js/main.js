@@ -34,6 +34,8 @@ AUI().add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var DOCUMENT_DRAGGABLE = '[data-draggable]';
+
 		var DOCUMENT_LIBRARY_GROUP = 'document-library';
 
 		var REFRESH_FOLDERS = 'refreshFolders';
@@ -468,7 +470,7 @@ AUI().add(
 						var ddHandler = new A.DD.Delegate(
 							{
 								container: instance._documentLibraryContainer,
-								nodes: CSS_DOCUMENT_DISPLAY_STYLE_SELECTABLE,
+								nodes: DOCUMENT_DRAGGABLE,
 								on: {
 									'drag:drophit': A.bind(instance._onDragDropHit, instance),
 									'drag:enter': A.bind(instance._onDragEnter, instance),
@@ -537,7 +539,8 @@ AUI().add(
 								item.plug(
 									A.Plugin.Drop,
 									{
-										groups: [DOCUMENT_LIBRARY_GROUP]
+										groups: [DOCUMENT_LIBRARY_GROUP],
+										padding: '-1px'
 									}
 								);
 							}
@@ -706,7 +709,7 @@ AUI().add(
 
 							var moveText = instance._getMoveText(selectedItemsCount, true);
 
-							var itemTitle = Lang.trim(dropTarget.one('.entry-title').text());
+							var itemTitle = Lang.trim(dropTarget.attr('data-title'));
 
 							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, itemTitle]));
 						}
@@ -1097,7 +1100,11 @@ AUI().add(
 						var instance = this;
 
 						if (instance._getDisplayStyle(DISPLAY_STYLE_LIST)) {
-							node.attr(ATTR_CHECKED, !node.attr(ATTR_CHECKED));
+							if (!preventUpdate) {
+								var input = node.one('input') || node;
+
+								input.attr(ATTR_CHECKED, !node.attr(ATTR_CHECKED));
+							}
 						}
 						else {
 							node = node.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || node;
@@ -1109,9 +1116,9 @@ AUI().add(
 
 								Liferay.Util.updateCheckboxValue(selectElement);
 							}
-
-							node.toggleClass(CSS_SELECTED);
 						}
+
+						node.toggleClass(CSS_SELECTED);
 					},
 
 					_unselectAllEntries: function() {

@@ -27,7 +27,7 @@ PortletURL viewEntriesURL = (PortletURL)request.getAttribute("view_entries.jsp-v
 boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE);
 %>
 
-<div class="document-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
+<div class="document-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-title="<%= StringUtil.shorten(folder.getName(), 60) %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>">
 	<c:if test="<%= showCheckBox %>">
 		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + Folder.class.getSimpleName() %>" type="checkbox" value="<%= folder.getFolderId() %>" />
 	</c:if>

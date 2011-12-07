@@ -326,7 +326,7 @@
 			color: #FFF;
 		}
 
-		&.active-area, &.active-area.hover {
+		&.active-area, &.active-area.hover, &.active-area td {
 			background-color: #5AD300;
 		}
 

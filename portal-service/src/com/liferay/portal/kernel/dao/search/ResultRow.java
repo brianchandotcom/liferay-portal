@@ -334,6 +334,10 @@ public class ResultRow {
 		return _className;
 	}
 
+	public Map<String, Object> getData() {
+		return _data;
+	}
+
 	public List<SearchEntry> getEntries() {
 		return _searchEntries;
 	}
@@ -386,6 +390,10 @@ public class ResultRow {
 		_className = className;
 	}
 
+	public void setData(Map<String, Object> data) {
+		_data = data;
+	}
+
 	public void setObject(Object obj) {
 		_obj = obj;
 	}
@@ -413,6 +421,7 @@ public class ResultRow {
 	private boolean _bold;
 	private String _classHoverName;
 	private String _className;
+	private Map<String, Object> _data;
 	private List<SearchEntry> _searchEntries;
 	private Object _obj;
 	private Map<String, Object> _params;

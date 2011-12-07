@@ -268,9 +268,11 @@ int sortColumnIndex = -1;
 
 				row.addSearchEntry(0, textSearchEntry);
 			}
+
+			Map<String, Object> data = row.getData();
 		%>
 
-			<tr class="<%= rowClassName %>">
+			<tr class="<%= rowClassName %>" <%= AUIUtil.buildData(data) %>>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {

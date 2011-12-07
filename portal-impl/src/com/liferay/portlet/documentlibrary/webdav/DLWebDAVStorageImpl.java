@@ -895,7 +895,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		long groupId = webDavRequest.getGroupId();
 
 		List<Folder> folders = DLAppServiceUtil.getFolders(
-			groupId, parentFolderId);
+			groupId, parentFolderId, false);
 
 		for (Folder folder : folders) {
 			Resource resource = toResource(webDavRequest, folder, true);

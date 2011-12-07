@@ -350,6 +350,11 @@
 	float: right;
 }
 
+.aui-tab-back-content {
+	border-width: 0;
+	padding: 1px;
+}
+
 /* ---------- Misc. ---------- */
 
 .lfr-panel-container {

@@ -236,8 +236,8 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 				/>
 			</c:when>
 			<c:otherwise>
-				<li class="aui-tab-back toggle last">
-					<span class="aui-tab-back-content">
+				<li class="aui-tab aui-tab-back toggle last">
+					<span class="aui-tab-content aui-tab-back-content">
 						<span class="aui-tab-label">
 							<a href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? backLabel : "&laquo;" + LanguageUtil.get(pageContext, "back") %></a>
 						</span>

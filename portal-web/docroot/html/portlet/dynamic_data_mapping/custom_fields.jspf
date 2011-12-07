@@ -23,7 +23,7 @@
 
 	var TPL_BUTTON = '<div class="aui-field-labels-inline">' +
 						'<input type="button" value="<liferay-ui:message key="select" />" />' +
-					 '<div>';
+					'<div>';
 
 	var TPL_PARAGRAPH = '<p></p>';
 
@@ -142,19 +142,24 @@
 					A.Array.each(
 						model,
 						function(item, index, collection) {
-							if (item.attributeName === 'predefinedValue') {
+							var attributeName = item.attributeName;
+
+							if (attributeName === 'predefinedValue') {
 								item.editor = false;
 							}
-
-							if (item.attributeName === 'type') {
-								item.formatter = function() {
-									return 'documents-and-media';
-								}
+							else if (attributeName === 'type') {
+								item.formatter = instance._defaultFormatter;
 							}
 						}
 					);
 
 					return model;
+				},
+
+				_defaultFormatter: function() {
+					var instance = this;
+
+					return 'documents-and-media';
 				},
 
 				_uiSetValue: function() {

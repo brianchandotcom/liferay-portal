@@ -77,13 +77,19 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		newDLSync.setFileId(nextLong());
 
+		newDLSync.setFileUuid(randomString());
+
 		newDLSync.setRepositoryId(nextLong());
 
 		newDLSync.setParentFolderId(nextLong());
 
+		newDLSync.setName(randomString());
+
 		newDLSync.setEvent(randomString());
 
 		newDLSync.setType(randomString());
+
+		newDLSync.setVersion(randomString());
 
 		_persistence.update(newDLSync, false);
 
@@ -96,12 +102,15 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(Time.getShortTimestamp(existingDLSync.getModifiedDate()),
 			Time.getShortTimestamp(newDLSync.getModifiedDate()));
 		assertEquals(existingDLSync.getFileId(), newDLSync.getFileId());
+		assertEquals(existingDLSync.getFileUuid(), newDLSync.getFileUuid());
 		assertEquals(existingDLSync.getRepositoryId(),
 			newDLSync.getRepositoryId());
 		assertEquals(existingDLSync.getParentFolderId(),
 			newDLSync.getParentFolderId());
+		assertEquals(existingDLSync.getName(), newDLSync.getName());
 		assertEquals(existingDLSync.getEvent(), newDLSync.getEvent());
 		assertEquals(existingDLSync.getType(), newDLSync.getType());
+		assertEquals(existingDLSync.getVersion(), newDLSync.getVersion());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -235,13 +244,19 @@ public class DLSyncPersistenceTest extends BasePersistenceTestCase {
 
 		dlSync.setFileId(nextLong());
 
+		dlSync.setFileUuid(randomString());
+
 		dlSync.setRepositoryId(nextLong());
 
 		dlSync.setParentFolderId(nextLong());
 
+		dlSync.setName(randomString());
+
 		dlSync.setEvent(randomString());
 
 		dlSync.setType(randomString());
+
+		dlSync.setVersion(randomString());
 
 		_persistence.update(dlSync, false);
 

@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{syncId=");
 		sb.append(syncId);
@@ -46,14 +46,20 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		sb.append(modifiedDate);
 		sb.append(", fileId=");
 		sb.append(fileId);
+		sb.append(", fileUuid=");
+		sb.append(fileUuid);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", event=");
 		sb.append(event);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append("}");
 
 		return sb.toString();
@@ -80,8 +86,23 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		}
 
 		dlSyncImpl.setFileId(fileId);
+
+		if (fileUuid == null) {
+			dlSyncImpl.setFileUuid(StringPool.BLANK);
+		}
+		else {
+			dlSyncImpl.setFileUuid(fileUuid);
+		}
+
 		dlSyncImpl.setRepositoryId(repositoryId);
 		dlSyncImpl.setParentFolderId(parentFolderId);
+
+		if (name == null) {
+			dlSyncImpl.setName(StringPool.BLANK);
+		}
+		else {
+			dlSyncImpl.setName(name);
+		}
 
 		if (event == null) {
 			dlSyncImpl.setEvent(StringPool.BLANK);
@@ -97,6 +118,13 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 			dlSyncImpl.setType(type);
 		}
 
+		if (version == null) {
+			dlSyncImpl.setVersion(StringPool.BLANK);
+		}
+		else {
+			dlSyncImpl.setVersion(version);
+		}
+
 		dlSyncImpl.resetOriginalValues();
 
 		return dlSyncImpl;
@@ -107,8 +135,11 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 	public long createDate;
 	public long modifiedDate;
 	public long fileId;
+	public String fileUuid;
 	public long repositoryId;
 	public long parentFolderId;
+	public String name;
 	public String event;
 	public String type;
+	public String version;
 }

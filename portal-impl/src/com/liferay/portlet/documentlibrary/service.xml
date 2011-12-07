@@ -522,10 +522,13 @@
 		<!-- Other fields -->
 
 		<column name="fileId" type="long" />
+		<column name="fileUuid" type="String" />
 		<column name="repositoryId" type="long" />
 		<column name="parentFolderId" type="long" />
+		<column name="name" type="String" />
 		<column name="event" type="String" />
 		<column name="type" type="String" />
+		<column name="version" type="String" />
 
 		<!-- Order -->
 

@@ -539,6 +539,25 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	@Skip
+	public List<Portlet> getScopablePortlets() {
+		Map<String, Portlet> portletsPool = _getPortletsPool();
+
+		List<Portlet> portlets = ListUtil.fromMapValues(portletsPool);
+
+		Iterator<Portlet> itr = portlets.iterator();
+
+		while (itr.hasNext()) {
+			Portlet portlet = itr.next();
+
+			if (!portlet.isScopeable()) {
+				itr.remove();
+			}
+		}
+
+		return portlets;
+	}
+
+	@Skip
 	public PortletCategory getWARDisplay(String servletContextName, String xml)
 		throws SystemException {
 

@@ -1350,6 +1350,30 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	/**
+	* Updates the names of the portlets within scope of the group, the scope of
+	* the layout's universally unique identifier, and the privacy.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout whose universally unique
+	identifier to match
+	* @param newNamesMap Map with the new names for the portlets for each language
+	* @param locales locales list to check
+	* @throws PortalException if a matching layout could not be found
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portlet.portletconfiguration.action.EditScopeAction
+	*/
+	public void updateScopedPortletNames(long groupId, boolean privateLayout,
+		long layoutId,
+		java.util.Map<java.util.Locale, java.lang.String> newNamesMap,
+		java.util.List<java.util.Locale> locales)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.updateScopedPortletNames(groupId, privateLayout,
+			layoutId, newNamesMap, locales);
+	}
+
+	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */
 	public LayoutLocalService getWrappedLayoutLocalService() {

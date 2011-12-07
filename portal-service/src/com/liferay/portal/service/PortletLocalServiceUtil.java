@@ -374,6 +374,10 @@ public class PortletLocalServiceUtil {
 		return getService().getPortlets(companyId, showSystem, showPortal);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Portlet> getScopablePortlets() {
+		return getService().getScopablePortlets();
+	}
+
 	public static com.liferay.portal.model.PortletCategory getWARDisplay(
 		java.lang.String servletContextName, java.lang.String xml)
 		throws com.liferay.portal.kernel.exception.SystemException {

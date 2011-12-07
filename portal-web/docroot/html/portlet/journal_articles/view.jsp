@@ -58,7 +58,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 		headerNames.clear();
 
-		headerNames.add("name");
+		headerNames.add("title");
 		headerNames.add("display-date");
 		headerNames.add("author");
 

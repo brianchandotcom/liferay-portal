@@ -17,10 +17,10 @@
 <meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
 
 <%
-String refreshRate = request.getParameter("refresh_rate");
+int refreshRate = ParamUtil.getInteger(request, "refresh_rate");
 %>
 
-<c:if test='<%= (refreshRate != null) && (!refreshRate.equals("0")) %>'>
+<c:if test="<%= refreshRate != 0 %>">
 	<meta content="<%= refreshRate %>;" http-equiv="Refresh" />
 </c:if>
 

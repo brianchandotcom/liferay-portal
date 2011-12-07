@@ -111,10 +111,6 @@ public class MBCategoryPermission {
 			while (categoryId !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
-				categoryId = category.getParentCategoryId();
-
 				if (!permissionChecker.hasOwnerPermission(
 						category.getCompanyId(), MBCategory.class.getName(),
 						category.getCategoryId(), category.getUserId(),
@@ -129,6 +125,10 @@ public class MBCategoryPermission {
 				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 					break;
 				}
+
+				categoryId = category.getParentCategoryId();
+
+				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 			}
 
 			return true;
@@ -136,10 +136,6 @@ public class MBCategoryPermission {
 		else {
 			while (categoryId !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
-				categoryId = category.getParentCategoryId();
 
 				if (permissionChecker.hasOwnerPermission(
 						category.getCompanyId(), MBCategory.class.getName(),
@@ -159,6 +155,10 @@ public class MBCategoryPermission {
 				if (actionId.equals(ActionKeys.VIEW)) {
 					break;
 				}
+
+				categoryId = category.getParentCategoryId();
+
+				category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 			}
 
 			return false;

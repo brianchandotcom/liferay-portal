@@ -886,7 +886,7 @@ public class LayoutTypePortletImpl
 
 		try {
 			removePortletId(userId, portletId, false);
-			addPortletId(userId, portletId, columnId, columnPos);
+			addPortletId(userId, portletId, columnId, columnPos, false);
 		}
 		finally {
 			_enablePortletLayoutListener = true;

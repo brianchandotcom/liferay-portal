@@ -208,8 +208,6 @@ if ((event.getRepeating()) && (recurrence != null)) {
 		<%= (monthlyPos == 4) ? LanguageUtil.get(pageContext, "fourth") : "" %>
 		<%= (monthlyPos == -1) ? LanguageUtil.get(pageContext, "last") : "" %>
 
-		<%= (monthlyDay1 == Calendar.MONDAY) ? LanguageUtil.get(pageContext, "weekday") : "" %>
-		<%= (monthlyDay1 == Calendar.SATURDAY) ? LanguageUtil.get(pageContext, "weekend-day") : "" %>
 		<%= (monthlyDay1 == Calendar.SUNDAY) ? days[0] : "" %>
 		<%= (monthlyDay1 == Calendar.MONDAY) ? days[1] : "" %>
 		<%= (monthlyDay1 == Calendar.TUESDAY) ? days[2] : "" %>
@@ -238,8 +236,6 @@ if ((event.getRepeating()) && (recurrence != null)) {
 			<%= (yearlyPos == 4) ? LanguageUtil.get(pageContext, "fourth") : "" %>
 			<%= (yearlyPos == -1) ? LanguageUtil.get(pageContext, "last") : "" %>
 
-			<%= (yearlyDay1 == Calendar.MONDAY) ? LanguageUtil.get(pageContext, "weekday") : "" %>
-			<%= (yearlyDay1 == Calendar.SATURDAY) ? LanguageUtil.get(pageContext, "weekend-day") : "" %>
 			<%= (yearlyDay1 == Calendar.SUNDAY) ? days[0] : "" %>
 			<%= (yearlyDay1 == Calendar.MONDAY) ? days[1] : "" %>
 			<%= (yearlyDay1 == Calendar.TUESDAY) ? days[2] : "" %>

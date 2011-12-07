@@ -693,6 +693,16 @@ public class ResourcePermissionLocalServiceUtil {
 			roleIds, actionId);
 	}
 
+	public static boolean[] hasResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .hasResourcePermissions(companyId, name, scope, primKey,
+			roleIds, actionId);
+	}
+
 	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on the resource.

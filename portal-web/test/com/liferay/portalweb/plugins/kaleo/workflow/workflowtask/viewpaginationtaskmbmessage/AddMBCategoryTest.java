@@ -58,6 +58,12 @@ public class AddMBCategoryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//td[2]/a/strong"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//td[5]/a"));
 	}
 }

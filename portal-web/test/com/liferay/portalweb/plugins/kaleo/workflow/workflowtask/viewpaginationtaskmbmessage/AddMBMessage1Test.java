@@ -47,8 +47,8 @@ public class AddMBMessage1Test extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -88,6 +88,8 @@ public class AddMBMessage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread1 Message Subject"),
 			selenium.getText("//div[@class='subject']/a/strong"));
+		assertEquals(RuntimeVariables.replace("Status: Pending (Review)"),
+			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread1 Message Body"),
 			selenium.getText("//div[@class='thread-body']"));

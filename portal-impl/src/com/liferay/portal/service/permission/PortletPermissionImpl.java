@@ -295,6 +295,8 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		if (hasCustomizePermission(
+				permissionChecker, layout, portletId, actionId) ||
+			hasConfigurePermission(
 				permissionChecker, layout, portletId, actionId)) {
 
 			return true;
@@ -440,6 +442,28 @@ public class PortletPermissionImpl implements PortletPermission {
 
 			return false;
 		}
+	}
+
+	protected boolean hasConfigurePermission(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		if (!actionId.equals(ActionKeys.CONFIGURATION)) {
+			return false;
+		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			layout.getCompanyId(), portletId);
+
+		if (portlet.isPreferencesUniquePerLayout()) {
+			return LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.CONFIGURE_PORTLETS);
+		}
+
+		return GroupPermissionUtil.contains(
+			permissionChecker, layout.getGroupId(),
+			ActionKeys.CONFIGURE_PORTLETS);
 	}
 
 	protected boolean hasCustomizePermission(

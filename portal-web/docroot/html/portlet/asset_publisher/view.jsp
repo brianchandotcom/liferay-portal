@@ -88,7 +88,7 @@ Group group = themeDisplay.getScopeGroup();
 		for (long groupId : groupIds) {
 		%>
 
-			<div class="add-asset-selector">
+			<div class="lfr-meta-actions add-asset-selector">
 				<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
 			</div>
 

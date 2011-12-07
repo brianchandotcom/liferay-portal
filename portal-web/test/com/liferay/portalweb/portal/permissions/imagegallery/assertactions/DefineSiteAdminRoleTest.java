@@ -85,13 +85,13 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("label=Media Gallery"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//td/input"));
+		assertTrue(selenium.isChecked("//tr[3]/td/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td/input"));
 		assertTrue(selenium.isChecked("//tr[5]/td/input"));
-		assertTrue(selenium.isChecked("//tr[6]/td/input"));
-		assertTrue(selenium.isChecked("//tr[8]/td/input"));
+		assertTrue(selenium.isChecked("//tr[7]/td/input"));
 		assertTrue(selenium.isChecked("//tr[9]/td/input"));
 		assertTrue(selenium.isChecked("//tr[10]/td/input"));
+		assertTrue(selenium.isChecked("//tr[11]/td/input"));
 		selenium.typeKeys("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("mmm"));
 		selenium.keyPress("//select[@id='_128_add-permissions']",
@@ -116,7 +116,7 @@ public class DefineSiteAdminRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Media Gallery"),
 			selenium.getText("//h3"));
-		assertTrue(selenium.isChecked("//td/input"));
+		assertTrue(selenium.isChecked("//tr[3]/td/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td/input"));
 		assertTrue(selenium.isChecked("//tr[5]/td/input"));
 		assertTrue(selenium.isChecked("//tr[6]/td/input"));

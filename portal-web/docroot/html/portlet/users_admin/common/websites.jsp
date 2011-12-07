@@ -64,6 +64,8 @@ else {
 
 <h3><liferay-ui:message key="websites" /></h3>
 
+<div><liferay-ui:message key="url-and-type-are-required-fields.-websites-must-start-with-http-or-https"/></div>
+
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 

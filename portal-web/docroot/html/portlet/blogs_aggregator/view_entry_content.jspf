@@ -77,6 +77,21 @@
 			<c:choose>
 				<c:when test='<%= displayStyle.startsWith("abstract") %>'>
 					<%= StringUtil.shorten(HtmlUtil.stripHtml(entry.getDescription()), 200, StringPool.BLANK) %>
+
+					<c:if test="<%= entry.isSmallImage() %>">
+						<%
+						String src = StringPool.BLANK;
+
+						if (Validator.isNotNull(entry.getSmallImageURL())) {
+							src = entry.getSmallImageURL();
+						}
+						%>
+
+						<div class="asset-small-image">
+							<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(src) %>" width="150" />
+						</div>
+					</c:if>
+
 				</c:when>
 				<c:when test='<%= displayStyle.startsWith("quote") %>'>
 					<span class="quote">

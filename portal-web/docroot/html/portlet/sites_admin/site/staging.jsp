@@ -43,7 +43,17 @@ UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribut
 			</aui:field-wrapper>
 		</div>
 
-		<div class="<%= (liveGroup.isStaged() && liveGroup.isStagedRemotely() ? StringPool.BLANK : "aui-helper-hidden") %> staging-section" id="<portlet:namespace />remoteStagingOptions">
+		<%
+		boolean showRemoteOptions = liveGroup.isStaged() && liveGroup.isStagedRemotely();
+
+		int stagingType = ParamUtil.getInteger(request, "stagingType");
+
+		if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
+			showRemoteOptions = true;
+		}
+		%>
+
+		<div class="<%= (showRemoteOptions ? StringPool.BLANK : "aui-helper-hidden") %> staging-section" id="<portlet:namespace />remoteStagingOptions">
 			<br />
 
 			<liferay-ui:error exception="<%= RemoteExportException.class %>">

@@ -495,14 +495,24 @@ public class DLFileEntryLocalServiceImpl
 	public void deleteFileEntries(long groupId, long folderId)
 		throws PortalException, SystemException {
 
-		List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
+		int fileEntryCount = dlFileEntryPersistence.countByG_F(
 			groupId, folderId);
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			dlAppHelperLocalService.deleteFileEntry(
-				new LiferayFileEntry(dlFileEntry));
+		int fileEntryPages = fileEntryCount / _DELETE_INTERVAL;
 
-			deleteFileEntry(dlFileEntry);
+		for (int i = 0; i <= fileEntryPages; i++) {
+			int fileEntryStart = (i * _DELETE_INTERVAL);
+			int fileEntryEnd = fileEntryStart + _DELETE_INTERVAL;
+
+			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
+				groupId, folderId, fileEntryStart, fileEntryEnd);
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				dlAppHelperLocalService.deleteFileEntry(
+					new LiferayFileEntry(dlFileEntry));
+
+				deleteFileEntry(dlFileEntry);
+			}
 		}
 	}
 
@@ -1661,6 +1671,8 @@ public class DLFileEntryLocalServiceImpl
 			throw new FileNameException(fileName);
 		}
 	}
+
+	private static final int _DELETE_INTERVAL = 100;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);

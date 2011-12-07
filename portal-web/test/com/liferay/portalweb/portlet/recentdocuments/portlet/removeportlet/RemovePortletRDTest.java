@@ -30,8 +30,7 @@ public class RemovePortletRDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Recently Downloaded Documents Test Page")) {
+				if (selenium.isVisible("link=Recent Download Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +40,8 @@ public class RemovePortletRDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Recently Downloaded Documents Test Page",
-			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
+		selenium.clickAt("link=Recent Download Test Page",
+			RuntimeVariables.replace("Recent Download Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()

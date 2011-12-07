@@ -62,7 +62,7 @@ public class AddPageRDTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
+			RuntimeVariables.replace("Recent Download Test Page"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 
@@ -72,8 +72,7 @@ public class AddPageRDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Recently Downloaded Documents Test Page")) {
+				if (selenium.isVisible("link=Recent Download Test Page")) {
 					break;
 				}
 			}
@@ -83,8 +82,8 @@ public class AddPageRDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Recently Downloaded Documents Test Page",
-			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
+		selenium.clickAt("link=Recent Download Test Page",
+			RuntimeVariables.replace("Recent Download Test Page"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

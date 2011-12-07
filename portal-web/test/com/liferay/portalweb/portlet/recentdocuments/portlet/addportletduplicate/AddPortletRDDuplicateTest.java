@@ -30,8 +30,7 @@ public class AddPortletRDDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Recently Downloaded Documents Test Page")) {
+				if (selenium.isVisible("link=Recent Download Test Page")) {
 					break;
 				}
 			}
@@ -41,8 +40,8 @@ public class AddPortletRDDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Recently Downloaded Documents Test Page",
-			RuntimeVariables.replace("Recently Downloaded Documents Test Page"));
+		selenium.clickAt("link=Recent Download Test Page",
+			RuntimeVariables.replace("Recent Download Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
@@ -75,8 +74,7 @@ public class AddPortletRDDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@title='Recently Downloaded Documents']")) {
+				if (selenium.isVisible("//div[@title='Recent Downloads']")) {
 					break;
 				}
 			}
@@ -86,7 +84,6 @@ public class AddPortletRDDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isVisible(
-				"//div[@title='Recently Downloaded Documents']/p/a"));
+		assertFalse(selenium.isVisible("//div[@title='Recent Downloads']/p/a"));
 	}
 }

@@ -162,7 +162,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()
 		};
 
-		if (assetRendererFactory.getClassTypes(groupdIds) == null) {
+		if (assetRendererFactory.getClassTypes(
+			groupdIds, themeDisplay.getLocale()) == null) {
+
 			return null;
 		}
 

@@ -128,13 +128,13 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 			<%
 			for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
-				if (assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}) == null) {
+				if (assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale()) == null) {
 					continue;
 				}
 
 				classTypesAssetRendererFactories.add(assetRendererFactory);
 
-				Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId});
+				Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
 
 				String className = AssetPublisherUtil.getClassName(assetRendererFactory);
 

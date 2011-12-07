@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -56,7 +57,8 @@ public interface AssetRendererFactory {
 
 	public long getClassNameId();
 
-	public Map<Long, String> getClassTypes(long[] groupIds) throws Exception;
+	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
+		throws Exception;
 
 	public String getIconPath(PortletRequest portletRequest);
 

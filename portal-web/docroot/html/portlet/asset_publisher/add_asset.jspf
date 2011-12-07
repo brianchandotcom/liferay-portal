@@ -179,7 +179,7 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 
 		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()});
+		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, themeDisplay.getLocale());
 
 		if ((classTypeIds.length == 0) || (classTypes == null)) {
 			PortletURL addPortletURL = getAddPortletURL(liferayPortletRequest, liferayPortletResponse, className, 0, allAssetCategoryIds, allAssetTagNames);

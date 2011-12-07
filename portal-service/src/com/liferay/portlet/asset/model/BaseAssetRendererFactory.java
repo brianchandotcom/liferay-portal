@@ -27,6 +27,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -69,7 +70,9 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return _classNameId;
 	}
 
-	public Map<Long, String> getClassTypes(long[] groupId) throws Exception {
+	public Map<Long, String> getClassTypes(long[] groupId, Locale locale)
+		throws Exception {
+
 		return null;
 	}
 

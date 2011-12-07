@@ -42,6 +42,7 @@ import com.liferay.portlet.journal.service.permission.JournalStructurePermission
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -107,7 +108,9 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public Map<Long, String> getClassTypes(long[] groupIds) throws Exception {
+	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
+		throws Exception {
+
 		Map<Long, String> classTypes = new HashMap<Long, String>();
 
 		for (long groupId : groupIds) {
@@ -115,7 +118,7 @@ public class JournalArticleAssetRendererFactory
 				JournalStructureLocalServiceUtil.getStructures(groupId);
 
 			for (JournalStructure structure : structures) {
-				classTypes.put(structure.getId(), structure.getName());
+				classTypes.put(structure.getId(), structure.getName(locale));
 			}
 		}
 

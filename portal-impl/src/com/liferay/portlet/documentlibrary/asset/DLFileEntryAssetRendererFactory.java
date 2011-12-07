@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -84,7 +85,9 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public Map<Long, String> getClassTypes(long[] groupIds) throws Exception {
+	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
+		throws Exception {
+
 		Map<Long, String> classTypes = new HashMap<Long, String>();
 
 		List<DLFileEntryType> dlFileEntryTypes =

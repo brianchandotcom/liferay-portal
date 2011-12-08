@@ -33,9 +33,10 @@ public class JSONWebServiceActionsManagerUtil {
 	}
 
 	public static List<JSONWebServiceActionMapping>
-		getJSONWebServiceActionMappings() {
+		getJSONWebServiceActionMappings(String servletContextName) {
 
-		return _jsonWebServiceActionsManager.getJSONWebServiceActionMappings();
+		return _jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
+			servletContextName);
 	}
 
 	public static JSONWebServiceActionsManager

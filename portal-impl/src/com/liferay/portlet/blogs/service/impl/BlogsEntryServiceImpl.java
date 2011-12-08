@@ -363,8 +363,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 			for (BlogsEntry entry : blogsEntries) {
 				String author = HtmlUtil.escape(
-					PortalUtil.getUserName(entry.getUserId(),
-						entry.getUserName()));
+					PortalUtil.getUserName(
+						entry.getUserId(), entry.getUserName()));
 
 				StringBundler link = new StringBundler(4);
 

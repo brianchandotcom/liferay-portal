@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -43,6 +45,7 @@ import java.util.Map;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 /**
  * @author Alexander Chow
@@ -107,7 +110,14 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	public FileEntry getFileEntry() throws PortalException, SystemException {
 		Document document = null;
 
-		List<Document> allVersions = _document.getAllVersions();
+		List<Document> allVersions = null;
+
+		try {
+			allVersions = _document.getAllVersions();
+		}
+		catch (CmisObjectNotFoundException confe) {
+			throw new NoSuchFileEntryException(confe);
+		}
 
 		if (allVersions.isEmpty()) {
 			document = _document;
@@ -123,6 +133,8 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	public long getFileEntryId() {
 		try {
 			return getFileEntry().getFileEntryId();
+		}
+		catch (NoSuchFileEntryException nsfee) {
 		}
 		catch (Exception e) {
 			_log.error(e, e);

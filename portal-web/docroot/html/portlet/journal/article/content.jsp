@@ -608,20 +608,20 @@ if (Validator.isNotNull(content)) {
 
 			versionNode.html(newVersion);
 
-			statusNode.removeClass('workflow-status-approved');
-			statusNode.addClass('workflow-status-draft');
-			statusNode.html('<%= LanguageUtil.get(pageContext, "draft") %>');
-
-			availableTranslationContainer.addClass('contains-translations');
-			availableTranslationsLinks.show();
-			translationsMessage.show();
-
 			var translationLink = availableTranslationContainer.one('.journal-article-translation-' + newLanguageId);
 
 			if (cmd == '<%= Constants.DELETE_TRANSLATION %>') {
 				translationLink.hide();
 			}
 			else if (!translationLink) {
+				statusNode.removeClass('workflow-status-approved');
+				statusNode.addClass('workflow-status-draft');
+				statusNode.html('<%= LanguageUtil.get(pageContext, "draft") %>');
+
+				availableTranslationContainer.addClass('contains-translations');
+				availableTranslationsLinks.show();
+				translationsMessage.show();
+
 				var TPL_TRANSLATION = '<a class="lfr-token journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
 
 				translationLinkTpl = A.Lang.sub(

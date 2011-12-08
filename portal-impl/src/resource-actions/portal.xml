@@ -294,6 +294,7 @@
 				<action-key>ADD_LAYOUT_SET_BRANCH</action-key>
 				<action-key>ASSIGN_MEMBERS</action-key>
 				<action-key>ASSIGN_USER_ROLES</action-key>
+				<action-key>CONFIGURE_PORTLETS</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>EXPORT_IMPORT_LAYOUTS</action-key>
 				<action-key>EXPORT_IMPORT_PORTLET_INFO</action-key>

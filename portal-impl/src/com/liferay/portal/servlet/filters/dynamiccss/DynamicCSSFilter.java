@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
+import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.servlet.ComboServlet;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
@@ -63,6 +66,9 @@ public class DynamicCSSFilter extends BasePortalFilter {
 		}
 
 		DynamicCSSUtil.init();
+
+		_cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+			ComboServlet.class.getName());
 	}
 
 	protected Object getDynamicContent(
@@ -104,7 +110,11 @@ public class DynamicCSSFilter extends BasePortalFilter {
 			sb.append(sterilizeQueryString(queryString));
 		}
 
-		String cacheCommonFileName = sb.toString();
+		String fileNameHashCode = _cacheKeyGenerator.getCacheKey(
+			sb.toString()).toString();
+
+		String cacheCommonFileName =
+			_tempDir.concat(StringPool.SLASH).concat(fileNameHashCode);
 
 		File cacheContentTypeFile = new File(
 			cacheCommonFileName + "_E_CONTENT_TYPE");
@@ -233,6 +243,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSFilter.class);
 
+	private CacheKeyGenerator _cacheKeyGenerator;
 	private ServletContext _servletContext;
 	private String _servletContextName;
 	private String _tempDir = _TEMP_DIR;

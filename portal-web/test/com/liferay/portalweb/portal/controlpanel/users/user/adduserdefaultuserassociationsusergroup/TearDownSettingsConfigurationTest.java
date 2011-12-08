@@ -71,9 +71,9 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		selenium.type("//input[@id='_130_industry']",
 			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_130_type']", RuntimeVariables.replace(""));
-		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", ""));
+		assertTrue(selenium.isPartialText("//a[@id='_130_usersLink']", "Users"));
 		selenium.clickAt("//a[@id='_130_usersLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Users"));
 		selenium.clickAt("link=Reserved Credentials",
 			RuntimeVariables.replace("Reserved Credentials"));
 		selenium.type("//textarea[@name='_130_settings--admin.reserved.screen.names--']",
@@ -95,9 +95,9 @@ public class TearDownSettingsConfigurationTest extends BaseTestCase {
 		selenium.type("//textarea[@name='_130_settings--admin.mail.host.names--']",
 			RuntimeVariables.replace(""));
 		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_emailNotificationsLink']", ""));
+				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
 		selenium.clickAt("//a[@id='_130_emailNotificationsLink']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Email Notifications"));
 		selenium.type("//input[@name='_130_settings--admin.email.from.name--']",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.type("//input[@name='_130_settings--admin.email.from.address--']",

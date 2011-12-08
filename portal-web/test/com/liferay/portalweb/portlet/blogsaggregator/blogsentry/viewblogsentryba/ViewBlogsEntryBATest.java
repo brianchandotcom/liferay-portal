@@ -45,7 +45,7 @@ public class ViewBlogsEntryBATest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//span[@class='entry-title']/a"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry Description"),
 			selenium.getText("//div[@class='abstract']"));
 		assertEquals(RuntimeVariables.replace(
 				"Read More About Blogs Entry Title \u00bb"),

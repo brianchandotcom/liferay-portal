@@ -69,6 +69,8 @@ public class AddBlogsEntryTest extends BaseTestCase {
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
 		selenium.selectFrame("relative=top");
+		selenium.type("//input[@id='_33_description']",
+			RuntimeVariables.replace("Blogs Entry Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

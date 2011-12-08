@@ -221,11 +221,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	#<portlet:namespace />exportPagesFm .selected-pages-option .aui-field-content {
 		display: inline;
 	}
-
-	#<portlet:namespace />pane {
-		border: 1px solid #CCC;
-		padding: 5px;
-	}
 </style>
 
 <aui:form action='<%= portletURL.toString() + "&etag=0" %>' method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "refreshDialog();" %>' >

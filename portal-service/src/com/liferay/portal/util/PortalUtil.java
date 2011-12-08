@@ -919,6 +919,40 @@ public class PortalUtil {
 		return getPortal().getPortletId(portletRequest);
 	}
 
+	public static String getPortletLongTitle(Portlet portlet, Locale locale) {
+		return getPortal().getPortletLongTitle(portlet, locale);
+	}
+
+	public static String getPortletLongTitle(
+		Portlet portlet, ServletContext servletContext, Locale locale) {
+
+		return getPortal().getPortletLongTitle(portlet, servletContext, locale);
+	}
+
+	public static String getPortletLongTitle(
+		Portlet portlet, String languageId) {
+
+		return getPortal().getPortletLongTitle(portlet, languageId);
+	}
+
+	public static String getPortletLongTitle(Portlet portlet, User user) {
+		return getPortal().getPortletLongTitle(portlet, user);
+	}
+
+	public static String getPortletLongTitle(String portletId, Locale locale) {
+		return getPortal().getPortletLongTitle(portletId, locale);
+	}
+
+	public static String getPortletLongTitle(
+		String portletId, String languageId) {
+
+		return getPortal().getPortletLongTitle(portletId, languageId);
+	}
+
+	public static String getPortletLongTitle(String portletId, User user) {
+		return getPortal().getPortletLongTitle(portletId, user);
+	}
+
 	public static String getPortletNamespace(String portletId) {
 		return getPortal().getPortletNamespace(portletId);
 	}

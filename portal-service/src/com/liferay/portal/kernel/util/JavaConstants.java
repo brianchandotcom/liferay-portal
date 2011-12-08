@@ -28,6 +28,9 @@ public interface JavaConstants {
 	public static final String JAVAX_PORTLET_KEYWORDS =
 		"javax.portlet.keywords";
 
+	public static final String JAVAX_PORTLET_LONG_TITLE =
+		"javax.portlet.long-title";
+
 	public static final String JAVAX_PORTLET_PORTLET = "javax.portlet.portlet";
 
 	public static final String JAVAX_PORTLET_REQUEST = "javax.portlet.request";

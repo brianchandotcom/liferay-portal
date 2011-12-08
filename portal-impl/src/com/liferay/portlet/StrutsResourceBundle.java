@@ -52,6 +52,7 @@ public class StrutsResourceBundle extends ResourceBundle {
 		}
 
 		if ((key.equals(JavaConstants.JAVAX_PORTLET_TITLE) ||
+			 key.equals(JavaConstants.JAVAX_PORTLET_LONG_TITLE) ||
 			 key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE) ||
 			 key.equals(JavaConstants.JAVAX_PORTLET_KEYWORDS) ||
 			 key.equals(JavaConstants.JAVAX_PORTLET_DESCRIPTION))) {

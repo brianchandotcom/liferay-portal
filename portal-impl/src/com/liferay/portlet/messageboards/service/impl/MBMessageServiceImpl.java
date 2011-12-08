@@ -669,83 +669,94 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			List<MBMessage> messages, ThemeDisplay themeDisplay)
 		throws SystemException {
 
-		SyndFeed syndFeed = new SyndFeedImpl();
-
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-		syndFeed.setTitle(name);
-		syndFeed.setLink(feedURL);
-		syndFeed.setDescription(description);
-
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
-
-		syndFeed.setEntries(syndEntries);
-
-		Iterator<MBMessage> itr = messages.iterator();
-
-		while (itr.hasNext()) {
-			MBMessage message = itr.next();
-
-			String author = HtmlUtil.escape(
-				PortalUtil.getUserName(
-					message.getUserId(), message.getUserName()));
-
-			String value = null;
-
-			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
-				value = StringUtil.shorten(
-					HtmlUtil.extractText(message.getBody()),
-					PropsValues.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH,
-					StringPool.BLANK);
-			}
-			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
-				value = StringPool.BLANK;
-			}
-			else {
-				value = BBCodeTranslatorUtil.getHTML(message.getBody());
-
-				value = StringUtil.replace(
-					value,
-					new String[] {
-						"@theme_images_path@",
-						"href=\"/",
-						"src=\"/"
-					},
-					new String[] {
-						themeDisplay.getURLPortal() +
-							themeDisplay.getPathThemeImages(),
-						"href=\"" + themeDisplay.getURLPortal() + "/",
-						"src=\"" + themeDisplay.getURLPortal() + "/"
-					});
-			}
-
-			SyndEntry syndEntry = new SyndEntryImpl();
-
-			if (!message.isAnonymous()) {
-				syndEntry.setAuthor(author);
-			}
-
-			syndEntry.setTitle(message.getSubject());
-			syndEntry.setLink(
-				entryURL + "&messageId=" + message.getMessageId());
-			syndEntry.setUri(syndEntry.getLink());
-			syndEntry.setPublishedDate(message.getCreateDate());
-			syndEntry.setUpdatedDate(message.getModifiedDate());
-
-			SyndContent syndContent = new SyndContentImpl();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
-			syndContent.setValue(value);
-
-			syndEntry.setDescription(syndContent);
-
-			syndEntries.add(syndEntry);
-		}
+		ClassLoader contextClassLoader =
+			Thread.currentThread().getContextClassLoader();
 
 		try {
-			return RSSUtil.export(syndFeed);
+			Thread.currentThread().setContextClassLoader(
+				SyndFeedImpl.class.getClassLoader());
+
+			SyndFeed syndFeed = new SyndFeedImpl();
+
+			syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
+			syndFeed.setTitle(name);
+			syndFeed.setLink(feedURL);
+			syndFeed.setDescription(description);
+
+			List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
+
+			syndFeed.setEntries(syndEntries);
+
+			Iterator<MBMessage> itr = messages.iterator();
+
+			while (itr.hasNext()) {
+				MBMessage message = itr.next();
+
+				String author = HtmlUtil.escape(
+					PortalUtil.getUserName(
+						message.getUserId(), message.getUserName()));
+
+				String value = null;
+
+				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+					value = StringUtil.shorten(
+						HtmlUtil.extractText(message.getBody()),
+						PropsValues.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH,
+						StringPool.BLANK);
+				}
+				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
+					value = StringPool.BLANK;
+				}
+				else {
+					value = BBCodeTranslatorUtil.getHTML(message.getBody());
+
+					value = StringUtil.replace(
+						value,
+						new String[] {
+							"@theme_images_path@",
+							"href=\"/",
+							"src=\"/"
+						},
+						new String[] {
+							themeDisplay.getURLPortal() +
+								themeDisplay.getPathThemeImages(),
+							"href=\"" + themeDisplay.getURLPortal() + "/",
+							"src=\"" + themeDisplay.getURLPortal() + "/"
+						});
+				}
+
+				SyndEntry syndEntry = new SyndEntryImpl();
+
+				if (!message.isAnonymous()) {
+					syndEntry.setAuthor(author);
+				}
+
+				syndEntry.setTitle(message.getSubject());
+				syndEntry.setLink(
+					entryURL + "&messageId=" + message.getMessageId());
+				syndEntry.setUri(syndEntry.getLink());
+				syndEntry.setPublishedDate(message.getCreateDate());
+				syndEntry.setUpdatedDate(message.getModifiedDate());
+
+				SyndContent syndContent = new SyndContentImpl();
+
+				syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
+				syndContent.setValue(value);
+
+				syndEntry.setDescription(syndContent);
+
+				syndEntries.add(syndEntry);
+			}
+
+			try {
+				return RSSUtil.export(syndFeed);
+			}
+			catch (FeedException fe) {
+				throw new SystemException(fe);
+			}
 		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
+		finally {
+			Thread.currentThread().setContextClassLoader(contextClassLoader);
 		}
 	}
 

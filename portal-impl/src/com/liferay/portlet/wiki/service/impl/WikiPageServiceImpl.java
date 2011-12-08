@@ -371,62 +371,93 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			String entryURL, List<WikiPage> pages, boolean diff, Locale locale)
 		throws SystemException {
 
-		SyndFeed syndFeed = new SyndFeedImpl();
+		ClassLoader contextClassLoader =
+			Thread.currentThread().getContextClassLoader();
 
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-		syndFeed.setTitle(name);
-		syndFeed.setLink(feedURL);
-		syndFeed.setDescription(description);
+		try {
+			Thread.currentThread().setContextClassLoader(
+				SyndFeedImpl.class.getClassLoader());
 
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
+			SyndFeed syndFeed = new SyndFeedImpl();
 
-		syndFeed.setEntries(syndEntries);
+			syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
+			syndFeed.setTitle(name);
+			syndFeed.setLink(feedURL);
+			syndFeed.setDescription(description);
 
-		WikiPage latestPage = null;
+			List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 
-		StringBundler link = new StringBundler(7);
+			syndFeed.setEntries(syndEntries);
 
-		for (WikiPage page : pages) {
-			String author = HtmlUtil.escape(
-				PortalUtil.getUserName(page.getUserId(), page.getUserName()));
+			WikiPage latestPage = null;
 
-			String title =
-				page.getTitle() + StringPool.SPACE + page.getVersion();
+			StringBundler link = new StringBundler(7);
 
-			if (page.isMinorEdit()) {
-				title +=
-					StringPool.SPACE + StringPool.OPEN_PARENTHESIS +
-						LanguageUtil.get(locale, "minor-edit") +
-							StringPool.CLOSE_PARENTHESIS;
-			}
+			for (WikiPage page : pages) {
+				String author = HtmlUtil.escape(
+					PortalUtil.getUserName(
+						page.getUserId(), page.getUserName()));
 
-			link.setIndex(0);
+				String title =
+					page.getTitle() + StringPool.SPACE + page.getVersion();
 
-			link.append(entryURL);
-			link.append(StringPool.AMPERSAND);
-			link.append(HttpUtil.encodeURL(page.getTitle()));
+				if (page.isMinorEdit()) {
+					title +=
+						StringPool.SPACE + StringPool.OPEN_PARENTHESIS +
+							LanguageUtil.get(locale, "minor-edit") +
+								StringPool.CLOSE_PARENTHESIS;
+				}
 
-			SyndEntry syndEntry = new SyndEntryImpl();
+				link.setIndex(0);
 
-			syndEntry.setAuthor(author);
-			syndEntry.setTitle(title);
-			syndEntry.setPublishedDate(page.getCreateDate());
-			syndEntry.setUpdatedDate(page.getModifiedDate());
+				link.append(entryURL);
+				link.append(StringPool.AMPERSAND);
+				link.append(HttpUtil.encodeURL(page.getTitle()));
 
-			SyndContent syndContent = new SyndContentImpl();
+				SyndEntry syndEntry = new SyndEntryImpl();
 
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
+				syndEntry.setAuthor(author);
+				syndEntry.setTitle(title);
+				syndEntry.setPublishedDate(page.getCreateDate());
+				syndEntry.setUpdatedDate(page.getModifiedDate());
 
-			if (diff) {
-				if (latestPage != null) {
-					link.append(StringPool.QUESTION);
-					link.append(
-						PortalUtil.getPortletNamespace(PortletKeys.WIKI));
-					link.append("version=");
-					link.append(page.getVersion());
+				SyndContent syndContent = new SyndContentImpl();
 
-					String value = getPageDiff(
-						companyId, latestPage, page, locale);
+				syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
+
+				if (diff) {
+					if (latestPage != null) {
+						link.append(StringPool.QUESTION);
+						link.append(
+							PortalUtil.getPortletNamespace(PortletKeys.WIKI));
+						link.append("version=");
+						link.append(page.getVersion());
+
+						String value = getPageDiff(
+							companyId, latestPage, page, locale);
+
+						syndContent.setValue(value);
+
+						syndEntry.setDescription(syndContent);
+
+						syndEntries.add(syndEntry);
+					}
+				}
+				else {
+					String value = null;
+
+					if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+						value = StringUtil.shorten(
+							HtmlUtil.extractText(page.getContent()),
+							PropsValues.WIKI_RSS_ABSTRACT_LENGTH,
+							StringPool.BLANK);
+					}
+					else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
+						value = StringPool.BLANK;
+					}
+					else {
+						value = page.getContent();
+					}
 
 					syndContent.setValue(value);
 
@@ -434,40 +465,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 					syndEntries.add(syndEntry);
 				}
-			}
-			else {
-				String value = null;
 
-				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
-					value = StringUtil.shorten(
-						HtmlUtil.extractText(page.getContent()),
-						PropsValues.WIKI_RSS_ABSTRACT_LENGTH, StringPool.BLANK);
-				}
-				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
-					value = StringPool.BLANK;
-				}
-				else {
-					value = page.getContent();
-				}
+				syndEntry.setLink(link.toString());
+				syndEntry.setUri(syndEntry.getLink());
 
-				syndContent.setValue(value);
-
-				syndEntry.setDescription(syndContent);
-
-				syndEntries.add(syndEntry);
+				latestPage = page;
 			}
 
-			syndEntry.setLink(link.toString());
-			syndEntry.setUri(syndEntry.getLink());
-
-			latestPage = page;
+			try {
+				return RSSUtil.export(syndFeed);
+			}
+			catch (FeedException fe) {
+				throw new SystemException(fe);
+			}
 		}
-
-		try {
-			return RSSUtil.export(syndFeed);
-		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
+		finally {
+			Thread.currentThread().setContextClassLoader(contextClassLoader);
 		}
 	}
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -353,9 +354,23 @@ public class ImageProcessor extends DLPreviewableProcessor {
 			isSupported(fileVersion) && !_hasImages(fileVersion)) {
 			_fileVersionIds.add(fileVersion.getFileVersionId());
 
-			MessageBusUtil.sendMessage(
-				DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-				fileVersion);
+			if (PropsValues.DL_FILE_ENTRY_PROCESSORS_PROCESS_SYNCHRONOUSLY) {
+				try {
+					MessageBusUtil.sendSynchronousMessage(
+						DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
+						fileVersion);
+				}
+				catch (MessageBusException mbe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(mbe, mbe);
+					}
+				}
+			}
+			else {
+				MessageBusUtil.sendMessage(
+					DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
+					fileVersion);
+			}
 		}
 	}
 

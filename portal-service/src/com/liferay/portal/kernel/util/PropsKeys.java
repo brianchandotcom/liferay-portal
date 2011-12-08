@@ -551,6 +551,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PROCESSORS = "dl.file.entry.processors";
 
+	public static final String DL_FILE_ENTRY_PROCESSORS_PROCESS_SYNCHRONOUSLY = "dl.file.entry.processors.process.synchronously";
+
 	public static final String DL_FILE_ENTRY_READ_COUNT_ENABLED = "dl.file.entry.read.count.enabled";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT = "dl.file.entry.thumbnail.custom1.max.height";

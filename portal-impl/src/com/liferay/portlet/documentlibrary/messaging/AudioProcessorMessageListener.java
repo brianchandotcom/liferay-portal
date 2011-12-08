@@ -16,7 +16,9 @@ package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 
 /**
@@ -30,6 +32,11 @@ public class AudioProcessorMessageListener extends BaseMessageListener {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
 		AudioProcessor.generateAudio(fileVersion);
+
+		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_PROCESS_SYNCHRONOUSLY) {
+			MessageBusUtil.sendMessage(
+				message.getResponseDestinationName(), message);
+		}
 	}
 
 }

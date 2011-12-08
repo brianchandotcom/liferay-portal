@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -277,8 +278,22 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 
 		_fileVersionIds.add(fileVersion.getFileVersionId());
 
-		MessageBusUtil.sendMessage(
-			DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR, fileVersion);
+		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_PROCESS_SYNCHRONOUSLY) {
+			try {
+				MessageBusUtil.sendSynchronousMessage(
+					DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
+					fileVersion);
+			}
+			catch (MessageBusException mbe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(mbe, mbe);
+				}
+			}
+		}
+		else {
+			MessageBusUtil.sendMessage(
+				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR, fileVersion);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AudioProcessor.class);

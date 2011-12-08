@@ -125,11 +125,7 @@ if (layout.isTypeControlPanel()) {
 			<c:choose>
 				<c:when test='<%= tabs2.equals("export") %>'>
 				<aui:fieldset>
-					<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
-
-					<aui:field-wrapper label="what-would-you-like-to-export">
-						<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
-					</aui:field-wrapper>
+					<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
 
 					<aui:button-row>
 						<aui:button onClick='<%= renderResponse.getNamespace() + "exportData();" %>' value="export" />
@@ -140,11 +136,7 @@ if (layout.isTypeControlPanel()) {
 				</c:when>
 				<c:when test='<%= tabs2.equals("import") %>'>
 					<aui:fieldset>
-						<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
-
-						<aui:field-wrapper label="what-would-you-like-to-import">
-							<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
-						</aui:field-wrapper>
+						<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
 
 						<aui:button-row>
 							<aui:button onClick='<%= renderResponse.getNamespace() + "importData();" %>' value="import" />
@@ -207,9 +199,7 @@ if (layout.isTypeControlPanel()) {
 					<c:choose>
 						<c:when test="<%= Validator.isNull(errorMessageKey) %>">
 							<aui:fieldset>
-								<aui:field-wrapper label="what-would-you-like-to-copy-from-live-or-publish-to-live">
-									<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
-								</aui:field-wrapper>
+								<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
 
 								<c:if test="<%= (themeDisplay.getURLPublishToLive() != null) || controlPanel %>">
 									<aui:button-row>

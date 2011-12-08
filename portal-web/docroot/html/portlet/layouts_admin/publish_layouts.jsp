@@ -221,11 +221,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	#<portlet:namespace />exportPagesFm .selected-pages-option .aui-field-content {
 		display: inline;
 	}
-
-	#<portlet:namespace />pane {
-		border: 1px solid #CCC;
-		padding: 5px;
-	}
 </style>
 
 <aui:form action='<%= portletURL.toString() + "&etag=0" %>' method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "refreshDialog();" %>' >
@@ -378,8 +373,12 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesOptionsPanel" persistState="<%= true %>" title="options">
-						<%@ include file="/html/portlet/layouts_admin/publish_layouts_options.jspf" %>
+					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesPortletsPanel" persistState="<%= true %>" title="applications">
+						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets.jspf" %>
+					</liferay-ui:panel>
+
+					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesOptionsPanel" persistState="<%= true %>" title="other">
+						<%@ include file="/html/portlet/layouts_admin/publish_layouts_other.jspf" %>
 					</liferay-ui:panel>
 
 					<c:if test="<%= !localPublishing %>">

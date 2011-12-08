@@ -148,6 +148,17 @@ body.portal-popup:after, body.portal-popup:before {
 	border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
 }
 
+.export-dialog-tree {
+	.lfr-panel.lfr-extended {
+		background: transparent;
+	}
+
+	.lfr-panel.lfr-extended.lfr-collapsible .lfr-panel-titlebar {
+		background: #E8EAEB;
+		margin: 0;
+	}
+}
+
 #content-wrapper {
 	position: relative;
 }
@@ -749,6 +760,10 @@ input[type="text"], input[type="password"], select, textarea, .textarea, .aui-ta
 
 input[type="text"], input[type="password"], select, textarea, .textarea, #breadcrumbs, .form-navigation, .lfr-panel.lfr-extended, .portlet-enterprise-admin .form-navigation, .lfr-asset-column-actions-content, .lfr-ctrl-panel-content .aui-column-content-center, .taglib-search-toggle, .portlet-communities .layout-breadcrumb ul, .portlet-enterprise-admin .layout-breadcrumb ul, .aui-textboxlistentry-holder, .aui-field-element {
 	@include border-radius(4px);
+}
+
+.export-dialog-tree .lfr-panel.lfr-extended.lfr-collapsible .lfr-panel-titlebar {
+	@include border-radius(4px 4px 0 0);
 }
 
 .portlet-description .aui-icon, .hide-notices-hover .hide-all-notices {

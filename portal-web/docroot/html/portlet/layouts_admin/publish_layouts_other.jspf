@@ -1,0 +1,59 @@
+<%--
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div>
+	<ul class="lfr-tree lfr-component">
+		<li class="tree-item">
+
+			<%
+			String taglibOnChange = renderResponse.getNamespace() + "toggleChildren(this, '" + renderResponse.getNamespace() + "permissionsUl');";
+			%>
+
+			<aui:input helpMessage="export-import-permissions-help" inlineLabel="right" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" onchange="<%= taglibOnChange %>" type="checkbox" />
+
+
+			<ul id="<portlet:namespace />permissionsUl">
+				<c:choose>
+					<c:when test="<%= (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 5) || (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) %>">
+						<li class="tree-item">
+							<aui:input cssClass="disabled" disabled="<%= true %>" inlineLabel="right" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="tree-item">
+							<aui:input cssClass="disabled" disabled="<%= true %>" inlineLabel="right" name="permissionsAssignedToOrganizationsUserGroupsRolesAndCommunities" type="checkbox" value="<%= true %>" />
+						</li>
+						<li class="tree-item">
+							<aui:input cssClass="disabled" disabled="<%= true %>" helpMessage="export-import-permissions-assigned-to-users-help" inlineLabel="right" label="permissions-assigned-to-users" name="<%= PortletDataHandlerKeys.USER_PERMISSIONS %>" type="checkbox" />
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</li>
+
+		<li class="tree-item">
+			<aui:input helpMessage="export-import-theme-help" inlineLabel="right" label="theme" name="<%= PortletDataHandlerKeys.THEME %>" type="checkbox" value="<%= true %>" />
+		</li>
+
+		<li class="tree-item">
+			<aui:input helpMessage="export-import-theme-settings-help" inlineLabel="right" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+		</li>
+
+		<li class="tree-item">
+			<aui:input helpMessage="export-import-categories-help" inlineLabel="right" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
+		</li>
+	</ul>
+</div>

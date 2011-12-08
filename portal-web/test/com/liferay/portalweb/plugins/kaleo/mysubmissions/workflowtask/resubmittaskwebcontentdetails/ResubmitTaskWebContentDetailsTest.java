@@ -116,7 +116,7 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Site Owner role."),
+				"Task initially assigned to the Administrator role."),
 			selenium.getText(
 				"xPath=(//div[@class='task-activity task-type-1'])[4]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),

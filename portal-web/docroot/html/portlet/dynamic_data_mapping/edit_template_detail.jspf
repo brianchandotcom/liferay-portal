@@ -26,36 +26,6 @@ if (scriptJSONArray != null) {
 	scriptJSONArray = _addDetailTemplateFieldAttributes(structure, scriptJSONArray);
 }
 
-Set<String> fieldNames = structure.getFieldNames();
-
-JSONArray structureAvailableFieldsJSONArray = JSONFactoryUtil.createJSONArray();
-
-Iterator<String> itr = fieldNames.iterator();
-
-while (itr.hasNext()) {
-	String fieldName = itr.next();
-
-	StringBundler sb = new StringBundler(5);
-
-	sb.append(structure.getFieldLabel(fieldName, languageId));
-	sb.append(CharPool.SPACE);
-	sb.append(CharPool.OPEN_PARENTHESIS);
-	sb.append(structure.getFieldDataType(fieldName));
-	sb.append(CharPool.CLOSE_PARENTHESIS);
-
-	JSONObject fieldJSONObject = JSONFactoryUtil.createJSONObject();
-
-	fieldJSONObject.put("id", fieldName);
-	fieldJSONObject.put("label", structure.getFieldLabel(fieldName, languageId));
-	fieldJSONObject.put("name", fieldName);
-	fieldJSONObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
-	fieldJSONObject.put("required", structure.getFieldRequired(fieldName));
-	fieldJSONObject.put("type", structure.getFieldType(fieldName));
-	fieldJSONObject.put("unique", true);
-
-	structureAvailableFieldsJSONArray.put(fieldJSONObject);
-}
-
 String namespace = renderResponse.getNamespace();
 
 if (Validator.isNotNull(portletResourceNamespace)){
@@ -80,7 +50,7 @@ if (Validator.isNotNull(portletResourceNamespace)){
 </aui:script>
 
 <aui:script use="liferay-portlet-dynamic-data-mapping">
-	var availableFields = A.Array(<%= structureAvailableFieldsJSONArray.toString() %>);
+	var availableFields = A.Array(<%= scriptJSONArray.toString() %>);
 
 	A.Array.each(
 		availableFields,

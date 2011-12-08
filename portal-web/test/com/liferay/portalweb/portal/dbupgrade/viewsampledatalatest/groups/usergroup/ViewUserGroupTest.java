@@ -65,7 +65,7 @@ public class ViewUserGroupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
 					break;
 				}
 			}
@@ -77,9 +77,9 @@ public class ViewUserGroupTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
@@ -128,7 +128,7 @@ public class ViewUserGroupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 					break;
 				}
 			}
@@ -140,9 +140,9 @@ public class ViewUserGroupTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("View Users"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Joe"),
 			selenium.getText("//td[2]/a"));

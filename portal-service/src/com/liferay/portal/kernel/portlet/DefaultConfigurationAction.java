@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -81,11 +83,18 @@ public class DefaultConfigurationAction
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, PREFERENCES_PREFIX);
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
+
+		PortletPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			portletResource, ActionKeys.CONFIGURATION);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletSetup(

@@ -34,6 +34,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
 import com.liferay.portal.service.persistence.LockUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
@@ -53,6 +54,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.data.AllowableActions;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.Action;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
 /**
  * @author Alexander Chow
@@ -167,12 +169,14 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException {
 
-		List<Document> documents = getAllVersions();
-
-		List<FileVersion> fileVersions = new ArrayList<FileVersion>(
-			documents.size());
+		List<FileVersion> fileVersions = null;
 
 		try {
+			List<Document> documents = getAllVersions();
+
+			fileVersions = new ArrayList<FileVersion>(
+				documents.size());
+
 			for (Document document : documents) {
 				FileVersion fileVersion =
 					CMISRepositoryLocalServiceUtil.toFileVersion(
@@ -292,10 +296,15 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			return getMimeType();
 		}
 
-		for (Document document : getAllVersions()) {
-			if (version.equals(document.getVersionLabel())) {
-				return document.getContentStreamMimeType();
+		try {
+			for (Document document : getAllVersions()) {
+				if (version.equals(document.getVersionLabel())) {
+					return document.getContentStreamMimeType();
+				}
 			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		return ContentTypes.APPLICATION_OCTET_STREAM;
@@ -473,11 +482,16 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return this;
 	}
 
-	protected List<Document> getAllVersions() {
+	protected List<Document> getAllVersions() throws PortalException {
 		if (_allVersions == null) {
-			_document.refresh();
+			try {
+				_document.refresh();
 
-			_allVersions = _document.getAllVersions();
+				_allVersions = _document.getAllVersions();
+			}
+			catch (CmisObjectNotFoundException confe) {
+				throw new NoSuchFileEntryException(confe);
+			}
 		}
 
 		return _allVersions;

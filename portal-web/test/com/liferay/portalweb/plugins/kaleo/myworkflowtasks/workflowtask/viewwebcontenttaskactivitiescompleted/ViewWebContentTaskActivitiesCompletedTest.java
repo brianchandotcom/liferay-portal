@@ -55,7 +55,7 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/div[2]/div[1]/div/span",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Site Owner role."),
+				"Task initially assigned to the Administrator role."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[3]"));
@@ -97,7 +97,7 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/div[2]/div[1]/div",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Site Owner role."),
+				"Task initially assigned to the Administrator role."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[2]/div[2]/div[1]/div[3]"));
@@ -141,7 +141,7 @@ public class ViewWebContentTaskActivitiesCompletedTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/div[3]/div[1]/div",
 			RuntimeVariables.replace("Activities"));
 		assertEquals(RuntimeVariables.replace(
-				"Task initially assigned to the Site Owner role."),
+				"Task initially assigned to the Administrator role."),
 			selenium.getText("//div[3]/div[2]/div/div[2]"));
 		assertEquals(RuntimeVariables.replace("Assigned initial task."),
 			selenium.getText("//div[3]/div[2]/div/div[3]"));

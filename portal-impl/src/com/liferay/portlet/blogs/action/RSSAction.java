@@ -31,6 +31,8 @@ import com.liferay.util.RSSUtil;
 
 import java.io.OutputStream;
 
+import java.util.Date;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -128,8 +130,8 @@ public class RSSAction extends PortletAction {
 			entryURL = feedURL;
 
 			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, status, max, type, version, displayStyle, feedURL,
-				entryURL, themeDisplay);
+				groupId, status, new Date(), max, type, version, displayStyle,
+				feedURL, entryURL, themeDisplay);
 		}
 		else if (organizationId > 0) {
 			feedURL = StringPool.BLANK;
@@ -148,8 +150,8 @@ public class RSSAction extends PortletAction {
 			entryURL = feedURL;
 
 			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, status, max, type, version, displayStyle, feedURL,
-				entryURL, themeDisplay);
+				groupId, status, new Date(), max, type, version, displayStyle,
+				feedURL, entryURL, themeDisplay);
 		}
 
 		return rss.getBytes(StringPool.UTF8);

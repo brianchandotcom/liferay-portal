@@ -136,6 +136,23 @@ public class BlogsEntryServiceSoap {
 	}
 
 	public static com.liferay.portlet.blogs.model.BlogsEntrySoap[] getGroupEntries(
+		long groupId, int status, java.util.Date displayDate, int max)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> returnValue =
+				BlogsEntryServiceUtil.getGroupEntries(groupId, status,
+					displayDate, max);
+
+			return com.liferay.portlet.blogs.model.BlogsEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.blogs.model.BlogsEntrySoap[] getGroupEntries(
 		long groupId, int status, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> returnValue =

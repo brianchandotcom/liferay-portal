@@ -380,6 +380,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.findByGroupId(groupId, start, end);
+		}
+		else {
+			return blogsEntryPersistence.findByG_S(groupId, status, start, end);
+		}
+	}
+
+	public List<BlogsEntry> getGroupEntries(
+			long groupId, int status, Date displayDate, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.findByG_LtD(
 				groupId, new Date(), start, end);
 		}

@@ -15,7 +15,18 @@
 --%>
 
 <%
-long groupId = themeDisplay.getScopeGroupId();
+Group group = themeDisplay.getScopeGroup();
+
+Group liveGroup = null;
+
+if (group.isStagingGroup()) {
+	liveGroup = group.getLiveGroup();
+}
+else {
+	liveGroup = group;
+}
+
+long groupId = liveGroup.getGroupId();
 
 List<WorkflowHandler> workflowHandlers = null;
 
@@ -103,7 +114,7 @@ portletURL.setParameter("tabs1", "default-configuration");
 							workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(company.getCompanyId(), workflowHandler.getClassName(), 0, 0);
 						}
 						else {
-							workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), workflowHandler.getClassName(), 0, 0, true);
+							workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), groupId, workflowHandler.getClassName(), 0, 0, true);
 						}
 					}
 					catch (NoSuchWorkflowDefinitionLinkException nswdle) {

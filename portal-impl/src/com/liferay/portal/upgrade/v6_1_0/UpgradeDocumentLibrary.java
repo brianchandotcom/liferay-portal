@@ -263,6 +263,25 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
+				"select fileEntryId, folderId from DLFileEntry");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long fileEntryId = rs.getLong("fileEntryId");
+				long folderId = rs.getLong("folderId");
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("update DLFileVersion set folderId = ");
+				sb.append(folderId);
+				sb.append(" where fileEntryId = ");
+				sb.append(fileEntryId);
+
+				runSQL(sb.toString());
+			}
+
+			ps = con.prepareStatement(
 				"select groupId, fileVersionId, folderId, name, extension " +
 					"from DLFileVersion");
 

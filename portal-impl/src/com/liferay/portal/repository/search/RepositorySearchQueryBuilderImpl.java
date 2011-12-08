@@ -17,6 +17,7 @@ package com.liferay.portal.repository.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder;
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -33,7 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -62,9 +63,30 @@ public class RepositorySearchQueryBuilderImpl
 
 			addSearchKeywords(searchQuery, searchContext);
 
-			searchQuery.setQueryConfig(searchContext.getQueryConfig());
+			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
-			return searchQuery;
+			if (contextQuery.hasClauses()) {
+				fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
+			}
+
+			if (searchQuery.hasClauses()) {
+				fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
+			}
+
+			BooleanClause[] booleanClauses = searchContext.getBooleanClauses();
+
+			if (booleanClauses != null) {
+				for (BooleanClause booleanClause : booleanClauses) {
+					fullQuery.add(
+						booleanClause.getQuery(),
+						booleanClause.getBooleanClauseOccur());
+				}
+			}
+
+			fullQuery.setQueryConfig(searchContext.getQueryConfig());
+
+			return fullQuery;
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -91,7 +113,7 @@ public class RepositorySearchQueryBuilderImpl
 
 			for (long folderId : folderIds) {
 				try {
-					DLFolderServiceUtil.getFolder(folderId);
+					DLAppServiceUtil.getFolder(folderId);
 				}
 				catch (Exception e) {
 					continue;

@@ -370,10 +370,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Asset
 
-		updateAsset(
+		doUpdateAsset(
 			userId, message, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.isAssetEntryVisible());
 
 		// Expando
 
@@ -1289,25 +1290,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException, SystemException {
 
-		boolean visible = false;
-
-		if (message.isApproved() &&
-			((message.getClassNameId() == 0) ||
-			 (message.getParentMessageId() != 0))) {
-
-			visible = true;
-		}
-
-		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
-			userId, message.getGroupId(), message.getWorkflowClassName(),
-			message.getMessageId(), message.getUuid(), 0, assetCategoryIds,
-			assetTagNames, visible, null, null, null, null,
-			ContentTypes.TEXT_HTML, message.getSubject(), null, null, null,
-			null, 0, 0, null, false);
-
-		assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
+		doUpdateAsset(
+			userId, message, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, true);
 	}
 
 	public MBMessage updateDiscussionMessage(
@@ -1560,8 +1545,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				// Asset
 
-				if ((message.getClassNameId() == 0) ||
-					(message.getParentMessageId() != 0)) {
+				if (serviceContext.isAssetEntryVisible() &&
+					((message.getClassNameId() == 0) ||
+					 (message.getParentMessageId() != 0))) {
 
 					assetEntryLocalService.updateVisible(
 						message.getWorkflowClassName(), message.getMessageId(),
@@ -1746,6 +1732,34 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					socialActivity.getActivityId());
 			}
 		}
+	}
+
+	protected void doUpdateAsset(
+			long userId, MBMessage message, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds,
+			boolean assetEntryVisible)
+		throws PortalException, SystemException {
+
+		boolean visible = false;
+
+		if (assetEntryVisible &&
+			message.isApproved() &&
+			((message.getClassNameId() == 0) ||
+			 (message.getParentMessageId() != 0))) {
+
+			visible = true;
+		}
+
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+			userId, message.getGroupId(), message.getWorkflowClassName(),
+			message.getMessageId(), message.getUuid(), 0, assetCategoryIds,
+			assetTagNames, visible, null, null, null, null,
+			ContentTypes.TEXT_HTML, message.getSubject(), null, null, null,
+			null, 0, 0, null, false);
+
+		assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	protected String getBody(String subject, String body) {

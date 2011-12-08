@@ -73,6 +73,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setAddGuestPermissions(getAddGuestPermissions());
 		serviceContext.setAssetCategoryIds(getAssetCategoryIds());
 		serviceContext.setAssetLinkEntryIds(getAssetLinkEntryIds());
+		serviceContext.setAssetEntryVisible(isAssetEntryVisible());
 		serviceContext.setAssetTagNames(getAssetTagNames());
 		serviceContext.setAttributes(getAttributes());
 		serviceContext.setCommand(getCommand());
@@ -569,6 +570,18 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Returns <code>true</code> if a service using this service context
+	 * should create an asset entry that is visible in the asset publisher.
+	 *
+	 * @return <code>true</code> if a service using this service context
+	 * 		   should create an asset entry that is visible in the asset
+	 * 		   publisher.  <code>false</code> otherwise
+	 */
+	public boolean isAssetEntryVisible() {
+		return _assetEntryVisible;
+	}
+
+	/**
 	 * Returns <code>true</code> if this service context contains an add command
 	 * (i.e. has command value {@link
 	 * com.liferay.portal.kernel.util.Constants#ADD})
@@ -685,15 +698,29 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
+	 *
+	 * Sets whether or not the asset entry created when this service
+	 * context is passed as a parameter to a service should be visible in the
+	 * asset publisher.
+	 *
+	 * @param assetEntryVisible indicates whether or not the asset entry
+	 * 		  created when this service context is passed as a parameter
+	 * 		  to a service should be visible in the asset publisher
+	 */
+	public void setAssetEntryVisible(boolean assetEntryVisible) {
+		_assetEntryVisible = assetEntryVisible;
+	}
+
+	/**
 	 * Sets an array of the primary keys of asset entries to be linked to an
 	 * asset entry if this service context is being passed as a parameter to a
 	 * method which manipulates the asset entry.
 	 *
-	 * @param _assetLinkEntryIds the primary keys of the asset entries to be
+	 * @param assetLinkEntryIds the primary keys of the asset entries to be
 	 *        linked to an asset entry
 	 */
-	public void setAssetLinkEntryIds(long[] _assetLinkEntryIds) {
-		this._assetLinkEntryIds = _assetLinkEntryIds;
+	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
+		_assetLinkEntryIds = assetLinkEntryIds;
 	}
 
 	/**
@@ -1035,6 +1062,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private boolean _addGroupPermissions;
 	private boolean _addGuestPermissions;
 	private long[] _assetCategoryIds;
+	private boolean _assetEntryVisible = true;
 	private long[] _assetLinkEntryIds;
 	private String[] _assetTagNames;
 	private Map<String, Serializable> _attributes;

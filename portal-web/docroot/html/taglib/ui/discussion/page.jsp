@@ -39,6 +39,7 @@
 <%
 String randomNamespace = PwdGenerator.getPassword(PwdGenerator.KEY3, 4) + StringPool.UNDERLINE;
 
+boolean assetEntryVisible = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:assetEntryVisible"));
 String className = (String)request.getAttribute("liferay-ui:discussion:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:classPK"));
 String formAction = (String)request.getAttribute("liferay-ui:discussion:formAction");
@@ -85,6 +86,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="assetEntryVisible" type="hidden" value="<%= assetEntryVisible %>" />
 			<aui:input name="className" type="hidden" value="<%= className %>" />
 			<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 			<aui:input name="permissionClassName" type="hidden" value="<%= permissionClassName %>" />

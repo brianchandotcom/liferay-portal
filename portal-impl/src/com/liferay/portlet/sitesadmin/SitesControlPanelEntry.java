@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.sitesadmin;
 
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -58,12 +57,6 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isCompany()) {
-			return false;
-		}
 
 		String controlPanelCategory = themeDisplay.getControlPanelCategory();
 

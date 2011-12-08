@@ -24,8 +24,8 @@
 		</c:when>
 	</c:choose>
 
-	<liferay-ui:panel-container id="export-dialog-tree-panel-container" extended="<%= true %>" persistState="<%= false %>">
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="pagesPanel" persistState="<%= false %>" title="pages">
+	<liferay-ui:panel-container id="export-dialog-tree-panel-container" extended="<%= true %>" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="pagesPanel" persistState="<%= true %>" title="pages">
 			<ul class="lfr-tree lfr-component">
 				<li class="tree-item">
 					<aui:input disabled="<%= true %>" inlineLabel="right" name="pages" type="checkbox" value="<%= true %>" />
@@ -39,7 +39,7 @@
 			</ul>
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="portletDataPanel" persistState="<%= false %>" title="applications">
+		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="portletDataPanel" persistState="<%= true %>" title="applications">
 			<ul class="lfr-tree lfr-component">
 				<li class="tree-item">
 					<aui:input disabled="<%= true %>" inlineLabel="right" name="portlets" type="checkbox" value="<%= true %>" />
@@ -297,7 +297,7 @@
 			</ul>
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="otherPanel" persistState="<%= false %>" title="other">
+		<liferay-ui:panel collapsible="<%= true %>" cssClass="export-group-panel" id="otherPanel" persistState="<%= true %>" title="other">
 			<ul class="lfr-tree lfr-component">
 				<li class="tree-item">
 

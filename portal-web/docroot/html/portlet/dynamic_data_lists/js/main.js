@@ -351,6 +351,8 @@ AUI().add(
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
 								config.options = instance.getCellEditorOptions(structureField.options);
+
+								config.multiple = A.DataType.Boolean.parse(structureField.multiple);
 							}
 
 							var validatorRuleName = instance.DATATYPE_VALIDATOR[dataType];

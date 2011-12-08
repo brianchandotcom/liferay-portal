@@ -171,6 +171,20 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	public List<BlogsEntry> getGroupEntries(
+			long groupId, int status, Date displayDate, int max)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterFindByG_LtD(
+				groupId, displayDate, 0, max);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_LtD_S(
+				groupId, displayDate, status, 0, max);
+		}
+	}
+
+	public List<BlogsEntry> getGroupEntries(
 			long groupId, int status, int start, int end)
 		throws SystemException {
 
@@ -196,16 +210,17 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	public String getGroupEntriesRSS(
-			long groupId, int status, int max, String type, double version,
-			String displayStyle, String feedURL, String entryURL,
-			ThemeDisplay themeDisplay)
+			long groupId, int status, Date displayDate, int max, String type,
+			double version, String displayStyle, String feedURL,
+			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		String name = HtmlUtil.escape(group.getDescriptiveName());
 		String description = name;
-		List<BlogsEntry> blogsEntries = getGroupEntries(groupId, status, max);
+		List<BlogsEntry> blogsEntries = getGroupEntries(
+			groupId, status, displayDate, max);
 
 		return exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,

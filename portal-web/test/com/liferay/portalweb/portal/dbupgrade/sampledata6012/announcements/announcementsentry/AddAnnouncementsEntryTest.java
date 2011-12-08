@@ -82,6 +82,12 @@ public class AddAnnouncementsEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.type("_84_content",
 			RuntimeVariables.replace("Announcements Entry Content"));
+		selenium.select("//select[@id='_84_displayDateMonth']",
+			RuntimeVariables.replace("November"));
+		selenium.select("//select[@id='_84_displayDateDay']",
+			RuntimeVariables.replace("1"));
+		selenium.select("//select[@id='_84_displayDateYear']",
+			RuntimeVariables.replace("2011"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Entries", RuntimeVariables.replace(""));

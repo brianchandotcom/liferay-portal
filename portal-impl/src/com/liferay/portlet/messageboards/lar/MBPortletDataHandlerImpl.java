@@ -232,7 +232,8 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 				MBThreadFlag threadFlag =
 					(MBThreadFlag)portletDataContext.getZipEntryAsObject(path);
 
-				importThreadFlag(portletDataContext, threadFlag);
+				importThreadFlag(
+					portletDataContext, threadFlag, threadFlagElement);
 			}
 		}
 
@@ -422,6 +423,15 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element threadFlagElement = threadFlagsElement.addElement(
 			"thread-flag");
+
+		MBThread thread = MBThreadLocalServiceUtil.getMBThread(
+			threadFlag.getThreadId());
+
+		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(
+			thread.getRootMessageId());
+
+		threadFlagElement.addAttribute(
+			"threadRootMessageUuid", message.getUuid());
 
 		portletDataContext.addClassedModel(
 			threadFlagElement, path, threadFlag, _NAMESPACE);
@@ -797,7 +807,8 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected void importThreadFlag(
-			PortletDataContext portletDataContext, MBThreadFlag threadFlag)
+			PortletDataContext portletDataContext, MBThreadFlag threadFlag,
+			Element threadFlagElement)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(threadFlag.getUserUuid());
@@ -809,7 +820,23 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 		long threadId = MapUtil.getLong(
 			messagePKs, threadFlag.getThreadId(), threadFlag.getThreadId());
 
-		MBThread thread = MBThreadUtil.findByPrimaryKey(threadId);
+		MBThread thread = MBThreadUtil.fetchByPrimaryKey(threadId);
+
+		if (thread == null) {
+			String threadRootMessageUuid = threadFlagElement.attributeValue(
+				"threadRootMessageUuid");
+
+			MBMessage threadRootMessage = MBMessageUtil.fetchByUUID_G(
+				threadRootMessageUuid, portletDataContext.getScopeGroupId());
+
+			if (threadRootMessage != null) {
+				thread = threadRootMessage.getThread();
+			}
+		}
+
+		if (thread == null) {
+			return;
+		}
 
 		MBThreadFlagLocalServiceUtil.addThreadFlag(userId, thread);
 	}

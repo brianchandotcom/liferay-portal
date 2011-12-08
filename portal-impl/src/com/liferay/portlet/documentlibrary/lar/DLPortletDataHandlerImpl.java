@@ -1538,11 +1538,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			Element repositoriesElement = rootElement.element("repositories");
 
-			List<Element> repositoryElements = repositoriesElement.elements(
-				"repository");
+			if (repositoriesElement != null) {
+				List<Element> repositoryElements = repositoriesElement.elements(
+					"repository");
 
-			for (Element repositoryElement : repositoryElements) {
-				importRepository(portletDataContext, repositoryElement);
+				for (Element repositoryElement : repositoryElements) {
+					importRepository(portletDataContext, repositoryElement);
+				}
 			}
 		}
 

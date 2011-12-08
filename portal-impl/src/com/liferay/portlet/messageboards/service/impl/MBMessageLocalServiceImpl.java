@@ -92,10 +92,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -464,11 +462,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
-
-		messages.add(message);
-
-		deleteDiscussionSocialActivities(BlogsEntry.class.getName(), messages);
+		deleteDiscussionSocialActivities(BlogsEntry.class.getName(), message);
 
 		deleteMessage(message);
 	}
@@ -486,11 +480,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				discussion.getThreadId(),
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, 0, 1);
 
-			deleteDiscussionSocialActivities(
-				BlogsEntry.class.getName(), messages);
-
 			if (!messages.isEmpty()) {
 				MBMessage message = messages.get(0);
+
+				deleteDiscussionSocialActivities(
+					BlogsEntry.class.getName(), message);
 
 				mbThreadLocalService.deleteThread(message.getThreadId());
 			}
@@ -1721,14 +1715,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void deleteDiscussionSocialActivities(
-			String className, List<MBMessage> messages)
+			String className, MBMessage message)
 		throws PortalException, SystemException {
 
-		if (messages.size() == 0) {
+		if (message == null) {
 			return;
 		}
-
-		MBMessage message = messages.get(0);
 
 		MBDiscussion discussion = mbDiscussionPersistence.findByThreadId(
 			message.getThreadId());
@@ -1738,12 +1730,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (discussion.getClassNameId() != classNameId) {
 			return;
-		}
-
-		Set<Long> messageIds = new HashSet<Long>();
-
-		for (MBMessage curMessage : messages) {
-			messageIds.add(curMessage.getMessageId());
 		}
 
 		List<SocialActivity> socialActivities =
@@ -1760,7 +1746,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			long extraDataMessageId = extraDataJSONObject.getLong("messageId");
 
-			if (messageIds.contains(extraDataMessageId)) {
+			if (message.getMessageId() == extraDataMessageId) {
 				socialActivityLocalService.deleteActivity(
 					socialActivity.getActivityId());
 			}

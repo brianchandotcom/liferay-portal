@@ -29,10 +29,21 @@ public class LayoutTypeException extends PortalException {
 		_type = type;
 	}
 
+	public LayoutTypeException(int type, String layoutType) {
+		_type = type;
+		_layoutType = layoutType;
+	}
+
 	public int getType() {
 		return _type;
 	}
 
+	public String getlayoutType() {
+		return _layoutType;
+	}
+
 	private int _type;
+
+	private String _layoutType;
 
 }

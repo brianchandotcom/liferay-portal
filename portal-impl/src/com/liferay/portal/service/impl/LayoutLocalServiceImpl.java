@@ -383,6 +383,32 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		// First layout validation
+
+		if (layout.getParentLayoutId() ==
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			List<Layout> rootLayouts = layoutPersistence.findByG_P_P(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 2);
+
+			long firstLayoutId = rootLayouts.get(0).getLayoutId();
+
+			if (firstLayoutId == layout.getLayoutId() &&
+				rootLayouts.size() > 1) {
+
+				Layout secondLayout = rootLayouts.get(1);
+
+				// The second layout cannot be a first layout child
+
+				if (secondLayout.getParentLayoutId() ==
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+					validateFirstLayout(secondLayout.getType());
+				}
+			}
+		}
+
 		// Child layouts
 
 		List<Layout> childLayouts = layoutPersistence.findByG_P_P(
@@ -2233,7 +2259,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(type) || !PortalUtil.isLayoutFirstPageable(type)) {
-			throw new LayoutTypeException(LayoutTypeException.FIRST_LAYOUT);
+			throw new LayoutTypeException(
+				LayoutTypeException.FIRST_LAYOUT, type);
 		}
 	}
 

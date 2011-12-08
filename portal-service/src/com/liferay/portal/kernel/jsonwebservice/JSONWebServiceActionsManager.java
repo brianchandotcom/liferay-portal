@@ -31,7 +31,8 @@ public interface JSONWebServiceActionsManager {
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature);
 
-	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings();
+	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
+		String servletContextName);
 
 	public void registerJSONWebServiceAction(
 		String servletContextName, Class<?> actionClass, Method actionMethod,

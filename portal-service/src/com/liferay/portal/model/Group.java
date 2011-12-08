@@ -41,6 +41,10 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public long getOrganizationId();
 
+	public com.liferay.portal.model.Group getParentGroup()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.lang.String getPathFriendlyURL(boolean privateLayout,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 

@@ -448,6 +448,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getOrganizationId();
 	}
 
+	public com.liferay.portal.model.Group getParentGroup()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _group.getParentGroup();
+	}
+
 	public java.lang.String getPathFriendlyURL(boolean privateLayout,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
 		return _group.getPathFriendlyURL(privateLayout, themeDisplay);

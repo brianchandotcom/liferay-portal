@@ -21,18 +21,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PhoneNumberException extends PortalException {
 
-	public static final int NUMBER = 1;
-
-	public static final int EXTENSION = 2;
-
-	public PhoneNumberException(int type) {
-		_type = type;
+	public PhoneNumberException() {
+		super();
 	}
 
-	public int getType() {
-		return _type;
+	public PhoneNumberException(String msg) {
+		super(msg);
 	}
 
-	private int _type;
+	public PhoneNumberException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public PhoneNumberException(Throwable cause) {
+		super(cause);
+	}
 
 }

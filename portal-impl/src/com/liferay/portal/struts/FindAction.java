@@ -134,9 +134,12 @@ public abstract class FindAction extends Action {
 			}
 		}
 
-		long groupId = getGroupId(primaryKey);
+		long groupId = 0;
 
-		if (groupId == 0) {
+		try {
+			groupId = getGroupId(primaryKey);
+		}
+		catch (Exception e) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

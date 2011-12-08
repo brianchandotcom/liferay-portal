@@ -89,4 +89,7 @@ public interface WorkflowDefinitionManager {
 			long companyId, long userId, String name, int version, String title)
 		throws WorkflowException;
 
+	public void validateWorkflowDefinition(InputStream inputStream)
+		throws WorkflowException;
+
 }

@@ -86,16 +86,11 @@ public class ActionUtil {
 
 		FileEntry fileEntry = null;
 
-		try {
-			if (fileEntryId > 0) {
-				fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-			}
+		if (fileEntryId > 0) {
+			fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
+		}
 
-			request.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-		}
+		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
 
 		String version = ParamUtil.getString(request, "version");
 

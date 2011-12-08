@@ -1051,6 +1051,10 @@ public class CMISRepository extends BaseCmisRepository {
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setScoreEnabled(false);
+
 		try {
 			return doSearch(searchContext, query);
 		}

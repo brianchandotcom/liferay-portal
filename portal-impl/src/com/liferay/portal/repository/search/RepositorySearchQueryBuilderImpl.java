@@ -62,6 +62,8 @@ public class RepositorySearchQueryBuilderImpl
 
 			addSearchKeywords(searchQuery, searchContext);
 
+			searchQuery.setQueryConfig(searchContext.getQueryConfig());
+
 			return searchQuery;
 		}
 		catch (Exception e) {

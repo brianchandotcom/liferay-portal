@@ -80,6 +80,35 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
+							"Searched for \"DL Folder Image Title\" in DL Folder Name")
+										.equals(selenium.getText(
+								"//span[@class='keywords']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"DL Folder Image Title\" in DL Folder Name"),
+			selenium.getText("//span[@class='keywords']"));
+		assertEquals(RuntimeVariables.replace("DL Folder Image Title"),
+			selenium.getText(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Search in every folder.']",
+			RuntimeVariables.replace("Search in every folder."));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
 							"Searched for \"DL Folder Image Title\" in every folder.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
@@ -92,13 +121,45 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"DL Folder Image Title\" in every folder."),
+			selenium.getText("//span[@class='keywords']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("\"DL1 Folder1 Image1 Title1\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Searched for \"DL1 Folder1 Image1 Title1\" in DL Folder Name")
+										.equals(selenium.getText(
+								"//span[@class='keywords']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"DL1 Folder1 Image1 Title1\" in DL Folder Name"),
+			selenium.getText("//span[@class='keywords']"));
+		assertFalse(selenium.isElementPresent(
+				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
+		selenium.clickAt("//input[@value='Search in every folder.']",
+			RuntimeVariables.replace("Search in every folder."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -119,6 +180,9 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"DL1 Folder1 Image1 Title1\" in every folder."),
+			selenium.getText("//span[@class='keywords']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

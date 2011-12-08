@@ -16,19 +16,20 @@
 
 <%
 boolean readEntry = false;
+boolean hideEntry = false;
 
-try {
-	AnnouncementsFlagLocalServiceUtil.getFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
-
+if (flagValue == AnnouncementsFlagConstants.HIDDEN) {
 	readEntry = true;
+	hideEntry = true;
 }
-catch (NoSuchFlagException nsfe1) {
+else {
 	try {
-		AnnouncementsFlagLocalServiceUtil.getFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.HIDDEN);
+		AnnouncementsFlagLocalServiceUtil.getFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
 
 		readEntry = true;
 	}
-	catch (NoSuchFlagException nsfe2) {
+	catch (NoSuchFlagException nsfe1) {
+		AnnouncementsFlagLocalServiceUtil.addFlag(user.getUserId(), entry.getEntryId(), AnnouncementsFlagConstants.READ);
 	}
 }
 
@@ -61,7 +62,7 @@ if (entry.getPriority() > 0) {
 	boolean showScopeName = false;
 	%>
 
-	<div class="<%= readEntry ? "aui-helper-hidden" : "" %> entry-content entry-type-<%= entry.getType() %>">
+	<div class="<%= hideEntry ? "aui-helper-hidden" : "" %> entry-content entry-type-<%= entry.getType() %>">
 		<%@ include file="/html/portlet/announcements/entry_scope.jspf" %>
 
 		<%= entry.getContent() %>

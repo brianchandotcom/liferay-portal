@@ -50,6 +50,7 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 		selenium.clickAt("//li[2]/span/a",
 			RuntimeVariables.replace("Staged Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Dropdown"));
 

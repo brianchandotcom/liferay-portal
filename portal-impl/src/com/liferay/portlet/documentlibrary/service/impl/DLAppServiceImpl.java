@@ -1841,8 +1841,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			// Move file entries within repository
 
-			return fromRepository.moveFileEntry(
+			FileEntry fileEntry = fromRepository.moveFileEntry(
 				fileEntryId, newFolderId, serviceContext);
+
+			dlAppHelperLocalService.moveFileEntry(fileEntry);
+
+			return fileEntry;
 		}
 
 		// Move file entries between repositories
@@ -1874,8 +1878,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			// Move file entries within repository
 
-			return fromRepository.moveFolder(
+			Folder folder = fromRepository.moveFolder(
 				folderId, parentFolderId, serviceContext);
+
+			dlAppHelperLocalService.moveFolder(folder);
+
+			return folder;
 		}
 
 		// Move file entries between repositories

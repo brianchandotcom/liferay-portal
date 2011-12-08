@@ -174,8 +174,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		try {
 			List<Document> documents = getAllVersions();
 
-			fileVersions = new ArrayList<FileVersion>(
-				documents.size());
+			fileVersions = new ArrayList<FileVersion>(documents.size());
 
 			for (Document document : documents) {
 				FileVersion fileVersion =

@@ -90,8 +90,7 @@ public class ActionUtil {
 			fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 		}
 
-		request.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
+		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
 
 		String version = ParamUtil.getString(request, "version");
 

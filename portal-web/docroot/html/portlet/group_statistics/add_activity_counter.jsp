@@ -21,6 +21,7 @@ int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String
 
 String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + index);
 String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + index);
+int chartWidth = PrefsParamUtil.getInteger(preferences, request, "chartWidth" + index, 35);
 String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + index);
 
 List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
@@ -64,7 +65,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<aui:option label="group-statistics-chart-type-area-diagram" selected='<%= chartType.equals("area") %>' value="area" />
 		<aui:option label="group-statistics-chart-type-column-diagram" selected='<%= chartType.equals("column") %>' value="column" />
 		<aui:option label="group-statistics-chart-type-activity-distribution" selected='<%= chartType.equals("pie") %>' value="pie" />
-		<aui:option label="group-statistics-chart-type-tag-cloud" selected='<%= chartType.equals("tagCloud") %>' value="tagCloud" />
+		<aui:option label="group-statistics-chart-type-tag-cloud" selected='<%= chartType.equals("tag-cloud") %>' value="tag-cloud" />
 	</aui:select>
 
 	<span class="aui-field aui-field-inline inline-text">
@@ -74,5 +75,24 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>'>
 		<aui:option label="group-statistics-data-range-this-year" selected='<%= dataRange.equals("year") %>' value="year" />
 		<aui:option label="group-statistics-data-range-last-12-months" selected='<%= dataRange.equals("12months") %>' value="12months" />
+	</aui:select>
+</div>
+<div class="aui-field-row">
+	<span class="aui-field aui-field-inline inline-text">
+		<liferay-ui:message key="chart-width" />:
+	</span>
+
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartWidth" + index + "--" %>'>
+
+		<%
+		for (int i = 5; i < 100; i = i + 5) {
+		%>
+
+			<aui:option label='<%= String.valueOf(i) + StringPool.PERCENT %>' selected="<%= (chartWidth == i) %>" value="<%= i %>" />
+
+		<%
+		}
+		%>
+
 	</aui:select>
 </div>

@@ -33,13 +33,13 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 %>
 
 <aui:layout>
-	<aui:column columnWidth="70">
-		<div class="group-statistics-chart" style="height: <%= displayHeight - 2 %>px; width: <%= displayHeight - 2 %>px;">
+	<aui:column columnWidth="<%= chartWidth %>" cssClass="chart-column">
+		<div class="group-statistics-chart">
 			<div id="groupStatisticsChart<%= displayActivityCounterNameIndex %>"></div>
 		</div>
 	</aui:column>
 
-	<aui:column columnWidth="30">
+	<aui:column columnWidth="<%= (100 - chartWidth) %>" cssClass="info-column">
 		<div class="group-statistics-info">
 			<strong><liferay-ui:message key="activities-by-area" />:</strong>
 
@@ -115,6 +115,14 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 	var chartContainer = A.one('#groupStatisticsChart<%= displayActivityCounterNameIndex %>');
 
+	var getContainerWidth = function(container) {
+		return container.width() * 0.7;
+	};
+
+	var containerWidth = getContainerWidth(chartContainer);
+
+	chartContainer.setStyle('height', dynamicWidth);
+
 	var chart = new A.Chart(
 		{
 			dataProvider: data,
@@ -134,25 +142,26 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 					valueKey: 'values'
 				}
 			],
-			height: <%= displayHeight - 2 %>,
+			height: containerWidth,
 			tooltip: tooltip,
 			type: 'pie',
-			width: <%= displayHeight - 2 %>
+			width: containerWidth
 		}
 	).render(chartContainer);
 
-	Liferay.after(
-		['portletMoved', 'liferaypanel:collapse'],
-		function(event) {
-			var width = chartContainer.width();
+	// To be fixed pending fix in http://yuilibrary.com/projects/yui3/ticket/2531555
+	//Liferay.after(
+	//	['portletMoved', 'liferaypanel:collapse'],
+	//	function(event) {
+	//		var width = getContainerWidth(chartContainer);
 
-			if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
-				(event.type == 'liferaypanel:collapse' && event.panelId == 'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')) {
+	//		if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
+	//			(event.type == 'liferaypanel:collapse' && event.panelId == 'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')) {
 
-				chart.set('width', width);
-			}
-		}
-	);
+	//			chart.set('width', width);
+	//		}
+	//	}
+	//);
 </aui:script>
 
 <%!

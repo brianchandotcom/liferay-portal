@@ -56,11 +56,11 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 %>
 
 <aui:layout>
-	<aui:column columnWidth="70" first="<%= true %>">
+	<aui:column columnWidth="<%= chartWidth %>" cssClass="chart-column" first="<%= true %>">
 		<div class="group-statistics-chart" id="groupStatisticsChart<%= displayActivityCounterNameIndex %>" style="height: <%= displayHeight - 2 %>px;"></div>
 	</aui:column>
 
-	<aui:column columnWidth="30">
+	<aui:column columnWidth="<%= (100 - chartWidth) %>" cssClass="info-column">
 		<div class="group-statistics-info">
 			<liferay-ui:message key="current-value" />: <%= currentValue %><br />
 

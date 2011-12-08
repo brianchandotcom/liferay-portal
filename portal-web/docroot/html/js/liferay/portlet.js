@@ -636,14 +636,19 @@
 					titleHtml = title.one('.portlet-title-text').outerHTML();
 				}
 
-				var dialog = Liferay.Util._openWindow(
+				Liferay.Util.openWindow(
 					{
 						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
 						uri: configurationURL,
 						cache: false,
 						dialog: {
 							align: Util.Window.ALIGN_CENTER,
-							width: 820
+							width: 820,
+							on: {
+								render: function(event) {
+									this.set('y', this.get('y') + 100);
+								}
+							}
 						},
 						dialogIframe: {
 							id: namespacedId + 'configurationIframe',
@@ -651,8 +656,6 @@
 						}
 					}
 				);
-
-				dialog.set('y', dialog.get('y') + 100);
 			}
 		},
 		['liferay-util-window']

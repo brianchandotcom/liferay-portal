@@ -47,13 +47,13 @@ public class AddMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -93,7 +93,7 @@ public class AddMessageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
 			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//div/a/strong"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
 			selenium.getText("//td[2]/div[2]"));

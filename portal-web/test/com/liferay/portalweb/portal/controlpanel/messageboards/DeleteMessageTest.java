@@ -47,8 +47,8 @@ public class DeleteMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Sujr"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Sujr"));
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"),
@@ -109,8 +109,8 @@ public class DeleteMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Sujr"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Sujr"));
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Moved to Sujr",
 			RuntimeVariables.replace("Moved to Sujr"));

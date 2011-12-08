@@ -47,8 +47,8 @@ public class AddNullEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
-			selenium.getText("//a/strong"));
-		selenium.clickAt("//a/strong",
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -67,7 +67,7 @@ public class AddNullEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Null Test Entry"),
 			selenium.getText("//div[1]/h1/span"));
 		assertEquals(RuntimeVariables.replace("Null Test Entry"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//div/a/strong"));
 		assertEquals(RuntimeVariables.replace("Null Test Entry"),
 			selenium.getText("//div[@class='thread-body']"));
 	}

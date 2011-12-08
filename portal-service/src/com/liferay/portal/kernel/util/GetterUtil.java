@@ -1013,7 +1013,9 @@ public class GetterUtil {
 			char c = value.charAt(i);
 
 			if ((Character.isDigit(c)) ||
-				((c == CharPool.DASH) && (i == 0)) ||
+				((c == CharPool.DASH) &&
+				 ((i == 0) || (value.charAt(i - 1) == CharPool.UPPER_CASE_E) ||
+				  (value.charAt(i - 1) == CharPool.LOWER_CASE_E))) ||
 				(c == CharPool.PERIOD) || (c == CharPool.UPPER_CASE_E) ||
 				(c == CharPool.LOWER_CASE_E)) {
 

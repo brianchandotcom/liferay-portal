@@ -59,6 +59,7 @@ import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -260,6 +261,7 @@ public class EditFileEntryAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||
+				e instanceof NoSuchFileVersionException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass().getName());

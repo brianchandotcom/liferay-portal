@@ -27,6 +27,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -84,8 +85,12 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, groupId, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
+			JournalArticle journalArticle =
+				JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
 			return JournalPermission.contains(
-				permissionChecker, classPK, ActionKeys.SUBSCRIBE);
+				permissionChecker, journalArticle.getGroupId(),
+				ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(MBCategory.class.getName())) {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);

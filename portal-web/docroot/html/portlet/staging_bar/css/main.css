@@ -15,6 +15,7 @@
 
 	.staging-tabview-list {
 		border-width: 0;
+		border-bottom: 1px solid #CCC;
 		font-size: 1.3em;
 		margin-bottom: 0;
 

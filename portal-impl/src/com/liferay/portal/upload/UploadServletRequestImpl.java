@@ -128,7 +128,9 @@ public class UploadServletRequestImpl
 
 			request.setAttribute(WebKeys.UPLOAD_EXCEPTION, uploadException);
 
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 	}
 

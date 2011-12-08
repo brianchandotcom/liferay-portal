@@ -33,7 +33,7 @@ String portletResourceLabel = null;
 if (Validator.isNotNull(portletResource)) {
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-	portletResourceLabel = PortalUtil.getPortletTitle(portlet, application, locale);
+	portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
 }
 
 // Edit

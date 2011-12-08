@@ -160,7 +160,7 @@ for (int i = 0; i < permissions.size(); i++) {
 		curPortletLabel = LanguageUtil.get(pageContext, "general");
 	}
 	else {
-		curPortletLabel = PortalUtil.getPortletTitle(portlet, application, locale);
+		curPortletLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
 	}
 
 	PermissionDisplay permissionDisplay = new PermissionDisplay(permission, resource, curPortletName, curPortletLabel, curModelName, curModelLabel, actionId, actionLabel);

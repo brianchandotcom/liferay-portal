@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -347,18 +348,7 @@ public class ThemeDisplay implements Serializable {
 	public long getScopeGroupIdOrLiveGroupId()
 		throws PortalException, SystemException {
 
-		if (_scopeGroupId == 0) {
-			return _scopeGroupId;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(_scopeGroupId);
-
-		if (group.isStagingGroup()) {
-			return group.getLiveGroupId();
-		}
-		else {
-			return _scopeGroupId;
-		}
+		return StagingUtil.getLiveGroupId(_scopeGroupId);
 	}
 
 	public Layout getScopeLayout() throws PortalException, SystemException {

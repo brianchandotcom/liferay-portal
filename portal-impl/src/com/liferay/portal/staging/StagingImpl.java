@@ -548,31 +548,34 @@ public class StagingImpl implements Staging {
 	public Group getLiveGroup(long groupId)
 		throws PortalException, SystemException {
 
-		Group group = null;
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (group.isStagingGroup()) {
-				group = group.getLiveGroup();
-			}
+		if (groupId == 0) {
+			return null;
 		}
 
-		return group;
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
+		if (group.isStagingGroup()) {
+			return group.getLiveGroup();
+		}
+		else {
+			return group;
+		}
 	}
 
 	public long getLiveGroupId(long groupId)
 		throws PortalException, SystemException {
 
-		if (groupId > 0) {
-			Group group = getLiveGroup(groupId);
-
-			if (group != null) {
-				groupId = group.getGroupId();
-			}
+		if (groupId == 0) {
+			return groupId;
 		}
 
-		return groupId;
+		Group group = getLiveGroup(groupId);
+
+		return group.getGroupId();
 	}
 
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)

@@ -191,6 +191,16 @@ public class GroupImpl extends GroupBaseImpl {
 		return 0;
 	}
 
+	public Group getParentGroup() throws SystemException, PortalException {
+		long parentGroupId = getParentGroupId();
+
+		if (parentGroupId <= 0) {
+			return null;
+		}
+
+		return GroupLocalServiceUtil.getGroup(parentGroupId);
+	}
+
 	public String getPathFriendlyURL(
 		boolean privateLayout, ThemeDisplay themeDisplay) {
 

@@ -235,6 +235,7 @@ alter table DLFileVersion add repositoryId LONG;
 alter table DLFileVersion add fileEntryId LONG;
 alter table DLFileVersion add mimeType VARCHAR(75) null;
 alter table DLFileVersion add fileEntryTypeId LONG;
+alter table DLFileVersion add folderId LONG;
 
 COMMIT_TRANSACTION;
 

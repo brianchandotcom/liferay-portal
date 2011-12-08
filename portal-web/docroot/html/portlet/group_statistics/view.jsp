@@ -23,6 +23,10 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	int chartWidth = PrefsParamUtil.getInteger(preferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
 	String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
 
+	if (Validator.isNull(displayActivityCounterName)){
+		continue;
+	}
+
 	List<AssetTag> assetTags = null;
 
 	List<SocialActivityCounter> activityCounters = null;

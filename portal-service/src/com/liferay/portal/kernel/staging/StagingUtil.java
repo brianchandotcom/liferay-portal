@@ -138,6 +138,18 @@ public class StagingUtil {
 			serviceContext);
 	}
 
+	public static Group getLiveGroup(long groupId)
+		throws PortalException, SystemException {
+
+		return getStaging().getLiveGroup(groupId);
+	}
+
+	public static long getLiveGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		return getStaging().getLiveGroupId(groupId);
+	}
+
 	public static List<Layout> getMissingParentLayouts(
 			Layout layout, long liveGroupId)
 		throws Exception {

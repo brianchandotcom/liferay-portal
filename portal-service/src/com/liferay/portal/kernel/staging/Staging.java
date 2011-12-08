@@ -89,6 +89,12 @@ public interface Staging {
 			boolean secureConnection, ServiceContext serviceContext)
 		throws Exception;
 
+	public Group getLiveGroup(long groupId)
+		throws PortalException, SystemException;
+
+	public long getLiveGroupId(long groupId)
+		throws PortalException, SystemException;
+
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws Exception;
 

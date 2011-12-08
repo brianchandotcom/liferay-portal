@@ -1304,6 +1304,20 @@ AUI().add(
 						instance.openSaveStructureDialog();
 					}
 				}
+				else if (instance.hasStructure() && !instance.hasTemplate() && !instance.updateStructureDefaultValues()) {
+					var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
+
+					alert(templateMessage);
+
+					instance.showMessage(
+						'#selectTemplateMessage',
+						'info',
+						templateMessage,
+						30000
+					);
+
+					instance.getById('selectTemplateButton').focus();
+				}
 				else {
 					var defaultLocale = instance.getDefaultLocale();
 					var typeInput = instance.getByName(form, 'type');

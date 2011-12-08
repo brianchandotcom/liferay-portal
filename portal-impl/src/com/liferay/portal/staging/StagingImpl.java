@@ -55,6 +55,7 @@ import com.liferay.portal.lar.LayoutExporter;
 import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
 import com.liferay.portal.messaging.LayoutsRemotePublisherRequest;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
@@ -112,6 +113,34 @@ import javax.servlet.http.HttpServletRequest;
  * @author Wesley Gong
  */
 public class StagingImpl implements Staging {
+
+	public String buildRemoteURL(
+		String remoteAddress, int remotePort, boolean secureConnection,
+		long remoteGroupId, boolean privateLayout) {
+
+		StringBundler sb = new StringBundler((remoteGroupId > 0) ? 4 : 9);
+
+		if (secureConnection) {
+			sb.append(Http.HTTPS_WITH_SLASH);
+		}
+		else {
+			sb.append(Http.HTTP_WITH_SLASH);
+		}
+
+		sb.append(remoteAddress);
+		sb.append(StringPool.COLON);
+		sb.append(remotePort);
+
+		if (remoteGroupId > 0) {
+			sb.append("/c/my_sites/view?");
+			sb.append("groupId=");
+			sb.append(remoteGroupId);
+			sb.append("&amp;privateLayout=");
+			sb.append(privateLayout);
+		}
+
+		return sb.toString();
+	}
 
 	public void copyFromLive(PortletRequest portletRequest) throws Exception {
 		long stagingGroupId = ParamUtil.getLong(
@@ -2106,20 +2135,9 @@ public class StagingImpl implements Staging {
 
 		User user = UserLocalServiceUtil.getUser(permissionChecker.getUserId());
 
-		StringBundler sb = new StringBundler(4);
-
-		if (secureConnection) {
-			sb.append(Http.HTTPS_WITH_SLASH);
-		}
-		else {
-			sb.append(Http.HTTP_WITH_SLASH);
-		}
-
-		sb.append(remoteAddress);
-		sb.append(StringPool.COLON);
-		sb.append(remotePort);
-
-		String url = sb.toString();
+		String url = buildRemoteURL(
+			remoteAddress,  remotePort, secureConnection,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
 			url, user.getEmailAddress(), user.getPassword(),

@@ -92,6 +92,26 @@ if (layout != null) {
 				</li>
 			</c:if>
 
+			<c:if test="<%= group.isStagedRemotely() %>">
+
+				<%
+				UnicodeProperties typeSettings = group.getTypeSettingsProperties();
+
+				String remoteAddress = typeSettings.getProperty("remoteAddress");
+				int remotePort = GetterUtil.getInteger(typeSettings.getProperty("remotePort"));
+				boolean secureConnection = GetterUtil.getBoolean(typeSettings.getProperty("secureConnection"));
+				long remoteGroupId = GetterUtil.getLong(typeSettings.getProperty("remoteGroupId"));
+
+				String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, secureConnection, remoteGroupId, layout.isPrivateLayout());
+				%>
+
+				<li class="aui-state-default aui-tab remote-live-link">
+					<span class="aui-tab-content">
+						<liferay-ui:icon cssClass="aui-tab-label" image="../arrows/05_right" label="<%= true %>" message="go-to-remote-live" target="_blank" url="<%= remoteURL %>" />
+					</span>
+				</li>
+			</c:if>
+
 			<c:if test="<%= stagingGroup != null %>">
 				<li class="aui-state-default aui-tab last <%= (layoutSetBranches != null) ? " aui-state-active aui-tab-active" : StringPool.BLANK %>">
 					<span class="aui-tab-content">

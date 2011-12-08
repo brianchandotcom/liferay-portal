@@ -37,6 +37,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Staging {
 
+	public String buildRemoteURL(
+		String remoteAddress, int remotePort, boolean secureConnection,
+		long remoteGroupId, boolean privateLayout);
+
 	public void copyFromLive(PortletRequest PortletRequest) throws Exception;
 
 	public void copyFromLive(PortletRequest PortletRequest, Portlet portlet)

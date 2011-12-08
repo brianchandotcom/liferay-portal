@@ -34,6 +34,10 @@
 				text-shadow: -1px -1px 0 #000;
 			}
 		}
+
+		.remote-live-link {
+			font-size: 0.9em;
+		}
 	}
 
 	.site-variations-tabview-list {

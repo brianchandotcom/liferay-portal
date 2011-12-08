@@ -38,7 +38,7 @@ if (Validator.isNotNull(portletResource)) {
 		portletResourceLabel = LanguageUtil.get(pageContext, "general");
 	}
 	else {
-		portletResourceLabel = PortalUtil.getPortletTitle(portlet, application, locale);
+		portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
 	}
 }
 

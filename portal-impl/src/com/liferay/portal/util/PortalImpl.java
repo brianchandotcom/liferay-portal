@@ -3146,6 +3146,68 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	public String getPortletLongTitle(Portlet portlet, Locale locale) {
+		return getPortletLongTitle(portlet.getPortletId(), locale);
+	}
+
+	public String getPortletLongTitle(Portlet portlet, String languageId) {
+		return getPortletLongTitle(portlet.getPortletId(), languageId);
+	}
+
+	public String getPortletLongTitle(
+		Portlet portlet, ServletContext servletContext, Locale locale) {
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, servletContext);
+
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		try {
+			String portletLongTitle = resourceBundle.getString(
+				JavaConstants.JAVAX_PORTLET_LONG_TITLE);
+
+			if (portletLongTitle.startsWith(
+					JavaConstants.JAVAX_PORTLET_LONG_TITLE)) {
+
+				portletLongTitle = getPortletTitle(
+					portlet, servletContext, locale);
+			}
+
+			return portletLongTitle;
+		}
+		catch (Exception e) {
+			return getPortletTitle(portlet, servletContext, locale);
+		}
+	}
+
+	public String getPortletLongTitle(Portlet portlet, User user) {
+		return getPortletLongTitle(portlet.getPortletId(), user);
+	}
+
+	public String getPortletLongTitle(String portletId, Locale locale) {
+		String portletLongTitle = LanguageUtil.get(
+			locale,
+			JavaConstants.JAVAX_PORTLET_LONG_TITLE.concat(
+				StringPool.PERIOD).concat(portletId),
+			StringPool.BLANK);
+
+		if (Validator.isNull(portletLongTitle)) {
+			portletLongTitle = getPortletTitle(portletId, locale);
+		}
+
+		return portletLongTitle;
+	}
+
+	public String getPortletLongTitle(String portletId, String languageId) {
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		return getPortletLongTitle(portletId, locale);
+	}
+
+	public String getPortletLongTitle(String portletId, User user) {
+		return getPortletLongTitle(portletId, user.getLocale());
+	}
+
 	public String getPortletNamespace(String portletId) {
 		return StringPool.UNDERLINE.concat(portletId).concat(
 			StringPool.UNDERLINE);

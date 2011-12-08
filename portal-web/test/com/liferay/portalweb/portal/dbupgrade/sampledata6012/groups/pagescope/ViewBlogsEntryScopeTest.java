@@ -54,6 +54,9 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Page Scope Current Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Blogs (Blogs Page Scope Current Page)"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Scope Current Page"),
 			selenium.getText("//div[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace(

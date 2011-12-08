@@ -88,6 +88,12 @@ public class AddAnnouncementsEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("1"));
 		selenium.select("//select[@id='_84_displayDateYear']",
 			RuntimeVariables.replace("2011"));
+		selenium.select("//select[@id='_84_expirationDateMonth']",
+			RuntimeVariables.replace("December"));
+		selenium.select("//select[@id='_84_expirationDateDay']",
+			RuntimeVariables.replace("31"));
+		selenium.select("//select[@id='_84_expirationDateYear']",
+			RuntimeVariables.replace("2012"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Entries", RuntimeVariables.replace(""));

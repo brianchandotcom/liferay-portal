@@ -87,21 +87,6 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<portlet:renderURL var="viewUsersURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="tabs1" value="users" />
-		<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
-		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		image="view_users"
-		message="view-users"
-		method="get"
-		url="<%= viewUsersURL %>"
-	/>
-
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.DELETE) %>">
 
 		<%

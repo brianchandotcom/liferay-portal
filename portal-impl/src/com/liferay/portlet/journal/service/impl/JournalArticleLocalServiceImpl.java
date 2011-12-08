@@ -1934,7 +1934,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		validate(
-			user.getCompanyId(), groupId, -1, titleMap, content, type,
+			user.getCompanyId(), groupId, 0, titleMap, content, type,
 			structureId, templateId, smallImage, smallImageURL, smallImageFile,
 			smallImageBytes);
 

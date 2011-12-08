@@ -124,7 +124,7 @@
 		<name><![CDATA[Events]]></name>
 		<description><![CDATA[Events]]></description>
 		<root available-locales="en_US" default-locale="en_US">
-			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
+			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
 				<meta-data locale="en_US">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
@@ -311,7 +311,7 @@
 					<entry name="width"><![CDATA[25]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
+			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
 				<meta-data locale="en_US">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
@@ -429,7 +429,7 @@
 		<name><![CDATA[Meeting Minutes]]></name>
 		<description><![CDATA[Meeting Minutes]]></description>
 		<root available-locales="en_US" default-locale="en_US">
-			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
+			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
 				<meta-data locale="en_US">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
@@ -512,7 +512,7 @@
 					<entry name="width"><![CDATA[50]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
+			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
 				<meta-data locale="en_US">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>

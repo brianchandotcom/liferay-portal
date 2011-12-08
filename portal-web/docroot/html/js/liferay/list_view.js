@@ -134,12 +134,20 @@ AUI().add(
 						var newData = event.newVal;
 
 						if (useTransition) {
-							instance._dataContainer.setContent(newData);
+							var dataContainer = instance._dataContainer;
+
+							dataContainer.plug(A.Plugin.ParseContent);
+
+							dataContainer.setContent(newData);
 
 							instance._moveContainer();
 						}
 						else {
-							instance.get(CONTENT_BOX).setContent(newData);
+							var contentBox = instance.get(CONTENT_BOX);
+
+							contentBox.plug(A.Plugin.ParseContent);
+
+							contentBox.setContent(newData);
 						}
 					},
 
@@ -148,7 +156,7 @@ AUI().add(
 
 						var dataContainer = instance._dataContainer;
 
-						instance.get(CONTENT_BOX).html(dataContainer.html());
+						instance.get(CONTENT_BOX).setContent(dataContainer.getDOM().childNodes);
 
 						dataContainer.hide();
 						dataContainer.empty();

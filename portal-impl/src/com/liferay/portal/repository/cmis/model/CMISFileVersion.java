@@ -232,6 +232,10 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public String getVersion() {
+		if (Validator.isNull(_document.getVersionLabel())) {
+			return StringPool.BLANK;
+		}
+
 		return _document.getVersionLabel();
 	}
 

@@ -246,10 +246,16 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		List<Document> documents = getAllVersions();
 
-		Document latestDocumentVersion = documents.get(0);
+		if (!documents.isEmpty()) {
+			Document latestDocumentVersion = documents.get(0);
 
-		_latestFileVersion = CMISRepositoryLocalServiceUtil.toFileVersion(
-			getRepositoryId(), latestDocumentVersion);
+			_latestFileVersion = CMISRepositoryLocalServiceUtil.toFileVersion(
+				getRepositoryId(), latestDocumentVersion);
+		}
+		else {
+			_latestFileVersion = CMISRepositoryLocalServiceUtil.toFileVersion(
+				getRepositoryId(), _document);
+		}
 
 		return _latestFileVersion;
 	}

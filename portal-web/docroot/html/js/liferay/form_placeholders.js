@@ -90,6 +90,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-form']
+		requires: ['liferay-form', 'plugin']
 	}
 );

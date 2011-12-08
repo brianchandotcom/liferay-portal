@@ -113,8 +113,8 @@ public class OrganizationServiceSoap {
 	* @param phones the organization's phone numbers
 	* @param websites the organization's websites
 	* @param serviceContext the organization's service context (optionally
-	<code>null</code>). Can specify the organization's asset category
-	IDs, asset tag names, and expando bridge attributes.
+	<code>null</code>). Can set asset category IDs, asset tag names,
+	and expando bridge attributes for the organization.
 	* @return the organization
 	* @throws PortalException if a parent organization with the primary key
 	could not be found, if the organization's information was
@@ -178,8 +178,8 @@ public class OrganizationServiceSoap {
 	* @param site whether the organization is to be associated with a main
 	site
 	* @param serviceContext the organization's service context (optionally
-	<code>null</code>). Can specify the organization's asset category
-	IDs, asset tag names, and expando bridge attributes.
+	<code>null</code>). Can set asset category IDs, asset tag names,
+	and expando bridge attributes for the organization.
 	* @return the organization
 	* @throws PortalException if the parent organization with the primary key
 	could not be found, if the organization information was invalid,
@@ -509,7 +509,7 @@ public class OrganizationServiceSoap {
 	* @param organizationIds the primary keys of the organizations
 	* @throws PortalException if a password policy or organization with the
 	primary key could not be found, or if the user did not have
-	permission to update the password policy.
+	permission to update the password policy
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void unsetPasswordPolicyOrganizations(long passwordPolicyId,
@@ -547,9 +547,9 @@ public class OrganizationServiceSoap {
 	* @param phones the organization's phone numbers
 	* @param websites the organization's websites
 	* @param serviceContext the organization's service context (optionally
-	<code>null</code>). Can specify the organization's replacement
-	asset category IDs, replacement asset tag names, and new expando
-	bridge attributes.
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the organization, and merge expando bridge attributes
+	for the organization.
 	* @return the organization
 	* @throws PortalException if an organization or parent organization with
 	the primary key could not be found, if the user did not have
@@ -609,9 +609,9 @@ public class OrganizationServiceSoap {
 	* @param site whether the organization is to be associated with a main
 	site
 	* @param serviceContext the organization's service context (optionally
-	<code>null</code>). Can specify the organization's replacement
-	asset category IDs, replacement asset tag names, and new expando
-	bridge attributes.
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the organization, and merge expando bridge attributes
+	for the organization.
 	* @return the organization
 	* @throws PortalException if an organization or parent organization with
 	the primary key could not be found, if the user did not have

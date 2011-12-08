@@ -97,15 +97,53 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 
 		selenium.clickAt("link=Scope", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("_86_scopeLayoutUuid",
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//select[@id='_86_scopeType']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.select("//select[@id='_86_scopeType']",
+			RuntimeVariables.replace("Select Layout"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//select[@id='_86_scopeLayoutUuid']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace(
-				"label=Current Page (Blogs Page Scope Current Page)"));
+				"Current Page (Blogs Page Scope Current Page)"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Select Layout",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		assertEquals("Current Page (Blogs Page Scope Current Page)",
-			selenium.getSelectedLabel("_86_scopeLayoutUuid"));
+			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 	}
 }

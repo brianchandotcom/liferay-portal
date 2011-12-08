@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -143,6 +144,8 @@ public class EditLayoutsAction extends PortletAction {
 			String closeRedirect = ParamUtil.getString(
 				actionRequest, "closeRedirect");
 
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 			Layout layout = null;
 			String oldFriendlyURL = StringPool.BLANK;
 
@@ -155,6 +158,9 @@ public class EditLayoutsAction extends PortletAction {
 
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, null, layout, oldFriendlyURL);
+
+				redirect = updateCloseRedirect(
+					redirect, null, layout, oldFriendlyURL);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				Object[] returnValue = SitesUtil.deleteLayout(
@@ -162,9 +168,16 @@ public class EditLayoutsAction extends PortletAction {
 
 				Group group = (Group)returnValue[0];
 				oldFriendlyURL = (String)returnValue[1];
+				Long newRefererPlid = (Long)returnValue[2];
 
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, group, null, oldFriendlyURL);
+
+				redirect = updateCloseRedirect(
+					redirect, group, null, oldFriendlyURL);
+
+				redirect = HttpUtil.setParameter(
+					redirect, "refererPlid", newRefererPlid);
 			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
@@ -222,8 +235,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("update_layout_revision")) {
 				updateLayoutRevision(actionRequest);
 			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(closeRedirect)) {
 				SessionMessages.add(

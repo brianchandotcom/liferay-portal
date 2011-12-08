@@ -831,6 +831,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return LayoutConstants.DEFAULT_PLID;
 	}
 
+	public Layout getFirstLayout(
+			long groupId, boolean privateLayout, long parentLayoutId)
+		throws PortalException, SystemException {
+
+		Layout firstLayout = null;
+
+		try {
+			firstLayout = layoutPersistence.findByG_P_P_First(
+				groupId, privateLayout, parentLayoutId,
+				new LayoutPriorityComparator(null, false));
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return firstLayout;
+	}
+
 	/**
 	 * Returns the layout for the friendly URL
 	 *

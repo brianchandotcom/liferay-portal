@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -38,6 +39,7 @@ import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -98,9 +100,14 @@ public class EditGroupAction extends PortletAction {
 				Group group = (Group)returnValue[0];
 				String oldFriendlyURL = (String)returnValue[1];
 				String oldStagingFriendlyURL = (String)returnValue[2];
+				Long newRefererPlid = (Long)returnValue[3];
 
 				redirect = HttpUtil.setParameter(
 					redirect, "doAsGroupId", group.getGroupId());
+
+				redirect = HttpUtil.setParameter(
+					redirect, "refererPlid", newRefererPlid);
+
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, group, themeDisplay, oldFriendlyURL,
 					oldStagingFriendlyURL);
@@ -191,13 +198,6 @@ public class EditGroupAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		if ((groupId == themeDisplay.getDoAsGroupId()) ||
-			(groupId == themeDisplay.getScopeGroupId()) ||
-			(groupId == getRefererGroupId(themeDisplay))) {
-
-			throw new RequiredGroupException(String.valueOf(groupId));
-		}
 
 		GroupServiceUtil.deleteGroup(groupId);
 
@@ -467,9 +467,36 @@ public class EditGroupAction extends PortletAction {
 
 		// Staging
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		long refererPlid = GetterUtil.getLong(HttpUtil.getParameter(
+			redirect, "refererPlid", false));
+
+		if (refererPlid > 0 && liveGroup.hasStagingGroup() && (
+			themeDisplay.getScopeGroupId() != liveGroup.getGroupId())) {
+
+			Layout firstLayout = LayoutLocalServiceUtil.getFirstLayout(
+				liveGroup.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (firstLayout == null) {
+				firstLayout = LayoutLocalServiceUtil.getFirstLayout(
+					liveGroup.getGroupId(), true,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+
+			if (firstLayout != null) {
+				refererPlid = firstLayout.getPlid();
+			}
+			else {
+				refererPlid = 0;
+			}
+		}
+
 		StagingUtil.updateStaging(actionRequest, liveGroup);
 
-		return new Object[] {liveGroup, oldFriendlyURL, oldStagingFriendlyURL};
+		return new Object[] {
+			liveGroup, oldFriendlyURL, oldStagingFriendlyURL, refererPlid};
 	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;

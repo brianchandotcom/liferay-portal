@@ -24,25 +24,26 @@ String redirect = ParamUtil.getString(request, "redirect");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (Validator.isNotNull(article)) {
-	portletURL.setParameter("struts_action", "/journal/view_article_history");
-	portletURL.setParameter("tabs1", tabs1);
-	portletURL.setParameter("redirect", redirect);
-	portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
-	portletURL.setParameter("articleId", article.getArticleId());
-}
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNull(article) %>">
+	<c:when test="<%= article == null %>">
 		<div class="portlet-msg-error">
 			<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
 		</div>
 	</c:when>
 	<c:otherwise>
+
+		<%
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/journal/view_article_history");
+		portletURL.setParameter("tabs1", tabs1);
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+		portletURL.setParameter("articleId", article.getArticleId());
+		%>
+
 		<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

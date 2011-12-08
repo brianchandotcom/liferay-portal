@@ -26,8 +26,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
-if ((group != null) && group.isStagingGroup()) {
-	group = group.getLiveGroup();
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
 }
 
 User selUser = PortalUtil.getSelectedUser(request, false);

@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -132,11 +133,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
 		if (groupId > 0) {
-			Group group = groupLocalService.getGroup(groupId);
-
-			if (group.isLayout()) {
-				groupId = group.getParentGroupId();
-			}
+			groupId = StagingUtil.getLiveGroupId(groupId);
 		}
 
 		workflowDefinitionLink =

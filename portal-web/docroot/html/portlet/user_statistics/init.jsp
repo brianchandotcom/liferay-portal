@@ -47,4 +47,6 @@ else {
 
 boolean rankByContribution = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "rankByContribution"), true);
 boolean rankByParticipation = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "rankByParticipation"), true);
+boolean showHeaderText = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "showHeaderText"), true);
+boolean showTotals = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "showTotals"), true);
 %>

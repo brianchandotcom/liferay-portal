@@ -2743,6 +2743,14 @@
 				<name>rankByParticipation</name>
 				<value>true</value>
 			</preference>
+			<preference>
+				<name>showHeaderText</name>
+				<value>true</value>
+			</preference>
+			<preference>
+				<name>showTotals</name>
+				<value>true</value>
+			</preference>
 		</portlet-preferences>
 		<security-role-ref>
 			<role-name>guest</role-name>

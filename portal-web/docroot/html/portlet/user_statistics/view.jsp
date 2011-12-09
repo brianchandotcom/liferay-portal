@@ -78,17 +78,17 @@ if (!rankingNamesList.isEmpty()) {
 	}
 	%>
 
-	<div class="top-users">
-		<c:if test="<%= total > 0 %>">
-			<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %>
-		</c:if>
-		<c:if test="<%= total == 0 %>">
-			<liferay-ui:message key="there-are-no-active-users-for-this-period" />
-		</c:if>
-	</div>
+	<c:if test="<%= showHeaderText %>">
+		<div class="top-users">
+			<c:if test="<%= total > 0 %>">
+				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" /> <%= LanguageUtil.format(pageContext, "ranking-is-based-on-x", rankingNamesMessage) %>
+				<br />
+			</c:if>
+		</div>
+	</c:if>
 
-	<c:if test="<%= total > 0 %>">
-		<br />
+	<c:if test="<%= total == 0 %>">
+			<liferay-ui:message key="there-are-no-active-users-for-this-period" />
 	</c:if>
 
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" paginate="<%= false %>" />

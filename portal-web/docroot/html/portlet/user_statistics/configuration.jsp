@@ -36,6 +36,12 @@ String redirect = ParamUtil.getString(request, "redirect");
 		<aui:input label="rank-by-participation" name="preferences--rankByParticipation--" type="checkbox" value="<%= rankByParticipation %>" />
 	</liferay-ui:panel>
 
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="userStatisticsSettingsPanel" persistState="<%= true %>" title="settings">
+		<aui:input label="show-header-text" name="preferences--showHeaderText--" type="checkbox" value="<%= showHeaderText %>" />
+
+		<aui:input label="show-totals" name="preferences--showTotals--" type="checkbox" value="<%= showTotals %>" />
+	</liferay-ui:panel>
+
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="userStatisticsDisplayActivityCounterNamesPanel" persistState="<%= true %>" title="counters">
 		<div id="<portlet:namespace />displayActivityCounterNames">
 			<aui:input label="display-additional-activity-counters" name="preferences--displayAdditionalActivityCounters--" type="checkbox" value="<%= displayAdditionalActivityCounters %>" />

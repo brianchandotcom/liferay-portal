@@ -63,7 +63,7 @@ public class SQLTransformer {
 			_vendorFirebird = true;
 		}
 		else if (dbType.equals(DB.TYPE_HYPERSONIC)) {
-			//_vendorHypersonic = true;
+			_vendorHypersonic = true;
 		}
 		else if (dbType.equals(DB.TYPE_INFORMIX)) {
 			_vendorInformix = true;
@@ -143,7 +143,10 @@ public class SQLTransformer {
 		else if (_vendorFirebird || _vendorInterbase) {
 			return matcher.replaceAll("BIN_AND($1, $2)");
 		}
-		else if (_vendorMySQL) {
+		else if (
+			_vendorMySQL || _vendorPostgreSQL || _vendorSQLServer ||
+			_vendorSybase) {
+
 			return matcher.replaceAll("($1 & $2)");
 		}
 		else {
@@ -366,7 +369,7 @@ public class SQLTransformer {
 	private boolean _vendorDB2;
 	private boolean _vendorDerby;
 	private boolean _vendorFirebird;
-	//private boolean _vendorHypersonic;
+	private boolean _vendorHypersonic;
 	private boolean _vendorInformix;
 	private boolean _vendorIngres;
 	private boolean _vendorInterbase;

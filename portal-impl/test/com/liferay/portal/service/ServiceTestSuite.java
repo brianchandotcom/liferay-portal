@@ -46,6 +46,8 @@ public class ServiceTestSuite extends TestSuite {
 		testSuite.addTestSuite(DLContentLocalServiceTest.class);
 		testSuite.addTestSuite(DLFileEntryTypeServiceTest.class);
 
+		testSuite.addTestSuite(LockLocalServiceTest.class);
+
 		testSuite.addTestSuite(MBMessageServiceTest.class);
 
 		testSuite.addTestSuite(SocialRelationLocalServiceTest.class);

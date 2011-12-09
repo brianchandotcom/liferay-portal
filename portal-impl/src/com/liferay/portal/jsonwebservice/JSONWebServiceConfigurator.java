@@ -59,12 +59,15 @@ import org.objectweb.asm.ClassReader;
  */
 public class JSONWebServiceConfigurator extends ClassFinder {
 
-	public JSONWebServiceConfigurator(String servletContextName) {
+	public JSONWebServiceConfigurator(
+		String servletContextName, String servletContextPath) {
+
 		setIncludedJars(
 			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar",
 			"*-portlet-service*.jar");
 
 		_servletContextName = servletContextName;
+		_servletContextPath = servletContextPath;
 	}
 
 	public void clean() {
@@ -394,8 +397,8 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		}
 
 		JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-			_servletContextName, method.getDeclaringClass(), method, path,
-			httpMethod);
+			_servletContextName, _servletContextPath,
+			method.getDeclaringClass(), method, path, httpMethod);
 
 		_registeredActionsCount++;
 	}
@@ -412,6 +415,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		new JSONWebServiceMappingResolver();
 	private int _registeredActionsCount;
 	private String _servletContextName;
+	private String _servletContextPath;
 	private Map<Class<?>, Class<?>> _utilClasses =
 		new HashMap<Class<?>, Class<?>>();
 

@@ -154,12 +154,13 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	public void registerJSONWebServiceAction(
-		String servletContextName, Class<?> actionClass, Method actionMethod,
-		String path, String method) {
+		String servletContextName, String servletContextPath,
+		Class<?> actionClass, Method actionMethod, String path, String method) {
 
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
 			new JSONWebServiceActionConfig(
-				servletContextName, actionClass, actionMethod, path, method);
+				servletContextName, servletContextPath, actionClass,
+				actionMethod, path, method);
 
 		_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 	}

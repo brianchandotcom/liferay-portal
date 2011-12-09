@@ -31,10 +31,11 @@ public class JSONWebServiceActionConfig
 	JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
-		String servletContextName, Class<?> actionClass, Method actionMethod,
-		String path, String method) {
+		String servletContextName, String servletContextPath,
+		Class<?> actionClass, Method actionMethod, String path, String method) {
 
 		_servletContextName = servletContextName;
+		_servletContextPath = servletContextPath;
 		_actionClass = actionClass;
 		_actionMethod = actionMethod;
 		_path = path;
@@ -100,13 +101,17 @@ public class JSONWebServiceActionConfig
 		return _servletContextName;
 	}
 
+	public String getServletContextPath() {
+		return _servletContextPath;
+	}
+
 	public String getSignature() {
 		return _signature;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{actionClass=");
 		sb.append(_actionClass);
@@ -122,6 +127,8 @@ public class JSONWebServiceActionConfig
 		sb.append(_path);
 		sb.append(", servletContextName=");
 		sb.append(_servletContextName);
+		sb.append(", servletContextPath=");
+		sb.append(_servletContextPath);
 		sb.append(", signature=");
 		sb.append(_signature);
 		sb.append("}");
@@ -136,6 +143,7 @@ public class JSONWebServiceActionConfig
 	private MethodParameter[] _methodParameters;
 	private String _path;
 	private String _servletContextName;
+	private String _servletContextPath;
 	private String _signature;
 
 }

@@ -15,10 +15,12 @@
 --%>
 
 <%
-List<JSONWebServiceActionMapping> jsonWebServiceActionMappings = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(application.getServletContextName());
+String contextName = request.getParameter("contextName");
+List<JSONWebServiceActionMapping> jsonWebServiceActionMappings = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(contextName);
 %>
 
 <p>
+	Context name: <b><%= contextName == null ? "ROOT" : contextName %></b><br/>
 	Total Methods: <b><%= jsonWebServiceActionMappings.size() %></b>
 </p>
 

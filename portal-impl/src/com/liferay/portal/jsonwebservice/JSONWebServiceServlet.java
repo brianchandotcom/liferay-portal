@@ -17,7 +17,11 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -30,6 +34,11 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.net.URL;
+import java.net.URLDecoder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -89,10 +98,49 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		String mainPath = PortalUtil.getPathMain();
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			mainPath + "/portal/api/jsonws");
+		String apiPath = mainPath + "/portal/api/jsonws";
 
-		requestDispatcher.forward(request, response);
+		ServletContext servletContext =
+			request.getSession().getServletContext();
+
+		String portalContextPath = PropsUtil.get(PropsKeys.PORTAL_CTX);
+
+		if (servletContext.getContext(portalContextPath) != null) {
+			RequestDispatcher requestDispatcher =
+						request.getRequestDispatcher(apiPath);
+
+			requestDispatcher.forward(request, response);
+		}
+		else {
+			String requestUri = request.getRequestURI();
+			String requestUrl = request.getRequestURL().toString();
+	 		String queryString = request.getQueryString();
+
+			String serverUrl = requestUrl.substring(
+				0, requestUrl.length() - requestUri.length());
+
+			if (Validator.isNull(queryString)) {
+
+				String servletContextName =
+					servletContext.getServletContextName();
+
+				queryString = "contextName=" +
+					URLDecoder.decode(servletContextName, "UTF-8");
+			}
+
+			apiPath = serverUrl + apiPath + '?' + queryString;
+
+			URL url = new URL(apiPath);
+			InputStream inputStream = null;
+			try {
+				inputStream = url.openStream();
+				OutputStream outputStream = response.getOutputStream();
+				StreamUtil.transfer(inputStream, outputStream);
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
 	}
 
 	@Override
@@ -102,7 +150,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 				PortletServlet.PORTLET_CLASS_LOADER);
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			servletContext.getServletContextName(), portletClassLoader);
+			servletContext.getServletContextName(),
+			servletContext.getContextPath(), portletClassLoader);
 
 		_jsonWebServiceServiceAction.setServletContext(servletContext);
 

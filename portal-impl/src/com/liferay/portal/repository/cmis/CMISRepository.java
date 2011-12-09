@@ -1613,6 +1613,10 @@ public class CMISRepository extends BaseCmisRepository {
 		while (itr.hasNext()) {
 			QueryResult queryResult = itr.next();
 
+			if (total < start) {
+				continue;
+			}
+
 			total++;
 
 			if ((total > end) && (end != QueryUtil.ALL_POS)) {

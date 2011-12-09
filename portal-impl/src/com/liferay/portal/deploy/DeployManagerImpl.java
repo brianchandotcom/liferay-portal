@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.File;
-
 import java.util.List;
 
 /**
@@ -55,6 +54,16 @@ public class DeployManagerImpl implements DeployManager {
 
 	public List<PluginPackage> getInstalledPluginPackages() {
 		return PluginPackageUtil.getInstalledPluginPackages();
+	}
+
+	public File getUpdateDir() throws Exception {
+		if (ServerDetector.isGlassfish()) {
+			return new File(
+				System.getProperty("catalina.home"), "applications");
+		}
+		else {
+			return new File(DeployUtil.getAutoDeployDestDir());
+		}
 	}
 
 	public boolean isDeployed(String context) {

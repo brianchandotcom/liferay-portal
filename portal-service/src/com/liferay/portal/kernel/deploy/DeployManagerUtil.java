@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.deploy;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 
 import java.io.File;
-
 import java.util.List;
 
 /**
@@ -49,6 +48,10 @@ public class DeployManagerUtil {
 
 	public static List<PluginPackage> getInstalledPluginPackages() {
 		return getDeployManager().getInstalledPluginPackages();
+	}
+
+	public static File getUpdateDir() throws Exception {
+		return getDeployManager().getUpdateDir();
 	}
 
 	public static boolean isDeployed(String context) {

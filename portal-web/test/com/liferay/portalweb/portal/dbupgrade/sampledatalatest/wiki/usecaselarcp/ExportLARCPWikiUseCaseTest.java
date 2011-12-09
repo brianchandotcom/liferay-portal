@@ -48,6 +48,7 @@ public class ExportLARCPWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//menu/span/ul/li/strong/a"));
 		selenium.clickAt("//menu/span/ul/li/strong/a",

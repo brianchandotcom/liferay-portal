@@ -90,6 +90,7 @@ public class ExportLARCPPage2BlogsPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

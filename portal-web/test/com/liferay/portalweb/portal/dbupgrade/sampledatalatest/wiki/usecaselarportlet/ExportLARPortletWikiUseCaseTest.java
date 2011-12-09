@@ -43,6 +43,7 @@ public class ExportLARPortletWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Options"),

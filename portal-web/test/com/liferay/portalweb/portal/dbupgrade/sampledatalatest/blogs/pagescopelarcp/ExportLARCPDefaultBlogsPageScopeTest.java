@@ -63,6 +63,7 @@ public class ExportLARCPDefaultBlogsPageScopeTest extends BaseTestCase {
 
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Options"),

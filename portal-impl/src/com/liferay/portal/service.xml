@@ -878,7 +878,7 @@
 		<finder name="LtExpirationDate" return-type="Collection">
 			<finder-column name="expirationDate" comparator="&lt;" />
 		</finder>
-		<finder name="C_K" return-type="Lock">
+		<finder name="C_K" return-type="Lock" unique="true">
 			<finder-column name="className" />
 			<finder-column name="key" />
 		</finder>

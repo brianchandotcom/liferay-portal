@@ -37,6 +37,8 @@ if (!selectableTree) {
 <aui:script use="<%= modules %>">
 	var Lang = A.Lang;
 
+	var Util = Liferay.Util;
+
 	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid=" %>';
 
 	var TreeUtil = {
@@ -72,11 +74,15 @@ if (!selectableTree) {
 		createLink: function(data) {
 			var className = 'layout-tree';
 
+			if (data.cssClass) {
+				className += ' ' + data.cssClass;
+			}
+
 			if (<%= checkContentDisplayPage %> && !data.contentDisplayPage) {
 				className += ' layout-page-invalid';
 			}
 
-			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + LAYOUT_URL + data.plid + '">' + Liferay.Util.escapeHTML(data.label) + '</a>';
+			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + LAYOUT_URL + data.plid + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
 		extractLayoutId: function(node) {
@@ -110,13 +116,23 @@ if (!selectableTree) {
 						type: '<%= selectableTree ? "task" : "io" %>'
 					};
 
-					newNode.label = node.name;
+					var cssClass = '';
+
+					var title = '';
+
+					newNode.label = Util.escapeHTML(node.name);
 
 					if (node.layoutRevisionId) {
-						newNode.label += Lang.sub(' [{layoutBranchName} {layoutRevisionId}]', node);
+						if (node.layoutBranchName) {
+							node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
+
+							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(pageContext, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);
+						}
 
 						if (node.incomplete) {
-							newNode.label = [newNode.label, 'incomplete'].join('');
+							cssClass = 'incomplete-layout';
+
+							title = '<%= UnicodeLanguageUtil.get(pageContext, "this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations") %>';
 						}
 					}
 
@@ -127,8 +143,10 @@ if (!selectableTree) {
 					if (!<%= selectableTree %>) {
 						newNode.label = TreeUtil.createLink(
 							{
+								cssClass: cssClass,
 								label: newNode.label,
 								plid: node.plid,
+								title: title,
 								uuid: node.uuid,
 								contentDisplayPage: node.contentDisplayPage
 							}
@@ -220,7 +238,7 @@ if (!selectableTree) {
 		<c:if test="<%= !checkContentDisplayPage %>">
 		rootLabel = TreeUtil.createLink(
 			{
-				label: rootLabel,
+				label: Util.escapeHTML(rootLabel),
 				plid: TreeUtil.DEFAULT_PARENT_LAYOUT_ID
 			}
 		);

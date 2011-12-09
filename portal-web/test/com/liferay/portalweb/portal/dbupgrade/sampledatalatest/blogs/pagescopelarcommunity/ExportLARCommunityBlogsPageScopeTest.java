@@ -51,6 +51,7 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -110,10 +111,6 @@ public class ExportLARCommunityBlogsPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_156_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_156_CATEGORIESCheckbox']"));
-		assertTrue(selenium.isPartialText("//div[@id='_156_exportMoreDiv']/a",
-				"More Options"));
-		selenium.clickAt("//div[@id='_156_exportMoreDiv']/a",
-			RuntimeVariables.replace("More Options"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_156_PORTLET_DATA_33Checkbox']"));
 		selenium.clickAt("//input[@id='_156_PORTLET_DATA_33Checkbox']",

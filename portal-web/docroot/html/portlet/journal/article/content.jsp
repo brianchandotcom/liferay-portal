@@ -532,7 +532,7 @@ if (Validator.isNotNull(content)) {
 							for (int i = 0; i < availableLocales.length ; i++) {
 					%>
 
-								<input name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" />
+								<input id= "<portlet:namespace />availableLocales<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(availableLocales[i]) %>" />
 
 					<%
 							}
@@ -541,7 +541,7 @@ if (Validator.isNotNull(content)) {
 						if (Validator.isNotNull(toLanguageId)) {
 					%>
 
-							<input name="<portlet:namespace />available_locales" type="hidden" value="<%= languageId %>" />
+							<input id="<portlet:namespace />availableLocales<%= languageId %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= languageId %>" />
 
 					<%
 						}
@@ -550,7 +550,7 @@ if (Validator.isNotNull(content)) {
 						contentDoc = SAXReaderUtil.createDocument(SAXReaderUtil.createElement("root"));
 					%>
 
-						<input name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" />
+						<input id="<portlet:namespace />availableLocales<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" name="<portlet:namespace />available_locales" type="hidden" value="<%= HtmlUtil.escapeAttribute(defaultLanguageId) %>" />
 
 					<%
 					}
@@ -611,7 +611,10 @@ if (Validator.isNotNull(content)) {
 			var translationLink = availableTranslationContainer.one('.journal-article-translation-' + newLanguageId);
 
 			if (cmd == '<%= Constants.DELETE_TRANSLATION %>') {
-				translationLink.hide();
+				var availableLocales = A.one('#<portlet:namespace />availableLocales' + newLanguageId);
+
+				translationLink.remove();
+				availableLocales.remove();
 			}
 			else if (!translationLink) {
 				statusNode.removeClass('workflow-status-approved');

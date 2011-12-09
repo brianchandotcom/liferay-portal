@@ -61,6 +61,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _ALWAYS_EXPORTABLE;
 	}
 
+	public boolean isAlwaysStaged() {
+		return _ALWAYS_STAGED;
+	}
+
 	public boolean isPublishToLiveByDefault() {
 		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
@@ -104,6 +108,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	private static final boolean _ALWAYS_EXPORTABLE = false;
+
+	private static final boolean _ALWAYS_STAGED = false;
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = false;
 

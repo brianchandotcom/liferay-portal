@@ -114,6 +114,15 @@ public interface PortletDataHandler {
 	public boolean isAlwaysExportable();
 
 	/**
+	 * Returns <code>true</code> to allow the user to select if the data for
+	 * this portlet is exported.
+	 *
+	 * @return <code>true</code> to allow the user to select if the data for
+	 *         this portlet is exported
+	 */
+	public boolean isAlwaysStaged();
+
+	/**
 	 * Returns whether the data exported by this handler should be included by
 	 * default when publishing to live. This should only be <code>true</code>
 	 * for data that is meant to be managed in an staging environment such as

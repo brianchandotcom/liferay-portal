@@ -37,6 +37,8 @@ if (!selectableTree) {
 <aui:script use="<%= modules %>">
 	var Lang = A.Lang;
 
+	var Util = Liferay.Util;
+
 	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid=" %>';
 
 	var TreeUtil = {
@@ -115,15 +117,16 @@ if (!selectableTree) {
 					};
 
 					var cssClass = '';
+
 					var title = '';
 
-					newNode.label = Liferay.Util.escapeHTML(node.name);
+					newNode.label = Util.escapeHTML(node.name);
 
 					if (node.layoutRevisionId) {
 						if (node.layoutBranchName) {
-	                        node.layoutBranchName = Liferay.Util.escapeHTML(node.layoutBranchName);
+	                        node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
 
-							newNode.label += Lang.sub(' <span class="layout-branch-name"title="' + Liferay.Language.get('this-is-the-page-variation-that-is-marked-as-ready-for-publication') + '">[{layoutBranchName}]</span>', node);
+							newNode.label += Lang.sub(' <span class="layout-branch-name" title="' + Liferay.Language.get('this-is-the-page-variation-that-is-marked-as-ready-for-publication') + '">[{layoutBranchName}]</span>', node);
 						}
 
 						if (node.incomplete) {
@@ -235,7 +238,7 @@ if (!selectableTree) {
 		<c:if test="<%= !checkContentDisplayPage %>">
 		rootLabel = TreeUtil.createLink(
 			{
-				label: Liferay.Util.escapeHTML(rootLabel),
+				label: Util.escapeHTML(rootLabel),
 				plid: TreeUtil.DEFAULT_PARENT_LAYOUT_ID
 			}
 		);

@@ -39,8 +39,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//input[@id='Email']</td>
+	<td>usernamePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${usernamePresent}</td>
+	<td>UsernamePresent</td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
+	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
 	<td>signedIn1</td>
 </tr>
 <tr>
@@ -59,18 +69,48 @@
 	<td>Sign out</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span/a</td>
-	<td>Sign in to Gmail</td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>signedOut1</td>
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isTextPresent('Sign in to Gmail'))</td>
+	<td>signInToGmailPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signInToGmailPresent}</td>
+	<td>SignInToGmailNotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='button']</td>
+	<td>Sign in to Gmail</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='button']</td>
+	<td>Sign in to Gmail</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SignInToGmailNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UsernamePresent</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>link=Sign out and sign in as a different user</td>
+	<td>//a[@id='link-force-reauth']</td>
 	<td>signInAsADifferentUserPresent</td>
 </tr>
 <tr>
@@ -79,8 +119,13 @@
 	<td>SignInAsADifferentUserNotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[@id='link-force-reauth']</td>
+	<td>Sign out and sign in as a different user</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Sign out and sign in as a different user</td>
+	<td>//a[@id='link-force-reauth']</td>
 	<td>Sign out and sign in as a different user</td>
 </tr>
 <tr>
@@ -96,7 +141,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='Email']</td>
-	<td>liferay.qa.server.trunk</td>
+	<td>liferay.qa.testing.trunk</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -179,23 +224,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//td/a/span</td>
+	<td>My groups</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//a[1]/font/b</td>
+	<td>//td/a/span</td>
+	<td>My groups</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//td/a/span</td>
+	<td>My groups</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=liferay-mailinglist</td>
 	<td>liferay-mailinglist</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a[1]/font/b</td>
+	<td>click</td>
+	<td>link=liferay-mailinglist</td>
 	<td>liferay-mailinglist</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//span[1]/a</td>
+	<td>//div[3]/div/div[2]/a</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span[1]/a</td>
+	<td>click</td>
+	<td>//div[3]/div/div[2]/a</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>

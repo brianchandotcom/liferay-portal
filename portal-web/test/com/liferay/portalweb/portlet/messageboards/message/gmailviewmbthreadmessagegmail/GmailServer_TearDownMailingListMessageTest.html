@@ -179,18 +179,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//td/a/span</td>
+	<td>My groups</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//a[1]/font/b</td>
+	<td>//td/a/span</td>
+	<td>My groups</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//td/a/span</td>
+	<td>My groups</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=liferay-mailinglist</td>
 	<td>liferay-mailinglist</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//a[1]/font/b</td>
+	<td>click</td>
+	<td>link=liferay-mailinglist</td>
 	<td>liferay-mailinglist</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[2]/span[2]</td>
+	<td>liferay-mailinglist</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[2]/span[2]</td>
+	<td>liferay-mailinglist</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>10000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[1]/a</td>
+	<td>//input[@type='checkbox']</td>
 	<td>MLMessage1Present</td>
 </tr>
 <tr>
@@ -199,28 +229,58 @@
 	<td>MLMessage1NotPresent</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span[1]/a</td>
+	<td>click</td>
+	<td>//input[@type='checkbox']</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Remove</td>
-	<td>Remove</td>
+	<td>assertText</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='really_delete.yes']</td>
-	<td>Yes, remove it now</td>
+	<td>clickAt</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@name='Action.Confirm']</td>
-	<td>Confirm</td>
+	<td>waitForVisible</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[1]/a</td>
+	<td>//input[@type='checkbox']</td>
 	<td>MLMessage2Present</td>
 </tr>
 <tr>
@@ -229,28 +289,58 @@
 	<td>MLMessage2NotPresent</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span[1]/a</td>
+	<td>click</td>
+	<td>//input[@type='checkbox']</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Remove</td>
-	<td>Remove</td>
+	<td>assertText</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='really_delete.yes']</td>
-	<td>Yes, remove it now</td>
+	<td>clickAt</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@name='Action.Confirm']</td>
-	<td>Confirm</td>
+	<td>waitForVisible</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[1]/a</td>
+	<td>//input[@type='checkbox']</td>
 	<td>MLMessage3Present</td>
 </tr>
 <tr>
@@ -259,28 +349,58 @@
 	<td>MLMessage3NotPresent</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span[1]/a</td>
+	<td>click</td>
+	<td>//input[@type='checkbox']</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Remove</td>
-	<td>Remove</td>
+	<td>assertText</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='really_delete.yes']</td>
-	<td>Yes, remove it now</td>
+	<td>clickAt</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@name='Action.Confirm']</td>
-	<td>Confirm</td>
+	<td>waitForVisible</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[1]/a</td>
+	<td>//input[@type='checkbox']</td>
 	<td>MLMessage4Present</td>
 </tr>
 <tr>
@@ -289,28 +409,58 @@
 	<td>MLMessage4NotPresent</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span[1]/a</td>
+	<td>click</td>
+	<td>//input[@type='checkbox']</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Remove</td>
-	<td>Remove</td>
+	<td>assertText</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='really_delete.yes']</td>
-	<td>Yes, remove it now</td>
+	<td>clickAt</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@name='Action.Confirm']</td>
-	<td>Confirm</td>
+	<td>waitForVisible</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[1]/a</td>
+	<td>//input[@type='checkbox']</td>
 	<td>MLMessage5Present</td>
 </tr>
 <tr>
@@ -319,24 +469,54 @@
 	<td>MLMessage5NotPresent</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//span[1]/a</td>
+	<td>click</td>
+	<td>//input[@type='checkbox']</td>
 	<td>[MB Category Name] MB Message Subject</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Remove</td>
-	<td>Remove</td>
+	<td>assertText</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='really_delete.yes']</td>
-	<td>Yes, remove it now</td>
+	<td>clickAt</td>
+	<td>//div/span/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@name='Action.Confirm']</td>
-	<td>Confirm</td>
+	<td>waitForVisible</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[contains(@id,'DELETE_TOPICS')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='dialog_ok']</td>
+	<td>OK</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>label</td>
@@ -403,7 +583,6 @@
 	<td>null</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

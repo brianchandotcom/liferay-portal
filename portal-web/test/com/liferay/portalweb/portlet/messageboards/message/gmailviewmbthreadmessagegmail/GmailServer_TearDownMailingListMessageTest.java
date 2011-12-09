@@ -119,14 +119,69 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.selectWindow("Google Groups");
 				Thread.sleep(10000);
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//td/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("My groups"),
+					selenium.getText("//td/a/span"));
+				selenium.click("//td/a/span");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=liferay-mailinglist")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.click("link=liferay-mailinglist");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("liferay-mailinglist")
+												.equals(selenium.getText(
+										"//span[2]/span[2]"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
-					selenium.getText("//a[1]/font/b"));
-				selenium.clickAt("//a[1]/font/b",
-					RuntimeVariables.replace("liferay-mailinglist"));
-				selenium.waitForPageToLoad("30000");
+					selenium.getText("//span[2]/span[2]"));
+				Thread.sleep(10000);
 
 				boolean MLMessage1Present = selenium.isElementPresent(
-						"//span[1]/a");
+						"//input[@type='checkbox']");
 
 				if (!MLMessage1Present) {
 					label = 5;
@@ -134,20 +189,56 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[1]/a",
-					RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Remove",
-					RuntimeVariables.replace("Remove"));
-				selenium.waitForPageToLoad("30000");
-				selenium.check("//input[@id='really_delete.yes']");
-				selenium.clickAt("//input[@name='Action.Confirm']",
-					RuntimeVariables.replace("Confirm"));
-				selenium.waitForPageToLoad("30000");
+				selenium.click("//input[@type='checkbox']");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//div/span/span"));
+				selenium.clickAt("//div/span/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@id,'DELETE_TOPICS')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//div[contains(@id,'DELETE_TOPICS')]"));
+				selenium.click("//div[contains(@id,'DELETE_TOPICS')]");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//div[@id='dialog_ok']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("OK"),
+					selenium.getText("//div[@id='dialog_ok']"));
+				selenium.click("//div[@id='dialog_ok']");
+				Thread.sleep(5000);
 
 				boolean MLMessage2Present = selenium.isElementPresent(
-						"//span[1]/a");
+						"//input[@type='checkbox']");
 
 				if (!MLMessage2Present) {
 					label = 6;
@@ -155,20 +246,56 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[1]/a",
-					RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Remove",
-					RuntimeVariables.replace("Remove"));
-				selenium.waitForPageToLoad("30000");
-				selenium.check("//input[@id='really_delete.yes']");
-				selenium.clickAt("//input[@name='Action.Confirm']",
-					RuntimeVariables.replace("Confirm"));
-				selenium.waitForPageToLoad("30000");
+				selenium.click("//input[@type='checkbox']");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//div/span/span"));
+				selenium.clickAt("//div/span/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@id,'DELETE_TOPICS')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//div[contains(@id,'DELETE_TOPICS')]"));
+				selenium.click("//div[contains(@id,'DELETE_TOPICS')]");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//div[@id='dialog_ok']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("OK"),
+					selenium.getText("//div[@id='dialog_ok']"));
+				selenium.click("//div[@id='dialog_ok']");
+				Thread.sleep(5000);
 
 				boolean MLMessage3Present = selenium.isElementPresent(
-						"//span[1]/a");
+						"//input[@type='checkbox']");
 
 				if (!MLMessage3Present) {
 					label = 7;
@@ -176,20 +303,56 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[1]/a",
-					RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Remove",
-					RuntimeVariables.replace("Remove"));
-				selenium.waitForPageToLoad("30000");
-				selenium.check("//input[@id='really_delete.yes']");
-				selenium.clickAt("//input[@name='Action.Confirm']",
-					RuntimeVariables.replace("Confirm"));
-				selenium.waitForPageToLoad("30000");
+				selenium.click("//input[@type='checkbox']");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//div/span/span"));
+				selenium.clickAt("//div/span/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@id,'DELETE_TOPICS')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//div[contains(@id,'DELETE_TOPICS')]"));
+				selenium.click("//div[contains(@id,'DELETE_TOPICS')]");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//div[@id='dialog_ok']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("OK"),
+					selenium.getText("//div[@id='dialog_ok']"));
+				selenium.click("//div[@id='dialog_ok']");
+				Thread.sleep(5000);
 
 				boolean MLMessage4Present = selenium.isElementPresent(
-						"//span[1]/a");
+						"//input[@type='checkbox']");
 
 				if (!MLMessage4Present) {
 					label = 8;
@@ -197,20 +360,56 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[1]/a",
-					RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Remove",
-					RuntimeVariables.replace("Remove"));
-				selenium.waitForPageToLoad("30000");
-				selenium.check("//input[@id='really_delete.yes']");
-				selenium.clickAt("//input[@name='Action.Confirm']",
-					RuntimeVariables.replace("Confirm"));
-				selenium.waitForPageToLoad("30000");
+				selenium.click("//input[@type='checkbox']");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//div/span/span"));
+				selenium.clickAt("//div/span/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@id,'DELETE_TOPICS')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//div[contains(@id,'DELETE_TOPICS')]"));
+				selenium.click("//div[contains(@id,'DELETE_TOPICS')]");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//div[@id='dialog_ok']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("OK"),
+					selenium.getText("//div[@id='dialog_ok']"));
+				selenium.click("//div[@id='dialog_ok']");
+				Thread.sleep(5000);
 
 				boolean MLMessage5Present = selenium.isElementPresent(
-						"//span[1]/a");
+						"//input[@type='checkbox']");
 
 				if (!MLMessage5Present) {
 					label = 9;
@@ -218,17 +417,53 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[1]/a",
-					RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Remove",
-					RuntimeVariables.replace("Remove"));
-				selenium.waitForPageToLoad("30000");
-				selenium.check("//input[@id='really_delete.yes']");
-				selenium.clickAt("//input[@name='Action.Confirm']",
-					RuntimeVariables.replace("Confirm"));
-				selenium.waitForPageToLoad("30000");
+				selenium.click("//input[@type='checkbox']");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText("//div/span/span"));
+				selenium.clickAt("//div/span/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[contains(@id,'DELETE_TOPICS')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText("//div[contains(@id,'DELETE_TOPICS')]"));
+				selenium.click("//div[contains(@id,'DELETE_TOPICS')]");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//div[@id='dialog_ok']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("OK"),
+					selenium.getText("//div[@id='dialog_ok']"));
+				selenium.click("//div[@id='dialog_ok']");
+				Thread.sleep(5000);
 
 			case 5:
 			case 6:

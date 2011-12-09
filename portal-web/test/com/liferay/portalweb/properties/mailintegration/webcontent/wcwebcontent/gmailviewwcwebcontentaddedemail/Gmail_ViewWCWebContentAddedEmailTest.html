@@ -39,14 +39,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
-	<td>SignedIn1</td>
+	<td>storeElementPresent</td>
+	<td>//input[@id='Email']</td>
+	<td>usernamePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${SignedIn1}</td>
-	<td>SignedOut1</td>
+	<td>${usernamePresent}</td>
+	<td>UsernamePresent</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
+	<td>signedIn1</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signedIn1}</td>
+	<td>signedOut1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,18 +69,48 @@
 	<td>Sign out</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>signedOut1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isTextPresent('Sign in to Gmail'))</td>
+	<td>signInToGmailPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signInToGmailPresent}</td>
+	<td>SignInToGmailNotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='button']</td>
+	<td>Sign in to Gmail</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//span/a</td>
+	<td>//a[@id='button']</td>
 	<td>Sign in to Gmail</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>SignedOut1</td>
+	<td>SignInToGmailNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UsernamePresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>link=Sign out and sign in as a different user</td>
+	<td>//a[@id='link-force-reauth']</td>
 	<td>signInAsADifferentUserPresent</td>
 </tr>
 <tr>
@@ -79,8 +119,13 @@
 	<td>SignInAsADifferentUserNotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[@id='link-force-reauth']</td>
+	<td>Sign out and sign in as a different user</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Sign out and sign in as a different user</td>
+	<td>//a[@id='link-force-reauth']</td>
 	<td>Sign out and sign in as a different user</td>
 </tr>
 <tr>
@@ -144,18 +189,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPartialText</td>
-	<td>//td[3]/div/span</td>
+	<td>waitForVisible</td>
+	<td>//td[5]/div/span/span</td>
 	<td>Administrator</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//td[3]/div/span</td>
+	<td>assertText</td>
+	<td>//td[5]/div/span/span</td>
 	<td>Administrator</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[3]/div/span</td>
+	<td>//td[5]/div/span/span</td>
 	<td>Administrator</td>
 </tr>
 <tr>
@@ -167,6 +212,16 @@
 	<td>assertPartialText</td>
 	<td>//h1/span[1]</td>
 	<td>Web Content: Article Added</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[contains(.,'Web Content Name')]</td>
+	<td>Dear userfn userln,</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[contains(.,'Web Content Name')]</td>
+	<td>version 1.0</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -223,7 +278,6 @@
 	<td>null</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

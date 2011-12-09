@@ -36,7 +36,16 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				selenium.selectWindow("gmail");
 				Thread.sleep(80000);
 
-				boolean signedIn1 = selenium.isElementPresent("link=Sign out");
+				boolean usernamePresent = selenium.isElementPresent(
+						"//input[@id='Email']");
+
+				if (usernamePresent) {
+					label = 4;
+
+					continue;
+				}
+
+				boolean signedIn1 = selenium.isPartialText("//td/a", "Sign out");
 
 				if (!signedIn1) {
 					label = 2;
@@ -47,27 +56,46 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				assertEquals(RuntimeVariables.replace("Sign out"),
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
-				selenium.clickAt("//span/a",
-					RuntimeVariables.replace("Sign in to Gmail"));
-				selenium.waitForPageToLoad("30000");
 
 			case 2:
+				Thread.sleep(5000);
 
-				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
-						"link=Sign out and sign in as a different user");
+				boolean signInToGmailPresent = selenium.isTextPresent(
+						"Sign in to Gmail");
 
-				if (!signInAsADifferentUserPresent) {
+				if (!signInToGmailPresent) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("link=Sign out and sign in as a different user",
+				assertEquals(RuntimeVariables.replace("Sign in to Gmail"),
+					selenium.getText("//a[@id='button']"));
+				selenium.clickAt("//a[@id='button']",
+					RuntimeVariables.replace("Sign in to Gmail"));
+				selenium.waitForPageToLoad("30000");
+
+			case 3:
+			case 4:
+
+				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
+						"//a[@id='link-force-reauth']");
+
+				if (!signInAsADifferentUserPresent) {
+					label = 5;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Sign out and sign in as a different user"),
+					selenium.getText("//a[@id='link-force-reauth']"));
+				selenium.clickAt("//a[@id='link-force-reauth']",
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
 
-			case 3:
+			case 5:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -86,7 +114,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				}
 
 				selenium.type("//input[@id='Email']",
-					RuntimeVariables.replace("liferay.qa.server.trunk"));
+					RuntimeVariables.replace("liferay.qa.testing.trunk"));
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
 
@@ -94,7 +122,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 						"PersistentCookie");
 
 				if (staySignedInChecked) {
-					label = 4;
+					label = 6;
 
 					continue;
 				}
@@ -104,7 +132,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
-			case 4:
+			case 6:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
@@ -119,16 +147,46 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					RuntimeVariables.replace(""));
 				selenium.selectWindow("Google Groups");
 				Thread.sleep(10000);
-				assertEquals(RuntimeVariables.replace("liferay-mailinglist"),
-					selenium.getText("//a[1]/font/b"));
-				selenium.clickAt("//a[1]/font/b",
-					RuntimeVariables.replace("liferay-mailinglist"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isElementPresent("//span[1]/a"));
-				selenium.clickAt("//span[1]/a",
-					RuntimeVariables.replace(
-						"[MB Category Name] MB Message Subject"));
-				selenium.waitForPageToLoad("30000");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//td/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("My groups"),
+					selenium.getText("//td/a/span"));
+				selenium.click("//td/a/span");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=liferay-mailinglist")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.click("link=liferay-mailinglist");
+				assertTrue(selenium.isElementPresent("//div[3]/div/div[2]/a"));
+				selenium.click("//div[3]/div/div[2]/a");
 				assertTrue(selenium.isPartialText(
 						"//table[@id='top']/tbody/tr[2]/td[1]/span/span/i",
 						"liferay.qa.server"));
@@ -144,7 +202,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 
 				if (!SignedIn2) {
-					label = 5;
+					label = 7;
 
 					continue;
 				}
@@ -153,7 +211,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
-			case 5:
+			case 7:
 				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");

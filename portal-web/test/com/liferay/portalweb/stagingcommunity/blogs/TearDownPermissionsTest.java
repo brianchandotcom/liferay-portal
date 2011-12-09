@@ -132,7 +132,7 @@ public class TearDownPermissionsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Manage Pages")
 										.equals(selenium.getText(
-								"//tr[13]/td[2]"))) {
+								"//tr[14]/td[2]"))) {
 					break;
 				}
 			}
@@ -143,7 +143,7 @@ public class TearDownPermissionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//tr[13]/td[2]"));
+			selenium.getText("//tr[14]/td[2]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -164,8 +164,8 @@ public class TearDownPermissionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Limit Scope"),
-			selenium.getText("//tr[13]/td[4]/span/a/span"));
-		selenium.clickAt("//tr[13]/td[4]/span/a/span",
+			selenium.getText("//tr[14]/td[4]/span/a/span"));
+		selenium.clickAt("//tr[14]/td[4]/span/a/span",
 			RuntimeVariables.replace("Limit Scope"));
 		Thread.sleep(5000);
 		selenium.selectWindow("name=site");

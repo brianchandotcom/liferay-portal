@@ -108,7 +108,7 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 			try {
 				if (RuntimeVariables.replace("Manage Pages")
 										.equals(selenium.getText(
-								"//tr[13]/td[2]"))) {
+								"//tr[14]/td[2]"))) {
 					break;
 				}
 			}
@@ -119,7 +119,7 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 		}
 
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//tr[13]/td[2]"));
+			selenium.getText("//tr[14]/td[2]"));
 		assertFalse(selenium.isChecked(
 				"//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']"));
 		selenium.check(

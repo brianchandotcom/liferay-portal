@@ -128,7 +128,7 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 			try {
 				if (RuntimeVariables.replace("Manage Pages")
 										.equals(selenium.getText(
-								"//tr[13]/td[2]"))) {
+								"//tr[14]/td[2]"))) {
 					break;
 				}
 			}
@@ -139,7 +139,7 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		}
 
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//tr[13]/td[2]"));
+			selenium.getText("//tr[14]/td[2]"));
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']",
 				"User Personal Site"));

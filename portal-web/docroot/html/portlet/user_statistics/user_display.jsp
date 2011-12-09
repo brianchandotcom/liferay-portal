@@ -59,20 +59,22 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 >
 	<c:if test="<%= userDisplay != null %>">
 		<div class="user-rank">
-			<span><liferay-ui:message key="rank" />:</span> <%= searchContainer.getStart() + row.getPos() + 1 %>
+			<span class="statistics-label"><liferay-ui:message key="rank" />:</span> <%= searchContainer.getStart() + row.getPos() + 1 %>
 		</div>
 
 		<div class="contribution-score">
-			<span><liferay-ui:message key='contribution-score' />:</span> <%= contributionActivityCounter.getCurrentValue() %>
+			<span class="statistics-label"><liferay-ui:message key='contribution-score' />:</span> <%= contributionActivityCounter.getCurrentValue() %>
+
 			<c:if test="<%= showTotals %>">
-				 (<span><liferay-ui:message key="total" />: <%= contributionActivityCounter.getTotalValue() %>)</span>
+				 <span>(<liferay-ui:message key="total" />: <%= contributionActivityCounter.getTotalValue() %>)</span>
 			</c:if>
 		</div>
 
 		<div class="participation-score">
-			<span><liferay-ui:message key='participation-score' />:</span> <%= participationActivityCounter.getCurrentValue() %>
+			<span class="statistics-label"><liferay-ui:message key='participation-score' />:</span> <%= participationActivityCounter.getCurrentValue() %>
+
 			<c:if test="<%= showTotals %>">
-				 (<span><liferay-ui:message key="total" />: <%= participationActivityCounter.getTotalValue() %>)</span>
+				 <span>(<liferay-ui:message key="total" />: <%= participationActivityCounter.getTotalValue() %>)</span>
 			</c:if>
 		</div>
 	</c:if>
@@ -89,9 +91,10 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 	%>
 
 		<div class="social-counter-<%= activityCounter.getName() %>">
-			<span><liferay-ui:message key='<%= "social.counter." + activityCounter.getName() %>' />:</span> <%= activityCounter.getCurrentValue() %>
+			<span class="statistics-label"><liferay-ui:message key='<%= "social.counter." + activityCounter.getName() %>' />:</span> <%= activityCounter.getCurrentValue() %>
+
 			<c:if test="<%= showTotals %>">
-				 (<span><liferay-ui:message key="total" />: <%= activityCounter.getTotalValue() %>)</span>
+				 <span>(<liferay-ui:message key="total" />: <%= activityCounter.getTotalValue() %>)</span>
 			</c:if>
 		</div>
 

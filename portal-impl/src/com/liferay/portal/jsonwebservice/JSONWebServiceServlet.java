@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -121,11 +122,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 			if (Validator.isNull(queryString)) {
 
-				String servletContextName =
-					servletContext.getServletContextName();
+				String servletContextPath =
+					ContextPathUtil.getContextPath(servletContext);
 
-				queryString = "contextName=" +
-					URLDecoder.decode(servletContextName, "UTF-8");
+				queryString = "contextPath=" +
+					URLDecoder.decode(servletContextPath, "UTF-8");
 			}
 
 			apiPath = serverUrl + apiPath + '?' + queryString;
@@ -150,7 +151,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 				PortletServlet.PORTLET_CLASS_LOADER);
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			servletContext.getServletContextName(),
 			servletContext.getContextPath(), portletClassLoader);
 
 		_jsonWebServiceServiceAction.setServletContext(servletContext);

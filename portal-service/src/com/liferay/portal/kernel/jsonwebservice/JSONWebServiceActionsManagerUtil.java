@@ -33,10 +33,10 @@ public class JSONWebServiceActionsManagerUtil {
 	}
 
 	public static List<JSONWebServiceActionMapping>
-		getJSONWebServiceActionMappings(String servletContextName) {
+		getJSONWebServiceActionMappings(String servletContextPath) {
 
 		return _jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
-			servletContextName);
+			servletContextPath);
 	}
 
 	public static JSONWebServiceActionsManager
@@ -53,19 +53,18 @@ public class JSONWebServiceActionsManagerUtil {
 	}
 
 	public static void registerJSONWebServiceAction(
-		String servletContextName, String servletContextPath,
-		Class<?> actionClass, Method actionMethod, String path, String method) {
+		String servletContextPath, Class<?> actionClass, Method actionMethod,
+		String path, String method) {
 
 		getJSONWebServiceActionsManager().registerJSONWebServiceAction(
-			servletContextName, servletContextPath, actionClass, actionMethod,
-			path, method);
+			servletContextPath, actionClass, actionMethod, path, method);
 	}
 
 	public static int unregisterJSONWebServiceActions(
-		String servletContextName) {
+		String servletContextPath) {
 
 		return getJSONWebServiceActionsManager().
-			unregisterJSONWebServiceActions(servletContextName);
+			unregisterJSONWebServiceActions(servletContextPath);
 	}
 
 	public void setJSONWebServiceActionsManager(

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.BinarySearch;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -88,16 +89,17 @@ public class JSONWebServiceActionsManagerImpl
 
 		ServletContext servletContext = session.getServletContext();
 
-		String servletContextName = servletContext.getServletContextName();
+		String servletContextPath =
+			ContextPathUtil.getContextPath(servletContext);
 
 		int jsonWebServiceActionConfigIndex =
 			_getJSONWebServiceActionConfigIndex(
-				servletContextName, path, method, parameterNames);
+				servletContextPath, path, method, parameterNames);
 
 		if (jsonWebServiceActionConfigIndex == -1) {
 			throw new RuntimeException(
 				"No JSON web service action associated with path " + path +
-					" and method " + method + " for " + servletContextName);
+					" and method " + method + " for /" + servletContextPath);
 		}
 
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
@@ -122,7 +124,7 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
-		String servletContextName) {
+		String servletContextPath) {
 
 		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			new ArrayList<JSONWebServiceActionMapping>(
@@ -131,22 +133,12 @@ public class JSONWebServiceActionsManagerImpl
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
 				_jsonWebServiceActionConfigs) {
 
-			String jsonWebServiceServletContextName =
-				jsonWebServiceActionConfig.getServletContextName();
+			String jsonWebServiceServletContextPath =
+				jsonWebServiceActionConfig.getServletContextPath();
 
-			if (servletContextName == null) {
-				if (jsonWebServiceServletContextName == null) {
-					jsonWebServiceActionMappings.add(
-						jsonWebServiceActionConfig);
-				}
-			}
-			else {
-				if (servletContextName.equals(
-						jsonWebServiceServletContextName)) {
+			if (servletContextPath.equals(jsonWebServiceServletContextPath)) {
 
-					jsonWebServiceActionMappings.add(
-						jsonWebServiceActionConfig);
-				}
+				jsonWebServiceActionMappings.add(jsonWebServiceActionConfig);
 			}
 		}
 
@@ -154,22 +146,17 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	public void registerJSONWebServiceAction(
-		String servletContextName, String servletContextPath,
-		Class<?> actionClass, Method actionMethod, String path, String method) {
+		String servletContextPath, Class<?> actionClass, Method actionMethod,
+		String path, String method) {
 
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
 			new JSONWebServiceActionConfig(
-				servletContextName, servletContextPath, actionClass,
-				actionMethod, path, method);
+				servletContextPath, actionClass, actionMethod, path, method);
 
 		_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
 	}
 
-	public int unregisterJSONWebServiceActions(String servletContextName) {
-		if (servletContextName == null) {
-			return 0;
-		}
-
+	public int unregisterJSONWebServiceActions(String servletContextPath) {
 		int count = 0;
 
 		Iterator<JSONWebServiceActionConfig> itr =
@@ -178,8 +165,8 @@ public class JSONWebServiceActionsManagerImpl
 		while (itr.hasNext()) {
 			JSONWebServiceActionConfig jsonWebServiceActionConfig = itr.next();
 
-			if (servletContextName.equals(
-					jsonWebServiceActionConfig.getServletContextName())) {
+			if (servletContextPath.equals(
+				jsonWebServiceActionConfig.getServletContextPath())) {
 
 				itr.remove();
 
@@ -209,7 +196,7 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	private int _getJSONWebServiceActionConfigIndex(
-		String servletContextName, String path, String method,
+		String servletContextPath, String path, String method,
 		String[] parameterNames) {
 
 		int hint = -1;
@@ -222,9 +209,7 @@ public class JSONWebServiceActionsManagerImpl
 			path = path.substring(0, dotIndex);
 		}
 
-		if (servletContextName != null) {
-			path = StringPool.SLASH + servletContextName + path;
-		}
+		path = servletContextPath + path;
 
 		int firstIndex = _pathBinarySearch.findFirst(path);
 

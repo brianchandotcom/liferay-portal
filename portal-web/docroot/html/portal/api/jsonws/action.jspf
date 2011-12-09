@@ -20,7 +20,7 @@
 	JSONWebServiceActionMapping jsonWebServiceActionMapping = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMapping(signature);
 	%>
 
-	<%= jsonWebServiceActionMapping.getPath() %>
+	<%= jsonWebServiceActionMapping.getServletContextPath() %><%= jsonWebServiceActionMapping.getPath() %>
 </h2>
 
 <h3>

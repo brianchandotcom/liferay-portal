@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.LockLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ResourceService;
@@ -39,6 +40,8 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
+import com.liferay.portal.service.persistence.LockFinder;
+import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
@@ -797,6 +800,60 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the lock local service.
+	 *
+	 * @return the lock local service
+	 */
+	public LockLocalService getLockLocalService() {
+		return lockLocalService;
+	}
+
+	/**
+	 * Sets the lock local service.
+	 *
+	 * @param lockLocalService the lock local service
+	 */
+	public void setLockLocalService(LockLocalService lockLocalService) {
+		this.lockLocalService = lockLocalService;
+	}
+
+	/**
+	 * Returns the lock persistence.
+	 *
+	 * @return the lock persistence
+	 */
+	public LockPersistence getLockPersistence() {
+		return lockPersistence;
+	}
+
+	/**
+	 * Sets the lock persistence.
+	 *
+	 * @param lockPersistence the lock persistence
+	 */
+	public void setLockPersistence(LockPersistence lockPersistence) {
+		this.lockPersistence = lockPersistence;
+	}
+
+	/**
+	 * Returns the lock finder.
+	 *
+	 * @return the lock finder
+	 */
+	public LockFinder getLockFinder() {
+		return lockFinder;
+	}
+
+	/**
+	 * Sets the lock finder.
+	 *
+	 * @param lockFinder the lock finder
+	 */
+	public void setLockFinder(LockFinder lockFinder) {
+		this.lockFinder = lockFinder;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -1118,6 +1175,12 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = GroupFinder.class)
 	protected GroupFinder groupFinder;
+	@BeanReference(type = LockLocalService.class)
+	protected LockLocalService lockLocalService;
+	@BeanReference(type = LockPersistence.class)
+	protected LockPersistence lockPersistence;
+	@BeanReference(type = LockFinder.class)
+	protected LockFinder lockFinder;
 	@BeanReference(type = ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
 	@BeanReference(type = ResourceService.class)

@@ -17,10 +17,13 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -33,6 +36,7 @@ import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.model.SocialActivityProcessor;
+import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.base.SocialActivityCounterLocalServiceBaseImpl;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinderUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
@@ -43,15 +47,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jodd.util.StringPool;
+
 /**
  * @author Zsolt Berentey
  */
 public class SocialActivityCounterLocalServiceImpl
 	extends SocialActivityCounterLocalServiceBaseImpl {
 
-	@Transactional(
-		rollbackFor = SystemException.class,
-		propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int currentValue, int totalValue)
@@ -219,9 +222,19 @@ public class SocialActivityCounterLocalServiceImpl
 			int ownerType)
 		throws SystemException {
 
+		return fetchLatestActivityCounter(
+			groupId, classNameId, classPK, name, ownerType, true);
+	}
+
+	public SocialActivityCounter fetchLatestActivityCounter(
+			long groupId, long classNameId, long classPK, String name,
+			int ownerType, boolean retrieveFromCache)
+		throws SystemException {
+
 		return socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
 			groupId, classNameId, classPK, name, ownerType,
-			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
+			SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
+			retrieveFromCache);
 	}
 
 	public List<SocialActivityCounter> getActivityCounterDistribution(
@@ -284,6 +297,15 @@ public class SocialActivityCounterLocalServiceImpl
 	public SocialActivityCounter getLatestActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType)
+		throws NoSuchActivityCounterException, SystemException {
+
+		return getLatestActivityCounter(
+			groupId, classNameId, classPK, name, ownerType, true);
+	}
+
+	public SocialActivityCounter getLatestActivityCounter(
+			long groupId, long classNameId, long classPK, String name,
+			int ownerType, boolean retrieveFromCache)
 		throws NoSuchActivityCounterException, SystemException {
 
 		return socialActivityCounterPersistence.findByG_C_C_N_O_E(
@@ -389,14 +411,43 @@ public class SocialActivityCounterLocalServiceImpl
 
 		SocialActivityCounter activityCounter = null;
 
-		try {
-			activityCounter = addActivityCounter(
-				groupId, classNameId, classPK, name, ownerType, 0,
-				overallValue);
-		}
-		catch (SystemException se) {
+		String lockKey = createLockKey(
+			groupId, classNameId, classPK, name, ownerType);
+
+		Lock lock = null;
+
+		while (true) {
+			try {
+				lock = lockLocalService.lock(
+					SocialActivityCounter.class.getName(), lockKey,
+					lockKey, false);
+			} catch (Exception ex) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Could not acquire activity counter lock" +
+						", retrying...");
+				}
+
+				continue;
+			}
+
 			activityCounter = fetchLatestActivityCounter(
-				groupId, classNameId, classPK, name, ownerType);
+				groupId, classNameId, classPK, name, ownerType, false);
+
+			if (activityCounter == null) {
+				if (!lock.isNew()) {
+					continue;
+				}
+
+				activityCounter = addActivityCounter(
+					groupId, classNameId, classPK, name, ownerType, 0, 0);
+			}
+
+			if (lock.isNew()) {
+				lockLocalService.unlock(
+					SocialActivityCounter.class.getName(), lockKey);
+			}
+
+			break;
 		}
 
 		return activityCounter;
@@ -541,5 +592,25 @@ public class SocialActivityCounterLocalServiceImpl
 				activityCounterDefinition.getIncrement());
 		}
 	}
+
+	private String createLockKey(
+		long groupId, long classNameId, long classPK, String name,
+		int ownerType) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(StringUtil.toHexString(groupId));
+		sb.append(StringPool.UNDERSCORE);
+		sb.append(StringUtil.toHexString(classNameId));
+		sb.append(StringPool.UNDERSCORE);
+		sb.append(StringUtil.toHexString(classPK));
+		sb.append(StringPool.UNDERSCORE);
+		sb.append(name);
+
+		return sb.toString();
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SocialActivityCounterLocalService.class);
 
 }

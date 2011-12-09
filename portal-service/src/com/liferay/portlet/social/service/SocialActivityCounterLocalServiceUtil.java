@@ -300,6 +300,15 @@ public class SocialActivityCounterLocalServiceUtil {
 			name, ownerType);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivityCounter fetchLatestActivityCounter(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLatestActivityCounter(groupId, classNameId, classPK,
+			name, ownerType, retrieveFromCache);
+	}
+
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounterDistribution(
 		long groupId, java.lang.String name, int offset,
 		boolean includeCurrentPeriod)
@@ -341,6 +350,16 @@ public class SocialActivityCounterLocalServiceUtil {
 		return getService()
 				   .getLatestActivityCounter(groupId, classNameId, classPK,
 			name, ownerType);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivityCounter getLatestActivityCounter(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityCounterException {
+		return getService()
+				   .getLatestActivityCounter(groupId, classNameId, classPK,
+			name, ownerType, retrieveFromCache);
 	}
 
 	public static int getUserActivityCounters(long groupId,

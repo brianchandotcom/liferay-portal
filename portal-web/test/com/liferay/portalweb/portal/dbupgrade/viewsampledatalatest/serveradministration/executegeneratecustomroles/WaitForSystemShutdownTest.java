@@ -14,23 +14,31 @@
 
 package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.serveradministration.executegeneratecustomroles;
 
-import com.liferay.portalweb.portal.BaseTests;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ExecuteGenerateCustomRolesTests extends BaseTests {
+public class WaitForSystemShutdownTest extends BaseTestCase {
 
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+	public void testWaitForSystemShutdown() throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 240) {
+				fail("timeout");
+			}
 
-		testSuite.addTestSuite(ExecuteGenerateCustomRolesTest.class);
-		testSuite.addTestSuite(WaitForSystemShutdownTest.class);
+			try {
+				if (selenium.isTextPresent(
+						"The system is shutdown. Please try again later.")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
 
-		return testSuite;
+			Thread.sleep(1000);
+		}
 	}
 
 }

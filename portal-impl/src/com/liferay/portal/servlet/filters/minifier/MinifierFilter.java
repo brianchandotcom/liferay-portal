@@ -175,16 +175,19 @@ public class MinifierFilter extends BasePortalFilter {
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {
-		String key = request.getRequestURI();
+		CacheKeyGenerator cacheKeyGenerator =
+			CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				MinifierFilter.class.getName());
+
+		cacheKeyGenerator.append(request.getRequestURI());
 
 		String queryString = request.getQueryString();
 
 		if (queryString != null) {
-			key = key.concat(_QUESTION_SEPARATOR).concat(
-				sterilizeQueryString(queryString));
+			cacheKeyGenerator.append(sterilizeQueryString(queryString));
 		}
 
-		String cacheKey = String.valueOf(_cacheKeyGenerator.getCacheKey(key));
+		String cacheKey = String.valueOf(cacheKeyGenerator.finish());
 
 		return _tempDir.concat(StringPool.SLASH).concat(cacheKey);
 	}
@@ -494,8 +497,6 @@ public class MinifierFilter extends BasePortalFilter {
 
 	private static final String _JSP_EXTENSION = ".jsp";
 
-	private static final String _QUESTION_SEPARATOR = "_Q_";
-
 	private static final String _TEMP_DIR =
 		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/minifier";
 
@@ -504,9 +505,6 @@ public class MinifierFilter extends BasePortalFilter {
 	private static Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
 
-	private CacheKeyGenerator _cacheKeyGenerator =
-		CacheKeyGeneratorUtil.getCacheKeyGenerator(
-			MinifierFilter.class.getName());
 	private ServletContext _servletContext;
 	private String _servletContextName;
 	private String _tempDir = _TEMP_DIR;

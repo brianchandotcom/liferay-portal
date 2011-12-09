@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 
@@ -41,9 +44,32 @@ public class JournalStructureImpl extends JournalStructureBaseImpl {
 		}
 
 		try {
-			JournalStructure parentStructure =
-				JournalStructureLocalServiceUtil.getStructure(
+			JournalStructure parentStructure = null;
+
+			try {
+				parentStructure = JournalStructureLocalServiceUtil.getStructure(
 					getGroupId(), parentStructureId);
+			}
+			catch (NoSuchStructureException nsse1) {
+				long groupId = getGroupId();
+
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+					group.getCompanyId());
+				
+				if (groupId != companyGroup.getGroupId()) {
+					try {
+						parentStructure = JournalStructureLocalServiceUtil.
+							getStructure(
+								companyGroup.getGroupId(), parentStructureId);
+					}
+					catch (NoSuchStructureException nsse2) {
+						throw new Exception(
+							"No JournalStructure exists with the structure id "
+								+ parentStructureId);
+					}
+				}
+			}
 
 			Document doc = SAXReaderUtil.read(getXsd());
 

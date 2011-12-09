@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -477,8 +478,8 @@ public class JournalStructureLocalServiceImpl
 			return;
 		}
 
-		JournalStructure parentStructure =
-			journalStructurePersistence.findByG_S(groupId, parentStructureId);
+		JournalStructure parentStructure = getParentStructure(
+			groupId, parentStructureId);
 
 		appendParentStructureElements(
 			groupId, parentStructure.getParentStructureId(), elements);
@@ -488,6 +489,27 @@ public class JournalStructureLocalServiceImpl
 		Element rootElement = document.getRootElement();
 
 		elements.addAll(rootElement.elements());
+	}
+
+	protected JournalStructure getParentStructure(
+			long groupId, String parentStructureId)
+		throws PortalException, SystemException {
+
+		JournalStructure parentStructure =
+			journalStructurePersistence.fetchByG_S(groupId, parentStructureId);
+
+		if (parentStructure == null) {
+			Group group = groupLocalService.getGroup(groupId);
+			Group companyGroup = groupLocalService.getCompanyGroup(
+				group.getCompanyId());
+
+			if (groupId != companyGroup.getGroupId()) {
+				parentStructure = journalStructurePersistence.findByG_S(
+					companyGroup.getGroupId(), parentStructureId);
+			}
+		}
+
+		return parentStructure;
 	}
 
 	protected void validate(List<Element> elements, Set<String> elNames)
@@ -627,8 +649,8 @@ public class JournalStructureLocalServiceImpl
 			throw new StructureInheritanceException();
 		}
 
-		JournalStructure parentStructure =
-			journalStructurePersistence.fetchByG_S(groupId, parentStructureId);
+		JournalStructure parentStructure = getParentStructure(
+			groupId, parentStructureId);
 
 		while (parentStructure != null) {
 			if ((parentStructure != null) &&
@@ -638,8 +660,13 @@ public class JournalStructureLocalServiceImpl
 				throw new StructureInheritanceException();
 			}
 
-			parentStructure = journalStructurePersistence.fetchByG_S(
-				groupId, parentStructure.getParentStructureId());
+			try {
+				parentStructure = getParentStructure(
+					groupId, parentStructure.getParentStructureId());
+			}
+			catch (NoSuchStructureException nsse) {
+				break;
+			}
 		}
 	}
 

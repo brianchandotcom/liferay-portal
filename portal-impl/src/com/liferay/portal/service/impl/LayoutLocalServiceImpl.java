@@ -386,23 +386,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// First layout validation
 
 		if (layout.getParentLayoutId() ==
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
 			List<Layout> rootLayouts = layoutPersistence.findByG_P_P(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 2);
 
-			long firstLayoutId = rootLayouts.get(0).getLayoutId();
+			if (rootLayouts.size() > 1) {
+				Layout firstLayout = rootLayouts.get(0);
 
-			if (firstLayoutId == layout.getLayoutId() &&
-				rootLayouts.size() > 1) {
-
-				Layout secondLayout = rootLayouts.get(1);
-
-				// The second layout cannot be a first layout child
-
-				if (secondLayout.getParentLayoutId() ==
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				if (firstLayout.getLayoutId() == layout.getLayoutId()) {
+					Layout secondLayout = rootLayouts.get(1);
 
 					validateFirstLayout(secondLayout.getType());
 				}

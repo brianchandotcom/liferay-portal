@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
@@ -57,6 +58,11 @@ public class LayoutSetPrototypeLayoutSetListener
 					group.getClassPK());
 
 			layoutSetPrototype.setModifiedDate(layoutSet.getModifiedDate());
+
+			UnicodeProperties settingsProperties =
+				layoutSet.getSettingsProperties();
+
+			settingsProperties.remove("merge-fail-count");
 
 			LayoutSetPrototypeUtil.update(layoutSetPrototype, false);
 		}

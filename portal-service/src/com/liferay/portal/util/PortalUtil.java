@@ -136,6 +136,13 @@ public class PortalUtil {
 		getPortal().addPortletDefaultResource(request, portlet);
 	}
 
+	public static void addPortletDefaultResource(
+			long companyId, Layout layout, Portlet portlet)
+		throws PortalException, SystemException {
+
+		getPortal().addPortletDefaultResource(companyId, layout, portlet);
+	}
+
 	/**
 	 * Adds preserved parameters such as doAsGroupId, doAsUserId,
 	 * doAsUserLanguageId, and referrerPlid that should always be preserved as

@@ -166,6 +166,19 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
+	 * Adds the default resource permissions for the portlet to the page.
+	 *
+	 * @param companyId company id
+	 * @param layout layout portlet is being added to
+	 * @param portlet target portlet permissions are added for
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	public void addPortletDefaultResource(
+			long companyId, Layout layout, Portlet portlet)
+		throws PortalException, SystemException;
+
+	/**
 	 * Adds the preserved parameters doAsGroupId and refererPlid to the URL,
 	 * optionally adding doAsUserId and doAsUserLanguageId as well.
 	 *

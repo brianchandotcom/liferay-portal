@@ -234,6 +234,8 @@ public class LayoutStagingHandler implements InvocationHandler {
 				serviceContext);
 		}
 
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
 		layoutRevision = LayoutRevisionLocalServiceUtil.addLayoutRevision(
 			serviceContext.getUserId(), layoutSetBranchId,
 			layoutBranch.getLayoutBranchId(),

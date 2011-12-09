@@ -263,6 +263,12 @@ public interface SocialActivityCounterLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.social.model.SocialActivityCounter fetchLatestActivityCounter(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounterDistribution(
 		long groupId, java.lang.String name, int offset,
 		boolean includeCurrentPeriod)
@@ -288,6 +294,13 @@ public interface SocialActivityCounterLocalService
 	public com.liferay.portlet.social.model.SocialActivityCounter getLatestActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivityCounterException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.social.model.SocialActivityCounter getLatestActivityCounter(
+		long groupId, long classNameId, long classPK, java.lang.String name,
+		int ownerType, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.social.NoSuchActivityCounterException;
 

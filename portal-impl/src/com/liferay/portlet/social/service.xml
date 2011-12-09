@@ -194,6 +194,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 	</entity>

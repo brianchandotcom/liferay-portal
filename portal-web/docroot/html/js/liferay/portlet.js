@@ -638,22 +638,22 @@
 
 				Liferay.Util.openWindow(
 					{
-						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
-						uri: configurationURL,
 						cache: false,
 						dialog: {
 							align: Util.Window.ALIGN_CENTER,
-							width: 820,
 							on: {
 								render: function(event) {
 									this.set('y', this.get('y') + 100);
 								}
-							}
+							},
+							width: 820
 						},
 						dialogIframe: {
 							id: namespacedId + 'configurationIframe',
 							uri: configurationURL
-						}
+						},
+						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
+						uri: configurationURL
 					}
 				);
 			}

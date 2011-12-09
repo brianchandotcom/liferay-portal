@@ -33,6 +33,7 @@
 				<action-key>ADD_USER_GROUP</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>EXPORT_USER</action-key>
+				<action-key>UNLINK_LAYOUT_SET_PROTOTYPE</action-key>
 				<action-key>VIEW_CONTROL_PANEL</action-key>
 			</supports>
 			<site-member-defaults />

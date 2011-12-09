@@ -22,8 +22,10 @@ Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 String content = StringPool.BLANK;
 
 boolean curFreeformLayout = false;
+boolean prototypeGroup = false;
 
 if (selLayout != null) {
+	Group group = selLayout.getGroup();
 	Theme curTheme = selLayout.getTheme();
 
 	String themeId = curTheme.getThemeId();
@@ -38,7 +40,11 @@ if (selLayout != null) {
 
 	curFreeformLayout = layoutTemplateId.equals("freeform");
 
-	if (!curFreeformLayout) {
+	if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+		prototypeGroup = true;
+	}
+
+	if (!curFreeformLayout && !prototypeGroup) {
 		LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, themeId);
 
 		if (layoutTemplate != null) {
@@ -66,6 +72,11 @@ if (selLayout != null) {
 	<c:when test="<%= curFreeformLayout %>">
 		<div class="portlet-msg-alert">
 			<liferay-ui:message key="it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" />
+		</div>
+	</c:when>
+	<c:when test="<%= prototypeGroup %>">
+		<div class="portlet-msg-alert">
+			<liferay-ui:message key="it-is-not-possible-to-specify-customization-settings-for-pages-in-site-templates-or-page-templates" />
 		</div>
 	</c:when>
 	<c:otherwise>

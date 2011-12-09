@@ -49,14 +49,21 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">
+
+					<%
+					addSiteURL.setParameter("showPrototypes", "0");
+					%>
+
 					<liferay-ui:icon
 						image="site_icon"
-						message="site"
+						message="blank-site"
 						method="get"
 						url='<%= addSiteURL.toString() %>'
 					/>
 
 					<%
+					addSiteURL.setParameter("showPrototypes", "1");
+
 					for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 						addSiteURL.setParameter("layoutSetPrototypeId", String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
 					%>

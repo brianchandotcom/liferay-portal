@@ -18,6 +18,7 @@
 
 <%
 String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
+boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -130,6 +131,7 @@ else if (layoutSetPrototype != null) {
 	request.setAttribute("site.stagingGroupId", new Long(stagingGroupId));
 	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
 	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
+	request.setAttribute("site.showPrototypes", Boolean.valueOf(showPrototypes));
 	%>
 
 	<liferay-util:buffer var="htmlBottom">

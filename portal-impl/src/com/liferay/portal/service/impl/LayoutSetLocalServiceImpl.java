@@ -204,6 +204,20 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPrototypeUuid);
 	}
 
+	public void updateLayoutSetPrototypeLink(
+			long groupId, boolean privateLayout,
+			boolean layoutSetPrototypeLinkEnabled)
+		throws PortalException, SystemException {
+
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+			groupId, privateLayout);
+
+		layoutSet.setLayoutSetPrototypeLinkEnabled(
+			layoutSetPrototypeLinkEnabled);
+
+		layoutSetPersistence.update(layoutSet, false);
+	}
+
 	public void updateLogo(
 			long groupId, boolean privateLayout, boolean logo, File file)
 		throws PortalException, SystemException {

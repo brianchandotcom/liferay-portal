@@ -36,6 +36,7 @@ import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutSettings;
@@ -192,6 +194,9 @@ public class SitesUtil {
 
 		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			serviceContext);
+
+		setLayoutSetPrototypeLinkEnabled(
+			parameterMap, targetLayoutSet, serviceContext);
 
 		if (!targetLayoutSet.isPrivateLayout()) {
 			parameterMap.put(
@@ -380,7 +385,7 @@ public class SitesUtil {
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_INHERITED,
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
@@ -431,6 +436,9 @@ public class SitesUtil {
 
 		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			serviceContext);
+
+		setLayoutSetPrototypeLinkEnabled(
+			parameterMap, layoutSet, serviceContext);
 
 		LayoutServiceUtil.importLayouts(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
@@ -564,6 +572,55 @@ public class SitesUtil {
 		}
 
 		return true;
+	}
+
+	protected static void setLayoutSetPrototypeLinkEnabled(
+			Map<String, String[]> parameterMap, LayoutSet targetLayoutSet,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) ||
+		    !PortalPermissionUtil.contains(
+			    permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
+
+			return;
+		}
+
+		if (targetLayoutSet.isPrivateLayout()) {
+			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "privateLayoutSetPrototypeLinkEnabled");
+
+			if (!privateLayoutSetPrototypeLinkEnabled) {
+				privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					serviceContext, "layoutSetPrototypeLinkEnabled");
+			}
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {
+					String.valueOf(privateLayoutSetPrototypeLinkEnabled)
+				}
+			);
+		}
+		else {
+			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "publicLayoutSetPrototypeLinkEnabled");
+
+			if (!publicLayoutSetPrototypeLinkEnabled) {
+				publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					serviceContext, "layoutSetPrototypeLinkEnabled");
+			}
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {
+					String.valueOf(publicLayoutSetPrototypeLinkEnabled)
+				}
+			);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SitesUtil.class);

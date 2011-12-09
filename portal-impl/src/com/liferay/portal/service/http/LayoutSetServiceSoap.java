@@ -64,6 +64,20 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class LayoutSetServiceSoap {
+	public static void updateLayoutSetPrototypeLink(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
+		throws RemoteException {
+		try {
+			LayoutSetServiceUtil.updateLayoutSetPrototypeLink(groupId,
+				privateLayout, layoutSetPrototypeLinkEnabled);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.LayoutSetSoap updateLookAndFeel(
 		long groupId, boolean privateLayout, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)

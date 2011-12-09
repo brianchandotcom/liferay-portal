@@ -39,8 +39,8 @@ public class PortletDataHandlerKeys {
 	public static final String IGNORE_LAST_PUBLISH_DATE =
 		"IGNORE_LAST_PUBLISH_DATE";
 
-	public static final String LAYOUT_SET_PROTOTYPE_INHERITED =
-		"LAYOUT_SET_PROTOTYPE_INHERITED";
+	public static final String LAYOUT_SET_PROTOTYPE_LINK_ENABLED =
+		"LAYOUT_SET_PROTOTYPE_LINK_ENABLED";
 
 	public static final String LAYOUTS_IMPORT_MODE = "LAYOUTS_IMPORT_MODE";
 

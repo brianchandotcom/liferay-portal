@@ -29,6 +29,14 @@ public class LayoutSetServiceWrapper implements LayoutSetService,
 		_layoutSetService = layoutSetService;
 	}
 
+	public void updateLayoutSetPrototypeLink(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetService.updateLayoutSetPrototypeLink(groupId, privateLayout,
+			layoutSetPrototypeLinkEnabled);
+	}
+
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,

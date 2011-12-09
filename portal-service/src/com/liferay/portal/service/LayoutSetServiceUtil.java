@@ -37,6 +37,15 @@ public class LayoutSetServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void updateLayoutSetPrototypeLink(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateLayoutSetPrototypeLink(groupId, privateLayout,
+			layoutSetPrototypeLinkEnabled);
+	}
+
 	public static void updateLogo(long groupId, boolean privateLayout,
 		boolean logo, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,

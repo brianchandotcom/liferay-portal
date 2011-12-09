@@ -12484,6 +12484,35 @@ This method handles the creation of the layout including its resources, metadata
 			</throws>
 		</method>
 		<method>
+			<name>updateLayoutSetPrototypeLink</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>privateLayout</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>layoutSetPrototypeLinkEnabled</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
 			<name>updateLogo</name>
 			<comment><![CDATA[]]></comment>
 			<param>
@@ -12791,12 +12820,7 @@ This method handles the creation of the layout including its resources, metadata
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>allowModifications</name>
-				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>allowLayoutAddition</name>
+				<name>layoutsUpdateable</name>
 				<type>boolean</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -12950,12 +12974,7 @@ This method handles the creation of the layout including its resources, metadata
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>allowModifications</name>
-				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>allowLayoutAddition</name>
+				<name>layoutsUpdateable</name>
 				<type>boolean</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -13025,12 +13044,7 @@ This method handles the creation of the layout including its resources, metadata
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>allowModifications</name>
-				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>allowLayoutAddition</name>
+				<name>layoutsUpdateable</name>
 				<type>boolean</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -13141,12 +13155,7 @@ This method handles the creation of the layout including its resources, metadata
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
-				<name>allowModifications</name>
-				<type>boolean</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-			<param>
-				<name>allowLayoutAddition</name>
+				<name>layoutsUpdateable</name>
 				<type>boolean</type>
 				<comment><![CDATA[]]></comment>
 			</param>
@@ -13196,6 +13205,35 @@ This method handles the creation of the layout including its resources, metadata
 		<type>com.liferay.portal.service.impl.LayoutSetServiceImpl</type>
 		<comment><![CDATA[]]></comment>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
+		<method>
+			<name>updateLayoutSetPrototypeLink</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>groupId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>privateLayout</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>layoutSetPrototypeLinkEnabled</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
 		<method>
 			<name>updateLogo</name>
 			<comment><![CDATA[]]></comment>
@@ -97538,6 +97576,50 @@ Due to legacy code, the names of some file entry properties are not intuitive. E
 				<type>com.liferay.portal.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
+		</method>
+		<method>
+			<name>updateAsset</name>
+			<comment><![CDATA[]]></comment>
+			<param>
+				<name>userId</name>
+				<type>long</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>message</name>
+				<type>com.liferay.portlet.messageboards.model.MBMessage</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>assetCategoryIds</name>
+				<type>long[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>assetTagNames</name>
+				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>assetLinkEntryIds</name>
+				<type>long[]</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<param>
+				<name>assetEntryVisible</name>
+				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>PortalException</name>
+				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+			<throws>
+				<name>SystemException</name>
+				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
 		</method>
 		<method>
 			<name>updatePriorities</name>

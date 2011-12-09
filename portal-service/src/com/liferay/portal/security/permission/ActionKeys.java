@@ -222,6 +222,9 @@ public class ActionKeys {
 
 	public static final String SUBMIT = "SUBMIT";
 
+	public static final String UNLINK_LAYOUT_SET_PROTOTYPE =
+		"UNLINK_LAYOUT_SET_PROTOTYPE";
+
 	public static final String UPDATE = "UPDATE";
 
 	public static final String UPDATE_DISCUSSION = "UPDATE_DISCUSSION";

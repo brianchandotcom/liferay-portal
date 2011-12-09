@@ -142,6 +142,7 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutSet",
 	{
+		updateLayoutSetPrototypeLink: true,
 		updateLookAndFeel: true,
 		updateSettings: true,
 		updateVirtualHost: true

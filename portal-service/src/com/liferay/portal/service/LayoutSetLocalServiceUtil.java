@@ -301,6 +301,15 @@ public class LayoutSetLocalServiceUtil {
 				   .getLayoutSetsByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
+	public static void updateLayoutSetPrototypeLink(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateLayoutSetPrototypeLink(groupId, privateLayout,
+			layoutSetPrototypeLinkEnabled);
+	}
+
 	public static void updateLogo(long groupId, boolean privateLayout,
 		boolean logo, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -24,22 +24,22 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGrou
 
 LayoutSetPrototype privateLayoutSetPrototype = null;
 
-boolean privateLayoutSetPrototypeInheritance = false;
+boolean privateLayoutSetPrototypeLinkEnabled = false;
 
 LayoutSetPrototype publicLayoutSetPrototype = null;
 
-boolean publicLayoutSetPrototypeInheritance = false;
+boolean publicLayoutSetPrototypeLinkEnabled = false;
 
 if (Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid())) {
 	privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(privateLayoutSet.getLayoutSetPrototypeUuid());
 
-	privateLayoutSetPrototypeInheritance = privateLayoutSet.getLayoutSetPrototypeLinkEnabled();
+	privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.getLayoutSetPrototypeLinkEnabled();
 }
 
 if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 	publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(publicLayoutSet.getLayoutSetPrototypeUuid());
 
-	publicLayoutSetPrototypeInheritance = publicLayoutSet.getLayoutSetPrototypeLinkEnabled();
+	publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.getLayoutSetPrototypeLinkEnabled();
 }
 %>
 
@@ -47,7 +47,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 
 <c:if test="<%= (publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null) %>">
 	<div class="portlet-msg-info">
-		<liferay-ui:message key="there-are-no-templates-used-on-this-site" />
+		<liferay-ui:message key="this-site-is-not-related-to-any-site-template" />
 	</div>
 </c:if>
 
@@ -55,21 +55,21 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 	<c:if test="<%= publicLayoutSetPrototype != null %>">
 		<aui:fieldset label="public-site-template">
 			<c:choose>
-				<c:when test="<%= publicLayoutSetPrototypeInheritance %>">
+				<c:when test="<%= publicLayoutSetPrototypeLinkEnabled %>">
 
 					<%
 					boolean layoutsUpdateable = GetterUtil.getBoolean(publicLayoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 					%>
 
-					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-template-x" />
+					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
 
 					<aui:field-wrapper label="site-template-settings">
 						<aui:input disabled="<%= true %>" name="active" value="<%= publicLayoutSetPrototype.isActive() %>" type="checkbox" />
-						<aui:input disabled="<%= true %>" name="allow-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
+						<aui:input disabled="<%= true %>" name="site-template-allows-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="this-site-was-cloned-from-template-x" />
+					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="this-site-was-cloned-from-site-template-x" />
 				</c:otherwise>
 			</c:choose>
 		</aui:fieldset>
@@ -78,21 +78,21 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 	<c:if test="<%= privateLayoutSetPrototype != null %>">
 		<aui:fieldset label="private-site-template">
 			<c:choose>
-				<c:when test="<%= privateLayoutSetPrototypeInheritance %>">
+				<c:when test="<%= privateLayoutSetPrototypeLinkEnabled %>">
 
 					<%
 					boolean layoutsUpdateable = GetterUtil.getBoolean(privateLayoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 					%>
 
-					<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-template-x" />
+					<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
 
 					<aui:field-wrapper label="site-template-settings">
 						<aui:input disabled="<%= true %>" name="active" type="checkbox" value="<%= privateLayoutSetPrototype.isActive() %>" />
-						<aui:input disabled="<%= true %>" name="template-allows-modification" type="checkbox" value="<%= layoutsUpdateable %>" />
+						<aui:input disabled="<%= true %>" name="site-template-allows-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="this-site-was-cloned-from-template-x" />
+					<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="this-site-was-cloned-from-site-template-x" />
 				</c:otherwise>
 			</c:choose>
 		</aui:fieldset>

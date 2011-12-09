@@ -343,6 +343,16 @@
 	}
 }
 
+.aui-tree-node-content {
+	.layout-branch-name {
+		color: #AAA;
+	}
+
+	.incomplete-layout {
+		color: #CCC;
+	}
+}
+
 .aui-tree-node-selected {
 	background: #eee;
 }

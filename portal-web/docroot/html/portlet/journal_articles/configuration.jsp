@@ -180,7 +180,6 @@ if (Validator.isNotNull(structureId)) {
 			Liferay.Util.openWindow(
 				{
 					dialog: {
-						stack: false,
 						width: 680
 					},
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',

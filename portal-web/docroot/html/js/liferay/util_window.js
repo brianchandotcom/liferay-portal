@@ -18,7 +18,7 @@ AUI().add(
 
 		var CONFIG_DEFAULTS_DIALOG = {
 			draggable: true,
-			stack: true,
+			stack: false,
 			width: 720,
 			xy: Window.XY,
 			after: {

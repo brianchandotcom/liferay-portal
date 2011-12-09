@@ -398,7 +398,6 @@ int tabIndex = 1;
 		Liferay.Util.openWindow(
 			{
 				dialog: {
-					stack: false,
 					width: 680
 				},
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structure") %>',

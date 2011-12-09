@@ -1249,7 +1249,6 @@ AUI().add(
 					{
 						dialog: {
 							align: Liferay.Util.Window.ALIGN_CENTER,
-							stack: false,
 							width: 680
 						},
 						title: title,

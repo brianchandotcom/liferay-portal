@@ -339,28 +339,17 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	public List<AssetTag> getTags(
-			long groupId, String socialActivityCounterName, int offset,
-			boolean includeCurrentPeriod)
-		throws SystemException {
-
-		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(-offset);
-		int endPeriod = -1;
-
-		if (!includeCurrentPeriod) {
-			endPeriod = SocialCounterPeriodUtil.getStartPeriod() - 1;
-		}
-
-		return getTags(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
-	}
-
-	public List<AssetTag> getTags(
 			long groupId, String socialActivityCounterName, int startPeriod,
 			int endPeriod)
 		throws SystemException {
 
+		int offset = SocialCounterPeriodUtil.getOffset(endPeriod);
+
+		int periodLength = SocialCounterPeriodUtil.getPeriodLength(offset);
+
 		return assetTagFinder.findByG_N_S_E(
-			groupId, socialActivityCounterName, startPeriod, endPeriod);
+			groupId, socialActivityCounterName, startPeriod, endPeriod,
+			periodLength);
 	}
 
 	@ThreadLocalCachable
@@ -370,6 +359,18 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return getTags(classNameId, classPK);
+	}
+
+	public List<AssetTag> getTagsByOffset(
+			long groupId, String socialActivityCounterName, int startOffset,
+			int endOffset)
+		throws SystemException {
+
+		int startPeriod = SocialCounterPeriodUtil.getStartPeriod(startOffset);
+		int endPeriod = SocialCounterPeriodUtil.getEndPeriod(endOffset);
+
+		return getTags(
+			groupId, socialActivityCounterName, startPeriod, endPeriod);
 	}
 
 	public int getTagsSize(long groupId, long classNameId, String name)

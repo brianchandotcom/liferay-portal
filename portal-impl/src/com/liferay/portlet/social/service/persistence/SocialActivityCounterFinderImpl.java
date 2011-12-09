@@ -104,10 +104,11 @@ public class SocialActivityCounterFinderImpl
 	}
 
 	public List<SocialActivityCounter> findAC_ByG_N_S_E_1(
-			long groupId, String name, int startPeriod, int endPeriod)
+			long groupId, String name, int startPeriod, int endPeriod,
+			int periodLength)
 		throws SystemException {
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append(groupId);
 		sb.append(StringPool.POUND);
@@ -117,12 +118,13 @@ public class SocialActivityCounterFinderImpl
 		sb.append(StringPool.POUND);
 		sb.append(endPeriod);
 		sb.append(StringPool.POUND);
+		sb.append(periodLength);
 
 		String key = sb.toString();
 
 		List<SocialActivityCounter> activityCounters = null;
 
-		if (startPeriod != SocialCounterPeriodUtil.getStartPeriod()) {
+		if (endPeriod < SocialCounterPeriodUtil.getActivityDay()) {
 			activityCounters =
 				(List<SocialActivityCounter>)_activityCounters.get(key);
 		}
@@ -145,6 +147,8 @@ public class SocialActivityCounterFinderImpl
 			qPos.add(groupId);
 			qPos.add(name);
 			qPos.add(startPeriod);
+			qPos.add(endPeriod);
+			qPos.add(periodLength);
 			qPos.add(endPeriod);
 
 			activityCounters = new ArrayList<SocialActivityCounter>();
@@ -174,7 +178,7 @@ public class SocialActivityCounterFinderImpl
 				_activityCounters.remove(key);
 			}
 			else {
-				if (startPeriod != SocialCounterPeriodUtil.getStartPeriod()) {
+				if (endPeriod < SocialCounterPeriodUtil.getActivityDay()) {
 					_activityCounters.put(key, activityCounters);
 				}
 			}
@@ -186,7 +190,8 @@ public class SocialActivityCounterFinderImpl
 	}
 
 	public List<SocialActivityCounter> findAC_ByG_N_S_E_2(
-			long groupId, String counterName, int startPeriod, int endPeriod)
+			long groupId, String counterName, int startPeriod, int endPeriod,
+			int periodLength)
 		throws SystemException {
 
 		Session session = null;
@@ -203,6 +208,8 @@ public class SocialActivityCounterFinderImpl
 			qPos.add(groupId);
 			qPos.add(counterName);
 			qPos.add(startPeriod);
+			qPos.add(endPeriod);
+			qPos.add(periodLength);
 			qPos.add(endPeriod);
 
 			List<SocialActivityCounter> activityCounters =

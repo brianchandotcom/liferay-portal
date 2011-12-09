@@ -30,10 +30,8 @@
 				(groupId = ?) AND
 				(name = ?) AND
 				(startPeriod >= ?) AND
-				(
-					(endPeriod <= ?) OR
-					(endPeriod = -1)
-				)
+				(startPeriod <= ?) AND
+				(startPeriod + ? <= ?)
 			GROUP BY
 				name, startPeriod, endPeriod
 			ORDER BY
@@ -50,10 +48,8 @@
 				(groupId = ?) AND
 				(name = ?) AND
 				(startPeriod >= ?) AND
-				(
-					(endPeriod <= ?) OR
-					(endPeriod = -1)
-				)
+				(startPeriod <= ?) AND
+				(startPeriod + ? <= ?)
 			GROUP BY
 				classNameId, name
 			ORDER BY

@@ -323,10 +323,8 @@
 				(SocialActivityCounter.groupId = ?) AND
 				(SocialActivityCounter.name = ?) AND
 				(SocialActivityCounter.startPeriod >= ?) AND
-				(
-					(SocialActivityCounter.endPeriod <= ?) OR
-					(SocialActivityCounter.endPeriod = -1)
-				)
+				(SocialActivityCounter.startPeriod <= ?) AND
+				(SocialActivityCounter.startPeriod + ? <= ?)
 			GROUP BY
 				AssetTag.tagId, AssetTag.name
    		]]>

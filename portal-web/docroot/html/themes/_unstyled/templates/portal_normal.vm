@@ -25,19 +25,19 @@ $theme.include($body_top_include)
 		<div id="heading">
 			<h1 class="company-title">
 				<a class="$logo_css_class" href="$company_url" title="#language("go-to") $company_name">
-					<span>$company_name</span>
+					<img src="$company_logo" height="$company_logo_height" width="$company_logo_width" alt="$logo_description">
 				</a>
+
+				#if ($show_site_name)
+					<span style="font-size: 1em; color:#000066;" href="$site_default_url" title="#language("go-to") $site_name">
+						<span>$site_name</span>
+					</span>
+				#end
 			</h1>
 
-			<h2 class="site-title">
-				<a href="$site_default_url" title="#language("go-to") $site_name">
-					<span>$site_name</span>
-				</a>
-			</h2>
-
-			<h3 class="page-title">
+			<h2 class="page-title">
 				<span>$the_title</span>
-			</h3>
+			</h2>
 		</div>
 
 		#if (!$is_signed_in)

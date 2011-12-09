@@ -73,6 +73,16 @@
 	#set ($company_url = $portalUtil.getURLWithSessionId($company_url, $request.getSession().getId()))
 #end
 
+#set ($show_site_name = $layout.layoutSet.getSettingsProperty("showSiteName") == "true")
+#set ($site_logo = $layout.layoutSet.isLogo())
+
+#if (!$site_logo)
+	#set ($site_default_url = $company_url)
+	#set ($site_name = $company_name)
+#end
+
+#set ($logo_description = $htmlUtil.escape($site_name))
+
 #set ($user_id = $user.getUserId())
 #set ($is_default_user = $user.isDefaultUser())
 #set ($user_first_name = $user.getFirstName())

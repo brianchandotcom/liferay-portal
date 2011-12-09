@@ -66,6 +66,9 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 			<img alt="<liferay-ui:message key="logo" />" src="<%= themeDisplay.getPathImage() %>/layout_set_logo?img_id=<%= selLayoutSet.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>" />
 		</div>
 	</c:if>
+
+<aui:input label="show-site-name" name="showSiteName" type="checkbox" checked='<%= selLayoutSet.getSettingsProperty("showSiteName") != null ? GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName")) : false %>' />
+
 </aui:fieldset>
 
 <aui:script use="aui-base">

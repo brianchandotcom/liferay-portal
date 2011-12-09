@@ -59,18 +59,19 @@ import org.objectweb.asm.ClassReader;
  */
 public class JSONWebServiceConfigurator extends ClassFinder {
 
-	public JSONWebServiceConfigurator(String servletContextName) {
+	public JSONWebServiceConfigurator(String servletContextPath) {
+
 		setIncludedJars(
 			"*portal-impl.jar", "*portal-service.jar", "*_wl_cls_gen.jar",
 			"*-portlet-service*.jar");
 
-		_servletContextName = servletContextName;
+		_servletContextPath = servletContextPath;
 	}
 
 	public void clean() {
 		int count =
 			JSONWebServiceActionsManagerUtil.unregisterJSONWebServiceActions(
-				_servletContextName);
+				_servletContextPath);
 
 		_registeredActionsCount -= count;
 
@@ -79,7 +80,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 				_log.debug(
 					"Removed " + count +
 						" existing JSON Web Service actions that belonged to " +
-							_servletContextName);
+							_servletContextPath);
 			}
 		}
 	}
@@ -394,7 +395,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		}
 
 		JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-			_servletContextName, method.getDeclaringClass(), method, path,
+			_servletContextPath, method.getDeclaringClass(), method, path,
 			httpMethod);
 
 		_registeredActionsCount++;
@@ -411,7 +412,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 	private JSONWebServiceMappingResolver _jsonWebServiceMappingResolver =
 		new JSONWebServiceMappingResolver();
 	private int _registeredActionsCount;
-	private String _servletContextName;
+	private String _servletContextPath;
 	private Map<Class<?>, Class<?>> _utilClasses =
 		new HashMap<Class<?>, Class<?>>();
 

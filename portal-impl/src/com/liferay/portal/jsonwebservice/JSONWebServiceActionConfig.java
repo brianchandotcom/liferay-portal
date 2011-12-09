@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Method;
 
@@ -31,10 +30,10 @@ public class JSONWebServiceActionConfig
 	JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
-		String servletContextName, Class<?> actionClass, Method actionMethod,
+		String servletContextPath, Class<?> actionClass, Method actionMethod,
 		String path, String method) {
 
-		_servletContextName = servletContextName;
+		_servletContextPath = servletContextPath;
 		_actionClass = actionClass;
 		_actionMethod = actionMethod;
 		_path = path;
@@ -43,14 +42,7 @@ public class JSONWebServiceActionConfig
 		_methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(actionMethod);
 
-		_fullPath = null;
-
-		if (_servletContextName != null) {
-			_fullPath = StringPool.SLASH + _servletContextName + _path;
-		}
-		else {
-			_fullPath = _path;
-		}
+		_fullPath = _servletContextPath + _path;
 
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
@@ -96,8 +88,8 @@ public class JSONWebServiceActionConfig
 		return _path;
 	}
 
-	public String getServletContextName() {
-		return _servletContextName;
+	public String getServletContextPath() {
+		return _servletContextPath;
 	}
 
 	public String getSignature() {
@@ -120,8 +112,8 @@ public class JSONWebServiceActionConfig
 		sb.append(_methodParameters);
 		sb.append(", path=");
 		sb.append(_path);
-		sb.append(", servletContextName=");
-		sb.append(_servletContextName);
+		sb.append(", servletContextPath=");
+		sb.append(_servletContextPath);
 		sb.append(", signature=");
 		sb.append(_signature);
 		sb.append("}");
@@ -135,7 +127,7 @@ public class JSONWebServiceActionConfig
 	private String _method;
 	private MethodParameter[] _methodParameters;
 	private String _path;
-	private String _servletContextName;
+	private String _servletContextPath;
 	private String _signature;
 
 }

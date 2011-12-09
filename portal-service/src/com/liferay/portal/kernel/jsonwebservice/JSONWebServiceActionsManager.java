@@ -32,12 +32,12 @@ public interface JSONWebServiceActionsManager {
 		String signature);
 
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
-		String servletContextName);
+		String servletContextPath);
 
 	public void registerJSONWebServiceAction(
-		String servletContextName, Class<?> actionClass, Method actionMethod,
+		String servletContextPath, Class<?> actionClass, Method actionMethod,
 		String path, String method);
 
-	public int unregisterJSONWebServiceActions(String servletContextName);
+	public int unregisterJSONWebServiceActions(String servletContextPath);
 
 }

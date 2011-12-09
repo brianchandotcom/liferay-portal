@@ -20,7 +20,7 @@
 	JSONWebServiceActionMapping jsonWebServiceActionMapping = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMapping(signature);
 	%>
 
-	<%= jsonWebServiceActionMapping.getPath() %>
+	<%= jsonWebServiceActionMapping.getServletContextPath() %><%= jsonWebServiceActionMapping.getPath() %>
 </h2>
 
 <h3>
@@ -98,7 +98,7 @@ for (MethodParameter methodParameter : methodParameters) {
 }
 %>
 
-<form action="/api/secure/jsonws<%= jsonWebServiceActionMapping.getPath() %>" <%= enctype %> id="execute"  method="<%= jsonWebServiceActionMapping.getMethod() %>">
+<form action="<%= jsonWebServiceActionMapping.getServletContextPath() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getPath() %>" <%= enctype %> id="execute"  method="<%= jsonWebServiceActionMapping.getMethod() %>">
 
 	<%
 	for (int i = 0; i < methodParameters.length; i++) {

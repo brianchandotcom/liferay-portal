@@ -53,6 +53,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
@@ -158,6 +159,19 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entry;
 	}
 
+	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max)
+			throws SystemException {
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				return blogsEntryPersistence.filterFindByGroupId(
+					groupId, 0, max);
+			}
+			else {
+				return blogsEntryPersistence.filterFindByG_S(
+					groupId, status, 0, max);
+			}
+	}
+
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int max)
 		throws SystemException {
@@ -169,6 +183,20 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		else {
 			return blogsEntryPersistence.filterFindByG_LtD_S(
 				groupId, displayDate, status, 0, max);
+		}
+	}
+
+	public List<BlogsEntry> getGroupEntries(
+			long groupId, int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterFindByGroupId(
+				groupId, start, end);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_S(
+				groupId, status, start, end);
 		}
 	}
 
@@ -186,15 +214,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 	}
 
-	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max)
+	public int getGroupEntriesCount(long groupId, int status)
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.filterFindByGroupId(groupId, 0, max);
+			return blogsEntryPersistence.filterCountByGroupId(groupId);
 		}
 		else {
-			return blogsEntryPersistence.filterFindByG_S(
-				groupId, status, 0, max);
+			return blogsEntryPersistence.filterCountByG_S(groupId, status);
 		}
 	}
 

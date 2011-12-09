@@ -1189,45 +1189,45 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param templateLayoutUuid the template layout uuid
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @return the matching layout
 	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout findByG_P_TLU(long groupId,
-		boolean privateLayout, java.lang.String templateLayoutUuid)
+	public com.liferay.portal.model.Layout findByG_P_SPLU(long groupId,
+		boolean privateLayout, java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param templateLayoutUuid the template layout uuid
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout fetchByG_P_TLU(long groupId,
-		boolean privateLayout, java.lang.String templateLayoutUuid)
+	public com.liferay.portal.model.Layout fetchByG_P_SPLU(long groupId,
+		boolean privateLayout, java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param templateLayoutUuid the template layout uuid
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Layout fetchByG_P_TLU(long groupId,
-		boolean privateLayout, java.lang.String templateLayoutUuid,
+	public com.liferay.portal.model.Layout fetchByG_P_SPLU(long groupId,
+		boolean privateLayout, java.lang.String sourcePrototypeLayoutUuid,
 		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1381,15 +1381,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the layout where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63; from the database.
+	* Removes the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param templateLayoutUuid the template layout uuid
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_TLU(long groupId, boolean privateLayout,
-		java.lang.String templateLayoutUuid)
+	public void removeByG_P_SPLU(long groupId, boolean privateLayout,
+		java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.NoSuchLayoutException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -1562,16 +1562,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and templateLayoutUuid = &#63;.
+	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param templateLayoutUuid the template layout uuid
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @return the number of matching layouts
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_P_TLU(long groupId, boolean privateLayout,
-		java.lang.String templateLayoutUuid)
+	public int countByG_P_SPLU(long groupId, boolean privateLayout,
+		java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

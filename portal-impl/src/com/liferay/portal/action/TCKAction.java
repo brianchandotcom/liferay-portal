@@ -90,7 +90,7 @@ public class TCKAction extends Action {
 				userId, groupId, false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "TCKAction",
 				StringPool.BLANK, StringPool.BLANK,
-				LayoutConstants.TYPE_PORTLET, false, StringPool.BLANK, false,
+				LayoutConstants.TYPE_PORTLET, false, StringPool.BLANK,
 				serviceContext);
 
 			LayoutTypePortlet layoutType =

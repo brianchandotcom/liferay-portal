@@ -74,11 +74,12 @@ public class LayoutServiceUtil {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param locked whether the layout is locked
 	* @param serviceContext the service context. Must specify the replacement
 	universally unique identifier and can specify the replacement
 	create date, replacement modified date and the new expando bridge
-	attributes.
+	attributes. For layouts that belong to a layout set prototype, an
+	attribute named 'layoutUpdateable' can be used to specify whether
+	site administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the layouts
@@ -93,13 +94,13 @@ public class LayoutServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addLayout(groupId, privateLayout, parentLayoutId,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, hidden, friendlyURL, locked, serviceContext);
+			robotsMap, type, hidden, friendlyURL, serviceContext);
 	}
 
 	/**
@@ -138,11 +139,12 @@ public class LayoutServiceUtil {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param locked whether the layout is locked
 	* @param serviceContext the service context. Must specify the replacement
 	universally unique identifier and can specify the replacement
 	create date, replacement modified date and the new expando bridge
-	attributes.
+	attributes. For layouts that belong to a layout set prototype, an
+	attribute named 'layoutUpdateable' can be used to specify whether
+	site administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the layouts
@@ -153,13 +155,12 @@ public class LayoutServiceUtil {
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addLayout(groupId, privateLayout, parentLayoutId, name,
-			title, description, type, hidden, friendlyURL, locked,
-			serviceContext);
+			title, description, type, hidden, friendlyURL, serviceContext);
 	}
 
 	/**
@@ -751,7 +752,7 @@ public class LayoutServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		java.lang.Boolean iconImage, byte[] iconBytes, boolean locked,
+		java.lang.Boolean iconImage, byte[] iconBytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -759,7 +760,7 @@ public class LayoutServiceUtil {
 				   .updateLayout(groupId, privateLayout, layoutId,
 			parentLayoutId, localeNamesMap, localeTitlesMap, descriptionMap,
 			keywordsMap, robotsMap, type, hidden, friendlyURL, iconImage,
-			iconBytes, locked, serviceContext);
+			iconBytes, serviceContext);
 	}
 
 	/**

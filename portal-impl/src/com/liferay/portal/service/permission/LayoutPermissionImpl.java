@@ -308,7 +308,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 	protected boolean isAttemptToModifyLockedLayout(
 		Layout layout, String actionId) {
 
-		if (SitesUtil.isLayoutLocked(layout) &&
+		if (!SitesUtil.isLayoutUpdateable(layout) &&
 			(ActionKeys.CUSTOMIZE.equals(actionId) ||
 			 ActionKeys.UPDATE.equals(actionId))) {
 

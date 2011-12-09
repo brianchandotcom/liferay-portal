@@ -91,8 +91,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Serializable {
 		sb.append(layoutPrototypeUuid);
 		sb.append(", layoutPrototypeLinkEnabled=");
 		sb.append(layoutPrototypeLinkEnabled);
-		sb.append(", templateLayoutUuid=");
-		sb.append(templateLayoutUuid);
+		sb.append(", sourcePrototypeLayoutUuid=");
+		sb.append(sourcePrototypeLayoutUuid);
 		sb.append("}");
 
 		return sb.toString();
@@ -237,11 +237,11 @@ public class LayoutCacheModel implements CacheModel<Layout>, Serializable {
 
 		layoutImpl.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 
-		if (templateLayoutUuid == null) {
-			layoutImpl.setTemplateLayoutUuid(StringPool.BLANK);
+		if (sourcePrototypeLayoutUuid == null) {
+			layoutImpl.setSourcePrototypeLayoutUuid(StringPool.BLANK);
 		}
 		else {
-			layoutImpl.setTemplateLayoutUuid(templateLayoutUuid);
+			layoutImpl.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 		}
 
 		layoutImpl.resetOriginalValues();
@@ -277,5 +277,5 @@ public class LayoutCacheModel implements CacheModel<Layout>, Serializable {
 	public int priority;
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
-	public String templateLayoutUuid;
+	public String sourcePrototypeLayoutUuid;
 }

@@ -107,8 +107,9 @@ catch (NoSuchLayoutException nsle) {
 
 if (selLayout != null) {
 	try {
-		if (SitesUtil.isLayoutToBeUpdatedFromTemplate(selLayout)) {
-			Layout templateLayout = LayoutTypePortletImpl.getTemplateLayout(selLayout);
+		if (SitesUtil.isLayoutToBeUpdatedFromSourcePrototype(selLayout)) {
+			Layout templateLayout = LayoutTypePortletImpl.getSourcePrototypeLayout(
+					selLayout);
 
 			SitesUtil.copyLayout(user.getUserId(), templateLayout, selLayout, new ServiceContext());
 

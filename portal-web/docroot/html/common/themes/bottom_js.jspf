@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portal/layout/view/portlet_js.jspf" %>
 
+<%@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
+
 <aui:script position="inline">
 	Liferay.Util.addInputFocus();
 
@@ -138,7 +140,7 @@ if (layout != null) {
 						</c:if>
 
 						navBlock: navBlock,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) %>
+						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutsUpdateable(layout.getLayoutSet()) %>
 					}
 				);
 			}

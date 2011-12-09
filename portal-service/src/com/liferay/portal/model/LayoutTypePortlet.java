@@ -110,13 +110,13 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public List<Portlet> getPortlets() throws SystemException;
 
+	public Layout getSourcePrototypeLayout();
+
 	public String getStateMax();
 
 	public String getStateMaxPortletId();
 
 	public String getStateMin();
-
-	public Layout getTemplateLayout();
 
 	public String getTemplateProperty(String key);
 

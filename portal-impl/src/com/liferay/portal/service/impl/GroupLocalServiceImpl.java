@@ -2009,7 +2009,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_CONTROL_PANEL, false,
-			friendlyURL, false, serviceContext);
+			friendlyURL, serviceContext);
 	}
 
 	protected void addDefaultGuestPublicLayoutByProperties(Group group)
@@ -2027,7 +2027,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			false, serviceContext);
+			serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

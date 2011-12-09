@@ -378,6 +378,10 @@
 	background-image: url(@theme_image_path@/trees/page.png);
 }
 
+.lfr-page-locked .aui-tree-icon {
+	background-image: url(@theme_image_path@/trees/page_locked.png);
+}
+
 .export-dialog-tree .aui-field-input-choice {
 	float: none;
 }

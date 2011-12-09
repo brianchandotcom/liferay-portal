@@ -81,8 +81,7 @@ public class LayoutPrototypeLocalServiceImpl
 			userId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			layoutPrototype.getName(LocaleUtil.getDefault()), null, null,
-			LayoutConstants.TYPE_PORTLET, false, "/layout", false,
-			serviceContext);
+			LayoutConstants.TYPE_PORTLET, false, "/layout", serviceContext);
 
 		return layoutPrototype;
 	}

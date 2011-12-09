@@ -100,11 +100,12 @@ public class LayoutServiceSoap {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param locked whether the layout is locked
 	* @param serviceContext the service context. Must specify the replacement
 	universally unique identifier and can specify the replacement
 	create date, replacement modified date and the new expando bridge
-	attributes.
+	attributes. For layouts that belong to a layout set prototype, an
+	attribute named 'layoutUpdateable' can be used to specify whether
+	site administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the layouts
@@ -115,12 +116,12 @@ public class LayoutServiceSoap {
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		boolean locked, com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.addLayout(groupId,
 					privateLayout, parentLayoutId, name, title, description,
-					type, hidden, friendlyURL, locked, serviceContext);
+					type, hidden, friendlyURL, serviceContext);
 
 			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
 		}

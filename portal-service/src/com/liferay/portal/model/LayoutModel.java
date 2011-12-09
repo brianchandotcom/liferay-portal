@@ -919,19 +919,19 @@ public interface LayoutModel extends BaseModel<Layout> {
 		boolean layoutPrototypeLinkEnabled);
 
 	/**
-	 * Returns the template layout uuid of this layout.
+	 * Returns the source prototype layout uuid of this layout.
 	 *
-	 * @return the template layout uuid of this layout
+	 * @return the source prototype layout uuid of this layout
 	 */
 	@AutoEscape
-	public String getTemplateLayoutUuid();
+	public String getSourcePrototypeLayoutUuid();
 
 	/**
-	 * Sets the template layout uuid of this layout.
+	 * Sets the source prototype layout uuid of this layout.
 	 *
-	 * @param templateLayoutUuid the template layout uuid of this layout
+	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid of this layout
 	 */
-	public void setTemplateLayoutUuid(String templateLayoutUuid);
+	public void setSourcePrototypeLayoutUuid(String sourcePrototypeLayoutUuid);
 
 	public boolean isNew();
 

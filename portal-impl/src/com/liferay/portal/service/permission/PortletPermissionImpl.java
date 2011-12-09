@@ -260,7 +260,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		if (!group.isLayoutSetPrototype() &&
-			SitesUtil.isLayoutLocked(layout) &&
+			!SitesUtil.isLayoutUpdateable(layout) &&
 			actionId.equals(ActionKeys.CONFIGURATION)) {
 
 			return false;

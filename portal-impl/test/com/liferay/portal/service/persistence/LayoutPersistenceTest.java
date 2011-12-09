@@ -123,7 +123,7 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 
 		newLayout.setLayoutPrototypeLinkEnabled(randomBoolean());
 
-		newLayout.setTemplateLayoutUuid(randomString());
+		newLayout.setSourcePrototypeLayoutUuid(randomString());
 
 		_persistence.update(newLayout, false);
 
@@ -166,8 +166,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 			newLayout.getLayoutPrototypeUuid());
 		assertEquals(existingLayout.getLayoutPrototypeLinkEnabled(),
 			newLayout.getLayoutPrototypeLinkEnabled());
-		assertEquals(existingLayout.getTemplateLayoutUuid(),
-			newLayout.getTemplateLayoutUuid());
+		assertEquals(existingLayout.getSourcePrototypeLayoutUuid(),
+			newLayout.getSourcePrototypeLayoutUuid());
 	}
 
 	public void testFindByPrimaryKeyExisting() throws Exception {
@@ -310,8 +310,8 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 		assertEquals(existingLayoutModelImpl.getPrivateLayout(),
 			existingLayoutModelImpl.getOriginalPrivateLayout());
 		assertTrue(Validator.equals(
-				existingLayoutModelImpl.getTemplateLayoutUuid(),
-				existingLayoutModelImpl.getOriginalTemplateLayoutUuid()));
+				existingLayoutModelImpl.getSourcePrototypeLayoutUuid(),
+				existingLayoutModelImpl.getOriginalSourcePrototypeLayoutUuid()));
 	}
 
 	protected Layout addLayout() throws Exception {
@@ -373,7 +373,7 @@ public class LayoutPersistenceTest extends BasePersistenceTestCase {
 
 		layout.setLayoutPrototypeLinkEnabled(randomBoolean());
 
-		layout.setTemplateLayoutUuid(randomString());
+		layout.setSourcePrototypeLayoutUuid(randomString());
 
 		_persistence.update(layout, false);
 

@@ -47,7 +47,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		_layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
-		_templateLayout = LayoutTypePortletImpl.getTemplateLayout(selLayout);
+		_templateLayout = LayoutTypePortletImpl.getSourcePrototypeLayout(
+			selLayout);
 	}
 
 	public String processColumn(String columnId) throws Exception {

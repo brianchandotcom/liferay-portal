@@ -126,7 +126,7 @@ String[][] categorySections = {mainSections};
 	</div>
 </c:if>
 
-<c:if test="<%= !SitesUtil.isLayoutSetLocked(selLayoutSet) %>">
+<c:if test="<%= SitesUtil.isLayoutsUpdateable(selLayoutSet) %>">
 	<aui:script use="aui-dialog,aui-toolbar">
 		var popup;
 		var exportPopup;
@@ -311,7 +311,7 @@ String[][] categorySections = {mainSections};
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		jspPath="/html/portlet/layouts_admin/layout_set/"
-		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.UPDATE) && !SitesUtil.isLayoutSetLocked(selLayoutSet) %>"
+		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.UPDATE) && SitesUtil.isLayoutsUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>
 

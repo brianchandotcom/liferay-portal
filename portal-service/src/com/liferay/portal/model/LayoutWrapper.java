@@ -1140,21 +1140,22 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns the template layout uuid of this layout.
+	* Returns the source prototype layout uuid of this layout.
 	*
-	* @return the template layout uuid of this layout
+	* @return the source prototype layout uuid of this layout
 	*/
-	public java.lang.String getTemplateLayoutUuid() {
-		return _layout.getTemplateLayoutUuid();
+	public java.lang.String getSourcePrototypeLayoutUuid() {
+		return _layout.getSourcePrototypeLayoutUuid();
 	}
 
 	/**
-	* Sets the template layout uuid of this layout.
+	* Sets the source prototype layout uuid of this layout.
 	*
-	* @param templateLayoutUuid the template layout uuid of this layout
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid of this layout
 	*/
-	public void setTemplateLayoutUuid(java.lang.String templateLayoutUuid) {
-		_layout.setTemplateLayoutUuid(templateLayoutUuid);
+	public void setSourcePrototypeLayoutUuid(
+		java.lang.String sourcePrototypeLayoutUuid) {
+		_layout.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 	}
 
 	public boolean isNew() {

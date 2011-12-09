@@ -299,7 +299,7 @@
 			<basic name="priority" />
 			<basic name="layoutPrototypeUuid" />
 			<basic name="layoutPrototypeLinkEnabled" />
-			<basic name="templateLayoutUuid" />
+			<basic name="sourcePrototypeLayoutUuid" />
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
 			<transient name="keywordsCurrentLanguageId" />

@@ -129,10 +129,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-		boolean allowModifications = ParamUtil.getBoolean(
-			actionRequest, "allowModifications");
-		boolean allowLayoutAddition = ParamUtil.getBoolean(
-			actionRequest, "allowLayoutAdditions");
+		boolean layoutsUpdateable = ParamUtil.getBoolean(
+			actionRequest, "layoutsUpdateable");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -145,8 +143,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 			layoutSetPrototype =
 				LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(
-					nameMap, description, active, allowModifications,
-					allowLayoutAddition, serviceContext);
+					nameMap, description, active, layoutsUpdateable,
+					serviceContext);
 		}
 		else {
 
@@ -155,7 +153,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			layoutSetPrototype =
 				LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
 					layoutSetPrototypeId, nameMap, description, active,
-					allowModifications, allowLayoutAddition, serviceContext);
+					layoutsUpdateable, serviceContext);
 		}
 
 		// Custom JSPs

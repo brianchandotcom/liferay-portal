@@ -841,7 +841,7 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			existingLayout = LayoutUtil.fetchByG_P_TLU(
+			existingLayout = LayoutUtil.fetchByG_P_SPLU(
 				groupId, privateLayout, layout.getUuid());
 		}
 		else {
@@ -887,7 +887,7 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-				importedLayout.setTemplateLayoutUuid(layout.getUuid());
+				importedLayout.setSourcePrototypeLayoutUuid(layout.getUuid());
 			}
 			else {
 				importedLayout.setUuid(layout.getUuid());
@@ -1177,7 +1177,7 @@ public class LayoutImporter {
 					user.getUserId(), user.getCompanyId(),
 					layoutSetPrototype.getNameMap(),
 					layoutSetPrototype.getDescription(),
-					layoutSetPrototype.getActive(), true, true, serviceContext);
+					layoutSetPrototype.getActive(), true, serviceContext);
 		}
 
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(

@@ -488,7 +488,7 @@
 		<column name="priority" type="int" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
-		<column name="templateLayoutUuid" type="String" />
+		<column name="sourcePrototypeLayoutUuid" type="String" />
 
 		<!-- Order -->
 
@@ -532,10 +532,10 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_P_TLU" return-type="Layout">
+		<finder name="G_P_SPLU" return-type="Layout">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
-			<finder-column name="templateLayoutUuid" />
+			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
 
 		<!-- References -->

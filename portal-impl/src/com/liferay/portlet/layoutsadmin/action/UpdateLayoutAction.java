@@ -142,7 +142,6 @@ public class UpdateLayoutAction extends JSONAction {
 		String type = LayoutConstants.TYPE_PORTLET;
 		boolean hidden = false;
 		String friendlyURL = StringPool.BLANK;
-		boolean locked = ParamUtil.getBoolean(request, "locked");
 		long layoutPrototypeId = ParamUtil.getLong(
 			request, "layoutPrototypeId");
 
@@ -161,7 +160,7 @@ public class UpdateLayoutAction extends JSONAction {
 			layout = LayoutServiceUtil.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
 				description, layoutPrototypeLayout.getType(),
-				false, friendlyURL, locked, serviceContext);
+				false, friendlyURL, serviceContext);
 
 			LayoutServiceUtil.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -177,7 +176,7 @@ public class UpdateLayoutAction extends JSONAction {
 		else {
 			layout = LayoutServiceUtil.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
-				description, type, hidden, friendlyURL, false, serviceContext);
+				description, type, hidden, friendlyURL, serviceContext);
 		}
 
 		LayoutSettings layoutSettings = LayoutSettings.getInstance(layout);

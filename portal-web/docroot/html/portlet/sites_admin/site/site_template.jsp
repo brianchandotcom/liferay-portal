@@ -58,16 +58,14 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 				<c:when test="<%= publicLayoutSetPrototypeInheritance %>">
 
 					<%
-					boolean allowModifications = GetterUtil.getBoolean(publicLayoutSetPrototype.getSettingsProperty("allowModifications"));
-					boolean allowLayoutAdditions = GetterUtil.getBoolean(publicLayoutSetPrototype.getSettingsProperty("allowLayoutAdditions"));
+					boolean layoutsUpdateable = GetterUtil.getBoolean(publicLayoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 					%>
 
 					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-template-x" />
 
 					<aui:field-wrapper label="site-template-settings">
 						<aui:input disabled="<%= true %>" name="active" value="<%= publicLayoutSetPrototype.isActive() %>" type="checkbox" />
-						<aui:input disabled="<%= true %>" name="allow-modifications" type="checkbox" value="<%= allowModifications %>" />
-						<aui:input disabled="<%= true %>" name="allow-adding-pages" type="checkbox" value="<%= allowLayoutAdditions %>" />
+						<aui:input disabled="<%= true %>" name="allow-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
@@ -83,16 +81,14 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 				<c:when test="<%= privateLayoutSetPrototypeInheritance %>">
 
 					<%
-					boolean allowModifications = GetterUtil.getBoolean(privateLayoutSetPrototype.getSettingsProperty("allowModifications"));
-					boolean allowLayoutAdditions = GetterUtil.getBoolean(privateLayoutSetPrototype.getSettingsProperty("allowLayoutAdditions"));
+					boolean layoutsUpdateable = GetterUtil.getBoolean(privateLayoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 					%>
 
 					<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-template-x" />
 
 					<aui:field-wrapper label="site-template-settings">
 						<aui:input disabled="<%= true %>" name="active" type="checkbox" value="<%= privateLayoutSetPrototype.isActive() %>" />
-						<aui:input disabled="<%= true %>" name="template-allows-modification" type="checkbox" value="<%= allowModifications %>" />
-						<aui:input disabled="<%= true %>" name="template-allows-page-addition" type="checkbox" value="<%= allowLayoutAdditions %>" />
+						<aui:input disabled="<%= true %>" name="template-allows-modification" type="checkbox" value="<%= layoutsUpdateable %>" />
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>

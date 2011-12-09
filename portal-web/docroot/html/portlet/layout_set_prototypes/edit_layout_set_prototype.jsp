@@ -31,8 +31,7 @@ if (layoutSetPrototype == null) {
 
 long layoutSetPrototypeId = BeanParamUtil.getLong(layoutSetPrototype, request, "layoutSetPrototypeId");
 
-boolean allowModifications = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("allowModifications"), true);
-boolean allowLayoutAdditions = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("allowLayoutAdditions"), true);
+boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
@@ -64,9 +63,7 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		<aui:input inlineLabel="left" name="active" />
 
-		<aui:input name="allowModifications" type="checkbox" value="<%= allowModifications %>" />
-
-		<aui:input name="allowLayoutAdditions" type="checkbox" value="<%= allowLayoutAdditions %>" />
+		<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="checkbox" value="<%= layoutsUpdateable %>" />
 
 		<c:if test="<%= !layoutSetPrototype.isNew() %>">
 			<aui:field-wrapper label="configuration">

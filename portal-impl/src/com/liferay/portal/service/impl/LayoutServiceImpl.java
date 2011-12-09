@@ -98,11 +98,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the replacement
 	 *         universally unique identifier and can specify the replacement
 	 *         create date, replacement modified date and the new expando bridge
-	 *         attributes.
+	 *         attributes. For layouts that belong to a layout set prototype, an
+	 *         attribute named 'layoutUpdateable' can be used to specify whether
+	 *         site administrators can modify this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found, if the group did not have permission to manage the layouts
@@ -115,7 +116,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
-			String friendlyURL, boolean locked, ServiceContext serviceContext)
+			String friendlyURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -133,7 +134,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.addLayout(
 			getUserId(), groupId, privateLayout, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURL, locked, serviceContext);
+			hidden, friendlyURL, serviceContext);
 	}
 
 	/**
@@ -172,11 +173,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  locked whether the layout is locked
 	 * @param  serviceContext the service context. Must specify the replacement
 	 *         universally unique identifier and can specify the replacement
 	 *         create date, replacement modified date and the new expando bridge
-	 *         attributes.
+	 *         attributes. For layouts that belong to a layout set prototype, an
+	 *         attribute named 'layoutUpdateable' can be used to specify whether
+	 *         site administrators can modify this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found, if the group did not have permission to manage the layouts
@@ -186,8 +188,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout addLayout(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, boolean locked,
-			ServiceContext serviceContext)
+			boolean hidden, String friendlyURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<Locale, String> localeNamesMap = new HashMap<Locale, String>();
@@ -200,7 +201,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, parentLayoutId, localeNamesMap,
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-			type, hidden, friendlyURL, locked, serviceContext);
+			type, hidden, friendlyURL, serviceContext);
 	}
 
 	/**
@@ -956,7 +957,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			String friendlyURL, Boolean iconImage, byte[] iconBytes,
-			boolean locked, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		LayoutPermissionUtil.check(
@@ -966,7 +967,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURL, iconImage, iconBytes, locked, serviceContext);
+			hidden, friendlyURL, iconImage, iconBytes, serviceContext);
 	}
 
 	/**

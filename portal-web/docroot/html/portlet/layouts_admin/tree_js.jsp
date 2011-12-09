@@ -104,6 +104,7 @@ if (!selectableTree) {
 							},
 						</c:if>
 						alwaysShowHitArea: node.hasChildren,
+						draggable: node.updateable,
 						expanded : node.selLayoutAncestor,
 						id: TreeUtil.createId(node.layoutId, node.plid),
 						type: '<%= selectableTree ? "task" : "io" %>'
@@ -117,6 +118,10 @@ if (!selectableTree) {
 						if (node.incomplete) {
 							newNode.label = [newNode.label, 'incomplete'].join('');
 						}
+					}
+
+					if (!node.updateable) {
+						newNode.cssClass = 'lfr-page-locked';
 					}
 
 					if (!<%= selectableTree %>) {

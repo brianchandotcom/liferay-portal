@@ -47,17 +47,20 @@ if (Validator.isNotNull(structureId)) {
 	try {
 		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
 	}
-	catch (NoSuchStructureException nsse1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
-			}
-			catch (NoSuchStructureException nsse2) {
-			}
+	catch (NoSuchStructureException nsse) {
+	}
+
+	if ((structure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
+		try {
+			structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
+		}
+		catch (NoSuchStructureException nsse) {
 		}
 	}
 
-	structureName = structure.getName(locale);
+	if (structure != null) {
+		structureName = structure.getName(locale);
+	}
 }
 
 String xslContent = request.getParameter("xslContent");

@@ -498,15 +498,18 @@ public class JournalStructureLocalServiceImpl
 		JournalStructure parentStructure =
 			journalStructurePersistence.fetchByG_S(groupId, parentStructureId);
 
-		if (parentStructure == null) {
-			Group group = groupLocalService.getGroup(groupId);
-			Group companyGroup = groupLocalService.getCompanyGroup(
-				group.getCompanyId());
+		if (parentStructure != null) {
+			return parentStructure;
+		}
 
-			if (groupId != companyGroup.getGroupId()) {
-				parentStructure = journalStructurePersistence.findByG_S(
-					companyGroup.getGroupId(), parentStructureId);
-			}
+		Group group = groupLocalService.getGroup(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		if (groupId != companyGroup.getGroupId()) {
+			parentStructure = journalStructurePersistence.findByG_S(
+				companyGroup.getGroupId(), parentStructureId);
 		}
 
 		return parentStructure;

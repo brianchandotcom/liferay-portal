@@ -50,25 +50,18 @@ public class JournalStructureImpl extends JournalStructureBaseImpl {
 				parentStructure = JournalStructureLocalServiceUtil.getStructure(
 					getGroupId(), parentStructureId);
 			}
-			catch (NoSuchStructureException nsse1) {
-				long groupId = getGroupId();
+			catch (NoSuchStructureException nsse) {
+				Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
 				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 					group.getCompanyId());
-				
-				if (groupId != companyGroup.getGroupId()) {
-					try {
-						parentStructure = JournalStructureLocalServiceUtil.
-							getStructure(
-								companyGroup.getGroupId(), parentStructureId);
-					}
-					catch (NoSuchStructureException nsse2) {
-						throw new Exception(
-							"No JournalStructure exists with the structure id "
-								+ parentStructureId);
-					}
+
+				if (getGroupId() == companyGroup.getGroupId()) {
+					throw new NoSuchStructureException();
 				}
+
+				parentStructure = JournalStructureLocalServiceUtil.getStructure(
+					companyGroup.getGroupId(), parentStructureId);
 			}
 
 			Document doc = SAXReaderUtil.read(getXsd());

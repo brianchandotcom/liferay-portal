@@ -55,16 +55,19 @@ if (Validator.isNotNull(parentStructureId)) {
 	try {
 		parentStructure = JournalStructureLocalServiceUtil.getStructure(groupId, parentStructureId);
 	}
-	catch (NoSuchStructureException nsse1) {
-		if (groupId != themeDisplay.getCompanyGroupId()) {
-			try {
-				parentStructure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), parentStructureId);
-			}
-			catch (NoSuchStructureException nsse2) {
-			}
-		}
+	catch (NoSuchStructureException nsse) {
 	}
+}
 
+if ((parentStructure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
+	try {
+		parentStructure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), parentStructureId);
+	}
+	catch (NoSuchStructureException nsse) {
+	}
+}
+
+if (parentStructure != null) {
 	parentStructureName = parentStructure.getName(locale);
 }
 

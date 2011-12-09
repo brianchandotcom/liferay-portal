@@ -59,6 +59,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -99,6 +100,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -111,7 +113,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//span[@title='Actions']/ul/li/strong/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
 							break;
 						}
 					}
@@ -139,6 +141,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -179,6 +182,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -219,6 +223,7 @@ public class TearDownMBCategoryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",

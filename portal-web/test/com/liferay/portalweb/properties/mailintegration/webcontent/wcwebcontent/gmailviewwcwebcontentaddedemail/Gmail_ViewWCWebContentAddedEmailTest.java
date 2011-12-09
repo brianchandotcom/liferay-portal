@@ -36,9 +36,18 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				selenium.selectWindow("gmail");
 				Thread.sleep(60000);
 
-				boolean SignedIn1 = selenium.isElementPresent("link=Sign out");
+				boolean usernamePresent = selenium.isElementPresent(
+						"//input[@id='Email']");
 
-				if (!SignedIn1) {
+				if (usernamePresent) {
+					label = 4;
+
+					continue;
+				}
+
+				boolean signedIn1 = selenium.isPartialText("//td/a", "Sign out");
+
+				if (!signedIn1) {
 					label = 2;
 
 					continue;
@@ -47,27 +56,46 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Sign out"),
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
-				selenium.clickAt("//span/a",
-					RuntimeVariables.replace("Sign in to Gmail"));
-				selenium.waitForPageToLoad("30000");
 
 			case 2:
+				Thread.sleep(5000);
 
-				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
-						"link=Sign out and sign in as a different user");
+				boolean signInToGmailPresent = selenium.isTextPresent(
+						"Sign in to Gmail");
 
-				if (!signInAsADifferentUserPresent) {
+				if (!signInToGmailPresent) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("link=Sign out and sign in as a different user",
+				assertEquals(RuntimeVariables.replace("Sign in to Gmail"),
+					selenium.getText("//a[@id='button']"));
+				selenium.clickAt("//a[@id='button']",
+					RuntimeVariables.replace("Sign in to Gmail"));
+				selenium.waitForPageToLoad("30000");
+
+			case 3:
+			case 4:
+
+				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
+						"//a[@id='link-force-reauth']");
+
+				if (!signInAsADifferentUserPresent) {
+					label = 5;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Sign out and sign in as a different user"),
+					selenium.getText("//a[@id='link-force-reauth']"));
+				selenium.clickAt("//a[@id='link-force-reauth']",
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
 
-			case 3:
+			case 5:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -94,7 +122,7 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 						"PersistentCookie");
 
 				if (staySignedInChecked) {
-					label = 4;
+					label = 6;
 
 					continue;
 				}
@@ -104,7 +132,7 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
-			case 4:
+			case 6:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
@@ -117,8 +145,7 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isPartialText("//td[3]/div/span",
-									"Administrator")) {
+						if (selenium.isVisible("//td[5]/div/span/span")) {
 							break;
 						}
 					}
@@ -128,13 +155,18 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertTrue(selenium.isPartialText("//td[3]/div/span",
-						"Administrator"));
-				selenium.clickAt("//td[3]/div/span",
+				assertEquals(RuntimeVariables.replace("Administrator"),
+					selenium.getText("//td[5]/div/span/span"));
+				selenium.clickAt("//td[5]/div/span/span",
 					RuntimeVariables.replace("Administrator"));
 				Thread.sleep(5000);
 				assertTrue(selenium.isPartialText("//h1/span[1]",
 						"Web Content: Article Added"));
+				assertTrue(selenium.isPartialText(
+						"//p[contains(.,'Web Content Name')]",
+						"Dear userfn userln,"));
+				assertTrue(selenium.isPartialText(
+						"//p[contains(.,'Web Content Name')]", "version 1.0"));
 				assertTrue(selenium.isPartialText(
 						"//p[contains(.,'Web Content Name')]",
 						"Web Content Name was added."));
@@ -143,7 +175,7 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 				boolean SignedIn2 = selenium.isElementPresent("link=Sign out");
 
 				if (!SignedIn2) {
-					label = 5;
+					label = 7;
 
 					continue;
 				}
@@ -152,7 +184,7 @@ public class Gmail_ViewWCWebContentAddedEmailTest extends BaseTestCase {
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
-			case 5:
+			case 7:
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 				selenium.close();

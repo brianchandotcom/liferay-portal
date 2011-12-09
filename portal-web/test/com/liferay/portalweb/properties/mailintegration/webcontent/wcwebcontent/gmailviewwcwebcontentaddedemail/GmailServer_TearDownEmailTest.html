@@ -9,16 +9,6 @@
 <tr><td rowspan="1" colspan="3">GmailServer_TearDownEmailTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
 	<td>openWindow</td>
 	<td>http://www.gmail.com/</td>
 	<td>gmail</td>
@@ -35,18 +25,33 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>10000</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
-	<td>SignedIn1</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@id='Email']</td>
+	<td>usernamePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${SignedIn1}</td>
-	<td>SignedOut1</td>
+	<td>${usernamePresent}</td>
+	<td>UsernamePresent</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
+	<td>signedIn1</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signedIn1}</td>
+	<td>signedOut1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,18 +64,48 @@
 	<td>Sign out</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>signedOut1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isTextPresent('Sign in to Gmail'))</td>
+	<td>signInToGmailPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${signInToGmailPresent}</td>
+	<td>SignInToGmailNotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='button']</td>
+	<td>Sign in to Gmail</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//span/a</td>
+	<td>//a[@id='button']</td>
 	<td>Sign in to Gmail</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>SignedOut1</td>
+	<td>SignInToGmailNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UsernamePresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>link=Sign out and sign in as a different user</td>
+	<td>//a[@id='link-force-reauth']</td>
 	<td>signInAsADifferentUserPresent</td>
 </tr>
 <tr>
@@ -79,8 +114,13 @@
 	<td>SignInAsADifferentUserNotPresent</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[@id='link-force-reauth']</td>
+	<td>Sign out and sign in as a different user</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Sign out and sign in as a different user</td>
+	<td>//a[@id='link-force-reauth']</td>
 	<td>Sign out and sign in as a different user</td>
 </tr>
 <tr>
@@ -145,12 +185,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@type='checkbox']</td>
+	<td>//span[@role='checkbox']/div</td>
 	<td>All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@type='checkbox']</td>
+	<td>//span[@role='checkbox']/div</td>
 	<td>All</td>
 </tr>
 <tr>
@@ -159,12 +199,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>storeVisible</td>
 	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
-	<td>Delete</td>
+	<td>deleteVisible</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>gotoIf</td>
+	<td>!${deleteVisible}</td>
+	<td>DeleteNotVisible</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]</td>
 	<td>Delete</td>
 </tr>
@@ -174,13 +219,18 @@
 	<td>Delete</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>DeleteNotVisible</td>
+	<td></td>
+</tr>
+<tr>
 	<td>pause</td>
-	<td>15000</td>
+	<td>10000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Sign out'))</td>
+	<td>eval(selenium.isPartialText('//td/a','Sign out'))</td>
 	<td>signedIn2</td>
 </tr>
 <tr>
@@ -205,7 +255,12 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>10000</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,7 +273,6 @@
 	<td>null</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

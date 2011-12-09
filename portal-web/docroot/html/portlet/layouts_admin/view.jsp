@@ -85,36 +85,24 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 		<aui:column columnWidth="25" cssClass="manage-sitemap">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
-
-					<%
-					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-
-					if (layoutSetBranchId <= 0) {
-						layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
-					}
-
-					LayoutSetBranch layoutSetBranch = null;
-
-					if (layoutSetBranchId > 0) {
-						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
-						}
-						catch (NoSuchLayoutSetBranchException nslsbe) {
-						}
-					}
-
-					if (layoutSetBranch == null) {
-						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
-						}
-						catch (NoSuchLayoutSetBranchException nslsbe) {
-						}
-					}
-					%>
-
-					<c:if test="<%= (stagingGroup != null) %>">
+					<c:if test="<%= stagingGroup != null %>">
 
 						<%
+						long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+
+						if (layoutSetBranchId <= 0) {
+							layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
+						}
+
+						LayoutSetBranch layoutSetBranch = null;
+
+						if (layoutSetBranchId > 0) {
+							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+						}
+						else {
+							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
+						}
+
 						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 						%>
 

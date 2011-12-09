@@ -85,12 +85,19 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, groupId, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
-			JournalArticle journalArticle =
-				JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+			long groupId = classPK;
+
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			if (group == null) {
+				JournalArticle journalArticle =
+					JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+				groupId = journalArticle.getGroupId();
+			}
 
 			return JournalPermission.contains(
-				permissionChecker, journalArticle.getGroupId(),
-				ActionKeys.SUBSCRIBE);
+				permissionChecker, groupId, ActionKeys.SUBSCRIBE);
 		}
 		else if (className.equals(MBCategory.class.getName())) {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);

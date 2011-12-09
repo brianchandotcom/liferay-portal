@@ -570,6 +570,14 @@ public class PortalImpl implements Portal {
 		addDefaultResource(themeDisplay, layout, portlet, false);
 	}
 
+	public void addPortletDefaultResource(
+			long companyId, Layout layout, Portlet portlet)
+		throws PortalException, SystemException {
+
+		addDefaultResource(companyId, layout, portlet, true);
+		addDefaultResource(companyId, layout, portlet, false);
+	}
+
 	public String addPreservedParameters(
 		ThemeDisplay themeDisplay, Layout layout, String url,
 		boolean doAsUser) {
@@ -5277,7 +5285,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected void addDefaultResource(
-			ThemeDisplay themeDisplay, Layout layout, Portlet portlet,
+			long companyId, Layout layout, Portlet portlet,
 			boolean portletActions)
 		throws PortalException, SystemException {
 
@@ -5308,9 +5316,8 @@ public class PortalImpl implements Portal {
 				int count =
 					ResourcePermissionLocalServiceUtil.
 						getResourcePermissionsCount(
-							themeDisplay.getCompanyId(), name,
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							primaryKey);
+							companyId, name,
+							ResourceConstants.SCOPE_INDIVIDUAL, primaryKey);
 
 				if (count == 0) {
 					throw new NoSuchResourceException();
@@ -5318,15 +5325,24 @@ public class PortalImpl implements Portal {
 			}
 			else if (!portlet.isUndeployedPortlet()) {
 				ResourceLocalServiceUtil.getResource(
-					themeDisplay.getCompanyId(), name,
+					companyId, name,
 					ResourceConstants.SCOPE_INDIVIDUAL, primaryKey);
 			}
 		}
 		catch (NoSuchResourceException nsre) {
 			ResourceLocalServiceUtil.addResources(
-				themeDisplay.getCompanyId(), layout.getGroupId(), 0, name,
-				primaryKey, portletActions, true, true);
+				companyId, layout.getGroupId(), 0, name, primaryKey,
+				portletActions, true, true);
 		}
+	}
+
+	protected void addDefaultResource(
+			ThemeDisplay themeDisplay, Layout layout, Portlet portlet,
+			boolean portletActions)
+		throws PortalException, SystemException {
+
+		addDefaultResource(themeDisplay.getCompanyId(), layout,
+				portlet, portletActions);
 	}
 
 	protected List<Portlet> filterControlPanelPortlets(

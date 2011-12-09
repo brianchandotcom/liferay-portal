@@ -269,24 +269,22 @@ public interface SocialActivityCounterLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounterDistribution(
-		long groupId, java.lang.String name, int offset,
-		boolean includeCurrentPeriod)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounterDistributionByOffset(
+		long groupId, java.lang.String name, int startOffset, int endOffset)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounterDistribution(
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounterDistributionByPeriod(
 		long groupId, java.lang.String name, int startPeriod, int endPeriod)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounters(
-		long groupId, java.lang.String name, int offset,
-		boolean includeCurrentPeriod)
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCountersByOffset(
+		long groupId, java.lang.String name, int startOffset, int endOffset)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCounters(
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getActivityCountersByPeriod(
 		long groupId, java.lang.String name, int startPeriod, int endPeriod)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

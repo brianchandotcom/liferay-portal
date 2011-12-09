@@ -76,6 +76,7 @@ public interface AssetTagFinder {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByG_N_S_E(
-		long groupId, java.lang.String name, int startPeriod, int endPeriod)
+		long groupId, java.lang.String name, int startPeriod, int endPeriod,
+		int periodLength)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

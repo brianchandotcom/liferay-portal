@@ -27,19 +27,21 @@ public class SocialActivityCounterFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_ByG_N_S_E_1(
-		long groupId, java.lang.String name, int startPeriod, int endPeriod)
+		long groupId, java.lang.String name, int startPeriod, int endPeriod,
+		int periodLength)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findAC_ByG_N_S_E_1(groupId, name, startPeriod, endPeriod);
+				   .findAC_ByG_N_S_E_1(groupId, name, startPeriod, endPeriod,
+			periodLength);
 	}
 
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_ByG_N_S_E_2(
 		long groupId, java.lang.String counterName, int startPeriod,
-		int endPeriod)
+		int endPeriod, int periodLength)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findAC_ByG_N_S_E_2(groupId, counterName, startPeriod,
-			endPeriod);
+			endPeriod, periodLength);
 	}
 
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> findAC_By_G_C_C_N_S_E(

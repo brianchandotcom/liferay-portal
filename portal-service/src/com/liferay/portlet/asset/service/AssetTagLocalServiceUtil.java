@@ -404,15 +404,6 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long groupId, java.lang.String socialActivityCounterName, int offset,
-		boolean includeCurrentPeriod)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getTags(groupId, socialActivityCounterName, offset,
-			includeCurrentPeriod);
-	}
-
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long groupId, java.lang.String socialActivityCounterName,
 		int startPeriod, int endPeriod)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -425,6 +416,15 @@ public class AssetTagLocalServiceUtil {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTags(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTagsByOffset(
+		long groupId, java.lang.String socialActivityCounterName,
+		int startOffset, int endOffset)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTagsByOffset(groupId, socialActivityCounterName,
+			startOffset, endOffset);
 	}
 
 	public static int getTagsSize(long groupId, long classNameId,

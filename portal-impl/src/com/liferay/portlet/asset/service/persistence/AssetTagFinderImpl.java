@@ -216,7 +216,8 @@ public class AssetTagFinderImpl
 	}
 
 	public List<AssetTag> findByG_N_S_E(
-			long groupId, String name, int startPeriod, int endPeriod)
+			long groupId, String name, int startPeriod, int endPeriod,
+			int periodLength)
 		throws SystemException {
 
 		Session session = null;
@@ -232,6 +233,8 @@ public class AssetTagFinderImpl
 			qPos.add(groupId);
 			qPos.add(name);
 			qPos.add(startPeriod);
+			qPos.add(endPeriod);
+			qPos.add(periodLength);
 			qPos.add(endPeriod);
 
 			List<AssetTag> assetTags = new ArrayList<AssetTag>();

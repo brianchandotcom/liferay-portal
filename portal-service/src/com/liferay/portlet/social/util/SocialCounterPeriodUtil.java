@@ -101,6 +101,26 @@ public class SocialCounterPeriodUtil {
 		return getActivityDay(calendar);
 	}
 
+	public static int getOffset(int activityDay) {
+		if (_isMonthlyPeriod()) {
+			GregorianCalendar calendar = new GregorianCalendar();
+
+			GregorianCalendar calendar2 = new GregorianCalendar();
+
+			calendar2.setTimeInMillis(_BASE_TIME + activityDay * Time.DAY);
+
+			int yearDiff =
+				calendar.get(Calendar.YEAR) - calendar2.get(Calendar.YEAR);
+
+			int monthDiff =
+				calendar.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
+
+			return -(yearDiff * 12 + monthDiff);
+		}
+
+		return -((getStartPeriod() - activityDay) / getPeriodLength());
+	}
+
 	public static int getPeriodLength() {
 		if (_isMonthlyPeriod()) {
 			if (_isWithinPeriod(_startPeriod, _endPeriod, getActivityDay())) {
@@ -124,12 +144,30 @@ public class SocialCounterPeriodUtil {
 			return _periodLength;
 		}
 
-		if (_periodLength == 0) {
+		if (_periodLength == -1) {
 			_periodLength = GetterUtil.getInteger(
 				_SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH);
 		}
 
 		return _periodLength;
+	}
+
+	public static int getPeriodLength(int offset) {
+		if (_isMonthlyPeriod()) {
+			Calendar calendar = new GregorianCalendar();
+
+			calendar.set(Calendar.DATE, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+
+			calendar.add(Calendar.MONTH, offset);
+
+			return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		}
+
+		return getPeriodLength();
 	}
 
 	public static int getStartPeriod() {

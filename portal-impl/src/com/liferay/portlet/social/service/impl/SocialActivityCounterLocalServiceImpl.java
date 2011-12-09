@@ -429,6 +429,14 @@ public class SocialActivityCounterLocalServiceImpl
 			return false;
 		}
 
+		String name = activityCounterDefinition.getName();
+
+		if ((user.getUserId() == assetEntryUser.getUserId()) &&
+			!name.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -460,15 +468,7 @@ public class SocialActivityCounterLocalServiceImpl
 			return true;
 		}
 
-		AssetEntry assetEntry = activity.getAssetEntry();
-
 		String name = activityCounterDefinition.getName();
-
-		if ((user.getUserId() == assetEntry.getUserId()) &&
-			!name.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
-
-			return false;
-		}
 
 		long classPK = activity.getClassPK();
 

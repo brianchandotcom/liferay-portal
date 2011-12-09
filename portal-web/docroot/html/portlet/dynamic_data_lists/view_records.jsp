@@ -104,14 +104,6 @@ for (int i = 0; i < results.size(); i++) {
 			com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
 
 			value = field.getRenderedValue(themeDisplay);
-
-			if (ddmStructure.getFieldDisplayChildLabelAsValue(name)) {
-				Map<String, String> childFields = ddmStructure.getFields(name, FieldConstants.VALUE, value);
-
-				if (childFields != null) {
-					value = childFields.get(FieldConstants.LABEL);
-				}
-			}
 		}
 		else {
 			value = StringPool.BLANK;

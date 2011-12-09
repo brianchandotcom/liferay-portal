@@ -148,9 +148,19 @@ AUI().add(
 									var type = field.type;
 
 									if ((type === 'radio') || (type === 'select')) {
-										var option = SpreadSheet.findStructureFieldByAttribute(field.options, 'label', item);
+										if (!Lang.isArray(item)) {
+											item = [item]
+										}
 
-										item = option.value;
+										var values = [];
+
+										for (var i = 0; i < item.length; i++) {
+											var option = SpreadSheet.findStructureFieldByAttribute(field.options, 'label', item[i]);
+
+											values[i] = option.value;
+										}
+
+										item = values.join();
 									}
 								}
 

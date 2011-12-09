@@ -379,21 +379,6 @@ AUI().add(
 									}
 								);
 
-								if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
-									var displayChildLabelAsValueTag = instance._createDynamicNode(
-										'entry',
-										{
-											name: 'displayChildLabelAsValue'
-										}
-									);
-
-									buffer.push(
-										displayChildLabelAsValueTag.openTag,
-										STR_CDATA_OPEN + true + STR_CDATA_CLOSE,
-										displayChildLabelAsValueTag.closeTag
-									);
-								}
-
 								if (instanceOf(field, A.FormBuilderTextField)) {
 									var fieldCssClassTag = instance._createDynamicNode(
 										'entry',

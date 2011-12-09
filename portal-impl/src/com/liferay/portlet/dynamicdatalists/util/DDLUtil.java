@@ -89,7 +89,8 @@ public class DDLUtil {
 		return "ddl_records/" + record.getRecordId();
 	}
 
-	public static JSONObject getRecordJSONObject(DDLRecord record)
+	public static JSONObject getRecordJSONObject(
+			DDLRecord record, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		DDLRecordSet recordSet = record.getRecordSet();
@@ -119,16 +120,7 @@ public class DDLUtil {
 				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
 			}
 			else {
-				fieldValue = String.valueOf(fieldValue);
-
-				if (ddmStructure.getFieldDisplayChildLabelAsValue(fieldName)) {
-					Map<String, String> childFields = ddmStructure.getFields(
-						fieldName, FieldConstants.VALUE, (String)fieldValue);
-
-					if (childFields != null) {
-						fieldValue = childFields.get(FieldConstants.LABEL);
-					}
-				}
+				fieldValue = field.getRenderedValue(themeDisplay);
 
 				jsonObject.put(fieldName, (String)fieldValue);
 			}
@@ -187,19 +179,21 @@ public class DDLUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
+	public static JSONArray getRecordsJSONArray(
+			DDLRecordSet recordSet, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getRecordsJSONArray(recordSet.getRecords());
+		return getRecordsJSONArray(recordSet.getRecords(), themeDisplay);
 	}
 
-	public static JSONArray getRecordsJSONArray(List<DDLRecord> records)
+	public static JSONArray getRecordsJSONArray(
+			List<DDLRecord> records, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (DDLRecord record : records) {
-			JSONObject jsonObject = getRecordJSONObject(record);
+			JSONObject jsonObject = getRecordJSONObject(record, themeDisplay);
 
 			jsonArray.put(jsonObject);
 		}

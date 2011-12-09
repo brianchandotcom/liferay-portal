@@ -5,5 +5,5 @@
 		<@liferay_ui.message key=label />
 	</label>
 
-	${fieldStructure.children}
+	${fieldValue}
 </div>

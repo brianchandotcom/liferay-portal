@@ -31,8 +31,8 @@ import java.io.Serializable;
 public class FileUploadFieldRenderer extends BaseFieldRenderer {
 
 	@Override
-	protected String doRender(
-		ThemeDisplay themeDisplay, Serializable fieldValue) {
+	protected String doRender(ThemeDisplay themeDisplay, Field field) {
+		Serializable fieldValue = field.getValue();
 
 		if (Validator.isNull(fieldValue) ||
 			fieldValue.equals(JSONFactoryUtil.getNullJSON())) {

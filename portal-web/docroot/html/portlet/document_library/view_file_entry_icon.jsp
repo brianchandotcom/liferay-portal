@@ -36,7 +36,7 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 
 <%@ include file="/html/portlet/document_library/document_thumbnail.jspf" %>
 
-<div class="document-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-title="<%= StringUtil.shorten(fileEntry.getTitle(), 60) %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>">
+<div class="document-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(fileEntry.getTitle(), 60) %>">
 	<c:if test="<%= showCheckBox %>">
 
 		<%

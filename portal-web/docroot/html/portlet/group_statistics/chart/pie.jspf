@@ -121,7 +121,7 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 	var containerWidth = getContainerWidth(chartContainer);
 
-	chartContainer.setStyle('height', dynamicWidth);
+	chartContainer.setStyle('height', containerWidth);
 
 	var chart = new A.Chart(
 		{

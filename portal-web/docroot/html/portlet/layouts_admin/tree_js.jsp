@@ -82,7 +82,7 @@ if (!selectableTree) {
 				className += ' layout-page-invalid';
 			}
 
-			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + LAYOUT_URL + data.plid + '" title="' + data.title + '" >' + data.label + '</a>';
+			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + LAYOUT_URL + data.plid + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
 		extractLayoutId: function(node) {
@@ -124,15 +124,15 @@ if (!selectableTree) {
 
 					if (node.layoutRevisionId) {
 						if (node.layoutBranchName) {
-	                        node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
+							node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
 
-							newNode.label += Lang.sub(' <span class="layout-branch-name" title="' + Liferay.Language.get('this-is-the-page-variation-that-is-marked-as-ready-for-publication') + '">[{layoutBranchName}]</span>', node);
+							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(pageContext, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);
 						}
 
 						if (node.incomplete) {
 							cssClass = 'incomplete-layout';
 
-							title = Liferay.Language.get('this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations');
+							title = '<%= UnicodeLanguageUtil.get(pageContext, "this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations") %>';
 						}
 					}
 

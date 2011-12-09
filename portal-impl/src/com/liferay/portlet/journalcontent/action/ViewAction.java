@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -83,7 +84,16 @@ public class ViewAction extends WebContentAction {
 		if ((groupId > 0) && Validator.isNotNull(articleId)) {
 			try {
 				article = JournalArticleLocalServiceUtil.getLatestArticle(
-					groupId, articleId, WorkflowConstants.STATUS_ANY);
+					groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+			}
+			catch (NoSuchArticleException nsae) {
+			}
+
+			try {
+				if (article == null) {
+					article = JournalArticleLocalServiceUtil.getLatestArticle(
+						groupId, articleId, WorkflowConstants.STATUS_ANY);
+				}
 
 				double version = article.getVersion();
 

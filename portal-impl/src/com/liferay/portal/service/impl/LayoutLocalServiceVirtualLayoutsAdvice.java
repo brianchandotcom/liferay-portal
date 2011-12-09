@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.UserGroup;
@@ -41,6 +43,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
@@ -312,8 +315,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			LayoutSet layoutSet)
 		throws Exception {
 
-		if ((permissionChecker == null) || !permissionChecker.isSignedIn() ||
-			!layoutSet.getLayoutSetPrototypeLinkEnabled() ||
+		if (!layoutSet.getLayoutSetPrototypeLinkEnabled() ||
 			Validator.isNull(layoutSet.getLayoutSetPrototypeUuid()) ||
 			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 
@@ -336,23 +338,45 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			return;
 		}
 
-		Map<String, String[]> parameterMap = null;
+		String owner = PortalUUIDUtil.generate();
 
-		if (lastMergeTime > 0) {
-			parameterMap = getLayoutTemplatesParameters(false);
+		try {
+			Lock lock = LockLocalServiceUtil.lock(
+				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
+				String.valueOf(layoutSet.getLayoutSetId()), owner, false);
+
+			if (!owner.equals(lock.getOwner())) {
+				return;
+			}
 		}
-		else {
-			parameterMap = getLayoutTemplatesParameters(true);
+		catch (Exception e) {
+			return;
 		}
 
-		importLayoutSetPrototype(
-			permissionChecker, layoutSetPrototype, layoutSet.getGroupId(),
-			layoutSet.isPrivateLayout(), parameterMap);
+		try {
+			Map<String, String[]> parameterMap = null;
 
-		settingsProperties.setProperty(
-			"last-merge-time", String.valueOf(modifiedDate.getTime()));
+			if (lastMergeTime > 0) {
+				parameterMap = getLayoutTemplatesParameters(false);
+			}
+			else {
+				parameterMap = getLayoutTemplatesParameters(true);
+			}
 
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
+			importLayoutSetPrototype(
+				permissionChecker, layoutSetPrototype, layoutSet.getGroupId(),
+				layoutSet.isPrivateLayout(), parameterMap);
+
+			settingsProperties.setProperty(
+				"last-merge-time", String.valueOf(modifiedDate.getTime()));
+
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
+		}
+		finally {
+			LockLocalServiceUtil.unlock(
+				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
+				String.valueOf(layoutSet.getLayoutSetId()), owner, false);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

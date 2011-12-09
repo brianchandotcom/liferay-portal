@@ -40,9 +40,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public java.lang.String getFieldDataType(java.lang.String fieldName)
 		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 
-	public boolean getFieldDisplayChildLabelAsValue(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
-
 	public java.lang.String getFieldLabel(java.lang.String fieldName,
 		java.util.Locale locale)
 		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;

@@ -29,7 +29,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.base.BlogsEntryServiceBaseImpl;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
@@ -160,6 +159,19 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entry;
 	}
 
+	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max)
+			throws SystemException {
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				return blogsEntryPersistence.filterFindByGroupId(
+					groupId, 0, max);
+			}
+			else {
+				return blogsEntryPersistence.filterFindByG_S(
+					groupId, status, 0, max);
+			}
+	}
+
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int max)
 		throws SystemException {
@@ -199,18 +211,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		else {
 			return blogsEntryPersistence.filterFindByG_LtD_S(
 				groupId, displayDate, status, start, end);
-		}
-	}
-
-	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max)
-		throws SystemException {
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.filterFindByGroupId(groupId, 0, max);
-		}
-		else {
-			return blogsEntryPersistence.filterFindByG_S(
-				groupId, status, 0, max);
 		}
 	}
 

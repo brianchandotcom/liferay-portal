@@ -1,3 +1,7 @@
+.folder-droppable {
+	clear: both;
+}
+
 .journal-article-component-list {
 	margin: 10px 0 0 0;
 }
@@ -508,7 +512,6 @@
 
 	.journal-article-buttons {
 		display: block;
-		height: 27px;
 		margin-top: 18px;
 		text-align: right;
 

@@ -42,12 +42,24 @@ String structureId = BeanParamUtil.getString(template, request, "structureId");
 String structureName = StringPool.BLANK;
 
 if (Validator.isNotNull(structureId)) {
-	try {
-		JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
+	JournalStructure structure = null;
 
-		structureName = structure.getName(locale);
+	try {
+		structure = JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
 	}
 	catch (NoSuchStructureException nsse) {
+	}
+
+	if ((structure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
+		try {
+			structure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), structureId);
+		}
+		catch (NoSuchStructureException nsse) {
+		}
+	}
+
+	if (structure != null) {
+		structureName = structure.getName(locale);
 	}
 }
 

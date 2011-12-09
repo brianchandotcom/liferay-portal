@@ -54,11 +54,21 @@ String parentStructureName = StringPool.BLANK;
 if (Validator.isNotNull(parentStructureId)) {
 	try {
 		parentStructure = JournalStructureLocalServiceUtil.getStructure(groupId, parentStructureId);
-
-		parentStructureName = parentStructure.getName(locale);
 	}
 	catch (NoSuchStructureException nsse) {
 	}
+}
+
+if ((parentStructure == null) && (groupId != themeDisplay.getCompanyGroupId())) {
+	try {
+		parentStructure = JournalStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), parentStructureId);
+	}
+	catch (NoSuchStructureException nsse) {
+	}
+}
+
+if (parentStructure != null) {
+	parentStructureName = parentStructure.getName(locale);
 }
 
 String xsd = ParamUtil.getString(request, "xsd");

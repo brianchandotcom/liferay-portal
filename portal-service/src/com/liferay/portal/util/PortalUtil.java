@@ -1026,6 +1026,14 @@ public class PortalUtil {
 		return getPortal().getScopeGroupId(request, portletId);
 	}
 
+	public static long getScopeGroupId(
+			HttpServletRequest request, String portletId,
+			boolean getStagedGroupId)
+		throws PortalException, SystemException {
+
+		return getPortal().getScopeGroupId(request, portletId, getStagedGroupId);
+	}
+
 	public static long getScopeGroupId(Layout layout) {
 		return getPortal().getScopeGroupId(layout);
 	}

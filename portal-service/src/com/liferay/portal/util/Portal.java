@@ -848,6 +848,11 @@ public interface Portal {
 	public long getScopeGroupId(HttpServletRequest request, String portletId)
 		throws PortalException, SystemException;
 
+	public long getScopeGroupId(
+			HttpServletRequest request, String portletId,
+			boolean getStagedGroupId)
+		throws PortalException, SystemException;
+
 	public long getScopeGroupId(Layout layout);
 
 	public long getScopeGroupId(Layout layout, String portletId);

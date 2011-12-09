@@ -3323,6 +3323,14 @@ public class PortalImpl implements Portal {
 	public long getScopeGroupId(HttpServletRequest request, String portletId)
 		throws PortalException, SystemException {
 
+		return getScopeGroupId(request, portletId, false);
+	}
+
+	public long getScopeGroupId(
+			HttpServletRequest request, String portletId,
+			boolean getStagedGroupId)
+		throws PortalException, SystemException {
+
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		long scopeGroupId = 0;
@@ -3377,6 +3385,11 @@ public class PortalImpl implements Portal {
 
 						scopeGroupId = getScopeGroupId(
 							liveGroupLayout, portletId);
+					}
+					else if (getStagedGroupId &&
+							 !liveGroup.isStagedRemotely()) {
+
+						scopeGroupId = liveGroup.getStagingGroup().getGroupId();
 					}
 					else {
 						scopeGroupId = liveGroup.getGroupId();

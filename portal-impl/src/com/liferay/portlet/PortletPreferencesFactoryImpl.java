@@ -228,7 +228,8 @@ public class PortletPreferencesFactoryImpl
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long scopeGroupId = PortalUtil.getScopeGroupId(request, portletId);
+		long scopeGroupId = PortalUtil.getScopeGroupId(
+			request, portletId, true);
 		long userId = PortalUtil.getUserId(request);
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
@@ -371,7 +372,8 @@ public class PortletPreferencesFactoryImpl
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long scopeGroupId = PortalUtil.getScopeGroupId(request, portletId);
+		long scopeGroupId = PortalUtil.getScopeGroupId(
+			request, portletId, true);
 
 		return getPortletSetup(
 			scopeGroupId, themeDisplay.getLayout(), portletId,

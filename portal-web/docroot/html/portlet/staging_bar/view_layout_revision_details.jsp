@@ -39,18 +39,18 @@ else {
 }
 %>
 
-<c:choose>
-	<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
-		<liferay-ui:message arguments="<%= new Object[] {layoutRevision.getName(locale), layoutSetBranch.getName()} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
-	</c:when>
-	<c:otherwise>
-		<div class="layout-actions">
+<div class="layout-actions">
+	<c:choose>
+		<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+			<liferay-ui:message arguments="<%= new Object[] {layoutRevision.getName(locale), layoutSetBranch.getName()} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+		</c:when>
+		<c:otherwise>
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 			<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status='<%= layoutRevision.getStatus() %>' statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-		</div>
-	</c:otherwise>
-</c:choose>
+		</c:otherwise>
+	</c:choose>
+</div>
 
 <span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
 
@@ -60,6 +60,10 @@ else {
 	stagingBar.init(
 		{
 			namespace: '<portlet:namespace />'
+
+			<c:if test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+				, hideHistory: true
+			</c:if>
 		}
 	);
 
@@ -110,6 +114,27 @@ else {
 		%>
 
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
+
+			<%
+			String icon = null;
+			String label = null;
+
+			if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+				icon = "circle-check";
+				label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
+			}
+			else {
+				if(WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName())) {
+					icon = "shuffle";
+					label = "submit-for-publication";
+				}
+				else {
+					icon = "circle-check";
+					label = "mark-as-ready-for-publication";
+				}
+			}
+			%>
+
 			stagingBar.layoutRevisionToolbar.add(
 				{
 					type: 'ToolbarSpacer'
@@ -123,7 +148,7 @@ else {
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 				<portlet:param name="major" value="true" />
-				<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+				<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
 			</portlet:actionURL>
 
 			stagingBar.layoutRevisionToolbar.add(
@@ -140,8 +165,8 @@ else {
 							}
 						);
 					},
-					icon: '<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "shuffle" : "circle-check" %>',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication") %>'
+					icon: '<%= icon %>',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
 				}
 			);
 		</c:if>

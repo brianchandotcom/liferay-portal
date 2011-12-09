@@ -437,7 +437,7 @@ if (layout != null) {
 											<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
 										</div>
 
-										<c:if test="<%= layoutRevisions.size() <= 1 %>">
+										<c:if test="<%= (layoutRevisions.size() <= 1) && layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE %>">
 											<liferay-ui:icon
 												cssClass="manage-layout-branches-tab"
 												id="manageLayoutRevisions"

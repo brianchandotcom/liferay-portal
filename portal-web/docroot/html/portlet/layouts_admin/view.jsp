@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portal.NoSuchLayoutSetBranchException" %>
 <%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
@@ -96,11 +97,23 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					LayoutSetBranch layoutSetBranch = null;
 
 					if (layoutSetBranchId > 0) {
-						layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+						try {
+							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+						}
+						catch (NoSuchLayoutSetBranchException nslsbe) {
+						}
+					}
+
+					if (layoutSetBranch == null) {
+						try {
+							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
+						}
+						catch (NoSuchLayoutSetBranchException nslsbe) {
+						}
 					}
 					%>
 
-					<c:if test="<%= (stagingGroup != null) && (layoutSetBranch != null) %>">
+					<c:if test="<%= (stagingGroup != null) %>">
 
 						<%
 						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
@@ -144,7 +157,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 									cssClass="layoutset-branch"
 									image="../dock/staging"
 									label="<%= true %>"
-									message='<%= (layoutSetBranches.size() == 1) ? "staging" : layoutSetBranch.getName() %>'
+									message='<%= (layoutSetBranch == null || (layoutSetBranches.size() == 1)) ? "staging" : layoutSetBranch.getName() %>'
 								/>
 							</c:otherwise>
 						</c:choose>

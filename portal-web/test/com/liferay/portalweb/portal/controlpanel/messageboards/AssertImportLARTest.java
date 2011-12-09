@@ -48,19 +48,24 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("T\u00e9st Cat\u00e9gory"));
 		assertTrue(selenium.isTextPresent("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
+			selenium.getText("//tr[5]/td[2]/a[1]/strong"));
 		selenium.clickAt("//tr[5]/td[2]/a[1]/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("T\u00e9st Subcat\u00e9gory"));
-		selenium.clickAt("//a/strong",
+		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent(
 				"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
 		assertTrue(selenium.isTextPresent("T\u00e9st M\u00e9ssag\u00e9 Edited"));
 		assertTrue(selenium.isTextPresent("RE: T\u00e9st M\u00e9ssag\u00e9"));
-		selenium.clickAt("link=exact:RE: T\u00e9st M\u00e9ssag\u00e9",
-			RuntimeVariables.replace("exact:RE: T\u00e9st M\u00e9ssag\u00e9"));
+		selenium.clickAt("link=RE: T\u00e9st M\u00e9ssag\u00e9",
+			RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent(
 				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!"));
@@ -86,7 +91,9 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards",
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Sujr"));
+		assertEquals(RuntimeVariables.replace("Sujr"),
+			selenium.getText("//td[2]/a/strong"));
+		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("Moved to Sujr"));
 	}

@@ -40,7 +40,7 @@ if ((article != null) && article.isDraft()) {
 			activeState: false,
 			boundingBox: '#<portlet:namespace />articleToobar',
 			children: [
-				<c:if test="<%= Validator.isNotNull(structureId) && (classNameId == 0) %>">
+				<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == 0) %>">
 					{
 						icon: 'search',
 						id: '<portlet:namespace />previewArticleButton',
@@ -56,7 +56,7 @@ if ((article != null) && article.isDraft()) {
 					},
 				</c:if>
 
-				<c:if test="<%= article != null && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
+				<c:if test="<%= (article != null) && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 					<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 						modelResource="<%= JournalArticle.class.getName() %>"
 						modelResourceDescription="<%= article.getTitle(locale) %>"

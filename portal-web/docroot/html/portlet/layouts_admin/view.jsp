@@ -97,10 +97,19 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 						LayoutSetBranch layoutSetBranch = null;
 
 						if (layoutSetBranchId > 0) {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+							try {
+								layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+							}
+							catch (NoSuchLayoutSetBranchException nslsbe) {
+							}
 						}
-						else {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
+
+						if (layoutSetBranch == null) {
+							try {
+								layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
+							}
+							catch (NoSuchLayoutSetBranchException nslsbe) {
+							}
 						}
 
 						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);

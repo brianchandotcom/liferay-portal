@@ -59,29 +59,11 @@
 #set ($company_logo_height = $theme_display.getCompanyLogoHeight())
 #set ($company_logo_width = $theme_display.getCompanyLogoWidth())
 
-#set($logo_css_class = "logo")
-
-#if (($company.getLogoId() == 0) && !$layout.layoutSet.isLogo())
-	#set($logo_css_class = "$logo_css_class default-logo")
-#else
-	#set($logo_css_class = "$logo_css_class custom-logo")
-#end
-
 #set ($company_url = $theme_display.getURLHome())
 
 #if (!$request.isRequestedSessionIdFromCookie())
 	#set ($company_url = $portalUtil.getURLWithSessionId($company_url, $request.getSession().getId()))
 #end
-
-#set ($show_site_name = $layout.layoutSet.getSettingsProperty("showSiteName") == "true")
-#set ($site_logo = $layout.layoutSet.isLogo())
-
-#if (!$site_logo)
-	#set ($site_default_url = $company_url)
-	#set ($site_name = $company_name)
-#end
-
-#set ($logo_description = $htmlUtil.escape($site_name))
 
 #set ($user_id = $user.getUserId())
 #set ($is_default_user = $user.isDefaultUser())
@@ -215,7 +197,9 @@
 
 	#set ($community_name = $site_name)
 
-	#if ($page_group.getName() == "Guest")
+	#set ($is_guest_group = $page_group.getName() == "Guest")
+
+	#if ($is_guest_group)
 		#set ($css_class = $css_class + " guest-site")
 	#end
 
@@ -230,6 +214,18 @@
 	#else
 		#set ($css_class = $css_class + " private-page")
 	#end
+
+	#if($page_group.isCompany())
+		#set ($site_type = "company-site")
+	#elseif ($page_group.isOrganization())
+		#set ($site_type = "organization-site")
+	#elseif ($page_group.isUser())
+		#set ($site_type = "user-site")
+	#else
+		#set ($site_type = "site")
+	#end
+
+	#set ($css_class = $css_class + " " + $site_type)
 
 	#set ($my_sites_portlet_url = $portletURLFactory.create($request, "49", $page.getPlid(), "ACTION_PHASE"))
 
@@ -288,6 +284,31 @@
 #if ($layouts)
 	#set ($pages = $layouts)
 #end
+
+## ---------- Logo ---------- ##
+
+#set($logo_css_class = "logo")
+
+#set ($use_company_logo = !$layout.layoutSet.isLogo())
+
+#set ($site_logo_height = $company_logo_height)
+#set ($site_logo_width = $company_logo_width)
+
+#if (($company.getLogoId() == 0) && $use_company_logo)
+	#set($logo_css_class = "$logo_css_class default-logo")
+#else
+	#set($logo_css_class = "$logo_css_class custom-logo")
+#end
+
+#if ($is_guest_group)
+	#set ($show_site_name = false)
+#else
+	#set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), true))	
+#end
+
+#set($site_logo = $company_logo)
+
+#set ($logo_description = $htmlUtil.escape($site_name))
 
 ## ---------- Navigation ---------- ##
 

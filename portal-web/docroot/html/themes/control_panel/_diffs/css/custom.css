@@ -641,7 +641,7 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panels-minimized #controlPanelMenuAddContentPanelContainer .lfr-panel-content:before {
-	background: #333 url(../images/custom/panel_icons_white_user_bg.png) no-repeat 50%;
+	background: #333 url(../images/common/user_icon_white.png) no-repeat 50%;
 	content: '';
 	display: block;
 	height: 35px;

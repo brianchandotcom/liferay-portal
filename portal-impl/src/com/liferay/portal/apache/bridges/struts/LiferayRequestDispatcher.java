@@ -138,7 +138,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 				if (urlPattern.endsWith("/*")) {
 					pos = urlPattern.indexOf("/*");
 
-					urlPattern = urlPattern.substring(0, pos);
+					urlPattern = urlPattern.substring(0, pos + 1);
 
 					if (pathNoQueryString.startsWith(urlPattern)) {
 						pathInfo = pathNoQueryString.substring(

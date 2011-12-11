@@ -16,76 +16,45 @@ package com.liferay.portal.osgi;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import org.osgi.framework.Constants;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Raymond Augé
  */
-public class ServiceListener
-	extends BaseListener implements org.osgi.framework.ServiceListener {
+public class ServiceListener implements org.osgi.framework.ServiceListener {
 
 	public void serviceChanged(ServiceEvent serviceEvent) {
 		try {
 			int type = serviceEvent.getType();
 
+			ServiceReference<?> serviceReference =
+				serviceEvent.getServiceReference();
+
+			Bundle bundle = serviceReference.getBundle();
+
+			Log log = LogFactoryUtil.getLog(bundle.getSymbolicName());
+
+			if (!log.isInfoEnabled()) {
+				return;
+			}
+
+			String message = serviceReference.toString();
+
 			if (type == ServiceEvent.MODIFIED) {
-				serviceEventModified(serviceEvent);
+				log.info("[MODIFIED] " + message);
 			}
 			else if (type == ServiceEvent.REGISTERED) {
-				serviceEventRegistered(serviceEvent);
+				log.info("[REGISTERED] " + message);
 			}
 			else if (type == ServiceEvent.UNREGISTERING) {
-				serviceEventUnregistering(serviceEvent);
+				log.info("[UNREGISTERING] " + message);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-	}
-
-	protected String getLogMessage(
-		String state, ServiceReference<?> serviceReference) {
-
-		String message = StringUtil.merge(
-			(String[])serviceReference.getProperty(Constants.OBJECTCLASS));
-
-		return getLogMessage(state, message);
-	}
-
-	protected void serviceEventModified(ServiceEvent serviceEvent)
-		throws Exception {
-
-		ServiceReference<?> serviceReference =
-			serviceEvent.getServiceReference();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(getLogMessage("[MODIFIED]", serviceReference));
-		}
-	}
-
-	protected void serviceEventRegistered(ServiceEvent serviceEvent)
-		throws Exception {
-
-		ServiceReference<?> serviceReference =
-			serviceEvent.getServiceReference();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(getLogMessage("[REGISTERED]", serviceReference));
-		}
-	}
-
-	protected void serviceEventUnregistering(ServiceEvent serviceEvent)
-		throws Exception {
-
-		ServiceReference<?> serviceReference =
-			serviceEvent.getServiceReference();
-
-		if (_log.isInfoEnabled()) {
-			_log.info(getLogMessage("[UNREGISTERING]", serviceReference));
 		}
 	}
 

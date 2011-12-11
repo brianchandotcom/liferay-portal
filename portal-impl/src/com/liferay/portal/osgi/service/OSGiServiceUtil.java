@@ -253,6 +253,9 @@ public class OSGiServiceUtil {
 				continue;
 			}
 
+			String bundleVersionString = attributes.getValue(
+				Constants.BUNDLE_VERSION);
+
 			for (String curBundleSymbolicName : bundleSymbolicNames) {
 				if (!bundleSymbolicName.startsWith(curBundleSymbolicName)) {
 					continue;
@@ -275,6 +278,11 @@ public class OSGiServiceUtil {
 
 						javaPackage = javaPackage.concat(
 							";version=\"").concat(version).concat("\"");
+					}
+					else {
+						javaPackage = javaPackage.concat(
+							";version=\"").concat(bundleVersionString).concat(
+								"\"");
 					}
 
 					packages.add(javaPackage);
@@ -437,6 +445,7 @@ public class OSGiServiceUtil {
 
 		properties.put(OSGiConstants.BEAN_ID, beanName);
 		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(OSGiConstants.SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			names.toArray(new String[names.size()]), bean, properties);
@@ -449,6 +458,7 @@ public class OSGiServiceUtil {
 
 		properties.put(OSGiConstants.BEAN_ID, ServletContext.class.getName());
 		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(OSGiConstants.SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,

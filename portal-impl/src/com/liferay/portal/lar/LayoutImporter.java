@@ -438,6 +438,35 @@ public class LayoutImporter {
 		List<Layout> previousLayouts = LayoutUtil.findByG_P(
 			groupId, privateLayout);
 
+		// Remove layouts that were deleted from the LayoutSetPrototype
+
+		if (Validator.isNotNull(layoutSetPrototypeUuid) &&
+			layoutSetPrototypeLinkEnabled) {
+
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(
+					layoutSetPrototypeUuid);
+
+			long layoutSetPrototypeGroupId =
+				layoutSetPrototype.getGroup().getGroupId();
+
+			for (Layout layout : previousLayouts) {
+				String sourcePrototypeLayoutUuid =
+					layout.getSourcePrototypeLayoutUuid();
+
+				if (Validator.isNotNull(
+						layout.getSourcePrototypeLayoutUuid())) {
+
+					Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G(
+						sourcePrototypeLayoutUuid, layoutSetPrototypeGroupId);
+
+					if (sourcePrototypeLayout == null) {
+						LayoutLocalServiceUtil.deleteLayout(layout);
+					}
+				}
+			}
+		}
+
 		List<Layout> newLayouts = new ArrayList<Layout>();
 
 		Set<Long> newLayoutIds = new HashSet<Long>();

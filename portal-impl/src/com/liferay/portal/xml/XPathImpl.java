@@ -111,6 +111,9 @@ public class XPathImpl implements XPath {
 		if (node == null) {
 			return null;
 		}
+		else if (node instanceof org.dom4j.Element) {
+			return new ElementImpl((org.dom4j.Element)node);
+		}
 		else {
 			return new NodeImpl(node);
 		}

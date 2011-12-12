@@ -16,6 +16,7 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -41,6 +42,7 @@ import java.io.StringReader;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -65,20 +67,30 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 	protected void addDLFileEntryType(
 			long userId, long groupId, String dlFileEntryTypeName,
-			String dlFileEntryTypeDescription, String ddmStructureName,
-			ServiceContext serviceContext)
+			String dlFileEntryTypeDescription, String dynamicDDMStructureName,
+			List<String> ddmStructuresName, ServiceContext serviceContext)
 		throws Exception {
 
-		String ddmStructureKey = ddmStructureName;
+		List<Long> ddmStructureIds = new ArrayList<Long>();
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			groupId, ddmStructureKey);
+		for (String ddmStructureName : ddmStructuresName) {
+			String ddmStructureKey = ddmStructureName;
 
-		if (ddmStructure == null) {
-			return;
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchStructure(
+					groupId, ddmStructureKey);
+
+			if (ddmStructure == null) {
+				continue;
+			}
+
+			ddmStructureIds.add(ddmStructure.getStructureId());
 		}
 
-		long[] ddmStructureId = new long[] {ddmStructure.getStructureId()};
+		String xsd = getDynamicDDMStructureXSD(
+			"document-library-structures.xml", dynamicDDMStructureName);
+
+		serviceContext.setAttribute("xsd", xsd);
 
 		try {
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
@@ -87,7 +99,10 @@ public class AddDefaultDocumentLibraryStructuresAction
 		catch (NoSuchFileEntryTypeException nsfete) {
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeName,
-				dlFileEntryTypeDescription, ddmStructureId, serviceContext);
+				dlFileEntryTypeDescription,
+				ArrayUtil.toArray(
+					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
+				serviceContext);
 		}
 	}
 
@@ -95,14 +110,39 @@ public class AddDefaultDocumentLibraryStructuresAction
 			long userId, long groupId, ServiceContext serviceContext)
 		throws Exception {
 
-		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_IMAGE,
-			"Image Document Type", "Default Image's Metadata Set",
-			serviceContext);
+		List<String> ddmStructuresName = new ArrayList<String>();
 
 		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_VIDEO,
-			"Video Document Type", "Default Video's Metadata Set",
+			userId, groupId, DLFileEntryTypeConstants.NAME_CONTRACT,
+			"Legal Contracts", DLFileEntryTypeConstants.NAME_CONTRACT,
+			ddmStructuresName, serviceContext);
+
+		ddmStructuresName = new ArrayList<String>();
+
+		ddmStructuresName.add("Marketing Campaign Theme Metadata");
+
+		addDLFileEntryType(
+			userId, groupId, DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
+			"Marketing Banner", DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
+			ddmStructuresName, serviceContext);
+
+		ddmStructuresName = new ArrayList<String>();
+
+		ddmStructuresName.add("Learning Module Metadata");
+
+		addDLFileEntryType(
+			userId, groupId, DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
+			"Online Training", DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
+			ddmStructuresName, serviceContext);
+
+		ddmStructuresName = new ArrayList<String>();
+
+		ddmStructuresName.add("Meeting Metadata");
+
+		addDLFileEntryType(
+			userId, groupId, DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
+			"Sales Presentation",
+			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION, ddmStructuresName,
 			serviceContext);
 	}
 

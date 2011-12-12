@@ -149,7 +149,7 @@ AUI().add(
 
 									if ((type === 'radio') || (type === 'select')) {
 										if (!Lang.isArray(item)) {
-											item = [item]
+											item = [item];
 										}
 
 										var values = [];

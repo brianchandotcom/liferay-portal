@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -29,6 +33,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -394,35 +399,22 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		IMOperation imOperation = new IMOperation();
+		String inputfilePath = file.getPath();
 
-		imOperation.alpha("off");
-
-		imOperation.density(dpi, dpi);
-
-		if (height != 0) {
-			imOperation.adaptiveResize(width, height);
-		}
-		else {
-			imOperation.adaptiveResize(width);
-		}
-
-		imOperation.depth(depth);
-
+		String outputFilePath = null;
+		
 		if (thumbnail) {
-			imOperation.addImage(file.getPath() + "[0]");
-			imOperation.addImage(getThumbnailTempFilePath(tempFileId));
+			inputfilePath += "[0]";
+			outputFilePath = getThumbnailTempFilePath(tempFileId);
 		}
 		else {
-			imOperation.addImage(file.getPath());
-			imOperation.addImage(getPreviewTempFilePath(tempFileId, -1));
+			outputFilePath = getPreviewTempFilePath(tempFileId, -1);
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Excecuting command 'convert " + imOperation + "'");
-		}
-
-		_convertCmd.run(imOperation);
+		ProcessExecutor.execute(
+			new ImageMagickProcessCallable(
+				inputfilePath, outputFilePath, depth, dpi, height, width),
+			ClassPathUtil.getPortalClassPath());
 
 		// Store images
 
@@ -724,6 +716,63 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	private static ConvertCmd _convertCmd;
 	private static boolean _warned;
+
+	private static class ImageMagickProcessCallable
+		implements ProcessCallable<String> {
+
+		public ImageMagickProcessCallable(
+			String inputFilePath, String outputFilePath, int depth, int dpi, 
+			int height, int width) {
+
+			_inputFilePath = inputFilePath;
+			_outputFilePath = outputFilePath;
+			_depth = depth;
+			_dpi = dpi;
+			_height = height;
+			_width = width;
+		}
+
+		public String call() throws ProcessException {
+			try {
+				IMOperation imOperation = new IMOperation();
+
+				imOperation.alpha("off");
+
+				imOperation.density(_dpi, _dpi);
+
+				if (_height != 0) {
+					imOperation.adaptiveResize(_width, _height);
+				}
+				else {
+					imOperation.adaptiveResize(_width);
+				}
+
+				imOperation.depth(_depth);
+				imOperation.addImage(_inputFilePath);
+				imOperation.addImage(_outputFilePath);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Excecuting command 'convert " + imOperation + "'");
+				}
+
+				_convertCmd.run(imOperation);
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+			
+			return StringPool.BLANK;
+		}
+
+		private String _inputFilePath;
+		private String _outputFilePath;
+		private int _depth;
+		private int _dpi;
+		private int _height;
+		private	int _width;
+
+	}
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 

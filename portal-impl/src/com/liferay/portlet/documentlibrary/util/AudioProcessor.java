@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -196,11 +200,10 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		}
 
 		try {
-			LiferayAudioConverter liferayAudioConverter =
-				new LiferayAudioConverter(
-					srcFile.getCanonicalPath(), destFile.getCanonicalPath());
-
-			liferayAudioConverter.convert();
+			ProcessExecutor.execute(
+				new LiferayAudioProcessCallable(
+					srcFile.getCanonicalPath(), destFile.getCanonicalPath()),
+				ClassPathUtil.getPortalClassPath());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -304,6 +307,33 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	private static Log _log = LogFactoryUtil.getLog(AudioProcessor.class);
 
 	private static AudioProcessor _instance = new AudioProcessor();
+
+	private static class LiferayAudioProcessCallable
+		implements ProcessCallable<String> {
+
+		public LiferayAudioProcessCallable(String inputURL, String outputURL) {
+			_inputURL = inputURL;
+			_outputURL = outputURL;
+		}
+
+		public String call() throws ProcessException {
+			try {
+				LiferayAudioConverter liferayAudioConverter =
+					new LiferayAudioConverter(_inputURL, _outputURL);
+
+				liferayAudioConverter.convert();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private String _inputURL;
+		private String _outputURL;
+
+	}
 
 	private Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);

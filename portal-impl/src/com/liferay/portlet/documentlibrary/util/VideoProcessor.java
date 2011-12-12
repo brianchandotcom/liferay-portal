@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -211,14 +215,15 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 
 		try {
 			try {
-				LiferayVideoThumbnailConverter liferayVideoThumbnailConverter =
-					new LiferayVideoThumbnailConverter(
+				ProcessCallable<String> processCallable = 
+					new LiferayVideoThumbnailProcessCallable(
 						file.getCanonicalPath(), thumbnailTempFile,
 						THUMBNAIL_TYPE, height, width,
 						PropsValues.
 							DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
-				liferayVideoThumbnailConverter.convert();
+				ProcessExecutor.execute(
+					processCallable, ClassPathUtil.getPortalClassPath());
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -227,18 +232,18 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			addFileToStore(
 				fileVersion.getCompanyId(), THUMBNAIL_PATH,
 				getThumbnailFilePath(fileVersion), thumbnailTempFile);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Xuggler generated a thumbnail for " +
+						fileVersion.getTitle() + " in " + stopWatch);
+			}
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
 		finally {
 			FileUtil.delete(thumbnailTempFile);
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Xuggler generated a thumbnail for " +
-					fileVersion.getTitle() + " in " + stopWatch);
 		}
 	}
 
@@ -344,11 +349,13 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			stopWatch.start();
 		}
 
-		LiferayVideoConverter liferayVideoConverter = new LiferayVideoConverter(
-			srcFile.getCanonicalPath(), destFile.getCanonicalPath(), height,
-			width);
-
-		liferayVideoConverter.convert();
+		ProcessCallable<String> processCallable = 
+			new LiferayVideoProcessCallable(
+				srcFile.getCanonicalPath(), destFile.getCanonicalPath(), height,
+				width);
+		
+		ProcessExecutor.execute(
+			processCallable, ClassPathUtil.getPortalClassPath());
 
 		addFileToStore(
 			fileVersion.getCompanyId(), PREVIEW_PATH,
@@ -538,6 +545,80 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	private static Log _log = LogFactoryUtil.getLog(VideoProcessor.class);
 
 	private static VideoProcessor _instance = new VideoProcessor();
+
+	private static class LiferayVideoProcessCallable
+		implements ProcessCallable<String> {
+
+		public LiferayVideoProcessCallable(
+			String inputURL, String outputURL, int height, int width) {
+
+			_inputURL = inputURL;
+			_outputURL = outputURL;
+			_height = height;
+			_width = width;
+		}
+
+		public String call() throws ProcessException {
+			try {
+				LiferayVideoConverter liferayVideoConverter =
+					new LiferayVideoConverter(
+						_inputURL, _outputURL, _height, _width);
+
+				liferayVideoConverter.convert();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private int _height;
+		private String _inputURL;
+		private String _outputURL;
+		private int _width;
+
+	}
+
+	private static class LiferayVideoThumbnailProcessCallable
+		implements ProcessCallable<String> {
+
+		public LiferayVideoThumbnailProcessCallable(
+			String inputURL, File outputFile, String extension, int height,
+			int width, int percentage) {
+
+			_inputURL = inputURL;
+			_outputFile = outputFile;
+			_extension = extension;
+			_height = height;
+			_width = width;
+			_percentage = percentage;
+		}
+
+		public String call() throws ProcessException {
+			try {
+				LiferayVideoThumbnailConverter liferayVideoThumbnailConverter =
+					new LiferayVideoThumbnailConverter(
+						_inputURL, _outputFile, _extension, _height, _width,
+						_percentage);
+
+				liferayVideoThumbnailConverter.convert();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private String _extension;
+		private int _height;
+		private String _inputURL;
+		private File _outputFile;
+		private int _percentage;
+		private int _width;
+
+	}
 
 	private Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);

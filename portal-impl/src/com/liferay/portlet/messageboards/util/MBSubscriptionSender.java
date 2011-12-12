@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
@@ -85,6 +86,8 @@ public class MBSubscriptionSender extends SubscriptionSender {
 	}
 
 	protected String getMailingListSubject(String subject, String mailId) {
+		subject = (Validator.isNull(subject) ? "" : subject);
+		mailId = (Validator.isNull(mailId) ? "" : mailId);
 		return subject.concat(StringPool.SPACE).concat(mailId);
 	}
 

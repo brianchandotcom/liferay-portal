@@ -3566,7 +3566,7 @@ public class PortalImpl implements Portal {
 			if (friendlyURL.equals(PropsValues.AUTH_LOGIN_SITE_URL)) {
 				if (themeDisplay.getLayout() != null) {
 					String layoutSetFriendlyURL = getLayoutSetFriendlyURL(
-						themeDisplay.getLayout().getLayoutSet(), themeDisplay);
+						layout.getLayoutSet(), themeDisplay);
 
 					return layoutSetFriendlyURL +
 						PropsValues.AUTH_LOGIN_SITE_URL;

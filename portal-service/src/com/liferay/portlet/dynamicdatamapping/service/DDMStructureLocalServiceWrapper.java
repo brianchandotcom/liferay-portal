@@ -359,6 +359,14 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getClassStructures(classNameId,
+			orderByComparator);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructureLocalService.getClassStructures(classNameId, start,

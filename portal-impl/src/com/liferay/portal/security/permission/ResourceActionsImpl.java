@@ -415,7 +415,23 @@ public class ResourceActionsImpl implements ResourceActions {
 	public List<String> getPortletResourceGuestUnsupportedActions(String name) {
 		name = PortletConstants.getRootPortletId(name);
 
-		return getActions(_portletResourceGuestUnsupportedActions, name);
+		List<String> actions = getActions(
+			_portletResourceGuestUnsupportedActions, name);
+
+		if (actions.contains(ActionKeys.CONFIGURATION) &&
+			actions.contains(ActionKeys.PERMISSIONS)) {
+
+			return actions;
+		}
+
+		actions = new UniqueList<String>(actions);
+
+		actions.add(ActionKeys.CONFIGURATION);
+		actions.add(ActionKeys.PERMISSIONS);
+
+		setActions(_portletResourceGuestUnsupportedActions, name, actions);
+
+		return actions;
 	}
 
 	public List<String> getPortletResourceLayoutManagerActions(String name) {

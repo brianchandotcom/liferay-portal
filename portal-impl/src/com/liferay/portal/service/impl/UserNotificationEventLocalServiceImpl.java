@@ -115,6 +115,14 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	public List<UserNotificationEvent> getUserNotificationEvents(
+			long userId, int start, int end)
+		throws SystemException {
+
+		return userNotificationEventPersistence.findByUserId(
+			userId, start, end);
+	}
+
+	public List<UserNotificationEvent> getUserNotificationEvents(
 			long userId, boolean archived)
 		throws SystemException {
 

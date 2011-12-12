@@ -27,6 +27,7 @@ public class TearDownPageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));

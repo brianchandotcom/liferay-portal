@@ -27,6 +27,7 @@ public class TearDownConfigurationTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {

@@ -708,17 +708,26 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Properties properties = PropsUtil.getProperties(propertiesPrefix, true);
 
-		if (useQuartzCluster && PropsValues.CLUSTER_LINK_ENABLED) {
+		if (useQuartzCluster) {
 			DB db = DBFactoryUtil.getDB();
 
 			String dbType = db.getType();
 
-			if (dbType.equals(DB.TYPE_HYPERSONIC)) {
-				_log.error("Unable to cluster scheduler on Hypersonic");
+			if (dbType.equals(DB.TYPE_SQLSERVER)) {
+				properties.setProperty(
+					"org.quartz.jobStore.selectWithLockSQL",
+					"SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?");
 			}
-			else {
-				properties.put(
-					"org.quartz.jobStore.isClustered", Boolean.TRUE.toString());
+
+			if (PropsValues.CLUSTER_LINK_ENABLED) {
+				if (dbType.equals(DB.TYPE_HYPERSONIC)) {
+					_log.error("Unable to cluster scheduler on Hypersonic");
+				}
+				else {
+					properties.put(
+						"org.quartz.jobStore.isClustered",
+						Boolean.TRUE.toString());
+				}
 			}
 		}
 

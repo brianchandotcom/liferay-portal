@@ -72,6 +72,14 @@ public class DLAppHelperLocalServiceUtil {
 		getService().addFolder(folder, serviceContext);
 	}
 
+	public static void checkAssetEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkAssetEntry(userId, fileEntry, fileVersion);
+	}
+
 	public static void deleteFileEntry(
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,

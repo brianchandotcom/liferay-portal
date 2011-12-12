@@ -97,65 +97,56 @@ public class PortletContextListener
 	}
 
 	@Override
-	protected void doPortalInit() {
+	protected void doPortalInit() throws Exception {
 		HotDeployUtil.fireDeployEvent(
 			new HotDeployEvent(_servletContext, _portletClassLoader));
 
-		try {
-			if (ServerDetector.isGlassfish()) {
-				return;
-			}
+		if (ServerDetector.isGlassfish()) {
+			return;
+		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Dynamically binding the Liferay data source");
+		}
+
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		if (dataSource == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Dynamically binding the Liferay data source");
+				_log.debug(
+					"Abort dynamically binding the Liferay data source " +
+						"because it is not available");
 			}
 
-			DataSource dataSource = InfrastructureUtil.getDataSource();
-
-			if (dataSource == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Abort dynamically binding the Liferay data source " +
-							"because it is not available");
-				}
-
-				return;
-			}
-
-			Context context = new InitialContext();
-
-			try {
-				context.lookup(_JNDI_JDBC);
-			}
-			catch (NamingException ne) {
-				context.createSubcontext(_JNDI_JDBC);
-			}
-
-			try {
-				context.lookup(_JNDI_JDBC_LIFERAY_POOL);
-			}
-			catch (NamingException ne) {
-				try {
-					Method method = dataSource.getClass().getMethod(
-						"getTargetDataSource");
-
-					dataSource = (DataSource)method.invoke(dataSource);
-				}
-				catch (NoSuchMethodException nsme) {
-				}
-
-				context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
-			}
-
-			_bindLiferayPool = true;
+			return;
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to dynamically bind the Liferay data source: "
-						+ e.getMessage());
-			}
+
+		Context context = new InitialContext();
+
+		try {
+			context.lookup(_JNDI_JDBC);
 		}
+		catch (NamingException ne) {
+			context.createSubcontext(_JNDI_JDBC);
+		}
+
+		try {
+			context.lookup(_JNDI_JDBC_LIFERAY_POOL);
+		}
+		catch (NamingException ne) {
+			try {
+				Method method = dataSource.getClass().getMethod(
+					"getTargetDataSource");
+
+				dataSource = (DataSource)method.invoke(dataSource);
+			}
+			catch (NoSuchMethodException nsme) {
+			}
+
+			context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
+		}
+
+		_bindLiferayPool = true;
 	}
 
 	private static final String _JNDI_JDBC = "java_liferay:jdbc";

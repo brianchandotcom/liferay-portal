@@ -76,7 +76,7 @@ public abstract class PortalClassLoaderServletContextListener
 	}
 
 	@Override
-	protected void doPortalInit() {
+	protected void doPortalInit() throws Exception {
 		PortletClassLoaderUtil.setClassLoader(_portletClassLoader);
 		PortletClassLoaderUtil.setServletContextName(_servletContextName);
 
@@ -91,9 +91,6 @@ public abstract class PortalClassLoaderServletContextListener
 			_servletContextListener = getInstance();
 
 			_servletContextListener.contextInitialized(_servletContextEvent);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

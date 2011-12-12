@@ -165,7 +165,7 @@ import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.service.AssetTagServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -2055,16 +2055,16 @@ public class PortalImpl implements Portal {
 
 		Locale locale = getLocale(request);
 
-		PortalUtil.addPageSubtitle(journalArticle.getTitle(locale), request);
-		PortalUtil.addPageDescription(
+		addPageSubtitle(journalArticle.getTitle(locale), request);
+		addPageDescription(
 			journalArticle.getDescription(locale), request);
 
 		List<AssetTag> articleTags =
-			AssetTagServiceUtil.getTags(
+			AssetTagLocalServiceUtil.getTags(
 				JournalArticle.class.getName(), journalArticle.getPrimaryKey());
 
 		if (!articleTags.isEmpty()) {
-			PortalUtil.addPageKeywords(
+			addPageKeywords(
 				ListUtil.toString(articleTags, AssetTag.NAME_ACCESSOR),
 				request);
 		}

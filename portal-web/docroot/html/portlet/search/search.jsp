@@ -43,6 +43,12 @@ portletURL.setParameter("keywords", keywords);
 portletURL.setParameter("format", format);
 
 request.setAttribute("search.jsp-portletURL", portletURL);
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setURLBack(redirect);
+}
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">

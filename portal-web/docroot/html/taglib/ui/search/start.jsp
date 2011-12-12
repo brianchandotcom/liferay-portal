@@ -38,6 +38,7 @@ portletURL.setWindowState(WindowState.MAXIMIZED);
 portletURL.setPortletMode(PortletMode.VIEW);
 
 portletURL.setParameter("struts_action", "/search/search");
+portletURL.setParameter("redirect", currentURL);
 
 pageContext.setAttribute("portletURL", portletURL);
 %>

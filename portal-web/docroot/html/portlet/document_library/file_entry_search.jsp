@@ -20,11 +20,14 @@
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 %>
 
 <liferay-portlet:resourceURL var="searchURL">
 	<portlet:param name="struts_action" value="/document_library/search" />
 	<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+	<portlet:param name="searchRepositoryId" value="<%= String.valueOf(folderId) %>" />
 	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
 </liferay-portlet:resourceURL>
@@ -56,12 +59,50 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 				requestParams: {
 					'<portlet:namespace />struts_action': '/document_library/search',
 					'<portlet:namespace />repositoryId': '<%= String.valueOf(repositoryId) %>',
+					'<portlet:namespace />searchRepositoryId': '<%= String.valueOf(repositoryId) %>',
 					'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
 					'<portlet:namespace />searchFolderId': '<%= String.valueOf(folderId) %>',
 					'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-					'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>
-				}
+					'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
+					<c:choose>
+						<c:when test="<%= (repositoryId == scopeGroupId) && (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>">
+							'<portlet:namespace />searchType': <%= String.valueOf(DLSearchConstants.MULTIPLE) %>
+						</c:when>
+						<c:otherwise>
+							'<portlet:namespace />searchType': <%= String.valueOf(DLSearchConstants.SINGLE) %>
+						</c:otherwise>
+					</c:choose>
+				},
+				src: 3
 			}
 		);
+
+		<%
+		if ((repositoryId == scopeGroupId) && (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+			for (Folder mountFolder : mountFolders) {
+			%>
+
+				Liferay.fire(
+					'<portlet:namespace />dataRequest',
+					{
+						requestParams: {
+							'<portlet:namespace />struts_action': '/document_library/search',
+							'<portlet:namespace />repositoryId': '<%= String.valueOf(mountFolder.getRepositoryId()) %>',
+							'<portlet:namespace />searchRepositoryId': '<%= String.valueOf(mountFolder.getRepositoryId()) %>',
+							'<portlet:namespace />folderId': '<%= String.valueOf(mountFolder.getFolderId()) %>',
+							'<portlet:namespace />searchFolderId': '<%= String.valueOf(mountFolder.getFolderId()) %>',
+							'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
+							'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
+							'<portlet:namespace />searchType': <%= String.valueOf(DLSearchConstants.MULTIPLE) %>
+
+						},
+						src: 3
+					}
+				);
+			<%
+			}
+		}
+		%>
+
 	}
 </aui:script>

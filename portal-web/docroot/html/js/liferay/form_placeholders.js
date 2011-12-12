@@ -22,22 +22,24 @@ AUI().add(
 
 						var formNode = host.formNode;
 
-						var placeholderInputs = formNode.all(SELECTOR_PLACEHOLDER_INPUTS);
+						if (formNode) {
+							var placeholderInputs = formNode.all(SELECTOR_PLACEHOLDER_INPUTS);
 
-						placeholderInputs.each(
-							function(item, index, collection) {
-								if (!item.val()) {
-									item.addClass(PLACEHOLDER_TEXT_CLASS);
+							placeholderInputs.each(
+								function(item, index, collection) {
+									if (!item.val()) {
+										item.addClass(PLACEHOLDER_TEXT_CLASS);
 
-									item.val(item.attr(STR_PLACEHOLDER));
+										item.val(item.attr(STR_PLACEHOLDER));
+									}
 								}
-							}
-						);
+							);
 
-						instance.host = host;
+							instance.host = host;
 
-						instance.beforeHostMethod('_onValidatorSubmit', instance._removePlaceholders, instance);
-						instance.beforeHostMethod('_onFieldFocusChange', instance._togglePlaceholders, instance);
+							instance.beforeHostMethod('_onValidatorSubmit', instance._removePlaceholders, instance);
+							instance.beforeHostMethod('_onFieldFocusChange', instance._togglePlaceholders, instance);
+						}
 					},
 
 					_removePlaceholders: function() {

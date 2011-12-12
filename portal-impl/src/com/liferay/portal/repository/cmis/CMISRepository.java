@@ -54,8 +54,6 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -1112,16 +1110,9 @@ public class CMISRepository extends BaseCmisRepository {
 			this, uuid, fileEntryId, document);
 
 		try {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				DLFileEntryConstants.getClassName(), fileEntryId);
-
-			if (assetEntry == null) {
-				FileVersion fileVersion = fileEntry.getFileVersion();
-
-				dlAppHelperLocalService.addFileEntry(
-					PrincipalThreadLocal.getUserId(), fileEntry, fileVersion,
-					new ServiceContext());
-			}
+			dlAppHelperLocalService.checkAssetEntry(
+				PrincipalThreadLocal.getUserId(), fileEntry,
+				fileEntry.getFileVersion());
 		}
 		catch (Exception e) {
 			_log.error("Unable to update asset", e);

@@ -35,6 +35,7 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -101,6 +102,64 @@ public class DLAppHelperLocalServiceImpl
 				folder.getFolderId(), folder.getUuid(), folder.getCompanyId(),
 				folder.getRepositoryId(), folder.getParentFolderId(),
 				folder.getName(), DLSyncConstants.TYPE_FOLDER, "-1");
+		}
+	}
+
+	public void checkAssetEntry(
+			long userId, FileEntry fileEntry, FileVersion fileVersion)
+		throws PortalException, SystemException {
+
+		AssetEntry fileEntryAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		long[] assetCategoryIds = new long[0];
+		String[] assetTagNames = new String[0];
+
+		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
+
+		if (fileEntryAssetEntry == null) {
+			fileEntryAssetEntry = assetEntryLocalService.updateEntry(
+				userId, fileEntry.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId(), fileEntry.getUuid(),
+				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
+				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getDescription(), null, null, null, 0, 0, null,
+				false);
+		}
+
+		AssetEntry fileVersionAssetEntry =
+			AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+
+		if ((fileVersionAssetEntry == null) && !fileVersion.isApproved() &&
+			!fileVersion.getVersion().equals(
+				DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+			assetTagNames = assetTagLocalService.getTagNames(
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+			fileVersionAssetEntry = assetEntryLocalService.updateEntry(
+				userId, fileEntry.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId(), fileEntry.getUuid(),
+				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
+				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getDescription(), null, null, null, 0, 0, null,
+				false);
+
+			List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
+				fileEntryAssetEntry.getEntryId());
+
+			long[] assetLinkIds = StringUtil.split(
+				ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+
+			assetLinkLocalService.updateLinks(
+				userId, fileVersionAssetEntry.getEntryId(), assetLinkIds,
+				AssetLinkConstants.TYPE_RELATED);
 		}
 	}
 

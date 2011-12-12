@@ -18,7 +18,6 @@
 
 <%
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
-boolean portletDisabled = (Boolean)request.getAttribute("render_controls.jsp-portletDisabled");
 
 for (int i = 0; i < controls.length; i++) {
 %>
@@ -30,11 +29,9 @@ for (int i = 0; i < controls.length; i++) {
 				<%
 				PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)controls[i];
 				PortletDataHandlerControl[] children = control.getChildren();
-
-				String taglibOnChange = children != null ? renderResponse.getNamespace() + "toggleChildren(this, '" + renderResponse.getNamespace() + control.getNamespacedControlName() + "Controls');" : null;
 				%>
 
-				<aui:input disabled="<%= controls[i].isDisabled() || portletDisabled %>" inlineLabel="right" label="<%= controls[i].getControlName() %>" name="<%= control.getNamespacedControlName() %>" onChange="<%= taglibOnChange %>" type="checkbox" value="<%= control.getDefaultState() %>" />
+				<aui:input disabled="<%= controls[i].isDisabled() %>" inlineLabel="right" label="<%= controls[i].getControlName() %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
 
 				<c:if test="<%= children != null %>">
 					<ul id="<portlet:namespace /><%= control.getNamespacedControlName() %>Controls">
@@ -45,6 +42,10 @@ for (int i = 0; i < controls.length; i++) {
 
 						<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 					</ul>
+
+					<aui:script>
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= control.getNamespacedControlName() %>Checkbox','<portlet:namespace /><%= control.getNamespacedControlName() %>Controls');
+					</aui:script>
 				</c:if>
 			</c:when>
 			<c:when test="<%= controls[i] instanceof PortletDataHandlerChoice %>">

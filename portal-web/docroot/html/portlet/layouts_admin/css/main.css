@@ -392,13 +392,28 @@
 	background-image: url(@theme_image_path@/trees/page_locked.png);
 }
 
-.export-dialog-tree .aui-field-input-choice {
-	float: none;
-}
+.export-dialog-tree {
+	.aui-field-input-choice {
+		float: none;
+	}
 
-.export-dialog-tree .file-selector {
-	display: block;
-	margin: 0.5em 0 1.5em;
+	.aui-field-label {
+		font-weight: normal;
+	}
+
+	.aui-fieldset .aui-field-content {
+		margin-top: .1em;
+		margin-bottom: .1em;
+	}
+
+	.file-selector {
+		display: block;
+		margin: 0.5em 0 1.5em;
+	}
+
+	.portlet-data-section legend {
+		font-size: 110%;
+	}
 }
 
 .lfr-export-dialog {

@@ -23,4 +23,12 @@ public class OSGiConstants {
 
 	public static final String ORIGINAL_BEAN = "original.bean";
 
+	public static final String OSGI_BUNDLE = "osgi-bundle";
+
+	public static final String OSGI_BUNDLECONTEXT = "osgi-bundlecontext";
+
+	public static final String SERVICE_VENDOR = "service.vendor";
+
+	public static final String WEB_CONTEXTPATH = "Web-ContextPath";
+
 }

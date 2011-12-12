@@ -31,6 +31,7 @@ import java.io.InputStream;
 
 import java.net.URI;
 
+import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -189,9 +190,19 @@ public class OSGiAutoDeployListener implements AutoDeployListener {
 			}
 		}
 
-		if (bundle != null) {
-			bundle.start();
+		if (bundle == null) {
+			return;
 		}
+
+		// Don't start fragment bundles
+
+		Dictionary<String,String> headers = bundle.getHeaders();
+
+		if (headers.get(Constants.FRAGMENT_HOST) != null) {
+			return;
+		}
+
+		bundle.start();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

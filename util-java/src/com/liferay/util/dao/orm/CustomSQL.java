@@ -219,11 +219,7 @@ public class CustomSQL {
 	}
 
 	public void reloadCustomSQL() throws SQLException {
-		// Clean custom SQL
-
 		PortalUtil.initCustomSQL();
-
-		// Load custom SQL from file
 
 		loadCustomSQL();
 	}

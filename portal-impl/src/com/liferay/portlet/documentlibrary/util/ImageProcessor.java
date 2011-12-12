@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -161,6 +162,10 @@ public class ImageProcessor extends DLPreviewableProcessor {
 	}
 
 	public boolean isSupported(String mimeType) {
+		if (Validator.isNull(mimeType)) {
+			return false;
+		}
+
 		return _imageMimeTypes.contains(mimeType);
 	}
 

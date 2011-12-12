@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -99,6 +100,10 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	}
 
 	public boolean isSupported(String mimeType) {
+		if (Validator.isNull(mimeType)) {
+			return false;
+		}
+
 		try {
 			if (PrefsPropsUtil.getBoolean(
 					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {

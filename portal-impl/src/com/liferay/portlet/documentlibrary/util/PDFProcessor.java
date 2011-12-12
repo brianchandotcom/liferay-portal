@@ -214,6 +214,10 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 	}
 
 	public boolean isSupported(String mimeType) {
+		if (Validator.isNull(mimeType)) {
+			return false;
+		}
+
 		if (mimeType.equals(ContentTypes.APPLICATION_PDF) ||
 			mimeType.equals(ContentTypes.APPLICATION_X_PDF)) {
 

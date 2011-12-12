@@ -107,6 +107,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				selenium.selectFrame("//iframe");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
@@ -151,6 +152,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				selenium.selectFrame("//iframe");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
@@ -195,6 +197,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				selenium.selectFrame("//iframe");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
@@ -239,6 +242,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				selenium.selectFrame("//iframe");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",
@@ -283,6 +287,7 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				}
 
 				selenium.selectFrame("//iframe");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//tr[3]/td[4]/span/ul/li/strong/a"));
 				selenium.clickAt("//tr[3]/td[4]/span/ul/li/strong/a",

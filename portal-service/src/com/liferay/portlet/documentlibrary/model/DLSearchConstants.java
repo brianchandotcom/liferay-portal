@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.portlet.documentlibrary.model;
 
-<%
-String param = (String)request.getAttribute("liferay-ui:section:param");
-String name = (String)request.getAttribute("liferay-ui:section:name");
-boolean selected = (Boolean)request.getAttribute("liferay-ui:section:selected");
-%>
+/**
+ * @author Sergio González
+ */
+public class DLSearchConstants {
 
-<div class='<%= selected ? StringPool.BLANK : "aui-helper-hidden" %>' id="<%= namespace %><%= param %><%= StringUtil.toCharCode(name) %>TabsSection">
+	public static final long FRAGMENT = 2;
+
+	public static final int MULTIPLE = 0;
+
+	public static final long SINGLE = 1;
+
+}

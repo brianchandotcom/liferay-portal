@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
@@ -46,6 +47,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -134,7 +136,19 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	public String getExtension() {
-		return FileUtil.getExtension(getTitle());
+		String extension = FileUtil.getExtension(getTitle());
+
+		if (Validator.isNull(extension)) {
+			Set<String> extensions = MimeTypesUtil.getExtensions(getMimeType());
+
+			Iterator<String> extensionsIterator = extensions.iterator();
+
+			if (extensionsIterator.hasNext()) {
+				return extensionsIterator.next();
+			}
+		}
+
+		return extension;
 	}
 
 	public long getFileEntryId() {

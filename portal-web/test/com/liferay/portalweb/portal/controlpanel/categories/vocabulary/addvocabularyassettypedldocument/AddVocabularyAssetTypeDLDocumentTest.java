@@ -111,7 +111,7 @@ public class AddVocabularyAssetTypeDLDocumentTest extends BaseTestCase {
 
 			case 2:
 				selenium.select("//select[@id='_147_classNameId0']",
-					RuntimeVariables.replace("Document Library Document"));
+					RuntimeVariables.replace("Documents and Media Document"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 

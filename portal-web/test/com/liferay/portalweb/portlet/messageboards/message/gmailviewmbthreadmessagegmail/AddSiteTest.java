@@ -64,11 +64,11 @@ public class AddSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Site"),
+		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
-			RuntimeVariables.replace("Site"));
+			RuntimeVariables.replace("Blank Site"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {

@@ -172,6 +172,10 @@
 			margin: 0;
 		}
 
+		.folder-droppable {
+			clear: both;
+		}
+
 		.journal-article-field-label {
 			display: block;
 			font-weight: bold;
@@ -219,9 +223,13 @@
 		margin-bottom: 10px;
 	}
 
-	.journal-article-variable-name .aui-field-label {
-		font-weight: normal;
-		margin-right: 5px;
+	.journal-article-variable-name {
+		float: right;
+
+		.aui-field-label {
+			font-weight: normal;
+			margin-right: 5px;
+		}
 	}
 
 	.component-group-title {
@@ -508,13 +516,20 @@
 
 	.journal-article-buttons {
 		display: block;
-		height: 27px;
 		margin-top: 18px;
 		text-align: right;
 
 		.edit-button, .repeatable-button {
 			float: left;
 			margin-left: 3px;
+		}
+
+		&:after {
+			clear: both;
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
 		}
 	}
 

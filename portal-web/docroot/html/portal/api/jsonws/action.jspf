@@ -18,6 +18,8 @@
 
 	<%
 	JSONWebServiceActionMapping jsonWebServiceActionMapping = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMapping(signature);
+
+	JavadocMethod javadocMethod = JavadocManagerUtil.lookupServiceUtilMethodJavadoc(jsonWebServiceActionMapping.getActionMethod());
 	%>
 
 	<%= jsonWebServiceActionMapping.getServletContextPath() %><%= jsonWebServiceActionMapping.getPath() %>
@@ -50,6 +52,15 @@
 	<%= actionClassName.substring(0, pos) %>.<span class="classname"><%= actionClassName.substring(pos + 1) %></span>#<span class="methodName"><%= actionMethod.getName() %></span>
 </div>
 
+<%
+	if (javadocMethod != null && javadocMethod.getComment() != null) {
+%>
+<div class="comment">
+	<%=javadocMethod.getComment()%>
+</div>
+<%
+	}
+%>
 
 <h3>
 	Parameters
@@ -58,27 +69,77 @@
 <%
 MethodParameter[] methodParameters = jsonWebServiceActionMapping.getMethodParameters();
 
-for (MethodParameter methodParameter : methodParameters) {
+for (int i = 0; i < methodParameters.length; i++) {
+	MethodParameter methodParameter = methodParameters[i];
+
+	Class methodParameterType = methodParameter.getType();
+
+	String methodParameterTypeName = null;
+
+	if (methodParameterType.isArray()) {
+		methodParameterTypeName = methodParameterType.getComponentType() + "[]";
+	}
+	else {
+		methodParameterTypeName = methodParameterType.getName();
+	}
+
+	String methodComment = null;
+	if (javadocMethod != null) {
+		methodComment = javadocMethod.getParametersComment(i);
+	}
+
 %>
-
 	<div class="param">
-		&bull; <%= methodParameter.getName() %> <span><%= methodParameter.getType() %></span>
+		&bull; <%= methodParameter.getName() %> <span><%= methodParameterTypeName %></span>
+<%	if (methodComment != null) { %>
+		<div class="comment-param"><%= methodComment %></div>
+<%	} %>
 	</div>
-
 <%
 }
 %>
 
-<h3>Return Type</h3>
+<h3>Return</h3>
 
-<div>
-
+<div class="param">
 	<%
 	Class<?> returnTypeClass = actionMethod.getReturnType();
 	%>
 
 	<%= returnTypeClass.getName() %>
+<%
+	if (javadocMethod != null && javadocMethod.getReturnComment() != null) {
+%>
+<div class="comment-param">
+	<%=javadocMethod.getReturnComment()%>
 </div>
+<%
+	}
+%>
+</div>
+
+<h3>Exception</h3>
+<%
+	Class<?>[] exceptionTypes = actionMethod.getExceptionTypes();
+
+	for (int i = 0; i < exceptionTypes.length; i++) {
+		Class<?> exceptionType = exceptionTypes[i];
+
+		String throwsComment = null;
+		if (javadocMethod != null) {
+			throwsComment = javadocMethod.getThrowsComment(i);
+		}
+%>
+	<div class="param">
+		&bull; <%= exceptionType.getName() %>
+		<%	if (throwsComment != null) { %>
+				<div class="comment-param"><%= throwsComment %></div>
+		<%	} %>
+	</div>
+
+<%
+	}
+%>
 
 <h3>
 	Execute
@@ -88,9 +149,9 @@ for (MethodParameter methodParameter : methodParameters) {
 String enctype = StringPool.BLANK;
 
 for (MethodParameter methodParameter : methodParameters) {
-	Class<?> methodParameterTypeClass = methodParameter.getType();
+	Class<?> methodParameterType = methodParameter.getType();
 
-	if (methodParameterTypeClass.equals(File.class)) {
+	if (methodParameterType.equals(File.class)) {
 		enctype = "enctype=\"multipart/form-data\"";
 
 		break;
@@ -110,20 +171,30 @@ for (MethodParameter methodParameter : methodParameters) {
 			continue;
 		}
 
-		Class<?> methodParameterTypeClass = methodParameter.getType();
+		Class<?> methodParameterType = methodParameter.getType();
+
+		String methodParameterTypeName = null;
+
+		if (methodParameterType.isArray()) {
+			methodParameterTypeName = methodParameterType.getComponentType() + "[]";
+		}
+		else {
+			methodParameterTypeName = methodParameterType.getName();
+		}
+
 	%>
 
-		<label for="field<%= i %>"><%= methodParameterName %> <span>(<%= methodParameterTypeClass.getName() %>)</span></label>
+		<label for="field<%= i %>"><%= methodParameterName %> <span>(<%= methodParameterTypeName %>)</span></label>
 
 		<%
-		if (methodParameterTypeClass.equals(File.class)) {
+		if (methodParameterType.equals(File.class)) {
 		%>
 
 			<input id="field<%= i %>" type="file" name="<%= methodParameterName %>" />
 
 		<%
 		}
-		else if (methodParameterTypeClass.equals(boolean.class)) {
+		else if (methodParameterType.equals(boolean.class)) {
 		%>
 
 			<input checked="checked" id="field<%= i %>" name="<%= methodParameterName %>" type="radio" value="false" />false &nbsp; <input id="field<%= i %>" name="<%= methodParameterName %>" type="radio" value="true" />true
@@ -133,7 +204,7 @@ for (MethodParameter methodParameter : methodParameters) {
 		else {
 			int size = 10;
 
-			if (methodParameterTypeClass.equals(String.class)) {
+			if (methodParameterType.equals(String.class)) {
 				size = 60;
 			}
 		%>

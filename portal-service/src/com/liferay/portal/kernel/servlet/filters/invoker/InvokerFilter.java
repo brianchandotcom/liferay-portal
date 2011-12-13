@@ -71,6 +71,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	public void init(FilterConfig filterConfig) {
 		_filterConfig = filterConfig;
 
+		ServletContext servletContext = _filterConfig.getServletContext();
+
+		_contextPath = servletContext.getContextPath();
+
 		registerPortalLifecycle();
 	}
 
@@ -183,18 +187,17 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			uri = request.getRequestURI();
 		}
 
-		String contextPath = request.getContextPath();
+		if (Validator.isNotNull(_contextPath) &&
+			!_contextPath.equals(StringPool.SLASH) &&
+			uri.startsWith(_contextPath)) {
 
-		if (Validator.isNotNull(contextPath) &&
-			!contextPath.equals(StringPool.SLASH) &&
-			uri.startsWith(contextPath)) {
-
-			uri = uri.substring(contextPath.length());
+			uri = uri.substring(_contextPath.length());
 		}
 
 		return uri;
 	}
 
+	private String _contextPath;
 	private Dispatcher _dispatcher;
 	private ConcurrentLRUCache<Integer, InvokerFilterChain> _filterChains;
 	private FilterConfig _filterConfig;

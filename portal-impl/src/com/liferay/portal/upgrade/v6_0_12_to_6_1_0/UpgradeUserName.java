@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 
@@ -76,6 +77,9 @@ public class UpgradeUserName extends UpgradeProcess {
 
 				String fullName = fullNameGenerator.getFullName(
 					firstName, middleName, lastName);
+
+				fullName = fullName.replace(
+					StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
 
 				if (setCompanyId) {
 					sb = new StringBundler(8);

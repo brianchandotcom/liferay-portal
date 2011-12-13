@@ -22,7 +22,7 @@ PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getA
 for (int i = 0; i < controls.length; i++) {
 %>
 
-	<li class="<portlet:namespace />handler-control">
+	<li class="handler-control">
 		<c:choose>
 			<c:when test="<%= controls[i] instanceof PortletDataHandlerBoolean %>">
 

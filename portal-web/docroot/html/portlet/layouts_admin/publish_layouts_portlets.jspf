@@ -241,7 +241,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 							%>
 
 								<li class="tree-item">
-									<div class="portlet-msg-error"><%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
+									<div class="portlet-msg-error">
+										<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
+									</div>
 								</li>
 
 						<%

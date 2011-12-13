@@ -228,7 +228,7 @@
 															<aui:input inlineLabel="right" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name='<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + rootPortletId %>' type="checkbox" value="<%= checked %>" />
 
 															<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= rootPortletId %>Controls">
-																<li class="<%= renderResponse.getNamespace() %>handler-control">
+																<li class="handler-control">
 																	<aui:input inlineLabel="right" label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= true %>" />
 																</li>
 
@@ -249,7 +249,9 @@
 												%>
 
 													<li class="tree-item">
-														<div class="portlet-msg-error"><%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
+														<div class="portlet-msg-error">
+															<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
+														</div>
 													</li>
 
 											<%

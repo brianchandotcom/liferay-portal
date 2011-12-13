@@ -82,7 +82,7 @@ for (Portlet alwaysExportablePortlet : alwaysExportablePortlets) {
 portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(application, locale));
 %>
 
-<aui:form method="post" name="fm1">
+<aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 
 	<c:choose>
@@ -114,6 +114,23 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	</c:choose>
 </aui:form>
 
+<c:if test='<%= cmd.equals(Constants.IMPORT) && SessionMessages.contains(renderRequest, "request_processed") %>'>
+	<aui:script>
+	var opener = Liferay.Util.getOpener();
+
+	if (opener) {
+		Liferay.fire(
+			'closeWindow',
+			{
+				id: '<portlet:namespace />importDialog'
+			}
+		);
+
+		opener.<portlet:namespace />saveLayoutset();
+	}
+	</aui:script>
+</c:if>
+
 <aui:script use="aui-base,aui-loading-mask,selector-css3">
 	var form = A.one('#<portlet:namespace />fm1');
 
@@ -134,9 +151,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 					submitForm(form, '<%= exportPagesURL + "&etag=0" %>', false);
 				</c:when>
 				<c:otherwise>
-					<portlet:actionURL windowState="<%= redirectWindowState %>" var="importPagesURL">
+					<portlet:actionURL var="importPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					</portlet:actionURL>

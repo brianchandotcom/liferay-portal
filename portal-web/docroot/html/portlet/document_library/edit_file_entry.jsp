@@ -247,12 +247,12 @@ else if (dlFileEntryType != null) {
 		}
 		%>
 
-		<aui:field-wrapper label="folder">
-			<portlet:renderURL var="viewFolderURL">
-				<portlet:param name="struts_action" value="/document_library/view" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-			</portlet:renderURL>
+		<portlet:renderURL var="viewFolderURL">
+			<portlet:param name="struts_action" value="/document_library/view" />
+			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		</portlet:renderURL>
 
+		<aui:field-wrapper label="folder">
 			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
 
 			<c:if test="<%= referringPortletName.equals(PortletKeys.ASSET_PUBLISHER) %>">

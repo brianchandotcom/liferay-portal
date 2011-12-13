@@ -43,6 +43,8 @@ public abstract class BasePortalLifecycle implements PortalLifecycle {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+
+			throw new IllegalStateException("Unable to initialize portal", e);
 		}
 	}
 

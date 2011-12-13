@@ -140,7 +140,7 @@ if (layout != null) {
 						</c:if>
 
 						navBlock: navBlock,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutsUpdateable(layout.getLayoutSet()) %>
+						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(layout.getLayoutSet()) %>
 					}
 				);
 			}

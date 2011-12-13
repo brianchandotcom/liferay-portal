@@ -480,8 +480,8 @@ public class LayoutTypePortletImpl
 	public String getLayoutTemplateId() {
 		String layoutTemplateId = StringPool.BLANK;
 
-		if (hasTemplate()) {
-			layoutTemplateId = getTemplateProperty(
+		if (hasSourcePrototypeLayout()) {
+			layoutTemplateId = getSourcePrototypeLayoutProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 		}
 		else {
@@ -606,7 +606,7 @@ public class LayoutTypePortletImpl
 			LayoutTypePortletConstants.STATE_MIN);
 	}
 
-	public String getTemplateProperty(String key) {
+	public String getSourcePrototypeLayoutProperty(String key) {
 		if (_sourcePrototypeLayout == null) {
 			return StringPool.BLANK;
 		}
@@ -756,7 +756,7 @@ public class LayoutTypePortletImpl
 		}
 	}
 
-	public boolean hasTemplate() {
+	public boolean hasSourcePrototypeLayout() {
 		if (_sourcePrototypeLayout != null) {
 			return true;
 		}
@@ -833,7 +833,7 @@ public class LayoutTypePortletImpl
 			Date preferencesModifiedDate = dateFormat.parse(
 				preferencesModifiedDateString);
 
-			if (hasTemplate()) {
+			if (hasSourcePrototypeLayout()) {
 				String propertiesModifiedDateString =
 					_sourcePrototypeLayout.getTypeSettingsProperties().
 						getProperty(_MODIFIED_DATE, _NULL_DATE);
@@ -868,11 +868,11 @@ public class LayoutTypePortletImpl
 	}
 
 	public boolean isTemplateCustomizable(String columnId) {
-		if (!hasTemplate()) {
+		if (!hasSourcePrototypeLayout()) {
 			return true;
 		}
 
-		String customizable = getTemplateProperty(
+		String customizable = getSourcePrototypeLayoutProperty(
 			CustomizedPages.namespaceColumnId(columnId));
 
 		return GetterUtil.getBoolean(customizable, false);
@@ -1357,14 +1357,14 @@ public class LayoutTypePortletImpl
 		Boolean customizable = null;
 		Boolean columnDisabled = null;
 
-		if (hasTemplate()) {
+		if (hasSourcePrototypeLayout()) {
 			customizable = isCustomizable();
 
 			if (customizable) {
 				columnDisabled = isColumnDisabled(columnId);
 
 				if (columnDisabled) {
-					return getTemplateProperty(columnId);
+					return getSourcePrototypeLayoutProperty(columnId);
 				}
 			}
 		}
@@ -1404,7 +1404,7 @@ public class LayoutTypePortletImpl
 
 		Layout layout = getLayout();
 
-		if (hasTemplate()) {
+		if (hasSourcePrototypeLayout()) {
 			layout = _sourcePrototypeLayout;
 		}
 
@@ -1517,8 +1517,8 @@ public class LayoutTypePortletImpl
 			return value;
 		}
 
-		if (hasTemplate()) {
-			value = getTemplateProperty(key);
+		if (hasSourcePrototypeLayout()) {
+			value = getSourcePrototypeLayoutProperty(key);
 		}
 		else {
 			value = getTypeSettingsProperties().getProperty(key);

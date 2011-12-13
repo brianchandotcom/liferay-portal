@@ -174,7 +174,17 @@ String[][] categorySections = {mainSections};
 				<c:choose>
 					<c:when test="<%= !SitesUtil.isLayoutUpdateable(selLayout) %>">
 						<div class="portlet-msg-alert">
-							<liferay-ui:message key="this-page-is-locked-by-the-template" />
+							<liferay-ui:message key="this-page-cannot-be-modified-because-it-is-associated-to-a-site-template-does-not-allow-modifications-to-it" />
+						</div>
+					</c:when>
+					<c:when test="<%= (selLayout.getGroupId() != groupId) && (selLayout.getGroup().isUserGroup()) %>">
+
+						<%
+						UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(selLayout.getGroup().getClassPK());
+						%>
+
+						<div class="portlet-msg-alert">
+							<liferay-ui:message arguments="<%= userGroup.getName() %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" />
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -310,7 +320,7 @@ String[][] categorySections = {mainSections};
 				categoryNames="<%= _CATEGORY_NAMES %>"
 				categorySections="<%= categorySections %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) && SitesUtil.isLayoutUpdateable(selLayout) %>"
+				showButtons="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) && SitesUtil.isLayoutUpdateable(selLayout) && (selLayout.getGroupId() == groupId) %>"
 			/>
 		</c:otherwise>
 	</c:choose>

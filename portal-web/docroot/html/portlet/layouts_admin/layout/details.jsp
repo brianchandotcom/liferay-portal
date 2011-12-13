@@ -21,12 +21,15 @@ Group group = (Group)request.getAttribute("edit_pages.jsp-group");
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
-boolean layoutUpdateable = SitesUtil.isLayoutUpdateable(selLayout);
-boolean layoutsUpdateable = SitesUtil.isLayoutsUpdateable(selLayout.getLayoutSet());
+LayoutTypePortletImpl selLayoutTypePortlet = new LayoutTypePortletImpl(selLayout);
+
+boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutTypePortlet.getSourcePrototypeLayoutProperty("layoutUpdateable"), true);
+
+boolean layoutSetPrototypeUpdateable = SitesUtil.isLayoutSetPrototypeUpdateable(selLayout.getLayoutSet());
 
 boolean layoutUpdateableDisabled = false;
 
-if (!layoutsUpdateable) {
+if (!layoutSetPrototypeUpdateable) {
 	layoutUpdateableDisabled = true;
 }
 

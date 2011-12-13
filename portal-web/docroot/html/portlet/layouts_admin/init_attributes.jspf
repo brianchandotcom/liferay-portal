@@ -108,9 +108,9 @@ catch (NoSuchLayoutException nsle) {
 if (selLayout != null) {
 	try {
 		if (SitesUtil.isLayoutToBeUpdatedFromSourcePrototype(selLayout)) {
-			Layout templateLayout = LayoutTypePortletImpl.getSourcePrototypeLayout(selLayout);
+			Layout sourcePrototypeLayout = LayoutTypePortletImpl.getSourcePrototypeLayout(selLayout);
 
-			SitesUtil.copyLayout(user.getUserId(), templateLayout, selLayout, new ServiceContext());
+			SitesUtil.copyLayout(user.getUserId(), sourcePrototypeLayout, selLayout, new ServiceContext());
 
 			selLayout = LayoutLocalServiceUtil.getLayout(selLayout.getPlid());
 
@@ -123,8 +123,7 @@ if (selLayout != null) {
 	}
 	catch (Exception e) {
 		if (_log.isWarnEnabled()) {
-			_log.warn("Failed to process dynamic site templates: " +
-				e.getMessage());
+			_log.warn("Failed to process dynamic site templates", e);
 		}
 	}
 

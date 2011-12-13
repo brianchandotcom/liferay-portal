@@ -236,6 +236,13 @@ public class SQLTransformer {
 		}
 	}
 
+	private String _replaceLike(String sql) {
+		Matcher matcher = _likePattern.matcher(sql);
+
+		return matcher.replaceAll(
+			"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
+	}
+
 	private String _replaceMod(String sql) {
 		Matcher matcher = _modPattern.matcher(sql);
 
@@ -271,7 +278,10 @@ public class SQLTransformer {
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 
-		if (_vendorDerby) {
+		if (_vendorDB2) {
+			newSQL = _replaceLike(newSQL);
+		}
+		else if (_vendorDerby) {
 			newSQL = _replaceUnion(newSQL);
 		}
 		else if (_vendorMySQL) {
@@ -397,6 +407,8 @@ public class SQLTransformer {
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _jpqlCountPattern = Pattern.compile(
 		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
+	private static Pattern _likePattern = Pattern.compile(
+		"LIKE \\?", Pattern.CASE_INSENSITIVE);
 	private static Pattern _modPattern = Pattern.compile(
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _negativeComparisonPattern = Pattern.compile(

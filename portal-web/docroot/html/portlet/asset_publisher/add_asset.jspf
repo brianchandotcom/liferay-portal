@@ -27,16 +27,19 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 	>
 
 		<%
+		boolean hasDocTypes = hasSubtypes(DLFileEntry.class.getName(), addPortletURLs);
+		boolean hasWebContentTypes = hasSubtypes(JournalArticle.class.getName(), addPortletURLs);
+
 		for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
 			String className = entry.getKey();
 
 			String message = StringPool.BLANK;
 
 			if (className.equals(DLFileEntry.class.getName())) {
-				message = "document";
+				message = hasDocTypes ? "basic-document" : "document";
 			}
 			else if (className.equals(JournalArticle.class.getName())) {
-				message = "basic-web-content";
+				message = hasWebContentTypes ? "basic-web-content" : "web-content";
 			}
 			else {
 				message = ResourceActionsUtil.getModelResourceNamePrefix() + className;
@@ -205,6 +208,18 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 	}
 
 	return addPortletURLs;
+}
+
+public boolean hasSubtypes(String className, Map<String, PortletURL> urlMap) {
+	for (Map.Entry<String, PortletURL> entry : urlMap.entrySet()) {
+		String key = entry.getKey();
+
+		if (key.startsWith(className) && !key.equals(className)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 private static final String _CLASSNAME_SEPARATOR = "_CLASSNAME_";

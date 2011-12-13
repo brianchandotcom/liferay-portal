@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -227,6 +228,15 @@ public class DDMStructureLocalServiceImpl
 		throws SystemException {
 
 		return ddmStructurePersistence.findByClassNameId(classNameId);
+	}
+
+	public List<DDMStructure> getClassStructures(
+			long classNameId, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByClassNameId(
+			classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			orderByComparator);
 	}
 
 	public List<DDMStructure> getClassStructures(

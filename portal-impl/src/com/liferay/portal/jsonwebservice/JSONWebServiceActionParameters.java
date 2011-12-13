@@ -127,6 +127,8 @@ public class JSONWebServiceActionParameters {
 		for (String parameterName : parameterNames) {
 			String value = jsonRpcRequest.getParameter(parameterName);
 
+			parameterName = CamelCaseUtil.fixCamelCase(parameterName);
+
 			_parameters.put(parameterName, value);
 		}
 	}
@@ -203,6 +205,8 @@ public class JSONWebServiceActionParameters {
 					value = parameterValues;
 				}
 			}
+
+			parameterName = CamelCaseUtil.fixCamelCase(parameterName);
 
 			_parameters.put(parameterName, value);
 		}

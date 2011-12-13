@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -163,6 +164,8 @@ import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -2003,10 +2006,10 @@ public class PortalImpl implements Portal {
 					LayoutTypePortletImpl.getFullInstanceSeparator();
 		}
 
-		if (Validator.isNull(currentDefaultAssetPublisherPortletId)) {
-			HttpServletRequest request =
-				(HttpServletRequest)requestContext.get("request");
+		HttpServletRequest request =
+			(HttpServletRequest)requestContext.get("request");
 
+		if (Validator.isNull(currentDefaultAssetPublisherPortletId)) {
 			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
 				request, layout.getPlid(), defaultAssetPublisherPortletId);
 
@@ -2048,6 +2051,22 @@ public class PortalImpl implements Portal {
 		else {
 			layoutActualURL =
 				layoutActualURL + StringPool.QUESTION + queryString;
+		}
+
+		Locale locale = getLocale(request);
+
+		addPageSubtitle(journalArticle.getTitle(locale), request);
+		addPageDescription(
+			journalArticle.getDescription(locale), request);
+
+		List<AssetTag> articleTags =
+			AssetTagLocalServiceUtil.getTags(
+				JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+
+		if (!articleTags.isEmpty()) {
+			addPageKeywords(
+				ListUtil.toString(articleTags, AssetTag.NAME_ACCESSOR),
+				request);
 		}
 
 		return layoutActualURL;

@@ -125,14 +125,13 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
-			LiferayPortletResponse liferayPortletResponse, boolean showGlobally)
+			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL =
-			(PortletURL)liferayPortletResponse.createResourceURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/document_library/view");
 		portletURL.setParameter("showSiblings", Boolean.TRUE.toString());
@@ -154,7 +153,7 @@ public class DLUtil {
 			request, themeDisplay.translate("home"), portletURL.toString(),
 			data);
 
-		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
+		addPortletBreadcrumbEntries(folder, request, portletURL, false);
 	}
 
 	public static void addPortletBreadcrumbEntries(

@@ -1,3 +1,5 @@
+@import "compass";
+
 @import url(custom_common.css);
 
 @import url(color_schemes/green.css);
@@ -44,30 +46,40 @@ hr, .separator {
 	height: auto;
 }
 
-#banner .company-title {
-	float: none;
-	margin: 15px 0 0;
-	position: static;
-}
-
-body #banner .logo a {
-	float: left;
-}
-
-.current-site {
-	display: none;
-}
-
-.logo .current-site {
-	background: #A6AFBE url(../images/dock/my_places_public.png) no-repeat 15px 50%;
+.site-title .site-name {
+	background: #555 url(../images/common/site_icon.png) no-repeat 15px 50%;
 	color: #FFF;
 	display: block;
 	float: right;
-	font-size: 0.8em;
+	font-size: 1em;
 	font-weight: bold;
 	margin: 15px 0 0 20px;
 	padding: 7px 17px 7px 40px;
+	position: relative;
 	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.company-site .site-title .site-name {
+	background-image: url(../images/common/folder.png);
+}
+
+.organization-site .site-title .site-name {
+	background-image: url(../images/common/organization_icon_white.png);
+}
+
+.user-site .site-title .site-name {
+	background-image: url(../images/common/user_icon_white.png);
+}
+
+.private-page .site-title .site-name:after {
+	background-image: url(../images/common/key_small.png);
+	content: '';
+	display: block;
+	height: 10px;
+	left: 24px;
+	position: absolute;
+	top: 50%;
+	width: 10px;
 }
 
 #skip-to-content:focus {
@@ -83,14 +95,6 @@ body #banner .logo a {
 	position: absolute;
 	right: 0;
 	top: 1.4em;
-}
-
-.guest-site .logo .current-site {
-	display: none;
-}
-
-.private-page .logo .current-site {
-	background-image: url(../images/dock/my_places_private.png);
 }
 
 .ie6 #banner {
@@ -375,6 +379,10 @@ body #banner .logo a {
 
 /* ---------- Extras ---------- */
 
+#banner .site-name {
+	@include box-shadow(inset 0 0 5px rgba(0, 0, 0, 0.8), 1px 1px 1px #FFF);
+}
+
 .portlet-borderless-bar {
 	-moz-border-radius: 20px;
 	-moz-box-shadow: inset 0 1px 3px #000;
@@ -390,10 +398,9 @@ body #banner .logo a {
 	box-shadow: 1px 1px 0 #FFF;
 }
 
-.logo .current-site {
-	-moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 1px 1px 0 #FFF;
-	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 1px 1px 0 #FFF;
-	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5), 1px 1px 0 #FFF;
+#banner .site-name {
+	@include border-radius(4px);
+	@include box-shadow(inset 0 0 5px rgba(0, 0, 0, 0.8), 1px 1px 1px #FFF);
 }
 
 #navigation li.selected a {

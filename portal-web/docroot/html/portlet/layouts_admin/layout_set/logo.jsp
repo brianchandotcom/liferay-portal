@@ -17,10 +17,13 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.GUEST);
 Group liveGroup = (Group)request.getAttribute("edit_pages.jsp-liveGroup");
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
 UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("edit_pages.jsp-groupTypeSettings");
 LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
+
+boolean showSiteName = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), true);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="logo" />
@@ -66,6 +69,11 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 			<img alt="<liferay-ui:message key="logo" />" src="<%= themeDisplay.getPathImage() %>/layout_set_logo?img_id=<%= selLayoutSet.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>" />
 		</div>
 	</c:if>
+
+	<c:if test="<%= liveGroup.getGroupId() != guestGroup.getGroupId() %>">
+		<aui:input label="show-site-name" name="showSiteName" type="checkbox" checked='<%= showSiteName %>' />
+	</c:if>
+
 </aui:fieldset>
 
 <aui:script use="aui-base">

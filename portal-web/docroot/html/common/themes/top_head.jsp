@@ -155,17 +155,6 @@ StringBundler pageTopSB = (StringBundler)request.getAttribute(WebKeys.PAGE_TOP);
 
 <style type="text/css">
 	/* <![CDATA[ */
-		<c:if test="<%= !themeDisplay.getCompanyLogo().equals(StringPool.BLANK) %>">
-			#heading .logo {
-				background: url(<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>) no-repeat;
-				display: block;
-				font-size: 0;
-				height: <%= themeDisplay.getCompanyLogoHeight() %>px;
-				text-indent: -9999px;
-				width: <%= themeDisplay.getCompanyLogoWidth() %>px;
-			}
-		</c:if>
-
 		<c:if test="<%= BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 7) %>">
 			img, .png {
 				position: relative;

@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -40,8 +42,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
@@ -100,7 +104,19 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public String getExtension() {
-		return FileUtil.getExtension(getTitle());
+		String extension = FileUtil.getExtension(getTitle());
+
+		if (Validator.isNull(extension)) {
+			Set<String> extensions = MimeTypesUtil.getExtensions(getMimeType());
+
+			Iterator<String> extensionsIterator = extensions.iterator();
+
+			if (extensionsIterator.hasNext()) {
+				return extensionsIterator.next();
+			}
+		}
+
+		return extension;
 	}
 
 	public String getExtraSettings() {

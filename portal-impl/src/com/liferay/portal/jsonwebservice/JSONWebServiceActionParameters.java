@@ -165,7 +165,7 @@ public class JSONWebServiceActionParameters {
 				value = pathParametersParts[i];
 			}
 
-			name = jodd.util.StringUtil.wordsToCamelCase(name, CharPool.DASH);
+			name = CamelCaseUtil.toCamelCase(name);
 
 			_parameters.put(name, value);
 

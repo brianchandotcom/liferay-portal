@@ -747,9 +747,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 			}
 		}
 
+		String portalURL = PortalUtil.getPortalURL(request);
+
 		String url = PortalUtil.getLayoutURL(this, themeDisplay);
 
-		if (!CookieKeys.hasSessionId(request)) {
+		if (!CookieKeys.hasSessionId(request) &&
+			(url.startsWith(portalURL) || url.startsWith(StringPool.SLASH))) {
+
 			url = PortalUtil.getURLWithSessionId(
 				url, request.getSession().getId());
 		}

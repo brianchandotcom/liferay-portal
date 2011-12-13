@@ -51,15 +51,15 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 				assertFalse(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[1]/span/span"));
 				assertNotEquals(RuntimeVariables.replace("Live"),
 					selenium.getText("//li[1]/span/a"));
 				assertTrue(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 				assertFalse(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[1]/span/span"));
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -259,9 +259,9 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 				assertFalse(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[1]/span/span"));
 				assertEquals(RuntimeVariables.replace("Live"),
 					selenium.getText("//li[1]/span/a"));
 

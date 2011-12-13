@@ -48,9 +48,9 @@ public class ViewActivateDeactivateSiteStagingLocalLiveDLTest
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//div[@class='staging-bar']/ul/li[1]/span/span"));
 		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
@@ -66,9 +66,9 @@ public class ViewActivateDeactivateSiteStagingLocalLiveDLTest
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//div[@class='staging-bar']/ul/li[1]/span/span"));
 		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

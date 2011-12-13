@@ -1,29 +1,3 @@
-.article-toolbar {
-	.aui-icon-delete {
-		background-image: url(@theme_image_path@/common/delete.png);
-	}
-
-	.aui-icon-download {
-		background-image: url(@theme_image_path@/common/download.png);
-	}
-	
-	.aui-icon-expire {
-		background-image: url(@theme_image_path@/common/time.png);
-	}
-	
-	.aui-icon-permissions {
-		background-image: url(@theme_image_path@/common/permissions.png);
-	}
-	
-	.aui-icon-preview {
-		background-image: url(@theme_image_path@/common/preview.png);
-	}
-	
-	.aui-icon-history {
-		background-image: url(@theme_image_path@/common/history.png);
-	}
-}
-
 .journal-article-component-list {
 	margin: 10px 0 0 0;
 }
@@ -44,6 +18,32 @@
 
 	.article-separator {
 		clear: both;
+	}
+
+	.article-toolbar {
+		.aui-icon-delete {
+			background-image: url(@theme_image_path@/common/delete.png);
+		}
+
+		.aui-icon-download {
+			background-image: url(@theme_image_path@/common/download.png);
+		}
+
+		.aui-icon-expire {
+			background-image: url(@theme_image_path@/common/time.png);
+		}
+
+		.aui-icon-permissions {
+			background-image: url(@theme_image_path@/common/permissions.png);
+		}
+
+		.aui-icon-preview {
+			background-image: url(@theme_image_path@/common/preview.png);
+		}
+
+		.aui-icon-history {
+			background-image: url(@theme_image_path@/common/history.png);
+		}
 	}
 
 	.form-section h3 {

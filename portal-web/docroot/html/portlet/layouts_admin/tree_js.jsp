@@ -247,9 +247,14 @@ if (!selectableTree) {
 
 	var rootNode = new RootNodeType(
 		{
+			after: {
+				expandedChange: function(event) {
+					TreeUtil.updateSessionTreeClick(0, event.newVal, '<%= HtmlUtil.escape(treeId) %>');
+				}
+			},
 			alwaysShowHitArea: true,
 			draggable: false,
-			expanded: <%= (selPlid > 0) ? true : false %>,
+			expanded: (A.Array.indexOf(TreeUtil.OPEN_NODES, '0') > -1),
 			id: rootId,
 			label: rootLabel,
 			leaf: false

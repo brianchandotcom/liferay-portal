@@ -52,6 +52,15 @@ if (fileEntry != null) {
 	folder = fileEntry.getFolder();
 }
 
+if ((folder == null) && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+	try {
+		folder = DLAppServiceUtil.getFolder(folderId);
+	}
+	catch (NoSuchFolderException nsfe) {
+		folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+	}
+}
+
 FileVersion fileVersion = null;
 
 long fileVersionId = 0;

@@ -916,7 +916,7 @@ public class PortletExporter {
 
 		boolean staged = liveGroup.isStagedPortlet(portlet.getRootPortletId());
 
-		if (!staged) {
+		if (!staged && ImportExportThreadLocal.isLayoutExportInProcess()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Not exporting data for " + portletId +

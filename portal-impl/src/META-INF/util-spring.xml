@@ -158,6 +158,11 @@
 			<bean class="com.liferay.portal.image.SpriteProcessorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.javadoc.JavadocManagerUtil" class="com.liferay.portal.kernel.javadoc.JavadocManagerUtil">
+		<property name="javadocManager">
+			<bean class="com.liferay.portal.javadoc.JavadocManagerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.json.JSONFactory" class="com.liferay.portal.json.JSONFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.json.JSONFactoryUtil" class="com.liferay.portal.kernel.json.JSONFactoryUtil">
 		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />

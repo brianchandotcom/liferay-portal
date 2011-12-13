@@ -85,6 +85,14 @@ public class MBSubscriptionSender extends SubscriptionSender {
 	}
 
 	protected String getMailingListSubject(String subject, String mailId) {
+		if (subject == null) {
+			subject = StringPool.BLANK;
+		}
+
+		if (mailId == null) {
+			mailId = StringPool.BLANK;
+		}
+
 		return subject.concat(StringPool.SPACE).concat(mailId);
 	}
 

@@ -59,6 +59,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.VirtualLayout;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -82,6 +83,7 @@ import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
@@ -422,6 +424,8 @@ public class ServicePreAction extends Action {
 				request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
 			}
 
+			boolean isLoginRequest = request.getRequestURI().startsWith(
+				Portal.PATH_MAIN.concat("/portal/login"));
 			boolean isViewableGroup = LayoutPermissionUtil.contains(
 				permissionChecker, layout, controlPanelCategory, true,
 				ActionKeys.VIEW);
@@ -437,25 +441,32 @@ public class ServicePreAction extends Action {
 			else if (!isViewableGroup && group.isStagingGroup()) {
 				layout = null;
 			}
-			else if (!isViewableGroup ||
-					 (!redirectToDefaultLayout &&
-					  !LayoutPermissionUtil.contains(
-						  permissionChecker, layout, false, ActionKeys.VIEW))) {
+			else if (!isLoginRequest &&
+					 (!isViewableGroup ||
+					  (!redirectToDefaultLayout &&
+					   !LayoutPermissionUtil.contains(
+						   permissionChecker, layout, false,
+						   ActionKeys.VIEW)))) {
 
-				sb = new StringBundler(6);
-
-				sb.append("User ");
-				sb.append(user.getUserId());
-				sb.append(" is not allowed to access the ");
-				sb.append(layout.isPrivateLayout() ? "private": "public");
-				sb.append(" pages of group ");
-				sb.append(layout.getGroupId());
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(sb.toString());
+				if (user.isDefaultUser()) {
+					throw new PrincipalException("User not authenticated.");
 				}
+				else {
+					sb = new StringBundler(6);
 
-				throw new NoSuchLayoutException(sb.toString());
+					sb.append("User ");
+					sb.append(user.getUserId());
+					sb.append(" is not allowed to access the ");
+					sb.append(layout.isPrivateLayout() ? "private": "public");
+					sb.append(" pages of group ");
+					sb.append(layout.getGroupId());
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(sb.toString());
+					}
+
+					throw new NoSuchLayoutException(sb.toString());
+				}
 			}
 			else if (group.isLayoutPrototype()) {
 				layouts = new ArrayList<Layout>();

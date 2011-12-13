@@ -16,13 +16,11 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.io.Serializable;
-
 /**
  * @author Bruno Basto
  */
 public interface FieldRenderer {
 
-	public String render(ThemeDisplay themeDisplay, Serializable value);
+	public String render(ThemeDisplay themeDisplay, Field field);
 
 }

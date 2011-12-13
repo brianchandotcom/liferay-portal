@@ -18,16 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.io.Serializable;
-
 /**
  * @author Bruno Basto
  */
 public abstract class BaseFieldRenderer implements FieldRenderer {
 
-	public String render(ThemeDisplay themeDisplay, Serializable fieldValue) {
+	public String render(ThemeDisplay themeDisplay, Field field) {
 		try {
-			return doRender(themeDisplay, fieldValue);
+			return doRender(themeDisplay, field);
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {
@@ -38,8 +36,7 @@ public abstract class BaseFieldRenderer implements FieldRenderer {
 		return null;
 	}
 
-	protected abstract String doRender(
-			ThemeDisplay themeDisplay, Serializable fieldValue)
+	protected abstract String doRender(ThemeDisplay themeDisplay, Field field)
 		throws Exception;
 
 	private static Log _log = LogFactoryUtil.getLog(BaseFieldRenderer.class);

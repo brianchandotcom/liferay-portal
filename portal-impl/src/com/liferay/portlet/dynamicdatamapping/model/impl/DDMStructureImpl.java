@@ -103,13 +103,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return getFieldProperty(fieldName, "dataType");
 	}
 
-	public boolean getFieldDisplayChildLabelAsValue(String fieldName)
-		throws StructureFieldException {
-
-		return GetterUtil.getBoolean(
-			getFieldProperty(fieldName, "displayChildLabelAsValue"));
-	}
-
 	public String getFieldLabel(String fieldName, Locale locale)
 		throws StructureFieldException {
 

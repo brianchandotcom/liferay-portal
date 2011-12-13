@@ -1,8 +1,12 @@
 <#include "../init.ftl">
 
-<#assign selected = (fieldStructure.value == fieldValue)>
+<#assign selected = (fieldStructure.value == fieldRawValue)>
 
 <#if parentType == "select">
+	<#if parentFieldStructure.multiple == "true">
+		<#assign selected = (fieldRawValue?split(","))?seq_contains(fieldStructure.value)>
+	</#if>
+
 	<@aui.option cssClass=cssClass label=fieldStructure.label selected=selected value=fieldStructure.value />
 <#else>
 	<@aui.input checked=selected cssClass=cssClass label=fieldStructure.label name=namespacedParentName type="radio" value=fieldStructure.value />

@@ -665,11 +665,6 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getFieldDataType(fieldName);
 	}
 
-	public boolean getFieldDisplayChildLabelAsValue(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException {
-		return _ddmStructure.getFieldDisplayChildLabelAsValue(fieldName);
-	}
-
 	public java.lang.String getFieldLabel(java.lang.String fieldName,
 		java.util.Locale locale)
 		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException {

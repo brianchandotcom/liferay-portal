@@ -7,5 +7,7 @@
 		</label>
 
 		${fieldValue}
+
+		${fieldStructure.children}
 	</div>
 </#if>

@@ -17,7 +17,9 @@ package com.liferay.portlet.dynamicdatalists.action;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -176,10 +178,23 @@ public class EditRecordAction extends PortletAction {
 
 		for (String fieldName : ddmStructure.getFieldNames()) {
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+			String fieldType = ddmStructure.getFieldType(fieldName);
 			String fieldValue = ParamUtil.getString(actionRequest, fieldName);
 
 			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
 				continue;
+			}
+
+			if (fieldType.equals("select")) {
+				boolean multiple = GetterUtil.getBoolean(
+					ddmStructure.getFieldProperty(fieldName, "multiple"));
+
+				if (multiple) {
+					String[] fieldValues = ParamUtil.getParameterValues(
+						actionRequest, fieldName);
+
+					fieldValue = StringUtil.merge(fieldValues);
+				}
 			}
 
 			Serializable fieldValueSerializable =

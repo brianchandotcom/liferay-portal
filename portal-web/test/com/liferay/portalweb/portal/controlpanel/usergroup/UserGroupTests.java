@@ -43,7 +43,8 @@ public class UserGroupTests extends BaseTests {
 		testSuite.addTestSuite(SearchUserGroupTest.class);
 		testSuite.addTestSuite(AddTemporaryUserGroupTest.class);
 		testSuite.addTestSuite(DeleteTemporaryUserGroupTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownUserGroupTest.class);
 
 		return testSuite;
 	}

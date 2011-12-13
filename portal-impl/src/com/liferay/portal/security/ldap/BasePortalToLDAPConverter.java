@@ -284,9 +284,11 @@ public class BasePortalToLDAPConverter implements PortalToLDAPConverter {
 		String portraitKey = userMappings.getProperty(
 			UserConverterKeys.PORTRAIT);
 
-		addModificationItem(
-			new BasicAttribute(portraitKey, getUserPortrait(user)),
-			modifications);
+		if (Validator.isNotNull(portraitKey)) {
+			addModificationItem(
+				new BasicAttribute(portraitKey, getUserPortrait(user)),
+				modifications);
+		}
 
 		populateCustomAttributeModifications(
 			user, user.getExpandoBridge(), userExpandoAttributes,

@@ -551,6 +551,11 @@
 		right: 0;
 	}
 
+	.taglib-search-iterator {
+		table-layout: fixed;
+		width: 100%;
+	}
+
 	.taglib-webdav {
 		margin-top: 3em;
 	}
@@ -561,6 +566,10 @@
 
 	.workflow-status-pending, .workflow-status-pending a {
 		color: orange;
+	}
+
+	.taglib-search-iterator .align-left {
+		word-wrap: break-word;
 	}
 
 	.document-library-breadcrumb {
@@ -805,6 +814,14 @@
 			}
 		}
 	}
+}
+
+.portlet-layout {
+	table-layout: fixed !important;
+}
+
+.document-display-style .document-description {
+	word-wrap: break-word;
 }
 
 .active-area-proxy {

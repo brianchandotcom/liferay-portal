@@ -149,9 +149,9 @@ public class EditFolderTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder Name Edit"),
 			selenium.getText("//tr[3]/td[2]/span/a/span"));
-		assertEquals(RuntimeVariables.replace("0k"),
+		assertEquals(RuntimeVariables.replace("--"),
 			selenium.getText("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("--"),
 			selenium.getText("//tr[3]/td[4]"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));

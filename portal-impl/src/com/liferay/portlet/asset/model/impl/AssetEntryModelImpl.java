@@ -603,8 +603,87 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 	}
 
+	public String getDescription(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getDescription(languageId);
+	}
+
+	public String getDescription(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getDescription(languageId, useDefault);
+	}
+
+	public String getDescription(String languageId) {
+		return LocalizationUtil.getLocalization(getDescription(), languageId);
+	}
+
+	public String getDescription(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getDescription(), languageId,
+			useDefault);
+	}
+
+	public String getDescriptionCurrentLanguageId() {
+		return _descriptionCurrentLanguageId;
+	}
+
+	@JSON
+	public String getDescriptionCurrentValue() {
+		Locale locale = getLocale(_descriptionCurrentLanguageId);
+
+		return getDescription(locale);
+	}
+
+	public Map<Locale, String> getDescriptionMap() {
+		return LocalizationUtil.getLocalizationMap(getDescription());
+	}
+
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	public void setDescription(String description, Locale locale) {
+		setDescription(description, locale, LocaleUtil.getDefault());
+	}
+
+	public void setDescription(String description, Locale locale,
+		Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(description)) {
+			setDescription(LocalizationUtil.updateLocalization(
+					getDescription(), "Description", description, languageId,
+					defaultLanguageId));
+		}
+		else {
+			setDescription(LocalizationUtil.removeLocalization(
+					getDescription(), "Description", languageId));
+		}
+	}
+
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		_descriptionCurrentLanguageId = languageId;
+	}
+
+	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
+		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
+	}
+
+	public void setDescriptionMap(Map<Locale, String> descriptionMap,
+		Locale defaultLocale) {
+		if (descriptionMap == null) {
+			return;
+		}
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String description = descriptionMap.get(locale);
+
+			setDescription(description, locale, defaultLocale);
+		}
 	}
 
 	@JSON
@@ -617,8 +696,85 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 	}
 
+	public String getSummary(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getSummary(languageId);
+	}
+
+	public String getSummary(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getSummary(languageId, useDefault);
+	}
+
+	public String getSummary(String languageId) {
+		return LocalizationUtil.getLocalization(getSummary(), languageId);
+	}
+
+	public String getSummary(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getSummary(), languageId,
+			useDefault);
+	}
+
+	public String getSummaryCurrentLanguageId() {
+		return _summaryCurrentLanguageId;
+	}
+
+	@JSON
+	public String getSummaryCurrentValue() {
+		Locale locale = getLocale(_summaryCurrentLanguageId);
+
+		return getSummary(locale);
+	}
+
+	public Map<Locale, String> getSummaryMap() {
+		return LocalizationUtil.getLocalizationMap(getSummary());
+	}
+
 	public void setSummary(String summary) {
 		_summary = summary;
+	}
+
+	public void setSummary(String summary, Locale locale) {
+		setSummary(summary, locale, LocaleUtil.getDefault());
+	}
+
+	public void setSummary(String summary, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(summary)) {
+			setSummary(LocalizationUtil.updateLocalization(getSummary(),
+					"Summary", summary, languageId, defaultLanguageId));
+		}
+		else {
+			setSummary(LocalizationUtil.removeLocalization(getSummary(),
+					"Summary", languageId));
+		}
+	}
+
+	public void setSummaryCurrentLanguageId(String languageId) {
+		_summaryCurrentLanguageId = languageId;
+	}
+
+	public void setSummaryMap(Map<Locale, String> summaryMap) {
+		setSummaryMap(summaryMap, LocaleUtil.getDefault());
+	}
+
+	public void setSummaryMap(Map<Locale, String> summaryMap,
+		Locale defaultLocale) {
+		if (summaryMap == null) {
+			return;
+		}
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String summary = summaryMap.get(locale);
+
+			setSummary(summary, locale, defaultLocale);
+		}
 	}
 
 	@JSON
@@ -1193,7 +1349,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;
+	private String _descriptionCurrentLanguageId;
 	private String _summary;
+	private String _summaryCurrentLanguageId;
 	private String _url;
 	private String _layoutUuid;
 	private int _height;

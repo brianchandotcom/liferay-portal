@@ -536,12 +536,122 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
+	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this asset entry
+	*/
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _assetEntry.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _assetEntry.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this asset entry
+	*/
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _assetEntry.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this asset entry
+	*/
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getDescription(languageId, useDefault);
+	}
+
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _assetEntry.getDescriptionCurrentLanguageId();
+	}
+
+	public java.lang.String getDescriptionCurrentValue() {
+		return _assetEntry.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this asset entry.
+	*
+	* @return the locales and localized descriptions of this asset entry
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _assetEntry.getDescriptionMap();
+	}
+
+	/**
 	* Sets the description of this asset entry.
 	*
 	* @param description the description of this asset entry
 	*/
 	public void setDescription(java.lang.String description) {
 		_assetEntry.setDescription(description);
+	}
+
+	/**
+	* Sets the localized description of this asset entry in the language.
+	*
+	* @param description the localized description of this asset entry
+	* @param locale the locale of the language
+	*/
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale) {
+		_assetEntry.setDescription(description, locale);
+	}
+
+	/**
+	* Sets the localized description of this asset entry in the language, and sets the default locale.
+	*
+	* @param description the localized description of this asset entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale, java.util.Locale defaultLocale) {
+		_assetEntry.setDescription(description, locale, defaultLocale);
+	}
+
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_assetEntry.setDescriptionCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized descriptions of this asset entry from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this asset entry
+	*/
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		_assetEntry.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	* Sets the localized descriptions of this asset entry from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this asset entry
+	* @param defaultLocale the default locale
+	*/
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -554,12 +664,121 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
+	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized summary of this asset entry
+	*/
+	public java.lang.String getSummary(java.util.Locale locale) {
+		return _assetEntry.getSummary(locale);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized summary of this asset entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	public java.lang.String getSummary(java.util.Locale locale,
+		boolean useDefault) {
+		return _assetEntry.getSummary(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized summary of this asset entry
+	*/
+	public java.lang.String getSummary(java.lang.String languageId) {
+		return _assetEntry.getSummary(languageId);
+	}
+
+	/**
+	* Returns the localized summary of this asset entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized summary of this asset entry
+	*/
+	public java.lang.String getSummary(java.lang.String languageId,
+		boolean useDefault) {
+		return _assetEntry.getSummary(languageId, useDefault);
+	}
+
+	public java.lang.String getSummaryCurrentLanguageId() {
+		return _assetEntry.getSummaryCurrentLanguageId();
+	}
+
+	public java.lang.String getSummaryCurrentValue() {
+		return _assetEntry.getSummaryCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized summaries of this asset entry.
+	*
+	* @return the locales and localized summaries of this asset entry
+	*/
+	public java.util.Map<java.util.Locale, java.lang.String> getSummaryMap() {
+		return _assetEntry.getSummaryMap();
+	}
+
+	/**
 	* Sets the summary of this asset entry.
 	*
 	* @param summary the summary of this asset entry
 	*/
 	public void setSummary(java.lang.String summary) {
 		_assetEntry.setSummary(summary);
+	}
+
+	/**
+	* Sets the localized summary of this asset entry in the language.
+	*
+	* @param summary the localized summary of this asset entry
+	* @param locale the locale of the language
+	*/
+	public void setSummary(java.lang.String summary, java.util.Locale locale) {
+		_assetEntry.setSummary(summary, locale);
+	}
+
+	/**
+	* Sets the localized summary of this asset entry in the language, and sets the default locale.
+	*
+	* @param summary the localized summary of this asset entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	public void setSummary(java.lang.String summary, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setSummary(summary, locale, defaultLocale);
+	}
+
+	public void setSummaryCurrentLanguageId(java.lang.String languageId) {
+		_assetEntry.setSummaryCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized summaries of this asset entry from the map of locales and localized summaries.
+	*
+	* @param summaryMap the locales and localized summaries of this asset entry
+	*/
+	public void setSummaryMap(
+		java.util.Map<java.util.Locale, java.lang.String> summaryMap) {
+		_assetEntry.setSummaryMap(summaryMap);
+	}
+
+	/**
+	* Sets the localized summaries of this asset entry from the map of locales and localized summaries, and sets the default locale.
+	*
+	* @param summaryMap the locales and localized summaries of this asset entry
+	* @param defaultLocale the default locale
+	*/
+	public void setSummaryMap(
+		java.util.Map<java.util.Locale, java.lang.String> summaryMap,
+		java.util.Locale defaultLocale) {
+		_assetEntry.setSummaryMap(summaryMap, defaultLocale);
 	}
 
 	/**

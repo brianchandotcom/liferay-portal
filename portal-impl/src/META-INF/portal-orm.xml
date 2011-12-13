@@ -1457,8 +1457,12 @@
 			<basic name="width" />
 			<basic name="priority" />
 			<basic name="viewCount" />
+			<transient name="descriptionCurrentLanguageId" />
+			<transient name="descriptionMap" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="summaryCurrentLanguageId" />
+			<transient name="summaryMap" />
 			<transient name="titleCurrentLanguageId" />
 			<transient name="titleMap" />
 			<transient name="userUuid" />

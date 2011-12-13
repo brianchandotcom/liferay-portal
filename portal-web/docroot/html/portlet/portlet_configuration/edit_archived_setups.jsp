@@ -83,6 +83,8 @@ portletURL.setParameter("portletResource", portletResource);
 	for (int i = 0; i < results.size(); i++) {
 		PortletItem portletItem = (PortletItem)results.get(i);
 
+		portletItem = portletItem.toEscapedModel();
+
 		ResultRow row = new ResultRow(new Object[] {portletItem, portletResource}, portletItem.getName(), i);
 
 		// Name

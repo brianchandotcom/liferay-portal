@@ -45,17 +45,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 				</portlet:renderURL>
 
-				<c:if test='<%= strutsAction.equals("/blogs/view_entry") %>'>
-					<portlet:renderURL var="blogsURL">
-						<portlet:param name="struts_action" value="/blogs/view" />
-					</portlet:renderURL>
-				</c:if>
-
-				<div class="entry-title">
-					<c:if test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
+				<c:if test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
+					<div class="entry-title">
 						<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>
-					</c:if>
-				</div>
+					</div>
+				</c:if>
 
 				<div class="entry-date">
 					<%= dateFormatDateTime.format(entry.getDisplayDate()) %>

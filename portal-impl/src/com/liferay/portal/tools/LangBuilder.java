@@ -339,19 +339,15 @@ public class LangBuilder {
 								"use another IP.");
 					}
 
-					if (translatedText.contains("&#39;")) {
-						translatedText = StringUtil.replace(
-							translatedText, "&#39;", "\'");
-					}
-
 					translatedText = StringUtil.replace(
 						translatedText.trim(),
 						new String[] {
-							"  ", "<b>", "</b>", "<i>", "</i>", " url "
+							"  ", "<b>", "</b>", "<i>", "</i>", " url ",
+							"&#39;", "&#39 ;", "&quot;", "&quot ;"
 						},
 						new String[] {
 							" ", "<strong>", "</strong>", "<em>", "</em>",
-							" URL "
+							" URL ", "\'", "\'", "\"", "\""
 						});
 
 					unsyncBufferedWriter.write(key + "=" + translatedText);

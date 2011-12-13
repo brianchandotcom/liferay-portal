@@ -191,23 +191,9 @@ request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
-	<c:choose>
-		<c:when test="<%= dlFileEntryTypeName.equals(DLFileEntryTypeConstants.NAME_IMAGE) %>">
-			<div class="portlet-msg-info">
-				<liferay-ui:message key="there-are-no-images-in-this-folder" />
-			</div>
-		</c:when>
-		<c:when test="<%= dlFileEntryTypeName.equals(DLFileEntryTypeConstants.NAME_VIDEO) %>">
-			<div class="portlet-msg-info">
-				<liferay-ui:message key="there-are-no-videos-in-this-folder" />
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div class="portlet-msg-info">
-				<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
-			</div>
-		</c:otherwise>
-	</c:choose>
+	<div class="portlet-msg-info">
+		<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
+	</div>
 </c:if>
 
 <%

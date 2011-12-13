@@ -127,13 +127,11 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId1());
 		}
 
-		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(assetLinkEntry.getClassNameId()));
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
+		assetLinkEntry = assetLinkEntry.toEscapedModel();
 
 		long assetLinkEntryId = assetLinkEntry.getEntryId();
 
-		String assetLinkEntryTitle = assetRenderer.getTitle(locale);
+		String assetLinkEntryTitle = assetLinkEntry.getTitle(locale);
 		String assetLinkEntryType = ResourceActionsUtil.getModelResource(locale, assetLinkEntry.getClassName());
 		%>
 

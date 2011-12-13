@@ -1094,10 +1094,10 @@
 		<field name="title" type="String" localized="true">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="description" type="String">
+		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="summary" type="String">
+		<field name="summary" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="url" type="String">

@@ -148,8 +148,8 @@
 		<column name="expirationDate" type="Date" />
 		<column name="mimeType" type="String" />
 		<column name="title" type="String" localized="true" />
-		<column name="description" type="String" />
-		<column name="summary" type="String" />
+		<column name="description" type="String" localized="true" />
+		<column name="summary" type="String" localized="true" />
 		<column name="url" type="String" />
 		<column name="layoutUuid" type="String" />
 		<column name="height" type="int" />

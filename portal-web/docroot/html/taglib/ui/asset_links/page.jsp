@@ -47,12 +47,14 @@ if (assetEntryId > 0) {
 					continue;
 				}
 
+                assetLinkEntry = assetLinkEntry.toEscapedModel();
+
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(assetLinkEntry.getClassNameId()));
 
 				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
 
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
-					String asseLinktEntryTitle = assetRenderer.getTitle(locale);
+					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, "viewFullContentURLString");
 			%>

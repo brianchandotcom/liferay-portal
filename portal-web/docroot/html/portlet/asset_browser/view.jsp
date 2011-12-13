@@ -88,8 +88,6 @@ portletURL.setParameter("callback", callback);
 
 			assetEntry = assetEntry.toEscapedModel();
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
 			String rowHREF = null;
 
 			if ((assetEntry.getEntryId() != refererAssetEntryId) && assetEntry.isVisible()) {
@@ -102,7 +100,7 @@ portletURL.setParameter("callback", callback);
 				sb.append("', '");
 				sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
 				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(assetRenderer.getTitle(locale)));
+				sb.append(assetEntry.getTitle(locale));
 				sb.append("');Liferay.Util.getWindow().close();");
 
 				rowHREF = sb.toString();
@@ -110,11 +108,11 @@ portletURL.setParameter("callback", callback);
 
 			// Title
 
-			row.addText(assetRenderer.getTitle(locale), rowHREF);
+			row.addText(assetEntry.getTitle(locale), rowHREF);
 
 			// Description
 
-			row.addText(assetRenderer.getSummary(locale), rowHREF);
+			row.addText(assetEntry.getSummary(locale), rowHREF);
 
 			// User name
 

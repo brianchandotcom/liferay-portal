@@ -47,6 +47,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.IOException;
 
@@ -307,6 +308,10 @@ public class SetupWizardUtil {
 		StartupAction startupAction = new StartupAction();
 
 		startupAction.run(null);
+
+		// Reload Custom SQL
+
+		CustomSQLUtil.reloadCustomSQL();
 
 		HttpSession session = request.getSession();
 

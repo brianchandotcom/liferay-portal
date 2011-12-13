@@ -973,6 +973,8 @@ public interface Portal {
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
+	public void initCustomSQL();
+
 	public boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException;

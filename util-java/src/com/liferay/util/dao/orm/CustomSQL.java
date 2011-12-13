@@ -72,120 +72,7 @@ public class CustomSQL {
 		"CONVERT(VARCHAR,?) IS NULL";
 
 	public CustomSQL() throws SQLException {
-		Connection con = DataAccess.getConnection();
-
-		String functionIsNull = PortalUtil.getCustomSQLFunctionIsNull();
-		String functionIsNotNull = PortalUtil.getCustomSQLFunctionIsNotNull();
-
-		try {
-			if (Validator.isNotNull(functionIsNull) &&
-				Validator.isNotNull(functionIsNotNull)) {
-
-				_functionIsNull = functionIsNull;
-				_functionIsNotNull = functionIsNotNull;
-
-				if (_log.isDebugEnabled()) {
-					_log.info(
-						"functionIsNull is manually set to " + functionIsNull);
-					_log.info(
-						"functionIsNotNull is manually set to " +
-							functionIsNotNull);
-				}
-			}
-			else if (con != null) {
-				DatabaseMetaData metaData = con.getMetaData();
-
-				String dbName = GetterUtil.getString(
-					metaData.getDatabaseProductName());
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Database name " + dbName);
-				}
-
-				if (dbName.startsWith("DB2")) {
-					_vendorDB2 = true;
-					_functionIsNull = DB2_FUNCTION_IS_NULL;
-					_functionIsNotNull = DB2_FUNCTION_IS_NOT_NULL;
-
-					if (_log.isInfoEnabled()) {
-						_log.info("Detected DB2 with database name " + dbName);
-					}
-				}
-				else if (dbName.startsWith("Informix")) {
-					_vendorInformix = true;
-					_functionIsNull = INFORMIX_FUNCTION_IS_NULL;
-					_functionIsNotNull = INFORMIX_FUNCTION_IS_NOT_NULL;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Detected Informix with database name " + dbName);
-					}
-				}
-				else if (dbName.startsWith("MySQL")) {
-					_vendorMySQL = true;
-					//_functionIsNull = MYSQL_FUNCTION_IS_NULL;
-					//_functionIsNotNull = MYSQL_FUNCTION_IS_NOT_NULL;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Detected MySQL with database name " + dbName);
-					}
-				}
-				else if (dbName.startsWith("Sybase") || dbName.equals("ASE")) {
-					_vendorSybase = true;
-					_functionIsNull = SYBASE_FUNCTION_IS_NULL;
-					_functionIsNotNull = SYBASE_FUNCTION_IS_NOT_NULL;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Detected Sybase with database name " + dbName);
-					}
-				}
-				else if (dbName.startsWith("Oracle")) {
-					_vendorOracle = true;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Detected Oracle with database name " + dbName);
-					}
-				}
-				else if (dbName.startsWith("PostgreSQL")) {
-					_vendorPostgreSQL = true;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Detected PostgreSQL with database name " + dbName);
-					}
-				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to detect database with name " + dbName);
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(con);
-		}
-
-		_sqlPool = new HashMap<String, String>();
-
-		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-
-			String[] configs = getConfigs();
-
-			for (String _config : configs) {
-				read(classLoader, _config);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		loadCustomSQL();
 	}
 
 	public String appendCriteria(String sql, String criteria) {
@@ -329,6 +216,12 @@ public class CustomSQL {
 		}
 
 		return keywordsArray;
+	}
+
+	public void reloadCustomSQL() throws SQLException {
+		PortalUtil.initCustomSQL();
+
+		loadCustomSQL();
 	}
 
 	public String removeGroupBy(String sql) {
@@ -678,6 +571,128 @@ public class CustomSQL {
 		}
 
 		return sb.toString();
+	}
+
+	private void loadCustomSQL() throws SQLException {
+		Connection con = DataAccess.getConnection();
+
+		String functionIsNull = PortalUtil.getCustomSQLFunctionIsNull();
+		String functionIsNotNull = PortalUtil.getCustomSQLFunctionIsNotNull();
+
+		try {
+			if (Validator.isNotNull(functionIsNull) &&
+				Validator.isNotNull(functionIsNotNull)) {
+
+				_functionIsNull = functionIsNull;
+				_functionIsNotNull = functionIsNotNull;
+
+				if (_log.isDebugEnabled()) {
+					_log.info(
+						"functionIsNull is manually set to " + functionIsNull);
+					_log.info(
+						"functionIsNotNull is manually set to " +
+							functionIsNotNull);
+				}
+			}
+			else if (con != null) {
+				DatabaseMetaData metaData = con.getMetaData();
+
+				String dbName = GetterUtil.getString(
+					metaData.getDatabaseProductName());
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Database name " + dbName);
+				}
+
+				if (dbName.startsWith("DB2")) {
+					_vendorDB2 = true;
+					_functionIsNull = DB2_FUNCTION_IS_NULL;
+					_functionIsNotNull = DB2_FUNCTION_IS_NOT_NULL;
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Detected DB2 with database name " + dbName);
+					}
+				}
+				else if (dbName.startsWith("Informix")) {
+					_vendorInformix = true;
+					_functionIsNull = INFORMIX_FUNCTION_IS_NULL;
+					_functionIsNotNull = INFORMIX_FUNCTION_IS_NOT_NULL;
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Detected Informix with database name " + dbName);
+					}
+				}
+				else if (dbName.startsWith("MySQL")) {
+					_vendorMySQL = true;
+					//_functionIsNull = MYSQL_FUNCTION_IS_NULL;
+					//_functionIsNotNull = MYSQL_FUNCTION_IS_NOT_NULL;
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Detected MySQL with database name " + dbName);
+					}
+				}
+				else if (dbName.startsWith("Sybase") || dbName.equals("ASE")) {
+					_vendorSybase = true;
+					_functionIsNull = SYBASE_FUNCTION_IS_NULL;
+					_functionIsNotNull = SYBASE_FUNCTION_IS_NOT_NULL;
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Detected Sybase with database name " + dbName);
+					}
+				}
+				else if (dbName.startsWith("Oracle")) {
+					_vendorOracle = true;
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Detected Oracle with database name " + dbName);
+					}
+				}
+				else if (dbName.startsWith("PostgreSQL")) {
+					_vendorPostgreSQL = true;
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Detected PostgreSQL with database name " + dbName);
+					}
+				}
+				else {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to detect database with name " + dbName);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			DataAccess.cleanUp(con);
+		}
+
+		if (_sqlPool == null) {
+			_sqlPool = new HashMap<String, String>();
+		}
+		else {
+			 _sqlPool.clear();
+		}
+
+		try {
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			String[] configs = getConfigs();
+
+			for (String _config : configs) {
+				read(classLoader, _config);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";

@@ -4176,6 +4176,82 @@ public class PortalImpl implements Portal {
 			portlet, PropsValues.WIDGET_SERVLET_MAPPING, themeDisplay);
 	}
 
+	public void initCustomSQL() {
+		_customSqlKeys = new String[] {
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.GROUP$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ORGANIZATION$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USERGROUP$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BLOGS.MODEL.BLOGSENTRY$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BOOKMARKS.MODEL." +
+				"BOOKMARKSENTRY$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.CALENDAR.MODEL.CALEVENT$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
+				"DLFILEENTRY$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
+				"MBMESSAGE$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
+				"MBTHREAD$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
+			"[$RESOURCE_SCOPE_COMPANY$]",
+			"[$RESOURCE_SCOPE_GROUP$]",
+			"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
+			"[$RESOURCE_SCOPE_INDIVIDUAL$]",
+			"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
+			"[$SOCIAL_RELATION_TYPE_BI_FRIEND$]",
+			"[$SOCIAL_RELATION_TYPE_BI_ROMANTIC_PARTNER$]",
+			"[$SOCIAL_RELATION_TYPE_BI_SIBLING$]",
+			"[$SOCIAL_RELATION_TYPE_BI_SPOUSE$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_CHILD$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_ENEMY$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_FOLLOWER$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_PARENT$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_SUBORDINATE$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]",
+			"[$FALSE$]",
+			"[$TRUE$]"
+		};
+
+		DB db = DBFactoryUtil.getDB();
+
+		Object[] customSqlValues = new Object[] {
+			getClassNameId(Group.class),
+			getClassNameId(Layout.class),
+			getClassNameId(Organization.class),
+			getClassNameId(Role.class),
+			getClassNameId(User.class),
+			getClassNameId(UserGroup.class),
+			getClassNameId(BlogsEntry.class),
+			getClassNameId(BookmarksEntry.class),
+			getClassNameId(CalEvent.class),
+			getClassNameId(DLFileEntry.class),
+			getClassNameId(MBMessage.class),
+			getClassNameId(MBThread.class),
+			getClassNameId(WikiPage.class),
+			ResourceConstants.SCOPE_COMPANY,
+			ResourceConstants.SCOPE_GROUP,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			SocialRelationConstants.TYPE_BI_COWORKER,
+			SocialRelationConstants.TYPE_BI_FRIEND,
+			SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER,
+			SocialRelationConstants.TYPE_BI_SIBLING,
+			SocialRelationConstants.TYPE_BI_SPOUSE,
+			SocialRelationConstants.TYPE_UNI_CHILD,
+			SocialRelationConstants.TYPE_UNI_ENEMY,
+			SocialRelationConstants.TYPE_UNI_FOLLOWER,
+			SocialRelationConstants.TYPE_UNI_PARENT,
+			SocialRelationConstants.TYPE_UNI_SUBORDINATE,
+			SocialRelationConstants.TYPE_UNI_SUPERVISOR,
+			db.getTemplateFalse(),
+			db.getTemplateTrue()
+		};
+
+		_customSqlValues = ArrayUtil.toStringArray(customSqlValues);
+	}
+
 	public boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
@@ -5057,7 +5133,7 @@ public class PortalImpl implements Portal {
 
 	public String transformCustomSQL(String sql) {
 		if ((_customSqlKeys == null) || (_customSqlValues == null)) {
-			_initCustomSQL();
+			initCustomSQL();
 		}
 
 		return StringUtil.replace(sql, _customSqlKeys, _customSqlValues);
@@ -5717,82 +5793,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
-	}
-
-	private void _initCustomSQL() {
-		_customSqlKeys = new String[] {
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.GROUP$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ORGANIZATION$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USERGROUP$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BLOGS.MODEL.BLOGSENTRY$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.BOOKMARKS.MODEL." +
-				"BOOKMARKSENTRY$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.CALENDAR.MODEL.CALEVENT$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
-				"DLFILEENTRY$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
-				"MBMESSAGE$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
-				"MBTHREAD$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
-			"[$RESOURCE_SCOPE_COMPANY$]",
-			"[$RESOURCE_SCOPE_GROUP$]",
-			"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
-			"[$RESOURCE_SCOPE_INDIVIDUAL$]",
-			"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
-			"[$SOCIAL_RELATION_TYPE_BI_FRIEND$]",
-			"[$SOCIAL_RELATION_TYPE_BI_ROMANTIC_PARTNER$]",
-			"[$SOCIAL_RELATION_TYPE_BI_SIBLING$]",
-			"[$SOCIAL_RELATION_TYPE_BI_SPOUSE$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_CHILD$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_ENEMY$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_FOLLOWER$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_PARENT$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_SUBORDINATE$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]",
-			"[$FALSE$]",
-			"[$TRUE$]"
-		};
-
-		DB db = DBFactoryUtil.getDB();
-
-		Object[] customSqlValues = new Object[] {
-			getClassNameId(Group.class),
-			getClassNameId(Layout.class),
-			getClassNameId(Organization.class),
-			getClassNameId(Role.class),
-			getClassNameId(User.class),
-			getClassNameId(UserGroup.class),
-			getClassNameId(BlogsEntry.class),
-			getClassNameId(BookmarksEntry.class),
-			getClassNameId(CalEvent.class),
-			getClassNameId(DLFileEntry.class),
-			getClassNameId(MBMessage.class),
-			getClassNameId(MBThread.class),
-			getClassNameId(WikiPage.class),
-			ResourceConstants.SCOPE_COMPANY,
-			ResourceConstants.SCOPE_GROUP,
-			ResourceConstants.SCOPE_GROUP_TEMPLATE,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			SocialRelationConstants.TYPE_BI_COWORKER,
-			SocialRelationConstants.TYPE_BI_FRIEND,
-			SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER,
-			SocialRelationConstants.TYPE_BI_SIBLING,
-			SocialRelationConstants.TYPE_BI_SPOUSE,
-			SocialRelationConstants.TYPE_UNI_CHILD,
-			SocialRelationConstants.TYPE_UNI_ENEMY,
-			SocialRelationConstants.TYPE_UNI_FOLLOWER,
-			SocialRelationConstants.TYPE_UNI_PARENT,
-			SocialRelationConstants.TYPE_UNI_SUBORDINATE,
-			SocialRelationConstants.TYPE_UNI_SUPERVISOR,
-			db.getTemplateFalse(),
-			db.getTemplateTrue()
-		};
-
-		_customSqlValues = ArrayUtil.toStringArray(customSqlValues);
 	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";

@@ -1257,6 +1257,10 @@ public class PortalUtil {
 		return getPortal().getWidgetURL(portlet, themeDisplay);
 	}
 
+	public static void initCustomSQL() {
+		getPortal().initCustomSQL();
+	}
+
 	public static boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {

@@ -31,6 +31,10 @@ public class AssertPublicPageHostURLTest extends BaseTestCase {
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		selenium.clickAt("link=Public Page",
+			RuntimeVariables.replace("Public Page"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"http://www.able.com:8080/public-page"), selenium.getLocation());
 	}

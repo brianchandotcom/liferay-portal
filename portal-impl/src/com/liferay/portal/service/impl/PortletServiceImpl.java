@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.RoleConstants;
@@ -30,6 +32,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
+@JSONWebService(mode = JSONWebServiceMode.MANUAL)
 public class PortletServiceImpl extends PortletServiceBaseImpl {
 
 	public JSONArray getWARPortlets() {

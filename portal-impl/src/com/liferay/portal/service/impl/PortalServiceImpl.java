@@ -17,6 +17,8 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -34,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 /**
  * @author Brian Wing Shun Chan
  */
+@JSONWebService(mode = JSONWebServiceMode.MANUAL)
 public class PortalServiceImpl extends PortalServiceBaseImpl {
 
 	public String getAutoDeployDirectory() throws SystemException {
@@ -42,6 +45,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 			PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 	}
 
+	@JSONWebService
 	public int getBuildNumber() {
 		return ReleaseInfo.getBuildNumber();
 	}

@@ -216,20 +216,6 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 						url="<%= addFolderURL %>"
 					/>
 				</c:if>
-
-				<c:if test="<%= showActions && folder.isDefaultRepository() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
-					<portlet:renderURL var="addRepositoryURL">
-						<portlet:param name="struts_action" value="/document_library/edit_repository" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						image="add_drive"
-						message="add-repository"
-						url="<%= addRepositoryURL %>"
-					/>
-				</c:if>
 			</c:when>
 			<c:otherwise>
 

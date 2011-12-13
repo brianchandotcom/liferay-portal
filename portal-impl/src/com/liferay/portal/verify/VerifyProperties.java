@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,6 +56,8 @@ public class VerifyProperties extends VerifyProcess {
 
 			verifyRenamedPortalProperty(oldKey, newKey);
 		}
+
+		StoreFactory.checkProperties();
 
 		for (String key : _OBSOLETE_PORTAL_KEYS) {
 			verifyObsoletePortalProperty(key);

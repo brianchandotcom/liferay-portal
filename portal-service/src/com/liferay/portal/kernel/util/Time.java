@@ -145,6 +145,11 @@ public class Time {
 
 				s = x + " Second";
 			}
+			else {
+				x = (int)milliseconds;
+
+				s = x + " Millisecond";
+			}
 		}
 
 		if (x > 1) {

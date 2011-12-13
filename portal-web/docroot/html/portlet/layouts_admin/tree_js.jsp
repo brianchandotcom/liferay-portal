@@ -27,6 +27,8 @@ boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true)
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 
+boolean rootNodeExpanded = GetterUtil.getBoolean(SessionClicks.get(request, treeId + "RootNode", null), true);
+
 String modules = "aui-io-request,aui-tree-view,dataschema-xml,datatype-xml";
 
 if (!selectableTree) {
@@ -249,12 +251,21 @@ if (!selectableTree) {
 		{
 			after: {
 				expandedChange: function(event) {
-					TreeUtil.updateSessionTreeClick(0, event.newVal, '<%= HtmlUtil.escape(treeId) %>');
+					var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_click';
+
+					A.io.request(
+						sessionClickURL,
+						{
+							data: {
+								'<%= HtmlUtil.escape(treeId) %>RootNode': event.newVal
+							}
+						}
+					);
 				}
 			},
 			alwaysShowHitArea: true,
 			draggable: false,
-			expanded: (A.Array.indexOf(TreeUtil.OPEN_NODES, '0') > -1),
+			expanded: <%= rootNodeExpanded %>,
 			id: rootId,
 			label: rootLabel,
 			leaf: false

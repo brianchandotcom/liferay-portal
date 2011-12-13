@@ -1864,6 +1864,8 @@
 			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
 		</action>
 
+		<action path="/user_groups_admin/page" type="com.liferay.portlet.myplaces.action.ViewAction" />
+
 		<action path="/user_groups_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
 
 		<action path="/user_groups_admin/view" forward="portlet.user_groups_admin.view" />

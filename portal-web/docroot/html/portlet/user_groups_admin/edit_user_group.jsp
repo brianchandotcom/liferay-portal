@@ -57,6 +57,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 		<aui:input name="description" />
 
+	</aui:fieldset>
+	<aui:fieldset helpMessage="user-group-site-help" label="user-group-site">
+
 		<%
 		List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 		%>

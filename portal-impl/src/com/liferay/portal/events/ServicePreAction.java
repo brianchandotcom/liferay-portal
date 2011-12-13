@@ -98,6 +98,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 
@@ -385,7 +386,14 @@ public class ServicePreAction extends Action {
 				Group sourceGroup = GroupLocalServiceUtil.getGroup(
 					sourceGroupId);
 
-				layout = new VirtualLayout(layout, sourceGroup);
+				if (SitesUtil.isUserGroupLayoutSetViewable(
+						permissionChecker, sourceGroup)) {
+
+					layout = new VirtualLayout(layout, sourceGroup);
+				}
+				else {
+					layout = null;
+				}
 			}
 		}
 		else {

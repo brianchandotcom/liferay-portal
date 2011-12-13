@@ -24,6 +24,8 @@ String redirect = searchContainer.getIteratorURL().toString();
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 UserGroup userGroup = (UserGroup)row.getObject();
+
+Group userGroupGroup = userGroup.getGroup();
 %>
 
 <liferay-ui:icon-menu>
@@ -54,22 +56,64 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.MANAGE_LAYOUTS) %>">
+	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= Group.class.getName() %>"
+			modelResourceDescription='<%= LanguageUtil.format(pageContext, "site-for-user-group-x", userGroup.getName()) %>'
+			resourcePrimKey="<%= String.valueOf(userGroup.getGroup().getGroupId()) %>"
+			var="permissionsURL"
+		/>
 
-		<%
-		Group group = userGroup.getGroup();
-		%>
+		<liferay-ui:icon
+			image="permissions"
+			message="site-permissions"
+			url="<%= permissionsURL %>"
+		/>
+	</c:if>
 
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, userGroupGroup.getGroupId(), ActionKeys.MANAGE_LAYOUTS) %>">
 		<portlet:renderURL var="managePagesURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_layouts" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			image="pages"
-			message="manage-pages"
+			message="manage-site-pages"
 			url="<%= managePagesURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= (userGroupGroup.getPublicLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, userGroupGroup.getGroupId(), ActionKeys.VIEW) %>">
+		<portlet:actionURL var="viewPublicPagesURL">
+			<portlet:param name="struts_action" value="/sites_admin/page" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
+			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			image="view"
+			message="go-to-the-site-public-pages"
+			target="_blank"
+			url="<%= viewPublicPagesURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= (userGroupGroup.getPrivateLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, userGroupGroup.getGroupId(), ActionKeys.VIEW) %>">
+		<portlet:actionURL var="viewPrivatePagesURL">
+			<portlet:param name="struts_action" value="/sites_admin/page" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
+			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			image="view"
+			message="go-to-the-site-private-pages"
+			target="_blank"
+			url="<%= viewPrivatePagesURL %>"
 		/>
 	</c:if>
 

@@ -58,7 +58,7 @@
 
 		// Title
 
-		row.addText(HtmlUtil.escape(question.getTitle(locale)), rowURL);
+		row.addText(question.getTitle(locale), rowURL);
 
 		// Number of votes
 

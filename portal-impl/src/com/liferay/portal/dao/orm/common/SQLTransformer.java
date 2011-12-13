@@ -160,6 +160,17 @@ public class SQLTransformer {
 			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
 	}
 
+	private String _replaceCastLong(String sql) {
+		Matcher matcher = _castLongPattern.matcher(sql);
+
+		if (_vendorSybase) {
+			return matcher.replaceAll("CONVERT(BIGINT, $1)");
+		}
+		else {
+			return matcher.replaceAll("$1");
+		}
+	}
+
 	private String _replaceCastText(String sql) {
 		Matcher matcher = _castTextPattern.matcher(sql);
 
@@ -228,6 +239,7 @@ public class SQLTransformer {
 
 		newSQL = _replaceBitwiseCheck(newSQL);
 		newSQL = _replaceBoolean(newSQL);
+		newSQL = _replaceCastLong(newSQL);
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
 
@@ -349,6 +361,8 @@ public class SQLTransformer {
 
 	private static Pattern _bitwiseCheckPattern = Pattern.compile(
 		"BITAND\\((.+?),(.+?)\\)");
+	private static Pattern _castLongPattern = Pattern.compile(
+		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(

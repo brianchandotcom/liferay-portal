@@ -30,7 +30,11 @@ List<JSONWebServiceActionMapping> jsonWebServiceActionMappings = JSONWebServiceA
 </p>
 
 <%
+
 String previousActionClassName = null;
+char[] usedChars = new char[128];
+char previousChar = ' ';
+int charsCount = 0;
 
 for (JSONWebServiceActionMapping jsonWebServiceActionMapping : jsonWebServiceActionMappings) {
 	Class<?> actionClass = jsonWebServiceActionMapping.getActionClass();
@@ -43,8 +47,17 @@ for (JSONWebServiceActionMapping jsonWebServiceActionMapping : jsonWebServiceAct
 
 	if (!actionClassName.equals(previousActionClassName)) {
 		previousActionClassName = actionClassName;
-%>
 
+		char firstChar = actionClassName.charAt(0);
+		if (firstChar != previousChar) {
+			previousChar = firstChar;
+			usedChars[firstChar] = firstChar;
+			charsCount++;
+%>
+		<a name="<%= firstChar %>"></a>
+<%
+		}
+%>
 		<h2>
 			<%= actionClassName %>
 		</h2>
@@ -68,6 +81,27 @@ for (JSONWebServiceActionMapping jsonWebServiceActionMapping : jsonWebServiceAct
 <%
 }
 %>
+
+<%
+	if (charsCount > 1) {
+%>
+<div id="quick">
+<%
+		for(char c = 'A'; c <= 'Z'; c++) {
+			if (usedChars[c] == 0) {
+				continue;
+			}
+%>
+	<div><a href="#<%= c %>"><%= c %></a></div>
+<%
+		}
+%>
+</div>
+<%
+	}
+%>
+
+
 
 <script type="text/javascript">
 	YUI().use(

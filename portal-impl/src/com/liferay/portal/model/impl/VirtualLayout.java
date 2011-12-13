@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -126,10 +127,19 @@ public class VirtualLayout extends LayoutWrapper {
 		try {
 			Group group = _sourceLayout.getGroup();
 
+			String params = StringPool.BLANK;
+
+			int paramsPos = layoutURL.indexOf(StringPool.QUESTION);
+
+			if (paramsPos > 0) {
+				params = layoutURL.substring(paramsPos, layoutURL.length());
+			}
+
 			int pos = layoutURL.indexOf(group.getFriendlyURL());
 
 			return layoutURL.substring(0, pos).concat(
-				_targetGroup.getFriendlyURL()).concat(getFriendlyURL());
+				_targetGroup.getFriendlyURL()).concat(getFriendlyURL()).concat(
+					params);
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -140,5 +150,6 @@ public class VirtualLayout extends LayoutWrapper {
 
 	private Layout _sourceLayout;
 	private Group _targetGroup;
+
 
 }

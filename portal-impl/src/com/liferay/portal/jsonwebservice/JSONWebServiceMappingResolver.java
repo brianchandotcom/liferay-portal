@@ -16,7 +16,6 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -59,8 +58,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if (path == null || path.length() == 0) {
-			path = jodd.util.StringUtil.camelCaseToWords(
-				method.getName(), CharPool.DASH);
+			path = CamelCaseUtil.toSeparatedWords(method.getName());
 		}
 
 		if (!path.startsWith(StringPool.SLASH)) {

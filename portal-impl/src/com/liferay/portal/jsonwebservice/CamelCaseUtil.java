@@ -23,12 +23,52 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class CamelCaseUtil {
 
 	/**
+	 * Converts camel case word to dash-separated-words.
+	 * Examples:
+	 * <li>camelCase --&gt; camel-case
+	 * <li>camelCASEWord --&gt; camel-case-word
+	 */
+	public static String fromCamelCase(String s) {
+		StringBundler sb = new StringBundler();
+
+		boolean upperCase = false;
+
+		int len = s.length();
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+
+			boolean nextUpperCase = true;
+			if (i < len - 1) {
+				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
+			}
+
+			if ((i > 0) && Character.isUpperCase(c)) {
+				if (!upperCase || !nextUpperCase) {
+					sb.append(CharPool.DASH);
+				}
+
+				c = Character.toLowerCase(c);
+
+				upperCase = true;
+			}
+			else {
+				upperCase = false;
+			}
+
+			sb.append(c);
+		}
+
+		return sb.toString();
+	}
+
+	/**
 	 * Normalizes inner uppercase words in camel case string.
 	 * Examples:
 	 * <li>camelCase --&gt; camelCase
 	 * <li>camelCASEWord --&gt; camelCaseWord
 	 */
-	public static String fixCamelCase(String s) {
+	public static String normalizeCamelCase(String s) {
 		StringBundler sb = new StringBundler();
 
 		boolean upperCase = false;
@@ -87,46 +127,6 @@ public class CamelCaseUtil {
 			else {
 				sb.append(c);
 			}
-		}
-
-		return sb.toString();
-	}
-
-	/**
-	 * Converts camel case word to dash-separated-words.
-	 * Examples:
-	 * <li>camelCase --&gt; camel-case
-	 * <li>camelCASEWord --&gt; camel-case-word
-	 */
-	public static String toSeparateWords(String s) {
-		StringBundler sb = new StringBundler();
-
-		boolean upperCase = false;
-
-		int len = s.length();
-
-		for (int i = 0; i < len; i++) {
-			char c = s.charAt(i);
-
-			boolean nextUpperCase = true;
-			if (i < len - 1) {
-				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
-			}
-
-			if ((i > 0) && Character.isUpperCase(c)) {
-				if (!upperCase || !nextUpperCase) {
-					sb.append(CharPool.DASH);
-				}
-
-				c = Character.toLowerCase(c);
-
-				upperCase = true;
-			}
-			else {
-				upperCase = false;
-			}
-
-			sb.append(c);
 		}
 
 		return sb.toString();

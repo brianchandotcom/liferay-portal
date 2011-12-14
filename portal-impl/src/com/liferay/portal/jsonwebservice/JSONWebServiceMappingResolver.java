@@ -58,7 +58,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if (path == null || path.length() == 0) {
-			path = CamelCaseUtil.toSeparateWords(method.getName());
+			path = CamelCaseUtil.fromCamelCase(method.getName());
 		}
 
 		if (!path.startsWith(StringPool.SLASH)) {

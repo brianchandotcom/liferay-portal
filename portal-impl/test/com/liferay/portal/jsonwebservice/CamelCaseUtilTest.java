@@ -22,19 +22,20 @@ import junit.framework.TestCase;
 public class CamelCaseUtilTest extends TestCase/* BaseTestCase*/ {
 
 	public void testFromCamelCase() {
-		assertEquals("camel-case", CamelCaseUtil.toSeparateWords("camelCase"));
+		assertEquals("camel-case", CamelCaseUtil.fromCamelCase("camelCase"));
 		assertEquals(
-			"camel-case-word", CamelCaseUtil.toSeparateWords("camelCASEWord"));
+			"camel-case-word", CamelCaseUtil.fromCamelCase("camelCASEWord"));
 		assertEquals(
-			"camel-case", CamelCaseUtil.toSeparateWords("camelCASE"));
+			"camel-case", CamelCaseUtil.fromCamelCase("camelCASE"));
 	}
 
 	public void testNormalization() {
-		assertEquals("camelCase", CamelCaseUtil.fixCamelCase("camelCase"));
-		assertEquals("camelCaseWord",
-			CamelCaseUtil.fixCamelCase("camelCASEWord"));
 		assertEquals("camelCase",
-			CamelCaseUtil.fixCamelCase("camelCASE"));
+			CamelCaseUtil.normalizeCamelCase("camelCase"));
+		assertEquals("camelCaseWord",
+			CamelCaseUtil.normalizeCamelCase("camelCASEWord"));
+		assertEquals("camelCase",
+			CamelCaseUtil.normalizeCamelCase("camelCASE"));
 	}
 
 	public void testToCamelCase() {

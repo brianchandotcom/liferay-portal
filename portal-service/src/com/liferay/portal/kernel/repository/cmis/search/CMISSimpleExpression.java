@@ -12,58 +12,41 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISBetweenExpression implements CMISCriterion {
+public class CMISSimpleExpression implements CMISCriterion {
 
-	public CMISBetweenExpression(
-		String field, String lowerTerm, String upperTerm, boolean includesLower,
-		boolean includesUpper) {
+	public CMISSimpleExpression(
+		String field, String value,
+		CMISSimpleExpressionOperator cmisSimpleExpressionOperator) {
 
 		_field = field;
-		_lowerTerm = lowerTerm;
-		_upperTerm = upperTerm;
-		_includesLower = includesLower;
-		_includesUpper = includesUpper;
+		_value = value;
+		_cmisSimpleExpressionOperator = cmisSimpleExpressionOperator;
 	}
 
 	public String toQueryFragment() {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append(_field);
-
-		if (_includesLower) {
-			sb.append(" >= ");
-		}
-		else {
-			sb.append(" > ");
-		}
-
-		sb.append(_lowerTerm);
-		sb.append(" AND ");
-		sb.append(_field);
-
-		if (_includesUpper) {
-			sb.append(" <= ");
-		}
-		else {
-			sb.append(" < ");
-		}
-
-		sb.append(_upperTerm);
+		sb.append(StringPool.SPACE);
+		sb.append(_cmisSimpleExpressionOperator);
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(_value);
+		sb.append(StringPool.APOSTROPHE);
 
 		return sb.toString();
 	}
 
+	private CMISSimpleExpressionOperator _cmisSimpleExpressionOperator;
 	private String _field;
-	private boolean _includesLower;
-	private boolean _includesUpper;
-	private String _lowerTerm;
-	private String _upperTerm;
+	private String _value;
 
 }

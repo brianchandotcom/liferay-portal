@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.cmis.BaseCmisRepository;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
+import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -48,7 +49,6 @@ import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.cmis.model.CMISFileEntry;
 import com.liferay.portal.repository.cmis.model.CMISFileVersion;
 import com.liferay.portal.repository.cmis.model.CMISFolder;
-import com.liferay.portal.repository.cmis.search.CMISQueryBuilder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
@@ -1574,7 +1574,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 		Session session = getSession();
 
-		String queryString = CMISQueryBuilder.buildQuery(searchContext, query);
+		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, query);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("CMIS search query: " + queryString);

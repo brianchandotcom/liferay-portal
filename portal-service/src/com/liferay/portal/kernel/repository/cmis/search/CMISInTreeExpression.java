@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISContainsExpression implements CMISCriterion {
+public class CMISInTreeExpression implements CMISCriterion {
 
-	public CMISContainsExpression(String content) {
-		_content = content;
+	public CMISInTreeExpression(String objectId) {
+		_objectId = objectId;
 	}
 
 	public String toQueryFragment() {
-		return "CONTAINS('".concat(_content).concat("')");
+		return "IN_TREE('".concat(_objectId).concat("')");
 	}
 
-	private String _content;
+	private String _objectId;
 
 }

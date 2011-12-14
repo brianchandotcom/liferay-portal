@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public interface CMISCriterion {
+public class CMISNotExpression implements CMISCriterion {
 
-	public String toQueryFragment();
+	public CMISNotExpression(CMISCriterion cmisCriterion) {
+		_cmisCriterion = cmisCriterion;
+	}
+
+	public String toQueryFragment() {
+		return "NOT(".concat(_cmisCriterion.toQueryFragment().concat(")"));
+	}
+
+	private CMISCriterion _cmisCriterion;
 
 }

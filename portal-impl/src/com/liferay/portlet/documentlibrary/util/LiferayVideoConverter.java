@@ -260,6 +260,10 @@ public class LiferayVideoConverter extends LiferayConverter {
 		}
 
 		cleanUp(inputIStreamCoders, outputIStreamCoders);
+		cleanUp(inputIAudioSamples, outputIAudioSamples);
+		cleanUp(inputIVideoPictures, outputIVideoPictures);
+		cleanUp(inputIPacket, outputIPacket);
+		cleanUp(iAudioResamplers, iVideoResamplers);
 
 		createMP4FastStart();
 	}

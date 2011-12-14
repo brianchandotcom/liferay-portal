@@ -151,6 +151,9 @@ public class LiferayAudioConverter extends LiferayConverter {
 		}
 
 		cleanUp(inputIStreamCoders, outputIStreamCoders);
+		cleanUp(inputIAudioSamples, outputIAudioSamples);
+		cleanUp(inputIPacket, outputIPacket);
+		cleanUp(iAudioResamplers, null);
 	}
 
 	@Override

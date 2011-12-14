@@ -272,6 +272,8 @@ public class PropsValues {
 
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
+	public static final String[] COMBO_ALLOWED_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS);
+
 	public static final boolean COMBO_CHECK_TIMESTAMP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP));
 
 	public static final long COMBO_CHECK_TIMESTAMP_INTERVAL = GetterUtil.getLong(PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP_INTERVAL));

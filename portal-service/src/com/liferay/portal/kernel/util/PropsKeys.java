@@ -339,6 +339,8 @@ public interface PropsKeys {
 
 	public static final String CLUSTER_LINK_ENABLED = "cluster.link.enabled";
 
+	public static final String COMBO_ALLOWED_FILE_EXTENSIONS = "combo.allowed.file.extensions";
+
 	public static final String COMBO_CHECK_TIMESTAMP = "combo.check.timestamp";
 
 	public static final String COMBO_CHECK_TIMESTAMP_INTERVAL = "combo.check.timestamp.interval";

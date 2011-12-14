@@ -141,7 +141,8 @@ public class SocialActivityCounterLocalServiceImpl
 				PortalUtil.getClassNameId(User.class.getName()),
 				activity.getUserId(),
 				SocialActivityCounterConstants.NAME_USER_ACTIVITIES,
-				SocialActivityCounterConstants.TYPE_ACTOR, 1);
+				SocialActivityCounterConstants.TYPE_ACTOR, 1,
+				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 		}
 
 		if (!assetEntryUser.isDefaultUser() && assetEntryUser.isActive()) {
@@ -149,7 +150,8 @@ public class SocialActivityCounterLocalServiceImpl
 				activity.getGroupId(), activity.getClassNameId(),
 				activity.getClassPK(),
 				SocialActivityCounterConstants.NAME_ASSET_ACTIVITIES,
-				SocialActivityCounterConstants.TYPE_ASSET, 1);
+				SocialActivityCounterConstants.TYPE_ASSET, 1,
+				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 		}
 	}
 
@@ -184,7 +186,8 @@ public class SocialActivityCounterLocalServiceImpl
 					startPeriod) {
 
 				latestContributionActivityCounter = addNewPeriod(
-					latestContributionActivityCounter);
+					latestContributionActivityCounter,
+					SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 			}
 
 			if (latestPopularityActivityCounter.getStartPeriod() ==
@@ -352,7 +355,8 @@ public class SocialActivityCounterLocalServiceImpl
 		incrementActivityCounter(
 			groupId, PortalUtil.getClassNameId(User.class.getName()), userId,
 			SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS,
-			SocialActivityCounterConstants.TYPE_ACTOR, 1);
+			SocialActivityCounterConstants.TYPE_ACTOR, 1,
+			SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 	}
 
 	protected SocialActivityCounter addActivityCounter(
@@ -441,15 +445,23 @@ public class SocialActivityCounterLocalServiceImpl
 	}
 
 	protected SocialActivityCounter addNewPeriod(
-			SocialActivityCounter activityCounter)
+			SocialActivityCounter activityCounter, int periodLength)
 		throws PortalException, SystemException {
 
 		if (activityCounter == null) {
 			return null;
 		}
 
-		activityCounter.setEndPeriod(
-			SocialCounterPeriodUtil.getStartPeriod() - 1);
+		if (periodLength ==
+				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) {
+
+			activityCounter.setEndPeriod(
+				SocialCounterPeriodUtil.getStartPeriod() - 1);
+		}
+		else {
+			activityCounter.setEndPeriod(
+				activityCounter.getStartPeriod() + periodLength - 1);
+		}
 
 		socialActivityCounterPersistence.update(activityCounter, false);
 
@@ -538,7 +550,7 @@ public class SocialActivityCounterLocalServiceImpl
 
 	protected void incrementActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int increment)
+			int ownerType, int increment, int periodLength)
 		throws PortalException, SystemException {
 
 		SocialActivityCounter activityCounter = fetchLatestActivityCounter(
@@ -547,10 +559,15 @@ public class SocialActivityCounterLocalServiceImpl
 		if (activityCounter == null) {
 			activityCounter = addActivityCounter(
 				groupId, classNameId, classPK, name, ownerType, 0);
+
+			if (periodLength > 0) {
+				activityCounter.setStartPeriod(
+					SocialCounterPeriodUtil.getActivityDay());
+			}
 		}
 
-		if (!activityCounter.isActivePeriod()) {
-			activityCounter = addNewPeriod(activityCounter);
+		if (!activityCounter.isActivePeriod(periodLength)) {
+			activityCounter = addNewPeriod(activityCounter, periodLength);
 		}
 
 		activityCounter.setCurrentValue(
@@ -573,19 +590,22 @@ public class SocialActivityCounterLocalServiceImpl
 			incrementActivityCounter(
 				groupId, userClassNameId, user.getUserId(),
 				activityCounterDefinition.getName(), ownerType,
-				activityCounterDefinition.getIncrement());
+				activityCounterDefinition.getIncrement(),
+				activityCounterDefinition.getPeriodLength());
 		}
 		else if (ownerType == SocialActivityCounterConstants.TYPE_ASSET) {
 			incrementActivityCounter(
 				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK(),
 				activityCounterDefinition.getName(), ownerType,
-				activityCounterDefinition.getIncrement());
+				activityCounterDefinition.getIncrement(),
+				activityCounterDefinition.getPeriodLength());
 		}
 		else {
 			incrementActivityCounter(
 				groupId, userClassNameId, assetEntry.getUserId(),
 				activityCounterDefinition.getName(), ownerType,
-				activityCounterDefinition.getIncrement());
+				activityCounterDefinition.getIncrement(),
+				activityCounterDefinition.getPeriodLength());
 		}
 	}
 

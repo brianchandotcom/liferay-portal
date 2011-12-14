@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.model.impl;
 
+import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 /**
@@ -21,7 +22,23 @@ import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
  */
 public class SocialActivityCounterImpl extends SocialActivityCounterBaseImpl {
 
-	public boolean isActivePeriod() {
+	public boolean isActivePeriod(int periodLength) {
+		if (periodLength ==
+				SocialActivityCounterConstants.PERIOD_LENGTH_INFINITE) {
+
+			return true;
+		}
+
+		if (periodLength !=
+				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) {
+
+			if (getStartPeriod() + periodLength >
+					SocialCounterPeriodUtil.getActivityDay()) {
+
+				return true;
+			}
+		}
+
 		if ((getStartPeriod() == SocialCounterPeriodUtil.getStartPeriod()) &&
 			((getEndPeriod() == -1) ||
 			 (getEndPeriod() == SocialCounterPeriodUtil.getEndPeriod()))) {

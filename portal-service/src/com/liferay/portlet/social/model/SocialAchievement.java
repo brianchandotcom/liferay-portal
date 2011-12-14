@@ -25,10 +25,16 @@ public interface SocialAchievement {
 
 	public String getName();
 
+	public String getNameKey();
+
+	public void initialize(SocialActivityDefinition activityDefinition);
+
 	public void processActivity(SocialActivity activity);
 
 	public void setIcon(String icon);
 
 	public void setName(String name);
+
+	public void setProperty(String name, String value);
 
 }

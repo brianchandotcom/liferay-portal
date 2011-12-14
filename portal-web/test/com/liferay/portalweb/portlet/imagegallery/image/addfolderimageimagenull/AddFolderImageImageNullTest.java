@@ -54,13 +54,13 @@ public class AddFolderImageImageNullTest extends BaseTestCase {
 				"There are no media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isVisible(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a"));
-		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a",
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a",
 			RuntimeVariables.replace("Add Media"));
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a"));
-		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a",
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a",
 			RuntimeVariables.replace("Add Media"));
 
 		for (int second = 0;; second++) {

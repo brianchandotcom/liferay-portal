@@ -116,10 +116,6 @@ public class ImportExportCommunityLARDLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_156_CATEGORIESCheckbox']",
 			RuntimeVariables.replace("Categories"));
 		assertTrue(selenium.isChecked("//input[@id='_156_CATEGORIESCheckbox']"));
-		assertTrue(selenium.isPartialText("//div[@id='_156_importMoreDiv']/a",
-				"More Options"));
-		selenium.clickAt("//div[@id='_156_importMoreDiv']/a",
-			RuntimeVariables.replace("More Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

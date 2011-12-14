@@ -86,70 +86,63 @@ public class ComboServlet extends HttpServlet {
 		String extension = FileUtil.getExtension(firstModulePath);
 
 		try {
-			if (!validateModuleExtension(firstModulePath)) {
-				PortalUtil.sendError(
-					HttpServletResponse.SC_NOT_FOUND,
-					new IOException(), request, response);
-			}
-			else {
-				if (bytesArray == null) {
-					String p = ParamUtil.getString(request, "p");
+			if (bytesArray == null) {
+				String p = ParamUtil.getString(request, "p");
 
-					String minifierType = ParamUtil.getString(request,
-						"minifierType");
+				String minifierType = ParamUtil.getString(request,
+					"minifierType");
 
-					if (Validator.isNull(minifierType)) {
-						minifierType = "js";
+				if (Validator.isNull(minifierType)) {
+					minifierType = "js";
 
-						if (extension.equalsIgnoreCase(_CSS_EXTENSION)) {
-							minifierType = "css";
-						}
-					}
-
-					int length = modulePaths.length;
-
-					bytesArray = new byte[length][];
-
-					for (String modulePath : modulePaths) {
-						if (!validateModuleExtension(modulePath)) {
-							PortalUtil.sendError(
-								HttpServletResponse.SC_NOT_FOUND,
-								new IOException(), request, response);
-
-							return;
-						}
-						else {
-							byte[] bytes = new byte[0];
-
-							if (Validator.isNotNull(modulePath)) {
-								modulePath = StringUtil.replaceFirst(
-									p.concat(modulePath), contextPath,
-									StringPool.BLANK);
-
-								bytes = getFileContent(
-									request, response, modulePath,
-									minifierType);
-							}
-
-							bytesArray[--length] = bytes;
-						}
-					}
-
-					if (modulePathsString != null) {
-						_byteArrays.put(modulePathsString, bytesArray);
+					if (extension.equalsIgnoreCase(_CSS_EXTENSION)) {
+						minifierType = "css";
 					}
 				}
 
-				String contentType = ContentTypes.TEXT_JAVASCRIPT;
+				int length = modulePaths.length;
 
-				if (extension.equalsIgnoreCase(_CSS_EXTENSION)) {
-					contentType = ContentTypes.TEXT_CSS;
+				bytesArray = new byte[length][];
+
+				for (String modulePath : modulePaths) {
+					if (!validateModuleExtension(modulePath)) {
+						PortalUtil.sendError(
+							HttpServletResponse.SC_NOT_FOUND,
+							new IOException(), request, response);
+
+						return;
+					}
+					else {
+						byte[] bytes = new byte[0];
+
+						if (Validator.isNotNull(modulePath)) {
+							modulePath = StringUtil.replaceFirst(
+								p.concat(modulePath), contextPath,
+								StringPool.BLANK);
+
+							bytes = getFileContent(
+								request, response, modulePath,
+								minifierType);
+						}
+
+						bytesArray[--length] = bytes;
+					}
 				}
 
-				response.setContentType(contentType);
-
-				ServletResponseUtil.write(response, bytesArray);
+				if (modulePathsString != null) {
+					_byteArrays.put(modulePathsString, bytesArray);
+				}
 			}
+
+			String contentType = ContentTypes.TEXT_JAVASCRIPT;
+
+			if (extension.equalsIgnoreCase(_CSS_EXTENSION)) {
+				contentType = ContentTypes.TEXT_CSS;
+			}
+
+			response.setContentType(contentType);
+
+			ServletResponseUtil.write(response, bytesArray);
 		} catch (Exception e) {
 			_log.error(e, e);
 

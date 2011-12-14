@@ -87,6 +87,7 @@ public class Member_AddImageTest extends BaseTestCase {
 			RuntimeVariables.replace("Permissions Image 3 Test"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

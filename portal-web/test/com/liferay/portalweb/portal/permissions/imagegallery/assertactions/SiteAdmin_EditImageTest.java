@@ -102,6 +102,7 @@ public class SiteAdmin_EditImageTest extends BaseTestCase {
 			RuntimeVariables.replace("Permissions Image Test Edited"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

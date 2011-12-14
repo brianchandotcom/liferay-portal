@@ -104,7 +104,7 @@
 	<td>Home</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>link=Home</td>
 	<td>Home</td>
 </tr>
@@ -119,7 +119,7 @@
 	<td>Media Gallery Permissions Test Folder</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
 	<td>Media Gallery Permissions Test Folder</td>
 </tr>
@@ -130,8 +130,8 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='Choose this Folder']</td>
-	<td>Choose this Folder</td>
+	<td>//input[@value='Choose This Folder']</td>
+	<td>Choose This Folder</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -139,12 +139,22 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//a[@id='_31_folderName']</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_31_folderName']</td>
+	<td>Media Gallery Permissions Test Folder</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@value='Move']</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Move']</td>
 	<td>Move</td>
 </tr>
@@ -188,7 +198,6 @@
 	<td>//a[@title='Permissions Image 3 Test - ']</td>
 	<td>Permissions Image 3 Test</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

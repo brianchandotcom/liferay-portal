@@ -94,14 +94,34 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>clickAt</td>
+	<td>//div[@class='aui-tree-hitarea']</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>xPath=(//a[@class='layout-tree'])[2]</td>
+	<td>Public Page</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>xPath=(//a[@class='layout-tree'])[2]</td>
+	<td>pageVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${pageVisible}</td>
+	<td>PageVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='aui-tree-hitarea']</td>
 	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PageVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -113,7 +133,6 @@
 	<td>//li/ul/li/div/div[3]/a</td>
 	<td>Public Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -99,6 +99,28 @@ public class Member_AssertCannotDeleteDocumentTypeTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isVisible("//input[@id='_20_keywords']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//input[@id='_20_keywords']",
+			RuntimeVariables.replace("Name"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("//tr[3]/td[1]")) {
 					break;
 				}

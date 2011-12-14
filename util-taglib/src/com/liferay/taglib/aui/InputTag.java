@@ -181,6 +181,7 @@ public class InputTag extends BaseInputTag {
 		}
 
 		_forLabel = id;
+		_inputName = getName();
 
 		String baseType = null;
 
@@ -191,6 +192,7 @@ public class InputTag extends BaseInputTag {
 
 			if (Validator.isNotNull(fieldParam)) {
 				_forLabel = fieldParam;
+				_inputName = fieldParam;
 			}
 
 			if (ModelHintsUtil.isLocalized(model.getName(), field)) {
@@ -199,6 +201,7 @@ public class InputTag extends BaseInputTag {
 					defaultLocale);
 
 				_forLabel += StringPool.UNDERLINE + defaultLanguageId;
+				_inputName += StringPool.UNDERLINE + defaultLanguageId;
 			}
 		}
 		else if (Validator.isNotNull(type)) {
@@ -252,12 +255,13 @@ public class InputTag extends BaseInputTag {
 
 		List<ValidatorTag> validatorTags = ListUtil.fromMapValues(_validators);
 
-		validatorTagsMap.put(getName(), validatorTags);
+		validatorTagsMap.put(_inputName, validatorTags);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private String _forLabel;
+	private String _inputName;
 	private Map<String, ValidatorTag> _validators;
 
 }

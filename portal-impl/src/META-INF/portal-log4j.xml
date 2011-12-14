@@ -763,7 +763,7 @@
 	</category>
 
 	<category name="com.liferay.portlet.documentlibrary.store.StoreFactory">
-		<priority value="ERROR" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portlet.documentlibrary.util">

@@ -166,7 +166,7 @@
 		</init-param>
 		<init-param>
 			<param-name>Cache-Control</param-name>
-			<param-value>max-age=315360000, public</param-value>
+			<param-value>max-age=315360000, public, no-cache="Set-cookie"</param-value>
 		</init-param>
 		<init-param>
 			<param-name>Expires</param-name>

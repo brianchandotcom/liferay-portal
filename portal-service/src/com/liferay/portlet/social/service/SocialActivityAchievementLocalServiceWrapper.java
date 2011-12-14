@@ -267,6 +267,62 @@ public class SocialActivityAchievementLocalServiceWrapper
 			groupId, achievement);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityAchievement fetchUserAchievement(
+		long userId, long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.fetchUserAchievement(userId,
+			groupId, name);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupAchievements(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getGroupAchievements(groupId);
+	}
+
+	public int getGroupAchievementsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getGroupAchievementsCount(groupId);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupAchievements(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getGroupAchievements(groupId,
+			name);
+	}
+
+	public int getGroupAchievementsCount(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getGroupAchievementsCount(groupId,
+			name);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupFirstAchievements(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getGroupFirstAchievements(groupId);
+	}
+
+	public int getGroupFirstAchievementsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getGroupFirstAchievementsCount(groupId);
+	}
+
+	public int getUserAchievementCount(long userId, long groupId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getUserAchievementCount(userId,
+			groupId, name);
+	}
+
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getUserAchievements(
+		long userId, long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityAchievementLocalService.getUserAchievements(userId,
+			groupId, name);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

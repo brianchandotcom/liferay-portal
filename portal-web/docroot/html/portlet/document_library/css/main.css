@@ -234,6 +234,7 @@
 				display: block;
 				height: 100px;
 				overflow: hidden;
+				word-wrap: break-word;
 			}
 
 			.document-action {
@@ -553,7 +554,10 @@
 
 	.taglib-search-iterator {
 		table-layout: fixed;
-		width: 100%;
+
+		.align-left {
+			word-wrap: break-word;
+		}
 	}
 
 	.taglib-webdav {
@@ -566,10 +570,6 @@
 
 	.workflow-status-pending, .workflow-status-pending a {
 		color: orange;
-	}
-
-	.taglib-search-iterator .align-left {
-		word-wrap: break-word;
 	}
 
 	.document-library-breadcrumb {
@@ -814,14 +814,6 @@
 			}
 		}
 	}
-}
-
-.portlet-layout {
-	table-layout: fixed !important;
-}
-
-.document-display-style .document-description {
-	word-wrap: break-word;
 }
 
 .active-area-proxy {

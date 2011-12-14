@@ -23,28 +23,28 @@ ${theme.include(body_top_include)}
 
 	<header id="banner" role="banner">
 		<div id="heading">
-			<h1 class="company-title">
-				<a class="${logo_css_class}" href="${company_url}" title="<@liferay.language key="go-to" /> ${company_name}">
-					<span>${company_name}</span>
+			<h1 class="site-title">
+				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language key="go-to" /> ${site_name}">
+					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}">
 				</a>
+
+				<#if show_site_name>
+					<span class="site-name" title="<@liferay.language key="go-to" /> ${site_name}">
+						${site_name}
+					</span>
+				</#if>
 			</h1>
 
-			<h2 class="site-title">
-				<a href="${site_default_url}" title="<@liferay.language key="go-to" /> ${site_name}">
-					<span>${site_name}</span>
-				</a>
-			</h2>
-
-			<h3 class="page-title">
+			<h2 class="page-title">
 				<span>${the_title}</span>
-			</h3>
+			</h2>
 		</div>
 
 		<#if !is_signed_in>
 			<a href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
 		</#if>
 
-		<#if has_navigation>
+		<#if has_navigation || is_signed_in>
 			<#include "${full_templates_path}/navigation.ftl" />
 		</#if>
 	</header>

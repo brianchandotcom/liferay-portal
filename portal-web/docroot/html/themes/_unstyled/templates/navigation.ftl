@@ -1,4 +1,4 @@
-<nav class="sort-pages modify-pages" id="navigation">
+<nav class="${nav_css_class}" id="navigation">
 	<h1>
 		<span><@liferay.language key="navigation" /></span>
 	</h1>

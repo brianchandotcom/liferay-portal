@@ -51,14 +51,10 @@ if (structure != null) {
 List<JournalTemplate> templates = new ArrayList();
 
 if (structure != null) {
-	List<JournalTemplate> structureGroupTemplates = JournalTemplateServiceUtil.getStructureTemplates(structureGroupId, structureId);
+	templates.addAll(JournalTemplateServiceUtil.getStructureTemplates(structureGroupId, structureId));
 
-	templates.addAll(structureGroupTemplates);
-
-	if (structureGroupId != groupId) {
-		List<JournalTemplate> groupTemplates = JournalTemplateServiceUtil.getStructureTemplates(groupId, structureId);
-
-		templates.addAll(groupTemplates);
+	if (groupId != structureGroupId) {
+		templates.addAll(JournalTemplateServiceUtil.getStructureTemplates(groupId, structureId));
 	}
 }
 

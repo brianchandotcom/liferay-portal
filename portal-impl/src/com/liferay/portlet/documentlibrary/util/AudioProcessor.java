@@ -26,19 +26,24 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -200,10 +205,15 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		}
 
 		try {
-			ProcessExecutor.execute(
+			ProcessCallable<String> processCallable =
 				new LiferayAudioProcessCallable(
-					srcFile.getCanonicalPath(), destFile.getCanonicalPath()),
-				ClassPathUtil.getPortalClassPath());
+					ServerDetector.getServerId(),
+					PropsUtil.get(PropsKeys.LIFERAY_HOME),
+					Log4JUtil.getCustomLogSettings(),
+					srcFile.getCanonicalPath(), destFile.getCanonicalPath());
+
+			ProcessExecutor.execute(
+				processCallable, ClassPathUtil.getPortalClassPath());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -311,17 +321,28 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	private static class LiferayAudioProcessCallable
 		implements ProcessCallable<String> {
 
-		public LiferayAudioProcessCallable(String inputURL, String outputURL) {
+		public LiferayAudioProcessCallable(
+			String serverId, String liferayHome,
+			HashMap<String, String> customLogSettings, String inputURL,
+			String outputURL) {
+
+			_serverId = serverId;
+			_liferayHome = liferayHome;
+			_customLogSettings = customLogSettings;
 			_inputURL = inputURL;
 			_outputURL = outputURL;
 		}
 
 		public String call() throws ProcessException {
-			try {
-				LiferayAudioConverter liferayAudioConverter =
-					new LiferayAudioConverter(_inputURL, _outputURL);
+			Log4JUtil.initLog4J(
+				_serverId, _liferayHome, this.getClass().getClassLoader(),
+				new Log4jLogFactoryImpl(), _customLogSettings);
 
-				liferayAudioConverter.convert();
+			try {
+				LiferayConverter liferayConverter = new LiferayAudioConverter(
+					_inputURL, _outputURL);
+
+				liferayConverter.convert();
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);
@@ -330,8 +351,11 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 			return StringPool.BLANK;
 		}
 
+		private HashMap<String, String> _customLogSettings;
 		private String _inputURL;
+		private String _liferayHome;
 		private String _outputURL;
+		private String _serverId;
 
 	}
 

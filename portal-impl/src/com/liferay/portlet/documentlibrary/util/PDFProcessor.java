@@ -51,6 +51,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -64,9 +65,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
 
-import org.im4java.core.ConvertCmd;
 import org.im4java.core.IMOperation;
-import org.im4java.process.ProcessStarter;
 
 /**
  * @author Alexander Chow
@@ -392,23 +391,40 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		String inputfilePath = file.getPath();
+		IMOperation imOperation = new IMOperation();
 
-		String outputFilePath = null;
+		imOperation.alpha("off");
 
-		if (thumbnail) {
-			inputfilePath += "[0]";
-			outputFilePath = getThumbnailTempFilePath(tempFileId);
+		imOperation.density(dpi, dpi);
+
+		if (height != 0) {
+			imOperation.adaptiveResize(width, height);
 		}
 		else {
-			outputFilePath = getPreviewTempFilePath(tempFileId, -1);
+			imOperation.adaptiveResize(width);
 		}
 
-		ProcessExecutor.execute(
+		imOperation.depth(depth);
+
+		if (thumbnail) {
+			imOperation.addImage(file.getPath() + "[0]");
+			imOperation.addImage(getThumbnailTempFilePath(tempFileId));
+		}
+		else {
+			imOperation.addImage(file.getPath());
+			imOperation.addImage(getPreviewTempFilePath(tempFileId, -1));
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Excecuting command 'convert " + imOperation + "'");
+		}
+
+		ProcessCallable<String> processCallable =
 			new ImageMagickProcessCallable(
-				_globalSearchPath, inputfilePath, outputFilePath, depth, dpi,
-				height, width),
-			ClassPathUtil.getPortalClassPath());
+				_globalSearchPath, imOperation.getCmdArgs());
+
+		ProcessExecutor.execute(
+			processCallable, ClassPathUtil.getPortalClassPath());
 
 		// Store images
 
@@ -716,45 +732,15 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		implements ProcessCallable<String> {
 
 		public ImageMagickProcessCallable(
-			String globalSearchPath, String inputFilePath,
-			String outputFilePath, int depth, int dpi, int height, int width) {
+			String globalSearchPath, LinkedList<String> commandArguments) {
 
 			_globalSearchPath = globalSearchPath;
-			_inputFilePath = inputFilePath;
-			_outputFilePath = outputFilePath;
-			_depth = depth;
-			_dpi = dpi;
-			_height = height;
-			_width = width;
+			_commandArguments = commandArguments;
 		}
 
 		public String call() throws ProcessException {
 			try {
-				IMOperation imOperation = new IMOperation();
-
-				imOperation.alpha("off");
-
-				imOperation.density(_dpi, _dpi);
-
-				if (_height != 0) {
-					imOperation.adaptiveResize(_width, _height);
-				}
-				else {
-					imOperation.adaptiveResize(_width);
-				}
-
-				imOperation.depth(_depth);
-				imOperation.addImage(_inputFilePath);
-				imOperation.addImage(_outputFilePath);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Excecuting command 'convert " + imOperation + "'");
-				}
-
-				ProcessStarter.setGlobalSearchPath(_globalSearchPath);
-
-				new ConvertCmd().run(imOperation);
+				LiferayConvertCmd.run(_globalSearchPath, _commandArguments);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);
@@ -763,16 +749,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 			return StringPool.BLANK;
 		}
 
-		private static Log _log = LogFactoryUtil.getLog(
-			ImageMagickProcessCallable.class);
-
-		private String _inputFilePath;
-		private String _outputFilePath;
-		private int _depth;
-		private int _dpi;
 		private String _globalSearchPath;
-		private int _height;
-		private int _width;
+		private LinkedList<String> _commandArguments;
 
 	}
 

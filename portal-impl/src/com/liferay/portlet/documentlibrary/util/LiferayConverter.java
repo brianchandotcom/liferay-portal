@@ -50,6 +50,8 @@ import javax.imageio.ImageIO;
  */
 public abstract class LiferayConverter {
 
+	public abstract void convert() throws Exception;
+
 	protected void cleanUp(
 		IStreamCoder[] inputIStreamCoders, IStreamCoder[] outputIStreamCoders) {
 

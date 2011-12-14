@@ -15,6 +15,8 @@
 package com.liferay.util.log4j;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.LogFactory;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -35,6 +37,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -49,6 +52,12 @@ import org.dom4j.io.SAXReader;
  * @author Brian Wing Shun Chan
  */
 public class Log4JUtil {
+
+	public static void configureLog4J(ClassLoader classLoader) {
+		configureLog4J(classLoader.getResource("META-INF/portal-log4j.xml"));
+		configureLog4J(
+			classLoader.getResource("META-INF/portal-log4j-ext.xml"));
+	}
 
 	public static void configureLog4J(URL url) {
 		if (url == null) {
@@ -100,7 +109,7 @@ public class Log4JUtil {
 
 				String priority = priorityElement.attributeValue("value");
 
-				setLevel(name, priority);
+				setLevel(name, priority, false);
 			}
 		}
 		catch (Exception e) {
@@ -108,7 +117,35 @@ public class Log4JUtil {
 		}
 	}
 
-	public static void setLevel(String name, String priority) {
+	public static HashMap<String, String> getCustomLogSettings() {
+		return new HashMap<String, String>(_customLogSettings);
+	}
+
+	public static void initLog4J(
+		String serverId, String liferayHome, ClassLoader classLoader,
+		LogFactory logFactory, HashMap<String, String> customLogSettings) {
+
+		ServerDetector.init(serverId);
+
+		_liferayHome = liferayHome;
+
+		configureLog4J(classLoader);
+
+		try {
+			LogFactoryUtil.setLogFactory(logFactory);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		for (String name : customLogSettings.keySet()) {
+			String priority = customLogSettings.get(name);
+
+			setLevel(name, priority, false);
+		}
+	}
+
+	public static void setLevel(String name, String priority, boolean custom) {
 		Logger logger = Logger.getLogger(name);
 
 		logger.setLevel(Level.toLevel(priority));
@@ -117,6 +154,10 @@ public class Log4JUtil {
 			name);
 
 		jdkLogger.setLevel(_getJdkLevel(priority));
+
+		if (custom) {
+			_customLogSettings.put(name, priority);
+		}
 	}
 
 	/**
@@ -149,10 +190,18 @@ public class Log4JUtil {
 		}
 	}
 
+	private static String _getLiferayHome() {
+		if (_liferayHome == null) {
+			_liferayHome = PropsUtil.get(PropsKeys.LIFERAY_HOME);
+		}
+
+		return _liferayHome;
+	}
+
 	private static String _getURLContent(URL url) {
 		Map<String, String> variables = new HashMap<String, String>();
 
-		variables.put("liferay.home", PropsUtil.get(PropsKeys.LIFERAY_HOME));
+		variables.put("liferay.home", _getLiferayHome());
 
 		String urlContent = null;
 
@@ -200,5 +249,10 @@ public class Log4JUtil {
 
 		return urlContent;
 	}
+
+	private static final Map<String, String> _customLogSettings =
+		new ConcurrentHashMap<String, String>();
+
+	private static String _liferayHome;
 
 }

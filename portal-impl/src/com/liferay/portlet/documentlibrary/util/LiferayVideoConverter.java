@@ -14,13 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.xuggle.xuggler.Configuration;
 import com.xuggle.xuggler.IAudioResampler;
@@ -51,21 +50,30 @@ import java.util.Properties;
 public class LiferayVideoConverter extends LiferayConverter {
 
 	public LiferayVideoConverter(
-		String inputURL, String outputURL, File tempFile, int height,
-		int width) {
-
-		_ffpresetProperties = PropsUtil.getProperties(
-			PropsKeys.XUGGLER_FFPRESET, true);
+		String inputURL, String outputURL, String tempFileName,
+		Properties videoProperties, Properties ffpresetProperties) {
 
 		_inputURL = inputURL;
 		_outputURL = outputURL;
-		_tempFile = tempFile;
-		_height = height;
-		_width = width;
+		_tempFileName = tempFileName;
 
-		initVideoBitRateMap();
+		_height = GetterUtil.getInteger(
+			videoProperties.getProperty(
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT), _height);
 
-		initVideoFrameRateMap();
+		_width = GetterUtil.getInteger(
+			videoProperties.getProperty(
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH), _width);
+
+		_previewVideoContainers = StringUtil.split(
+			videoProperties.getProperty(
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS));
+
+		initVideoBitRateMap(videoProperties);
+
+		initVideoFrameRateMap(videoProperties);
+
+		_ffpresetProperties = ffpresetProperties;
 	}
 
 	public void convert() throws Exception {
@@ -92,13 +100,15 @@ public class LiferayVideoConverter extends LiferayConverter {
 		File videoFile = new File(_outputURL);
 
 		if (outputFormat.equals("mp4") && videoFile.exists()) {
-			try {
-				JQTFastStart.convert(videoFile, _tempFile);
+			File tempFile = new File(_tempFileName);
 
-				if (_tempFile.exists() && _tempFile.length() > 0) {
+			try {
+				JQTFastStart.convert(videoFile, tempFile);
+
+				if (tempFile.exists() && tempFile.length() > 0) {
 					videoFile.delete();
 
-					_tempFile.renameTo(videoFile);
+					tempFile.renameTo(videoFile);
 				}
 			}
 			catch (Exception e) {
@@ -107,7 +117,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 				}
 			}
 			finally {
-				_tempFile.delete();
+				tempFile.delete();
 			}
 		}
 	}
@@ -300,21 +310,15 @@ public class LiferayVideoConverter extends LiferayConverter {
 		return _inputIContainer;
 	}
 
-	protected void initVideoBitRateMap() {
-		if (_videoBitRateMap != null) {
-			return;
-		}
-
+	protected void initVideoBitRateMap(Properties videoProperties) {
 		_videoBitRateMap = new HashMap<String, Integer>();
 
-		for (String previewVideoContainer :
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
-
-			Filter filter = new Filter(previewVideoContainer);
-
+		for (String previewVideoContainer : _previewVideoContainers) {
 			int videoBitRate = GetterUtil.getInteger(
-				PropsUtil.get(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_BIT_RATE, filter));
+				videoProperties.getProperty(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_BIT_RATE
+						+ StringPool.OPEN_BRACKET + previewVideoContainer
+							+ StringPool.CLOSE_BRACKET));
 
 			if (videoBitRate > _VIDEO_BIT_RATE_MAX) {
 				videoBitRate = _VIDEO_BIT_RATE_MAX;
@@ -332,27 +336,20 @@ public class LiferayVideoConverter extends LiferayConverter {
 		}
 	}
 
-	protected void initVideoFrameRateMap() {
-		if (_videoFrameRateMap != null) {
-			return;
-		}
-
+	protected void initVideoFrameRateMap(Properties videoProperties) {
 		_videoFrameRateMap = new HashMap<String, IRational>();
 
-		for (String previewVideoContainer :
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
-
-			Filter filter = new Filter(previewVideoContainer);
-
+		for (String previewVideoContainer : _previewVideoContainers) {
 			int numerator = GetterUtil.getInteger(
-				PropsUtil.get(
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_NUMERATOR,
-					filter));
+				videoProperties.getProperty(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_NUMERATOR
+						+ StringPool.OPEN_BRACKET + previewVideoContainer
+							+ StringPool.CLOSE_BRACKET));
 			int denominator = GetterUtil.getInteger(
-				PropsUtil.get(
-					PropsKeys.
-						DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_DENOMINATOR,
-					filter));
+				videoProperties.getProperty(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_DENOMINATOR
+						+ StringPool.OPEN_BRACKET + previewVideoContainer
+							+ StringPool.CLOSE_BRACKET));
 
 			if ((numerator > 0) && (denominator > 0)) {
 				IRational iRational = IRational.make(numerator, denominator);
@@ -489,16 +486,16 @@ public class LiferayVideoConverter extends LiferayConverter {
 	private static Log _log = LogFactoryUtil.getLog(
 		LiferayVideoConverter.class);
 
-	private static Map<String, Integer> _videoBitRateMap;
-	private static Map<String, IRational> _videoFrameRateMap;
-
 	private Properties _ffpresetProperties;
 	private int _height = 240;
 	private IContainer _inputIContainer;
 	private String _inputURL;
 	private IContainer _outputIContainer;
 	private String _outputURL;
-	private File _tempFile;
+	private String[] _previewVideoContainers;
+	private String _tempFileName;
+	private Map<String, Integer> _videoBitRateMap;
+	private Map<String, IRational> _videoFrameRateMap;
 	private int _width = 320;
 
 }

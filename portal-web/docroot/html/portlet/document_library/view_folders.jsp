@@ -149,7 +149,7 @@ if (folder != null) {
 								</a>
 							</c:if>
 
-							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
+							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-view-folders="<%= Boolean.FALSE.toString() %>" data-title="<%= LanguageUtil.get(pageContext, "home") %>" href="<%= viewDocumentsHomeURL.toString() %>">
 								<liferay-ui:icon image="../aui/home" message="" />
 
 								<span class="entry-title">
@@ -280,7 +280,7 @@ if (folder != null) {
 										</a>
 									</c:if>
 
-									<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" href="<%= viewURL.toString() %>">
+									<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-title="<%= mountFolder.getName() %>" href="<%= viewURL.toString() %>">
 										<liferay-ui:icon image="drive" />
 
 										<span class="entry-title">

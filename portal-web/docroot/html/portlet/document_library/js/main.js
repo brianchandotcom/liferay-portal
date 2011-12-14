@@ -433,12 +433,7 @@ AUI().add(
 							initialState[instance.ns(STR_ENTRY_START)] = config[STR_ENTRY_START];
 							initialState[instance.ns(STR_FOLDER_END)] = config[STR_FOLDER_END];
 							initialState[instance.ns(STR_FOLDER_START)] = config[STR_FOLDER_START];
-							initialState[instance.ns(VIEW_ADD_BUTTON)] = true;
-							initialState[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
-							initialState[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
-							initialState[instance.ns(VIEW_ENRTIES)] = true;
-							initialState[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
-							initialState[instance.ns(VIEW_SORT_BUTTON)] = true;
+							initialState[instance.ns(VIEW_ENTRIES_PAGE)] = true;
 						}
 
 						return initialState;

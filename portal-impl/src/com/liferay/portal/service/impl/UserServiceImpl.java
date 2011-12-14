@@ -246,9 +246,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's universally unique
-	 *         identifier (with the <code>uuid</code> attribute), asset category
-	 *         IDs, asset tag names, and expando bridge attributes.
+	 *         <code>null</code>). Can set the universally unique identifier
+	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
+	 *         tag names, and expando bridge attributes for the user.
 	 * @return the new user
 	 * @throws PortalException if the user's information was invalid, if the
 	 *         creator did not have permission to add users, if the email
@@ -327,9 +327,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's universally unique
-	 *         identifier (with the <code>uuid</code> attribute), asset category
-	 *         IDs, asset tag names, and expando bridge attributes.
+	 *         <code>null</code>). Can set the universally unique identifier
+	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
+	 *         tag names, and expando bridge attributes for the user.
 	 * @return the new user
 	 * @throws PortalException if the user's information was invalid, if the
 	 *         creator did not have permission to add users, or if the email
@@ -409,9 +409,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's universally unique
-	 *         identifier (with the <code>uuid</code> attribute), asset category
-	 *         IDs, asset tag names, and expando bridge attributes.
+	 *         <code>null</code>). Can set the universally unique identifier
+	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
+	 *         tag names, and expando bridge attributes for the user.
 	 * @return the new user
 	 * @throws PortalException if the user's information was invalid, if the
 	 *         creator did not have permission to add users, if the email
@@ -512,9 +512,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's universally unique
-	 *         identifier (with the <code>uuid</code> attribute), asset category
-	 *         IDs, asset tag names, and expando bridge attributes.
+	 *         <code>null</code>). Can set the universally unique identifier
+	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
+	 *         tag names, and expando bridge attributes for the user.
 	 * @return the new user
 	 * @throws PortalException if the user's information was invalid, if the
 	 *         creator did not have permission to add users, or if the email
@@ -881,8 +881,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  sendEmail whether to send the user an email notification about
 	 *         their new account
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's expando bridge
-	 *         attributes.
+	 *         <code>null</code>). Can set the expando bridge attributes for the
+	 *         user.
 	 * @return the user
 	 * @throws PortalException if the user's information was invalid or if the
 	 *         email address was reserved
@@ -1370,10 +1370,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  websites the user's websites
 	 * @param  announcementsDelivers the announcements deliveries
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's universally unique
-	 *         identifier (with the <code>uuid</code> attribute), replacement
-	 *         asset category IDs, replacement asset tag names, and new expando
-	 *         bridge attributes.
+	 *         <code>null</code>). Can set the universally unique identifier
+	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
+	 *         tag names, and new expando bridge attributes for the user.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be
 	 *         found, if the new information was invalid, or if the current user
@@ -1477,10 +1476,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userGroupRoles the user user's group roles
 	 * @param  userGroupIds the primary keys of the user's user groups
 	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can specify the user's universally unique
-	 *         identifier (with the <code>uuid</code> attribute), replacement
-	 *         asset category IDs, replacement asset tag names, and new expando
-	 *         bridge attributes.
+	 *         <code>null</code>). Can set the universally unique identifier
+	 *         (with the <code>uuid</code> attribute), asset category IDs, asset
+	 *         tag names, and new expando bridge attributes for the user.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be
 	 *         found, if the new information was invalid, or if the current user

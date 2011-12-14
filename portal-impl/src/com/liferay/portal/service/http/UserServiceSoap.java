@@ -1472,7 +1472,7 @@ public class UserServiceSoap {
 	* @param serviceContext the user's service context (optionally
 	<code>null</code>). Can set the universally unique identifier
 	(with the <code>uuid</code> attribute), asset category IDs, asset
-	tag names, and new expando bridge attributes for the user.
+	tag names, and expando bridge attributes for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the new information was invalid, or if the current user
@@ -1587,7 +1587,7 @@ public class UserServiceSoap {
 	* @param serviceContext the user's service context (optionally
 	<code>null</code>). Can set the universally unique identifier
 	(with the <code>uuid</code> attribute), asset category IDs, asset
-	tag names, and new expando bridge attributes for the user.
+	tag names, and expando bridge attributes for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the new information was invalid, or if the current user

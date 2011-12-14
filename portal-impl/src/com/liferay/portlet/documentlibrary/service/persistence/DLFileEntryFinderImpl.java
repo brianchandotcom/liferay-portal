@@ -321,6 +321,8 @@ public class DLFileEntryFinderImpl
 
 			sql = StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
 
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addEntity("DLFileEntry", DLFileEntryImpl.class);

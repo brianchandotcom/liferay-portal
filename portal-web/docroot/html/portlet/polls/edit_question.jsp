@@ -86,7 +86,7 @@ if (choiceName > 0) {
 	<aui:fieldset>
 		<aui:input name="title" />
 
-		<aui:input name="description" />
+		<aui:input label="polls-question" name="description" />
 
 		<aui:input disabled="<%= neverExpire %>" name="expirationDate" />
 

@@ -55,6 +55,11 @@ private static final String _getPreviewURL(FileEntry fileEntry, FileVersion file
 
 	sb.append(queryString);
 
+	if (themeDisplay.isAddSessionIdToURL()) {
+		return PortalUtil.getURLWithSessionId(
+			sb.toString(), themeDisplay.getSessionId());
+	}
+
 	return sb.toString();
 }
 %>

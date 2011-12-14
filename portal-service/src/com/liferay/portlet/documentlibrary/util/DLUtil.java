@@ -134,7 +134,6 @@ public class DLUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/document_library/view");
-		portletURL.setParameter("showSiblings", Boolean.TRUE.toString());
 		portletURL.setParameter("viewAddButton", Boolean.TRUE.toString());
 		portletURL.setParameter("viewBreadcrumb", Boolean.TRUE.toString());
 		portletURL.setParameter(

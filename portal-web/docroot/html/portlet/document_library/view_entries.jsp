@@ -214,7 +214,7 @@ for (int i = 0; i < results.size(); i++) {
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 							tempRowURL.setParameter("struts_action", "/document_library/view_file_entry");
-							tempRowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
+							tempRowURL.setParameter("redirect", currentURL);
 							tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
@@ -252,7 +252,7 @@ for (int i = 0; i < results.size(); i++) {
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-						rowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
+						rowURL.setParameter("redirect", currentURL);
 						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 						%>
 

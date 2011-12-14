@@ -28,6 +28,8 @@ AUI().add(
 
 		var CSS_SELECTED = 'selected';
 
+        var EXPAND_FOLDER = 'expandFolder';
+
 		var DATA_FOLDER_ID = 'data-folder-id';
 
 		var DATA_REFRESH_FOLDERS = 'data-refresh-folders';
@@ -47,8 +49,6 @@ AUI().add(
 		var ROWS_PER_PAGE = 'rowsPerPage';
 
 		var SEARCH_TYPE = 'searchType';
-
-		var SHOW_SIBLINGS = 'showSiblings';
 
 		var STR_ACTIVE = 'active';
 
@@ -364,13 +364,12 @@ AUI().add(
 
 						item.ancestor('.folder').addClass(CSS_SELECTED);
 
+                        var dataExpandFolder = item.attr('data-expand-folder');
 						var dataFileEntryTypeId = item.attr('data-file-entry-type-id');
 						var dataFolderId = item.attr(DATA_FOLDER_ID);
 						var dataNavigation = item.attr('data-navigation');
 						var dataRefreshEntries = item.attr('data-refresh-entries');
 						var dataRefreshFolders = item.attr(DATA_REFRESH_FOLDERS);
-						var dataShowSiblings = item.attr('data-show-siblings');
-						var dataShowRootFolder = item.attr('data-show-root-folder');
 
 						var direction = 'left';
 
@@ -396,6 +395,10 @@ AUI().add(
 						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
 						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
 
+                        if (dataExpandFolder) {
+                            requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;
+                        }
+
 						if (dataFolderId) {
 							requestParams[instance._folderId] = dataFolderId;
 						}
@@ -406,14 +409,6 @@ AUI().add(
 
 						if (dataRefreshEntries) {
 							requestParams[instance.ns(VIEW_ENTRIES)] = dataRefreshEntries;
-						}
-
-						if (dataShowSiblings) {
-							requestParams[instance.ns(SHOW_SIBLINGS)] = dataShowSiblings;
-						}
-
-						if (dataShowRootFolder) {
-							requestParams[instance.ns('showRootFolder')] = dataShowRootFolder;
 						}
 
 						if (dataFileEntryTypeId) {
@@ -662,8 +657,8 @@ AUI().add(
 						requestParams[instance.ns(STR_ENTRY_END)] = instance._entryPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_END)] = instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-						requestParams[instance.ns(REFRESH_FOLDERS)] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
-						requestParams[instance.ns(SHOW_SIBLINGS)] = true;
+                        requestParams[instance.ns(EXPAND_FOLDER)] = false;
+                        requestParams[instance.ns(REFRESH_FOLDERS)] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
 						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;

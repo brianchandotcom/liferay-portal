@@ -300,10 +300,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param serviceContext the service context. Must specify the replacement
-	universally unique identifier and can specify the replacement
-	create date, replacement modified date and the new expando bridge
-	attributes. For layouts that belong to a layout set prototype, an
+	* @param serviceContext the service context. Must set the universally
+	unique identifier (UUID) for the layout. Can set the creation
+	date, modification date and the expando bridge attributes for the
+	layout. For layouts that belong to a layout set prototype, an
 	attribute named 'layoutUpdateable' can be set to specify whether
 	site administrators can modify this page within their site.
 	* @return the layout
@@ -371,11 +371,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param serviceContext the service context. Must specify the universally
-	unique identifier and can specify the create date and modified
-	date. For layouts that belong to a layout set prototype, an
-	attribute named 'layoutUpdateable' can be set to specify whether
-	site administrators can modify this page within their site.
+	* @param serviceContext the service context. Must set the universally
+	unique identifier (UUID) for the layout. Can set the creation
+	date and modification date for the layout. For layouts that
+	belong to a layout set prototype, an attribute named
+	'layoutUpdateable' can be set to specify whether site
+	administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group or user with the primary key could not
 	be found
@@ -1108,8 +1109,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	String)}.
 	* @param iconImage whether the icon image will be updated
 	* @param iconBytes the byte array of the layout's new icon image
-	* @param serviceContext the service context. Can specify the replacement
-	modified date and new expando bridge attributes.
+	* @param serviceContext the service context. Can set the modification date
+	and expando bridge attributes for the layout.
 	* @return the updated layout
 	* @throws PortalException if a group or layout with the primary key could
 	not be found, if a unique friendly URL could not be generated, if

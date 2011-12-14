@@ -45,9 +45,9 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//div[@class='staging-bar']/ul/li[1]/span/span"));
 		assertFalse(selenium.isTextPresent(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."));
 		assertFalse(selenium.isElementPresent(

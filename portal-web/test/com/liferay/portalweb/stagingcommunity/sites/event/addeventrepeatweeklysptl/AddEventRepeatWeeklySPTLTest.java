@@ -49,17 +49,17 @@ public class AddEventRepeatWeeklySPTLTest extends BaseTestCase {
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[1]/span/span"));
 				assertFalse(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
 				assertFalse(selenium.isElementPresent(
-						"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+						"//div[@class='staging-bar']/ul/li[1]/span/span"));
 				assertTrue(selenium.isElementPresent(
 						"//a[@id='_170_0publishScheduleLink']"));
 				selenium.clickAt("//a[@id='_170_0publishScheduleLink']",

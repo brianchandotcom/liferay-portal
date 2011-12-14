@@ -54,6 +54,29 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Use the classic uploader.")
+										.equals(selenium.getText(
+								"//a[contains(@class,'use-fallback')]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Use the classic uploader."),
+			selenium.getText("//a[contains(@class,'use-fallback')]"));
+		selenium.clickAt("//a[contains(@class,'use-fallback')]",
+			RuntimeVariables.replace("Use the classic uploader."));
 		selenium.type("//input[@id='_36_file1']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledatalatest\\wiki\\usecase\\dependencies\\Wiki_Attachment.jpg"));

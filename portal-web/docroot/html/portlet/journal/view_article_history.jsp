@@ -52,7 +52,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
-
 			<aui:input name="groupId" type="hidden" />
             <aui:input name="articleId" type="hidden" />
 			<aui:input name="deleteArticleIds" type="hidden" />

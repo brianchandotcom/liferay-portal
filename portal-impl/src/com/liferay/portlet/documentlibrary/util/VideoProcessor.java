@@ -20,23 +20,33 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 
@@ -211,14 +221,18 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 
 		try {
 			try {
-				LiferayVideoThumbnailConverter liferayVideoThumbnailConverter =
-					new LiferayVideoThumbnailConverter(
-						file.getCanonicalPath(), thumbnailTempFile,
-						THUMBNAIL_TYPE, height, width,
+				ProcessCallable<String> processCallable =
+					new LiferayVideoThumbnailProcessCallable(
+						ServerDetector.getServerId(),
+						PropsUtil.get(PropsKeys.LIFERAY_HOME),
+						Log4JUtil.getCustomLogSettings(),
+						file.getCanonicalPath(),
+						thumbnailTempFile, THUMBNAIL_TYPE, height, width,
 						PropsValues.
 							DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
-				liferayVideoThumbnailConverter.convert();
+				ProcessExecutor.execute(
+					processCallable, ClassPathUtil.getPortalClassPath());
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -227,18 +241,18 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			addFileToStore(
 				fileVersion.getCompanyId(), THUMBNAIL_PATH,
 				getThumbnailFilePath(fileVersion), thumbnailTempFile);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Xuggler generated a thumbnail for " +
+						fileVersion.getTitle() + " in " + stopWatch);
+			}
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
 		finally {
 			FileUtil.delete(thumbnailTempFile);
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Xuggler generated a thumbnail for " +
-					fileVersion.getTitle() + " in " + stopWatch);
 		}
 	}
 
@@ -328,8 +342,8 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	private void _generateVideoXuggler(
-			FileVersion fileVersion, File srcFile, File destFile, int height,
-			int width, String containerType)
+			FileVersion fileVersion, File srcFile, File destFile,
+			String containerType)
 		throws Exception {
 
 		if (!_isGeneratePreview(fileVersion, containerType)) {
@@ -344,11 +358,18 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			stopWatch.start();
 		}
 
-		LiferayVideoConverter liferayVideoConverter = new LiferayVideoConverter(
-			srcFile.getCanonicalPath(), destFile.getCanonicalPath(), height,
-			width);
+		ProcessCallable<String> processCallable =
+			new LiferayVideoProcessCallable(
+				ServerDetector.getServerId(),
+				PropsUtil.get(PropsKeys.LIFERAY_HOME),
+				Log4JUtil.getCustomLogSettings(), srcFile.getCanonicalPath(),
+				destFile.getCanonicalPath(), FileUtil.createTempFileName(),
+				PropsUtil.getProperties(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO,
+					false),
+				PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
 
-		liferayVideoConverter.convert();
+		ProcessExecutor.execute(
+			processCallable, ClassPathUtil.getPortalClassPath());
 
 		addFileToStore(
 			fileVersion.getCompanyId(), PREVIEW_PATH,
@@ -368,8 +389,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		try {
 			for (int i = 0; i < destFiles.length; i++) {
 				_generateVideoXuggler(
-					fileVersion, srcFile, destFiles[i], height, width,
-					_PREVIEW_TYPES[i]);
+					fileVersion, srcFile, destFiles[i], _PREVIEW_TYPES[i]);
 			}
 		}
 		catch (Exception e) {
@@ -538,6 +558,107 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	private static Log _log = LogFactoryUtil.getLog(VideoProcessor.class);
 
 	private static VideoProcessor _instance = new VideoProcessor();
+
+	private static class LiferayVideoProcessCallable
+		implements ProcessCallable<String> {
+
+		public LiferayVideoProcessCallable(
+			String serverId, String liferayHome,
+			HashMap<String, String> customLogSettings, String inputURL,
+			String outputURL, String tempFileName, Properties videoProperties,
+			Properties ffpresetProperties) {
+
+			_serverId = serverId;
+			_liferayHome = liferayHome;
+			_customLogSettings = customLogSettings;
+			_inputURL = inputURL;
+			_outputURL = outputURL;
+			_tempFileName = tempFileName;
+			_videoProperties = videoProperties;
+			_ffpresetProperties = ffpresetProperties;
+		}
+
+		public String call() throws ProcessException {
+			Log4JUtil.initLog4J(
+				_serverId, _liferayHome, this.getClass().getClassLoader(),
+				new Log4jLogFactoryImpl(), _customLogSettings);
+
+			try {
+				LiferayConverter liferayConverter = new LiferayVideoConverter(
+					_inputURL, _outputURL, _tempFileName, _videoProperties,
+					_ffpresetProperties);
+
+				liferayConverter.convert();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private HashMap<String, String> _customLogSettings;
+		private Properties _ffpresetProperties;
+		private String _inputURL;
+		private String _liferayHome;
+		private String _outputURL;
+		private String _serverId;
+		private String _tempFileName;
+		private Properties _videoProperties;
+
+	}
+
+	private static class LiferayVideoThumbnailProcessCallable
+		implements ProcessCallable<String> {
+
+		public LiferayVideoThumbnailProcessCallable(
+			String serverId, String liferayHome,
+			HashMap<String, String> customLogSettings, String inputURL,
+			File outputFile, String extension, int height,
+			int width, int percentage) {
+
+			_serverId = serverId;
+			_liferayHome = liferayHome;
+			_customLogSettings = customLogSettings;
+			_inputURL = inputURL;
+			_outputFile = outputFile;
+			_extension = extension;
+			_height = height;
+			_width = width;
+			_percentage = percentage;
+		}
+
+		public String call() throws ProcessException {
+			Log4JUtil.initLog4J(
+				_serverId, _liferayHome, this.getClass().getClassLoader(),
+				new Log4jLogFactoryImpl(), _customLogSettings);
+
+			try {
+				LiferayConverter liferayConverter =
+					new LiferayVideoThumbnailConverter(
+						_inputURL, _outputFile, _extension, _height, _width,
+						_percentage);
+
+				liferayConverter.convert();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private HashMap<String, String> _customLogSettings;
+		private String _extension;
+		private int _height;
+		private String _inputURL;
+		private String _liferayHome;
+		private File _outputFile;
+		private int _percentage;
+		private String _serverId;
+		private int _width;
+
+	}
 
 	private Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);

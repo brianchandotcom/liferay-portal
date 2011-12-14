@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.image.ImageProcessorUtil;
+import com.liferay.portal.image.ImageProcessorImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -49,6 +49,8 @@ import javax.imageio.ImageIO;
  * @author Alexander Chow
  */
 public abstract class LiferayConverter {
+
+	public abstract void convert() throws Exception;
 
 	protected void cleanUp(
 		IStreamCoder[] inputIStreamCoders, IStreamCoder[] outputIStreamCoders) {
@@ -262,7 +264,10 @@ public abstract class LiferayConverter {
 
 				thumbnailFile.createNewFile();
 
-				RenderedImage renderedImage = ImageProcessorUtil.scale(
+				ImageProcessorImpl imageProcessorImpl =
+					ImageProcessorImpl.getInstance();
+
+				RenderedImage renderedImage = imageProcessorImpl.scale(
 					bufferedImage, thumbnailHeight, thumbnailWidth);
 
 				ImageIO.write(

@@ -94,7 +94,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -192,9 +191,7 @@ public class EditServerAction extends PortletAction {
 		String loggerName = ParamUtil.getString(actionRequest, "loggerName");
 		String priority = ParamUtil.getString(actionRequest, "priority");
 
-		Logger logger = Logger.getLogger(loggerName);
-
-		logger.setLevel(Level.toLevel(priority));
+		Log4JUtil.setLevel(loggerName, priority, true);
 	}
 
 	protected void cacheDb() throws Exception {
@@ -593,7 +590,7 @@ public class EditServerAction extends PortletAction {
 				String priority = ParamUtil.getString(
 					actionRequest, name, Level.INFO.toString());
 
-				Log4JUtil.setLevel(loggerName, priority);
+				Log4JUtil.setLevel(loggerName, priority, true);
 			}
 		}
 	}

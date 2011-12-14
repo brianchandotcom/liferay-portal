@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -29,6 +33,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -46,6 +51,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -59,9 +65,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
 
-import org.im4java.core.ConvertCmd;
 import org.im4java.core.IMOperation;
-import org.im4java.process.ProcessStarter;
 
 /**
  * @author Alexander Chow
@@ -190,14 +194,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	public static void reset() throws Exception {
 		if (isImageMagickEnabled()) {
-			String globalSearchPath = getGlobalSearchPath();
-
-			ProcessStarter.setGlobalSearchPath(globalSearchPath);
-
-			_convertCmd = new ConvertCmd();
-		}
-		else {
-			_convertCmd = null;
+			_globalSearchPath = getGlobalSearchPath();
 		}
 	}
 
@@ -422,7 +419,12 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 			_log.info("Excecuting command 'convert " + imOperation + "'");
 		}
 
-		_convertCmd.run(imOperation);
+		ProcessCallable<String> processCallable =
+			new ImageMagickProcessCallable(
+				_globalSearchPath, imOperation.getCmdArgs());
+
+		ProcessExecutor.execute(
+			processCallable, ClassPathUtil.getPortalClassPath());
 
 		// Store images
 
@@ -720,10 +722,37 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessor.class);
 
+	private static String _globalSearchPath;
+
 	private static PDFProcessor _instance = new PDFProcessor();
 
-	private static ConvertCmd _convertCmd;
 	private static boolean _warned;
+
+	private static class ImageMagickProcessCallable
+		implements ProcessCallable<String> {
+
+		public ImageMagickProcessCallable(
+			String globalSearchPath, LinkedList<String> commandArguments) {
+
+			_globalSearchPath = globalSearchPath;
+			_commandArguments = commandArguments;
+		}
+
+		public String call() throws ProcessException {
+			try {
+				LiferayConvertCmd.run(_globalSearchPath, _commandArguments);
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private String _globalSearchPath;
+		private LinkedList<String> _commandArguments;
+
+	}
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 

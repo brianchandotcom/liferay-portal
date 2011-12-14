@@ -19,22 +19,31 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -196,11 +205,15 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		}
 
 		try {
-			LiferayAudioConverter liferayAudioConverter =
-				new LiferayAudioConverter(
+			ProcessCallable<String> processCallable =
+				new LiferayAudioProcessCallable(
+					ServerDetector.getServerId(),
+					PropsUtil.get(PropsKeys.LIFERAY_HOME),
+					Log4JUtil.getCustomLogSettings(),
 					srcFile.getCanonicalPath(), destFile.getCanonicalPath());
 
-			liferayAudioConverter.convert();
+			ProcessExecutor.execute(
+				processCallable, ClassPathUtil.getPortalClassPath());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -304,6 +317,47 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	private static Log _log = LogFactoryUtil.getLog(AudioProcessor.class);
 
 	private static AudioProcessor _instance = new AudioProcessor();
+
+	private static class LiferayAudioProcessCallable
+		implements ProcessCallable<String> {
+
+		public LiferayAudioProcessCallable(
+			String serverId, String liferayHome,
+			HashMap<String, String> customLogSettings, String inputURL,
+			String outputURL) {
+
+			_serverId = serverId;
+			_liferayHome = liferayHome;
+			_customLogSettings = customLogSettings;
+			_inputURL = inputURL;
+			_outputURL = outputURL;
+		}
+
+		public String call() throws ProcessException {
+			Log4JUtil.initLog4J(
+				_serverId, _liferayHome, this.getClass().getClassLoader(),
+				new Log4jLogFactoryImpl(), _customLogSettings);
+
+			try {
+				LiferayConverter liferayConverter = new LiferayAudioConverter(
+					_inputURL, _outputURL);
+
+				liferayConverter.convert();
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		private HashMap<String, String> _customLogSettings;
+		private String _inputURL;
+		private String _liferayHome;
+		private String _outputURL;
+		private String _serverId;
+
+	}
 
 	private Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);

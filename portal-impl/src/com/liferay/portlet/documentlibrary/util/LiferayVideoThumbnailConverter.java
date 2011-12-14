@@ -123,6 +123,9 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 
 			generateThumbnail(inputIStreamCoders, inputIVideoPictures);
 		}
+
+		cleanUp(inputIStreamCoders, null);
+		cleanUp(inputIVideoPictures, null);
 	}
 
 	protected boolean generateThumbnail(
@@ -180,6 +183,8 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 					continue;
 				}
 				else if (value == DECODE_VIDEO_THUMBNAIL) {
+					cleanUp(inputIPacket, null);
+
 					return true;
 				}
 			}
@@ -189,6 +194,8 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 				}
 			}
 		}
+
+		cleanUp(inputIPacket, null);
 
 		return false;
 	}

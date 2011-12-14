@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -143,7 +142,7 @@ public class HeaderFilter extends BasePortalFilter {
 
 	private static final String _EXPIRES = "Expires";
 
-	private static final String _TIME_ZONE = StringPool.UTC;
+	private static final String _TIME_ZONE = "GMT";
 
 	private static final String _URL_REGEX_PATTERN = "url-regex-pattern";
 

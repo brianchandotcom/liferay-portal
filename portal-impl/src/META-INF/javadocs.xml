@@ -42281,7 +42281,7 @@ Useful when paginating results. Returns a maximum of <code>end - start</code> in
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[the user's service context (optionally <code>null</code>). Can set the universally unique identifier (with the <code>uuid</code> attribute), asset category IDs, asset tag names, and new expando bridge attributes for the user.]]></comment>
+				<comment><![CDATA[the user's service context (optionally <code>null</code>). Can set the universally unique identifier (with the <code>uuid</code> attribute), asset category IDs, asset tag names, and expando bridge attributes for the user.]]></comment>
 			</param>
 			<return>
 				<comment><![CDATA[the user]]></comment>
@@ -45274,7 +45274,7 @@ This method handles the creation and bookkeeping of the user including its resou
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[the user's service context (optionally <code>null</code>). Can set the universally unique identifier (with the <code>uuid</code> attribute), asset category IDs, asset tag names, and new expando bridge attributes for the user.]]></comment>
+				<comment><![CDATA[the user's service context (optionally <code>null</code>). Can set the universally unique identifier (with the <code>uuid</code> attribute), asset category IDs, asset tag names, and expando bridge attributes for the user.]]></comment>
 			</param>
 			<return>
 				<comment><![CDATA[the user]]></comment>
@@ -45496,7 +45496,7 @@ This method handles the creation and bookkeeping of the user including its resou
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
-				<comment><![CDATA[the user's service context (optionally <code>null</code>). Can set the universally unique identifier (with the <code>uuid</code> attribute), asset category IDs, asset tag names, and new expando bridge attributes for the user.]]></comment>
+				<comment><![CDATA[the user's service context (optionally <code>null</code>). Can set the universally unique identifier (with the <code>uuid</code> attribute), asset category IDs, asset tag names, and expando bridge attributes for the user.]]></comment>
 			</param>
 			<return>
 				<comment><![CDATA[the user]]></comment>

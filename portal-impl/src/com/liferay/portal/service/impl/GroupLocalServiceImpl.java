@@ -196,8 +196,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  site whether the group is to be associated with a main site
 	 * @param  active whether the group is active
 	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can specify the group's asset category IDs,
-	 *         asset tag names, and whether the group is for staging
+	 *         <code>null</code>). Can set asset category IDs and asset tag
+	 *         names for the group, and whether the group is for staging.
 	 * @return the group
 	 * @throws PortalException if a creator could not be found, if the group's
 	 *         information was invalid, if a layout could not be found, or if a
@@ -367,8 +367,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  site whether the group is to be associated with a main site
 	 * @param  active whether the group is active
 	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can specify the group's asset category IDs,
-	 *         asset tag names, and whether the group is for staging
+	 *         <code>null</code>). Can set asset category IDs and asset tag
+	 *         names for the group, and whether the group is for staging.
 	 * @return the group
 	 * @throws PortalException if a creator could not be found, if the group's
 	 *         information was invalid, if a layout could not be found, or if a
@@ -1891,8 +1891,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  active whether the group is active
 	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can specify the group's replacement asset
-	 *         category IDs and replacement asset tag names
+	 *         <code>null</code>). Can set asset category IDs and asset tag
+	 *         names for the group.
 	 * @return the group
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found or if the friendly URL was invalid or could one not be

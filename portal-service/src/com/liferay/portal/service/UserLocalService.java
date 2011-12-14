@@ -377,9 +377,9 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* @param sendEmail whether to send the user an email notification about
 	their new account
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), asset category
-	IDs, asset tag names, and expando bridge attributes.
+	<code>null</code>). Can set the universally unique identifier
+	(with the <code>uuid</code> attribute), asset category IDs, asset
+	tag names, and expando bridge attributes for the user.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid
 	* @throws SystemException if a system exception occurred
@@ -452,9 +452,9 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* @param sendEmail whether to send the user an email notification about
 	their new account
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), asset category
-	IDs, asset tag names, and expando bridge attributes.
+	<code>null</code>). Can set the universally unique identifier
+	(with the <code>uuid</code> attribute), asset category IDs, asset
+	tag names, and expando bridge attributes for the user.
 	* @return the new user
 	* @throws PortalException if the user's information was invalid
 	* @throws SystemException if a system exception occurred
@@ -751,10 +751,10 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* the confirmation email.
 	*
 	* @param user the user
-	* @param serviceContext the user's service context. Can specify whether a
+	* @param serviceContext the user's service context. Can set whether a
 	password should be generated (with the <code>autoPassword</code>
 	attribute) and whether the confirmation email should be sent
-	(with the <code>sendEmail</code> attribute).
+	(with the <code>sendEmail</code> attribute) for the user.
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1687,8 +1687,8 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* @param sendEmail whether to send the user an email notification about
 	their new account
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can specify the user's expando bridge
-	attributes.
+	<code>null</code>). Can set expando bridge attributes for the
+	user.
 	* @return the user
 	* @throws PortalException if the user's information was invalid
 	* @throws SystemException if a system exception occurred
@@ -1939,9 +1939,9 @@ public interface UserLocalService extends PersistedModelLocalService {
 	*
 	* @param user the verification email recipient
 	* @param emailAddress the recipient's email address
-	* @param serviceContext the service context. Must specify the portal URL,
-	main path, primary key of the layout, remote address, remote
-	host, and user agent.
+	* @param serviceContext the service context. Must set the portal URL, main
+	path, primary key of the layout, remote address, remote host, and
+	agent for the user.
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -2520,10 +2520,9 @@ public interface UserLocalService extends PersistedModelLocalService {
 	* @param userGroupRoles the user user's group roles
 	* @param userGroupIds the primary keys of the user's user groups
 	* @param serviceContext the user's service context (optionally
-	<code>null</code>). Can specify the user's universally unique
-	identifier (with the <code>uuid</code> attribute), replacement
-	asset category IDs, replacement asset tag names, and new expando
-	bridge attributes.
+	<code>null</code>). Can set the universally unique identifier
+	(with the <code>uuid</code> attribute), asset category IDs, asset
+	tag names, and new expando bridge attributes for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the new information was invalid

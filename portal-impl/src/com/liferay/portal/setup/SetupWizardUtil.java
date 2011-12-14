@@ -16,6 +16,7 @@ package com.liferay.portal.setup;
 
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
@@ -312,6 +313,10 @@ public class SetupWizardUtil {
 		// Reload Custom SQL
 
 		CustomSQLUtil.reloadCustomSQL();
+
+		// Reload SQLTransformer
+
+		SQLTransformer.reloadSQLTransformer();
 
 		HttpSession session = request.getSession();
 

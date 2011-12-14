@@ -23,6 +23,8 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
 String structureId = BeanParamUtil.getString(article, request, "structureId");
 
+String originalRedirect = ParamUtil.getString(request, "originalRedirect");
+
 String deleteButtonLabel = "delete-this-version";
 
 if ((article != null) && article.isDraft()) {
@@ -116,6 +118,7 @@ if ((article != null) && article.isDraft()) {
 					<portlet:renderURL var="viewHistoryURL">
 						<portlet:param name="struts_action" value="/journal/view_article_history" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
+                        <portlet:param name="originalRedirect" value="<%= originalRedirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 						<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 					</portlet:renderURL>

@@ -314,6 +314,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>" var="editURL" portletName="<%= PortletKeys.JOURNAL %>">
 					<portlet:param name="struts_action" value="/journal/edit_article" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
+                    <portlet:param name="originalRedirect" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(latestArticle.getGroupId()) %>" />
 					<portlet:param name="articleId" value="<%= latestArticle.getArticleId() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(latestArticle.getVersion()) %>" />

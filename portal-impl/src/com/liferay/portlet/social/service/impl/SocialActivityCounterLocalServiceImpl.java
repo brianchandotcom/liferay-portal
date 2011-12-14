@@ -432,7 +432,8 @@ public class SocialActivityCounterLocalServiceImpl
 		String name = activityCounterDefinition.getName();
 
 		if ((user.getUserId() == assetEntryUser.getUserId()) &&
-			!name.equals(SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+			(name.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) ||
+			 name.equals(SocialActivityCounterConstants.NAME_POPULARITY))) {
 
 			return false;
 		}

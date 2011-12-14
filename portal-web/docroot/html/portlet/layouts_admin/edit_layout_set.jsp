@@ -63,7 +63,9 @@ String[][] categorySections = {mainSections};
 
 <div class="lfr-header-row">
 	<div class="lfr-header-row-content">
-		<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
+		<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp">
+			<liferay-util:param name="firstLayout" value="<%= String.valueOf(selLayoutSet.getPageCount() == 0) %>" />
+		</liferay-util:include>
 
 		<aui:button-row cssClass="edit-toolbar" id='<%= liferayPortletResponse.getNamespace() + "layoutSetToolbar" %>'>
 			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">

@@ -110,8 +110,6 @@ public class AddSitesPublicPageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
-		selenium.clickAt("//div[@class='aui-tree-hitarea']",
-			RuntimeVariables.replace("Drop Down Arrow"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

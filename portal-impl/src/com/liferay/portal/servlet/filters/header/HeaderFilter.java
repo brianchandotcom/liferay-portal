@@ -96,21 +96,31 @@ public class HeaderFilter extends BasePortalFilter {
 				value = _dateFormat.format(cal.getTime());
 			}
 
-			// LEP-5895
+			// LEP-5895 and LPS-15802
 
 			boolean addHeader = true;
 
-			if (PropsValues.WEB_SERVER_PROXY_LEGACY_MODE) {
+			if (name.equalsIgnoreCase(HttpHeaders.EXPIRES) ||
+				name.equalsIgnoreCase(HttpHeaders.CACHE_CONTROL)) {
+
+				boolean newSession = false;
+
+				HttpSession session = request.getSession(false);
+
+				if ((session == null) || session.isNew()) {
+					newSession = true;
+				}
+
 				String contextPath = request.getContextPath();
 
-				if (name.equalsIgnoreCase(HttpHeaders.CACHE_CONTROL) &&
-					contextPath.equals(PortalUtil.getPathContext())) {
+				if (name.equalsIgnoreCase(HttpHeaders.EXPIRES) && newSession) {
+					addHeader = false;
+				}
+				else if (PropsValues.WEB_SERVER_PROXY_LEGACY_MODE &&
+					contextPath.equals(PortalUtil.getPathContext()) &&
+					newSession) {
 
-					HttpSession session = request.getSession(false);
-
-					if ((session == null) || session.isNew()) {
-						addHeader = false;
-					}
+					addHeader = false;
 				}
 			}
 

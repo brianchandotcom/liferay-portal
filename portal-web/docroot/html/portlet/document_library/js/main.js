@@ -338,6 +338,10 @@ AUI().add(
 							}
 						);
 
+						if (AObject.isEmpty(requestParams)) {
+							requestParams = instance._getDefaultHistoryState();
+						}
+
 						Liferay.fire(
 							instance._eventDataRequest,
 							{
@@ -415,6 +419,29 @@ AUI().add(
 								requestParams: requestParams
 							}
 						);
+					},
+
+					_getDefaultHistoryState: function() {
+						var instance = this;
+
+						var initialState = History.get();
+
+						var config = instance._config;
+
+						if (AObject.isEmpty(initialState)) {
+							initialState[instance.ns(STR_ENTRY_END)] = config[STR_ENTRY_END];
+							initialState[instance.ns(STR_ENTRY_START)] = config[STR_ENTRY_START];
+							initialState[instance.ns(STR_FOLDER_END)] = config[STR_FOLDER_END];
+							initialState[instance.ns(STR_FOLDER_START)] = config[STR_FOLDER_START];
+							initialState[instance.ns(VIEW_ADD_BUTTON)] = true;
+							initialState[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
+							initialState[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
+							initialState[instance.ns(VIEW_ENRTIES)] = true;
+							initialState[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
+							initialState[instance.ns(VIEW_SORT_BUTTON)] = true;
+						}
+
+						return initialState;
 					},
 
 					_getDisplayStyle: function(style) {

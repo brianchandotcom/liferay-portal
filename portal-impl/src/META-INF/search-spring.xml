@@ -75,6 +75,10 @@
 			<bean class="com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilder" class="com.liferay.portal.kernel.repository.cmis.search.BaseCmisSearchQueryBuilder" />
+	<bean id="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil">
+		<property name="cmisSearchQueryBuilder" ref="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilder" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" class="com.liferay.portal.repository.search.RepositorySearchQueryBuilderImpl">
 		<property name="analyzer" ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 	</bean>

@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,7 +46,7 @@ public class CMISParameterValueUtil {
 			try {
 				DateFormat searchSimpleDateFormat =
 					DateFormatFactoryUtil.getSimpleDateFormat(
-						PropsValues.INDEX_DATE_FORMAT_PATTERN);
+						PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 
 				Date date = searchSimpleDateFormat.parse(value);
 

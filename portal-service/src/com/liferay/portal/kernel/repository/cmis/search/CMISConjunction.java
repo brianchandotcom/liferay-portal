@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Mika Koivisto
  */
-public class CMISDisjunction extends CMISJunction {
+public class CMISConjunction extends CMISJunction {
 
 	@Override
 	public String toQueryFragment() {
@@ -32,21 +32,25 @@ public class CMISDisjunction extends CMISJunction {
 
 		List<CMISCriterion> cmisCriterions = list();
 
-		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
+		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 - 1);
 
-		sb.append("(");
+		if (cmisCriterions.size() > 1) {
+			sb.append("(");
+		}
 
 		for (int i = 0; i < cmisCriterions.size(); i++) {
 			CMISCriterion cmisCriterion = cmisCriterions.get(i);
 
 			if (i != 0) {
-				sb.append(" OR ");
+				sb.append(" AND ");
 			}
 
 			sb.append(cmisCriterion.toQueryFragment());
 		}
 
-		sb.append(")");
+		if (cmisCriterions.size() > 1) {
+			sb.append(")");
+		}
 
 		return sb.toString();
 	}

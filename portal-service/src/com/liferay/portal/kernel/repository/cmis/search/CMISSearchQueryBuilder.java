@@ -12,24 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
+
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 
 /**
  * @author Mika Koivisto
  */
-public enum CMISSimpleExpressionOperator {
+public interface CMISSearchQueryBuilder {
 
-	EQ("="), GE(">="), GT(">"), LE("<="), LIKE("LIKE"), LT("<"), NE("<>");
-
-	private CMISSimpleExpressionOperator(String value) {
-		_value = value;
-	}
-
-	@Override
-	public String toString() {
-		return _value;
-	}
-
-	private String _value;
+	public String buildQuery(SearchContext searchContext, Query query)
+		throws SearchException;
 
 }

@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.portal.kernel.repository.cmis.search;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISNotExpression implements CMISCriterion {
+public enum CMISSimpleExpressionOperator {
 
-	public CMISNotExpression(CMISCriterion cmisCriterion) {
-		_cmisCriterion = cmisCriterion;
+	EQ("="), GE(">="), GT(">"), LE("<="), LIKE("LIKE"), LT("<"), NE("<>");
+
+	private CMISSimpleExpressionOperator(String value) {
+		_value = value;
 	}
 
-	public String toQueryFragment() {
-		return "NOT(".concat(_cmisCriterion.toQueryFragment().concat(")"));
+	@Override
+	public String toString() {
+		return _value;
 	}
 
-	private CMISCriterion _cmisCriterion;
+	private String _value;
 
 }

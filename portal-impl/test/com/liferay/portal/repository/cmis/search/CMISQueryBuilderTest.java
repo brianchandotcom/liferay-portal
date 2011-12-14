@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.cmis.search;
 
+import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -33,7 +34,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -51,7 +52,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -67,7 +68,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -83,7 +84,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -99,7 +100,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -115,7 +116,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -132,7 +133,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -148,7 +149,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -164,7 +165,7 @@ public class CMISQueryBuilderTest extends TestCase {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISQueryBuilder.buildQuery(
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(

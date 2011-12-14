@@ -30,6 +30,7 @@ import java.io.File;
 import java.net.URL;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 /**
  * @author Shuyang Zhou
@@ -53,12 +54,20 @@ public class ClassPathUtil {
 			return;
 		}
 
-		_globalClassPath = _buildClassPath(
+		StringBundler sb = new StringBundler(7);
+
+		String portalGlobalClassPath = _buildClassPath(
 			classLoader, PortalException.class.getName());
 
-		StringBundler sb = new StringBundler(5);
+		sb.append(portalGlobalClassPath);
+		sb.append(File.pathSeparator);
 
-		sb.append(_globalClassPath);
+		String appServerGlobalClassPath = _buildClassPath(
+			classLoader, ServletException.class.getName());
+		sb.append(appServerGlobalClassPath);
+
+		_globalClassPath = sb.toString();
+
 		sb.append(File.pathSeparator);
 		sb.append(
 			_buildClassPath(

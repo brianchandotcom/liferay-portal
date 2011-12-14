@@ -1593,7 +1593,9 @@
 							showBox.show();
 						}
 
-						A.all('#' + hideBoxIds.join(',#')).hide();
+						if (hideBoxIds) {
+							A.all('#' + hideBoxIds.join(',#')).hide();
+						}
 					}
 				);
 			}

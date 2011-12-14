@@ -150,35 +150,27 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	);
 
 	var toggleHandlerControl = function(item, index, collection) {
-		var container = item.ancestor('.<portlet:namespace />handler-control').one('ul');
+		var container = item.ancestor('.handler-control').one('ul');
 
 		if (container) {
-			var action = 'hide';
+			var checked = item.get('checked');
 
-			if (item.get('checked')) {
-				action = 'show';
-			}
+			container.toggle(checked);
 
-			container[action]();
+			container.all(':checkbox').attr('checked', checked);
 		}
 	};
 
-	var checkboxes = A.all('.<portlet:namespace />handler-control input[type=checkbox]');
+	var checkboxes = A.all('.handler-control :checkbox');
 
-	if (checkboxes) {
-		var uncheckedBoxes = checkboxes.filter(':not(:checked)');
+	checkboxes.filter(':not(:checked)').each(toggleHandlerControl);
 
-		if (uncheckedBoxes) {
-			uncheckedBoxes.each(toggleHandlerControl);
+	checkboxes.detach('click');
+
+	checkboxes.on(
+		'click',
+		function(event) {
+			toggleHandlerControl(event.currentTarget);
 		}
-
-		checkboxes.detach('click');
-
-		checkboxes.on(
-			'click',
-			function(event) {
-				toggleHandlerControl(event.currentTarget);
-			}
-		);
-	}
+	);
 </aui:script>

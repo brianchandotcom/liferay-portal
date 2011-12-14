@@ -124,7 +124,8 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("link=Home"));
-		selenium.click("link=Home");
+		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -147,6 +148,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder 2"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -170,6 +172,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -190,8 +193,31 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"),
 			selenium.getText("//li[3]/span/a"));
-		selenium.click("//input[@value='Choose this Folder']");
+		selenium.click("//input[@value='Choose This Folder']");
 		selenium.selectWindow("null");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"Media Gallery Permissions Test Subfolder 2")
+										.equals(selenium.getText(
+								"//a[@id='_31_folderName']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Media Gallery Permissions Test Subfolder 2"),
+			selenium.getText("//a[@id='_31_folderName']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

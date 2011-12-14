@@ -104,7 +104,7 @@
 	<td>Home</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAtAndWait</td>
 	<td>link=Home</td>
 	<td>Home</td>
 </tr>
@@ -119,7 +119,7 @@
 	<td>Media Gallery Permissions Test Folder 2</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//tr[4]/td[1]/a</td>
 	<td>Media Gallery Permissions Test Folder 2</td>
 </tr>
@@ -134,7 +134,7 @@
 	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
 	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
@@ -150,13 +150,23 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='Choose this Folder']</td>
-	<td>Choose this Folder</td>
+	<td>//input[@value='Choose This Folder']</td>
+	<td>Choose This Folder</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//a[@id='_31_folderName']</td>
+	<td>Media Gallery Permissions Test Subfolder 2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_31_folderName']</td>
+	<td>Media Gallery Permissions Test Subfolder 2</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -218,7 +228,6 @@
 	<td>//a[@title='Permissions Image Test - ']</td>
 	<td>Permissions Image Test</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

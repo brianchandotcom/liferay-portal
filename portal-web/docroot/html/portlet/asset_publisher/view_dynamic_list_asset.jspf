@@ -27,9 +27,16 @@ for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex+
 		continue;
 	}
 
-	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+    AssetRenderer assetRenderer = null;
 
-	if (!assetRenderer.isDisplayable()) {
+    try {
+	    assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+    }
+    catch (Exception e) {
+        _log.error(e.getMessage());
+    }
+
+	if (assetRenderer == null || !assetRenderer.isDisplayable()) {
 		continue;
 	}
 

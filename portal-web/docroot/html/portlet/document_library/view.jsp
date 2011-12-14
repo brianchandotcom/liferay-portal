@@ -212,20 +212,13 @@ if (folder != null) {
 			entryEnd: <%= entryEnd %>,
 			entryRowsPerPage: <%= entryRowsPerPage %>,
 			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			entryStart: <%= entryStart %>,
 			folderEnd: <%= folderEnd %>,
-			folderId: '<%= folderId %>',
 			folderRowsPerPage: <%= folderRowsPerPage %>,
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,
 			mainUrl: '<%= mainURL %>',
 			namespace: '<portlet:namespace />',
-			showSiblings: true,
-			strutsAction: '/document_library/view',
-			viewBreadcrumb: true,
-			viewEntries: true,
-			viewFolders: true
+			strutsAction: '/document_library/view'
 		}
 	);
 </aui:script>

@@ -102,13 +102,13 @@ AUI().add(
 
 		var TOUCH = A.UA.touch;
 
-		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
+		var VIEW_BREADCRUMB = 'viewBreadcrumb';
 
 		var VIEW_ADD_BUTTON = 'viewAddButton';
 
 		var VIEW_DISPLAY_STYLE_BUTTONS = 'viewDisplayStyleButtons';
 
-		var VIEW_ENRTIES = 'viewEntries';
+		var VIEW_ENTRIES = 'viewEntries';
 
 		var VIEW_FILE_ENTRY_SEARCH = 'viewFileEntrySearch';
 
@@ -391,7 +391,7 @@ AUI().add(
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
 						requestParams[instance.ns('refreshEntries')] = dataRefreshEntries;
 						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						requestParams[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
+						requestParams[instance.ns(VIEW_BREADCRUMB)] = true;
 						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
 						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
 						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
@@ -405,7 +405,7 @@ AUI().add(
 						}
 
 						if (dataRefreshEntries) {
-							requestParams[instance.ns(VIEW_ENRTIES)] = dataRefreshEntries;
+							requestParams[instance.ns(VIEW_ENTRIES)] = dataRefreshEntries;
 						}
 
 						if (dataShowSiblings) {
@@ -667,9 +667,9 @@ AUI().add(
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
 						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						requestParams[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
+						requestParams[instance.ns(VIEW_BREADCRUMB)] = true;
 						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
-						requestParams[instance.ns(VIEW_ENRTIES)] = true;
+						requestParams[instance.ns(VIEW_ENTRIES)] = true;
 						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
 						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
 
@@ -824,7 +824,7 @@ AUI().add(
 						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
 						customParams[instance.ns(REFRESH_FOLDERS)] = false;
 						customParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						customParams[instance.ns(VIEW_ENRTIES)] = true;
+						customParams[instance.ns(VIEW_ENTRIES)] = true;
 
 						if (AObject.owns(requestParams, instance.ns('searchType'))) {
 							customParams[instance.ns(SEARCH_TYPE)] = SRC_SEARCH_FRAGMENT;
@@ -853,7 +853,7 @@ AUI().add(
 						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
 						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
 						customParams[instance.ns(REFRESH_FOLDERS)] = true;
-						customParams[instance.ns(VIEW_ENRTIES)] = true;
+						customParams[instance.ns(VIEW_ENTRIES)] = true;
 
 						A.mix(requestParams, customParams, true);
 

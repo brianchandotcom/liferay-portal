@@ -388,7 +388,6 @@ for (int i = 0; i < results.size(); i++) {
 
 						data.put("folder", true);
 						data.put("folder-id", curFolder.getFolderId());
-						data.put("refresh-folders", true);
 
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 

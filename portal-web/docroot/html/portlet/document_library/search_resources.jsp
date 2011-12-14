@@ -107,7 +107,6 @@ int total = 0;
 							'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
 							'<portlet:namespace />searchFolderId': '<%= (folder != null) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>',
 							'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-							'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
 							<c:choose>
 								<c:when test="<%= (folder != null) %>">
 									'<portlet:namespace />searchType': <%= String.valueOf(DLSearchConstants.MULTIPLE) %>
@@ -136,7 +135,6 @@ int total = 0;
 									'<portlet:namespace />folderId': '<%= String.valueOf(mountFolder.getFolderId()) %>',
 									'<portlet:namespace />searchFolderId': '<%= String.valueOf(mountFolder.getFolderId()) %>',
 									'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-									'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
 									'<portlet:namespace />searchType': <%= String.valueOf(DLSearchConstants.MULTIPLE) %>
 								},
 								src: 3
@@ -162,7 +160,6 @@ int total = 0;
 								requestParams: {
 									'<portlet:namespace />struts_action': '/document_library/view',
 									'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
-									'<portlet:namespace />viewDisplayStyleButtons': <%= Boolean.TRUE.toString() %>,
 									'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
 								},
 								src: 4

@@ -32,7 +32,9 @@ AUI().add(
 
 		var DATA_FOLDER_ID = 'data-folder-id';
 
-		var DATA_REFRESH_FOLDERS = 'data-refresh-folders';
+		var DATA_VIEW_ENTRIES = 'data-view-entries';
+
+		var DATA_VIEW_FOLDERS = 'data-view-folders';
 
 		var DISPLAY_STYLE_LIST = 'list';
 
@@ -43,8 +45,6 @@ AUI().add(
 		var DOCUMENT_LIBRARY_GROUP = 'document-library';
 
 		var PARENT_NODE = 'parentNode';
-
-		var REFRESH_FOLDERS = 'refreshFolders';
 
 		var ROWS_PER_PAGE = 'rowsPerPage';
 
@@ -102,17 +102,11 @@ AUI().add(
 
 		var TOUCH = A.UA.touch;
 
-		var VIEW_BREADCRUMB = 'viewBreadcrumb';
-
-		var VIEW_ADD_BUTTON = 'viewAddButton';
-
-		var VIEW_DISPLAY_STYLE_BUTTONS = 'viewDisplayStyleButtons';
-
 		var VIEW_ENTRIES = 'viewEntries';
 
-		var VIEW_FILE_ENTRY_SEARCH = 'viewFileEntrySearch';
+        var VIEW_ENTRIES_PAGE = 'viewEntriesPage';
 
-		var VIEW_SORT_BUTTON = 'viewSortButton';
+		var VIEW_FOLDERS = 'viewFolders';
 
 		var DocumentLibrary = A.Component.create(
 			{
@@ -278,9 +272,11 @@ AUI().add(
 
 						data[displayStyle] = History.get(displayStyle) || config.displayStyle;
 
-						data[instance.ns('viewFolders')] = true;
+                        data[instance.ns(VIEW_ENTRIES)] = true;
 
-						A.mix(data, requestParams, true);
+                        data[instance.ns(VIEW_FOLDERS)] = true;
+
+                        A.mix(data, requestParams, true);
 
 						instance._documentLibraryContainer.loadingmask.show();
 
@@ -368,8 +364,8 @@ AUI().add(
 						var dataFileEntryTypeId = item.attr('data-file-entry-type-id');
 						var dataFolderId = item.attr(DATA_FOLDER_ID);
 						var dataNavigation = item.attr('data-navigation');
-						var dataRefreshEntries = item.attr('data-refresh-entries');
-						var dataRefreshFolders = item.attr(DATA_REFRESH_FOLDERS);
+						var dataViewEntries = item.attr(DATA_VIEW_ENTRIES);
+						var dataViewFolders = item.attr(DATA_VIEW_FOLDERS);
 
 						var direction = 'left';
 
@@ -388,12 +384,6 @@ AUI().add(
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
 						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
-						requestParams[instance.ns('refreshEntries')] = dataRefreshEntries;
-						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						requestParams[instance.ns(VIEW_BREADCRUMB)] = true;
-						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
-						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
-						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
 
                         if (dataExpandFolder) {
                             requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;
@@ -407,16 +397,16 @@ AUI().add(
 							requestParams[instance.ns('navigation')] = dataNavigation;
 						}
 
-						if (dataRefreshEntries) {
-							requestParams[instance.ns(VIEW_ENTRIES)] = dataRefreshEntries;
+						if (dataViewEntries) {
+							requestParams[instance.ns(VIEW_ENTRIES)] = dataViewEntries;
 						}
 
 						if (dataFileEntryTypeId) {
 							requestParams[instance.ns('fileEntryTypeId')] = dataFileEntryTypeId;
 						}
 
-						if (dataRefreshFolders) {
-							requestParams[instance.ns(REFRESH_FOLDERS)] = dataRefreshFolders;
+						if (dataViewFolders) {
+							requestParams[instance.ns(VIEW_FOLDERS)] = dataViewFolders;
 						}
 
 						Liferay.fire(
@@ -658,15 +648,20 @@ AUI().add(
 						requestParams[instance.ns(STR_FOLDER_END)] = instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
                         requestParams[instance.ns(EXPAND_FOLDER)] = false;
-                        requestParams[instance.ns(REFRESH_FOLDERS)] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
-						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						requestParams[instance.ns(VIEW_BREADCRUMB)] = true;
-						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
-						requestParams[instance.ns(VIEW_ENTRIES)] = true;
-						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
-						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
+
+                        var viewEntries = event.currentTarget.attr(DATA_VIEW_ENTRIES);
+
+                        if (viewEntries) {
+                            requestParams[instance.ns(VIEW_ENTRIES)] = viewEntries;
+                        }
+
+                        var viewFolders = event.currentTarget.attr(DATA_VIEW_FOLDERS);
+
+                        if (viewFolders) {
+                            requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
+                        }
 
 						Liferay.fire(
 							instance._eventDataRequest,
@@ -817,9 +812,9 @@ AUI().add(
 
 						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
 						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
-						customParams[instance.ns(REFRESH_FOLDERS)] = false;
-						customParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						customParams[instance.ns(VIEW_ENTRIES)] = true;
+                        customParams[instance.ns(VIEW_ENTRIES)] = false;
+                        customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
+                        customParams[instance.ns(VIEW_FOLDERS)] = false;
 
 						if (AObject.owns(requestParams, instance.ns('searchType'))) {
 							customParams[instance.ns(SEARCH_TYPE)] = SRC_SEARCH_FRAGMENT;
@@ -847,8 +842,8 @@ AUI().add(
 
 						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
 						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
-						customParams[instance.ns(REFRESH_FOLDERS)] = true;
-						customParams[instance.ns(VIEW_ENTRIES)] = true;
+                        customParams[instance.ns(VIEW_ENTRIES)] = false;
+                        customParams[instance.ns(VIEW_FOLDERS)] = true;
 
 						A.mix(requestParams, customParams, true);
 
@@ -1072,11 +1067,7 @@ AUI().add(
 
 							listViewDataContainer.plug(A.Plugin.ParseContent);
 
-							var refreshFolders = folders.attr(DATA_REFRESH_FOLDERS);
-
-							if (refreshFolders) {
-								instance._listView.set(STR_DATA, folders.html());
-							}
+                            instance._listView.set(STR_DATA, folders.html());
 						}
 					},
 

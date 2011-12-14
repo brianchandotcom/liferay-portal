@@ -134,19 +134,12 @@ public class DLUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/document_library/view");
-		portletURL.setParameter("viewAddButton", Boolean.TRUE.toString());
-		portletURL.setParameter("viewBreadcrumb", Boolean.TRUE.toString());
-		portletURL.setParameter(
-			"viewDisplayStyleButttons", Boolean.TRUE.toString());
 		portletURL.setParameter("viewEntries", Boolean.TRUE.toString());
-		portletURL.setParameter("viewFileEntrySearch", Boolean.TRUE.toString());
 		portletURL.setParameter("viewFolders", Boolean.TRUE.toString());
-		portletURL.setParameter("viewSortButton", Boolean.TRUE.toString());
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("folder-id", _getDefaultFolderId(request));
-		data.put("refresh-folders", Boolean.TRUE.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -191,7 +184,6 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", ancestorFolder.getFolderId());
-			data.put("refresh-folders", Boolean.TRUE.toString());
 			data.put("show-globally", String.valueOf(showGlobally));
 
 			PortalUtil.addPortletBreadcrumbEntry(
@@ -212,7 +204,6 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", folderId);
-			data.put("refresh-folders", Boolean.TRUE.toString());
 			data.put("show-globally", String.valueOf(showGlobally));
 
 			PortalUtil.addPortletBreadcrumbEntry(
@@ -248,7 +239,8 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", _getDefaultFolderId(request));
-			data.put("refresh-folders", Boolean.TRUE.toString());
+			data.put("view-entries", Boolean.TRUE.toString());
+			data.put("view-folders", Boolean.TRUE.toString());
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString(),

@@ -215,7 +215,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 
 		try {
 			try {
-				ProcessCallable<String> processCallable = 
+				ProcessCallable<String> processCallable =
 					new LiferayVideoThumbnailProcessCallable(
 						file.getCanonicalPath(), thumbnailTempFile,
 						THUMBNAIL_TYPE, height, width,
@@ -349,11 +349,11 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			stopWatch.start();
 		}
 
-		ProcessCallable<String> processCallable = 
+		ProcessCallable<String> processCallable =
 			new LiferayVideoProcessCallable(
-				srcFile.getCanonicalPath(), destFile.getCanonicalPath(), height,
-				width);
-		
+				srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+				FileUtil.createTempFile(), height, width);
+
 		ProcessExecutor.execute(
 			processCallable, ClassPathUtil.getPortalClassPath());
 
@@ -550,10 +550,12 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		implements ProcessCallable<String> {
 
 		public LiferayVideoProcessCallable(
-			String inputURL, String outputURL, int height, int width) {
+			String inputURL, String outputURL, File tempFile, int height,
+			int width) {
 
 			_inputURL = inputURL;
 			_outputURL = outputURL;
+			_tempFile = tempFile;
 			_height = height;
 			_width = width;
 		}
@@ -562,7 +564,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			try {
 				LiferayVideoConverter liferayVideoConverter =
 					new LiferayVideoConverter(
-						_inputURL, _outputURL, _height, _width);
+						_inputURL, _outputURL, _tempFile, _height, _width);
 
 				liferayVideoConverter.convert();
 			}
@@ -576,6 +578,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		private int _height;
 		private String _inputURL;
 		private String _outputURL;
+		private File _tempFile;
 		private int _width;
 
 	}

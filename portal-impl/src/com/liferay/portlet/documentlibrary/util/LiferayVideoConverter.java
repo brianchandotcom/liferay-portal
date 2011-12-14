@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -52,13 +51,15 @@ import java.util.Properties;
 public class LiferayVideoConverter extends LiferayConverter {
 
 	public LiferayVideoConverter(
-		String inputURL, String outputURL, int height, int width) {
+		String inputURL, String outputURL, File tempFile, int height,
+		int width) {
 
 		_ffpresetProperties = PropsUtil.getProperties(
 			PropsKeys.XUGGLER_FFPRESET, true);
 
 		_inputURL = inputURL;
 		_outputURL = outputURL;
+		_tempFile = tempFile;
 		_height = height;
 		_width = width;
 
@@ -91,13 +92,13 @@ public class LiferayVideoConverter extends LiferayConverter {
 		File videoFile = new File(_outputURL);
 
 		if (outputFormat.equals("mp4") && videoFile.exists()) {
-			File tempFile = FileUtil.createTempFile();
-
 			try {
-				JQTFastStart.convert(videoFile, tempFile);
+				JQTFastStart.convert(videoFile, _tempFile);
 
-				if (tempFile.exists() && tempFile.length() > 0) {
-					FileUtil.move(tempFile, videoFile);
+				if (_tempFile.exists() && _tempFile.length() > 0) {
+					videoFile.delete();
+
+					_tempFile.renameTo(videoFile);
 				}
 			}
 			catch (Exception e) {
@@ -106,7 +107,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 				}
 			}
 			finally {
-				FileUtil.delete(tempFile);
+				_tempFile.delete();
 			}
 		}
 	}
@@ -497,6 +498,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 	private String _inputURL;
 	private IContainer _outputIContainer;
 	private String _outputURL;
+	private File _tempFile;
 	private int _width = 320;
 
 }

@@ -195,14 +195,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	public static void reset() throws Exception {
 		if (isImageMagickEnabled()) {
-			String globalSearchPath = getGlobalSearchPath();
-
-			ProcessStarter.setGlobalSearchPath(globalSearchPath);
-
-			_convertCmd = new ConvertCmd();
-		}
-		else {
-			_convertCmd = null;
+			_globalSearchPath = getGlobalSearchPath();
 		}
 	}
 
@@ -402,7 +395,7 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		String inputfilePath = file.getPath();
 
 		String outputFilePath = null;
-		
+
 		if (thumbnail) {
 			inputfilePath += "[0]";
 			outputFilePath = getThumbnailTempFilePath(tempFileId);
@@ -413,7 +406,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 		ProcessExecutor.execute(
 			new ImageMagickProcessCallable(
-				inputfilePath, outputFilePath, depth, dpi, height, width),
+				_globalSearchPath, inputfilePath, outputFilePath, depth, dpi,
+				height, width),
 			ClassPathUtil.getPortalClassPath());
 
 		// Store images
@@ -712,18 +706,20 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessor.class);
 
+	private static String _globalSearchPath;
+
 	private static PDFProcessor _instance = new PDFProcessor();
 
-	private static ConvertCmd _convertCmd;
 	private static boolean _warned;
 
 	private static class ImageMagickProcessCallable
 		implements ProcessCallable<String> {
 
 		public ImageMagickProcessCallable(
-			String inputFilePath, String outputFilePath, int depth, int dpi, 
-			int height, int width) {
+			String globalSearchPath, String inputFilePath,
+			String outputFilePath, int depth, int dpi, int height, int width) {
 
+			_globalSearchPath = globalSearchPath;
 			_inputFilePath = inputFilePath;
 			_outputFilePath = outputFilePath;
 			_depth = depth;
@@ -756,21 +752,27 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 						"Excecuting command 'convert " + imOperation + "'");
 				}
 
-				_convertCmd.run(imOperation);
+				ProcessStarter.setGlobalSearchPath(_globalSearchPath);
+
+				new ConvertCmd().run(imOperation);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);
 			}
-			
+
 			return StringPool.BLANK;
 		}
+
+		private static Log _log = LogFactoryUtil.getLog(
+			ImageMagickProcessCallable.class);
 
 		private String _inputFilePath;
 		private String _outputFilePath;
 		private int _depth;
 		private int _dpi;
+		private String _globalSearchPath;
 		private int _height;
-		private	int _width;
+		private int _width;
 
 	}
 

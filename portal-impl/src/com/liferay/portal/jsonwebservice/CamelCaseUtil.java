@@ -22,16 +22,29 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class CamelCaseUtil {
 
+	/**
+	 * Normalizes inner uppercase words in camel case string.
+	 * Examples:
+	 * <li>camelCase --&gt; camelCase
+	 * <li>camelCASEWord --&gt; camelCaseWord
+	 */
 	public static String fixCamelCase(String s) {
 		StringBundler sb = new StringBundler();
 
 		boolean upperCase = false;
 
-		for (int i = 0; i < s.length(); i++) {
+		int len = s.length();
+
+		for (int i = 0; i < len; i++) {
 			char c = s.charAt(i);
 
+			boolean nextUpperCase = true;
+			if (i < len - 1) {
+				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
+			}
+
 			if ((i > 0) && Character.isUpperCase(c)) {
-				if (upperCase) {
+				if (upperCase && nextUpperCase) {
 					c = Character.toLowerCase(c);
 				}
 
@@ -47,6 +60,14 @@ public class CamelCaseUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Converts a dash-separated-words into camel case. Only the first
+	 * letter of words is converted into upper case, all others
+	 * remains unchanged.Examples:
+	 *
+	 * <li>camel-case --&gt; camelCase
+	 * <li>camel-CASE-word --&gt; camelCASEWord
+	 */
 	public static String toCamelCase(String s) {
 		StringBundler sb = new StringBundler(s.length());
 
@@ -71,16 +92,29 @@ public class CamelCaseUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Converts camel case word to dash-separated-words.
+	 * Examples:
+	 * <li>camelCase --&gt; camel-case
+	 * <li>camelCASEWord --&gt; camel-case-word
+	 */
 	public static String toSeparateWords(String s) {
 		StringBundler sb = new StringBundler();
 
 		boolean upperCase = false;
 
-		for (int i = 0; i < s.length(); i++) {
+		int len = s.length();
+
+		for (int i = 0; i < len; i++) {
 			char c = s.charAt(i);
 
+			boolean nextUpperCase = true;
+			if (i < len - 1) {
+				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
+			}
+
 			if ((i > 0) && Character.isUpperCase(c)) {
-				if (!upperCase) {
+				if (!upperCase || !nextUpperCase) {
 					sb.append(CharPool.DASH);
 				}
 

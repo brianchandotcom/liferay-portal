@@ -14,10 +14,13 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamException;
 import java.io.OutputStream;
 import java.io.Serializable;
 
@@ -49,12 +52,15 @@ public class ProcessExecutor {
 
 			if (errorInputStream.available() > 0) {
 				ProcessException processException =
-					(ProcessException)_readObject(errorInputStream, true);
+					(ProcessException)_readObject(errorInputStream, true,
+						System.err);
 
-				throw processException;
+				if (processException != null) {
+					throw processException;
+				}
 			}
 
-			return (T)_readObject(process.getInputStream(), true);
+			return (T)_readObject(process.getInputStream(), true, System.out);
 		}
 		catch (Exception e) {
 			throw new ProcessException(e);
@@ -66,7 +72,7 @@ public class ProcessExecutor {
 
 		try {
 			ProcessCallable<?> processCallable =
-				(ProcessCallable<?>)_readObject(System.in, false);
+				(ProcessCallable<?>)_readObject(System.in, false, null);
 
 			Object result = processCallable.call();
 
@@ -77,18 +83,47 @@ public class ProcessExecutor {
 		}
 	}
 
-	private static Object _readObject(InputStream inputStream, boolean close)
+	private static Object _readObject(
+			InputStream inputStream, boolean close,
+			OutputStream failDumpOutputStream)
 		throws ClassNotFoundException, IOException {
 
-		ObjectInputStream objectInputStream = new ObjectInputStream(
-			inputStream);
+		if (failDumpOutputStream != null) {
+			inputStream = new UnsyncBufferedInputStream(inputStream);
+
+			// Mark ObjectInputStream's magic header
+			inputStream.mark(4);
+		}
 
 		try {
-			return objectInputStream.readObject();
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+				inputStream);
+
+			try {
+				return objectInputStream.readObject();
+			}
+			finally {
+				if (close) {
+					objectInputStream.close();
+				}
+			}
 		}
-		finally {
-			if (close) {
-				objectInputStream.close();
+		catch (ObjectStreamException ose) {
+			if (failDumpOutputStream != null) {
+				inputStream.reset();
+
+				int ch = -1;
+
+				while ((ch = inputStream.read()) != -1) {
+					failDumpOutputStream.write(ch);
+				}
+
+				failDumpOutputStream.flush();
+
+				return null;
+			}
+			else {
+				throw ose;
 			}
 		}
 	}

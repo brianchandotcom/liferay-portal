@@ -60,7 +60,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 		/>
 
 		<span style="font-size: x-small;">
-			<%= StringUtil.replace(HtmlUtil.escape(question.getDescription(locale)), StringPool.NEW_LINE, "<br />") %>
+			<%= StringUtil.replace(question.getDescription(locale), StringPool.NEW_LINE, "<br />") %>
 		</span>
 
 		<br /><br />
@@ -78,7 +78,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 						choice = choice.toEscapedModel();
 					%>
 
-						<aui:input inlineLabel="left" label='<%= "<strong>" + choice.getName() + ".</strong> " + HtmlUtil.escape(choice.getDescription(locale)) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+						<aui:input inlineLabel="left" label='<%= "<strong>" + choice.getName() + ".</strong> " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
 
 					<%
 					}

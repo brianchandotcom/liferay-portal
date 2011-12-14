@@ -21,6 +21,8 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "web-content");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+String originalRedirect = ParamUtil.getString(request, "originalRedirect");
+
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
@@ -40,6 +42,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		portletURL.setParameter("struts_action", "/journal/view_article_history");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("redirect", redirect);
+        portletURL.setParameter("originalRedirect", originalRedirect);
 		portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter("articleId", article.getArticleId());
 		%>
@@ -49,9 +52,12 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
+
 			<aui:input name="groupId" type="hidden" />
+            <aui:input name="articleId" type="hidden" />
 			<aui:input name="deleteArticleIds" type="hidden" />
 			<aui:input name="expireArticleIds" type="hidden" />
+            <aui:input name="originalRedirect" type="hidden" value="<%= originalRedirect %>" />
 
 			<%
 			ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
@@ -160,8 +166,9 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 					'<portlet:namespace />deleteArticles',
 					function() {
 						if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE_VERSIONS %>";
 							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = "<%= scopeGroupId %>";
+                            document.<portlet:namespace />fm.<portlet:namespace />articleId.value = "<%= article.getArticleId() %>";
 							document.<portlet:namespace />fm.<portlet:namespace />deleteArticleIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
 							submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
 						}

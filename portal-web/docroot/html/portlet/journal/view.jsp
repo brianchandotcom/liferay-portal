@@ -101,6 +101,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 				rowURL.setParameter("struts_action", "/journal/edit_article");
 				rowURL.setParameter("redirect", currentURL);
+                rowURL.setParameter("originalRedirect", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(article.getGroupId()));
 				rowURL.setParameter("articleId", article.getArticleId());
 			%>

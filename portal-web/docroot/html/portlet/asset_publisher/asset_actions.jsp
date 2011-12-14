@@ -46,6 +46,8 @@ if (showEditURL && (editPortletURL != null)) {
 
 	editPortletURL.setParameter("redirect", redirectURL.toString());
 
+    editPortletURL.setParameter("originalRedirect", redirectURL.toString());
+
 	editPortletURLString = editPortletURL.toString();
 
 	editPortletURLString = HttpUtil.addParameter(editPortletURLString, "doAsGroupId", assetRenderer.getGroupId());

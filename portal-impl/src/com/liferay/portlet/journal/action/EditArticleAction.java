@@ -58,6 +58,7 @@ import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
@@ -132,7 +133,9 @@ public class EditArticleAction extends PortletAction {
 				article = (JournalArticle)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
 			}
-			else if (cmd.equals(Constants.DELETE)) {
+			else if (cmd.equals(Constants.DELETE) ||
+					 cmd.equals(Constants.DELETE_VERSIONS)) {
+
 				deleteArticles(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE_TRANSLATION)) {
@@ -195,6 +198,21 @@ public class EditArticleAction extends PortletAction {
 						WebKeys.THEME_DISPLAY);
 
 				Layout layout = themeDisplay.getLayout();
+
+				if (cmd.equals(Constants.DELETE_VERSIONS)) {
+					long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+					String articleId = ParamUtil.getString(
+                        actionRequest, "articleId");
+
+                    try {
+						JournalArticleLocalServiceUtil.getArticle(
+                            groupId, articleId);
+					} catch (NoSuchArticleException nsae) {
+						redirect = ParamUtil.getString(
+                            actionRequest, "originalRedirect");
+					}
+				}
 
 				if (cmd.equals(Constants.DELETE_TRANSLATION) ||
 					cmd.equals(Constants.TRANSLATE)) {

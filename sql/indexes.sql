@@ -680,6 +680,7 @@ create index IX_1F00C374 on SocialActivity (mirrorActivityId, classNameId, class
 create index IX_121CA3CB on SocialActivity (receiverUserId);
 create index IX_3504B8BC on SocialActivity (userId);
 
+create index IX_E14B1F1 on SocialActivityAchievement (groupId);
 create index IX_83E16F2F on SocialActivityAchievement (groupId, firstInGroup);
 create index IX_8F6408F0 on SocialActivityAchievement (groupId, name);
 create index IX_C8FD892B on SocialActivityAchievement (groupId, userId);

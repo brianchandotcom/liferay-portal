@@ -40,7 +40,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 			}
 		%>
 
-			<aui:option label='<%= "social.counter." + activityCounterName %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
+			<aui:option label='<%= "user.statistics." + activityCounterName %>' selected="<%= activityCounterName.equals(displayActivityCounterName) %>" value="<%= activityCounterName %>" />
 
 		<%
 		}

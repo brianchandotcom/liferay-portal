@@ -91,7 +91,7 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 	%>
 
 		<div class="social-counter-<%= activityCounter.getName() %>">
-			<span class="statistics-label"><liferay-ui:message key='<%= "social.counter." + activityCounter.getName() %>' />:</span> <%= activityCounter.getCurrentValue() %>
+			<span class="statistics-label"><liferay-ui:message key='<%= "user.statistics." + activityCounter.getName() %>' />:</span> <%= activityCounter.getCurrentValue() %>
 
 			<c:if test="<%= showTotals %>">
 				<span>(<liferay-ui:message key="total" />: <%= activityCounter.getTotalValue() %>)</span>

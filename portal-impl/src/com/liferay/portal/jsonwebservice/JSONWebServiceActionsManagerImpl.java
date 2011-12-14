@@ -184,7 +184,7 @@ public class JSONWebServiceActionsManagerImpl
 		for (MethodParameter methodParameter : methodParameters) {
 			String methodParameterName = methodParameter.getName();
 
-			methodParameterName = CamelCaseUtil.fixCamelCase(
+			methodParameterName = CamelCaseUtil.normalizeCamelCase(
 				methodParameterName);
 
 			for (String parameterName : parameterNames) {

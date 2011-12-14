@@ -45,13 +45,25 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 		Metadata metadata = super.extractMetadata(extension, mimeType, file);
 
+		InputStream inputStream = null;
+
 		try {
-			InputStream inputStream = new FileInputStream(file);
+			inputStream = new FileInputStream(file);
 
 			return extractMetadata(inputStream, metadata);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
+		}
+		finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				}
+				catch (IOException ioe) {
+					throw new SystemException(ioe);
+				}
+			}
 		}
 	}
 

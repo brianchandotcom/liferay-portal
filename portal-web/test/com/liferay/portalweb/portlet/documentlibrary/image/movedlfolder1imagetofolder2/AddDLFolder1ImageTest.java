@@ -83,7 +83,7 @@ public class AddDLFolder1ImageTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
 					break;
 				}
 			}
@@ -93,11 +93,11 @@ public class AddDLFolder1ImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Image"),
+		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
-			RuntimeVariables.replace("Image"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(

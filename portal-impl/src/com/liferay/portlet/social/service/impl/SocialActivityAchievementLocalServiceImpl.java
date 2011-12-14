@@ -21,6 +21,8 @@ import com.liferay.portlet.social.model.SocialAchievement;
 import com.liferay.portlet.social.model.SocialActivityAchievement;
 import com.liferay.portlet.social.service.base.SocialActivityAchievementLocalServiceBaseImpl;
 
+import java.util.List;
+
 /**
  * @author Zsolt Berentey
  * @author Brian Wing Shun Chan
@@ -65,6 +67,66 @@ public class SocialActivityAchievementLocalServiceImpl
 
 		socialActivityCounterLocalService.incrementUserAchievementCounter(
 			userId, groupId);
+	}
+
+	public SocialActivityAchievement fetchUserAchievement(
+			long userId, long groupId, String name)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.fetchByG_U_N(
+			groupId, userId, name);
+	}
+
+	public List<SocialActivityAchievement> getGroupAchievements(long groupId)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.findByGroupId(groupId);
+	}
+
+	public int getGroupAchievementsCount(long groupId)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.countByGroupId(groupId);
+	}
+
+	public List<SocialActivityAchievement> getGroupAchievements(
+			long groupId, String name)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.findByG_N(groupId, name);
+	}
+
+	public int getGroupAchievementsCount(long groupId, String name)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.countByG_N(groupId, name);
+	}
+
+	public List<SocialActivityAchievement> getGroupFirstAchievements(
+			long groupId)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.findByG_F(groupId, true);
+	}
+
+	public int getGroupFirstAchievementsCount(long groupId)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.countByG_F(groupId, true);
+	}
+
+	public int getUserAchievementCount(long userId, long groupId, String name)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.countByG_U_N(
+			groupId, userId, name);
+	}
+
+	public List<SocialActivityAchievement> getUserAchievements(
+			long userId, long groupId, String name)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.findByG_U(groupId, userId);
 	}
 
 }

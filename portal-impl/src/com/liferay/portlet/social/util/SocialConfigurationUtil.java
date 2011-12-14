@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.util;
 
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,10 +45,24 @@ import java.util.Set;
 public class SocialConfigurationUtil {
 
 	public static List<String> getActivityCounterNames() {
-		return getActivityCounterNames(SocialActivityCounterConstants.TYPE_ALL);
+		return getActivityCounterNames(
+			SocialActivityCounterConstants.TYPE_ALL, false);
+	}
+
+	public static List<String> getActivityCounterNames(
+		boolean transientCounter) {
+
+		return getActivityCounterNames(
+			SocialActivityCounterConstants.TYPE_ALL, transientCounter);
 	}
 
 	public static List<String> getActivityCounterNames(int ownerType) {
+		return getActivityCounterNames(ownerType, false);
+	}
+
+	public static List<String> getActivityCounterNames(
+		int ownerType, boolean transientCounter) {
+
 		List<String> activityCounterNames = new UniqueList<String>();
 
 		for (Map<Integer, SocialActivityDefinition> activityDefinitions :
@@ -61,10 +74,12 @@ public class SocialConfigurationUtil {
 				for (SocialActivityCounterDefinition activityCounterDefinition :
 						activityDefinition.getActivityCounterDefinitions()) {
 
-					if ((ownerType ==
+					if ((activityCounterDefinition.isTransient() ==
+							transientCounter) &&
+						((ownerType ==
 							SocialActivityCounterConstants.TYPE_ALL) ||
-						(ownerType ==
-							activityCounterDefinition.getOwnerType())) {
+						 (ownerType ==
+							activityCounterDefinition.getOwnerType()))) {
 
 						activityCounterNames.add(
 							activityCounterDefinition.getName());
@@ -183,6 +198,8 @@ public class SocialConfigurationUtil {
 			_readAchievementProperty(achievement, propertyElement);
 		}
 
+		achievement.initialize(activityDefinition);
+
 		List<SocialAchievement> achievements =
 			activityDefinition.getAchievements();
 
@@ -200,7 +217,7 @@ public class SocialConfigurationUtil {
 		String value = GetterUtil.getString(
 			propertyElement.elementText("value"));
 
-		BeanPropertiesUtil.setProperty(achievement, name, value);
+		achievement.setProperty(name, value);
 	}
 
 	private static void _readActivity(

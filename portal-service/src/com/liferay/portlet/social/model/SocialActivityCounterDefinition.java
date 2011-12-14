@@ -41,6 +41,8 @@ public class SocialActivityCounterDefinition implements Serializable {
 		activityCounterDefinition.setLimitValue(_limitValue);
 		activityCounterDefinition.setName(_name);
 		activityCounterDefinition.setOwnerType(_ownerType);
+		activityCounterDefinition.setPeriodLength(_periodLength);
+		activityCounterDefinition.setTransient(_transient);
 
 		return activityCounterDefinition;
 	}
@@ -60,7 +62,11 @@ public class SocialActivityCounterDefinition implements Serializable {
 				_limitValue, activityCounterDefinition._limitValue) &&
 			Validator.equals(_name, activityCounterDefinition._name) &&
 			Validator.equals(
-				_ownerType, activityCounterDefinition._ownerType)) {
+				_ownerType, activityCounterDefinition._ownerType) &&
+			Validator.equals(
+				_periodLength, activityCounterDefinition._periodLength) &&
+			Validator.equals(
+				_transient, activityCounterDefinition._transient)) {
 
 			return true;
 		}
@@ -93,12 +99,20 @@ public class SocialActivityCounterDefinition implements Serializable {
 		return _ownerType;
 	}
 
+	public int getPeriodLength() {
+		return _periodLength;
+	}
+
 	public boolean isEnabled() {
 		return _enabled;
 	}
 
 	public boolean isLimitEnabled() {
 		return _limitEnabled;
+	}
+
+	public boolean isTransient() {
+		return _transient;
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -141,6 +155,14 @@ public class SocialActivityCounterDefinition implements Serializable {
 		_ownerType = ownerType;
 	}
 
+	public void setPeriodLength(int periodLength) {
+		_periodLength = periodLength;
+	}
+
+	public void setTransient(boolean transientCounter) {
+		_transient = transientCounter;
+	}
+
 	public void setOwnerType(String ownerType) {
 		if (ownerType.equalsIgnoreCase("actor")) {
 			setOwnerType(SocialActivityCounterConstants.TYPE_ACTOR);
@@ -154,11 +176,14 @@ public class SocialActivityCounterDefinition implements Serializable {
 	}
 
 	private boolean _enabled = true;
-	private int _increment;
+	private int _increment = 1;
 	private boolean _limitEnabled = true;
 	private int _limitPeriod = LIMIT_PERIOD_DAY;
 	private int _limitValue;
 	private String _name;
 	private int _ownerType;
+	private int _periodLength =
+		SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM;
+	private boolean _transient;
 
 }

@@ -194,6 +194,7 @@ public class AddRecordTest extends BaseTestCase {
 				"//div[@class='aui-fieldset-content ']/div[10]/span/span/label"));
 		selenium.type("//div[@class='aui-fieldset-content ']/div[10]/span/span/span/textarea",
 			RuntimeVariables.replace("Text\nBox"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

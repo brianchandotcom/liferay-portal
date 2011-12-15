@@ -95,7 +95,13 @@ public Map<String, PortletURL> getAddArticleURLs(LiferayPortletRequest liferayPo
 
 	Map<String, PortletURL> addArticleURLs = new TreeMap<String, PortletURL>();
 
-	List<JournalStructure> structures = JournalStructureServiceUtil.getStructures(themeDisplay.getScopeGroupId());
+	List<JournalStructure> structures = new ArrayList();
+
+	structures.addAll(JournalStructureServiceUtil.getStructures(themeDisplay.getScopeGroupId()));
+
+	if (themeDisplay.getCompanyGroupId() != themeDisplay.getScopeGroupId()) {
+		structures.addAll(JournalStructureServiceUtil.getStructures(themeDisplay.getCompanyGroupId()));
+	}
 
 	PortletURL addArticleURL = getAddArticleURL(liferayPortletRequest, liferayPortletResponse, null);
 

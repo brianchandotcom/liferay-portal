@@ -22,6 +22,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/sites_admin/view");
 
 pageContext.setAttribute("portletURL", portletURL);
+
+Group group = themeDisplay.getScopeGroup();
 %>
 
 <liferay-ui:success key="membership_request_sent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
@@ -73,7 +75,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		long groupId = pkParser.getLong("groupId");
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
 		<liferay-ui:message arguments="<%= group.getDescriptiveName() %>" key="site-x-does-not-have-any-private-pages" />
@@ -86,7 +88,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		long groupId = GetterUtil.getLong(rge.getMessage());
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
 		<c:choose>
@@ -111,7 +113,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	}
 
 	headerNames.add("active");
-	headerNames.add("pending-requests");
+
+	if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+		headerNames.add("pending-requests");
+	}
+
 	headerNames.add("tags");
 
 	headerNames.add(StringPool.BLANK);
@@ -121,7 +127,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	List resultRows = searchContainer.getResultRows();
 
 	for (int i = 0; i < results.size(); i++) {
-		Group group = (Group)results.get(i);
+		group = (Group)results.get(i);
 
 		group = group.toEscapedModel();
 
@@ -287,13 +293,15 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Restricted number of petitions
 
-		if ((group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) && permissionChecker.isGroupAdmin(group.getGroupId())) {
-			int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
+		if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+			if ((group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) {
+				int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
 
-			row.addText(String.valueOf(pendingRequests));
-		}
-		else {
-			row.addText(StringPool.BLANK);
+				row.addText(String.valueOf(pendingRequests));
+			}
+			else {
+				row.addText(StringPool.BLANK);
+			}
 		}
 	%>
 

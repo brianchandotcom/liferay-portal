@@ -457,6 +457,12 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>showRequiredLabel</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

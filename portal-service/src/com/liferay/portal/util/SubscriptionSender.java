@@ -526,6 +526,19 @@ public class SubscriptionSender implements Serializable {
 				content, "[$PORTLET_NAME$]", portletName);
 		}
 
+		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+		content = StringUtil.replace(
+			content,
+			new String[] {
+				"href=\"/",
+				"src=\"/"
+			},
+			new String[] {
+				"href=\"" + getPortalURL(company) + "/",
+				"src=\"" + getPortalURL(company) + "/"
+			});
+
 		return content;
 	}
 

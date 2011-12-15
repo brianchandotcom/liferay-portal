@@ -685,7 +685,9 @@ AUI().add(
                             requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
                         }
 
-						Liferay.fire(
+                        instance._listView.set('direction', 'left');
+
+                        Liferay.fire(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams

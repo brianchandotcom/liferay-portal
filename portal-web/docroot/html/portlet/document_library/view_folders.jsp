@@ -310,7 +310,7 @@ if (folder != null) {
 								<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-l" />
 							</a>
 
-							<a class="browse-folder" data-folder-id="<%= String.valueOf(parentFolderId) %>" href="<%= viewURL.toString() %>">
+							<a class="browse-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" href="<%= viewURL.toString() %>">
 								<liferay-ui:icon src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' />
 
 								<%= LanguageUtil.get(pageContext, "up") %>

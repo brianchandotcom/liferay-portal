@@ -50,7 +50,7 @@ if ((article != null) && article.isDraft()) {
 					},
 				</c:if>
 
-				<c:if test="<%= Validator.isNotNull(structureId) %>">
+				<c:if test="<%= (article != null) && Validator.isNotNull(structureId) %>">
 					{
 						icon: 'arrowreturnthick-1-b',
 						id: '<portlet:namespace />downloadArticleContentButton',

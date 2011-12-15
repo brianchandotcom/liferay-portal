@@ -42,7 +42,7 @@ while (itr.hasNext()) {
 	}
 }
 
-List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, definitionNameComparator);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

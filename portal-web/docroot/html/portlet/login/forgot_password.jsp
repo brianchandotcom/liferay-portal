@@ -75,7 +75,9 @@ if (reminderAttempts == null) {
 
 				<aui:input name="step" type="hidden" value="1" />
 
-				<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>" />
+				<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>">
+					<aui:validator name="required" />
+				</aui:input>
 
 				<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD %>">
 					<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="captchaURL">

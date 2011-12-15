@@ -27,7 +27,9 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 %>
 
-<aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
+<c:if test="<%= !user.isDefaultUser() %>">
+	<aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
+</c:if>
 
 <liferay-ui:icon-menu align="left" cssClass="actions-button aui-helper-hidden" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
@@ -97,28 +99,30 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 </span>
 
 <span class="manage-button">
-	<liferay-ui:icon-menu align="left" direction="down" icon="" message="manage" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= !user.isDefaultUser() %>">
+		<liferay-ui:icon-menu align="left" direction="down" icon="" message="manage" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
-		<%
-		String taglibUrl = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
-		%>
+			<%
+			String taglibUrl = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
+			%>
 
-		<liferay-ui:icon
-			image="copy"
-			message="document-types"
-			url="<%= taglibUrl %>"
-		/>
+			<liferay-ui:icon
+				image="copy"
+				message="document-types"
+				url="<%= taglibUrl %>"
+			/>
 
-		<%
-		taglibUrl = "javascript:" + renderResponse.getNamespace() + "openDDMStructureView()";
-		%>
+			<%
+			taglibUrl = "javascript:" + renderResponse.getNamespace() + "openDDMStructureView()";
+			%>
 
-		<liferay-ui:icon
-			image="copy"
-			message="metadata-sets"
-			url="<%= taglibUrl %>"
-		/>
-	</liferay-ui:icon-menu>
+			<liferay-ui:icon
+				image="copy"
+				message="metadata-sets"
+				url="<%= taglibUrl %>"
+			/>
+		</liferay-ui:icon-menu>
+	</c:if>
 </span>
 
 <aui:script>

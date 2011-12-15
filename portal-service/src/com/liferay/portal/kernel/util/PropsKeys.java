@@ -863,6 +863,8 @@ public interface PropsKeys {
 
 	public static final String JDBC_DEFAULT_DRIVER_CLASS_NAME = "jdbc.default.driverClassName";
 
+	public static final String JDBC_DEFAULT_JNDI_NAME = "jdbc.default.jndi.name";
+	
 	public static final String JDBC_DEFAULT_LIFERAY_POOL_PROVIDER = "jdbc.default.liferay.pool.provider";
 
 	public static final String JDBC_DEFAULT_PASSWORD = "jdbc.default.password";

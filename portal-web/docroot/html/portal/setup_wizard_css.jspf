@@ -120,6 +120,18 @@ body {
 	margin-bottom: 1em;
 }
 
+.database-values {
+	border: 1px solid #CCC;
+	margin-left: 0;
+	padding: 1em;
+}
+
+.database-values dt {
+	font-weight: bold;
+	float: left;
+	margin-right: 1em;
+}
+
 .lfr-inline-code {
 	background: #FF9;
 	color: #555;

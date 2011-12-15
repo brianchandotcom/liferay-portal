@@ -48,7 +48,7 @@
 				<c:when test="<%= !propertiesFileUpdated && !SetupWizardUtil.isSetupFinished(request) %>">
 
 					<%
-					boolean defaultDatabase = ParamUtil.getBoolean(request,"defaultDatabase", PropsValues.JDBC_DEFAULT_URL.contains("hsqldb"));
+					boolean defaultDatabase = SetupWizardUtil.isDefaultDatabase(request);
 					%>
 
 					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" onSubmit="event.preventDefault();" name="fm">
@@ -92,23 +92,55 @@
 						<aui:fieldset column="<%= true %>" cssClass="aui-w100" label="database">
 							<aui:input name="defaultDatabase" type="hidden" value="<%= defaultDatabase %>" />
 
-							<div class='<%= defaultDatabase ? StringPool.BLANK : "aui-helper-hidden" %>' id="defaultDatabaseOptions">
-								<p>
-									<strong><liferay-ui:message key="default-database" /> (<liferay-ui:message key="database.hypersonic" />)</strong>
-								</p>
+							<div id="defaultDatabaseOptions">
+								<c:choose>
+									<c:when test="<%= defaultDatabase %>">
+										<p>
+											<strong><liferay-ui:message key="default-database" /> (<liferay-ui:message key="database.hypersonic" />)</strong>
+										</p>
 
-								<liferay-ui:message key="this-database-is-useful-for-development-and-demo'ing-purposes" />
+										<liferay-ui:message key="this-database-is-useful-for-development-and-demo'ing-purposes" />
+									</c:when>
+									<c:otherwise>
+										<p>
+											<strong><liferay-ui:message key="configured-database" /></strong>
+										</p>
+
+										<dl class="database-values">
+											<c:choose>
+												<c:when test="<%= Validator.isNotNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
+													<dt><liferay-ui:message key="jdbc-default-jndi-name" /></dt>
+
+													<dd><%= PropsValues.JDBC_DEFAULT_JNDI_NAME %></dd>
+												</c:when>
+												<c:otherwise>
+														<dt><liferay-ui:message key="jdbc-url" /></dt>
+														<dd><%= PropsValues.JDBC_DEFAULT_URL %></dd>
+
+														<dt><liferay-ui:message key="jdbc-driver-class-name" /></dt>
+														<dd><%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %></dd>
+
+														<dt><liferay-ui:message key="user-name" /></dt>
+														<dd><%= PropsValues.JDBC_DEFAULT_USERNAME %></dd>
+
+														<dt><liferay-ui:message key="password" /></dt>
+														<dd>*****</dd>
+												</c:otherwise>
+											</c:choose>
+										</dl>
+									</c:otherwise>
+								</c:choose>
 
 								<a href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>" id="customDatabaseOptionsLink">
 									(<liferay-ui:message key="change" />)
 								</a>
 							</div>
 
-							<div class="<%= defaultDatabase ? "aui-helper-hidden" : StringPool.BLANK %>" id="customDatabaseOptions">
+							<div class="aui-helper-hidden" id="customDatabaseOptions">
 								<div class="connection-messages" id="connectionMessages"></div>
 
 								<a class="database-options" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
-									&laquo; <liferay-ui:message key="use-default-database" />
+									&laquo; <liferay-ui:message key='<%= defaultDatabase ? "use-default-database" : "use-configured-database" %>' />
 								</a>
 
 								<aui:select cssClass="database-type" name="databaseType">
@@ -201,8 +233,6 @@
 							jdbcDefaultURL.val(databaseURL);
 							jdbcDefaultDriverClassName.val(driverClassName);
 						}
-
-						onChangeDatabaseSelector();
 
 						databaseSelector.on('change', onChangeDatabaseSelector);
 

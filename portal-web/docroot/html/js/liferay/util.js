@@ -1593,16 +1593,18 @@
 							showBox.show();
 						}
 
-						var selector = null;
+                        if (Lang.isValue(hideBoxIds)) {
+                            var selector;
 
-						if (hideBoxIds.join) {
-							selector = '#' + hideBoxIds.join(',#');
-						}
-						else {
-							selector = '#' + hideBoxIds;
-						}
+                            if (Lang.isArray(hideBoxIds)) {
+                                selector = '#' + hideBoxIds.join(',#');
+                            }
+                            else {
+                                selector = '#' + hideBoxIds;
+                            }
 
-						A.all(selector).hide();
+                            A.all(selector).hide();
+                        }
 					}
 				);
 			}

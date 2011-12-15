@@ -186,6 +186,7 @@ selectURL.setParameter("groupId", String.valueOf(stagingGroupId));
 selectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
 selectURL.setParameter("schedule", String.valueOf(schedule));
+selectURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 
 request.setAttribute("edit_pages.jsp-groupId", new Long(stagingGroupId));
 request.setAttribute("edit_pages.jsp-selPlid", new Long(selPlid));

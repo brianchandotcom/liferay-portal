@@ -101,7 +101,7 @@ public class PortletContextListener
 		HotDeployUtil.fireDeployEvent(
 			new HotDeployEvent(_servletContext, _portletClassLoader));
 
-		if (ServerDetector.isGlassfish()) {
+		if (ServerDetector.isGlassfish() || ServerDetector.isJOnAS()) {
 			return;
 		}
 
@@ -124,30 +124,39 @@ public class PortletContextListener
 		Context context = new InitialContext();
 
 		try {
-			context.lookup(_JNDI_JDBC);
-		}
-		catch (NamingException ne) {
-			context.createSubcontext(_JNDI_JDBC);
-		}
-
-		try {
-			context.lookup(_JNDI_JDBC_LIFERAY_POOL);
-		}
-		catch (NamingException ne) {
 			try {
-				Class<?> clazz = dataSource.getClass();
-
-				Method method = clazz.getMethod("getTargetDataSource");
-
-				dataSource = (DataSource)method.invoke(dataSource);
+				context.lookup(_JNDI_JDBC);
 			}
-			catch (NoSuchMethodException nsme) {
+			catch (NamingException ne) {
+				context.createSubcontext(_JNDI_JDBC);
 			}
 
-			context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
+			try {
+				context.lookup(_JNDI_JDBC_LIFERAY_POOL);
+			}
+			catch (NamingException ne) {
+				try {
+					Class<?> clazz = dataSource.getClass();
+
+					Method method = clazz.getMethod("getTargetDataSource");
+
+					dataSource = (DataSource)method.invoke(dataSource);
+				}
+				catch (NoSuchMethodException nsme) {
+				}
+
+				context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
+			}
+
+			_bindLiferayPool = true;
 		}
-
-		_bindLiferayPool = true;
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to dynamically bind the Liferay data source: "
+						+ e.getMessage());
+			}
+		}
 	}
 
 	private static final String _JNDI_JDBC = "java_liferay:jdbc";

@@ -114,7 +114,7 @@ public Map<String, PortletURL> getAddArticleURLs(LiferayPortletRequest liferayPo
 			String structureName = structure.getName(themeDisplay.getLocale());
 
 			if (structure.getGroupId() == themeDisplay.getCompanyGroupId()) {
-				structureName += " (" + themeDisplay.translate("global") + ")";
+				structureName += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";
 			}
 
 			addArticleURLs.put(JournalArticle.class.getName() + _CLASSNAME_SEPARATOR + HtmlUtil.escape(structureName), addArticleURL);

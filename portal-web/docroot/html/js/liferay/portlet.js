@@ -482,12 +482,19 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
-					Util.portletTitleEdit(
-						{
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							obj: portlet,
-							plid: themeDisplay.getPlid(),
-							portletId: portletId
+					var handle = portlet.on(
+						['focus', 'mousemove'],
+						function(event) {
+							Util.portletTitleEdit(
+								{
+									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+									obj: portlet,
+									plid: themeDisplay.getPlid(),
+									portletId: portletId
+								}
+							);
+
+							handle.detach();
 						}
 					);
 				}

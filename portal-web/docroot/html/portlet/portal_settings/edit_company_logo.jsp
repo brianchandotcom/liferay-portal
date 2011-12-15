@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
 <%
-	Company curCompany = CompanyServiceUtil.getCompanyById(company.getCompanyId());
+Company curCompany = CompanyServiceUtil.getCompanyById(company.getCompanyId());
 %>
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 

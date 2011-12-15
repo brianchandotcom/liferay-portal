@@ -16,13 +16,16 @@
 
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
+<%
+Company curCompany = CompanyServiceUtil.getCompanyById(company.getCompanyId());
+%>
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "request_processed") %>'>
 		<aui:script>
 			window.close();
-			opener.<portlet:namespace />changeLogo('<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>');
+			opener.<portlet:namespace />changeLogo('<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + curCompany.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(curCompany.getLogoId()) %>');
 		</aui:script>
 	</c:when>
 	<c:otherwise>

@@ -43,20 +43,8 @@ body {
 	visibility: hidden;
 }
 
-#banner .company-title {
-	float: left;
-	width: 50%;
-}
-
-#banner .site-title {
-	clip: rect(auto auto auto auto);
-	float: right;
-	font-size: 1.8em;
-	margin: 0.5em 0;
-	position: relative;
-	text-align: right;
-	text-shadow: 1px 1px #FFF;
-	width: 50%;
+#banner .site-name {
+	background-image: url(<%= themeDisplay.getPathThemeImages() %>/common/configuration.png);
 }
 
 #footer {

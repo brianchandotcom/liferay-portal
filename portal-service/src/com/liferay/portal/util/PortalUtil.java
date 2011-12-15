@@ -239,17 +239,18 @@ public class PortalUtil {
 		return getPortal().getBasicAuthUserId(request, companyId);
 	}
 
-	public static String getCanonicalAlternateURL(
-			HttpServletRequest request, String url, Locale locale)
+	public static String getAlternateURL(
+			HttpServletRequest request, String canonicalURL, Locale locale)
 		throws PortalException, SystemException{
 
-		return getPortal().getCanonicalAlternateURL(request, url, locale);
+		return getPortal().getAlternateURL(request, canonicalURL, locale);
 	}
 
-	public static String getCanonicalURL(HttpServletRequest request)
+	public static String getCanonicalURL(
+			String completeURL, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException{
 
-		return getPortal().getCanonicalURL(request);
+		return getPortal().getCanonicalURL(completeURL, themeDisplay);
 	}
 
 	/**

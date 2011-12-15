@@ -863,10 +863,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				},
 				icon: 'edit',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>'
-			}
-		);
-
-		fileEntryToolbarChildren.push(
+			},
 			{
 
 				<portlet:renderURL var="moveURL">
@@ -908,10 +905,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					},
 					icon: 'undo',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout") %>'
-				}
-			);
-
-			fileEntryToolbarChildren.push(
+				},
 				{
 
 					handler: function(event) {

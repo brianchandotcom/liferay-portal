@@ -185,10 +185,7 @@ String[][] categorySections = {mainSections};
 		layoutSetToolbarChildren.push(
 			{
 				type: 'ToolbarSpacer'
-			}
-		);
-
-		layoutSetToolbarChildren.push(
+			},
 			{
 				handler: function(event) {
 					if (!exportPopup) {
@@ -233,10 +230,7 @@ String[][] categorySections = {mainSections};
 				},
 				icon: 'export',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>'
-			}
-		);
-
-		layoutSetToolbarChildren.push(
+			},
 			{
 				handler: function(event) {
 					if (!importPopup) {

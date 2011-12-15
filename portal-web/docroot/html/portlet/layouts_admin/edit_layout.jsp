@@ -266,10 +266,7 @@ String[][] categorySections = {mainSections};
 								layoutToolbarChildren.push(
 									{
 										type: 'ToolbarSpacer'
-									}
-								);
-
-								layoutToolbarChildren.push(
+									},
 									{
 										handler: function(event) {
 											if (!exportPopup) {

@@ -24,17 +24,17 @@
 
 <div id="wrapper">
 	<header id="banner" role="banner">
-		<hgroup id="heading">
-			<h1 class="company-title">
+		<div id="heading">
+			<h1 class="site-title">
 				<span class="logo" title="<liferay-ui:message key="welcome-to-liferay" />">
-					<liferay-ui:message key="welcome-to-liferay" />
+					<img alt="<%= HtmlUtil.escape(layout.getGroup().getDescriptiveName()) %>" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
+				</span>
+
+				<span class="site-name" title="<liferay-ui:message key="basic-configuration" />">
+					<liferay-ui:message key="basic-configuration" />
 				</span>
 			</h1>
-
-			<h2 class="site-title">
-				<span><liferay-ui:message key="basic-configuration" /></span>
-			</h2>
-		</hgroup>
+		</div>
 	</header>
 
 	<div id="content">

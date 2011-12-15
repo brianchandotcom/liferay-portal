@@ -25,7 +25,7 @@ ${theme.include(body_top_include)}
 		<div id="heading">
 			<h1 class="site-title">
 				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language key="go-to" /> ${site_name}">
-					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}">
+					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
 				</a>
 
 				<#if show_site_name>

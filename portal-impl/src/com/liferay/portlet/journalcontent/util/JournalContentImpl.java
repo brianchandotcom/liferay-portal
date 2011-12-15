@@ -218,7 +218,7 @@ public class JournalContentImpl implements JournalContent {
 
 		return getDisplay(
 			groupId, articleId, 0, templateId, viewMode, languageId,
-			themeDisplay, 1, null);
+			themeDisplay, 1, xmlRequest);
 	}
 
 	public JournalArticleDisplay getDisplay(

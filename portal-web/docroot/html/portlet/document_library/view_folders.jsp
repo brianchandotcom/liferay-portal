@@ -72,7 +72,7 @@ if ((folderId != rootFolderId) || !showRootFolder) {
 
 request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 
-List<Folder> ancestorFolders = new ArrayList();
+List<Folder> ancestorFolders = new ArrayList<Folder>();
 
 if (folder != null) {
 	ancestorFolders = folder.getAncestors();

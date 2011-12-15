@@ -333,7 +333,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 						currentGroupTemplateActions = ResourceActionsUtil.getActions(permissions);
 					}
 					catch (NoSuchResourceException nsre) {
-						currentGroupTemplateActions = new ArrayList();
+						currentGroupTemplateActions = new ArrayList<String>();
 					}
 
 					try {
@@ -344,7 +344,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 						currentCompanyActions = ResourceActionsUtil.getActions(permissions);
 					}
 					catch (NoSuchResourceException nsre) {
-						currentCompanyActions = new ArrayList();
+						currentCompanyActions = new ArrayList<String>();
 					}
 				}
 

@@ -73,7 +73,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFol
 						</c:otherwise>
 					</c:choose>
 				},
-				src: 3
+				src: Liferay.DL_SEARCH
 			}
 		);
 
@@ -96,7 +96,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFol
 							'<portlet:namespace />searchType': <%= String.valueOf(DLSearchConstants.MULTIPLE) %>
 
 						},
-						src: 3
+						src: Liferay.DL_SEARCH
 					}
 				);
 			<%

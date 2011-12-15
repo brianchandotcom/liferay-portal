@@ -214,6 +214,7 @@ if (folder != null) {
 			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			entryStart: <%= entryStart %>,
 			folderEnd: <%= folderEnd %>,
+			folderId: <%= folderId %>,
 			folderRowsPerPage: <%= folderRowsPerPage %>,
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			folderStart: <%= folderStart %>,

@@ -70,6 +70,8 @@ AUI().add(
 
 		var STR_FOLDER_END = 'folderEnd';
 
+		var STR_FOLDER_ID = 'folderId';
+
 		var STR_FOLDER_START = 'folderStart';
 
 		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
@@ -426,17 +428,27 @@ AUI().add(
 
 						var initialState = History.get();
 
-						var config = instance._config;
-
 						if (AObject.isEmpty(initialState)) {
-							initialState[instance.ns(STR_ENTRY_END)] = config[STR_ENTRY_END];
-							initialState[instance.ns(STR_ENTRY_START)] = config[STR_ENTRY_START];
-							initialState[instance.ns(STR_FOLDER_END)] = config[STR_FOLDER_END];
-							initialState[instance.ns(STR_FOLDER_START)] = config[STR_FOLDER_START];
-							initialState[instance.ns(VIEW_ENTRIES_PAGE)] = true;
+							initialState = instance._getDefaultParams();
 						}
 
 						return initialState;
+					},
+
+					_getDefaultParams: function() {
+						var instance = this;
+
+						var params = {};
+
+						var config = instance._config;
+
+						params[instance.ns(STR_ENTRY_END)] = config[STR_ENTRY_END];
+						params[instance.ns(STR_ENTRY_START)] = config[STR_ENTRY_START];
+						params[instance.ns(STR_FOLDER_END)] = config[STR_FOLDER_END];
+						params[instance.ns(STR_FOLDER_START)] = config[STR_FOLDER_START];
+						params[instance.ns(STR_FOLDER_ID)] = config[STR_FOLDER_ID];
+
+						return params;
 					},
 
 					_getDisplayStyle: function(style) {
@@ -830,7 +842,7 @@ AUI().add(
 
 						var startEndParams = instance._getResultsStartEnd(instance._entryPaginator);
 
-						var requestParams = instance._lastDataRequest || {};
+						var requestParams = instance._lastDataRequest || instance._getDefaultParams();
 
 						var customParams = {};
 

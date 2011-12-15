@@ -117,11 +117,11 @@
 				}
 				%>
 
-				<aui:input label="<%= loginLabel %>" name="login" type="text" value="<%= login %>">
+				<aui:input label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
 					<aui:validator name="required" />
 				</aui:input>
 
-				<aui:input name="password" type="password" value="<%= password %>">
+				<aui:input name="password" showRequiredLabel="<%= false %>" type="password" value="<%= password %>">
 					<aui:validator name="required" />
 				</aui:input>
 

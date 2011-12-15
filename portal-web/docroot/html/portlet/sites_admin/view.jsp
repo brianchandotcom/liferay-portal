@@ -22,6 +22,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/sites_admin/view");
 
 pageContext.setAttribute("portletURL", portletURL);
+
+Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <liferay-ui:success key="membership_request_sent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
@@ -111,7 +113,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	}
 
 	headerNames.add("active");
-	headerNames.add("pending-requests");
+
+	if (permissionChecker.isGroupAdmin(scopeGroup.getGroupId())) {
+		headerNames.add("pending-requests");
+	}
+
 	headerNames.add("tags");
 
 	headerNames.add(StringPool.BLANK);
@@ -287,13 +293,15 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Restricted number of petitions
 
-		if ((group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) && permissionChecker.isGroupAdmin(group.getGroupId())) {
-			int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
+		if (permissionChecker.isGroupAdmin(scopeGroup.getGroupId())) {
+			if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
+				int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
 
-			row.addText(String.valueOf(pendingRequests));
-		}
-		else {
-			row.addText(StringPool.BLANK);
+				row.addText(String.valueOf(pendingRequests));
+			}
+			else {
+				row.addText(StringPool.BLANK);
+			}
 		}
 	%>
 

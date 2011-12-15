@@ -124,21 +124,21 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 		sb.append("<li><span>");
 
 		if (categoryId == category.getCategoryId()) {
-			sb.append("<strong>");
-			sb.append(title);
-			sb.append("</strong>");
+			portletURL.setParameter("categoryId", "");
+
+			sb.append("<a class=\"tag-selected\" href=\"");
 		}
 		else {
 			portletURL.setParameter("resetCur", Boolean.TRUE.toString());
 			portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 
 			sb.append("<a href=\"");
-			sb.append(portletURL.toString());
-			sb.append("\">");
-			sb.append(title);
-			sb.append("</a>");
 		}
 
+		sb.append(portletURL.toString());
+		sb.append("\"><strong>");
+		sb.append(title);
+		sb.append("</strong></a>");
 		sb.append("</span>");
 
 		if (!categoriesChildren.isEmpty()) {

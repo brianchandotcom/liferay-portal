@@ -138,7 +138,7 @@ public class BaseLDAPToPortalConverter implements LDAPToPortalConverter {
 		Contact contact = new ContactImpl();
 
 		Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
-			Calendar.JANUARY, 1, 1970);
+			1970, Calendar.JANUARY, 1);
 
 		contact.setBirthday(birthdayCalendar.getTime());
 

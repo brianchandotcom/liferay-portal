@@ -665,7 +665,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteCategories',
-		function(cmd) {
+		function() {
 			var deleteCategories = true;
 
 			var deleteCategoryIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
@@ -677,7 +677,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 			if (deleteCategories) {
 				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
 					document.<portlet:namespace />fm.method = "post";
-					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
+					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 					document.<portlet:namespace />fm.<portlet:namespace />deleteCategoryIds.value = deleteCategoryIds;
 					submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_category" /></portlet:actionURL>");
 				}

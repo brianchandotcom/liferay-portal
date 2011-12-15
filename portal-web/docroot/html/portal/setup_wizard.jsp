@@ -114,26 +114,28 @@
 													<dd><%= PropsValues.JDBC_DEFAULT_JNDI_NAME %></dd>
 												</c:when>
 												<c:otherwise>
-														<dt><liferay-ui:message key="jdbc-url" /></dt>
-														<dd><%= PropsValues.JDBC_DEFAULT_URL %></dd>
-
-														<dt><liferay-ui:message key="jdbc-driver-class-name" /></dt>
-														<dd><%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %></dd>
-
-														<dt><liferay-ui:message key="user-name" /></dt>
-														<dd><%= PropsValues.JDBC_DEFAULT_USERNAME %></dd>
-
-														<dt><liferay-ui:message key="password" /></dt>
-														<dd>*****</dd>
+													<dt><liferay-ui:message key="jdbc-url" /></dt>
+													<dd><%= PropsValues.JDBC_DEFAULT_URL %></dd>
+	
+													<dt><liferay-ui:message key="jdbc-driver-class-name" /></dt>
+													<dd><%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %></dd>
+	
+													<dt><liferay-ui:message key="user-name" /></dt>
+													<dd><%= PropsValues.JDBC_DEFAULT_USERNAME %></dd>
+	
+													<dt><liferay-ui:message key="password" /></dt>
+													<dd>**********</dd>
 												</c:otherwise>
 											</c:choose>
 										</dl>
 									</c:otherwise>
 								</c:choose>
 
-								<a href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>" id="customDatabaseOptionsLink">
-									(<liferay-ui:message key="change" />)
-								</a>
+								<c:if test="<%= Validator.isNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
+									<a href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>" id="customDatabaseOptionsLink">
+										(<liferay-ui:message key="change" />)
+									</a>
+								</c:if>
 							</div>
 
 							<div class="aui-helper-hidden" id="customDatabaseOptions">

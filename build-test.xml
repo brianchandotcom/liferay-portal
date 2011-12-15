@@ -2104,6 +2104,8 @@ browser.launcher.url=
 
 index.on.startup=true
 
+setup.wizard.enabled=false
+
 mail.session.jndi.name=
 
 axis.servlet.hosts.allowed=

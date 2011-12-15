@@ -21,4 +21,10 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %>
+page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil" %>
+
+<%
+OrderByComparator definitionNameComparator =
+	WorkflowComparatorFactoryUtil.getDefinitionNameComparator(true);
+%>

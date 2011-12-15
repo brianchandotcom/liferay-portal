@@ -82,7 +82,7 @@ portletURL.setParameter("callback", callback);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, assetEntryId);
 
-			if (assetEntry == null) {
+			if ((assetEntry == null) || !assetEntry.isVisible()) {
 				continue;
 			}
 
@@ -90,7 +90,7 @@ portletURL.setParameter("callback", callback);
 
 			String rowHREF = null;
 
-			if ((assetEntry.getEntryId() != refererAssetEntryId) && assetEntry.isVisible()) {
+			if (assetEntry.getEntryId() != refererAssetEntryId) {
 				StringBundler sb = new StringBundler(9);
 
 				sb.append("javascript:Liferay.Util.getOpener().");

@@ -28,29 +28,30 @@
 <%-- Available Translations --%>
 
 <%
-if (layout.isPublicLayout() && !themeDisplay.isSignedIn()) {
-	String canonicalURL = PortalUtil.getCanonicalURL(request);	
-	%>
+if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
+	String completeURL = PortalUtil.getCurrentCompleteURL(request);
+	
+	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay);
+%>
 	
 	<link href="<%= canonicalURL %>" rel="canonical" />
 	
 	<%
-	boolean canonicalAlternate = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("canonical-alternate"), false);
-	
-	if (canonicalAlternate) {
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-	
-		if ((availableLocales.length > 1) && layout.isPublicLayout()) {
-			Locale defaultLocale = LocaleUtil.getDefault();
-	
-			if (locale.equals(defaultLocale)) {
+	Locale defaultLocale = LocaleUtil.getDefault();
+
+	if (locale.equals(defaultLocale)) {
+		boolean showAlternateLinks = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("show-alternate-links"), true);
+
+		if (showAlternateLinks) {
+			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+			if (availableLocales.length > 1) {
 				for (Locale curLocale : availableLocales) {
 					if (!curLocale.equals(defaultLocale)) {
-						String canonicalAlternateURL = PortalUtil.getAlternateURL(request, canonicalURL, curLocale);
 	%>
-	
-						<link href="<%= canonicalAlternateURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
-	
+
+						<link href="<%= PortalUtil.getAlternateURL(request, canonicalURL, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
+
 	<%
 					}
 				}

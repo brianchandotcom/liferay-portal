@@ -73,10 +73,10 @@ if (selLayout != null) {
 <aui:fieldset>
 
 	<%
-	boolean canonicalAlternate = GetterUtil.getBoolean(layoutTypeSettings.getProperty("canonical-alternate"), false);
+	boolean showAlternateLinks = GetterUtil.getBoolean(layoutTypeSettings.getProperty("show-alternate-links"), true);
 	%>
 
-	<h3><liferay-ui:message key="canonical-and-alternate-links" /></h3>
+	<h3><liferay-ui:message key="alternate-links" /></h3>
 
-	<aui:input helpMessage="canonical-and-alternate-links-help" label="use-canonical-alternate" name="TypeSettingsProperties--canonical-alternate--" type="checkbox" value="<%= canonicalAlternate %>" />
+	<aui:input helpMessage="alternate-links-help" label="show-alternate-links" name="TypeSettingsProperties--show-alternate-links--" type="checkbox" value="<%= showAlternateLinks %>" />
 </aui:fieldset>

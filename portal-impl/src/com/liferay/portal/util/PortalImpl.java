@@ -820,60 +820,53 @@ public class PortalImpl implements Portal {
 
 		return actualURL;
 	}
-	
-	public String getAlternateURL(
-		HttpServletRequest request, String url, Locale locale)
-	throws PortalException, SystemException {
 
-		String i18nPath = generateI18NPath(locale);
-	
+	public String getAlternateURL(
+			HttpServletRequest request, String canonicalURL, Locale locale)
+		throws PortalException, SystemException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	
-		//FIXME
-		String virtualHost = themeDisplay.getLayout().getLayoutSet().getVirtualHostname();
-	
-		int posVirtualHost = -1;
-		
-		if (Validator.isNotNull(virtualHost)) {
-			posVirtualHost = url.indexOf(virtualHost);
-		}
-		
-		if(posVirtualHost == -1){
-			//FIXME
-			virtualHost = getCompany(request).getVirtualHostname();
-			
-			if (Validator.isNotNull(virtualHost)) {
-				posVirtualHost = url.indexOf(virtualHost);
-			}
-			
-		}
-	
-		if (posVirtualHost != -1) {
-			String pattern = virtualHost + "(:\\d{1,5})?";
-			String parts[] = url.split(pattern, 2);
-	
-			if (parts[1].length() > 0) {
-				StringBuffer sb = new StringBuffer(url);
-				
-				int posPage = url.indexOf(parts[1], parts[0].length());
-				
-				sb.insert(posPage, i18nPath);
-				
-				url = sb.toString();
-			
-			}
-			else{
-				url = url.concat(i18nPath);
-			}
+
+		LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+		String virtualHost = null;
+
+		if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
+			virtualHost = layoutSet.getVirtualHostname();
 		}
 		else {
-			url = url.replaceFirst(
+			Company company = themeDisplay.getCompany();
+
+			virtualHost = company.getVirtualHostname();
+		}
+	
+		String i18nPath = generateI18NPath(locale);
+
+		if (Validator.isNull(virtualHost)) {
+			return canonicalURL.replaceFirst(
 				_PUBLIC_GROUP_SERVLET_MAPPING, 
 				i18nPath.concat(_PUBLIC_GROUP_SERVLET_MAPPING));
 		}
-	
-		return url;
+		
+		// www.liferay.com:8080/page --> www.liferay.com:8080/es/page
+
+		String pattern = virtualHost.concat("(:\\d{1,5})?");
+
+		String parts[] = canonicalURL.split(pattern, 2);
+
+		if (parts.length > 0 && Validator.isNotNull(parts[1])) {
+			StringBuffer sb = new StringBuffer(canonicalURL);
+			
+			int posPage = canonicalURL.indexOf(parts[1], parts[0].length());
+			
+			sb.insert(posPage, i18nPath);
+			
+			return sb.toString();
+		}
+		else {
+			return canonicalURL.concat(i18nPath);
+		}
 	}
 
 	public Set<String> getAuthTokenIgnoreActions() {
@@ -1020,154 +1013,43 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
-	public String getCanonicalURL(HttpServletRequest request)
+	public String getCanonicalURL(String completeURL, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		String completeURL = getCurrentCompleteURL(request);
+		completeURL = removeRedirectParameter(completeURL);
 
-		Set<String> parameters =
-			HttpUtil.getParameterMap(
-				HttpUtil.getQueryString(completeURL)).keySet();
+		String parametersURL = StringPool.BLANK;
 
-		for (String parameter : parameters) {
-			if (parameter.matches("redirect$") || 
-				parameter.matches("_.*_redirect$")) {
-				
-				completeURL = HttpUtil.removeParameter(completeURL, parameter);
-			}
+		int pos = completeURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+
+		if (pos == -1) {
+			pos = completeURL.indexOf(StringPool.QUESTION);
 		}
 
-		String groupPagePart = StringPool.BLANK;
-		String parametersPart = StringPool.BLANK;
+		String groupFriendlyURL = completeURL;
+		
+		if (pos != -1) {
+			groupFriendlyURL = completeURL.substring(0, pos);
 
-		int posParameters = completeURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
-
-		if (posParameters == -1) {
-			posParameters = completeURL.indexOf(StringPool.QUESTION);
+			parametersURL = completeURL.substring(pos);
 		}
-
-		if (posParameters != -1) {
-			groupPagePart = completeURL.substring(0, posParameters);
-			parametersPart = completeURL.substring(posParameters);
-		}
-		else{
-			groupPagePart = completeURL;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
-		String layoutFriendlyUrl = layout.getFriendlyURL();
-
-		String groupPart = groupPagePart;
-		String pagePart = StringPool.BLANK;
-
-		if (groupPagePart.contains(layoutFriendlyUrl)) {
-			int posLayout = groupPagePart.indexOf(layoutFriendlyUrl);
-
-			groupPart = groupPagePart.substring(0, posLayout);
-			pagePart = groupPagePart.substring(posLayout);
-
-			if (layout.isFirstParent() && parametersPart.length() == 0) {
-				pagePart = StringPool.BLANK;
-			}
+		String layoutFriendlyURL = StringPool.BLANK;
+		
+		if (groupFriendlyURL.contains(layout.getFriendlyURL()) && (
+			!layout.isFirstParent() || Validator.isNotNull(parametersURL))) {
+		
+			layoutFriendlyURL = layout.getFriendlyURL();
 		}
+		
+		Group group = layout.getGroup();
 
-		String groupFriendlyUrl = layout.getGroup().getFriendlyURL();
+		groupFriendlyURL = getGroupFriendlyURL(
+			group, layout.isPrivateLayout(), themeDisplay, true);
 
-		String virtualHost = layout.getLayoutSet().getVirtualHostname();
-
-		if (groupPart.contains(groupFriendlyUrl)) {
-			if(Validator.isNotNull(virtualHost)) {
-				
-				StringBundler groupPartVirtualHost =
-					new StringBundler();
-				
-				groupPartVirtualHost.append(HttpUtil.getProtocol(request));
-				groupPartVirtualHost.append(Http.PROTOCOL_DELIMITER);
-				groupPartVirtualHost.append(virtualHost);
-				
-				int serverPort = themeDisplay.getServerPort();
-				
-				if ((serverPort != Http.HTTP_PORT) &&
-					(serverPort != Http.HTTPS_PORT)) {
-					
-					groupPartVirtualHost.append(CharPool.COLON);
-					groupPartVirtualHost.append(request.getServerPort());
-					
-				}
-				
-				groupPart = groupPartVirtualHost.toString();
-			}
-			else {
-				Company company = getCompany(request);
-				
-				String companyVirtualHost = company.getVirtualHostname();
-				
-				if(Validator.isNotNull(companyVirtualHost)) {
-					if (!groupPart.contains(companyVirtualHost)) {
-						StringBundler groupPartCompanyVirtualHost =
-							new StringBundler();
-						
-						groupPartCompanyVirtualHost.append(HttpUtil.getProtocol(
-							request));
-						groupPartCompanyVirtualHost.append(
-							Http.PROTOCOL_DELIMITER);
-						groupPartCompanyVirtualHost.append(virtualHost);
-						
-						int serverPort = themeDisplay.getServerPort();
-						
-						if ((serverPort != Http.HTTP_PORT) &&
-							(serverPort != Http.HTTPS_PORT)) {
-							
-							groupPartCompanyVirtualHost.append(CharPool.COLON);
-							groupPartCompanyVirtualHost.append(
-								request.getServerPort());
-							
-						}
-						
-						groupPartCompanyVirtualHost.append(
-							_PUBLIC_GROUP_SERVLET_MAPPING);
-						groupPartCompanyVirtualHost.append(groupFriendlyUrl);
-						
-						groupPart = groupPartCompanyVirtualHost.toString();
-					} 
-					else {
-						Group defaultGroup = GroupLocalServiceUtil.getGroup(
-							themeDisplay.getCompanyId(),
-							PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
-
-						if (layout.getGroupId() == defaultGroup.getGroupId()) {
-							
-							int posServletMapping = groupPart.indexOf(
-								_PUBLIC_GROUP_SERVLET_MAPPING);
-							
-							if (posServletMapping > 0) {
-								groupPart = groupPart.substring(
-									0, posServletMapping);
-							}
-						}
-					}
-				}
-				
-			}
-		}
-
-		String i18nPath = generateI18NPath(request.getLocale());
-
-		int posLang = groupPart.indexOf(i18nPath);
-
-		if (posLang > 0) {
-			StringBuffer sb = new StringBuffer(groupPart);
-			
-			sb.delete(posLang, posLang+i18nPath.length());
-			
-			groupPart = sb.toString();
-		}
-
-		return groupPart.concat(pagePart).concat(parametersPart);
+		return groupFriendlyURL.concat(layoutFriendlyURL).concat(parametersURL);
 	}
 
 	/**
@@ -1920,12 +1802,21 @@ public class PortalImpl implements Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
+		return getGroupFriendlyURL(
+			group, privateLayoutSet, themeDisplay, false);
+	}
+
+	protected String getGroupFriendlyURL(
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			boolean canonicalURL)
+		throws PortalException, SystemException {
+
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), privateLayoutSet);
 
 		String portalURL = StringPool.BLANK;
 
-		if (!themeDisplay.getServerName().equals(_LOCALHOST)) {
+		if (canonicalURL || !themeDisplay.getServerName().equals(_LOCALHOST)) {
 			String virtualHostname = layoutSet.getVirtualHostname();
 
 			if (Validator.isNull(virtualHostname) &&
@@ -1950,7 +1841,8 @@ public class PortalImpl implements Portal {
 			}
 
 			if (Validator.isNotNull(virtualHostname) &&
-				!virtualHostname.equalsIgnoreCase(_LOCALHOST)) {
+				(canonicalURL ||
+					!virtualHostname.equalsIgnoreCase(_LOCALHOST))) {
 
 				virtualHostname = getPortalURL(
 					virtualHostname, themeDisplay.getServerPort(),
@@ -1959,14 +1851,14 @@ public class PortalImpl implements Portal {
 				String portalDomain = HttpUtil.getDomain(
 					themeDisplay.getPortalURL());
 
-				if (virtualHostname.contains(portalDomain)) {
+				if (canonicalURL || virtualHostname.contains(portalDomain)) {
 					String path = StringPool.BLANK;
 
 					if (themeDisplay.isWidget()) {
 						path = PropsValues.WIDGET_SERVLET_MAPPING;
 					}
 
-					if (themeDisplay.isI18n()) {
+					if (themeDisplay.isI18n() && !canonicalURL) {
 						path = themeDisplay.getI18nPath();
 					}
 
@@ -1978,7 +1870,7 @@ public class PortalImpl implements Portal {
 
 				LayoutSet curLayoutSet = curLayout.getLayoutSet();
 
-				if ((layoutSet.getLayoutSetId() !=
+				if (canonicalURL || (layoutSet.getLayoutSetId() !=
 						curLayoutSet.getLayoutSetId()) &&
 					(group.getClassPK() != themeDisplay.getUserId())) {
 
@@ -2022,7 +1914,7 @@ public class PortalImpl implements Portal {
 		sb.append(portalURL);
 		sb.append(_pathContext);
 
-		if (themeDisplay.isI18n()) {
+		if (themeDisplay.isI18n() && !canonicalURL) {
 			sb.append(themeDisplay.getI18nPath());
 		}
 
@@ -5803,6 +5695,21 @@ public class PortalImpl implements Portal {
 
 			portalPortEventListener.portalPortConfigured(portalPort);
 		}
+	}
+
+	protected String removeRedirectParameter(String url) {
+		String queryString = HttpUtil.getQueryString(url);
+
+		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+			queryString);
+
+		for (String parameter : parameterMap.keySet()) {
+			if (parameter.endsWith("redirect")) {
+				url = HttpUtil.removeParameter(url, parameter);
+			}
+		}
+
+		return url;
 	}
 
 	private long _getPlidFromPortletId(

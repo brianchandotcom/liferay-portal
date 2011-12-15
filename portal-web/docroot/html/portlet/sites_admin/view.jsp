@@ -23,7 +23,7 @@ portletURL.setParameter("struts_action", "/sites_admin/view");
 
 pageContext.setAttribute("portletURL", portletURL);
 
-Group group = themeDisplay.getScopeGroup();
+Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <liferay-ui:success key="membership_request_sent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
@@ -75,7 +75,7 @@ Group group = themeDisplay.getScopeGroup();
 
 		long groupId = pkParser.getLong("groupId");
 
-		group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
 		<liferay-ui:message arguments="<%= group.getDescriptiveName() %>" key="site-x-does-not-have-any-private-pages" />
@@ -88,7 +88,7 @@ Group group = themeDisplay.getScopeGroup();
 
 		long groupId = GetterUtil.getLong(rge.getMessage());
 
-		group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
 		<c:choose>
@@ -114,7 +114,7 @@ Group group = themeDisplay.getScopeGroup();
 
 	headerNames.add("active");
 
-	if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+	if (permissionChecker.isGroupAdmin(scopeGroup.getGroupId())) {
 		headerNames.add("pending-requests");
 	}
 
@@ -127,7 +127,7 @@ Group group = themeDisplay.getScopeGroup();
 	List resultRows = searchContainer.getResultRows();
 
 	for (int i = 0; i < results.size(); i++) {
-		group = (Group)results.get(i);
+		Group group = (Group)results.get(i);
 
 		group = group.toEscapedModel();
 
@@ -293,8 +293,8 @@ Group group = themeDisplay.getScopeGroup();
 
 		// Restricted number of petitions
 
-		if (permissionChecker.isGroupAdmin(group.getGroupId())) {
-			if ((group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) {
+		if (permissionChecker.isGroupAdmin(scopeGroup.getGroupId())) {
+			if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 				int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
 
 				row.addText(String.valueOf(pendingRequests));

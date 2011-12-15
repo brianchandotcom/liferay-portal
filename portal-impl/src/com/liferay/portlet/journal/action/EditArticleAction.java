@@ -691,8 +691,20 @@ public class EditArticleAction extends PortletAction {
 
 			// Merge current content with new content
 
-			JournalArticle curArticle = JournalArticleServiceUtil.getArticle(
-				groupId, articleId, version);
+			JournalArticle curArticle = null;
+
+			try {
+				curArticle = JournalArticleServiceUtil.getArticle(
+					groupId, articleId, version);
+			}
+			catch (NoSuchArticleException e) {
+				// If the article really doesn't exist, getLatestArticle will
+				// throw an exception, otherwise just the version is wrong
+				JournalArticleServiceUtil.getLatestArticle(
+					groupId, articleId, WorkflowConstants.STATUS_ANY);
+
+				throw new ArticleVersionException();
+			}
 
 			if (Validator.isNull(structureId)) {
 				if (!curArticle.isTemplateDriven()) {

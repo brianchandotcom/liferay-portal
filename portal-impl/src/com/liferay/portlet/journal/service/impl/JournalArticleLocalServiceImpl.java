@@ -1996,7 +1996,11 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(oldArticle.getSmallImageId());
 		}
 		else {
+			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+
 			article = oldArticle;
+
+			article.setVersion(newVersion);
 		}
 
 		Locale locale = LocaleUtil.getDefault();
@@ -2177,7 +2181,11 @@ public class JournalArticleLocalServiceImpl
 			article.setStatusDate(new Date());
 		}
 		else {
+			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+
 			article = oldArticle;
+
+			article.setVersion(newVersion);
 		}
 
 		Map<Locale, String> titleMap = article.getTitleMap();

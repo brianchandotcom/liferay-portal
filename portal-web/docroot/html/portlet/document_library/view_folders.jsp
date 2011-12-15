@@ -145,7 +145,7 @@ if (folder != null) {
 
 							<c:if test="<%= (foldersCount > 0) %>">
 								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
-									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="" />
+									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 								</a>
 							</c:if>
 
@@ -276,7 +276,7 @@ if (folder != null) {
 
 									<c:if test="<%= mountFoldersCount > 0 %>">
 										<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
-											<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" />
+											<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 										</a>
 									</c:if>
 
@@ -307,11 +307,11 @@ if (folder != null) {
 
 						<li class="folder">
 							<a class="expand-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
-								<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-l" />
+								<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-l" message="collapse" />
 							</a>
 
-							<a class="browse-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" href="<%= viewURL.toString() %>">
-								<liferay-ui:icon src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' />
+							<a class="browse-folder" data-folder-id="<%= String.valueOf(parentFolderId) %>" href="<%= viewURL.toString() %>">
+								<liferay-ui:icon src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' message="up" />
 
 								<%= LanguageUtil.get(pageContext, "up") %>
 							</a>
@@ -342,7 +342,7 @@ if (folder != null) {
 
 								<c:if test="<%= foldersCount > 0 %>">
 									<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
-										<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" />
+										<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 									</a>
 								</c:if>
 

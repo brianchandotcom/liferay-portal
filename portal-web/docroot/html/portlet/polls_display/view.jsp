@@ -58,7 +58,7 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 			<liferay-ui:error exception="<%= DuplicateVoteException.class %>" message="you-may-only-vote-once" />
 			<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
 
-			<%= StringUtil.replace(HtmlUtil.escape(question.getDescription(locale)), StringPool.NEW_LINE, "<br />") %>
+			<%= StringUtil.replace(question.getDescription(locale), StringPool.NEW_LINE, "<br />") %>
 
 			<c:choose>
 				<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">

@@ -118,7 +118,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	<aui:script>
 	var opener = Liferay.Util.getOpener();
 
-	if (opener) {
+	if (opener.<portlet:namespace />saveLayoutset) {
 		Liferay.fire(
 			'closeWindow',
 			{

@@ -224,7 +224,7 @@ create table BlogsEntry (
 	trackbacks TEXT null,
 	smallImage BOOLEAN,
 	smallImageId LONG,
-	smallImageURL VARCHAR(75) null,
+	smallImageURL STRING null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

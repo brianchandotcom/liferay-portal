@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -82,7 +83,14 @@ public class ServiceContextFactory {
 
 			serviceContext.setPathMain(PortalUtil.getPathMain());
 
-			User user = PortalUtil.getUser(request);
+			User user = null;
+
+			try {
+				user = PortalUtil.getUser(request);
+			}
+			catch (NoSuchUserException nsue) {
+				// LPS-24160
+			}
 
 			if (user != null) {
 				serviceContext.setSignedIn(!user.isDefaultUser());

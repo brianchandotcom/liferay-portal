@@ -536,6 +536,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>showRequiredLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>suffix</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

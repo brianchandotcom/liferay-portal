@@ -128,7 +128,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				displayStyle="<%= socialBookmarksDisplayStyle %>"
 				target="_blank"
 				title="<%= assetEntry.getTitle(locale) %>"
-				url="<%= viewFullContentURL.toString() %>"
+				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay) %>"
 			/>
 		</c:if>
 
@@ -157,7 +157,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				displayStyle="<%= socialBookmarksDisplayStyle %>"
 				target="_blank"
 				title="<%= assetEntry.getTitle(locale) %>"
-				url="<%= viewFullContentURL.toString() %>"
+				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay) %>"
 			/>
 		</c:if>
 

@@ -235,8 +235,24 @@ public class LayoutExporter {
 			_log.debug("Export theme " + exportTheme);
 		}
 
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		long companyId = layoutSet.getCompanyId();
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+			serviceContext.setSignedIn(false);
+			serviceContext.setUserId(defaultUserId);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
 
 		serviceContext.setAttribute("exporting", Boolean.TRUE);
 
@@ -265,12 +281,6 @@ public class LayoutExporter {
 		}
 
 		LayoutCache layoutCache = new LayoutCache();
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
-
-		long companyId = layoutSet.getCompanyId();
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 

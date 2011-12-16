@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_1_0;
+package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
@@ -20,22 +20,12 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
 
 /**
- * @author Minhchau Dang
  * @author Brian Wing Shun Chan
  */
 public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("drop index IX_E0D90212 on BlogsEntry");
-			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
-			runSQL("drop index IX_B88E740E on BlogsEntry");
-			runSQL("alter table BlogsEntry drop column draft");
-		}
-		catch (Exception e) {
-		}
-
 		try {
 			runSQL("alter_column_type BlogsEntry smallImageURL STRING null");
 		}

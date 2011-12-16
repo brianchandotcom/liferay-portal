@@ -66,7 +66,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					displayStyle="<%= socialBookmarksDisplayStyle %>"
 					target="_blank"
 					title="<%= entry.getTitle() %>"
-					url="<%= bookmarkURL.toString() %>"
+					url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay) %>"
 				/>
 			</c:if>
 
@@ -255,7 +255,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							displayStyle="<%= socialBookmarksDisplayStyle %>"
 							target="_blank"
 							title="<%= entry.getTitle() %>"
-							url="<%= bookmarkURL.toString() %>"
+							url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay) %>"
 						/>
 					</c:if>
 

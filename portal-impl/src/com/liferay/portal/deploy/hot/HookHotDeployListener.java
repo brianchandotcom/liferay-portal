@@ -570,7 +570,16 @@ public class HookHotDeployListener
 				Properties portalProperties =
 					portalPropertiesConfiguration.getProperties();
 
-				if (portalProperties.size() > 0) {
+				if (!portalProperties.isEmpty()) {
+					Properties unfilteredPortalProperties =
+						(Properties)portalProperties.clone();
+
+					portalProperties.remove(
+						PropsKeys.RELEASE_INFO_BUILD_NUMBER);
+					portalProperties.remove(
+						PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER);
+					portalProperties.remove(PropsKeys.UPGRADE_PROCESSES);
+
 					_portalPropertiesMap.put(
 						servletContextName, portalProperties);
 
@@ -581,7 +590,7 @@ public class HookHotDeployListener
 
 					initPortalProperties(
 						servletContextName, portletClassLoader,
-						portalProperties);
+						portalProperties, unfilteredPortalProperties);
 					initAuthFailures(
 						servletContextName, portletClassLoader,
 						portalProperties);
@@ -685,7 +694,7 @@ public class HookHotDeployListener
 
 			getCustomJsps(servletContext, webDir, customJspDir, customJsps);
 
-			if (customJsps.size() > 0) {
+			if (!customJsps.isEmpty()) {
 				CustomJspBag customJspBag = new CustomJspBag(
 					customJspDir, customJspGlobal, customJsps);
 
@@ -1546,7 +1555,7 @@ public class HookHotDeployListener
 
 	protected void initPortalProperties(
 			String servletContextName, ClassLoader portletClassLoader,
-			Properties portalProperties)
+			Properties portalProperties, Properties unfilteredPortalProperties)
 		throws Exception {
 
 		PropsUtil.addProperties(portalProperties);
@@ -1776,11 +1785,14 @@ public class HookHotDeployListener
 			ScreenNameValidatorFactory.setInstance(screenNameValidator);
 		}
 
-		if (portalProperties.containsKey(PropsKeys.RELEASE_INFO_BUILD_NUMBER) ||
-			portalProperties.containsKey(PropsKeys.UPGRADE_PROCESSES)) {
+		if (unfilteredPortalProperties.containsKey(
+				PropsKeys.RELEASE_INFO_BUILD_NUMBER) ||
+			unfilteredPortalProperties.containsKey(
+				PropsKeys.UPGRADE_PROCESSES)) {
 
 			updateRelease(
-				servletContextName, portletClassLoader, portalProperties);
+				servletContextName, portletClassLoader,
+				unfilteredPortalProperties);
 		}
 	}
 
@@ -2088,11 +2100,12 @@ public class HookHotDeployListener
 
 	protected void updateRelease(
 			String servletContextName, ClassLoader portletClassLoader,
-			Properties portalProperties)
+			Properties unfilteredPortalProperties)
 		throws Exception {
 
 		int buildNumber = GetterUtil.getInteger(
-			portalProperties.getProperty(PropsKeys.RELEASE_INFO_BUILD_NUMBER));
+			unfilteredPortalProperties.getProperty(
+				PropsKeys.RELEASE_INFO_BUILD_NUMBER));
 
 		if (buildNumber <= 0) {
 			_log.error(
@@ -2110,7 +2123,7 @@ public class HookHotDeployListener
 		}
 		catch (PortalException pe) {
 			int previousBuildNumber = GetterUtil.getInteger(
-				portalProperties.getProperty(
+				unfilteredPortalProperties.getProperty(
 					PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER),
 				buildNumber);
 
@@ -2132,7 +2145,8 @@ public class HookHotDeployListener
 		}
 		else {
 			String[] upgradeProcessClassNames = StringUtil.split(
-				portalProperties.getProperty(PropsKeys.UPGRADE_PROCESSES));
+				unfilteredPortalProperties.getProperty(
+					PropsKeys.UPGRADE_PROCESSES));
 
 			UpgradeProcessUtil.upgradeProcess(
 				release.getBuildNumber(), upgradeProcessClassNames,

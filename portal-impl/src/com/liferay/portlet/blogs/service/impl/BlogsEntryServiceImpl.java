@@ -437,8 +437,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 					new String[] {
 						"href=\"" + themeDisplay.getURLPortal() + "/",
 						"src=\"" + themeDisplay.getURLPortal() + "/"
-					}
-				);
+					});
 			}
 
 			SyndEntry syndEntry = new SyndEntryImpl();

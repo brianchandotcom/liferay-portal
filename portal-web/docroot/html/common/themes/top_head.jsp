@@ -28,33 +28,43 @@
 <%-- Available Translations --%>
 
 <%
-boolean canonicalAlternate = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("canonical-alternate"), false);
+if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
+	String completeURL = PortalUtil.getCurrentCompleteURL(request);
 
-if (canonicalAlternate) {
-	Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-	if ((availableLocales.length > 1) && layout.isPublicLayout()) {
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String canonicalURL = PortalUtil.getCanonicalURL(request);
+	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay);
 %>
 
-		<link href="<%= canonicalURL %>" rel="canonical" />
+	<link href="<%= canonicalURL %>" rel="canonical" />
 
-<%
-		if (locale.equals(defaultLocale)) {
-			for (Locale curLocale : availableLocales) {
-				if (!curLocale.equals(defaultLocale)) {
-					String canonicalAlternateURL = PortalUtil.getCanonicalAlternateURL(request, canonicalURL, curLocale);
-%>
+	<%
+	Locale defaultLocale = LocaleUtil.getDefault();
+	%>
 
-					<link href="<%= canonicalAlternateURL %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" title="<%= layout.getHTMLTitle(curLocale) %>" />
+	<c:if test="<%= locale.equals(defaultLocale) %>">
 
-<%
+		<%
+		boolean showAlternateLinks = GetterUtil.getBoolean(layout.getTypeSettingsProperties().get("show-alternate-links"), true);
+
+		if (showAlternateLinks) {
+			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+			if (availableLocales.length > 1) {
+				for (Locale curLocale : availableLocales) {
+					if (!curLocale.equals(defaultLocale)) {
+		%>
+
+						<link href="<%= PortalUtil.getAlternateURL(request, canonicalURL, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
+
+		<%
+					}
 				}
 			}
 		}
-	}
+		%>
+
+	</c:if>
+
+<%
 }
 %>
 

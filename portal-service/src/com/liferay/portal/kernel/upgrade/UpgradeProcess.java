@@ -212,9 +212,7 @@ public abstract class UpgradeProcess {
 		}
 	}
 
-	public void upgrade(Class<?> upgradeProcessClass)
-		throws UpgradeException {
-
+	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {
 		UpgradeProcess upgradeProcess = null;
 
 		try {
@@ -227,9 +225,7 @@ public abstract class UpgradeProcess {
 		upgradeProcess.upgrade();
 	}
 
-	public void upgrade(UpgradeProcess upgradeProcess)
-		throws UpgradeException {
-
+	public void upgrade(UpgradeProcess upgradeProcess) throws UpgradeException {
 		upgradeProcess.upgrade();
 	}
 

@@ -48,7 +48,7 @@ if (structure != null) {
 	structureXSD = structure.getMergedXsd();
 }
 
-List<JournalTemplate> templates = new ArrayList();
+List<JournalTemplate> templates = new ArrayList<JournalTemplate>();
 
 if (structure != null) {
 	templates.addAll(JournalTemplateServiceUtil.getStructureTemplates(structureGroupId, structureId));

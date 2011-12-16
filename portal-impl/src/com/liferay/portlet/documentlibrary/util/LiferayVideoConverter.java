@@ -86,17 +86,14 @@ public class LiferayVideoConverter extends LiferayConverter {
 				_outputIContainer.close();
 			}
 		}
+
+		createMP4FastStart();
 	}
 
 	protected void createMP4FastStart() {
-		IContainerFormat iContainerFormat =
-			_outputIContainer.getContainerFormat();
-
-		String outputFormat = iContainerFormat.getOutputFormatShortName();
-
 		File videoFile = new File(_outputURL);
 
-		if (outputFormat.equals("mp4") && videoFile.exists()) {
+		if (_outputVideoFormat.equals("mp4") && videoFile.exists()) {
 			File tempFile = new File(_tempFileName);
 
 			try {
@@ -131,6 +128,11 @@ public class LiferayVideoConverter extends LiferayConverter {
 		if (inputStreamsCount < 0) {
 			throw new RuntimeException("Input URL does not have any streams");
 		}
+
+		IContainerFormat iContainerFormat =
+			_outputIContainer.getContainerFormat();
+
+		_outputVideoFormat = iContainerFormat.getOutputFormatShortName();
 
 		IAudioResampler[] iAudioResamplers =
 			new IAudioResampler[inputStreamsCount];
@@ -272,8 +274,6 @@ public class LiferayVideoConverter extends LiferayConverter {
 		cleanUp(inputIVideoPictures, outputIVideoPictures);
 		cleanUp(inputIStreamCoders, outputIStreamCoders);
 		cleanUp(inputIPacket, outputIPacket);
-
-		createMP4FastStart();
 	}
 
 	@Override
@@ -374,11 +374,6 @@ public class LiferayVideoConverter extends LiferayConverter {
 			ICodec.Type inputICodecType, String outputURL, int index)
 		throws Exception {
 
-		IContainerFormat iContainerFormat =
-			outputIContainer.getContainerFormat();
-
-		String outputFormat = iContainerFormat.getOutputFormatShortName();
-
 		IStream outputIStream = outputIContainer.addNewStream(index);
 
 		outputIStreams[index] = outputIStream;
@@ -395,7 +390,8 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		if (bitRate == 0) {
 			bitRate = GetterUtil.getInteger(
-				_videoBitRateMap.get(outputFormat), _VIDEO_BIT_RATE_DEFAULT);
+				_videoBitRateMap.get(_outputVideoFormat),
+				_VIDEO_BIT_RATE_DEFAULT);
 		}
 		else if (bitRate > _VIDEO_BIT_RATE_MAX) {
 			bitRate = _VIDEO_BIT_RATE_MAX;
@@ -410,7 +406,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		ICodec iCodec = ICodec.guessEncodingCodec(
 			null, null, outputURL, null, inputICodecType);
 
-		if (outputFormat.equals("mp4")) {
+		if (_outputVideoFormat.equals("mp4")) {
 			iCodec = ICodec.findEncodingCodec(ICodec.ID.CODEC_ID_H264);
 		}
 
@@ -430,8 +426,8 @@ public class LiferayVideoConverter extends LiferayConverter {
 					iRational.getDenominator());
 		}
 
-		if (_videoFrameRateMap.containsKey(outputFormat)) {
-			iRational = _videoFrameRateMap.get(outputFormat);
+		if (_videoFrameRateMap.containsKey(_outputVideoFormat)) {
+			iRational = _videoFrameRateMap.get(_outputVideoFormat);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -491,6 +487,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 	private String _inputURL;
 	private IContainer _outputIContainer;
 	private String _outputURL;
+	private String _outputVideoFormat;
 	private String[] _previewVideoContainers;
 	private String _tempFileName;
 	private Map<String, Integer> _videoBitRateMap;

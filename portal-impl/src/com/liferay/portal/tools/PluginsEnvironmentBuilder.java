@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
@@ -145,15 +146,25 @@ public class PluginsEnvironmentBuilder {
 		List<String> ignores = ListUtil.fromFile(
 			libDir.getCanonicalPath() + "/../.gitignore");
 
-		if (!libDirPath.contains("/ext/") && !ignores.contains("lib")) {
+		if (!libDirPath.contains("/ext/") && !ignores.contains("/lib")) {
 			File gitignoreFile = new File(
 				libDir.getCanonicalPath() + "/.gitignore");
 
 			System.out.println("Updating " + gitignoreFile);
 
-			_fileUtil.write(
-				gitignoreFile,
-				StringUtil.merge(jars.toArray(new String[jars.size()]), "\n"));
+			String[] gitIgnores = jars.toArray(new String[jars.size()]);
+
+			for (int i = 0; i < gitIgnores.length; i++) {
+				String gitIgnore = gitIgnores[i];
+
+				if (Validator.isNotNull(gitIgnore) &&
+					!gitIgnore.startsWith("/")) {
+
+					gitIgnores[i] = "/" + gitIgnore;
+				}
+			}
+
+			_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
 		}
 	}
 
@@ -355,24 +366,24 @@ public class PluginsEnvironmentBuilder {
 				List<String> gitIgnores = new ArrayList<String>();
 
 				if (sourceDirName.endsWith("ext-impl/src")) {
-					gitIgnores.add("classes");
-					gitIgnores.add("ext-impl.jar");
+					gitIgnores.add("/classes");
+					gitIgnores.add("/ext-impl.jar");
 				}
 				else if (sourceDirName.endsWith("ext-service/src")) {
-					gitIgnores.add("classes");
-					gitIgnores.add("ext-service.jar");
+					gitIgnores.add("/classes");
+					gitIgnores.add("/ext-service.jar");
 				}
 				else if (sourceDirName.endsWith("ext-util-bridges/src")) {
-					gitIgnores.add("classes");
-					gitIgnores.add("ext-util-bridges.jar");
+					gitIgnores.add("/classes");
+					gitIgnores.add("/ext-util-bridges.jar");
 				}
 				else if (sourceDirName.endsWith("ext-util-java/src")) {
-					gitIgnores.add("classes");
-					gitIgnores.add("ext-util-java.jar");
+					gitIgnores.add("/classes");
+					gitIgnores.add("/ext-util-java.jar");
 				}
 				else if (sourceDirName.endsWith("ext-util-taglib/src")) {
-					gitIgnores.add("classes");
-					gitIgnores.add("ext-util-taglib.jar");
+					gitIgnores.add("/classes");
+					gitIgnores.add("/ext-util-taglib.jar");
 				}
 				else {
 					continue;
@@ -394,7 +405,7 @@ public class PluginsEnvironmentBuilder {
 
 		if (_fileUtil.exists(projectDirName + "/test")) {
 			_fileUtil.write(
-				projectDirName + "/.gitignore", "test-classes\ntest-results");
+				projectDirName + "/.gitignore", "/test-classes\n/test-results");
 		}
 		else {
 			_fileUtil.delete(projectDirName + "/.gitignore");

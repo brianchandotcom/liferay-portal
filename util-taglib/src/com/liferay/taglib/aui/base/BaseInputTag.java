@@ -141,6 +141,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _prefix;
 	}
 
+	public boolean getShowRequiredLabel() {
+		return _showRequiredLabel;
+	}
+
 	public java.lang.String getSuffix() {
 		return _suffix;
 	}
@@ -323,6 +327,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("prefix", prefix);
 	}
 
+	public void setShowRequiredLabel(boolean showRequiredLabel) {
+		_showRequiredLabel = showRequiredLabel;
+
+		setScopedAttribute("showRequiredLabel", showRequiredLabel);
+	}
+
 	public void setSuffix(java.lang.String suffix) {
 		_suffix = suffix;
 
@@ -382,6 +392,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_onClick = null;
 		_placeholder = null;
 		_prefix = null;
+		_showRequiredLabel = true;
 		_suffix = null;
 		_title = null;
 		_type = null;
@@ -423,6 +434,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "onClick", _onClick);
 		setNamespacedAttribute(request, "placeholder", _placeholder);
 		setNamespacedAttribute(request, "prefix", _prefix);
+		setNamespacedAttribute(request, "showRequiredLabel", _showRequiredLabel);
 		setNamespacedAttribute(request, "suffix", _suffix);
 		setNamespacedAttribute(request, "title", _title);
 		setNamespacedAttribute(request, "type", _type);
@@ -462,6 +474,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _onClick = null;
 	private java.lang.String _placeholder = null;
 	private java.lang.String _prefix = null;
+	private boolean _showRequiredLabel = true;
 	private java.lang.String _suffix = null;
 	private java.lang.String _title = null;
 	private java.lang.String _type = null;

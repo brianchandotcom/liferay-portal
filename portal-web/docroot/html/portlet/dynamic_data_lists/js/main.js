@@ -22,7 +22,7 @@ AUI().add(
 		var STR_EMPTY = '';
 
 		var DLFileEntryCellEditor = A.Component.create(
-			{				
+			{
 				NAME: 'document-library-file-entry-cell-editor',
 
 				EXTENDS: A.BaseCellEditor,
@@ -32,9 +32,6 @@ AUI().add(
 
 					initializer: function() {
 						var instance = this;
-
-						instance.title = STR_EMPTY;
-						instance.url = STR_EMPTY;
 
 						window[Liferay.Util.getPortletNamespace('15') + 'selectDocumentLibrary'] = A.bind(instance._selectFileEntry, instance);
 					},
@@ -83,9 +80,9 @@ AUI().add(
 
 					_selectFileEntry: function(url, uuid, title, version) {
 						var instance = this
-						
-						instance.title = title;
-						instance.url = url;
+
+						instance.selectedTitle = title;
+						instance.selectedURL = url;
 
 						instance.set(
 							'value',
@@ -119,8 +116,8 @@ AUI().add(
 						var instance = this;
 
 						if (val) {
-							if (instance.title && instance.url) {
-								instance._syncFileLabel(instance.title, instance.url);
+							if (instance.selectedTitle && instance.selectedURL) {
+								instance._syncFileLabel(instance.selectedTitle, instance.selectedURL);
 							}
 							else {
 								SpreadSheet.Util.getFileEntry(val, function(fileEntry) {

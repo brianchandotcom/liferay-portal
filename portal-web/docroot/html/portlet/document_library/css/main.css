@@ -234,6 +234,7 @@
 				display: block;
 				height: 100px;
 				overflow: hidden;
+				word-wrap: break-word;
 			}
 
 			.document-action {
@@ -549,6 +550,14 @@
 		left: 0;
 		position: absolute;
 		right: 0;
+	}
+
+	.taglib-search-iterator {
+		table-layout: fixed;
+
+		.align-left {
+			word-wrap: break-word;
+		}
 	}
 
 	.taglib-webdav {

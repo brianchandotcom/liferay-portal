@@ -997,16 +997,7 @@ else {
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
-
-			<%
-			String modules = StringPool.BLANK;
-
-			if (showConfigurationIcon) {
-				modules += "aui-editable";
-			}
-			%>
-
-			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>' use="<%= modules %>">
+			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
 				Liferay.Portlet.onLoad(
 					{
 						canEditTitle: <%= showConfigurationIcon && portletDecorate %>,

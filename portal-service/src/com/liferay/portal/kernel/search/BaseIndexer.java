@@ -253,6 +253,10 @@ public abstract class BaseIndexer implements Indexer {
 		return _INDEXER_ENABLED;
 	}
 
+	public boolean isPermissionAware() {
+		return _PERMISSION_AWARE;
+	}
+
 	public boolean isStagingAware() {
 		return _stagingAware;
 	}
@@ -692,7 +696,8 @@ public abstract class BaseIndexer implements Indexer {
 
 				if ((indexer.isFilterSearch() && indexer.hasPermission(
 						permissionChecker, entryClassPK, ActionKeys.VIEW)) ||
-					!indexer.isFilterSearch()) {
+					!indexer.isFilterSearch() ||
+					!indexer.isPermissionAware()) {
 
 					docs.add(document);
 					scores.add(hits.score(i));
@@ -929,6 +934,8 @@ public abstract class BaseIndexer implements Indexer {
 	private static final boolean _FILTER_SEARCH = false;
 
 	private static final boolean _INDEXER_ENABLED = true;
+
+	private static final boolean _PERMISSION_AWARE = true;
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 

@@ -64,6 +64,8 @@ public interface Indexer {
 
 	public boolean isFilterSearch();
 
+	public boolean isPermissionAware();
+
 	public boolean isStagingAware();
 
 	public void postProcessContextQuery(

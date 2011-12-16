@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:script use="aui-datepicker,json,liferay-portlet-dynamic-data-mapping">
+<aui:script use="aui-datepicker,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping">
 	var FormBuilderTextField = A.FormBuilderTextField;
 	var FormBuilderTypes = A.FormBuilder.types;
 
@@ -143,9 +143,23 @@
 						model,
 						function(item, index, collection) {
 							var attributeName = item.attributeName;
+							var DLFileEntryCellEditor = Liferay.SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'];
 
 							if (attributeName === 'predefinedValue') {
-								item.editor = false;
+								item.editor = new DLFileEntryCellEditor();
+
+								item.formatter = function(obj) {
+									var data = obj.record.get('data');
+
+									var label = '';
+									var value = data.value;
+
+									if (value !== '') {
+										label = '(' + Liferay.Language.get('file') + ')';
+									}
+
+									return label;
+								};
 							}
 							else if (attributeName === 'type') {
 								item.formatter = instance._defaultFormatter;

@@ -8,10 +8,14 @@
 
 <#assign controlPanelPlid = layoutLocalService.getDefaultPlid(controlPanelGroup.getGroupId(), true)>
 
+<#if !(fields?? && fields.get(fieldName)??) && (fieldRawValue == "")>
+	<#assign fieldRawValue = predefinedValue>
+</#if>
+
 <#assign fileEntryTitle = "">
 <#assign fileEntryURL = "">
 
-<#if (fields??) && (fieldValue != "")>
+<#if (fieldRawValue != "")>
 	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
 
 	<#assign fileEntry = getFileEntry(fileJSONObject)>
@@ -73,15 +77,20 @@
 			var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
 
 			if (inputNode) {
-				inputNode.val(
-					A.JSON.stringify(
-						{
-							groupId: ${scopeGroupId?c},
-							uuid: uuid,
-							version: version
-						}
-					)
-				);
+				if (uuid) {
+					inputNode.val(
+						A.JSON.stringify(
+							{
+								groupId: ${scopeGroupId?c},
+								uuid: uuid,
+								version: version
+							}
+						)
+					);
+				}
+				else {
+					inputNode.val('');
+				}
 			}
 
 			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');

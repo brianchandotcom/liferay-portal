@@ -327,6 +327,10 @@
 			return portletId;
 		},
 
+		getPortletNamespace: function(portletId) {
+			return '_' + portletId + '_';
+		},
+
 		getTop: function() {
 			var topWindow = Util._topWindow;
 

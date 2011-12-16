@@ -187,7 +187,7 @@ if (folder != null) {
 
 		sb.setIndex(0);
 
-		sb.append("parent.");
+		sb.append("Liferay.Util.getOpener().");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectDocumentLibrary('");
 		sb.append(themeDisplay.getPathContext());

@@ -14,12 +14,6 @@
  */
 --%>
 
-<%
-Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
-%>
-
 <aui:script use="aui-io-request,io-upload-iframe,liferay-portlet-dynamic-data-lists,liferay-portlet-url">
 	var SpreadSheet = Liferay.SpreadSheet;
 
@@ -48,106 +42,6 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 	};
 
 	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<%= UnicodeLanguageUtil.get(pageContext, "please-fill-out-all-required-fields") %>';
-
-	var DLFileEntryCellEditor = A.Component.create(
-		{
-			NAME: 'document-library-file-entry-cell-editor',
-
-			EXTENDS: A.BaseCellEditor,
-
-			prototype: {
-				ELEMENT_TEMPLATE: '<input type="hidden" />',
-
-				initializer: function() {
-					var instance = this;
-
-					window['<%= PortalUtil.getPortletNamespace(PortletKeys.JOURNAL) %>selectDocumentLibrary'] = A.bind(instance._selectFileEntry, instance);
-				},
-
-				getElementsValue: function() {
-					var instance = this;
-
-					return instance.get('value');
-				},
-
-				_defInitToolbarFn: function() {
-					var instance = this;
-
-					DLFileEntryCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
-
-					instance.toolbar.add(
-						{
-							handler: A.bind(instance._handleChooseEvent, instance),
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "choose") %>'
-						},
-						1
-					);
-				},
-
-				_handleChooseEvent: function() {
-					var instance = this;
-
-					var portletURL = Liferay.PortletURL.createRenderURL();
-
-					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-					portletURL.setParameter('struts_action', '/journal/select_document_library');
-
-					portletURL.setPlid(<%= controlPanelPlid %>);
-
-					portletURL.setPortletId('<%= PortletKeys.JOURNAL %>');
-
-					portletURL.setWindowState('pop_up');
-
-					Liferay.Util.openWindow(
-						{
-							uri: portletURL.toString()
-						}
-					);
-				},
-
-				_selectFileEntry: function(url, uuid, version) {
-					var instance = this
-
-					instance.set(
-						'value',
-						A.JSON.stringify(
-							{
-								groupId: themeDisplay.getScopeGroupId(),
-								uuid: uuid,
-								version: version
-							}
-						)
-					);
-				},
-
-				_uiSetValue: function(val) {
-					var instance = this;
-
-					var contentBox = instance.get('contentBox');
-
-					var fileEntryLinkNode = contentBox.one('a') || A.Node.create('<a href="javascript:;"></a>');
-
-					if (val) {
-						SpreadSheet.Util.getFileEntry(
-							val,
-							function(fileEntry) {
-								var fileEntryURL = SpreadSheet.Util.getFileEntryURL(fileEntry);
-
-								fileEntryLinkNode.setContent(fileEntry.title).attr('href', fileEntryURL);
-							}
-						);
-					}
-					else {
-						fileEntryLinkNode.setContent(STR_EMPTY).attr('href', 'javascript:;');
-					}
-
-					contentBox.prepend(fileEntryLinkNode);
-
-					instance.elements.val(val);
-				}
-			}
-		}
-	);
 
 	var FileUploadCellEditor = A.Component.create(
 		{
@@ -412,6 +306,5 @@ long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.
 		}
 	);
 
-	SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
 	SpreadSheet.TYPE_EDITOR['ddm-fileupload'] = FileUploadCellEditor;
 </aui:script>

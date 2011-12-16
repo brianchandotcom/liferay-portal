@@ -1689,7 +1689,9 @@
 		<autopropagated-parameters>chooseCallback,ddmResource,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
+		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
 		<header-portlet-javascript>/html/portlet/dynamic_data_mapping/js/main.js</header-portlet-javascript>
+		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-dynamic-data-mapping</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>

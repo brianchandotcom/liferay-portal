@@ -21,6 +21,127 @@ AUI().add(
 
 		var STR_EMPTY = '';
 
+		var DLFileEntryCellEditor = A.Component.create(
+			{				
+				NAME: 'document-library-file-entry-cell-editor',
+
+				EXTENDS: A.BaseCellEditor,
+
+				prototype: {
+					ELEMENT_TEMPLATE: '<input type="hidden" />',
+
+					initializer: function() {
+						var instance = this;
+
+						instance.title = STR_EMPTY;
+						instance.url = STR_EMPTY;
+
+						window[Liferay.Util.getPortletNamespace('15') + 'selectDocumentLibrary'] = A.bind(instance._selectFileEntry, instance);
+					},
+
+					getElementsValue: function() {
+						var instance = this;
+
+						return instance.get('value');
+					},
+
+					_defInitToolbarFn: function() {
+						var instance = this;
+
+						DLFileEntryCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
+
+						instance.toolbar.add(
+							{
+								handler: A.bind(instance._handleChooseEvent, instance),
+								label: Liferay.Language.get('choose')
+							},
+							1
+						);
+					},
+
+					_handleChooseEvent: function() {
+						var instance = this;
+
+						var portletURL = Liferay.PortletURL.createRenderURL();
+
+						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+						portletURL.setParameter('struts_action', '/journal/select_document_library');
+
+						portletURL.setPlid(themeDisplay.getPlid());
+
+						portletURL.setPortletId('15');
+
+						portletURL.setWindowState('pop_up');
+
+						Liferay.Util.openWindow(
+							{
+								title: Liferay.Language.get('javax.portlet.title.20'),
+								uri: portletURL.toString()
+							}
+						);
+					},
+
+					_selectFileEntry: function(url, uuid, title, version) {
+						var instance = this
+						
+						instance.title = title;
+						instance.url = url;
+
+						instance.set(
+							'value',
+							A.JSON.stringify(
+								{
+									groupId: themeDisplay.getScopeGroupId(),
+									uuid: uuid,
+									version: version
+								}
+							)
+						);
+					},
+
+					_syncFileLabel: function(title, url) {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+						var linkNode = contentBox.one('a');
+
+						if (!linkNode) {
+							linkNode = A.Node.create('<a></a>');
+
+							contentBox.prepend(linkNode);
+						}
+
+						linkNode.setAttribute('href', url);
+						linkNode.setContent(title);
+					},
+
+					_uiSetValue: function(val) {
+						var instance = this;
+
+						if (val) {
+							if (instance.title && instance.url) {
+								instance._syncFileLabel(instance.title, instance.url);
+							}
+							else {
+								SpreadSheet.Util.getFileEntry(val, function(fileEntry) {
+									var url = SpreadSheet.Util.getFileEntryURL(fileEntry);
+
+									instance._syncFileLabel(fileEntry.title, url);
+								});
+							}
+
+							instance.elements.val(val);
+						}
+						else {
+							instance._syncFileLabel(STR_EMPTY, STR_EMPTY);
+
+							instance.elements.val(STR_EMPTY);
+						}
+					}
+				}
+			}
+		);
+
 		var SpreadSheet = A.Component.create(
 			{
 				ATTRS: {
@@ -522,10 +643,12 @@ AUI().add(
 			}
 		};
 
+		SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
+
 		Liferay.SpreadSheet = SpreadSheet;
 	},
 	'',
 	{
-		requires: ['aui-arraysort', 'aui-datatable', 'json']
+		requires: ['aui-arraysort', 'aui-datatable', 'json', 'liferay-portlet-url']
 	}
 );

@@ -483,7 +483,7 @@
 
 				if (canEditTitle) {
 					var handle = portlet.on(
-						['focus', 'mousemove'],
+						['focus', 'mousedown', 'mousemove'],
 						function(event) {
 							Util.portletTitleEdit(
 								{

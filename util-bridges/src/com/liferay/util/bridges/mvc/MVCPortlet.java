@@ -47,6 +47,7 @@ import javax.portlet.WindowState;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class MVCPortlet extends LiferayPortlet {
 
@@ -137,11 +138,15 @@ public class MVCPortlet extends LiferayPortlet {
 		include(viewJSP, renderRequest, renderResponse);
 	}
 
+	public String getTemplateToken() {
+		return _TEMPLATE_TOKEN;
+	}
+
 	@Override
 	public void init() throws PortletException {
 		super.init();
 
-		jspPath = getInitParameter("jsp-path");
+		jspPath = getInitParameter(getTemplateToken() + "-path");
 
 		if (Validator.isNull(jspPath)) {
 			jspPath = StringPool.SLASH;
@@ -152,24 +157,27 @@ public class MVCPortlet extends LiferayPortlet {
 				 jspPath.contains(StringPool.SPACE)) {
 
 			throw new PortletException(
-				"jsp-path " + jspPath + " has invalid characters");
+				getTemplateToken() + "-path " + jspPath +
+					" has invalid characters");
 		}
 		else if (!jspPath.startsWith(StringPool.SLASH) ||
 				 !jspPath.endsWith(StringPool.SLASH)) {
 
 			throw new PortletException(
-				"jsp-path " + jspPath + " must start and end with a /");
+				getTemplateToken() + "-path " + jspPath +
+					" must start and end with a /");
 		}
 
-		aboutJSP = getInitParameter("about-jsp");
-		configJSP = getInitParameter("config-jsp");
-		editJSP = getInitParameter("edit-jsp");
-		editDefaultsJSP = getInitParameter("edit-defaults-jsp");
-		editGuestJSP = getInitParameter("edit-guest-jsp");
-		helpJSP = getInitParameter("help-jsp");
-		previewJSP = getInitParameter("preview-jsp");
-		printJSP = getInitParameter("print-jsp");
-		viewJSP = getInitParameter("view-jsp");
+		aboutJSP = getInitParameter("about-" + getTemplateToken());
+		configJSP = getInitParameter("config-" + getTemplateToken());
+		editJSP = getInitParameter("edit-" + getTemplateToken());
+		editDefaultsJSP = getInitParameter(
+			"edit-defaults-" + getTemplateToken());
+		editGuestJSP = getInitParameter("edit-guest-" + getTemplateToken());
+		helpJSP = getInitParameter("help-" + getTemplateToken());
+		previewJSP = getInitParameter("preview-" + getTemplateToken());
+		printJSP = getInitParameter("print-" + getTemplateToken());
+		viewJSP = getInitParameter("view-" + getTemplateToken());
 
 		clearRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("clear-request-parameters"));
@@ -220,7 +228,8 @@ public class MVCPortlet extends LiferayPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		String jspPage = resourceRequest.getParameter("jspPage");
+		String jspPage = resourceRequest.getParameter(
+			getTemplateToken() + "Page");
 
 		if (jspPage != null) {
 			include(
@@ -287,7 +296,8 @@ public class MVCPortlet extends LiferayPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String jspPage = renderRequest.getParameter("jspPage");
+		String jspPage = renderRequest.getParameter(
+			getTemplateToken() + "Page");
 
 		if (jspPage != null) {
 			if (!isProcessRenderRequest(renderRequest)) {
@@ -372,6 +382,8 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
+
+	protected static String _TEMPLATE_TOKEN = "jsp";
 
 	protected ActionCommandCache _actionCommandCache;
 

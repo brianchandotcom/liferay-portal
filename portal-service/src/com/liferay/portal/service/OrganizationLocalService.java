@@ -485,9 +485,7 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 		java.util.List<com.liferay.portal.model.Organization> availableOrganizations);
 
 	/**
-	* Returns all the organizations associated with the user, optionally
-	* including the organizations associated with the user groups to which the
-	* user belongs.
+	* Returns all the organizations associated with the user.
 	*
 	* @param userId the primary key of the user
 	* @return the organizations associated with the user
@@ -501,9 +499,7 @@ public interface OrganizationLocalService extends PersistedModelLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the organizations associated with the user,
-	* optionally including the organizations associated with the user groups to
-	* which the user belongs.
+	* Returns a range of all the organizations associated with the user.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -

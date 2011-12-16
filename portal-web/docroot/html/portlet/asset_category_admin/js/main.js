@@ -2291,11 +2291,11 @@ AUI().add(
 							var categoryName = dragTreeNode.get(LABEL);
 
 							var dropAction = instance.dropAction;
-							
+
 							var dropNode = event.drop.get(NODE).get(PARENT_NODE);
 
 							if (dropAction !== 'append') {
-								dropNode = dropNode.get(PARENT_NODE).get(PARENT_NODE);
+								dropNode = dropNode.get('parentNode.parentNode');
 							}
 
 							var dropTreeNode = Widget.getByNode(dropNode);

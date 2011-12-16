@@ -77,11 +77,10 @@ if (layout != null) {
 %>
 
 <c:if test="<%= !themeDisplay.isStatePopUp() && !group.isControlPanel() && (layout != null) && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) || LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) || (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) %>">
-	<aui:script use="liferay-layout,liferay-navigation">
-		var layoutOptions = {};
 
-		if (!themeDisplay.isFreeformLayout()) {
-			layoutOptions = {
+	<c:if test="<%= layout.isTypePortlet() %>">
+		<aui:script>
+			var layoutOptions = {
 				disabledDropContainerClass: 'portlet-dropzone-disabled',
 				dragNodes: '#main-content .portlet-boundary:not(.portlet-static)',
 				dropContainer: '.portlet-dropzone',
@@ -92,23 +91,16 @@ if (layout != null) {
 				nestedPortletId: '_<%= PortletKeys.NESTED_PORTLETS %>_INSTANCE',
 				portletBoundary: '.portlet-boundary'
 			};
-		}
-		else {
-			layoutOptions = {
-				disabledDropContainerClass: 'portlet-dropzone-disabled',
-				dragNodes: '#main-content .portlet-boundary',
-				dropContainer: '.portlet-dropzone',
-				dropNodes: '.portlet-column',
-				emptyColumnClass: 'empty',
-				freeForm: true,
-				freeformPlaceholderClass: 'lfr-freeform-layout-drag-indicator',
-				handles: ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
-				nestedPortletId: '_<%= PortletKeys.NESTED_PORTLETS %>_INSTANCE',
-				portletBoundary: '.portlet-boundary'
-			};
-		}
 
-		<c:if test="<%= layout.isTypePortlet() %>">
+			<c:if test="<%= themeDisplay.isFreeformLayout() %>">
+				layoutOptions.dropNodes = "#main-content .portlet-boundary";
+				layoutOptions.freeForm = true;
+				layoutOptions.freeformPlaceholderClass = 'lfr-freeform-layout-drag-indicator';
+				layoutOptions.handles = ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'];
+			</c:if>
+		</aui:script>
+
+		<aui:script use="liferay-layout">
 			Liferay.once(
 				'initLayout',
 				function() {
@@ -126,8 +118,10 @@ if (layout != null) {
 					}
 				);
 			}
-		</c:if>
+		</aui:script>
+	</c:if>
 
+	<aui:script use="liferay-navigation">
 		Liferay.once(
 			'initNavigation',
 			function() {

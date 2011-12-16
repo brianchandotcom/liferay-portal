@@ -1,4 +1,4 @@
-AUI.add(
+AUI().add(
 	'liferay-menu',
 	function(A) {
 		var Lang = A.Lang;
@@ -135,59 +135,6 @@ AUI.add(
 				}
 			),
 
-			_getLiveSearch: function(trigger, menu) {
-				var instance = this;
-
-				var liveSearch = menu._liveSearch;
-
-				if (!liveSearch) {
-					var searchId = A.guid();
-
-					var listNode = menu.one('ul');
-
-					var searchLabelNode = trigger.one(SELECTOR_ANCHOR) || trigger;
-
-					var searchBoxContent = Lang.sub(
-						TPL_SEARCH_BOX,
-						{
-							searchId: searchId,
-							searchLabeledBy: searchLabelNode.guid(),
-							searchOwns: listNode.guid()
-						}
-					);
-
-					var inputSearch = A.Node.create(searchBoxContent);
-
-					inputSearch.swallowEvent('click');
-
-					menu.prepend(inputSearch);
-
-					var options = {
-						data: function(node) {
-							return trim(node.one(SELECTOR_TEXT).text());
-						},
-						input: '#' + searchId,
-						nodes: '#' + listNode.guid() + ' > li'
-					};
-
-					liveSearch = new A.LiveSearch(options);
-
-					var bodyNode = instance._overlay.bodyNode;
-
-					liveSearch.after(
-						'search',
-						function(event) {
-							bodyNode.focusManager.refresh();
-						},
-						instance
-					);
-
-					menu._liveSearch = liveSearch;
-				}
-
-				return liveSearch;
-			},
-
 			_getMenu: function(trigger) {
 				var instance = this;
 
@@ -302,70 +249,6 @@ AUI.add(
 				return height;
 			},
 
-			_getFocusManager: function() {
-				var instance = this;
-
-				var focusManager = instance._focusManager;
-
-				if (!focusManager) {
-					var bodyNode = instance._overlay.bodyNode;
-
-					bodyNode.plug(
-						A.Plugin.NodeFocusManager,
-						{
-							circular: true,
-							descendants: 'li:not(.aui-helper-hidden) a,input',
-							focusClass: 'aui-focus',
-							keys: {
-								next: 'down:40',
-								previous: 'down:38'
-							}
-						}
-					);
-
-					bodyNode.on(
-						'key',
-						function(event) {
-							var anchor = instance._activeTrigger.one(SELECTOR_ANCHOR);
-
-							instance._closeActiveMenu();
-
-							if (anchor) {
-								anchor.focus();
-							}
-						},
-						'down:27,9'
-					);
-
-					focusManager = bodyNode.focusManager;
-
-					bodyNode.delegate(
-						'mouseenter',
-						function (event) {
-							if (focusManager.get('focused')) {
-								focusManager.focus(event.currentTarget.one(SELECTOR_ANCHOR));
-							}
-						},
-						SELECTOR_LIST_ITEM
-					);
-
-					focusManager.after(
-						'activeDescendantChange',
-						function(event) {
-							var descendants = focusManager.get('descendants');
-
-							var selectedItem = descendants.item(event.newVal);
-
-							bodyNode.one('ul').setAttribute('aria-activedescendant', selectedItem.guid());
-						}
-					);
-
-					instance._focusManager = focusManager;
-				}
-
-				return focusManager;
-			},
-
 			_positionActiveMenu: function() {
 				var instance = this;
 
@@ -466,37 +349,7 @@ AUI.add(
 				if (buffer.length) {
 					var nodes = A.all(buffer);
 
-					nodes.on(
-						EVENT_CLICK,
-						function(event) {
-							var trigger = event.currentTarget;
-
-							var activeTrigger = instance._activeTrigger;
-
-							if (activeTrigger && (activeTrigger != trigger)) {
-								activeTrigger.removeClass(CSS_STATE_ACTIVE);
-							}
-
-							if (!trigger.hasClass('disabled')) {
-								var menu = instance._getMenu(trigger);
-
-								instance._activeMenu = menu;
-								instance._activeTrigger = trigger;
-
-								if (!instance._handles.length) {
-									instance._handles.push(
-										Liferay.on('portletDragStart', instance._closeActiveMenu, instance),
-										A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance)),
-										A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance)
-									);
-								}
-
-								instance._positionActiveMenu();
-
-								event.halt();
-							}
-						}
-					);
+					nodes.on(EVENT_CLICK, A.bind('_registerMenu', Menu));
 				}
 			},
 			100
@@ -510,10 +363,171 @@ AUI.add(
 			}
 		};
 
+		Liferay.provide(
+			Menu,
+			'_getFocusManager',
+			function() {
+				var instance = Menu._INSTANCE;
+
+				var focusManager = instance._focusManager;
+
+				if (!focusManager) {
+					var bodyNode = instance._overlay.bodyNode;
+
+					bodyNode.plug(
+						A.Plugin.NodeFocusManager,
+						{
+							circular: true,
+							descendants: 'li:not(.aui-helper-hidden) a,input',
+							focusClass: 'aui-focus',
+							keys: {
+								next: 'down:40',
+								previous: 'down:38'
+							}
+						 }
+					);
+
+					bodyNode.on(
+						'key',
+						function(event) {
+							var anchor = instance._activeTrigger.one(SELECTOR_ANCHOR);
+
+							instance._closeActiveMenu();
+
+							if (anchor) {
+								anchor.focus();
+							}
+						},
+						'down:27,9'
+					);
+
+					focusManager = bodyNode.focusManager;
+
+					bodyNode.delegate(
+						'mouseenter',
+						function (event) {
+							if (focusManager.get('focused')) {
+								focusManager.focus(event.currentTarget.one(SELECTOR_ANCHOR));
+							}
+						},
+						SELECTOR_LIST_ITEM
+					);
+
+					focusManager.after(
+						'activeDescendantChange',
+						function(event) {
+							var descendants = focusManager.get('descendants');
+
+							var selectedItem = descendants.item(event.newVal);
+
+							bodyNode.one('ul').setAttribute('aria-activedescendant', selectedItem.guid());
+						}
+					);
+
+					instance._focusManager = focusManager;
+				}
+
+				focusManager.refresh();
+			},
+			['node-focusmanager']
+		);
+
+		Liferay.provide(
+			Menu,
+			'_getLiveSearch',
+			function(trigger, menu) {
+				var instance = Menu._INSTANCE;
+
+				var liveSearch = menu._liveSearch;
+
+				if (!liveSearch) {
+					var searchId = A.guid();
+
+					var listNode = menu.one('ul');
+
+					var searchLabelNode = trigger.one(SELECTOR_ANCHOR) || trigger;
+
+					var searchBoxContent = Lang.sub(
+						TPL_SEARCH_BOX,
+						{
+							searchId: searchId,
+							searchLabeledBy: searchLabelNode.guid(),
+							searchOwns: listNode.guid()
+						}
+					);
+
+					var inputSearch = A.Node.create(searchBoxContent);
+
+					inputSearch.swallowEvent('click');
+
+					menu.prepend(inputSearch);
+
+					var options = {
+						data: function(node) {
+							return trim(node.one(SELECTOR_TEXT).text());
+						},
+						input: '#' + searchId,
+						nodes: '#' + listNode.guid() + ' > li'
+					};
+
+					liveSearch = new A.LiveSearch(options);
+
+					var bodyNode = instance._overlay.bodyNode;
+
+					liveSearch.after(
+						'search',
+						function(event) {
+							bodyNode.focusManager.refresh();
+						},
+						instance
+					);
+
+					menu._liveSearch = liveSearch;
+				}
+			},
+			['aui-live-search']
+		);
+
+		Liferay.provide(
+			Menu,
+			'_registerMenu',
+			function(event) {
+				var instance = Menu._INSTANCE;
+
+				var trigger = event.currentTarget;
+
+				var activeTrigger = instance._activeTrigger;
+
+				if (activeTrigger && (activeTrigger != trigger)) {
+					activeTrigger.removeClass(CSS_STATE_ACTIVE);
+				}
+
+				if (!trigger.hasClass('disabled')) {
+					var menu = instance._getMenu(trigger);
+
+					instance._activeMenu = menu;
+					instance._activeTrigger = trigger;
+
+					if (!instance._handles.length) {
+						instance._handles.push(
+							Liferay.on('portletDragStart', instance._closeActiveMenu, instance),
+							A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance)),
+							A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance)
+						);
+					}
+
+					instance._positionActiveMenu();
+
+					event.halt();
+				}
+			},
+			['aui-overlay']
+		);
+
 		Liferay.Menu = Menu;
 	},
 	'',
 	{
-		requires: ['aui-live-search', 'aui-overlay', 'node-focusmanager']
+		requires: []
 	}
 );

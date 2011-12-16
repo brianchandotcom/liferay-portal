@@ -42,7 +42,7 @@ String languageId = LanguageUtil.getLanguageId(request);
 
 Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(languageId);
 
-List<String> headerNames = new ArrayList();
+List<String> headerNames = new ArrayList<String>();
 
 for (Map<String, String> fields : fieldsMap.values()) {
 	String label = fields.get(FieldConstants.LABEL);

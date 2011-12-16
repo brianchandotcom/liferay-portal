@@ -532,10 +532,10 @@
 					document.selection.createRange().text='\t';
 				}
 
-		        el.scrollTop = oldscroll;
+				el.scrollTop = oldscroll;
 
 				return false;
-		    }
+			}
 		},
 
 		toCharCode: A.cached(
@@ -1087,7 +1087,7 @@
 
 			ddmURL.setEscapeXML(false);
 
-            ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
+			ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
 
 			ddmURL.setParameter('chooseCallback', config.chooseCallback);
 			ddmURL.setParameter('ddmResource', config.ddmResource);
@@ -1212,7 +1212,7 @@
 		function(box, value) {
 			box = A.one(box);
 
-			var selectedIndex =  box.get('selectedIndex');
+			var selectedIndex = box.get('selectedIndex');
 
 			if (!value) {
 				box.all('option').item(selectedIndex).remove(true);
@@ -1593,8 +1593,12 @@
 							showBox.show();
 						}
 
-						if (hideBoxIds) {
-							A.all('#' + hideBoxIds.join(',#')).hide();
+						if (Lang.isValue(hideBoxIds)) {
+							if (Lang.isArray(hideBoxIds)) {
+								hideBoxIds = hideBoxIds.join(',#');
+							}
+
+							A.all('#' + hideBoxIds).hide();
 						}
 					}
 				);

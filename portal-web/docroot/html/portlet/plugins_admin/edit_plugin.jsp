@@ -58,7 +58,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 
 	<aui:fieldset>
 		<aui:field-wrapper label="module-id">
-			<%= moduleId %>
+			<%= HtmlUtil.escape(moduleId) %>
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="plugin-id">

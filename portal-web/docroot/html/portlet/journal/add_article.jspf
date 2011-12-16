@@ -111,7 +111,13 @@ public Map<String, PortletURL> getAddArticleURLs(LiferayPortletRequest liferayPo
 		addArticleURL = getAddArticleURL(liferayPortletRequest, liferayPortletResponse, structure.getStructureId());
 
 		if (addArticleURL != null) {
-			addArticleURLs.put(JournalArticle.class.getName() + _CLASSNAME_SEPARATOR + HtmlUtil.escape(structure.getName(themeDisplay.getLocale())), addArticleURL);
+			String structureName = structure.getName(themeDisplay.getLocale());
+
+			if (structure.getGroupId() == themeDisplay.getCompanyGroupId()) {
+				structureName += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";
+			}
+
+			addArticleURLs.put(JournalArticle.class.getName() + _CLASSNAME_SEPARATOR + HtmlUtil.escape(structureName), addArticleURL);
 		}
 	}
 

@@ -245,7 +245,7 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 />
 
 <c:choose>
-	<c:when test='<%= tabs2.equals("comments") && enableComments %>'>
+	<c:when test='<%= tabs2.equals("comments") && PropsValues.SC_PRODUCT_COMMENTS_ENABLED %>'>
 		<portlet:actionURL var="discussionURL">
 			<portlet:param name="struts_action" value="/software_catalog/edit_product_entry_discussion" />
 		</portlet:actionURL>

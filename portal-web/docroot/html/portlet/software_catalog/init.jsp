@@ -64,7 +64,5 @@ page import="com.liferay.portlet.softwarecatalog.util.SCUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-boolean enableComments = PropsValues.SC_PRODUCT_COMMENTS_ENABLED;
-
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

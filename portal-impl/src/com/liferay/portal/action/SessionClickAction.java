@@ -14,6 +14,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SessionClicks;
@@ -46,7 +47,8 @@ public class SessionClickAction extends Action {
 				String name = enu.nextElement();
 
 				if (!name.equals("doAsUserId")) {
-					String value = ParamUtil.getString(request, name);
+					String value = HtmlUtil.escape(
+						ParamUtil.getString(request, name));
 
 					SessionClicks.put(request, name, value);
 				}

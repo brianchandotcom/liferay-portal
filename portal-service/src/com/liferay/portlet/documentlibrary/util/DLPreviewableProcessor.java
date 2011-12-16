@@ -14,11 +14,17 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -26,6 +32,8 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+
+import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.InputStream;
@@ -42,6 +50,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			"/liferay/" + PREVIEW_PATH;
 
 	public static final long REPOSITORY_ID = CompanyConstants.SYSTEM;
+
+	public static int THUMBNAIL_INDEX_CUSTOM_1 = 1;
+
+	public static int THUMBNAIL_INDEX_CUSTOM_2 = 2;
+
+	public static int THUMBNAIL_INDEX_DEFAULT = 0;
 
 	public static final String THUMBNAIL_PATH = "document_thumbnail/";
 
@@ -218,20 +232,25 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected InputStream doGetThumbnailAsStream(
-			FileVersion fileVersion, String type)
+			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
+
+		String type = getThumbnailType(fileVersion);
 
 		return DLStoreUtil.getFileAsStream(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			getThumbnailFilePath(fileVersion, type));
+			getThumbnailFilePath(fileVersion, type, thumbnailIndex));
 	}
 
-	protected long doGetThumbnailFileSize(FileVersion fileVersion, String type)
+	protected long doGetThumbnailFileSize(
+			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
+
+		String type = getThumbnailType(fileVersion);
 
 		return DLStoreUtil.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			getThumbnailFilePath(fileVersion, type));
+			getThumbnailFilePath(fileVersion, type, thumbnailIndex));
 	}
 
 	protected String getPreviewFilePath(
@@ -328,11 +347,24 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return getPreviewTempFilePath(id, 0, type);
 	}
 
-	protected String getThumbnailFilePath(
-		FileVersion fileVersion, String type) {
+	protected abstract String getPreviewType(FileVersion fileVersion);
 
-		return getPathSegment(fileVersion, false).concat(
-			StringPool.PERIOD).concat(type);
+	protected String getThumbnailFilePath(
+		FileVersion fileVersion, String type, int index) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getPathSegment(fileVersion, false));
+
+		if (index != THUMBNAIL_INDEX_DEFAULT) {
+			sb.append(StringPool.DASH);
+			sb.append(index);
+		}
+
+		sb.append(StringPool.PERIOD);
+		sb.append(type);
+
+		return sb.toString();
 	}
 
 	protected File getThumbnailTempFile(String id, String type) {
@@ -350,6 +382,131 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		sb.append(type);
 
 		return sb.toString();
+	}
+
+	protected abstract String getThumbnailType(FileVersion fileVersion);
+
+	protected boolean hasThumbnail(
+		FileVersion fileVersion, int thumbnailIndex) {
+
+		try {
+			String imageType = getThumbnailType(fileVersion);
+
+			return DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), REPOSITORY_ID,
+				getThumbnailFilePath(fileVersion, imageType, thumbnailIndex));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
+	}
+
+	protected boolean isCustomThumbnailsEnabled(int thumbnailIndex)
+		throws Exception {
+
+		if (thumbnailIndex == 1) {
+			if ((PrefsPropsUtil.getInteger(
+					PropsKeys.
+						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT) > 0) ||
+				(PrefsPropsUtil.getInteger(
+					PropsKeys.
+						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH) > 0)) {
+
+				return true;
+			}
+		}
+		else if (thumbnailIndex == 2) {
+			if ((PrefsPropsUtil.getInteger(
+					PropsKeys.
+						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT) > 0) ||
+				(PrefsPropsUtil.getInteger(
+					PropsKeys.
+						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH) > 0)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected void storeThumbnailImages(FileVersion fileVersion, File file)
+		throws Exception {
+
+		ImageBag imageBag = ImageProcessorUtil.read(file);
+
+		RenderedImage renderedImage = imageBag.getRenderedImage();
+
+		storeThumbnailImages(fileVersion, renderedImage);
+	}
+
+	protected void storeThumbnailImages(
+			FileVersion fileVersion, RenderedImage renderedImage)
+		throws Exception {
+
+		storeThumbnailmage(fileVersion, renderedImage, THUMBNAIL_INDEX_DEFAULT);
+
+		storeThumbnailmage(
+			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_1);
+
+		storeThumbnailmage(
+			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
+	}
+
+	protected void storeThumbnailmage(
+			FileVersion fileVersion, RenderedImage renderedImage,
+			int thumbnailIndex)
+		throws Exception {
+
+		if ((thumbnailIndex > 0) &&
+			!isCustomThumbnailsEnabled(thumbnailIndex)) {
+
+			return;
+		}
+
+		String type = getThumbnailType(fileVersion);
+
+		String maxHeightPropsKey = PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT;
+
+		if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_1) {
+			maxHeightPropsKey =
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT;
+		}
+		else if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_2) {
+			maxHeightPropsKey =
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT;
+		}
+
+		String maxWidthPropsKey = PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
+
+		if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_1) {
+			maxWidthPropsKey =
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH;
+		}
+		else if (thumbnailIndex == THUMBNAIL_INDEX_CUSTOM_2) {
+			maxWidthPropsKey =
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH;
+		}
+
+		RenderedImage thumbnailRenderedImage = ImageProcessorUtil.scale(
+			renderedImage, PrefsPropsUtil.getInteger(maxHeightPropsKey),
+			PrefsPropsUtil.getInteger(maxWidthPropsKey));
+
+		byte[] bytes = ImageProcessorUtil.getBytes(
+			thumbnailRenderedImage, MimeTypesUtil.getContentType("A." + type));
+
+		File file = FileUtil.createTempFile(bytes);
+
+		try {
+			addFileToStore(
+				fileVersion.getCompanyId(), THUMBNAIL_PATH,
+				getThumbnailFilePath(fileVersion, type, thumbnailIndex), file);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

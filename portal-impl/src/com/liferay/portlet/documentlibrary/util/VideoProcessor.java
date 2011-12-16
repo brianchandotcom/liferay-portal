@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -40,6 +42,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.util.log4j.Log4JUtil;
+
+import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.InputStream;
@@ -92,16 +96,18 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		return _instance.doGetPreviewFileSize(fileVersion, type);
 	}
 
-	public static InputStream getThumbnailAsStream(FileVersion fileVersion)
+	public static InputStream getThumbnailAsStream(
+			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
-		return _instance.doGetThumbnailAsStream(fileVersion);
+		return _instance.doGetThumbnailAsStream(fileVersion, thumbnailIndex);
 	}
 
-	public static long getThumbnailFileSize(FileVersion fileVersion)
+	public static long getThumbnailFileSize(
+			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
-		return _instance.doGetThumbnailFileSize(fileVersion);
+		return _instance.doGetThumbnailFileSize(fileVersion, thumbnailIndex);
 	}
 
 	public static Set<String> getVideoMimeTypes() {
@@ -188,7 +194,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	@Override
-	protected String getPreviewType() {
+	protected String getPreviewType(FileVersion fileVersion) {
 		return _PREVIEW_TYPES[0];
 	}
 
@@ -198,8 +204,29 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	}
 
 	@Override
-	protected String getThumbnailType() {
+	protected String getThumbnailType(FileVersion fileVersion) {
 		return THUMBNAIL_TYPE;
+	}
+
+	@Override
+	protected void storeThumbnailImages(FileVersion fileVersion, File file)
+		throws Exception {
+
+		addFileToStore(
+			fileVersion.getCompanyId(), THUMBNAIL_PATH,
+			getThumbnailFilePath(fileVersion, THUMBNAIL_INDEX_DEFAULT), file);
+
+		if (isCustomThumbnailsEnabled(1) || isCustomThumbnailsEnabled(2)) {
+			ImageBag imageBag = ImageProcessorUtil.read(file);
+
+			RenderedImage renderedImage = imageBag.getRenderedImage();
+
+			storeThumbnailmage(
+				fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_1);
+
+			storeThumbnailmage(
+				fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
+		}
 	}
 
 	private void _generateThumbnailXuggler(
@@ -238,9 +265,7 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 				_log.error(e, e);
 			}
 
-			addFileToStore(
-				fileVersion.getCompanyId(), THUMBNAIL_PATH,
-				getThumbnailFilePath(fileVersion), thumbnailTempFile);
+			storeThumbnailImages(fileVersion, thumbnailTempFile);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -445,33 +470,34 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 			}
 		}
 
-		boolean previewExists = false;
-
-		if (previewsCount == _PREVIEW_TYPES.length) {
-			previewExists = true;
+		if (previewsCount != _PREVIEW_TYPES.length) {
+			return false;
 		}
 
-		boolean thumbnailExists = DLStoreUtil.hasFile(
-			fileVersion.getCompanyId(), REPOSITORY_ID,
-			getThumbnailFilePath(fileVersion));
-
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
-
-			if (previewExists && thumbnailExists) {
-				return true;
+		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
+			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
+				return false;
 			}
 		}
-		else if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && previewExists) {
-			return true;
-		}
-		else if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-				 thumbnailExists) {
 
-			return true;
+		try {
+			if (isCustomThumbnailsEnabled(1)) {
+				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
+					return false;
+				}
+			}
+
+			if (isCustomThumbnailsEnabled(2)) {
+				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
-		return false;
+		return true;
 	}
 
 	private boolean _isGeneratePreview(FileVersion fileVersion)
@@ -512,7 +538,8 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	private boolean _isGenerateThumbnail(FileVersion fileVersion)
 		throws Exception {
 
-		String thumbnailFilePath = getThumbnailFilePath(fileVersion);
+		String thumbnailFilePath = getThumbnailFilePath(
+			fileVersion, THUMBNAIL_INDEX_DEFAULT);
 
 		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
 			!DLStoreUtil.hasFile(

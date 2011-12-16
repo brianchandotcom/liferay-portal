@@ -569,10 +569,6 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH = "dl.file.entry.thumbnail.custom2.max.width";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DEPTH = "dl.file.entry.thumbnail.document.depth";
-
-	public static final String DL_FILE_ENTRY_THUMBNAIL_DOCUMENT_DPI = "dl.file.entry.thumbnail.document.dpi";
-
 	public static final String DL_FILE_ENTRY_THUMBNAIL_ENABLED = "dl.file.entry.thumbnail.enabled";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT = "dl.file.entry.thumbnail.max.height";

@@ -131,8 +131,13 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 	}
 
 	@Override
-	protected String getPreviewType() {
+	protected String getPreviewType(FileVersion fileVersion) {
 		return PREVIEW_TYPE;
+	}
+
+	@Override
+	protected String getThumbnailType(FileVersion fileVersion) {
+		return null;
 	}
 
 	private void _generateAudio(FileVersion fileVersion) throws Exception {

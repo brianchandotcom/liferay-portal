@@ -424,7 +424,8 @@ public class WebServerServlet extends HttpServlet {
 
 			if (smallImage) {
 				is = ImageProcessor.getThumbnailAsStream(
-					fileEntry.getFileVersion());
+					fileEntry.getFileVersion(),
+					ImageProcessor.THUMBNAIL_INDEX_DEFAULT);
 			}
 			else {
 				is = fileEntry.getContentStream();
@@ -767,43 +768,40 @@ public class WebServerServlet extends HttpServlet {
 		String targetExtension = ParamUtil.getString(
 			request, "targetExtension");
 		int imageThumbnail = ParamUtil.getInteger(request, "imageThumbnail");
-		boolean documentThumbnail = ParamUtil.getBoolean(
+		int documentThumbnail = ParamUtil.getInteger(
 			request, "documentThumbnail");
 		int previewFileIndex = ParamUtil.getInteger(
 			request, "previewFileIndex");
 		boolean audioPreview = ParamUtil.getBoolean(request, "audioPreview");
 		boolean videoPreview = ParamUtil.getBoolean(request, "videoPreview");
-		boolean videoThumbnail = ParamUtil.getBoolean(
-			request, "videoThumbnail");
+		int videoThumbnail = ParamUtil.getInteger(request, "videoThumbnail");
 
 		InputStream inputStream = null;
 		long contentLength = 0;
 
-		if ((imageThumbnail > 0) && (imageThumbnail < 3)) {
+		if ((imageThumbnail > 0) && (imageThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(fileVersion.getExtension());
 
-			if (imageThumbnail == 1) {
-				inputStream = ImageProcessor.getThumbnailAsStream(fileVersion);
-				contentLength = ImageProcessor.getThumbnailFileSize(
-					fileVersion);
-			}
-			else if (imageThumbnail == 2) {
-				inputStream = ImageProcessor.getCustom1AsStream(fileVersion);
-				contentLength = ImageProcessor.getCustom1FileSize(fileVersion);
-			}
-			else if (imageThumbnail == 3) {
-				inputStream = ImageProcessor.getCustom2AsStream(fileVersion);
-				contentLength = ImageProcessor.getCustom2FileSize(fileVersion);
-			}
+			int thumbnailIndex = imageThumbnail - 1;
+
+			inputStream = ImageProcessor.getThumbnailAsStream(
+				fileVersion, thumbnailIndex);
+			contentLength = ImageProcessor.getThumbnailFileSize(
+				fileVersion, thumbnailIndex);
 
 			converted = true;
 		}
-		else if (documentThumbnail) {
+		else if ((documentThumbnail > 0) && (documentThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
-			inputStream = PDFProcessor.getThumbnailAsStream(fileVersion);
-			contentLength = PDFProcessor.getThumbnailFileSize(fileVersion);
+
+			int thumbnailIndex = documentThumbnail - 1;
+
+			inputStream = PDFProcessor.getThumbnailAsStream(
+				fileVersion, thumbnailIndex);
+			contentLength = PDFProcessor.getThumbnailFileSize(
+				fileVersion, thumbnailIndex);
 
 			converted = true;
 		}
@@ -874,11 +872,16 @@ public class WebServerServlet extends HttpServlet {
 
 			converted = true;
 		}
-		else if (videoThumbnail) {
+		else if ((videoThumbnail > 0) && (videoThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
-			inputStream = VideoProcessor.getThumbnailAsStream(fileVersion);
-			contentLength = VideoProcessor.getThumbnailFileSize(fileVersion);
+
+			int thumbnailIndex = videoThumbnail - 1;
+
+			inputStream = VideoProcessor.getThumbnailAsStream(
+				fileVersion, thumbnailIndex);
+			contentLength = VideoProcessor.getThumbnailFileSize(
+				fileVersion, thumbnailIndex);
 
 			converted = true;
 		}

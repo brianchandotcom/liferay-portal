@@ -28,7 +28,7 @@ Layout selLayout = null;
 
 String layoutBreadcrumb = StringPool.BLANK;
 
-if (article != null) {
+if ((article != null) && Validator.isNotNull(layoutUuid)) {
 	selLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getParentGroupId());
 
 	layoutBreadcrumb = _getLayoutBreadcrumb(selLayout, locale);

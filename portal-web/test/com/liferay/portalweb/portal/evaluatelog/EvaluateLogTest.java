@@ -50,9 +50,11 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
-			if (line.contains(
-					"Resource Destroyer in BasicResourcePool.close()")) {
+			if (line.contains("BasicResourcePool")) {
+				continue;
+			}
 
+			if (line.contains("Caused by:")) {
 				continue;
 			}
 

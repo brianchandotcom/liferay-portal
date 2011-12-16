@@ -853,7 +853,7 @@ public class PortalImpl implements Portal {
 		String[] canonicalURLParts = canonicalURL.split(
 			virtualHost.concat("(:\\d{1,5})?"), 2);
 
-		if ((canonicalURLParts.length > 0) &&
+		if ((canonicalURLParts.length > 1) &&
 			Validator.isNotNull(canonicalURLParts[1])) {
 
 			int pos = canonicalURL.indexOf(

@@ -54,7 +54,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 			sb.append(fields.get(FieldConstants.LABEL));
 
-			if ((i + 1) > values.length) {
+			if ((i + 1) < values.length) {
 				sb.append(", ");
 			}
 		}

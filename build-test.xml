@@ -3311,6 +3311,7 @@ file.
 				<if>
 					<or>
 						<contains string="${simple.server.dir}" substring="glassfish" />
+						<contains string="${simple.server.dir}" substring="jonas" />
 						<isset property="hook.plugins.includes" />
 						<isset property="portlet.plugins.includes" />
 						<isset property="theme.plugins.includes" />

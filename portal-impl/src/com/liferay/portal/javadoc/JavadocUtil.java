@@ -47,10 +47,24 @@ public class JavadocUtil {
 
 		Thread currentThread = Thread.currentThread();
 
-		classLoader = currentThread.getContextClassLoader();
+		ClassLoader currentThreadClassLoader =
+			currentThread.getContextClassLoader();
 
-		return classLoader.loadClass(className);
+		if (currentThreadClassLoader != classLoader) {
+			try {
+				return currentThreadClassLoader.loadClass(className);
+			}
+			catch (ClassNotFoundException cnfex) {
+			}
+		}
+		
+		try {
+			Class.forName(className);
+		}
+		catch (ClassNotFoundException cnfex) {
+		}
 
+		throw new ClassNotFoundException("Class not found: " + className);
 	}
 
 	private static int _getPrimitiveClassName(String className) {

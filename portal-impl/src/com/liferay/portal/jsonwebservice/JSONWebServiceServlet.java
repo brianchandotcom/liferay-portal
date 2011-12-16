@@ -152,7 +152,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 				PortletServlet.PORTLET_CLASS_LOADER);
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			servletContext.getContextPath(), portletClassLoader);
+			ContextPathUtil.getContextPath(servletContext), portletClassLoader);
 
 		_jsonWebServiceServiceAction.setServletContext(servletContext);
 

@@ -1933,11 +1933,6 @@ public class JournalArticleLocalServiceImpl
 		catch (IOException ioe) {
 		}
 
-		validate(
-			user.getCompanyId(), groupId, 0, titleMap, content, type,
-			structureId, templateId, smallImage, smallImageURL, smallImageFile,
-			smallImageBytes);
-
 		JournalArticle oldArticle = null;
 		double oldVersion = 0;
 
@@ -1973,6 +1968,11 @@ public class JournalArticleLocalServiceImpl
 				incrementVersion = true;
 			}
 		}
+
+		validate(
+			user.getCompanyId(), groupId, oldArticle.getClassNameId(), titleMap,
+			content, type, structureId, templateId, smallImage, smallImageURL,
+			smallImageFile, smallImageBytes);
 
 		JournalArticle article = null;
 

@@ -83,14 +83,21 @@ public class JavadocFormatter {
 			"limit");
 		CmdLineParser.Option initOption = cmdLineParser.addStringOption(
 			"init");
+		CmdLineParser.Option updateOption = cmdLineParser.addStringOption(
+			"update");
 
 		cmdLineParser.parse(args);
 
 		String limit = (String)cmdLineParser.getOptionValue(limitOption);
 		String init = (String)cmdLineParser.getOptionValue(initOption);
+		String update = (String)cmdLineParser.getOptionValue(updateOption);
 
 		if (Validator.isNotNull(init) && !init.startsWith("$")) {
 			_initializeMissingJavadocs = GetterUtil.getBoolean(init);
+		}
+
+		if (Validator.isNotNull(update) && !update.startsWith("$")) {
+			_updateJavadocs = GetterUtil.getBoolean(update);
 		}
 
 		DirectoryScanner ds = new DirectoryScanner();
@@ -275,7 +282,7 @@ public class JavadocFormatter {
 				}
 
 				if (!name.equals("deprecated") && !_initializeMissingJavadocs &&
-					Validator.isNull(comment)) {
+					!_updateJavadocs && Validator.isNull(comment)) {
 
 					continue;
 				}
@@ -312,6 +319,10 @@ public class JavadocFormatter {
 		}
 
 		if (!publicAccess && !hasComments) {
+			return null;
+		}
+
+		if (!_initializeMissingJavadocs && !hasComments) {
 			return null;
 		}
 
@@ -1386,5 +1397,6 @@ public class JavadocFormatter {
 	private boolean _initializeMissingJavadocs;
 	private Map<String, Tuple> _javadocxXmlTuples =
 		new HashMap<String, Tuple>();
+	private boolean _updateJavadocs;
 
 }

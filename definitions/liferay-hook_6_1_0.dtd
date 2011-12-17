@@ -78,9 +78,6 @@ my.sites.show.user.public.sites.with.no.layouts
 organizations.form.add.identification
 organizations.form.add.main
 organizations.form.add.miscellaneous
-organizations.form.update.identification
-organizations.form.update.main
-organizations.form.update.miscellaneous
 passwords.passwordpolicytoolkit.generator
 passwords.passwordpolicytoolkit.static
 portlet.add.default.resource.check.enabled

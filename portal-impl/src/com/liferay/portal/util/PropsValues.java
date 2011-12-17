@@ -760,6 +760,10 @@ public class PropsValues {
 
 	public static final boolean LAYOUT_PARALLEL_RENDER_ENABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_ENABLE));
 
+	public static final int LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD =  GetterUtil.getInteger(PropsUtil.get(PropsKeys.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD));;
+
+	public static final long LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME = GetterUtil.getLong(PropsUtil.get(PropsKeys.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME)) * Time.SECOND;
+
 	public static final boolean LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE));
 
 	public static String[] LAYOUT_SET_FORM_UPDATE = PropsUtil.getArray(PropsKeys.LAYOUT_SET_FORM_UPDATE);

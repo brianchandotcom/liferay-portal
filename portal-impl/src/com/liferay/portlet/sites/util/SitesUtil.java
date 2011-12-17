@@ -29,9 +29,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.model.impl.VirtualLayout;
@@ -39,11 +44,15 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
@@ -51,12 +60,15 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutSettings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.io.File;
 import java.io.InputStream;
@@ -69,6 +81,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -121,6 +134,43 @@ public class SitesUtil {
 				request, LanguageUtil.get(locale, pagesName),
 				redirectURL.toString());
 		}
+	}
+
+	public static void applyLayoutPrototype(
+			LayoutPrototype layoutPrototype, Layout targetLayout,
+			boolean linkEnabled)
+		throws Exception {
+
+		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAttribute(
+			"layoutPrototypeUuid", layoutPrototype.getUuid());
+		serviceContext.setAttribute("layoutPrototypeLinkEnabled", linkEnabled);
+
+		targetLayout = LayoutServiceUtil.updateLayout(
+			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+			targetLayout.getLayoutId(),
+			targetLayout.getParentLayoutId(), targetLayout.getNameMap(),
+			targetLayout.getTitleMap(), targetLayout.getDescriptionMap(),
+			targetLayout.getKeywordsMap(), targetLayout.getRobotsMap(),
+			layoutPrototypeLayout.getType(), targetLayout.getHidden(),
+			targetLayout.getFriendlyURL(), targetLayout.getIconImage(), null,
+			serviceContext);
+
+		targetLayout = LayoutServiceUtil.updateLayout(
+			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+			targetLayout.getLayoutId(),
+			layoutPrototypeLayout.getTypeSettings());
+
+		copyLayoutPrototypePermissions(targetLayout, layoutPrototype);
+
+		copyPortletPermissions(targetLayout, layoutPrototypeLayout);
+
+		copyPortletSetups(layoutPrototypeLayout, targetLayout);
+
+		copyLookAndFeel(targetLayout, layoutPrototypeLayout);
 	}
 
 	public static void applyLayoutSetPrototypes(
@@ -220,6 +270,20 @@ public class SitesUtil {
 		finally {
 			file.delete();
 		}
+	}
+
+	public static void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
+		throws Exception {
+
+		LayoutServiceUtil.updateLookAndFeel(
+			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
+			sourceLayout.getColorSchemeId(), sourceLayout.getCss(), false);
+
+		LayoutServiceUtil.updateLookAndFeel(
+			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+			targetLayout.getLayoutId(), sourceLayout.getWapThemeId(),
+			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
 	}
 
 	public static void copyTypeSettings(Group sourceGroup, Group targetGroup)
@@ -535,8 +599,7 @@ public class SitesUtil {
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
-			if ((layout.isLayoutPrototypeLinkEnabled() ||
-				 layoutSet.isLayoutSetPrototypeLinkEnabled()) &&
+			if (layoutSet.isLayoutSetPrototypeLinkEnabled() &&
 				Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
 
 				boolean layoutSetPrototypeUpdateable =
@@ -590,6 +653,119 @@ public class SitesUtil {
 		}
 		else {
 			return false;
+		}
+	}
+
+	protected static void copyLayoutPrototypePermissions(
+			Layout targetLayout,
+			LayoutPrototype sourceLayoutPrototype)
+		throws Exception {
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			targetLayout.getCompanyId());
+
+		for (Role role : roles) {
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
+				continue;
+			}
+
+			List<String> actionIds = ResourceActionsUtil.getResourceActions(
+				LayoutPrototype.class.getName());
+
+			List<String> actions =
+				ResourcePermissionLocalServiceUtil.
+					getAvailableResourcePermissionActionIds(
+						targetLayout.getCompanyId(),
+						LayoutPrototype.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(
+							sourceLayoutPrototype.getLayoutPrototypeId()),
+						role.getRoleId(), actionIds);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				targetLayout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(targetLayout.getPlid()), role.getRoleId(),
+				actions.toArray(new String[actions.size()]));
+		}
+	}
+
+	public static void copyPortletPermissions(
+		Layout targetLayout, Layout sourceLayout)
+		throws Exception {
+
+		long companyId = targetLayout.getCompanyId();
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(companyId);
+
+		LayoutTypePortlet sourceLayoutTypePortlet =
+			(LayoutTypePortlet)sourceLayout.getLayoutType();
+
+		List<String> sourcePortletIds = sourceLayoutTypePortlet.getPortletIds();
+
+		for (String sourcePortletId : sourcePortletIds) {
+			String resourceName = PortletConstants.getRootPortletId(
+				sourcePortletId);
+
+			String sourceResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				sourceLayout.getPlid(), sourcePortletId);
+
+			String targetResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				targetLayout.getPlid(), sourcePortletId);
+
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(resourceName);
+
+			for (Role role : roles) {
+				String roleName = role.getName();
+
+				if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
+					continue;
+				}
+
+				List<String> actions =
+					ResourcePermissionLocalServiceUtil.
+						getAvailableResourcePermissionActionIds(
+							companyId, resourceName,
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							sourceResourcePrimKey, role.getRoleId(), actionIds);
+
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(
+					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+					targetResourcePrimKey, role.getRoleId(),
+					actions.toArray(new String[actions.size()]));
+			}
+		}
+	}
+
+	public static void copyPortletSetups(
+			Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		LayoutTypePortlet sourceLayoutTypePortlet =
+			(LayoutTypePortlet)sourceLayout.getLayoutType();
+
+		List<String> sourcePortletIds = sourceLayoutTypePortlet.getPortletIds();
+
+		for (String sourcePortletId : sourcePortletIds) {
+			PortletPreferences sourcePreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					sourceLayout, sourcePortletId, null);
+
+			PortletPreferences targetPreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					targetLayout, sourcePortletId, null);
+
+			PortletPreferencesImpl targetPreferencesImpl =
+				(PortletPreferencesImpl)targetPreferences;
+
+			PortletPreferencesLocalServiceUtil.updatePreferences(
+				targetPreferencesImpl.getOwnerId(),
+				targetPreferencesImpl.getOwnerType(),
+				targetPreferencesImpl.getPlid(), sourcePortletId,
+				sourcePreferences);
 		}
 	}
 

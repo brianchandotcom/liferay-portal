@@ -310,6 +310,15 @@ if (portlet.isStatic()) {
 	showMoveIcon = false;
 }
 
+// Portlets in a layout linked to a layout prototype cannot be moved
+
+if (Validator.isNotNull(layout.getLayoutPrototypeUuid()) && layout.getLayoutPrototypeLinkEnabled()) {
+	showCloseIcon = false;
+	showConfigurationIcon = false;
+	showMoveIcon = false;
+	showPortletCssIcon = false;
+}
+
 // Deny access to edit mode if you do not have permission
 
 if (access && !PropsValues.TCK_URL && portletMode.equals(PortletMode.EDIT) && !PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {

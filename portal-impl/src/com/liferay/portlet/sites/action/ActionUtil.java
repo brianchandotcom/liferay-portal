@@ -20,25 +20,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.MembershipRequest;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferencesIds;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -57,128 +47,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil
 	extends com.liferay.portlet.rolesadmin.action.ActionUtil {
-
-	public static void copyLayoutPrototypePermissions(
-			HttpServletRequest request, Layout targetLayout,
-			LayoutPrototype sourceLayoutPrototype)
-		throws Exception {
-
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			targetLayout.getCompanyId());
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-				continue;
-			}
-
-			List<String> actionIds = ResourceActionsUtil.getResourceActions(
-				LayoutPrototype.class.getName());
-
-			List<String> actions =
-				ResourcePermissionLocalServiceUtil.
-					getAvailableResourcePermissionActionIds(
-						targetLayout.getCompanyId(),
-						LayoutPrototype.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(
-							sourceLayoutPrototype.getLayoutPrototypeId()),
-						role.getRoleId(), actionIds);
-
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				targetLayout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(targetLayout.getPlid()), role.getRoleId(),
-				actions.toArray(new String[actions.size()]));
-		}
-	}
-
-	public static void copyLayoutPrototypePermissions(
-			PortletRequest portletRequest, Layout targetLayout,
-			LayoutPrototype sourceLayoutPrototype)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		copyLayoutPrototypePermissions(
-			request, targetLayout, sourceLayoutPrototype);
-	}
-
-	public static void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
-		throws Exception {
-
-		LayoutServiceUtil.updateLookAndFeel(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
-			sourceLayout.getColorSchemeId(), sourceLayout.getCss(), false);
-
-		LayoutServiceUtil.updateLookAndFeel(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), sourceLayout.getWapThemeId(),
-			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
-	}
-
-	public static void copyPortletPermissions(
-			HttpServletRequest request, Layout targetLayout,
-			Layout sourceLayout)
-		throws Exception {
-
-		long companyId = targetLayout.getCompanyId();
-
-		List<Role> roles = RoleLocalServiceUtil.getRoles(companyId);
-
-		LayoutTypePortlet sourceLayoutTypePortlet =
-			(LayoutTypePortlet)sourceLayout.getLayoutType();
-
-		List<String> sourcePortletIds = sourceLayoutTypePortlet.getPortletIds();
-
-		for (String sourcePortletId : sourcePortletIds) {
-			String resourceName = PortletConstants.getRootPortletId(
-				sourcePortletId);
-
-			String sourceResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				sourceLayout.getPlid(), sourcePortletId);
-
-			String targetResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				targetLayout.getPlid(), sourcePortletId);
-
-			List<String> actionIds =
-				ResourceActionsUtil.getPortletResourceActions(resourceName);
-
-			for (Role role : roles) {
-				String roleName = role.getName();
-
-				if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-					continue;
-				}
-
-				List<String> actions =
-					ResourcePermissionLocalServiceUtil.
-						getAvailableResourcePermissionActionIds(
-							companyId, resourceName,
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							sourceResourcePrimKey, role.getRoleId(), actionIds);
-
-				 ResourcePermissionLocalServiceUtil.setResourcePermissions(
-					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-					targetResourcePrimKey, role.getRoleId(),
-					actions.toArray(new String[actions.size()]));
-			 }
-		}
-	}
-
-	public static void copyPortletPermissions(
-			PortletRequest portletRequest, Layout targetLayout,
-			Layout sourceLayout)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		copyPortletPermissions(request, targetLayout, sourceLayout);
-	}
 
 	public static void copyPreferences(
 			HttpServletRequest request, Layout targetLayout,

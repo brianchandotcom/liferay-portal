@@ -40,7 +40,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutSettings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -151,27 +150,16 @@ public class UpdateLayoutAction extends JSONAction {
 		Layout layout = null;
 
 		if (layoutPrototypeId > 0) {
+			layout = LayoutServiceUtil.addLayout(
+				groupId, privateLayout, parentLayoutId, name, title,
+				description, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+				serviceContext);
+
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeServiceUtil.getLayoutPrototype(
 					layoutPrototypeId);
 
-			Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-			layout = LayoutServiceUtil.addLayout(
-				groupId, privateLayout, parentLayoutId, name, title,
-				description, layoutPrototypeLayout.getType(), false,
-				friendlyURL, serviceContext);
-
-			LayoutServiceUtil.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layoutPrototypeLayout.getTypeSettings());
-
-			ActionUtil.copyLookAndFeel(layout, layoutPrototypeLayout);
-
-			ActionUtil.copyPortletPermissions(
-				request, layout, layoutPrototypeLayout);
-
-			ActionUtil.copyPreferences(request, layout, layoutPrototypeLayout);
+			SitesUtil.applyLayoutPrototype(layoutPrototype, layout, true);
 		}
 		else {
 			layout = LayoutServiceUtil.addLayout(

@@ -1039,6 +1039,10 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_PARENTABLE = "layout.parentable";
 
+	public static final String LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD = "layout.prototype.merge.fail.threshold";
+
+	public static final String LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME = "layout.prototype.merge.lock.max.time";
+
 	public static final String LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = "layout.remember.maximized.window.state";
 
 	public static final String LAYOUT_SET_FORM_UPDATE = "layout.set.form.update";

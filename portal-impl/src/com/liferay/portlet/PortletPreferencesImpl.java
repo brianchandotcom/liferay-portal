@@ -86,6 +86,10 @@ public class PortletPreferencesImpl
 		}
 	}
 
+	public long getPlid() {
+		return _plid;
+	}
+
 	@Override
 	public int hashCode() {
 		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
@@ -160,10 +164,6 @@ public class PortletPreferencesImpl
 		catch (SystemException se) {
 			throw new IOException(se.getMessage());
 		}
-	}
-
-	protected long getPlid() {
-		return _plid;
 	}
 
 	protected String getPortletId() {

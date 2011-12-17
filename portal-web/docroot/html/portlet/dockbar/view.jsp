@@ -59,7 +59,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 								</li>
 							</c:if>
 
-							<c:if test="<%= !themeDisplay.isStateMaximized() && layout.isTypePortlet() %>">
+							<c:if test="<%= !themeDisplay.isStateMaximized() && layout.isTypePortlet() && (Validator.isNull(layout.getLayoutPrototypeUuid()) || !layout.getLayoutPrototypeLinkEnabled()) %>">
 								<li class="last common-items">
 									<div class="aui-menugroup">
 										<div class="aui-menugroup-content">
@@ -364,11 +364,14 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</c:if>
 </div>
 
-<c:if test="<%= !SitesUtil.isLayoutUpdateable(layout) %>">
+<c:if test="<%= !SitesUtil.isLayoutUpdateable(layout) || layout.isLayoutPrototypeLinkEnabled() %>">
 	<div class="page-customization-bar">
 		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />
 
 		<c:choose>
+			<c:when test="<%= layout.isLayoutPrototypeLinkEnabled() %>">
+				<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
+			</c:when>
 			<c:when test="<%= layout instanceof VirtualLayout %>">
 				<liferay-ui:message key="this-page-belongs-to-a-user-group" />
 			</c:when>

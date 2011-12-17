@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Lock;
@@ -39,13 +40,16 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetUtil;
+import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 
@@ -64,12 +68,20 @@ import org.springframework.core.annotation.Order;
 
 /**
  * @author Raymond Augé
+ * @author Jorge Ferrer
  */
 @Order(2)
 public class LayoutLocalServiceVirtualLayoutsAdvice
 	implements MethodInterceptor {
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			return methodInvocation.proceed();
+		}
+
 		Method method = methodInvocation.getMethod();
 
 		String methodName = method.getName();
@@ -88,13 +100,11 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				return layout;
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			Group group = layout.getGroup();
 			LayoutSet layoutSet = layout.getLayoutSet();
 
-			mergeLayoutSetProtypeLayouts(permissionChecker, group, layoutSet);
+			mergeLayoutProtypeLayout(group, layout);
+			mergeLayoutSetProtypeLayouts(group, layoutSet);
 		}
 		else if (methodName.equals("getLayouts") &&
 				 (Arrays.equals(parameterTypes, _TYPES_L_B_L) ||
@@ -104,17 +114,13 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			boolean privateLayout = (Boolean)arguments[1];
 			long parentLayoutId = (Long)arguments[2];
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
-				mergeLayoutSetProtypeLayouts(
-					permissionChecker, group, layoutSet);
+				mergeLayoutSetProtypeLayouts(group, layoutSet);
 
 				if (!PropsValues.
 						USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE &&
@@ -125,8 +131,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					Object returnValue = methodInvocation.proceed();
 
 					return addUserGroupLayouts(
-						permissionChecker, group, layoutSet,
-						(List<Layout>)returnValue);
+						group, layoutSet, (List<Layout>)returnValue);
 				}
 			}
 			catch (Exception e) {
@@ -140,8 +145,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 	}
 
 	protected List<Layout> addUserGroupLayouts(
-			PermissionChecker permissionChecker, Group group,
-			LayoutSet layoutSet, List<Layout> layouts)
+			Group group, LayoutSet layoutSet, List<Layout> layouts)
 		throws Exception {
 
 		layouts = ListUtil.copy(layouts);
@@ -293,9 +297,115 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		}
 	}
 
+	protected void mergeLayoutProtypeLayout(Group group, Layout layout)
+		throws Exception {
+
+		if (!layout.getLayoutPrototypeLinkEnabled() ||
+			Validator.isNull(layout.getLayoutPrototypeUuid()) ||
+			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+
+			return;
+		}
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		long lastMergeTime = GetterUtil.getLong(
+			typeSettingsProperties.getProperty("last-merge-time"));
+
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
+				layout.getLayoutPrototypeUuid());
+
+		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
+
+		Date modifiedDate = layoutPrototypeLayout.getModifiedDate();
+
+		if (lastMergeTime >= modifiedDate.getTime()) {
+			return;
+		}
+
+		UnicodeProperties prototypeTypeSettingsProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			prototypeTypeSettingsProperties.getProperty("merge-fail-count"));
+
+		if (mergeFailCount >
+			PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
+
+			return;
+		}
+
+		String owner = PortalUUIDUtil.generate();
+
+		try {
+			Lock lock = LockLocalServiceUtil.lock(
+				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
+				String.valueOf(layout.getPlid()), owner, false);
+
+			// Double deep check
+
+			if (!owner.equals(lock.getOwner())) {
+				Date createDate = lock.getCreateDate();
+
+				if (((System.currentTimeMillis() - createDate.getTime()) >=
+					PropsValues.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME)) {
+
+					// Acquire lock if the lock is older than the lock max time
+
+					lock = LockLocalServiceUtil.lock(
+						LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
+						String.valueOf(layout.getPlid()), lock.getOwner(),
+						owner, false);
+
+					// Check if acquiring the lock succeeded or if another
+					// process has the lock
+
+					if (!owner.equals(lock.getOwner())) {
+						return;
+					}
+				}
+				else {
+					return;
+				}
+			}
+		}
+		catch (Exception e) {
+			return;
+		}
+
+		try {
+			SitesUtil.applyLayoutPrototype(layoutPrototype, layout, true);
+
+			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+			typeSettingsProperties = layout.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty(
+				"last-merge-time", String.valueOf(modifiedDate.getTime()));
+
+			LayoutLocalServiceUtil.updateLayout(layout, false);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			prototypeTypeSettingsProperties.setProperty(
+				"merge-fail-count", String.valueOf(++mergeFailCount));
+
+			// Invoke updateImpl so that we do not trigger the listeners
+
+			LayoutUtil.updateImpl(layoutPrototypeLayout, false);
+		}
+		finally {
+			LockLocalServiceUtil.unlock(
+				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
+				String.valueOf(layout.getPlid()), owner, false);
+		}
+	}
+
 	protected void mergeLayoutSetProtypeLayouts(
-			PermissionChecker permissionChecker, Group group,
-			LayoutSet layoutSet)
+			Group group, LayoutSet layoutSet)
 		throws Exception {
 
 		if (!layoutSet.getLayoutSetPrototypeLinkEnabled() ||

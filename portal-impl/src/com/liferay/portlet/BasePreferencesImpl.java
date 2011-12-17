@@ -67,6 +67,14 @@ public abstract class BasePreferencesImpl implements Serializable {
 		return Collections.enumeration(preferences.keySet());
 	}
 
+	public long getOwnerId() {
+		return _ownerId;
+	}
+
+	public int getOwnerType() {
+		return _ownerType;
+	}
+
 	public String getValue(String key, String def) {
 		if (key == null) {
 			throw new IllegalArgumentException();
@@ -244,14 +252,6 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 	protected Map<String, Preference> getOriginalPreferences() {
 		return _originalPreferences;
-	}
-
-	protected long getOwnerId() {
-		return _ownerId;
-	}
-
-	protected int getOwnerType() {
-		return _ownerType;
 	}
 
 	protected Map<String, Preference> getPreferences() {

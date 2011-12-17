@@ -830,37 +830,21 @@ public class EditLayoutsAction extends PortletAction {
 					ActionUtil.copyPreferences(
 						actionRequest, layout, parentLayout);
 
-					ActionUtil.copyLookAndFeel(layout, parentLayout);
+					SitesUtil.copyLookAndFeel(layout, parentLayout);
 				}
 			}
 			else if (layoutPrototypeId > 0) {
+				layout = LayoutServiceUtil.addLayout(
+					groupId, privateLayout, parentLayoutId, nameMap,
+					titleMap, descriptionMap, keywordsMap, robotsMap,
+					LayoutConstants.TYPE_PORTLET, hidden, friendlyURL,
+					serviceContext);
+
 				LayoutPrototype layoutPrototype =
 					LayoutPrototypeServiceUtil.getLayoutPrototype(
 						layoutPrototypeId);
 
-				Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap,
-					titleMap, descriptionMap, keywordsMap, robotsMap,
-					layoutPrototypeLayout.getType(), hidden, friendlyURL,
-					serviceContext);
-
-				LayoutServiceUtil.updateLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(),
-					layoutPrototypeLayout.getTypeSettings());
-
-				ActionUtil.copyLayoutPrototypePermissions(
-					actionRequest, layout, layoutPrototype);
-
-				ActionUtil.copyPortletPermissions(
-					actionRequest, layout, layoutPrototypeLayout);
-
-				ActionUtil.copyPreferences(
-					actionRequest, layout, layoutPrototypeLayout);
-
-				ActionUtil.copyLookAndFeel(layout, layoutPrototypeLayout);
+				SitesUtil.applyLayoutPrototype(layoutPrototype, layout, true);
 			}
 			else {
 				layout = LayoutServiceUtil.addLayout(
@@ -917,7 +901,7 @@ public class EditLayoutsAction extends PortletAction {
 							ActionUtil.copyPreferences(
 								actionRequest, layout, copyLayout);
 
-							ActionUtil.copyLookAndFeel(layout, copyLayout);
+							SitesUtil.copyLookAndFeel(layout, copyLayout);
 						}
 					}
 					catch (NoSuchLayoutException nsle) {

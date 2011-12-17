@@ -41,6 +41,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search" %>',
 				'<portlet:namespace />navigation': '<%= HtmlUtil.escapeJS(navigation) %>',
 				'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
+				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
+				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
+				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
 				'<portlet:namespace />displayStyle': displayStyle,
 				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
 			};
@@ -76,7 +79,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				'<portlet:namespace />dataRequest',
 				{
 					requestParams: config,
-					src: 0
+					src: Liferay.DL_ENTRIES_PAGINATOR
 				}
 			);
 		}

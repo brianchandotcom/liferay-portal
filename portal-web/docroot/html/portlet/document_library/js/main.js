@@ -22,13 +22,19 @@ AUI().add(
 
 		var CSS_DOCUMENT_DISPLAY_STYLE_SELECTED = '.document-display-style.selected';
 
+		var CSS_HIDDEN = 'aui-helper-hidden';
+
 		var CSS_RESULT_ROW = '.results-row';
 
 		var CSS_SELECTED = 'selected';
 
+        var EXPAND_FOLDER = 'expandFolder';
+
 		var DATA_FOLDER_ID = 'data-folder-id';
 
-		var DATA_REFRESH_FOLDERS = 'data-refresh-folders';
+		var DATA_VIEW_ENTRIES = 'data-view-entries';
+
+		var DATA_VIEW_FOLDERS = 'data-view-folders';
 
 		var DISPLAY_STYLE_LIST = 'list';
 
@@ -38,11 +44,11 @@ AUI().add(
 
 		var DOCUMENT_LIBRARY_GROUP = 'document-library';
 
-		var REFRESH_FOLDERS = 'refreshFolders';
+		var PARENT_NODE = 'parentNode';
 
 		var ROWS_PER_PAGE = 'rowsPerPage';
 
-		var SHOW_SIBLINGS = 'showSiblings';
+		var SEARCH_TYPE = 'searchType';
 
 		var STR_ACTIVE = 'active';
 
@@ -64,6 +70,8 @@ AUI().add(
 
 		var STR_FOLDER_END = 'folderEnd';
 
+		var STR_FOLDER_ID = 'folderId';
+
 		var STR_FOLDER_START = 'folderStart';
 
 		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
@@ -80,21 +88,45 @@ AUI().add(
 
 		var SRC_ENTRIES_PAGINATOR = 1;
 
+		var SRC_GLOBAL = 0;
+
 		var SRC_HISTORY = 2;
+
+		var SRC_SEARCH = 3;
+
+		var SRC_SEARCH_END = 4;
+
+		var SRC_SEARCH_FRAGMENT = 2;
+
+		var SRC_SEARCH_MULTIPLE = 0;
+
+		var SRC_SEARCH_SINGLE = 1;
 
 		var TOUCH = A.UA.touch;
 
-		var VIEW_ADD_BREADCRUMB = 'viewBreadcrumb';
+		var VIEW_ENTRIES = 'viewEntries';
 
-		var VIEW_ADD_BUTTON = 'viewAddButton';
+        var VIEW_ENTRIES_PAGE = 'viewEntriesPage';
 
-		var VIEW_DISPLAY_STYLE_BUTTONS = 'viewDisplayStyleButtons';
+		var VIEW_FOLDERS = 'viewFolders';
 
-		var VIEW_ENRTIES = 'viewEntries';
+		Liferay.DL_DISPLAY_STYLE_BUTTONS = SRC_DISPLAY_STYLE_BUTTONS;
 
-		var VIEW_FILE_ENTRY_SEARCH = 'viewFileEntrySearch';
+		Liferay.DL_ENTRIES_PAGINATOR = SRC_ENTRIES_PAGINATOR;
 
-		var VIEW_SORT_BUTTON = 'viewSortButton';
+		Liferay.DL_GLOBAL = SRC_GLOBAL;
+
+		Liferay.DL_HISTORY = SRC_HISTORY;
+
+		Liferay.DL_SEARCH = SRC_SEARCH;
+
+		Liferay.DL_SEARCH_END = SRC_SEARCH_END;
+
+		Liferay.DL_SEARCH_FRAGMENT = SRC_SEARCH_FRAGMENT;
+
+		Liferay.DL_SEARCH_MULTIPLE = SRC_SEARCH_MULTIPLE;
+
+		Liferay.DL_SEARCH_SINGLE = SRC_SEARCH_SINGLE;
 
 		var DocumentLibrary = A.Component.create(
 			{
@@ -202,6 +234,8 @@ AUI().add(
 
 						History.after('stateChange', instance._afterStateChange, instance);
 
+						Liferay.on('showTab', instance._onShowTab, instance);
+
 						documentLibraryContainer.plug(A.LoadingMask);
 
 						instance._config = config;
@@ -218,6 +252,8 @@ AUI().add(
 						instance._initSelectAllCheckbox();
 
 						instance._initToggleSelect();
+
+						instance._repositoriesData = {};
 
 						instance._restoreState();
 					},
@@ -256,19 +292,50 @@ AUI().add(
 
 						data[displayStyle] = History.get(displayStyle) || config.displayStyle;
 
-						data[instance.ns('viewFolders')] = true;
+                        data[instance.ns(VIEW_ENTRIES)] = true;
 
-						A.mix(data, requestParams, true);
+                        data[instance.ns(VIEW_FOLDERS)] = true;
+
+                        A.mix(data, requestParams, true);
 
 						instance._documentLibraryContainer.loadingmask.show();
 
-						if (event.src !== SRC_HISTORY) {
+						var src = event.src;
+
+						if (src !== SRC_HISTORY) {
 							instance._addHistoryState(data);
 						}
 
-						var ioRequest = instance._getIORequest();
+						var ioRequest = A.io.request(
+							instance._config.mainUrl,
+							{
+								autoLoad: false
+							}
+						);
+
+						var sendIOResponse = A.bind(instance._sendIOResponse, instance, ioRequest);
+
+						ioRequest.after(['failure', 'success'], sendIOResponse);
 
 						ioRequest.set(STR_DATA, data);
+
+						if (src === SRC_SEARCH) {
+							var repositoryId = event.requestParams[instance.NS + 'repositoryId'];
+
+							var repositoriesData = instance._repositoriesData;
+
+							var repositoryData = repositoriesData[repositoryId];
+
+							if (!repositoryData) {
+								repositoryData = {};
+
+								repositoriesData[repositoryId] = repositoryData;
+							}
+
+							repositoryData.dataRequest = data;
+						}
+
+						instance._lastDataRequest = data;
 
 						ioRequest.start();
 					},
@@ -291,15 +358,17 @@ AUI().add(
 							}
 						);
 
-						if (!AObject.isEmpty(requestParams)) {
-							Liferay.fire(
-								instance._eventDataRequest,
-								{
-									requestParams: requestParams,
-									src: SRC_HISTORY
-								}
-							);
+						if (AObject.isEmpty(requestParams)) {
+							requestParams = instance._getDefaultHistoryState();
 						}
+
+						Liferay.fire(
+							instance._eventDataRequest,
+							{
+								requestParams: requestParams,
+								src: SRC_HISTORY
+							}
+						);
 					},
 
 					_afterListViewItemChange: function(event) {
@@ -315,13 +384,12 @@ AUI().add(
 
 						item.ancestor('.folder').addClass(CSS_SELECTED);
 
+                        var dataExpandFolder = item.attr('data-expand-folder');
 						var dataFileEntryTypeId = item.attr('data-file-entry-type-id');
 						var dataFolderId = item.attr(DATA_FOLDER_ID);
 						var dataNavigation = item.attr('data-navigation');
-						var dataRefreshEntries = item.attr('data-refresh-entries');
-						var dataRefreshFolders = item.attr(DATA_REFRESH_FOLDERS);
-						var dataShowSiblings = item.attr('data-show-siblings');
-						var dataShowRootFolder = item.attr('data-show-root-folder');
+						var dataViewEntries = item.attr(DATA_VIEW_ENTRIES);
+						var dataViewFolders = item.attr(DATA_VIEW_FOLDERS);
 
 						var direction = 'left';
 
@@ -336,16 +404,14 @@ AUI().add(
 						var requestParams = {};
 
 						requestParams[instance.ns(STRUTS_ACTION)] = config.strutsAction;
-						requestParams[instance.ns(STR_ENTRY_END)] = config.entryRowsPerPage || instance._entryPaginator.get('rowsPerPage');
+						requestParams[instance.ns(STR_ENTRY_END)] = config.entryRowsPerPage || instance._entryPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
-						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get('rowsPerPage');
+						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
-						requestParams[instance.ns('refreshEntries')] = dataRefreshEntries;
-						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						requestParams[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
-						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
-						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
-						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
+
+                        if (dataExpandFolder) {
+                            requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;
+                        }
 
 						if (dataFolderId) {
 							requestParams[instance._folderId] = dataFolderId;
@@ -355,24 +421,16 @@ AUI().add(
 							requestParams[instance.ns('navigation')] = dataNavigation;
 						}
 
-						if (dataRefreshEntries) {
-							requestParams[instance.ns(VIEW_ENRTIES)] = dataRefreshEntries;
-						}
-
-						if (dataShowSiblings) {
-							requestParams[instance.ns(SHOW_SIBLINGS)] = dataShowSiblings;
-						}
-
-						if (dataShowRootFolder) {
-							requestParams[instance.ns('showRootFolder')] = dataShowRootFolder;
+						if (dataViewEntries) {
+							requestParams[instance.ns(VIEW_ENTRIES)] = dataViewEntries;
 						}
 
 						if (dataFileEntryTypeId) {
 							requestParams[instance.ns('fileEntryTypeId')] = dataFileEntryTypeId;
 						}
 
-						if (dataRefreshFolders) {
-							requestParams[instance.ns(REFRESH_FOLDERS)] = dataRefreshFolders;
+						if (dataViewFolders) {
+							requestParams[instance.ns(VIEW_FOLDERS)] = dataViewFolders;
 						}
 
 						Liferay.fire(
@@ -381,6 +439,34 @@ AUI().add(
 								requestParams: requestParams
 							}
 						);
+					},
+
+					_getDefaultHistoryState: function() {
+						var instance = this;
+
+						var initialState = History.get();
+
+						if (AObject.isEmpty(initialState)) {
+							initialState = instance._getDefaultParams();
+						}
+
+						return initialState;
+					},
+
+					_getDefaultParams: function() {
+						var instance = this;
+
+						var params = {};
+
+						var config = instance._config;
+
+						params[instance.ns(STR_ENTRY_END)] = config[STR_ENTRY_END];
+						params[instance.ns(STR_ENTRY_START)] = config[STR_ENTRY_START];
+						params[instance.ns(STR_FOLDER_END)] = config[STR_FOLDER_END];
+						params[instance.ns(STR_FOLDER_START)] = config[STR_FOLDER_START];
+						params[instance.ns(STR_FOLDER_ID)] = config[STR_FOLDER_ID];
+
+						return params;
 					},
 
 					_getDisplayStyle: function(style) {
@@ -393,31 +479,6 @@ AUI().add(
 						}
 
 						return displayStyle;
-					},
-
-					_getIORequest: function() {
-						var instance = this;
-
-						var ioRequest = instance._ioRequest;
-
-						if (!ioRequest) {
-							var sendIOResponse = A.bind(instance._sendIOResponse, instance);
-
-							ioRequest = A.io.request(
-								instance._config.mainUrl,
-								{
-									after: {
-										success: sendIOResponse,
-										failure: sendIOResponse
-									},
-									autoLoad: false
-								}
-							);
-
-							instance._ioRequest = ioRequest;
-						}
-
-						return ioRequest;
 					},
 
 					_getMoveText: function(selectedItemsCount, targetAvailable) {
@@ -611,6 +672,13 @@ AUI().add(
 								instance._selectedEntries = selectedEntries.val();
 							}
 						}
+						else if (src === SRC_SEARCH) {
+							instance._entryPaginator.setState(
+								{
+									page: 1
+								}
+							);
+						}
 
 						instance._processDefaultParams(event);
 
@@ -631,18 +699,25 @@ AUI().add(
 						requestParams[instance.ns(STR_ENTRY_END)] = instance._entryPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_END)] = instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-						requestParams[instance.ns(REFRESH_FOLDERS)] = event.currentTarget.attr(DATA_REFRESH_FOLDERS);
-						requestParams[instance.ns(SHOW_SIBLINGS)] = true;
+                        requestParams[instance.ns(EXPAND_FOLDER)] = false;
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
-						requestParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						requestParams[instance.ns(VIEW_ADD_BREADCRUMB)] = true;
-						requestParams[instance.ns(VIEW_DISPLAY_STYLE_BUTTONS)] = true;
-						requestParams[instance.ns(VIEW_ENRTIES)] = true;
-						requestParams[instance.ns(VIEW_FILE_ENTRY_SEARCH)] = true;
-						requestParams[instance.ns(VIEW_SORT_BUTTON)] = true;
 
-						Liferay.fire(
+                        var viewEntries = event.currentTarget.attr(DATA_VIEW_ENTRIES);
+
+                        if (viewEntries) {
+                            requestParams[instance.ns(VIEW_ENTRIES)] = viewEntries;
+                        }
+
+                        var viewFolders = event.currentTarget.attr(DATA_VIEW_FOLDERS);
+
+                        if (viewFolders) {
+                            requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
+                        }
+
+                        instance._listView.set('direction', 'left');
+
+                        Liferay.fire(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams
@@ -785,15 +860,19 @@ AUI().add(
 
 						var startEndParams = instance._getResultsStartEnd(instance._entryPaginator);
 
-						var requestParams = instance._getIORequest().get(STR_DATA) || {};
+						var requestParams = instance._lastDataRequest || instance._getDefaultParams();
 
 						var customParams = {};
 
 						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
 						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
-						customParams[instance.ns(REFRESH_FOLDERS)] = false;
-						customParams[instance.ns(VIEW_ADD_BUTTON)] = true;
-						customParams[instance.ns(VIEW_ENRTIES)] = true;
+                        customParams[instance.ns(VIEW_ENTRIES)] = false;
+                        customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
+                        customParams[instance.ns(VIEW_FOLDERS)] = false;
+
+						if (AObject.owns(requestParams, instance.ns('searchType'))) {
+							customParams[instance.ns(SEARCH_TYPE)] = SRC_SEARCH_FRAGMENT;
+						}
 
 						A.mix(requestParams, customParams, true);
 
@@ -811,14 +890,14 @@ AUI().add(
 
 						var startEndParams = instance._getResultsStartEnd(instance._folderPaginator);
 
-						var requestParams = instance._getIORequest().get(STR_DATA) || {};
+						var requestParams = instance._lastDataRequest || {};
 
 						var customParams = {};
 
 						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
 						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
-						customParams[instance.ns(REFRESH_FOLDERS)] = true;
-						customParams[instance.ns(VIEW_ENRTIES)] = true;
+                        customParams[instance.ns(VIEW_ENTRIES)] = false;
+                        customParams[instance.ns(VIEW_FOLDERS)] = true;
 
 						A.mix(requestParams, customParams, true);
 
@@ -836,10 +915,36 @@ AUI().add(
 						var paginatorData = event.paginator;
 
 						if (paginatorData) {
-							var paginator = instance['_' + paginatorData.name];
+							if (event.src == SRC_SEARCH) {
+								var repositoriesData = instance._repositoriesData;
 
-							if (A.instanceOf(paginator, A.Paginator)) {
-								paginator.setState(paginatorData.state);
+								var repositoryData = repositoriesData[event.repositoryId];
+
+								if (!repositoryData) {
+									repositoryData = {};
+
+									instance._repositoriesData[event.repositoryId] = repositoryData;
+								}
+
+								repositoryData.paginatorData = paginatorData;
+
+								var dataRequest = repositoryData.dataRequest;
+
+								var searchType = dataRequest[instance.NS + SEARCH_TYPE];
+
+								if (searchType === SRC_SEARCH_SINGLE || searchType === SRC_SEARCH_FRAGMENT) {
+									instance._setPaginatorData(paginatorData);
+								}
+								else {
+									var resultsContainer = instance.byId('searchResults' + event.repositoryId);
+
+									if (resultsContainer && !(resultsContainer.get(PARENT_NODE).get(PARENT_NODE).hasClass(CSS_HIDDEN))) {
+										instance._setPaginatorData(paginatorData);
+									}
+								}
+							}
+							else {
+								instance._setPaginatorData(paginatorData);
 							}
 						}
 					},
@@ -848,6 +953,31 @@ AUI().add(
 						var instance = this;
 
 						instance._toggleEntriesSelection();
+					},
+
+					_onShowTab: function(event) {
+						var instance = this;
+
+						var tabSection = event.tabSection;
+
+						var namespace = instance.NS;
+
+						A.some(
+							instance._repositoriesData,
+							function(repositoryData, repositoryId, collection) {
+								var repositoryNode = tabSection.one('#' + namespace + 'searchResults' + repositoryId);
+
+								if (repositoryNode) {
+									var paginatorData = collection[repositoryId].paginatorData;
+
+									instance._setPaginatorData(paginatorData);
+
+									instance._lastDataRequest = repositoryData.dataRequest;
+								}
+
+								return repositoryNode;
+							}
+						);
 					},
 
 					_processDefaultParams: function(event) {
@@ -972,6 +1102,8 @@ AUI().add(
 							var fileEntrySearchContainer = instance.byId('fileEntrySearchContainer');
 
 							if (fileEntrySearchContainer) {
+								fileEntrySearchContainer.purge(true);
+
 								fileEntrySearchContainer.plug(A.Plugin.ParseContent);
 
 								fileEntrySearchContainer.setContent(fileEntrySearch);
@@ -989,11 +1121,17 @@ AUI().add(
 
 							listViewDataContainer.plug(A.Plugin.ParseContent);
 
-							var refreshFolders = folders.attr(DATA_REFRESH_FOLDERS);
+                            instance._listView.set(STR_DATA, folders.html());
+						}
+					},
 
-							if (refreshFolders) {
-								instance._listView.set(STR_DATA, folders.html());
-							}
+					_setPaginatorData: function(paginatorData) {
+						var instance = this;
+
+						var paginator = instance['_' + paginatorData.name];
+
+						if (A.instanceOf(paginator, A.Paginator)) {
+							paginator.setState(paginatorData.state);
 						}
 					},
 
@@ -1012,21 +1150,88 @@ AUI().add(
 					_setSearchResults: function(content) {
 						var instance = this;
 
-						var searchResults = instance.one('#searchResults', content);
+						var repositoryData;
+
+						var repositoryId;
+
+						var repositoryIdNode = instance.one('#' + instance.ns('repositoryId'), content);
+
+						if (repositoryIdNode) {
+							repositoryId = repositoryIdNode.val();
+
+							repositoryData = instance._repositoriesData[repositoryId];
+						}
+
+						var searchType;
+
+						if (repositoryData) {
+							searchType = repositoryData.dataRequest[instance.NS + 'searchType'];
+						}
+
+						var searchInfo = instance.one('#' + instance.ns('searchInfo'), content);
+
+						var entriesContainer = instance._entriesContainer;
+
+						var fragmentSearchResults = instance.one('#' + instance.ns('fragmentSearchResults'), content);
+
+						if (searchInfo && searchType != SRC_SEARCH_FRAGMENT) {
+							entriesContainer.plug(A.Plugin.ParseContent);
+
+							entriesContainer.setContent(searchInfo);
+						}
+
+						var singleSearchResults;
+
+						if (fragmentSearchResults) {
+							var multipleSearchResults = entriesContainer.one('#' + instance.ns('searchResults') + repositoryId);
+
+							if (multipleSearchResults) {
+								multipleSearchResults.plug(A.Plugin.ParseContent);
+
+								multipleSearchResults.setContent(fragmentSearchResults.html());
+							}
+							else {
+								singleSearchResults = entriesContainer.one('#' + instance.ns('singleSearchResults'));
+
+								if (singleSearchResults) {
+									singleSearchResults.plug(A.Plugin.ParseContent);
+
+									singleSearchResults.setContent(fragmentSearchResults.html());
+								}
+							}
+						}
+
+						singleSearchResults = instance.one('#' + instance.ns('singleSearchResults'), content);
+
+						if (singleSearchResults) {
+							entriesContainer.plug(A.Plugin.ParseContent);
+
+							entriesContainer.append(singleSearchResults);
+						}
+
+						var searchResults = instance.one('.local-search-results', content);
 
 						if (searchResults) {
-							var entriesContainer = instance._entriesContainer;
+							var searchResultsContainer = instance.one('#' + instance.ns('searchResultsContainer'), content);
 
 							entriesContainer.plug(A.Plugin.ParseContent);
 
-							entriesContainer.setContent(searchResults);
+							entriesContainer.append(searchResultsContainer);
+						}
+
+						var repositorySearchResults = instance.one('.repository-search-results', content);
+
+						if (repositorySearchResults) {
+							var repositorySearchResultsContainer = entriesContainer.one('#' + instance.ns('repositorySearchResultsContainer') + repositoryId);
+
+							repositorySearchResultsContainer.plug(A.Plugin.ParseContent);
+
+							repositorySearchResultsContainer.append(repositorySearchResults);
 						}
 					},
 
-					_sendIOResponse: function(event) {
+					_sendIOResponse: function(ioRequest, event) {
 						var instance = this;
-
-						var ioRequest = instance._getIORequest();
 
 						var data = ioRequest.get(STR_DATA);
 						var reponseData = ioRequest.get('responseData');

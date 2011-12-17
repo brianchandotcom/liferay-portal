@@ -98,7 +98,6 @@ if (orderByType.equals("asc")) {
 						'<portlet:namespace />folderId': folderId,
 						'<portlet:namespace />struts_action': '/document_library/view',
 						'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>,
-						'<portlet:namespace />viewSortButton': <%= Boolean.TRUE.toString() %>,
 						'<portlet:namespace />orderByCol': orderByCol,
 						'<portlet:namespace />orderByType': reverseOrderByType
 					}

@@ -214,7 +214,7 @@ for (int i = 0; i < results.size(); i++) {
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 							tempRowURL.setParameter("struts_action", "/document_library/view_file_entry");
-							tempRowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
+							tempRowURL.setParameter("redirect", currentURL);
 							tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
@@ -252,7 +252,7 @@ for (int i = 0; i < results.size(); i++) {
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-						rowURL.setParameter("redirect", HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiblings", true));
+						rowURL.setParameter("redirect", currentURL);
 						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 						%>
 
@@ -339,22 +339,6 @@ for (int i = 0; i < results.size(); i++) {
 		</c:when>
 
 		<c:when test="<%= curFolder != null %>">
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="viewEntriesURL">
-				<portlet:param name="struts_action" value="/document_library/view" />
-				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-				<portlet:param name="showSiblings" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewAddButton" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewBreadcrumb" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewDisplayStyleButtons" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewFileEntrySearch" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="viewSortButton" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="entryStart" value="0" />
-				<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-				<portlet:param name="folderStart" value="0" />
-				<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-			</liferay-portlet:resourceURL>
 
 			<%
 			int foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
@@ -384,7 +368,6 @@ for (int i = 0; i < results.size(); i++) {
 					request.setAttribute("view_entries.jsp-folderImage", folderImage);
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
-					request.setAttribute("view_entries.jsp-viewEntriesURL", viewEntriesURL);
 					%>
 
 					<c:choose>
@@ -405,8 +388,6 @@ for (int i = 0; i < results.size(); i++) {
 
 						data.put("folder", true);
 						data.put("folder-id", curFolder.getFolderId());
-						data.put("refresh-folders", true);
-						data.put("resource-url", viewEntriesURL);
 
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
@@ -485,14 +466,6 @@ for (int i = 0; i < results.size(); i++) {
 <c:if test='<%= displayStyle.equals("list") %>'>
 	<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 </c:if>
-
-<liferay-portlet:resourceURL varImpl="paginationURL">
-	<portlet:param name="struts_action" value="/document_library/view" />
-	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-	<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-	<portlet:param name="viewFolders" value="<%= Boolean.TRUE.toString() %>" />
-	<portlet:param name="showSiblings" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-portlet:resourceURL>
 
 <aui:script>
 	Liferay.fire(

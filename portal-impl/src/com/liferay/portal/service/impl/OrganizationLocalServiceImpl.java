@@ -675,9 +675,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the organizations associated with the user, optionally
-	 * including the organizations associated with the user groups to which the
-	 * user belongs.
+	 * Returns all the organizations associated with the user.
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the organizations associated with the user
@@ -692,9 +690,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the organizations associated with the user,
-	 * optionally including the organizations associated with the user groups to
-	 * which the user belongs.
+	 * Returns a range of all the organizations associated with the user.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -

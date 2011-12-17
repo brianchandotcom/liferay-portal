@@ -15,6 +15,8 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -85,6 +87,11 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonObject.put("command", "signOut");
+
+				ClusterNode clusterNode =
+					ClusterExecutorUtil.getLocalClusterNode();
+
+				jsonObject.put("clusterNodeId", clusterNode.getClusterNodeId());
 
 				long userId = userIdObj.longValue();
 

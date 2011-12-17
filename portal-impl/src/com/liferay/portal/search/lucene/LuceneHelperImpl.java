@@ -501,7 +501,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		Address bootupAddress = null;
 
-		do{
+		do {
 			clusterNodeAddressesCount--;
 
 			ClusterNodeResponse clusterNodeResponse = null;
@@ -680,8 +680,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 			InetAddress inetAddress = clusterNode.getInetAddress();
 
 			URL url = new URL(
-				"http", inetAddress.getHostAddress(),
-				clusterNode.getPort(), "/lucene/dump");
+				"http", inetAddress.getHostAddress(), clusterNode.getPort(),
+				"/lucene/dump");
 
 			return new ObjectValuePair<String, URL>(transientToken, url);
 		}

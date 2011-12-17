@@ -380,9 +380,12 @@ public class BaseDeployer implements Deployer {
 					"/WEB-INF/classes/portlet.properties");
 
 			if (!portletPropertiesFile.exists()) {
+				String pluginPackageName = pluginPackage != null ? 
+						pluginPackage.getName() : srcFile.getName();
+
 				FileUtil.write(
 					portletPropertiesFile,
-					"plugin.package.name=" + pluginPackage.getName());
+					"plugin.package.name=" + pluginPackageName);
 			}
 		}
 	}

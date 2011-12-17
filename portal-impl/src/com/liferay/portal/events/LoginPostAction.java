@@ -14,6 +14,8 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -71,6 +73,12 @@ public class LoginPostAction extends Action {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonObject.put("command", "signIn");
+
+				ClusterNode clusterNode =
+					ClusterExecutorUtil.getLocalClusterNode();
+
+				jsonObject.put("clusterNodeId", clusterNode.getClusterNodeId());
+
 				jsonObject.put("companyId", companyId);
 				jsonObject.put("userId", userId);
 				jsonObject.put("sessionId", sessionId);

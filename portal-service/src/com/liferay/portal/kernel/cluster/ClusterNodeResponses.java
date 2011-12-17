@@ -32,8 +32,12 @@ public class ClusterNodeResponses implements Serializable {
 	public void addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
 		_clusterResponsesByAddress.put(
 			clusterNodeResponse.getAddress(), clusterNodeResponse);
+
+		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
 		_clusterResponsesByClusterNode.put(
-			clusterNodeResponse.getClusterNode(), clusterNodeResponse);
+			clusterNode.getClusterNodeId(), clusterNodeResponse);
+
 		_clusterResponsesQueue.offer(clusterNodeResponse);
 	}
 
@@ -42,7 +46,11 @@ public class ClusterNodeResponses implements Serializable {
 	}
 
 	public ClusterNodeResponse getClusterResponse(ClusterNode clusterNode) {
-		return _clusterResponsesByClusterNode.get(clusterNode);
+		return getClusterResponse(clusterNode.getClusterNodeId());
+	}
+
+	public ClusterNodeResponse getClusterResponse(String clusterNodeId) {
+		return _clusterResponsesByClusterNode.get(clusterNodeId);
 	}
 
 	public BlockingQueue<ClusterNodeResponse> getClusterResponses() {
@@ -55,9 +63,8 @@ public class ClusterNodeResponses implements Serializable {
 
 	private Map<Address, ClusterNodeResponse> _clusterResponsesByAddress =
 		new HashMap<Address, ClusterNodeResponse>();
-	private Map<ClusterNode, ClusterNodeResponse>
-		_clusterResponsesByClusterNode =
-			new HashMap<ClusterNode, ClusterNodeResponse>();
+	private Map<String, ClusterNodeResponse> _clusterResponsesByClusterNode =
+		new HashMap<String, ClusterNodeResponse>();
 	private BlockingQueue<ClusterNodeResponse> _clusterResponsesQueue =
 		new LinkedBlockingQueue<ClusterNodeResponse>();
 

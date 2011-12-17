@@ -69,6 +69,7 @@ public class ClusterExecutorImpl
 
 	public void addClusterEventListener(
 		ClusterEventListener clusterEventListener) {
+
 		if (!isEnabled()) {
 			return;
 		}
@@ -80,6 +81,10 @@ public class ClusterExecutorImpl
 	public void afterPropertiesSet() {
 		if (PropsValues.CLUSTER_EXECUTOR_DEBUG_ENABLED) {
 			addClusterEventListener(new DebuggingClusterEventListenerImpl());
+		}
+
+		if (PropsValues.LIVE_USERS_ENABLED) {
+			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
 		}
 
 		super.afterPropertiesSet();

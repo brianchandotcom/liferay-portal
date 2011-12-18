@@ -249,6 +249,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 				}
 
 				parentLayoutId = parentLayout.getParentLayoutId();
+
+				layout = parentLayout;
 			}
 		}
 

@@ -133,14 +133,34 @@ if (layout != null) {
 			function() {
 				new Liferay.Navigation(
 					{
-						layoutIds: [<%= ListUtil.toString(layouts, Layout.LAYOUT_ID_ACCESSOR) %>],
+						layoutIds: [
+
+							<%
+							for (int i = 0; i < layouts.size(); i++) {
+								Layout curLayout = (Layout)layouts.get(i);
+
+								boolean updateable = SitesUtil.isLayoutUpdateable(curLayout);
+								boolean deleteable = updateable && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE);
+							%>
+
+		                    	{
+									id: <%= curLayout.getLayoutId() %>,
+									updateable: <%= updateable %>,
+									deletable: <%= deleteable %>,
+		                        },
+
+							<%
+							}
+							%>
+
+							],
 
 						<c:if test="<%= layoutRevision != null %>">
 							layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
 						</c:if>
 
 						navBlock: navBlock,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(layout.getLayoutSet()) %>
+						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) %>
 					}
 				);
 			}

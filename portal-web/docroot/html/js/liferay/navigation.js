@@ -89,9 +89,27 @@ AUI().add(
 							var items = navBlock.all('> ul > li');
 							var layoutIds = instance.get('layoutIds');
 
+							var cssClassBuffer = [];
+
 							items.each(
 								function(item, index, collection) {
-									item._LFR_layoutId = layoutIds[index];
+									var layoutConfig = layoutIds[index];
+
+									item._LFR_layoutId = layoutConfig.id;
+
+									if (layoutConfig.deletable) {
+										cssClassBuffer.push('lfr-nav-deletable');
+									}
+
+									if (layoutConfig.updateable) {
+										cssClassBuffer.push('lfr-nav-updateable');
+									}
+
+									if (cssClassBuffer.length) {
+										item.addClass(cssClassBuffer.join(' '));
+
+										cssClassBuffer.length = 0;
+									}
 								}
 							);
 
@@ -317,10 +335,27 @@ AUI().add(
 						}
 					},
 
-					_deleteButton: function(obj) {
+					_createDeleteButton: function(obj) {
 						var instance = this;
 
 						obj.append(instance.TPL_DELETE_BUTTON);
+					},
+
+					_deleteButton: function(obj) {
+						var instance = this;
+
+						if (!A.instanceOf(obj, A.NodeList)) {
+							obj = A.all(obj);
+						}
+
+						obj.each(
+							function(item, index, collection) {
+								console.log(item.hasClass('lfr-nav-deletable'));
+								if (item.hasClass('lfr-nav-deletable')) {
+									instance._createDeleteButton(item);
+								}
+							}
+						);
 					},
 
 					_handleKeyDown: function(event) {
@@ -464,7 +499,7 @@ AUI().add(
 								{
 									container: navBlock,
 									moveType: 'move',
-									nodes: 'li',
+									nodes: '.lfr-nav-updateable',
 									opacity: '.5',
 									opacityNode: 'currentNode'
 								}
@@ -652,9 +687,13 @@ AUI().add(
 
 									comboBox.destroy();
 
-									listItem.addClass('sortable-item');
+									if (data.updateable) {
+										listItem.addClass('sortable-item lfr-nav-updateable');
+									}
 
-									instance._deleteButton(listItem);
+									if (data.deletable) {
+										instance._createDeleteButton(listItem);
+									}
 
 									Liferay.fire(
 										'navigation',

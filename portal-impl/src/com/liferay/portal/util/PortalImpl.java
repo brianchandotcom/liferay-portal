@@ -188,15 +188,34 @@ import com.liferay.util.JS;
 import com.liferay.util.PwdGenerator;
 import com.liferay.util.UniqueList;
 import com.liferay.util.servlet.DynamicServletRequest;
+import org.apache.struts.Globals;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.PreferencesValidator;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ValidatorException;
+import javax.portlet.WindowState;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.io.Serializable;
-
 import java.lang.reflect.Method;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -219,31 +238,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
-import javax.portlet.PreferencesValidator;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ValidatorException;
-import javax.portlet.WindowState;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
-
-import org.apache.struts.Globals;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1035,9 +1029,11 @@ public class PortalImpl implements Portal {
 
 		String layoutFriendlyURL = StringPool.BLANK;
 
-		if ((groupFriendlyURL.contains(layout.getFriendlyURL()) || 
-			groupFriendlyURL.contains(StringPool.SLASH.concat(Long.toString(layout.getLayoutId())))) && (
-			!layout.isFirstParent() || Validator.isNotNull(parametersURL))) {
+		if ((groupFriendlyURL.contains(layout.getFriendlyURL()) ||
+			groupFriendlyURL.contains(
+				StringPool.SLASH.concat(String.valueOf(layout.getLayoutId()))))
+			&& (!layout.isFirstParent() ||
+				Validator.isNotNull(parametersURL))) {
 
 			layoutFriendlyURL = layout.getFriendlyURL();
 		}

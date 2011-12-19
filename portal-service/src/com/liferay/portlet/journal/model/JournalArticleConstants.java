@@ -16,11 +16,18 @@ package com.liferay.portlet.journal.model;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Alexander Chow
  */
 public class JournalArticleConstants {
+
+	public static final int[] ASSET_ENTRY_CREATION_STATUSES =
+		new int[] {
+			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_EXPIRED
+		};
 
 	public static final String CANONICAL_URL_SEPARATOR = "/-/";
 

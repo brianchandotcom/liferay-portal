@@ -2232,7 +2232,7 @@ public class JournalArticleLocalServiceImpl
 			int approvedArticlesCount =
 				journalArticlePersistence.countByG_A_ST(
 					article.getGroupId(), article.getArticleId(),
-					WorkflowConstants.STATUS_APPROVED);
+					JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
 
 			if (approvedArticlesCount > 0) {
 				addDraftAssetEntry = true;

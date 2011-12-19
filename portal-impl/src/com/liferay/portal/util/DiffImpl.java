@@ -298,28 +298,29 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 		for (; i <= difference.getDeletedEnd() && j <= difference.getAddedEnd();
 				i++, j++) {
 
-			aligned = !_isMaxLineLengthExceeded(
-				sourceStringList.get(i), targetStringList.get(j)) &&
+			if (!_isMaxLineLengthExceeded(
+				sourceStringList.get(i), targetStringList.get(j))) {
+
 				_lineDiff(
 					sourceResults, targetResults, sourceStringList,
 					targetStringList, addedMarkerStart, addedMarkerEnd,
 					deletedMarkerStart, deletedMarkerEnd, i, j, true);
-
-			if (!aligned) {
+			}
+			else {
 				_highlightLines(
 					sourceStringList, deletedMarkerStart, deletedMarkerEnd, i,
 					i);
-				
+
 				DiffResult sourceResult = new DiffResult(
 					i, sourceStringList.subList(i, i + 1));
 
 				sourceResults.add(sourceResult);
 
 				targetResults.add(new DiffResult(i, CONTEXT_LINE));
-				
+
 				_highlightLines(
 					targetStringList, addedMarkerStart, addedMarkerEnd, j, j);
-				
+
 				DiffResult targetResult = new DiffResult(
 					j, targetStringList.subList(j, j + 1));
 
@@ -389,14 +390,14 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 	}
 
 	private static boolean _isMaxLineLengthExceeded(
-		String source, String target){
-		
-		if(source.length() > _DIFF_MAX_LINE_LENGTH ||
+		String source, String target) {
+
+		if (source.length() > _DIFF_MAX_LINE_LENGTH ||
 			target.length() > _DIFF_MAX_LINE_LENGTH) {
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -583,7 +584,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 
 		return sb.toString();
 	}
-	
+
 	private static int _DIFF_MAX_LINE_LENGTH = 5000;
 
 }

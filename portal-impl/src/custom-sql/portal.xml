@@ -305,7 +305,7 @@
 				ResourceAction ON
 					(ResourceAction.name = ResourceTypePermission.name) AND
 					(ResourceAction.actionId = ?) AND
-					(BITAND(CAST_LONG(ResourcePermission.actionIds), CAST_LONG(ResourceAction.bitwiseValue)) != 0)
+					(BITAND(CAST_LONG(ResourceTypePermission.actionIds), CAST_LONG(ResourceAction.bitwiseValue)) != 0)
 			WHERE
 				(Group_.liveGroupId = 0)
 		]]>

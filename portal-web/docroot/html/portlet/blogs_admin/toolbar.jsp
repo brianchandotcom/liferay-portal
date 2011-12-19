@@ -32,8 +32,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
+			<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

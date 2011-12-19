@@ -32,7 +32,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
 		<portlet:renderURL var="addPasswordPolicyURL">
 			<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= viewPasswordPoliciesURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

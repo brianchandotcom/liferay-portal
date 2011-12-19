@@ -36,7 +36,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) %>">
 				<portlet:renderURL var="addUserURL">
 					<portlet:param name="struts_action" value="/users_admin/edit_user" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 				</portlet:renderURL>
 
 				<liferay-ui:icon
@@ -54,7 +54,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 
 					<portlet:renderURL var="addOrganizationURL">
 						<portlet:param name="struts_action" value="/users_admin/edit_organization" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 						<portlet:param name="type" value="<%= organizationType %>" />
 					</portlet:renderURL>
 

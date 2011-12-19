@@ -21,10 +21,14 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 %>
 
 <c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+	<portlet:renderURL var="viewRulesURL">
+		<portlet:param name="struts_action" value="/mobile_device_rules/view" />
+	</portlet:renderURL>
+
 	<liferay-portlet:renderURL var="addRuleGroupURL">
 		<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="redirect" value="<%= viewRulesURL %>" />
+		<portlet:param name="backURL" value="<%= viewRulesURL %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	</liferay-portlet:renderURL>
 

@@ -32,7 +32,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
 		<portlet:renderURL var="addUsergroupURL">
 			<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

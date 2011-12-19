@@ -32,8 +32,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
+			<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

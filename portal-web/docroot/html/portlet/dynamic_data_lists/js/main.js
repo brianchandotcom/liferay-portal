@@ -290,8 +290,11 @@ AUI().add(
 
 									var value = data[name];
 
-									if (value !== STR_EMPTY) {
-										value = Liferay.Language.get(value);
+									if (value === 'true') {
+										value = Liferay.Language.get('true');
+									}									
+									else if (value === 'false') {
+										value = Liferay.Language.get('false');
 									}
 
 									return value;

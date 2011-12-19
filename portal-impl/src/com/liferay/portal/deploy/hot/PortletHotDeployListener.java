@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
+import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -410,6 +411,10 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		registerClpMessageListeners(servletContext, portletClassLoader);
 
+		// Javadoc
+
+		JavadocManagerUtil.load(servletContextName, portletClassLoader);
+
 		// Clear cache
 
 		DirectServletRegistry.clearServlets();
@@ -488,6 +493,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		PortletResourceBundles.remove(servletContextName);
 
 		unregisterClpMessageListeners(servletContext);
+
+		JavadocManagerUtil.unload(servletContextName);
 
 		if (_log.isInfoEnabled()) {
 			if (portlets.size() == 1) {

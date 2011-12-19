@@ -18,6 +18,12 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+
+PortletURL currentPortletURL = PortletURLUtil.clone(currentURLObj, renderResponse);
+
+currentPortletURL.setParameter("struts_action", "/roles_admin/view");
+
+currentURL = currentPortletURL.toString();
 %>
 
 <div class="lfr-portlet-toolbar">

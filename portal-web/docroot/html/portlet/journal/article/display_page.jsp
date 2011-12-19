@@ -482,7 +482,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 						messageType = 'info';
 					}
 					else if (text) {
-						messageText = Lang.sub('<liferay-ui:message key="x-is-not-a-content-display-page" />', ['"' + text + '"']);
+						messageText = Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-is-not-a-content-display-page")  %>', ['"' + text + '"']);
 					}
 				}
 

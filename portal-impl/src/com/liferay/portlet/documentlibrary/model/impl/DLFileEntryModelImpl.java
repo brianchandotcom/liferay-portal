@@ -170,8 +170,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileEntry"));
+	public static final long LOCK_EXPIRATION_TIME = 0;
 
 	public DLFileEntryModelImpl() {
 	}

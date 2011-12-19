@@ -3459,6 +3459,73 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns all the journal articles where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @return the matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A_ST(
+		long groupId, java.lang.String articleId, int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_A_ST(groupId, articleId, statuses);
+	}
+
+	/**
+	* Returns a range of all the journal articles where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A_ST(
+		long groupId, java.lang.String articleId, int[] statuses, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_A_ST(groupId, articleId, statuses, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_A_ST(
+		long groupId, java.lang.String articleId, int[] statuses, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_A_ST(groupId, articleId, statuses, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -3541,6 +3608,69 @@ public class JournalArticleUtil {
 		return getPersistence()
 				   .filterFindByG_A_ST_PrevAndNext(id, groupId, articleId,
 			status, orderByComparator);
+	}
+
+	/**
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @return the matching journal articles that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A_ST(
+		long groupId, java.lang.String articleId, int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_A_ST(groupId, articleId, statuses);
+	}
+
+	/**
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A_ST(
+		long groupId, java.lang.String articleId, int[] statuses, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_A_ST(groupId, articleId, statuses, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_A_ST(
+		long groupId, java.lang.String articleId, int[] statuses, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_A_ST(groupId, articleId, statuses, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -4668,6 +4798,21 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns the number of journal articles where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @return the number of matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_A_ST(long groupId, java.lang.String articleId,
+		int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_A_ST(groupId, articleId, statuses);
+	}
+
+	/**
 	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -4680,6 +4825,21 @@ public class JournalArticleUtil {
 		java.lang.String articleId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().filterCountByG_A_ST(groupId, articleId, status);
+	}
+
+	/**
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @param statuses the statuses
+	* @return the number of matching journal articles that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_A_ST(long groupId,
+		java.lang.String articleId, int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_A_ST(groupId, articleId, statuses);
 	}
 
 	/**

@@ -119,8 +119,8 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 		limitTest(outsideDST, durationHour, firstSunOfMonth);
 	}
 
-	protected void limitTest(Calendar candidate, Duration duration,
-		TZSRecurrence recur) {
+	protected void limitTest(
+		Calendar candidate, Duration duration, TZSRecurrence recur) {
 
 		long candidateTimeInMills = candidate.getTimeInMillis();
 		long durationInMills = duration.getInterval();
@@ -177,4 +177,5 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 
 	protected Calendar insideDSTStart = getCalendar(2011, JULY, 3, 4, 0);
 	protected Calendar outsideDSTStart = getCalendar(2011, FEBRUARY, 7, 5, 0);
+
 }

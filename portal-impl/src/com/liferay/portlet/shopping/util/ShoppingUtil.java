@@ -1009,13 +1009,14 @@ public class ShoppingUtil {
 			}
 		}
 		else {
-			int rowPos = getFieldsQuantitiesPos(item, itemFields, fieldsArray);
-
 			String[] fieldsQuantities = item.getFieldsQuantitiesArray();
 
 			int stockQuantity = 0; 
 
 			if (fieldsQuantities.length > 0) {
+				int rowPos = getFieldsQuantitiesPos(
+					item, itemFields, fieldsArray);
+
 				stockQuantity = GetterUtil.getInteger(fieldsQuantities[rowPos]);
 			}
 

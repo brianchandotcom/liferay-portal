@@ -1013,7 +1013,11 @@ public class ShoppingUtil {
 
 			String[] fieldsQuantities = item.getFieldsQuantitiesArray();
 
-			int stockQuantity = GetterUtil.getInteger(fieldsQuantities[rowPos]);
+			int stockQuantity = 0; 
+
+			if (fieldsQuantities.length > 0) {
+				stockQuantity = GetterUtil.getInteger(fieldsQuantities[rowPos]);
+			}
 
 			try {
 				if ((stockQuantity > 0) &&

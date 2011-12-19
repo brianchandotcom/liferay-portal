@@ -461,7 +461,8 @@ public class LayoutImporter {
 					sourcePrototypeLayoutUuid, group.getGroupId());
 
 				if (sourcePrototypeLayout == null) {
-					LayoutLocalServiceUtil.deleteLayout(layout);
+					LayoutLocalServiceUtil.deleteLayout(
+						layout, false, serviceContext);
 				}
 			}
 		}
@@ -816,7 +817,11 @@ public class LayoutImporter {
 			if (layout != null) {
 				newLayoutsMap.put(oldLayoutId, layout);
 
-				LayoutLocalServiceUtil.deleteLayout(layout);
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				LayoutLocalServiceUtil.deleteLayout(
+					layout, false, serviceContext);
 			}
 
 			return;

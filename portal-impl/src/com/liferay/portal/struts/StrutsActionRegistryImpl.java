@@ -18,22 +18,43 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.struts.action.Action;
 
 /**
+ * @author Mika Koivisto
  * @author Raymond Augé
  */
-public interface StrutsActionRegistry {
+public class StrutsActionRegistryImpl implements StrutsActionRegistry {
 
-	public Action getAction(String path);
+	public Action getAction(String path) {
+		return _actions.get(path);
+	}
 
-	public Map<String, Action> getActions();
+	public Map<String, Action> getActions() {
+		return _actions;
+	}
 
-	public void register(String path, StrutsAction strutsAction);
+	public void register(String path, StrutsAction strutsAction) {
+		Action action = new ActionAdapter(strutsAction);
 
-	public void register(String path, StrutsPortletAction strutsPortletAction);
+		_actions.put(path, action);
+	}
 
-	public void unregister(String path);
+	public void register(
+		String path, StrutsPortletAction strutsPortletAction) {
+
+		Action action = new PortletActionAdapter(strutsPortletAction);
+
+		_actions.put(path, action);
+	}
+
+	public void unregister(String path) {
+		_actions.remove(path);
+	}
+
+	private static Map<String, Action> _actions =
+		new ConcurrentHashMap<String, Action>();
 
 }

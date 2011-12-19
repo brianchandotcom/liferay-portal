@@ -301,7 +301,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 		throws IOException {
 
 		PortletActionAdapter portletActionAdapter =
-			(PortletActionAdapter)StrutsActionRegistry.getAction(
+			(PortletActionAdapter)StrutsActionRegistryUtil.getAction(
 				actionMapping.getPath());
 
 		if (portletActionAdapter != null) {
@@ -409,7 +409,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				companyId, portletConfigImpl.getPortletId());
 
-			if (StrutsActionRegistry.getAction(path) != null) {
+			if (StrutsActionRegistryUtil.getAction(path) != null) {
 				actionMapping = (ActionMapping)moduleConfig.findActionConfig(
 					path);
 
@@ -432,7 +432,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 					StringPool.SLASH + portlet.getParentStrutsPath() +
 						path.substring(pos, path.length());
 
-				if (StrutsActionRegistry.getAction(parentPath) != null) {
+				if (StrutsActionRegistryUtil.getAction(parentPath) != null) {
 					actionMapping =
 						(ActionMapping)moduleConfig.findActionConfig(path);
 

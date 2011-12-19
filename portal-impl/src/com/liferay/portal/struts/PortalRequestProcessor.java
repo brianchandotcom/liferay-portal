@@ -155,7 +155,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		ActionMapping actionMapping =
 			(ActionMapping)moduleConfig.findActionConfig(path);
 
-		Action action = StrutsActionRegistry.getAction(path);
+		Action action = StrutsActionRegistryUtil.getAction(path);
 
 		if (((basicAuthEnabled != null) && basicAuthEnabled.booleanValue()) ||
 			((actionMapping == null) && (action == null))) {
@@ -482,7 +482,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		throws IOException {
 
 		ActionAdapter actionAdapter =
-			(ActionAdapter)StrutsActionRegistry.getAction(
+			(ActionAdapter)StrutsActionRegistryUtil.getAction(
 				actionMapping.getPath());
 
 		if (actionAdapter != null) {
@@ -512,7 +512,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return null;
 		}
 
-		Action action = StrutsActionRegistry.getAction(path);
+		Action action = StrutsActionRegistryUtil.getAction(path);
 
 		if (action != null) {
 			ActionMapping actionMapping =
@@ -803,7 +803,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			(ActionMapping)moduleConfig.findActionConfig(path);
 
 		if (actionMapping == null) {
-			Action strutsAction = StrutsActionRegistry.getAction(path);
+			Action strutsAction = StrutsActionRegistryUtil.getAction(path);
 
 			if (strutsAction == null) {
 				return null;

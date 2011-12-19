@@ -90,7 +90,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	int totalEmptyRecords = Math.max(recordSet.getMinDisplayRows(), records.size());
 	%>
 
-	var records = <%= DDLUtil.getRecordsJSONArray(records, themeDisplay) %>;
+	var records = <%= DDLUtil.getRecordsJSONArray(records) %>;
 
 	records.sort(
 		function(a, b) {

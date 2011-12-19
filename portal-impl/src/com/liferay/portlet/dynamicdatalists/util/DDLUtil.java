@@ -89,8 +89,7 @@ public class DDLUtil {
 		return "ddl_records/" + record.getRecordId();
 	}
 
-	public static JSONObject getRecordJSONObject(
-			DDLRecord record, ThemeDisplay themeDisplay)
+	public static JSONObject getRecordJSONObject(DDLRecord record)
 		throws Exception {
 
 		DDLRecordSet recordSet = record.getRecordSet();
@@ -120,8 +119,6 @@ public class DDLUtil {
 				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
 			}
 			else {
-				fieldValue = field.getRenderedValue(themeDisplay);
-
 				jsonObject.put(fieldName, (String)fieldValue);
 			}
 		}
@@ -179,21 +176,19 @@ public class DDLUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray getRecordsJSONArray(
-			DDLRecordSet recordSet, ThemeDisplay themeDisplay)
+	public static JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
 		throws Exception {
 
-		return getRecordsJSONArray(recordSet.getRecords(), themeDisplay);
+		return getRecordsJSONArray(recordSet.getRecords());
 	}
 
-	public static JSONArray getRecordsJSONArray(
-			List<DDLRecord> records, ThemeDisplay themeDisplay)
+	public static JSONArray getRecordsJSONArray(List<DDLRecord> records)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (DDLRecord record : records) {
-			JSONObject jsonObject = getRecordJSONObject(record, themeDisplay);
+			JSONObject jsonObject = getRecordJSONObject(record);
 
 			jsonArray.put(jsonObject);
 		}

@@ -19,6 +19,7 @@ AUI().add(
 
 		var EMPTY_FN = A.Lang.emptyFn;
 
+		var STR_COMMA = ',';
 		var STR_EMPTY = '';
 
 		var DLFileEntryCellEditor = A.Component.create(
@@ -79,7 +80,7 @@ AUI().add(
 					},
 
 					_selectFileEntry: function(url, uuid, title, version) {
-						var instance = this
+						var instance = this;
 
 						instance.selectedTitle = title;
 						instance.selectedURL = url;
@@ -266,19 +267,9 @@ AUI().add(
 									var type = field.type;
 
 									if ((type === 'radio') || (type === 'select')) {
-										if (!Lang.isArray(item)) {
-											item = [item];
+										if (Lang.isArray(item)) {
+											item = item.join();
 										}
-
-										var values = [];
-
-										for (var i = 0; i < item.length; i++) {
-											var option = SpreadSheet.findStructureFieldByAttribute(field.options, 'label', item[i]);
-
-											values[i] = option.value;
-										}
-
-										item = values.join();
 									}
 								}
 
@@ -478,9 +469,36 @@ AUI().add(
 							else if ((type === 'radio') || (type === 'select')) {
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
-								config.options = instance.getCellEditorOptions(structureField.options);
+								var multiple = A.DataType.Boolean.parse(structureField.multiple);
+								var options = instance.getCellEditorOptions(structureField.options);
 
-								config.multiple = A.DataType.Boolean.parse(structureField.multiple);
+								item.formatter = function(obj) {
+									var data = obj.record.get('data');
+
+									var label = [];
+									var value = data[name];
+
+									if (multiple) {
+										if (!Lang.isArray(value)) {
+											value = value.split(STR_COMMA);
+										}
+
+										AArray.each(
+											value,
+											function(item1, index1, collection1) {
+												label.push(options[item1]);
+											}
+										);
+									}
+									else {
+										label.push(options[value]);
+									}
+
+									return label.join(', ');
+								};
+
+								config.multiple = multiple;
+								config.options = options;
 							}
 
 							var validatorRuleName = instance.DATATYPE_VALIDATOR[dataType];
@@ -540,7 +558,7 @@ AUI().add(
 					AArray.each(
 						options,
 						function(item, index, collection) {
-							normalized[item.label] = item.label;
+							normalized[item.value] = item.label;
 						}
 					);
 

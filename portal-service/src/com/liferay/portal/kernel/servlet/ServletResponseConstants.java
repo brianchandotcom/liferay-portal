@@ -19,12 +19,12 @@ package com.liferay.portal.kernel.servlet;
  */
 public interface ServletResponseConstants {
 
-	public static final int SC_DUPLICATE_FILE_EXCEPTION = 1000;
+	public static final int SC_DUPLICATE_FILE_EXCEPTION = 490;
 
-	public static final int SC_FILE_EXTENSION_EXCEPTION = 1001;
+	public static final int SC_FILE_EXTENSION_EXCEPTION = 491;
 
-	public static final int SC_FILE_NAME_EXCEPTION = 1002;
+	public static final int SC_FILE_NAME_EXCEPTION = 492;
 
-	public static final int SC_FILE_SIZE_EXCEPTION = 1003;
+	public static final int SC_FILE_SIZE_EXCEPTION = 493;
 
 }

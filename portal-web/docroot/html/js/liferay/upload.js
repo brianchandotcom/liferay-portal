@@ -116,10 +116,10 @@ AUI().add(
 			instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
 
 			instance._errorMessages = {
-				'1000': instance._duplicateFileText,
-				'1001': instance._invalidFileExtensionText,
-				'1002': instance._invalidFileNameText,
-				'1003': instance._invalidFileSizeText
+				'490': instance._duplicateFileText,
+				'491': instance._invalidFileExtensionText,
+				'492': instance._invalidFileNameText,
+				'493': instance._invalidFileSizeText
 			};
 
 			if (instance._fallbackContainer) {

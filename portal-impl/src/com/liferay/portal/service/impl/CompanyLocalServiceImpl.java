@@ -1014,7 +1014,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		imageLocalService.updateImage(company.getLogoId(), bytes);
 
-		return companyPersistence.update(company, false);
+		return company;
 	}
 
 	/**
@@ -1034,7 +1034,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		imageLocalService.updateImage(company.getLogoId(), file);
 
-		return companyPersistence.update(company, false);
+		return company;
 	}
 
 	/**
@@ -1054,7 +1054,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		imageLocalService.updateImage(company.getLogoId(), is);
 
-		return companyPersistence.update(company, false);
+		return company;
 	}
 
 	/**
@@ -1186,15 +1186,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * Check if the company has a valid logo, assigning a new one if it has
-	 * no logo.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @return the Company
-	 * @throws PortalException if a PortalException ocurred
-	 * @throws SystemException if a SystemException ocurred
-	 */
 	protected Company checkCompanyLogo(long companyId)
 		throws PortalException, SystemException {
 
@@ -1206,6 +1197,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			logoId = counterLocalService.increment();
 
 			company.setLogoId(logoId);
+
+			company = companyPersistence.update(company, false);
 		}
 
 		return company;

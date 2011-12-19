@@ -97,8 +97,8 @@ public class EditCompanyLogoAction extends PortletAction {
 				throw new UploadException();
 			}
 
-			Company company =
-				CompanyServiceUtil.updateLogo(companyId, inputStream);
+			Company company = CompanyServiceUtil.updateLogo(
+				companyId, inputStream);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);

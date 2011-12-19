@@ -361,12 +361,13 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  inputStream the input stream of the company's logo image
+	 * @return the company with the primary key
 	 * @throws PortalException if the company's logo ID could not be found or if
 	 *         the logo's image was corrupted or if the user was an
 	 *         administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void updateLogo(long companyId, InputStream inputStream)
+	public Company updateLogo(long companyId, InputStream inputStream)
 		throws PortalException, SystemException {
 
 		if (!roleLocalService.hasUserRole(
@@ -375,7 +376,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			throw new PrincipalException();
 		}
 
-		companyLocalService.updateLogo(companyId, inputStream);
+		return companyLocalService.updateLogo(companyId, inputStream);
 	}
 
 	/**

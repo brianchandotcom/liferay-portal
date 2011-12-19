@@ -19,10 +19,13 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 
 import java.io.InputStream;
 
@@ -94,7 +97,13 @@ public class EditCompanyLogoAction extends PortletAction {
 				throw new UploadException();
 			}
 
-			CompanyServiceUtil.updateLogo(companyId, inputStream);
+			Company company = CompanyServiceUtil.updateLogo(
+				companyId, inputStream);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setCompany(company);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

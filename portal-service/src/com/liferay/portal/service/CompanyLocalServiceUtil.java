@@ -667,14 +667,16 @@ public class CompanyLocalServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param bytes the bytes of the company's logo image
+	* @return the company with the primary key
 	* @throws PortalException if the company's logo ID could not be found or if
 	the logo's image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateLogo(long companyId, byte[] bytes)
+	public static com.liferay.portal.model.Company updateLogo(long companyId,
+		byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateLogo(companyId, bytes);
+		return getService().updateLogo(companyId, bytes);
 	}
 
 	/**
@@ -682,14 +684,16 @@ public class CompanyLocalServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param file the file of the company's logo image
+	* @return the company with the primary key
 	* @throws PortalException the company's logo ID could not be found or if
 	the logo's image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateLogo(long companyId, java.io.File file)
+	public static com.liferay.portal.model.Company updateLogo(long companyId,
+		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateLogo(companyId, file);
+		return getService().updateLogo(companyId, file);
 	}
 
 	/**
@@ -697,14 +701,16 @@ public class CompanyLocalServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param is the input stream of the company's logo image
+	* @return the company with the primary key
 	* @throws PortalException if the company's logo ID could not be found or if
 	the company's logo image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void updateLogo(long companyId, java.io.InputStream is)
+	public static com.liferay.portal.model.Company updateLogo(long companyId,
+		java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateLogo(companyId, is);
+		return getService().updateLogo(companyId, is);
 	}
 
 	/**

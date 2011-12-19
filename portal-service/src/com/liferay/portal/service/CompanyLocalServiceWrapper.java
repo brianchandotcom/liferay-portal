@@ -648,14 +648,16 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	*
 	* @param companyId the primary key of the company
 	* @param bytes the bytes of the company's logo image
+	* @return the company with the primary key
 	* @throws PortalException if the company's logo ID could not be found or if
 	the logo's image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateLogo(long companyId, byte[] bytes)
+	public com.liferay.portal.model.Company updateLogo(long companyId,
+		byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_companyLocalService.updateLogo(companyId, bytes);
+		return _companyLocalService.updateLogo(companyId, bytes);
 	}
 
 	/**
@@ -663,14 +665,16 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	*
 	* @param companyId the primary key of the company
 	* @param file the file of the company's logo image
+	* @return the company with the primary key
 	* @throws PortalException the company's logo ID could not be found or if
 	the logo's image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateLogo(long companyId, java.io.File file)
+	public com.liferay.portal.model.Company updateLogo(long companyId,
+		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_companyLocalService.updateLogo(companyId, file);
+		return _companyLocalService.updateLogo(companyId, file);
 	}
 
 	/**
@@ -678,14 +682,16 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	*
 	* @param companyId the primary key of the company
 	* @param is the input stream of the company's logo image
+	* @return the company with the primary key
 	* @throws PortalException if the company's logo ID could not be found or if
 	the company's logo image was corrupted
 	* @throws SystemException if a system exception occurred
 	*/
-	public void updateLogo(long companyId, java.io.InputStream is)
+	public com.liferay.portal.model.Company updateLogo(long companyId,
+		java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_companyLocalService.updateLogo(companyId, is);
+		return _companyLocalService.updateLogo(companyId, is);
 	}
 
 	/**

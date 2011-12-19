@@ -37,7 +37,7 @@ String chooseCallback = (String)request.getAttribute("record_set_action.jsp-choo
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("javascript:");
-		sb.append(chooseCallback);
+		sb.append(HtmlUtil.escape(chooseCallback));
 		sb.append("('");
 		sb.append(recordSet.getRecordSetId());
 		sb.append("', '");

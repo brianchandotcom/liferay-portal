@@ -1203,7 +1203,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				role = rolePersistence.findByC_N(companyId, name);
 			}
 
-			if (!role.getDescription().equals(descriptionMap)) {
+			if (role.getDescriptionMap() != descriptionMap) {
 				role.setDescriptionMap(descriptionMap);
 
 				roleLocalService.updateRole(role, false);

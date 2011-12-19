@@ -873,6 +873,18 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String portletId = _portletIdsByStrutsPath.get(securityPath);
 
 		if (Validator.isNull(portletId)) {
+			for (String strutsPath : _portletIdsByStrutsPath.keySet()) {
+				if (securityPath.startsWith(
+						strutsPath.concat(StringPool.SLASH))) {
+
+					portletId =  _portletIdsByStrutsPath.get(strutsPath);
+
+					break;
+				}
+			}
+		}
+
+		if (Validator.isNull(portletId)) {
 			_log.error(
 				"Struts path " + securityPath + " is not mapped to a portlet " +
 					"in liferay-portlet.xml");

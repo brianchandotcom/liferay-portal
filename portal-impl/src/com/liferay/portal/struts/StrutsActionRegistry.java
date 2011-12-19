@@ -24,6 +24,7 @@ import org.apache.struts.action.Action;
 
 /**
  * @author Mika Koivisto
+ * @author Raymond Augé
  */
 public class StrutsActionRegistry {
 
@@ -46,7 +47,19 @@ public class StrutsActionRegistry {
 	}
 
 	public static Action getAction(String path) {
-		return _actions.get(path);
+		Action action = _actions.get(path);
+
+		if (action == null) {
+			for (String mappingPath : _actions.keySet()) {
+				if (path.startsWith(mappingPath)) {
+					action = _actions.get(mappingPath);
+
+					break;
+				}
+			}
+		}
+
+		return action;
 	}
 
 	private static Map<String, Action> _actions =

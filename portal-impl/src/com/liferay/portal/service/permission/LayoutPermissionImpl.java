@@ -239,7 +239,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			while (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getParentLayoutId());
+					parentLayoutId);
 
 				if (contains(
 						permissionChecker, parentLayout, controlPanelCategory,
@@ -249,8 +249,6 @@ public class LayoutPermissionImpl implements LayoutPermission {
 				}
 
 				parentLayoutId = parentLayout.getParentLayoutId();
-
-				layout = parentLayout;
 			}
 		}
 

@@ -240,8 +240,13 @@
 							defaultDatabase.val(showDefault);
 						};
 
-						customDatabaseOptionsLink.on('click', A.bind(toggleDatabaseOptions, null, false));
-						defaultDatabaseOptionsLink.on('click', A.bind(toggleDatabaseOptions, null, true));
+						if (customDatabaseOptionsLink) {
+							customDatabaseOptionsLink.on('click', A.bind(toggleDatabaseOptions, null, false));
+						}
+
+						if (defaultDatabaseOptionsLink) {
+							defaultDatabaseOptionsLink.on('click', A.bind(toggleDatabaseOptions, null, true));
+						}
 
 						var onChangeDatabaseSelector = function() {
 							var value = databaseSelector.val();

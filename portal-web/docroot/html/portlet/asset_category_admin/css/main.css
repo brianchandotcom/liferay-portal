@@ -289,12 +289,13 @@
 	}
 
 	.yui3-widget-bd .aui-field.vocabulary-checkbox {
+		margin-top: 1.8em;
+
 		input {
-			width: 100%;
+			width: auto;
 		}
 
 		label {
-			margin: 1.8em 0;
 			display:inline-block;
 		}
 	}

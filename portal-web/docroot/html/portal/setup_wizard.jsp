@@ -324,7 +324,7 @@
 												failure: function(event, id, obj) {
 													loadingMask.hide();
 
-													updateMessage('<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
+													updateMessage('<%= UnicodeLanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
 												}
 											},
 											on: {

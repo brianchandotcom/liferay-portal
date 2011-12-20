@@ -145,6 +145,17 @@ public class DLFolderPermission {
 		throws PortalException, SystemException {
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			// LPS-24245 - Prevent the propagation of checks for actions that
+			// are not supported at the application resource level.
+
+			if (actionId.equals(ActionKeys.ACCESS) ||
+				actionId.equals(ActionKeys.DELETE) ||
+				actionId.equals(ActionKeys.ADD_SUBFOLDER)) {
+
+				return false;
+			}
+
 			return DLPermission.contains(permissionChecker, groupId, actionId);
 		}
 		else {

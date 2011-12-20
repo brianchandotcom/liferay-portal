@@ -70,16 +70,14 @@ public class Log4JUtil {
 			return;
 		}
 
-		// See LPS-6029 and LPS-8865
+		// See LPS-6029, LPS-8865 and LPS-24280
 
-		if (!ServerDetector.isJBoss()) {
-			DOMConfigurator domConfigurator = new DOMConfigurator();
+		DOMConfigurator domConfigurator = new DOMConfigurator();
 
-			Reader urlReader = new StringReader(urlContent);
+		Reader urlReader = new StringReader(urlContent);
 
-			domConfigurator.doConfigure(
-				urlReader, LogManager.getLoggerRepository());
-		}
+		domConfigurator.doConfigure(
+			urlReader, LogManager.getLoggerRepository());
 
 		Set<String> currentLoggerNames = new HashSet<String>();
 

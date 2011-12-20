@@ -88,7 +88,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 					StringBundler sb = new StringBundler(7);
 
 					sb.append("javascript:Liferay.Util.getOpener().");
-					sb.append(chooseCallback);
+					sb.append(HtmlUtil.escape(chooseCallback));
 					sb.append("(");
 					sb.append(ruleGroup.getRuleGroupId());
 					sb.append(",'");

@@ -223,31 +223,31 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 			String taglibOnClick = namespace + "showTable('" + namespace + "neverTable');";
 			%>
 
-			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="neverRadio" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" onClick="<%= taglibOnClick %>" />
 
 			<%
 			taglibOnClick = namespace + "showTable('" + namespace + "dailyTable');";
 			%>
 
-			<aui:input checked="<%= recurrenceType == Recurrence.DAILY %>" id="dailyRadio" label="daily" name="recurrenceType" type="radio" value="<%= Recurrence.DAILY %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.DAILY %>" id="recurrenceTypeDaily" label="daily" name="recurrenceType" type="radio" value="<%= Recurrence.DAILY %>" onClick="<%= taglibOnClick %>" />
 
 			<%
 			taglibOnClick = namespace + "showTable('" + namespace + "weeklyTable');";
 			%>
 
-			<aui:input checked="<%= recurrenceType == Recurrence.WEEKLY %>" id="weeklyRadio" label="weekly" name="recurrenceType" type="radio" value="<%= Recurrence.WEEKLY %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.WEEKLY %>" id="recurrenceTypeWeekly" label="weekly" name="recurrenceType" type="radio" value="<%= Recurrence.WEEKLY %>" onClick="<%= taglibOnClick %>" />
 
 			<%
 			taglibOnClick = namespace + "showTable('" + namespace + "monthlyTable');";
 			%>
 
-			<aui:input checked="<%= recurrenceType == Recurrence.MONTHLY %>" id="monthlyRadio" label="monthly" name="recurrenceType" type="radio" value="<%= Recurrence.MONTHLY %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.MONTHLY %>" id="recurrenceTypeMonthly" label="monthly" name="recurrenceType" type="radio" value="<%= Recurrence.MONTHLY %>" onClick="<%= taglibOnClick %>" />
 
 			<%
 			taglibOnClick = namespace + "showTable('" + namespace + "yearlyTable');";
 			%>
 
-			<aui:input checked="<%= recurrenceType == Recurrence.YEARLY %>" id="yearlyRadio" label="yearly" name="recurrenceType" type="radio" value="<%= Recurrence.YEARLY %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.YEARLY %>" id="recurrenceTypeYearly" label="yearly" name="recurrenceType" type="radio" value="<%= Recurrence.YEARLY %>" onClick="<%= taglibOnClick %>" />
 		</aui:field-wrapper>
 	</aui:column>
 

@@ -226,7 +226,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 
 			<liferay-ui:input-repeat event="<%= event %>" />
 
-			<aui:fieldset id='<%= renderResponse.getNamespace() + "repeatUntilFieldSet" %>'>
+			<aui:fieldset id="repeatUntilOptions">
 				<aui:field-wrapper cssClass="end-date-field" label="repeat-until" name="endDateType">
 					<aui:input checked="<%= endDateType == 0 %>" cssClass="input-container" label="no-end-date" name="endDateType" type="radio" value="0" />
 
@@ -362,11 +362,11 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 		);
 	}
 
-	Liferay.Util.toggleRadio('<portlet:namespace />neverRadio', '', '<portlet:namespace />repeatUntilFieldSet');
-	Liferay.Util.toggleRadio('<portlet:namespace />dailyRadio', '<portlet:namespace />repeatUntilFieldSet', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />weeklyRadio', '<portlet:namespace />repeatUntilFieldSet', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />monthlyRadio', '<portlet:namespace />repeatUntilFieldSet', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />yearlyRadio', '<portlet:namespace />repeatUntilFieldSet', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />recurrenceTypeNever', '', '<portlet:namespace />repeatUntilOptions');
+	Liferay.Util.toggleRadio('<portlet:namespace />recurrenceTypeDaily', '<portlet:namespace />repeatUntilOptions', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />recurrenceTypeWeekly', '<portlet:namespace />repeatUntilOptions', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />recurrenceTypeMonthly', '<portlet:namespace />repeatUntilOptions', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />recurrenceTypeYearly', '<portlet:namespace />repeatUntilOptions', '');
 </aui:script>
 
 <%

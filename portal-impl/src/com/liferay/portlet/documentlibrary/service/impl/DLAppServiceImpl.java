@@ -1775,6 +1775,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return TempFileUtil.getTempFileEntryNames(getUserId(), tempFolderName);
 	}
 
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		return repository.lockFileEntry(fileEntryId);
+	}
+
+	public Lock lockFileEntry(
+			long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		return repository.lockFileEntry(fileEntryId, owner, expirationTime);
+	}
+
 	/**
 	 * Locks the folder. This method is primarily used by WebDAV.
 	 *
@@ -1986,6 +2003,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	public void unlockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		repository.unlockFileEntry(fileEntryId);
+	}
+
+	public void unlockFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		repository.unlockFileEntry(fileEntryId, lockUuid);
 	}
 
 	/**
@@ -2344,6 +2377,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.verifyFileEntryCheckOut(fileEntryId, lockUuid);
+	}
+
+	public boolean verifyFileEntryLock(
+			long repositoryId, long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.verifyFileEntryLock(fileEntryId, lockUuid);
 	}
 
 	/**

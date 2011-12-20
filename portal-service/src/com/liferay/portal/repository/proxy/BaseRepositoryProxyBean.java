@@ -400,6 +400,24 @@ public class BaseRepositoryProxyBean
 		_baseRepository.initRepository();
 	}
 
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Lock lock = _baseRepository.lockFileEntry(fileEntryId);
+
+		return (Lock)newProxyInstance(lock, Lock.class);
+	}
+
+	public Lock lockFileEntry(
+		long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		Lock lock = _baseRepository.lockFileEntry(
+			fileEntryId, owner, expirationTime);
+
+		return (Lock)newProxyInstance(lock, Lock.class);
+	}
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -520,6 +538,18 @@ public class BaseRepositoryProxyBean
 		_baseRepository.setUserLocalService(userLocalService);
 	}
 
+	public void unlockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		_baseRepository.unlockFileEntry(fileEntryId);
+	}
+
+	public void unlockFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		_baseRepository.unlockFileEntry(fileEntryId, lockUuid);
+	}
+
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 
@@ -574,6 +604,12 @@ public class BaseRepositoryProxyBean
 		throws PortalException, SystemException {
 
 		return _baseRepository.verifyFileEntryCheckOut(fileEntryId, lockUuid);
+	}
+
+	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+	
+		return _baseRepository.verifyFileEntryLock(fileEntryId, lockUuid);
 	}
 
 	public boolean verifyInheritableLock(long folderId, String lockUuid)

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.webdav.Status;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -236,7 +237,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			else {
 				FileEntry fileEntry = (FileEntry)model;
 
-				if (isLocked(fileEntry, webDavRequest.getLockUuid())) {
+				if (!hasLock(fileEntry, webDavRequest.getLockUuid()) &&
+					(fileEntry.getLock() != null)) {
+
 					return WebDAVUtil.SC_LOCKED;
 				}
 
@@ -387,10 +390,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
-				fileEntry = DLAppServiceUtil.checkOutFileEntry(
+				lock = DLAppServiceUtil.lockFileEntry(
 					fileEntry.getFileEntryId(), owner, timeout);
-
-				lock = fileEntry.getLock();
 			}
 			else {
 				boolean inheritable = false;
@@ -543,7 +544,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			FileEntry fileEntry = (FileEntry)resource.getModel();
 
-			if (isLocked(fileEntry, webDavRequest.getLockUuid())) {
+			if (!hasLock(fileEntry, webDavRequest.getLockUuid()) &&
+				(fileEntry.getLock() != null)) {
+
 				return WebDAVUtil.SC_LOCKED;
 			}
 
@@ -677,7 +680,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 					groupId, parentFolderId, title);
 
-				if (isLocked(fileEntry, webDavRequest.getLockUuid())) {
+				if (!hasLock(fileEntry, webDavRequest.getLockUuid()) &&
+					(fileEntry.getLock() != null)) {
+
 					return WebDAVUtil.SC_LOCKED;
 				}
 
@@ -695,6 +700,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					changeLog, false, file, serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
+				if (file.length() == 0) {
+					serviceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_SAVE_DRAFT);
+				}
+
 				DLAppServiceUtil.addFileEntry(
 					groupId, parentFolderId, title, contentType, title,
 					description, changeLog, file, serviceContext);
@@ -762,7 +772,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
-				DLAppServiceUtil.checkInFileEntry(
+				DLAppServiceUtil.unlockFileEntry(
 					fileEntry.getFileEntryId(), token);
 
 				if (webDavRequest.isAppleDoubleRequest()) {
@@ -813,7 +823,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 					groupId, parentFolderId, name);
 
-				if (isLocked(fileEntry, lockUuid)) {
+				if (!hasLock(fileEntry, lockUuid) &&
+					(fileEntry.getLock() != null)) {
+
 					throw new LockException();
 				}
 
@@ -912,7 +924,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return getFolderId(companyId, pathArray, true);
 	}
 
-	protected boolean isLocked(FileEntry fileEntry, String lockUuid)
+	protected boolean hasLock(FileEntry fileEntry, String lockUuid)
 		throws Exception {
 
 		if (Validator.isNull(lockUuid)) {
@@ -926,11 +938,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			// Client claims to know of a lock. Verify the lock UUID.
 
 			try {
-				boolean verified = DLAppServiceUtil.verifyFileEntryCheckOut(
+				return DLAppServiceUtil.verifyFileEntryLock(
 					fileEntry.getRepositoryId(), fileEntry.getFileEntryId(),
 					lockUuid);
-
-				return !verified;
 			}
 			catch (NoSuchLockException nsle) {
 				return false;

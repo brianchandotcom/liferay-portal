@@ -424,5 +424,44 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	public static boolean verifyFileEntryLock(long fileEntryId,
+		java.lang.String lockUuid) throws RemoteException {
+		try {
+			boolean returnValue = DLFileEntryServiceUtil.verifyFileEntryLock(fileEntryId,
+					lockUuid);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unlockFileEntry(long fileEntryId)
+		throws RemoteException {
+		try {
+			DLFileEntryServiceUtil.unlockFileEntry(fileEntryId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unlockFileEntry(long fileEntryId,
+		java.lang.String lockUuid) throws RemoteException {
+		try {
+			DLFileEntryServiceUtil.unlockFileEntry(fileEntryId, lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryServiceSoap.class);
 }

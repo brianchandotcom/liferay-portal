@@ -794,6 +794,33 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	public Lock lockFileEntry(long userId, long fileEntryId)
+		throws PortalException, SystemException {
+
+		return lockFileEntry(
+			userId, fileEntryId, null, DLFileEntryImpl.LOCK_EXPIRATION_TIME);
+	}
+
+	public Lock lockFileEntry(
+			long userId, long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		if (hasFileEntryLock(userId, fileEntryId)) {
+			return lockLocalService.getLock(
+				DLFileEntry.class.getName(), fileEntryId);
+		}
+
+		if ((expirationTime <= 0) ||
+			(expirationTime > DLFileEntryImpl.LOCK_EXPIRATION_TIME)) {
+
+			expirationTime = DLFileEntryImpl.LOCK_EXPIRATION_TIME;
+		}
+
+		return lockLocalService.lock(
+			userId, DLFileEntry.class.getName(), fileEntryId, owner, false,
+			expirationTime);
+	}
+
 	public DLFileEntry moveFileEntry(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)
@@ -858,6 +885,37 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 			fileEntryId, newDlFileVersion.getFileVersionId(),
 			dlFileVersion.getFileVersionId(), serviceContext);
+	}
+
+	public void unlockFileEntry(long fileEntryId) throws SystemException {
+		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
+	}
+
+	public void unlockFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		if (Validator.isNotNull(lockUuid)) {
+			try {
+				Lock lock = lockLocalService.getLock(
+					DLFileEntry.class.getName(), fileEntryId);
+
+				if (!lock.getUuid().equals(lockUuid)) {
+					throw new InvalidLockException("UUIDs do not match");
+				}
+			}
+			catch (PortalException pe) {
+				if ((pe instanceof ExpiredLockException) ||
+					(pe instanceof NoSuchLockException)) {
+				}
+				else {
+					throw pe;
+				}
+			}
+		}
+
+		if (!isFileEntryCheckedOut(fileEntryId)) {
+			lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
+		}
 	}
 
 	public DLFileEntry updateFileEntry(
@@ -1020,6 +1078,19 @@ public class DLFileEntryLocalServiceImpl
 	public boolean verifyFileEntryCheckOut(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
 
+		if (verifyFileEntryLock(fileEntryId, lockUuid) &&
+			isFileEntryCheckedOut(fileEntryId)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
 		boolean lockVerified = false;
 
 		try {
@@ -1032,7 +1103,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 		catch (PortalException pe) {
 			if ((pe instanceof ExpiredLockException) ||
-				(pe instanceof NoSuchLockException)) {
+							(pe instanceof NoSuchLockException)) {
 
 				DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 					fileEntryId);
@@ -1045,12 +1116,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
-		if (lockVerified && isFileEntryCheckedOut(fileEntryId)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return lockVerified;
 	}
 
 	protected void addFileEntryResources(
@@ -1346,28 +1412,6 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
-	protected Lock lockFileEntry(long userId, long fileEntryId)
-		throws PortalException, SystemException {
-
-		return lockFileEntry(
-			userId, fileEntryId, null, DLFileEntryImpl.LOCK_EXPIRATION_TIME);
-	}
-
-	protected Lock lockFileEntry(
-			long userId, long fileEntryId, String owner, long expirationTime)
-		throws PortalException, SystemException {
-
-		if ((expirationTime <= 0) ||
-			(expirationTime > DLFileEntryImpl.LOCK_EXPIRATION_TIME)) {
-
-			expirationTime = DLFileEntryImpl.LOCK_EXPIRATION_TIME;
-		}
-
-		return lockLocalService.lock(
-			userId, DLFileEntry.class.getName(), fileEntryId, owner, false,
-			expirationTime);
-	}
-
 	protected DLFileEntry moveFileEntryImpl(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)
@@ -1428,10 +1472,6 @@ public class DLFileEntryLocalServiceImpl
 		indexer.reindex(dlFileEntry);
 	}
 
-	protected void unlockFileEntry(long fileEntryId) throws SystemException {
-		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
-	}
-
 	protected DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String extension, String mimeType, String title, String description,
@@ -1458,7 +1498,8 @@ public class DLFileEntryLocalServiceImpl
 		else if (!checkedOut) {
 			lockFileEntry(userId, fileEntryId);
 		}
-		else if (!hasFileEntryLock(userId, fileEntryId)) {
+
+		if (!hasFileEntryLock(userId, fileEntryId)) {
 			lockFileEntry(userId, fileEntryId);
 		}
 
@@ -1543,6 +1584,27 @@ public class DLFileEntryLocalServiceImpl
 				checkInFileEntry(
 					userId, fileEntryId, majorVersion, changeLog,
 					serviceContext);
+			}
+			else if (serviceContext.getWorkflowAction() == 
+				WorkflowConstants.ACTION_PUBLISH) {
+
+				Map<String, Serializable> workflowContext =
+					new HashMap<String, Serializable>();
+
+				if (dlFileVersion.getVersion().equals(
+						DLFileEntryConstants.VERSION_DEFAULT)) {
+
+					workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+				}
+				else {
+					workflowContext.put("event", DLSyncConstants.EVENT_UPDATE);
+				}
+
+				WorkflowHandlerRegistryUtil.startWorkflowInstance(
+					dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
+					userId, DLFileEntry.class.getName(),
+					dlFileVersion.getFileVersionId(), dlFileVersion,
+					serviceContext, workflowContext);
 			}
 		}
 		catch (PortalException pe) {

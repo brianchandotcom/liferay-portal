@@ -228,6 +228,18 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static void unlockFileEntry(long fileEntryId,
+		java.lang.String lockUuid) throws RemoteException {
+		try {
+			DLAppServiceUtil.unlockFileEntry(fileEntryId, lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Deletes the file entry with the primary key.
 	*
@@ -852,6 +864,21 @@ public class DLAppServiceSoap {
 		long fileEntryId, java.lang.String lockUuid) throws RemoteException {
 		try {
 			boolean returnValue = DLAppServiceUtil.verifyFileEntryCheckOut(repositoryId,
+					fileEntryId, lockUuid);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean verifyFileEntryLock(long repositoryId,
+		long fileEntryId, java.lang.String lockUuid) throws RemoteException {
+		try {
+			boolean returnValue = DLAppServiceUtil.verifyFileEntryLock(repositoryId,
 					fileEntryId, lockUuid);
 
 			return returnValue;

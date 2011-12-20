@@ -292,7 +292,7 @@ AUI().add(
 
 									if (value === 'true') {
 										value = Liferay.Language.get('true');
-									}									
+									}
 									else if (value === 'false') {
 										value = Liferay.Language.get('false');
 									}

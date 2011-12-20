@@ -159,7 +159,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</div>
 			</div>
 
-			<c:if test="<%= fileEntry.isCheckedOut() && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+			<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 				<c:choose>
 					<c:when test="<%= fileEntry.hasLock() %>">
 						<div class="portlet-msg-lock portlet-msg-success">

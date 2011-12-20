@@ -74,9 +74,12 @@ boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEnt
 		<span class="entry-title">
 			<%= StringUtil.shorten(fileEntry.getTitle(), 60) %>
 
-			<c:if test="<%= latestFileVersion.isPending() %>">
-				<span class="workflow-status-pending">
-					(<liferay-ui:message key="pending" />)
+			<c:if test="<%= latestFileVersion.isPending() || latestFileVersion.isDraft() %>">
+				<%
+				String statusMessage = WorkflowConstants.toLabel(latestFileVersion.getStatus());
+				%>
+				<span class="workflow-status-<%= statusMessage %>">
+					(<liferay-ui:message key="<%= statusMessage %>" />)
 				</span>
 			</c:if>
 		</span>

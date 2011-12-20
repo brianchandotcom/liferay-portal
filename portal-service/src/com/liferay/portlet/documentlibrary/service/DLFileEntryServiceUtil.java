@@ -204,11 +204,29 @@ public class DLFileEntryServiceUtil {
 			end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long rootFolderId,
+		java.lang.String[] mimeTypes, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupFileEntries(groupId, userId, rootFolderId,
+			mimeTypes, status, start, end, obc);
+	}
+
 	public static int getGroupFileEntriesCount(long groupId, long userId,
 		long rootFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getGroupFileEntriesCount(groupId, userId, rootFolderId);
+	}
+
+	public static int getGroupFileEntriesCount(long groupId, long userId,
+		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupFileEntriesCount(groupId, userId, rootFolderId,
+			mimeTypes, status);
 	}
 
 	public static boolean hasFileEntryLock(long fileEntryId)

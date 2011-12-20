@@ -195,10 +195,25 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFileEntries(rootFolderId, start, end, obc);
 	}
 
+	public List<FileEntry> getRepositoryFileEntries(
+			long userId, long rootFolderId, String[] mimeTypes, int status,
+			int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return getRepositoryFileEntries(userId, rootFolderId, start, end, obc);
+	}
+
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
 		throws SystemException {
 
 		return getFileEntriesCount(rootFolderId);
+	}
+
+	public int getRepositoryFileEntriesCount(
+			long userId, long rootFolderId, String[] mimeTypes, int status)
+		throws SystemException {
+
+		return getRepositoryFileEntriesCount(userId, rootFolderId);
 	}
 
 	public long getRepositoryId() {

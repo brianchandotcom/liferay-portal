@@ -1332,6 +1332,16 @@ public class DLAppServiceWrapper implements DLAppService,
 			start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
+		long groupId, long userId, long rootFolderId,
+		java.lang.String[] mimeTypes, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getGroupFileEntries(groupId, userId, rootFolderId,
+			mimeTypes, status, start, end, obc);
+	}
+
 	/**
 	* Returns the number of file entries in a group starting at the repository
 	* default parent folder that are stored within the Liferay repository. This
@@ -1372,6 +1382,14 @@ public class DLAppServiceWrapper implements DLAppService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.getGroupFileEntriesCount(groupId, userId,
 			rootFolderId);
+	}
+
+	public int getGroupFileEntriesCount(long groupId, long userId,
+		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getGroupFileEntriesCount(groupId, userId,
+			rootFolderId, mimeTypes, status);
 	}
 
 	/**

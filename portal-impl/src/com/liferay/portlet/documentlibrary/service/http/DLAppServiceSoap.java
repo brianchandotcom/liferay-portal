@@ -639,6 +639,22 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static int getGroupFileEntriesCount(long groupId, long userId,
+		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getGroupFileEntriesCount(groupId,
+					userId, rootFolderId, mimeTypes, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void getSubfolderIds(long repositoryId, Long[] folderIds,
 		long folderId) throws RemoteException {
 		try {

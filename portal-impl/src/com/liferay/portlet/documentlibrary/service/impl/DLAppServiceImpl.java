@@ -1572,6 +1572,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			userId, rootFolderId, start, end, obc);
 	}
 
+	public List<FileEntry> getGroupFileEntries(
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(groupId);
+
+		return repository.getRepositoryFileEntries(
+			userId, rootFolderId, mimeTypes, status, start, end, obc);
+	}
+
 	/**
 	 * Returns the number of file entries in a group starting at the repository
 	 * default parent folder that are stored within the Liferay repository. This
@@ -1614,6 +1625,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(groupId);
 
 		return repository.getRepositoryFileEntriesCount(userId, rootFolderId);
+	}
+
+	public int getGroupFileEntriesCount(
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(groupId);
+
+		return repository.getRepositoryFileEntriesCount(
+			userId, rootFolderId, mimeTypes, status);
 	}
 
 	/**

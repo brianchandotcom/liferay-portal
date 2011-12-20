@@ -22,7 +22,7 @@ DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RE
 long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 %>
 
-<div class="record-toolbar" id="<portlet:namespace />recordToobar"></div>
+<div class="record-toolbar" id="<portlet:namespace />recordToolbar"></div>
 
 <aui:script use="aui-toolbar,aui-dialog-iframe,liferay-util-window">
 	var permissionPopUp = null;
@@ -30,7 +30,7 @@ long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 	new A.Toolbar(
 		{
 			activeState: false,
-			boundingBox: '#<portlet:namespace />recordToobar',
+			boundingBox: '#<portlet:namespace />recordToolbar',
 			children: [
 				<c:if test="<%= record != null %>">
 					<portlet:renderURL var="viewHistoryURL">

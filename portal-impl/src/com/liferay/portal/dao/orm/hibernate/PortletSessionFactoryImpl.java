@@ -39,6 +39,32 @@ import org.hibernate.SessionFactory;
  */
 public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
+	public void afterPropertiesSet() {
+		if (_dataSource == InfrastructureUtil.getDataSource()) {
+			// Register only if the current SessionFactory is using the Portal
+			// DataSource
+
+			portletSessionFactories.add(this);
+		}
+	}
+
+	public void destroy() {
+		portletSessionFactories.remove(this);
+	}
+
+	public DataSource getDataSource() {
+		ShardDataSourceTargetSource shardDataSourceTargetSource =
+			(ShardDataSourceTargetSource)
+				InfrastructureUtil.getShardDataSourceTargetSource();
+
+		if (shardDataSourceTargetSource != null) {
+			return shardDataSourceTargetSource.getDataSource();
+		}
+		else {
+			return _dataSource;
+		}
+	}
+
 	@Override
 	public Session openSession() throws ORMException {
 		SessionFactory sessionFactory = getSessionFactory();
@@ -74,19 +100,6 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	public void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
-	}
-
-	protected DataSource getDataSource() {
-		ShardDataSourceTargetSource shardDataSourceTargetSource =
-			(ShardDataSourceTargetSource)
-				InfrastructureUtil.getShardDataSourceTargetSource();
-
-		if (shardDataSourceTargetSource != null) {
-			return shardDataSourceTargetSource.getDataSource();
-		}
-		else {
-			return _dataSource;
-		}
 	}
 
 	protected SessionFactory getSessionFactory() {

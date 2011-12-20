@@ -25,6 +25,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.hibernate.engine.SessionFactoryImplementor;
 
 /**
@@ -32,6 +35,14 @@ import org.hibernate.engine.SessionFactoryImplementor;
  * @author Shuyang Zhou
  */
 public class SessionFactoryImpl implements SessionFactory {
+
+	public static List<PortletSessionFactoryImpl> getPortletSessionFactorys() {
+		return portletSessionFactories;
+	}
+
+	public void destroy() {
+		portletSessionFactories.clear();
+	}
 
 	public void closeSession(Session session) throws ORMException {
 		if (!PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
@@ -41,6 +52,10 @@ public class SessionFactoryImpl implements SessionFactory {
 
 	public Dialect getDialect() throws ORMException {
 		return new DialectImpl(_sessionFactoryImplementor.getDialect());
+	}
+
+	public ClassLoader getSessionFactoryClassLoader() {
+		return _sessionFactoryClassLoader;
 	}
 
 	public SessionFactoryImplementor getSessionFactoryImplementor() {
@@ -98,6 +113,10 @@ public class SessionFactoryImpl implements SessionFactory {
 
 		return liferaySession;
 	}
+
+	protected static final List<PortletSessionFactoryImpl>
+		portletSessionFactories =
+			new CopyOnWriteArrayList<PortletSessionFactoryImpl>();
 
 	private static Log _log = LogFactoryUtil.getLog(SessionFactoryImpl.class);
 

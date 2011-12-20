@@ -59,6 +59,12 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.SearchEngineUtil" class="com.liferay.portal.kernel.search.SearchEngineUtil">
 		<property name="searchPermissionChecker" ref="com.liferay.portal.kernel.search.SearchPermissionChecker" />
+		<property name="entryClassNameExclusions">
+			<list>
+				<value>com.liferay.portlet.asset.model.AssetEntry</value>
+				<value>com.liferay.portal.kernel.plugin.PluginPackage</value>
+			</list>
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.SearchPermissionChecker" class="com.liferay.portal.search.SearchPermissionCheckerImpl" />
 	<bean id="com.liferay.portal.kernel.search.SortFactory" class="com.liferay.portal.kernel.search.SortFactoryImpl" />

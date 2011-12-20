@@ -17,14 +17,21 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -196,6 +203,21 @@ public class SearchEngineUtil {
 		searchContext.setSearchEngineId(searchEngineId);
 
 		indexWriter.deletePortletDocuments(searchContext, portletId);
+	}
+
+	public static String[] getEntryClassNames() {
+		Set<String> entryClassNamesSet = new HashSet<String>();
+
+		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+			for (String className : indexer.getClassNames()) {
+				if (!_entryClassNameExclusionMap.containsKey(className)) {
+					entryClassNamesSet.add(className);
+				}
+			}
+		}
+
+		return entryClassNamesSet.toArray(
+			new String[entryClassNamesSet.size()]);
 	}
 
 	public static SearchEngine getSearchEngine() {
@@ -469,6 +491,13 @@ public class SearchEngineUtil {
 		_searchPermissionChecker = searchPermissionChecker;
 	}
 
+	public void setEntryClassNameExclusions(List<String> exclusionClassNames) {
+		for (String exclusionClassName : exclusionClassNames) {
+			_entryClassNameExclusionMap.put(
+				exclusionClassName, exclusionClassName);
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
 
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
@@ -477,4 +506,6 @@ public class SearchEngineUtil {
 		new ConcurrentHashMap<String, SearchEngine>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
+	private static Map<String, String> _entryClassNameExclusionMap =
+		new HashMap<String, String>();
 }

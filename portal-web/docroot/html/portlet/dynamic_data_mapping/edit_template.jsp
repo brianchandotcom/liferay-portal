@@ -147,15 +147,15 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
 			window.<portlet:namespace />formBuilder.get('fields').each(
-				function(field) {
-					field.set('hiddenAttributes', hiddenAttributes);
+				function(item, index, collection) {
+					item.set('hiddenAttributes', hiddenAttributes);
 				}
 			);
 
 			A.Array.each(
 				window.<portlet:namespace />formBuilder.get('availableFields'),
-				function(availableField) {
-					availableField.set('hiddenAttributes', hiddenAttributes);
+				function(item, index, collection) {
+					item.set('hiddenAttributes', hiddenAttributes);
 				}
 			);
 		};

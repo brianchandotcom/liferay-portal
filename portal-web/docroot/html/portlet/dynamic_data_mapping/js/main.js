@@ -147,12 +147,11 @@ AUI().add(
 				NAME: 'liferayformbuilder',
 
 				prototype: {
-					HIDDEN_FIELD_ATTRS: HIDDEN_FIELD_ATTRS,
-
-					LOCALIZABLE_FIELD_ATTRS: LOCALIZABLE_FIELD_ATTRS,
-
 					initializer: function() {
 						var instance = this;
+
+						instance.HIDDEN_FIELD_ATTRS = A.Array(HIDDEN_FIELD_ATTRS);
+						instance.LOCALIZABLE_FIELD_ATTRS = A.Array(LOCALIZABLE_FIELD_ATTRS);
 
 						var translationManager = instance.translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
 

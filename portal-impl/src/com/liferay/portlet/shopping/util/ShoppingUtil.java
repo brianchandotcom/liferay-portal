@@ -1011,7 +1011,7 @@ public class ShoppingUtil {
 		else {
 			String[] fieldsQuantities = item.getFieldsQuantitiesArray();
 
-			int stockQuantity = 0; 
+			int stockQuantity = 0;
 
 			if (fieldsQuantities.length > 0) {
 				int rowPos = getFieldsQuantitiesPos(

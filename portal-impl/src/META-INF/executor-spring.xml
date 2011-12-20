@@ -9,6 +9,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 
+	<!-- ProcessExecutor -->
+
+	<bean id ="com.liferay.portal.kernel.process.ProcessExecutor" class="com.liferay.portal.kernel.process.ProcessExecutor" />
+
 	<!-- Executor factory -->
 
 	<bean id="com.liferay.portal.kernel.executor.PortalExecutorFactory" class="com.liferay.portal.executor.PortalExecutorFactoryImpl">

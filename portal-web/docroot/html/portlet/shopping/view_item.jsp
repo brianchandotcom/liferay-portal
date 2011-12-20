@@ -168,7 +168,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 
 				<aui:fieldset>
 					<aui:select label="<%= fieldName %>" name='<%= "fieldName" + fieldName %>'>
-						<aui:option label="select-option" />
+						<aui:option label="select-option" value="" />
 
 						<%
 						for (int j = 0; j < fieldValues.length; j++) {

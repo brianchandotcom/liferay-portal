@@ -1,4 +1,516 @@
 <?xml version="1.0"?>
 
 <taglibs short-name="aui" uri="http://alloy.liferay.com/tld/aui" tlib-version="1.0">
+	<authors>
+		<author>Eduardo Lundgren</author>
+		<author>Bruno Basto</author>
+		<author>Nathan Cavanaugh</author>
+		<author>Julio Camarero</author>
+		<author>Antonio Junior</author>
+	</authors>
+	<component name="ButtonItem" module="aui-button-item" bodyContent="false" alloyComponent="true">
+		<attributes>
+	      <attribute>
+	        <name>activeState</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[Whether to track the active state of the button.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>boundingBox</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[The outermost DOM node for the Widget, used for sizing and positioning 
+	of a Widget as well as a containing element for any decorator elements used 
+	for skinning.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>classNames</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.util.HashMap</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[An object map of the CSS class names to use for the different interaction states.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>contentBox</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[A DOM node that is a direct descendant of a Widget's bounding box that 
+	houses its content.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>cssClass</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[CSS class to be automatically added to the <code>boundingBox</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>defaultState</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>true</defaultValue>
+	        <description><![CDATA[Whether to apply the default interaction state to the button<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>depth</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Number</outputType>
+	        <defaultValue>-1</defaultValue>
+	        <description><![CDATA[Number representing the depth of this Widget relative to 
+	the root Widget in the object heirarchy.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"-1"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>destroyed</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[Flag indicating whether or not this object
+	has been through the destroy lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>disabled</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[Boolean indicating if the Widget should be disabled. The disabled implementation
+	is left to the specific classes extending widget.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>focused</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[Boolean indicating if the Widget, or one of its descendants, 
+	has focus.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>handler</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Object</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[An event callback to handle when a user interacts with the button.
+	This can either be a function that will be attached on click, or
+	an object map that accepts the following keys:
+	<code>{fn: // The function to execute
+	context: // The context to execute the function in
+	type: // The type of event to listen for (defaults to "click")
+	}</code><!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>height</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Object</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[String with units, or number, representing the height of the Widget. If a number is provided,
+	the default unit, defined by the Widgets DEF_UNIT, property is used.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>hideClass</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue>aui-helper-hidden</defaultValue>
+	        <description><![CDATA[css class added to hide the <code>boundingBox</code> when
+	<a href="Component.html#config_visible">visible</a> is set to
+	<code>false</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-helper-hidden"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>hoverState</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>true</defaultValue>
+	        <description><![CDATA[Whether to track the hover interaction state of the button.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>icon</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[The icon to use inside of the button. Possible values are:<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>iconNode</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[DOM Node to display the icon of the ButtonItem. If not
+	specified try to query using HTML_PARSER an element inside
+	boundingBox which matches <code>aui-button-icon</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>id</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>index</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Number</outputType>
+	        <defaultValue>0</defaultValue>
+	        <description><![CDATA[Number representing the Widget's ordinal position in its 
+	parent Widget.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>initialized</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[Flag indicating whether or not this object
+	has been through the init lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>label</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[Text to use inside of the button.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>labelNode</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[DOM Node to display the text of the ButtonItem. If not
+	specified try to query using HTML_PARSER an element inside
+	boundingBox which matches <code>aui-button-label</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>parent</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Object</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[Retrieves the parent of the Widget in the object hierarchy.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>render</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Object</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[If <code>true</code> the render phase will be autimatically invoked
+	preventing the <code>.render()</code> manual call.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>rendered</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>false</defaultValue>
+	        <description><![CDATA[Flag indicating whether or not this Widget
+	has been through the render lifecycle phase.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"false"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>root</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Object</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[Returns the root Widget in the object hierarchy.  If the
+	ROOT_TYPE property is set, the search for the root Widget will be 
+	constrained to parent Widgets of the specified type.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>selected</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Number</outputType>
+	        <defaultValue>0</defaultValue>
+	        <description><![CDATA[Number indicating if the Widget is selected.  Possible 
+	values are:
+	<dl>
+	<dt>0</dt> <dd>(Default) Not selected</dd>
+	<dt>1</dt> <dd>Fully selected</dd>
+	<dt>2</dt> <dd>Partially selected</dd>
+	</dl><!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>srcNode</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[The DOM node to parse for configuration values, passed to the Widget's HTML_PARSER definition<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>strings</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.util.HashMap</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[Collection of strings used to label elements of the Widget's UI.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.util.HashMap","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>tabIndex</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Number</outputType>
+	        <defaultValue>0</defaultValue>
+	        <description><![CDATA[Number (between -32767 to 32767) indicating the widget's 
+	position in the default tab flow.  The value is used to set the 
+	"tabIndex" attribute on the widget's bounding box.  Negative values allow
+	the widget to receive DOM focus programmatically (by calling the focus
+	method), while being removed from the default tab flow.  A value of 
+	null removes the "tabIndex" attribute from the widget's bounding box.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Number","required":false,"defaultValue":"0"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>title</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[Text to use as the title attribute of the button.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>type</name>
+	        <inputType>java.lang.String</inputType>
+	        <outputType>java.lang.String</outputType>
+	        <defaultValue>button</defaultValue>
+	        <description><![CDATA[Button type.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"button"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>useARIA</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>true</defaultValue>
+	        <description><![CDATA[Boolean indicating if use of the WAI-ARIA Roles and States should be
+	enabled for the Widget.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>visible</name>
+	        <inputType>boolean</inputType>
+	        <outputType>boolean</outputType>
+	        <defaultValue>true</defaultValue>
+	        <description><![CDATA[Boolean indicating weather or not the Widget is visible.<!--{"event":false,"inputType":"boolean","outputType":"boolean","required":false,"defaultValue":"true"}-->]]></description>
+	      </attribute>
+	      <attribute>
+	        <name>width</name>
+	        <inputType>java.lang.Object</inputType>
+	        <outputType>java.lang.Object</outputType>
+	        <defaultValue></defaultValue>
+	        <description><![CDATA[String with units, or number, representing the width of the Widget. If a number is provided,
+	the default unit, defined by the Widgets DEF_UNIT, property is used.<!--{"event":false,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </attribute>
+	    </attributes>
+	    <events>
+	      <event>
+	        <name>activeStateChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'activeState' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>boundingBoxChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'boundingBox' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>classNamesChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'classNames' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>contentBoxChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'contentBox' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>cssClassChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'cssClass' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>defaultStateChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'defaultState' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>depthChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'depth' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>destroy</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[<p>
+	Lifecycle event for the destroy phase, 
+	fired prior to destruction. Invoking the preventDefault 
+	method on the event object provided to subscribers will 
+	prevent destruction from proceeding.
+	</p>
+	<p>
+	Subscribers to the "after" moment of this event, will be notified
+	after destruction is complete (and as a result cannot prevent
+	destruction).
+	</p><!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>destroyedChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'destroyed' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>disabledChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'disabled' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>focusedChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'focused' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>handlerChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'handler' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>heightChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'height' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>hideClassChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'hideClass' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>hoverStateChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'hoverState' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>iconChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'icon' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>iconNodeChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'iconNode' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>idChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'id' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>indexChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'index' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>init</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[<p>
+	Lifecycle event for the init phase, fired prior to initialization. 
+	Invoking the preventDefault() method on the event object provided 
+	to subscribers will prevent initialization from occuring.
+	</p>
+	<p>
+	Subscribers to the "after" momemt of this event, will be notified
+	after initialization of the object is complete (and therefore
+	cannot prevent initialization).
+	</p><!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>initializedChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'initialized' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>labelChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'label' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>labelNodeChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'labelNode' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>parentChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'parent' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>renderChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'render' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>renderedChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'rendered' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>rootChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'root' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>selectedChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'selected' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>srcNodeChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'srcNode' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>stringsChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'strings' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>tabIndexChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'tabIndex' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>titleChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'title' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>typeChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'type' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>useARIAChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'useARIA' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>visibleChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'visible' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>widget:contentUpdate</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Notification event, which widget implementations can fire, when
+	they change the content of the widget. This event has no default
+	behavior and cannot be prevented, so the "on" or "after"
+	moments are effectively equivalent (with on listeners being invoked before 
+	after listeners).<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>widget:render</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Lifecycle event for the render phase, fired prior to rendering the UI 
+	for the widget (prior to invoking the widget's renderer method).
+	<p>
+	Subscribers to the "on" moment of this event, will be notified 
+	before the widget is rendered.
+	</p>
+	<p>
+	Subscribers to the "after" moment of this event, will be notified
+	after rendering is complete.
+	</p><!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+	      <event>
+	        <name>widthChange</name>
+	        <type>java.lang.Object</type>
+	        <description><![CDATA[Fires when the value for the configuration attribute 'width' is changed. You can listen for the event using the <a href="Attribute.html#method_on">on</a> method if you wish to be notified before the attribute's value has changed, or using the <a href="Event.Target.html#method_after">after</a> method if you wish to be notified after the attribute's value has changed.<!--{"event":true,"inputType":"java.lang.Object","outputType":"java.lang.Object","required":false}-->]]></description>
+	      </event>
+    	</events>
+ 	</component>
 </taglibs>

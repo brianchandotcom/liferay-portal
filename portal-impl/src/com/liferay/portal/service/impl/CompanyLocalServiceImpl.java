@@ -30,10 +30,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -793,42 +798,37 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try {
 			SearchContext searchContext = new SearchContext();
 
-			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
-
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			contextQuery.addRequiredTerm(Field.COMPANY_ID, companyId);
-
-			if (Validator.isNotNull(portletId)) {
-				contextQuery.addRequiredTerm(Field.PORTLET_ID, portletId);
-			}
-
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
 			if (groupId > 0) {
-				contextQuery.addRequiredTerm(Field.GROUP_ID, groupId);
+				searchContext.setGroupIds(new long[]{groupId});
+			}
+			searchContext.setEntryClassNames(
+				SearchEngineUtil.getEntryClassNames());
+			searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+			searchContext.setStart(start);
+			searchContext.setUserId(userId);
+
+			searchContext.setKeywords(keywords);
+			if (Validator.isNotNull(portletId)) {
+				searchContext.setPortletIds(new String[] {portletId});
 			}
 
-			if (Validator.isNotNull(type)) {
-				contextQuery.addRequiredTerm(Field.TYPE, type);
-			}
+			Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
 
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			assetEntriesFacet.setStatic(true);
 
-			searchQuery.addTerms(_KEYWORDS_FIELDS, keywords);
+			searchContext.addFacet(assetEntriesFacet);
 
-			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			Facet scopeFacet = new ScopeFacet(searchContext);
 
-			fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
+			scopeFacet.setStatic(true);
 
-			if (searchQuery.clauses().size() > 0) {
-				fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
-			}
+			searchContext.addFacet(scopeFacet);
 
-			return SearchEngineUtil.search(
-				companyId, new long[] {groupId}, userId, null, fullQuery, start,
-				end);
+			Indexer indexer = FacetedSearcher.getInstance();
+
+			return indexer.search(searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

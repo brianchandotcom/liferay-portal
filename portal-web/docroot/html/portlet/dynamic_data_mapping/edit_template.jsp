@@ -138,7 +138,26 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		window.<portlet:namespace />toggleMode = function(mode) {
 			var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
+			var hiddenAttributes = window.<portlet:namespace />formBuilder.HIDDEN_FIELD_ATTRS;
+
+			if (modeEdit) {
+				hiddenAttributes = [];
+			}
+
 			window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
+
+			window.<portlet:namespace />formBuilder.get('fields').each(
+				function(field) {
+					field.set('hiddenAttributes', hiddenAttributes);
+				}
+			);
+
+			A.Array.each(
+				window.<portlet:namespace />formBuilder.get('availableFields'),
+				function(availableField) {
+					availableField.set('hiddenAttributes', hiddenAttributes);
+				}
+			);
 		};
 
 		<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');

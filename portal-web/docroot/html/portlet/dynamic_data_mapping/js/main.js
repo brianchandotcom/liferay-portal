@@ -10,6 +10,8 @@ AUI().add(
 
 		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
+		var HIDDEN_FIELD_ATTRS = ['readOnly'];
+
 		var LOCALIZABLE_FIELD_ATTRS = ['label', 'predefinedValue', 'tip'];
 
 		var STR_BLANK = '';
@@ -145,6 +147,10 @@ AUI().add(
 				NAME: 'liferayformbuilder',
 
 				prototype: {
+					HIDDEN_FIELD_ATTRS: HIDDEN_FIELD_ATTRS,
+
+					LOCALIZABLE_FIELD_ATTRS: LOCALIZABLE_FIELD_ATTRS,
+
 					initializer: function() {
 						var instance = this;
 
@@ -512,7 +518,7 @@ AUI().add(
 
 								if (isObject(localizationMap) && isObject(localeMap)) {
 									AArray.each(
-										LOCALIZABLE_FIELD_ATTRS,
+										instance.LOCALIZABLE_FIELD_ATTRS,
 										function(item, index, collection) {
 											field.set(item, localeMap[item]);
 										}
@@ -564,7 +570,7 @@ AUI().add(
 							function(item, index, collection) {
 								var localizationMap = {};
 
-								localizationMap[locale] = item.getAttrs(LOCALIZABLE_FIELD_ATTRS);
+								localizationMap[locale] = item.getAttrs(instance.LOCALIZABLE_FIELD_ATTRS);
 
 								item.set(
 									'localizationMap',
@@ -642,56 +648,67 @@ AUI().add(
 
 			DDM_STRUCTURE: [
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-checkbox',
 					label: Liferay.Language.get('boolean'),
 					type: 'checkbox'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-date',
 					label: Liferay.Language.get('date'),
 					type: 'ddm-date'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-decimal',
 					label: Liferay.Language.get('decimal'),
 					type: 'ddm-decimal'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-document',
 					label: Liferay.Language.get('documents-and-media'),
 					type: 'ddm-documentlibrary'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-fileupload',
 					label: Liferay.Language.get('file-upload'),
 					type: 'ddm-fileupload'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-integer',
 					label: Liferay.Language.get('integer'),
 					type: 'ddm-integer'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-number',
 					label: Liferay.Language.get('number'),
 					type: 'ddm-number'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-radio',
 					label: Liferay.Language.get('radio'),
 					type: 'radio'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-select',
 					label: Liferay.Language.get('select'),
 					type: 'select'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-text',
 					label: Liferay.Language.get('text'),
 					type: 'text'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-textarea',
 					label: Liferay.Language.get('text-box'),
 					type: 'textarea'
@@ -700,16 +717,19 @@ AUI().add(
 
 			DDM_TEMPLATE: [
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-paragraph',
 					label: Liferay.Language.get('paragraph'),
 					type: 'ddm-paragraph'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'
 				},
 				{
+					hiddenAttributes: HIDDEN_FIELD_ATTRS,
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-fieldset',
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'

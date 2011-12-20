@@ -410,6 +410,19 @@ public class DLAppServiceWrapper implements DLAppService,
 			expirationTime);
 	}
 
+	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId,
+		java.lang.String owner, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.lockFileEntry(fileEntryId, owner, expirationTime);
+	}
+
+	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.unlockFileEntry(fileEntryId, lockUuid);
+	}
+
 	/**
 	* Performs a deep copy of the folder.
 	*
@@ -1951,6 +1964,14 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.verifyFileEntryCheckOut(repositoryId, fileEntryId,
+			lockUuid);
+	}
+
+	public boolean verifyFileEntryLock(long repositoryId, long fileEntryId,
+		java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.verifyFileEntryLock(repositoryId, fileEntryId,
 			lockUuid);
 	}
 

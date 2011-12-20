@@ -422,6 +422,20 @@ public class DLAppServiceUtil {
 		return getService().checkOutFileEntry(fileEntryId, owner, expirationTime);
 	}
 
+	public static com.liferay.portal.model.Lock lockFileEntry(
+		long fileEntryId, java.lang.String owner, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().lockFileEntry(fileEntryId, owner, expirationTime);
+	}
+
+	public static void unlockFileEntry(long fileEntryId,
+		java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unlockFileEntry(fileEntryId, lockUuid);
+	}
+
 	/**
 	* Performs a deep copy of the folder.
 	*
@@ -1987,6 +2001,14 @@ public class DLAppServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .verifyFileEntryCheckOut(repositoryId, fileEntryId, lockUuid);
+	}
+
+	public static boolean verifyFileEntryLock(long repositoryId,
+		long fileEntryId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .verifyFileEntryLock(repositoryId, fileEntryId, lockUuid);
 	}
 
 	/**

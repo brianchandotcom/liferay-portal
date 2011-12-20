@@ -682,6 +682,8 @@ Liferay.Service.registerClass(
 		cancelCheckOut: true,
 		checkInFileEntry: true,
 		checkOutFileEntry: true,
+		lockFileEntry: true,
+		unlockFileEntry: true,
 		copyFolder: true,
 		deleteFileEntry: true,
 		deleteFileEntryByTitle: true,
@@ -715,6 +717,7 @@ Liferay.Service.registerClass(
 		updateFileShortcut: true,
 		updateFolder: true,
 		verifyFileEntryCheckOut: true,
+		verifyFileEntryLock: true,
 		verifyInheritableLock: true
 	}
 );
@@ -741,7 +744,10 @@ Liferay.Service.registerClass(
 		moveFileEntry: true,
 		refreshFileEntryLock: true,
 		revertFileEntry: true,
-		verifyFileEntryCheckOut: true
+		verifyFileEntryCheckOut: true,
+		verifyFileEntryLock: true,
+		lockFileEntry: true,
+		unlockFileEntry: true
 	}
 );
 

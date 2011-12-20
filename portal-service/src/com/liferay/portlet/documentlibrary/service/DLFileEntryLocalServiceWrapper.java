@@ -592,6 +592,40 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			lockUuid);
 	}
 
+	public boolean verifyFileEntryLock(long fileEntryId,
+		java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.verifyFileEntryLock(fileEntryId,
+			lockUuid);
+	}
+
+	public com.liferay.portal.model.Lock lockFileEntry(long userId,
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.lockFileEntry(userId, fileEntryId);
+	}
+
+	public com.liferay.portal.model.Lock lockFileEntry(long userId,
+		long fileEntryId, java.lang.String owner, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.lockFileEntry(userId, fileEntryId,
+			owner, expirationTime);
+	}
+
+	public void unlockFileEntry(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.unlockFileEntry(fileEntryId);
+	}
+
+	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.unlockFileEntry(fileEntryId, lockUuid);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

@@ -52,7 +52,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 
 		TZSRecurrence secondDayOfMonthTSZRecurrence =
 			getMonthByMonthDayTSZRecurrence(
-					_insideDSTCalendar, _durationHour, 2, 1, _timeZone);
+				_insideDSTCalendar, _durationHour, 2, 1, _timeZone);
 
 		testWithinTSZRecurrence(
 			getInsideDSTCalendar(AUGUST, 2), _durationHour,

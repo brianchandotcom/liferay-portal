@@ -19,7 +19,7 @@
 		<copy todir="${tstamp.value}">
 			<fileset
 				dir="lib/development"
-				includes="hsql.jar,jtds.jar,mysql.jar,persistence.jar,postgresql.jar"
+				includes="hsql.jar,jtds.jar,mysql.jar,persistence.jar,postgresql.jar,servlet-api.jar"
 			/>
 		</copy>
 
@@ -45,6 +45,10 @@
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\Progra~1\IBM\WebSphere\AppServer\lib\ext\portlet.jar C:\Progra~1\IBM\WebSphere\AppServer\java\jre\lib\ext" />
 		</exec>
 
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\Progra~1\IBM\WebSphere\AppServer\lib\ext\servlet-api.jar C:\Progra~1\IBM\WebSphere\AppServer\java\jre\lib\ext" />
+		</exec>
+
 		<exec executable="${pscp.executable}">
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:/Progra~1/IBM/WebSphere/AppServer/profiles/AppSrv01/config/cells/liferay-ead7385Node01Cell/nodes/liferay-ead7385Node01/servers/server1/server.xml server.xml" />
 		</exec>
@@ -53,7 +57,7 @@
 			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8 -Xk22000 -Xp64k,16k&quot;" />
 			<replacefilter token="verboseModeGarbageCollection=&quot;false&quot;" value="verboseModeGarbageCollection=&quot;true&quot;" />
 			<replacefilter token="verboseModeJNI=&quot;false&quot;" value="verboseModeJNI=&quot;false&quot; initialHeapSize=&quot;256&quot; maximumHeapSize=&quot;1024&quot;" />
-			<replacefilter token="xmi:id=&quot;DynamicCache_1183122130078&quot; enable=&quot;true&quot;" value="xmi:id=&quot;DynamicCache_1183122130078&quot; enable=&quot;true&quot; defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot;" />
+			<replacefilter token="xmi:id=&quot;DynamicCache_" value="defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot; xmi:id=&quot;DynamicCache_"/>
 		</replace>
 
 		<exec executable="${pscp.executable}">

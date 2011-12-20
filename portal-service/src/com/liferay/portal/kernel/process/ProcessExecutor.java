@@ -15,19 +15,43 @@
 package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.log.ProcessOutputStream;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Shuyang Zhou
  */
 public class ProcessExecutor {
+
+	public void destroy() {
+		if (_executorService != null) {
+			synchronized (ProcessExecutor.class) {
+				if (_executorService != null) {
+					_executorService.shutdownNow();
+					_executorService = null;
+				}
+			}
+		}
+	}
 
 	public static <T extends Serializable> T execute(
 			ProcessCallable<T> processCallable, String classPath)
@@ -39,7 +63,15 @@ public class ProcessExecutor {
 
 			Process process = processBuilder.start();
 
-			_writeObject(process.getOutputStream(), processCallable, true);
+			_writeObject(process.getOutputStream(), processCallable);
+
+			ExecutorService executorService = _getExecutorService();
+
+			SubProcessReactor subProcessReactor = new SubProcessReactor(
+				process.getInputStream());
+
+			Future<ProcessCallable<?>> futureResponseProcessCallable =
+				executorService.submit(subProcessReactor);
 
 			int exitCode = process.waitFor();
 
@@ -48,19 +80,32 @@ public class ProcessExecutor {
 					"Subprocess terminated with exit code " + exitCode);
 			}
 
-			InputStream errorInputStream = process.getErrorStream();
+			ProcessCallable<?> responseProcessCallable =
+				futureResponseProcessCallable.get();
 
-			if (errorInputStream.available() > 0) {
-				ProcessException processException =
-					(ProcessException)_readObject(
-						errorInputStream, System.err, true);
-
-				if (processException != null) {
-					throw processException;
-				}
+			if (responseProcessCallable instanceof ReturnProcessCallable<?>) {
+				return (T)responseProcessCallable.call();
 			}
 
-			return (T)_readObject(process.getInputStream(), System.out, true);
+			if (responseProcessCallable instanceof ExceptionProcessCallable) {
+				ExceptionProcessCallable exceptionProcessCallable =
+					(ExceptionProcessCallable)responseProcessCallable;
+
+				throw exceptionProcessCallable.call();
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"SubProcessReactor quited without a valid return " +
+					"ProcessCallable, this means sub-process terminated " +
+					"exceptionally.");
+			}
+
+			return null;
+		}
+		catch (ProcessException pe) {
+			// Don't wrap ProcessException
+			throw pe;
 		}
 		catch (Exception e) {
 			throw new ProcessException(e);
@@ -70,67 +115,80 @@ public class ProcessExecutor {
 	public static void main(String[] arguments)
 		throws ClassNotFoundException, IOException {
 
+		// Use default System.out as communication channel
+		PrintStream oldOut = System.out;
+
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(oldOut);
+
+		// Install std-out logging
+		ProcessOutputStream processOut = new ProcessOutputStream(
+			objectOutputStream, false);
+		PrintStream newOut = new PrintStream(processOut, true);
+
+		System.setOut(newOut);
+
+		// Install std-err logging
+		ProcessOutputStream processErr = new ProcessOutputStream(
+			objectOutputStream, true);
+		PrintStream newErr = new PrintStream(processErr, true);
+
+		System.setErr(newErr);
+
 		try {
 			ProcessCallable<?> processCallable =
-				(ProcessCallable<?>)_readObject(System.in, null, false);
+				(ProcessCallable<?>)_readObject(System.in, false);
 
-			Object result = processCallable.call();
+			Serializable result = processCallable.call();
 
-			_writeObject(System.out, result, false);
+			newOut.flush();
+
+			processOut.writeProcessCallable(
+				new ReturnProcessCallable<Serializable>(result));
+
+			processOut.close();
 		}
 		catch (ProcessException pe) {
-			_writeObject(System.err, pe, false);
+			newErr.flush();
+
+			processErr.writeProcessCallable(new ExceptionProcessCallable(pe));
+
+			processErr.close();
 		}
 	}
 
-	private static Object _readObject(
-			InputStream inputStream, OutputStream outputStream,
-			boolean close)
+	private static ExecutorService _getExecutorService() {
+		if (_executorService == null) {
+			synchronized (ProcessExecutor.class) {
+				if (_executorService == null) {
+					_executorService = Executors.newCachedThreadPool(
+						new NamedThreadFactory(
+							"ProcessExecutor Reactor Thread",
+							Thread.MIN_PRIORITY,
+							PortalClassLoaderUtil.getClassLoader()));
+				}
+			}
+		}
+
+		return _executorService;
+	}
+
+	private static Object _readObject(InputStream inputStream, boolean close)
 		throws ClassNotFoundException, IOException {
 
-		if (outputStream != null) {
-			inputStream = new UnsyncBufferedInputStream(inputStream);
-
-			// Mark ObjectInputStream's magic header
-
-			inputStream.mark(4);
-		}
+		ObjectInputStream objectInputStream = new ObjectInputStream(
+			inputStream);
 
 		try {
-			ObjectInputStream objectInputStream = new ObjectInputStream(
-				inputStream);
-
-			try {
-				return objectInputStream.readObject();
-			}
-			finally {
-				if (close) {
-					objectInputStream.close();
-				}
-			}
+			return objectInputStream.readObject();
 		}
-		catch (ObjectStreamException ose) {
-			if (outputStream != null) {
-				inputStream.reset();
-
-				int b = -1;
-
-				while ((b = inputStream.read()) != -1) {
-					outputStream.write(b);
-				}
-
-				outputStream.flush();
-
-				return null;
-			}
-			else {
-				throw ose;
+		finally {
+			if (close) {
+				objectInputStream.close();
 			}
 		}
 	}
 
-	private static void _writeObject(
-			OutputStream outputStream, Object object, boolean close)
+	private static void _writeObject(OutputStream outputStream, Object object)
 		throws IOException {
 
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
@@ -140,13 +198,87 @@ public class ProcessExecutor {
 			objectOutputStream.writeObject(object);
 		}
 		finally {
-			if (close) {
-				objectOutputStream.close();
-			}
-			else {
-				objectOutputStream.flush();
-			}
+			objectOutputStream.close();
 		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
+
+	private static volatile ExecutorService _executorService;
+
+	private static class SubProcessReactor
+		implements Callable<ProcessCallable<? extends Serializable>> {
+
+		public SubProcessReactor(InputStream inputStream) {
+			_ubis = new UnsyncBufferedInputStream(inputStream);
+		}
+
+		public ProcessCallable<? extends Serializable> call() throws Exception {
+			try {
+				ObjectInputStream objectInputStream = null;
+
+				// Corrupted log collector
+				UnsyncByteArrayOutputStream ubaos =
+					new UnsyncByteArrayOutputStream();
+
+				while (true) {
+					try {
+						// Be ready for bad header
+						_ubis.mark(4);
+
+						objectInputStream =
+							new PortalClassLoaderObjectInputStream(_ubis);
+
+						// Found the beginning of ObjectInputStream, flush out
+						// corrupted log if there is any.
+						if (ubaos.size() > 0) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("Found corrupted leading log : " +
+									ubaos.toString());
+							}
+						}
+
+						ubaos = null;
+
+						break;
+					}
+					catch (StreamCorruptedException sce) {
+						// Collecting bad header as log data
+						_ubis.reset();
+
+						ubaos.write(_ubis.read());
+					}
+				}
+
+				while (true) {
+					ProcessCallable processCallable =
+						(ProcessCallable)objectInputStream.readObject();
+
+					if (processCallable instanceof ReturnProcessCallable<?>) {
+						return processCallable;
+					}
+
+					if (processCallable instanceof ExceptionProcessCallable) {
+						return processCallable;
+					}
+
+					Serializable result = processCallable.call();
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Invoked generic ProcessCallable : " +
+							processCallable + ", with return value : " +
+							result);
+					}
+				}
+			}
+			catch (EOFException eofe) {
+			}
+
+			return null;
+		}
+
+		private final UnsyncBufferedInputStream _ubis;
+
 	}
 
 }

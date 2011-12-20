@@ -57,8 +57,16 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		return _options;
 	}
 
+	public java.lang.String getScriptPosition() {
+		return _scriptPosition;
+	}
+
 	public javax.servlet.jsp.JspContext getTagPageContext() {
 		return _tagPageContext;
+	}
+
+	public java.io.Serializable getUseJavaScript() {
+		return _useJavaScript;
 	}
 
 	public java.lang.String getVar() {
@@ -101,10 +109,22 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("options", options);
 	}
 
+	public void setScriptPosition(java.lang.String scriptPosition) {
+		_scriptPosition = scriptPosition;
+
+		setScopedAttribute("scriptPosition", scriptPosition);
+	}
+
 	public void setTagPageContext(javax.servlet.jsp.JspContext tagPageContext) {
 		_tagPageContext = tagPageContext;
 
 		setScopedAttribute("tagPageContext", tagPageContext);
+	}
+
+	public void setUseJavaScript(java.io.Serializable useJavaScript) {
+		_useJavaScript = useJavaScript;
+
+		setScopedAttribute("useJavaScript", useJavaScript);
 	}
 
 	public void setVar(java.lang.String var) {
@@ -121,7 +141,9 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		_module = null;
 		_name = null;
 		_options = null;
+		_scriptPosition = null;
 		_tagPageContext = null;
+		_useJavaScript = true;
 		_var = null;
 	}
 
@@ -138,7 +160,9 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "module", _module);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "options", _options);
+		setNamespacedAttribute(request, "scriptPosition", _scriptPosition);
 		setNamespacedAttribute(request, "tagPageContext", _tagPageContext);
+		setNamespacedAttribute(request, "useJavaScript", _useJavaScript);
 		setNamespacedAttribute(request, "var", _var);
 	}
 
@@ -153,7 +177,9 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _module = null;
 	private java.lang.String _name = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _options = null;
+	private java.lang.String _scriptPosition = null;
 	private javax.servlet.jsp.JspContext _tagPageContext = null;
+	private java.io.Serializable _useJavaScript = true;
 	private java.lang.String _var = null;
 
 }

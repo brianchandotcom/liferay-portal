@@ -17,12 +17,12 @@
 <%@ page import="com.liferay.alloy.util.MarkupUtil" %>
 
 <%
-String _iconTypeClass = StringPool.BLANK;
+String iconTypeClass = null;
 
 if (Validator.isNull(label) && Validator.isNotNull(icon)) {
-	_iconTypeClass = "aui-buttonitem-icon-only";
+	iconTypeClass = "aui-buttonitem-icon-only";
 }
 else if (Validator.isNotNull(label) && Validator.isNull(icon)) {
-	_iconTypeClass = "aui-buttonitem-label-only";
+	iconTypeClass = "aui-buttonitem-label-only";
 }
 %>

@@ -18,10 +18,12 @@
 
 <c:if test="<%= useMarkup %>">
 	<c:if test="<%= !hasBoundingBox %>">
-		<button class="aui-widget aui-component aui-buttonitem aui-buttonitem-content aui-state-default <%= _iconTypeClass %> <%= (String)cssClass %>" id="<%= uniqueId %>BoundingBox" type="button">
+		<button class="aui-buttonitem aui-buttonitem-content aui-component aui-state-default aui-widget <%= (iconTypeClass != null) ? iconTypeClass : StringPool.BLANK %> <%= cssClass %>" id="<%= uniqueId %>BoundingBox" type="button">
 	</c:if>
 
-	<span class="aui-buttonitem-icon aui-icon aui-icon-<%= icon %>"></span>
+	<c:if test="<%= Validator.isNotNull(icon) %>">
+		<span class="aui-buttonitem-icon aui-icon aui-icon-<%= icon %>"></span>
+	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<span class="aui-buttonitem-label">
@@ -35,9 +37,12 @@
 </c:if>
 
 <aui:component
-	excludeAttributes="var,javaScriptAttributes,useMarkup,useJavaScript"
-	tagPageContext="<%= pageContext %>"
-	options="<%= _options %>"
+	excludeAttributes="javaScriptAttributes,useJavaScript,useMarkup,var"
 	module="aui-button-item"
 	name="ButtonItem"
+	options="<%= _options %>"
+	scriptPosition='<%= GetterUtil.getString(_options.get("scriptPosition")) %>'
+	tagPageContext="<%= pageContext %>"
+	useJavaScript='<%= GetterUtil.getBoolean(_options.get("useJavaScript"), true) %>'
+	var='<%= GetterUtil.getString(_options.get("var")) %>'
 />

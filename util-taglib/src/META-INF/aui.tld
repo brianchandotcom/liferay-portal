@@ -1092,10 +1092,22 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
+			<name>scriptPosition</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>tagPageContext</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>javax.servlet.jsp.JspContext</type>
+		</attribute>
+		<attribute>
+			<name>useJavaScript</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.io.Serializable</type>
 		</attribute>
 		<attribute>
 			<name>var</name>

@@ -39,7 +39,9 @@ java.lang.String javaScriptAttributes = GetterUtil.getString((java.lang.String)r
 java.lang.String module = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:module"));
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:name"));
 java.util.Map<java.lang.String, java.lang.Object> options = (java.util.Map<java.lang.String, java.lang.Object>)request.getAttribute("aui:component:options");
+java.lang.String scriptPosition = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:scriptPosition"));
 javax.servlet.jsp.JspContext tagPageContext = (javax.servlet.jsp.JspContext)request.getAttribute("aui:component:tagPageContext");
+boolean useJavaScript = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:component:useJavaScript")), true);
 java.lang.String var = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:var"));
 
 _updateOptions(_options, "defineVar", defineVar);
@@ -48,7 +50,9 @@ _updateOptions(_options, "javaScriptAttributes", javaScriptAttributes);
 _updateOptions(_options, "module", module);
 _updateOptions(_options, "name", name);
 _updateOptions(_options, "options", options);
+_updateOptions(_options, "scriptPosition", scriptPosition);
 _updateOptions(_options, "tagPageContext", tagPageContext);
+_updateOptions(_options, "useJavaScript", useJavaScript);
 _updateOptions(_options, "var", var);
 %>
 

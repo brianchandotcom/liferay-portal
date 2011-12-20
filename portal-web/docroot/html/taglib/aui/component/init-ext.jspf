@@ -17,9 +17,6 @@
 <%@ page import="com.liferay.portal.kernel.json.JSONTransformer" %>
 
 <%
-String scriptPosition = GetterUtil.getString((Serializable)_options.get("scriptPosition"), "inline");
-boolean useJavaScript = GetterUtil.getBoolean((Serializable)_options.get("useJavaScript"), true);
-
 Map<String, Object> jsonifiedOptions = (Map<String, Object>)request.getAttribute("aui:component:jsonifiedOptions");
 
 Object render = String.valueOf(_options.get("render"));

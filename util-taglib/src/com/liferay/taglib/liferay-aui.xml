@@ -172,7 +172,6 @@
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
-				<defaultType></defaultType>
 			</attribute>
 			<attribute>
 				<name>options</name>
@@ -180,10 +179,21 @@
 				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
 			</attribute>
 			<attribute>
+				<name>scriptPosition</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>tagPageContext</name>
 				<inputType>javax.servlet.jsp.JspContext</inputType>
 				<outputType>javax.servlet.jsp.JspContext</outputType>
 				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>useJavaScript</name>
+				<inputType>java.io.Serializable</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
 				<name>var</name>

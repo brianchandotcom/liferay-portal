@@ -15,16 +15,29 @@
 --%>
 
 <%
-boolean useJavaScript = GetterUtil.getBoolean((Serializable)dynamicAttributes.get("useJavaScript"), true);
-boolean useMarkup = GetterUtil.getBoolean((Serializable)dynamicAttributes.get("useMarkup"), true);
+boolean useMarkup = GetterUtil.getBoolean((Serializable)_options.get("useMarkup"), true);
 
 Object boundingBox = (Object)request.getAttribute(_NAMESPACE.concat("boundingBox"));
 Object contentBox = (Object)request.getAttribute(_NAMESPACE.concat("contentBox"));
 Object srcNode = (Object)request.getAttribute(_NAMESPACE.concat("srcNode"));
 
-boolean hasBoundingBox = GetterUtil.getBoolean(String.valueOf(boundingBox));
-boolean hasContentBox = GetterUtil.getBoolean(String.valueOf(contentBox));
-boolean hasSrcNode = GetterUtil.getBoolean(String.valueOf(srcNode));
+boolean hasBoundingBox = false;
+
+if (Validator.isNotNull(boundingBox)) {
+	hasBoundingBox = true;
+}
+
+boolean hasContentBox = false;
+
+if (Validator.isNotNull(contentBox)) {
+	hasContentBox = true;
+}
+
+boolean hasSrcNode = false;
+
+if (Validator.isNotNull(srcNode)) {
+	hasSrcNode = true;
+}
 
 String uniqueId = StringPool.BLANK;
 

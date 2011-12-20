@@ -290,16 +290,9 @@ public class DLFileEntryLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 		 		WorkflowConstants.ACTION_PUBLISH) {
 
-			Map<String, Serializable> workflowContext =
-				new HashMap<String, Serializable>();
-
-			workflowContext.put("event", DLSyncConstants.EVENT_UPDATE);
-
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-				userId, DLFileEntry.class.getName(),
-				dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
-				workflowContext);
+			doStartWorkflowInstance(
+				userId, serviceContext, dlFileVersion,
+				DLSyncConstants.EVENT_UPDATE);
 		}
 
 		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
@@ -1272,6 +1265,23 @@ public class DLFileEntryLocalServiceImpl
 		indexer.delete(dlFileEntry);
 	}
 
+	protected void doStartWorkflowInstance(
+			long userId, ServiceContext serviceContext,
+			DLFileVersion dlFileVersion, String eventType)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put("event", eventType);
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
+			userId, DLFileEntry.class.getName(),
+			dlFileVersion.getFileVersionId(), dlFileVersion, serviceContext,
+			workflowContext);
+	}
+
 	protected String getExtension(String title, String sourceFileName) {
 		if (Validator.isNull(sourceFileName)) {
 			sourceFileName = title;
@@ -1543,6 +1553,14 @@ public class DLFileEntryLocalServiceImpl
 				checkInFileEntry(
 					userId, fileEntryId, majorVersion, changeLog,
 					serviceContext);
+			}
+			else if (dlFileVersion.isDraft() &&
+					 (serviceContext.getWorkflowAction() ==
+					  	WorkflowConstants.ACTION_PUBLISH)) {
+
+				doStartWorkflowInstance(
+					userId, serviceContext, dlFileVersion,
+					DLSyncConstants.EVENT_ADD);
 			}
 		}
 		catch (PortalException pe) {

@@ -70,7 +70,7 @@ public class Log4JUtil {
 			return;
 		}
 
-		// See LPS-6029 and LPS-8865
+		// See LPS-6029, LPS-8865 and LPS-24280
 
 		DOMConfigurator domConfigurator = new DOMConfigurator();
 

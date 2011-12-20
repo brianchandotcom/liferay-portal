@@ -3,7 +3,9 @@
 <#assign selected = (fieldStructure.value == fieldRawValue)>
 
 <#if parentType == "select">
-	<#if parentFieldStructure.multiple == "true">
+	<#assign multiple = parentFieldStructure.multiple!"false">
+
+	<#if multiple == "true">
 		<#assign selected = (fieldRawValue?split(","))?seq_contains(fieldStructure.value)>
 	</#if>
 

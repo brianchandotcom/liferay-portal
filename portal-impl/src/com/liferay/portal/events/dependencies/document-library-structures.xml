@@ -33,6 +33,7 @@
 				<dynamic-element name="nda" type="option" value="NDA">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[NDA]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="msa" type="option" value="MSA">
@@ -60,6 +61,7 @@
 				<dynamic-element name="draft" type="option" value="Draft">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Draft]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="in_review" type="option" value="Review">
@@ -134,6 +136,7 @@
 				<dynamic-element name="home_edition" type="option" value="HE">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Home Edition]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="business_edition" type="option" value="BE">
@@ -161,6 +164,7 @@
 				<dynamic-element name="1_0" type="option" value="1">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[1.0]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="2_0" type="option" value="2">
@@ -188,6 +192,7 @@
 				<dynamic-element name="administration" type="option" value="admin">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Administration]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="installation" type="option" value="install">
@@ -215,6 +220,7 @@
 				<dynamic-element name="beginner" type="option" value="beginner">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Beginner]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="intermediate" type="option" value="intermediate">
@@ -299,6 +305,7 @@
 				<dynamic-element name="strong_company" type="option" value="strong">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Strong Company]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="new_product_launch" type="option" value="product">
@@ -326,6 +333,7 @@
 				<dynamic-element name="your_trusted_advisor" type="option" value="advisor">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Your Trusted Advisor]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="10_years_of_customer_solutions" type="option" value="solutions">
@@ -353,6 +361,7 @@
 				<dynamic-element name="awareness" type="option" value="awareness">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Awareness]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="lead_generation" type="option" value="leads">
@@ -494,6 +503,7 @@
 				<dynamic-element name="home_edition" type="option" value="HE">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Home Edition]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="business_edition" type="option" value="BE">
@@ -521,6 +531,7 @@
 				<dynamic-element name="1_0" type="option" value="1">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[1.0]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="2_0" type="option" value="2">
@@ -548,6 +559,7 @@
 				<dynamic-element name="website" type="option" value="website">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Website]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="collaboration" type="option" value="collaboration">
@@ -575,6 +587,7 @@
 				<dynamic-element name="acme" type="option" value="acme">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[ACME]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="sevencogs" type="option" value="sevencogs">

@@ -39,6 +39,7 @@
 				<dynamic-element name="aol" type="option" value="aol">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[AOL]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="yahoo" type="option" value="yahoo">
@@ -366,6 +367,7 @@
 				<dynamic-element name="critical" type="option" value="critical">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Critical]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="major" type="option" value="major">
@@ -394,6 +396,7 @@
 				<dynamic-element name="open" type="option" value="open">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Open]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="pending" type="option" value="pending">
@@ -570,6 +573,7 @@
 				<dynamic-element name="critical" type="option" value="critical">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Critical]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="major" type="option" value="major">
@@ -606,6 +610,7 @@
 				<dynamic-element name="open" type="option" value="open">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Open]]></entry>
+						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="pending" type="option" value="pending">

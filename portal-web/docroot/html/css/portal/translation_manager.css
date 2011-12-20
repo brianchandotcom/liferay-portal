@@ -75,6 +75,6 @@
 }
 
 .lfr-translation-manager-selector, .lfr-translation-manager-add-menu {
-	display: inline-block;
+	display: inline;
 	margin: 0.5em 0;
 }

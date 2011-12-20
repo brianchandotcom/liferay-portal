@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -211,6 +212,19 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	public abstract void initRepository()
 		throws PortalException, SystemException;
 
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public Lock lockFileEntry(
+		long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
 
@@ -266,6 +280,18 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		this.userLocalService = userLocalService;
 	}
 
+	public void unlockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public void unlockFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public void unlockFolder(long parentFolderId, String title, String lockUuid)
 		throws PortalException, SystemException {
 
@@ -303,6 +329,12 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 				}
 			}
 		}
+	}
+
+	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	protected AssetEntryLocalService assetEntryLocalService;

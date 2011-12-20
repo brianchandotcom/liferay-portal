@@ -72,10 +72,8 @@ public class ViewArticleContentAction extends Action {
 
 			String output = null;
 
-			JournalArticle article = null;
-
 			if (cmd.equals(Constants.PREVIEW)) {
-				article = JournalArticleServiceUtil.getArticle(
+				JournalArticle article = JournalArticleServiceUtil.getArticle(
 					groupId, articleId, version);
 
 				output = JournalArticleLocalServiceUtil.getArticleContent(

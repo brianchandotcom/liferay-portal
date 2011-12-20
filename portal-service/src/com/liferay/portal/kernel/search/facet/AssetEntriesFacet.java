@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -30,14 +29,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Raymond Augé
@@ -164,22 +159,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 		}
 
 		if ((entryClassNames == null) || (entryClassNames.length == 0)) {
-			List<String> entryClassNamesList = new ArrayList<String>();
-
-			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
-				for (String className : indexer.getClassNames()) {
-					if (!entryClassNamesList.contains(className) &&
-						!className.equals(AssetEntry.class.getName()) &&
-						!className.equals(DLFileEntry.class.getName()) &&
-						!className.equals(PluginPackage.class.getName())) {
-
-						entryClassNamesList.add(className);
-					}
-				}
-			}
-
-			entryClassNames = entryClassNamesList.toArray(
-				new String[entryClassNamesList.size()]);
+			entryClassNames = SearchEngineUtil.getEntryClassNames();
 
 			if (!dataJSONObject.has("values")) {
 				JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();

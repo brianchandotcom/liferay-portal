@@ -24,7 +24,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -196,6 +200,21 @@ public class SearchEngineUtil {
 		searchContext.setSearchEngineId(searchEngineId);
 
 		indexWriter.deletePortletDocuments(searchContext, portletId);
+	}
+
+	public static String[] getEntryClassNames() {
+		Set<String> entryClassNamesSet = new HashSet<String>();
+
+		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+			for (String className : indexer.getClassNames()) {
+				if (!_entryClassNameExclusionMap.containsKey(className)) {
+					entryClassNamesSet.add(className);
+				}
+			}
+		}
+
+		return entryClassNamesSet.toArray(
+			new String[entryClassNamesSet.size()]);
 	}
 
 	public static SearchEngine getSearchEngine() {
@@ -469,8 +488,17 @@ public class SearchEngineUtil {
 		_searchPermissionChecker = searchPermissionChecker;
 	}
 
+	public void setEntryClassNameExclusions(List<String> exclusionClassNames) {
+		for (String exclusionClassName : exclusionClassNames) {
+			_entryClassNameExclusionMap.put(
+				exclusionClassName, exclusionClassName);
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
 
+	private static Map<String, String> _entryClassNameExclusionMap =
+		new HashMap<String, String>();
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
 	private static Map<String, SearchEngine> _searchEngines =

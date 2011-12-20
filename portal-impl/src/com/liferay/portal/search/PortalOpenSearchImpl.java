@@ -118,6 +118,10 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 
 				String title = StringPool.BLANK;
 
+				if (resultScopeGroupId == 0) {
+					resultScopeGroupId = themeDisplay.getScopeGroupId();
+				}
+
 				PortletURL portletURL = getPortletURL(
 					request, portletId, resultScopeGroupId);
 

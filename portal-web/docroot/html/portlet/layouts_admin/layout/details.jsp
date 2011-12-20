@@ -23,16 +23,6 @@ Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
 LayoutTypePortletImpl selLayoutTypePortlet = new LayoutTypePortletImpl(selLayout);
 
-boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutTypePortlet.getSourcePrototypeLayoutProperty("layoutUpdateable"), true);
-
-boolean layoutSetPrototypeUpdateable = SitesUtil.isLayoutSetPrototypeUpdateable(selLayout.getLayoutSet());
-
-boolean layoutUpdateableDisabled = false;
-
-if (!layoutSetPrototypeUpdateable) {
-	layoutUpdateableDisabled = true;
-}
-
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 %>
@@ -123,6 +113,20 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" name="hidden" />
 
 			<c:if test="<%= group.isLayoutSetPrototype() %>">
+
+				<%
+				LayoutSetPrototype layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(group.getClassPK());
+
+				boolean layoutSetPrototypeUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
+				boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutTypePortlet.getTypeSettingsProperties().getProperty("layoutUpdateable"), true);
+
+				boolean layoutUpdateableDisabled = false;
+
+				if (!layoutSetPrototypeUpdateable) {
+					layoutUpdateableDisabled = true;
+				}
+				%>
+
 				<aui:input disabled="<%= layoutUpdateableDisabled %>" helpMessage="allow-site-administrators-to-modify-this-page-for-their-site-help" label="allow-site-administrators-to-modify-this-page-for-their-site" name="layoutUpdateable" type="checkbox" value="<%= layoutUpdateable %>" />
 			</c:if>
 		</c:when>

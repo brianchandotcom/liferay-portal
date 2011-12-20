@@ -131,6 +131,7 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("DL Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.click("//input[@value='Choose this Folder']");
 		selenium.selectWindow("null");
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),

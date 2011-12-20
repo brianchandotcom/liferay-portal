@@ -14,15 +14,19 @@
 
 package com.liferay.portal.dao.jdbc.util;
 
+import com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
+import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.jpa.LocalContainerEntityManagerFactoryBean;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -116,6 +120,8 @@ public class DataSourceSwapper {
 
 			_reinitializeHibernate("liferaySessionFactory", newDataSource);
 		}
+
+		_reinitializePortletsHibernate(newDataSource);
 	}
 
 	public void setCounterDataSourceWrapper(
@@ -170,6 +176,51 @@ public class DataSourceSwapper {
 				PortalBeanLocatorUtil.locate(name);
 
 		sessionFactoryImpl.setEntityManagerFactory(entityManagerFactory);
+	}
+
+	private static void _reinitializePortletsHibernate(DataSource newDataSource)
+		throws Exception {
+
+		List<PortletSessionFactoryImpl> portletSessionFactoryImpls =
+			SessionFactoryImpl.getPortletSessionFactorys();
+
+		for (PortletSessionFactoryImpl portletSessionFactoryImpl :
+			portletSessionFactoryImpls) {
+
+			ClassLoader portletClassLoader =
+				portletSessionFactoryImpl.getSessionFactoryClassLoader();
+
+			ClassLoader oldPortletClassLoader =
+				PortletClassLoaderUtil.getClassLoader();
+
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader oldContextClassLoader =
+				currentThread.getContextClassLoader();
+
+			PortletClassLoaderUtil.setClassLoader(portletClassLoader);
+			currentThread.setContextClassLoader(portletClassLoader);
+
+			try {
+				PortletHibernateConfiguration portletHibernateConfiguration =
+					new PortletHibernateConfiguration();
+
+				portletHibernateConfiguration.setDataSource(newDataSource);
+
+				portletHibernateConfiguration.afterPropertiesSet();
+
+				SessionFactoryImplementor sessionFactoryImplementor =
+					(SessionFactoryImplementor)
+						portletHibernateConfiguration.getObject();
+
+				portletSessionFactoryImpl.setSessionFactoryImplementor(
+					sessionFactoryImplementor);
+			}
+			finally {
+				PortletClassLoaderUtil.setClassLoader(oldPortletClassLoader);
+				currentThread.setContextClassLoader(oldContextClassLoader);
+			}
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DataSourceSwapper.class);

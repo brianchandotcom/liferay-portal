@@ -35,6 +35,7 @@ import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.enums.IncludeRelationships;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisPermissionDeniedException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisUnauthorizedException;
 
 /**
@@ -85,6 +86,9 @@ public class CMISRepositoryUtil {
 		}
 		catch (CmisUnauthorizedException cue) {
 			throw new PrincipalException();
+		}
+		catch (CmisPermissionDeniedException cpde) {
+			throw new PrincipalException(cpde);
 		}
 		catch (Exception e) {
 			throw new RepositoryException(e);

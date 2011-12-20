@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployDir;
 import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployListener;
 import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.POPServerUtil;
@@ -293,6 +295,14 @@ public class GlobalStartupAction extends SimpleAction {
 				_log.warn(e.getMessage());
 			}
 		}
+
+		// Javadoc
+
+		Thread thread = Thread.currentThread();
+
+		ClassLoader classLoader = thread.getContextClassLoader();
+
+		JavadocManagerUtil.load(StringPool.BLANK, classLoader);
 
 		// POP server
 

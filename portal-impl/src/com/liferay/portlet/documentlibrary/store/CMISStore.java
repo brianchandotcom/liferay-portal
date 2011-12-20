@@ -61,12 +61,12 @@ public class CMISStore extends BaseStore {
 
 	public CMISStore() {
 		_systemRootDir = getFolder(
-			_session.getRootFolder(),
+			SessionHolder.session.getRootFolder(),
 			PropsValues.DL_STORE_CMIS_SYSTEM_ROOT_DIR);
 
 		if (_systemRootDir == null) {
 			_systemRootDir = createFolder(
-				_session.getRootFolder(),
+				SessionHolder.session.getRootFolder(),
 				PropsValues.DL_STORE_CMIS_SYSTEM_ROOT_DIR);
 		}
 	}
@@ -437,9 +437,10 @@ public class CMISStore extends BaseStore {
 		properties.put(
 			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_FOLDER.value());
 
-		ObjectId objectId = _session.createFolder(properties, parentFolderId);
+		ObjectId objectId = SessionHolder.session.createFolder(
+			properties, parentFolderId);
 
-		return (Folder)_session.getObject(objectId);
+		return (Folder)SessionHolder.session.getObject(objectId);
 	}
 
 	protected Folder getCompanyFolder(long companyId) {
@@ -565,41 +566,48 @@ public class CMISStore extends BaseStore {
 		return versioningFolder;
 	}
 
-	private static Session _session;
-	private static Folder _systemRootDir;
+	private static class SessionHolder {
 
-	static {
-		Map<String, String> parameters = new HashMap<String, String>();
+		private final static Session session;
 
-		parameters.put(
-			SessionParameter.ATOMPUB_URL,
-			PropsValues.DL_STORE_CMIS_REPOSITORY_URL);
-		parameters.put(
-			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
-		parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+		static {
+			Map<String, String> parameters = new HashMap<String, String>();
 
-		Locale locale = LocaleUtil.getDefault();
+			parameters.put(
+				SessionParameter.ATOMPUB_URL,
+				PropsValues.DL_STORE_CMIS_REPOSITORY_URL);
+			parameters.put(
+				SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
+			parameters.put(SessionParameter.COMPRESSION,
+				Boolean.TRUE.toString());
 
-		parameters.put(
-			SessionParameter.LOCALE_ISO3166_COUNTRY,
-			locale.getCountry());
-		parameters.put(
-			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
-		parameters.put(
-			SessionParameter.PASSWORD,
-			PropsValues.DL_STORE_CMIS_CREDENTIALS_PASSWORD);
-		parameters.put(
-			SessionParameter.USER,
-			PropsValues.DL_STORE_CMIS_CREDENTIALS_USERNAME);
+			Locale locale = LocaleUtil.getDefault();
 
-		SessionFactory sessionFactory = CMISRepositoryUtil.getSessionFactory();
+			parameters.put(
+				SessionParameter.LOCALE_ISO3166_COUNTRY,
+				locale.getCountry());
+			parameters.put(
+				SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
+			parameters.put(
+				SessionParameter.PASSWORD,
+				PropsValues.DL_STORE_CMIS_CREDENTIALS_PASSWORD);
+			parameters.put(
+				SessionParameter.USER,
+				PropsValues.DL_STORE_CMIS_CREDENTIALS_USERNAME);
 
-		Repository repository =
-			sessionFactory.getRepositories(parameters).get(0);
+			SessionFactory sessionFactory =
+				CMISRepositoryUtil.getSessionFactory();
 
-		_session = repository.createSession();
+			Repository repository =
+				sessionFactory.getRepositories(parameters).get(0);
 
-		_session.setDefaultContext(CMISRepositoryUtil.getOperationContext());
+			session = repository.createSession();
+
+			session.setDefaultContext(CMISRepositoryUtil.getOperationContext());
+		}
+
 	}
+
+	private static Folder _systemRootDir;
 
 }

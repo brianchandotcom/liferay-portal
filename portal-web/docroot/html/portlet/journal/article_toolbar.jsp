@@ -32,7 +32,7 @@ if ((article != null) && article.isDraft()) {
 }
 %>
 
-<div class="article-toolbar" id="<portlet:namespace />articleToobar"></div>
+<div class="article-toolbar" id="<portlet:namespace />articleToolbar"></div>
 
 <aui:script use="aui-toolbar,aui-dialog-iframe,liferay-util-window">
 	var permissionPopUp = null;
@@ -40,7 +40,7 @@ if ((article != null) && article.isDraft()) {
 	new A.Toolbar(
 		{
 			activeState: false,
-			boundingBox: '#<portlet:namespace />articleToobar',
+			boundingBox: '#<portlet:namespace />articleToolbar',
 			children: [
 				<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == 0) %>">
 					{

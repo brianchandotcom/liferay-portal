@@ -62,6 +62,11 @@ public class BookmarksIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isPermissionAware() {
+		return _PERMISSION_AWARE;
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -263,4 +268,5 @@ public class BookmarksIndexer extends BaseIndexer {
 		}
 	}
 
+	private static final boolean _PERMISSION_AWARE = true;
 }

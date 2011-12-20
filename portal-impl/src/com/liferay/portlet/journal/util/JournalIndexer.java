@@ -76,6 +76,11 @@ public class JournalIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isPermissionAware() {
+		return _PERMISSION_AWARE;
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -523,6 +528,8 @@ public class JournalIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(companyId, documents);
 	}
+
+	private static final boolean _PERMISSION_AWARE = true;
 
 	private static final String _FIELD_NAMESPACE = "web_content";
 

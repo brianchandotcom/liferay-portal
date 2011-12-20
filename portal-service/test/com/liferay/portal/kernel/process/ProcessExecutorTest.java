@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -96,11 +97,15 @@ public class ProcessExecutorTest extends TestCase {
 
 		executorService = invokeGetExecutorService();
 
-		Future<Void> futureResult = executorService.submit(new DummyJob());
-
 		assertNotNull(executorService);
 
 		assertNotNull(getExecutorService());
+
+		DummyJob dummyJob = new DummyJob();
+
+		Future<Void> futureResult = executorService.submit(dummyJob);
+
+		dummyJob.waitUntilStarted();
 
 		processExecutor.destroy();
 
@@ -250,11 +255,23 @@ public class ProcessExecutorTest extends TestCase {
 
 	private static class DummyJob implements Callable<Void> {
 
+		public DummyJob() {
+			_countDownLatch = new CountDownLatch(1);
+		}
+
 		public Void call() throws Exception {
+			_countDownLatch.countDown();
+
 			Thread.sleep(Long.MAX_VALUE);
 
 			return null;
 		}
+
+		public void waitUntilStarted() throws InterruptedException {
+			_countDownLatch.await();
+		}
+
+		private final CountDownLatch _countDownLatch;
 
 	}
 

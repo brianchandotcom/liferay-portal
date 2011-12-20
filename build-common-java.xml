@@ -126,6 +126,49 @@
 
 						import java.io.File;
 
+						String os = System.getProperty("os.name").toLowerCase();
+						boolean isWindows = (os.indexOf("win") >= 0);
+
+						String buildRevision = "";
+
+						try {
+							File projectDir = new File(project.getProperty("project.dir"));
+
+							File repoDataDir = new File(projectDir, ".svn");
+
+							String command = "";
+
+							if (repoDataDir.exists()) {
+								if (isWindows) {
+									command = "cmd /c svnversion .";
+								}
+								else {
+									command = "svnversion .";
+								}
+							}
+
+							repoDataDir = new File(projectDir, ".git");
+
+							if (repoDataDir.exists()) {
+								if (isWindows) {
+									command = "cmd /c git rev-parse HEAD";
+								}
+								else {
+									command = "git rev-parse HEAD";
+								}
+							}
+
+							if (!command.equals("")) {
+								Process child = Runtime.getRuntime().exec(command);
+
+								buildRevision = StringUtil.read(child.getInputStream());
+							}
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						project.setProperty("build.revision", buildRevision);
 						project.setProperty("release.info.code.name", ReleaseInfo.getCodeName());
 						project.setProperty("release.info.build.date", String.valueOf(ReleaseInfo.getBuildDate()));
 						project.setProperty("release.info.build.number", String.valueOf(ReleaseInfo.getBuildNumber()));
@@ -155,9 +198,15 @@
 					<attribute name="Liferay-Portal-Code-Name" value="${release.info.code.name}" />
 					<attribute name="Liferay-Portal-Build-Date" value="${release.info.build.date}" />
 					<attribute name="Liferay-Portal-Build-Number" value="${release.info.build.number}" />
+					<attribute name="Liferay-Portal-Build-Revision" value="${build.revision}" />
+					<attribute name="Liferay-Portal-Build-Time" value="${build.time}" />
 					<attribute name="Liferay-Portal-Release-Info" value="${release.info.release.info}" />
 					<attribute name="Liferay-Portal-Server-Info" value="${release.info.server.info}" />
 					<attribute name="Liferay-Portal-Version" value="${release.info.version}" />
+					<attribute name="Java-Compiler" value="javac.compiler=${javac.compiler}" />
+					<attribute name="Java-Debug" value="javac.debug=${javac.debug}" />
+					<attribute name="Java-Deprecation" value="javac.encoding=${javac.encoding}" />
+					<attribute name="Jsp-Precompile" value="jsp.precompile=${jsp.precompile}" />
 				</manifest>
 
 				<if>

@@ -39,6 +39,10 @@
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 
+	<tstamp>
+		<format property="build.time" pattern="EEE MMM d HH:mm:ss z yyyy" />
+	</tstamp>
+
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />

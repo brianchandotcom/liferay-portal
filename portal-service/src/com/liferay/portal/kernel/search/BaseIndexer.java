@@ -935,7 +935,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static final boolean _INDEXER_ENABLED = true;
 
-	private static final boolean _PERMISSION_AWARE = true;
+	private static final boolean _PERMISSION_AWARE = false;
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 

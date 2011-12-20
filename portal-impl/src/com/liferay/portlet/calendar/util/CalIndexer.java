@@ -54,6 +54,11 @@ public class CalIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isPermissionAware() {
+		return _PERMISSION_AWARE;
+	}
+
+	@Override
 	protected void doDelete(Object obj) throws Exception {
 		CalEvent event = (CalEvent)obj;
 
@@ -156,5 +161,7 @@ public class CalIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(companyId, documents);
 	}
+
+	private static final boolean _PERMISSION_AWARE = true;
 
 }

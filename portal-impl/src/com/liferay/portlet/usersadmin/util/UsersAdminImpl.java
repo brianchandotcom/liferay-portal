@@ -764,9 +764,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		for (int i = 0; i < groupRolesGroupIds.length; i++) {
-			if ((groupRolesGroupIds[i] == 0) ||
-				(groupRolesRoleIds[i] == 0)) {
-
+			if ((groupRolesGroupIds[i] == 0) || (groupRolesRoleIds[i] == 0)) {
 				continue;
 			}
 

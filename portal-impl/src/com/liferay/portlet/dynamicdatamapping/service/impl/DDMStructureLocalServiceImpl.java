@@ -511,9 +511,7 @@ public class DDMStructureLocalServiceImpl
 						String attributeName =
 							metadataEntryElement.attributeValue("name");
 
-						if (fieldRequired &&
-							attributeName.equals("required")) {
-
+						if (fieldRequired && attributeName.equals("required")) {
 							metadataEntryElement.setText("true");
 						}
 					}

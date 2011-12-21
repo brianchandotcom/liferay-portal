@@ -457,9 +457,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 				sessionResponses.put(sessionResponseId, response);
 			}
-			else if ((response.getTime() < now) &&
-					 (_expCache.intValue() > 0)) {
-
+			else if ((response.getTime() < now) && (_expCache.intValue() > 0)) {
 				String title = invokeRender(renderRequest, renderResponse);
 
 				response.setTitle(title);

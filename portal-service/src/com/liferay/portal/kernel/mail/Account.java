@@ -124,9 +124,7 @@ public abstract class Account implements Serializable {
 	}
 
 	public boolean isRequiresAuthentication() {
-		if (Validator.isNotNull(_user) &&
-			Validator.isNotNull(_password)) {
-
+		if (Validator.isNotNull(_user) && Validator.isNotNull(_password)) {
 			return true;
 		}
 		else {

@@ -512,9 +512,7 @@ public class ShoppingOrderLocalServiceImpl
 
 			shoppingOrderPersistence.update(order, false);
 		}
-		else if (emailType.equals("shipping") &&
-				 order.isSendShippingEmail()) {
-
+		else if (emailType.equals("shipping") && order.isSendShippingEmail()) {
 			order.setSendShippingEmail(false);
 
 			shoppingOrderPersistence.update(order, false);

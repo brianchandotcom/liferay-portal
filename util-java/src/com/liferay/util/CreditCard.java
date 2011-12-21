@@ -82,9 +82,7 @@ public class CreditCard {
 				return false;
 			}
 
-			if (number.length() != 13 &&
-				number.length() != 16) {
-
+			if (number.length() != 13 && number.length() != 16) {
 				return false;
 			}
 		}

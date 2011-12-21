@@ -2563,9 +2563,7 @@ public class JournalArticleLocalServiceImpl
 		Element elParent = el.getParent();
 
 		for (;;) {
-			if ((elParent == null) ||
-				(elParent.getName().equals("root"))) {
-
+			if ((elParent == null) || (elParent.getName().equals("root"))) {
 				break;
 			}
 
@@ -3149,9 +3147,7 @@ public class JournalArticleLocalServiceImpl
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
 
-		if (emailType.equals("requested") ||
-			emailType.equals("review")) {
-
+		if (emailType.equals("requested") || emailType.equals("review")) {
 			String tempToName = fromName;
 			String tempToAddress = fromAddress;
 

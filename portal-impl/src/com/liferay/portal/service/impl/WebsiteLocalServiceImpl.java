@@ -169,9 +169,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 			while (itr.hasNext()) {
 				Website website = itr.next();
 
-				if ((websiteId <= 0) ||
-					(website.getWebsiteId() != websiteId)) {
-
+				if ((websiteId <= 0) || (website.getWebsiteId() != websiteId)) {
 					website.setPrimary(false);
 
 					websitePersistence.update(website, false);

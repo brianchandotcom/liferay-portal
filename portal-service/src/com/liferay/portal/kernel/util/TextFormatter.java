@@ -359,9 +359,7 @@ public class TextFormatter {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (Character.isUpperCase(c) && (i > 0) &&
-				((i + 1) < s.length())) {
-
+			if (Character.isUpperCase(c) && (i > 0) && ((i + 1) < s.length())) {
 				int delta = sb.length() - s.length();
 
 				if (Character.isLowerCase(s.charAt(i + 1))) {

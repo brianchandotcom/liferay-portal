@@ -254,7 +254,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.image.ImageProcessorImpl">
+	<category name="com.liferay.portal.image.ImageToolImpl">
 		<priority value="ERROR" />
 	</category>
 

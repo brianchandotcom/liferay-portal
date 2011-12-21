@@ -40,11 +40,11 @@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
-page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %><%@
+page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %><%@
-page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %><%@
-page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %><%@
+page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 
 <%
@@ -87,5 +87,3 @@ boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
-
-<%@ include file="/html/portlet/document_library/util.jspf" %>

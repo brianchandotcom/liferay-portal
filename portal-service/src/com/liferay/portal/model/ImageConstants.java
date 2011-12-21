@@ -14,24 +14,24 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.image.ImageProcessor;
+import com.liferay.portal.kernel.image.ImageTool;
 
 /**
  * @author Alexander Chow
  */
 public class ImageConstants {
 
-	public static final String TYPE_BMP = ImageProcessor.TYPE_BMP;
+	public static final String TYPE_BMP = ImageTool.TYPE_BMP;
 
-	public static final String TYPE_GIF = ImageProcessor.TYPE_GIF;
+	public static final String TYPE_GIF = ImageTool.TYPE_GIF;
 
-	public static final String TYPE_JPEG = ImageProcessor.TYPE_JPEG;
+	public static final String TYPE_JPEG = ImageTool.TYPE_JPEG;
 
-	public static final String TYPE_PNG = ImageProcessor.TYPE_PNG;
+	public static final String TYPE_PNG = ImageTool.TYPE_PNG;
 
-	public static final String TYPE_TIFF = ImageProcessor.TYPE_TIFF;
+	public static final String TYPE_TIFF = ImageTool.TYPE_TIFF;
 
 	public static final String TYPE_NOT_AVAILABLE =
-		ImageProcessor.TYPE_NOT_AVAILABLE;
+		ImageTool.TYPE_NOT_AVAILABLE;
 
 }

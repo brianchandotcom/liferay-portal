@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.ImageProcessor;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 /**
  * @author Sergio González
@@ -30,7 +30,7 @@ public class ImageProcessorMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
-		ImageProcessor.generateImages(fileVersion);
+		ImageProcessorUtil.generateImages(fileVersion);
 
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			MessageBusUtil.sendMessage(

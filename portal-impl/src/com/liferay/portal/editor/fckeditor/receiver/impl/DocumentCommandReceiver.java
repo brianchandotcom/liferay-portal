@@ -35,7 +35,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.util.ImageProcessor;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 import java.io.InputStream;
 
@@ -188,7 +188,7 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 			sb.append(StringPool.SLASH);
 			sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
 
-			Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
+			Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
 
 			if (imageMimeTypes.contains(fileEntry.getMimeType())) {
 				sb.append("?t=");

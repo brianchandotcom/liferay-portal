@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -52,6 +55,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeCo
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -322,6 +326,20 @@ public class DLUtil {
 		return sb.toString();
 	}
 
+	public static final String getFileEntryImage(
+		FileEntry fileEntry, ThemeDisplay themeDisplay) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<img style=\"border-width: 0; text-align: left;\" src=\"");
+		sb.append(themeDisplay.getPathThemeImages());
+		sb.append("/file_system/small/");
+		sb.append(fileEntry.getIcon());
+		sb.append(".png\">");
+
+		return sb.toString();
+	}
+
 	public static String getFileIcon(String extension) {
 		return _instance._getFileIcon(extension);
 	}
@@ -366,6 +384,55 @@ public class DLUtil {
 		Arrays.sort(mimeTypesArray);
 
 		return mimeTypesArray;
+	}
+
+	public static String getPreviewURL(
+			FileEntry fileEntry, FileVersion fileVersion,
+			ThemeDisplay themeDisplay, String queryString)
+		throws PortalException, SystemException {
+
+		return getPreviewURL(
+			fileEntry, fileVersion, themeDisplay, queryString, true);
+	}
+
+	public static String getPreviewURL(
+			FileEntry fileEntry, FileVersion fileVersion,
+			ThemeDisplay themeDisplay, String queryString,
+			boolean appendToken)
+		throws PortalException, SystemException {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathContext());
+		sb.append("/documents/");
+		sb.append(fileEntry.getRepositoryId());
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getFolderId());
+		sb.append(StringPool.SLASH);
+		sb.append(HttpUtil.encodeURL(
+			HtmlUtil.unescape(fileEntry.getTitle()), true));
+		sb.append("?version=");
+		sb.append(fileVersion.getVersion());
+
+		if (appendToken) {
+			sb.append("&t=");
+
+			Date modifiedDate = fileVersion.getModifiedDate();
+
+			sb.append(modifiedDate.getTime());
+		}
+
+		sb.append(queryString);
+
+		String previewURL = sb.toString();
+
+		if (themeDisplay.isAddSessionIdToURL()) {
+			return PortalUtil.getURLWithSessionId(
+				previewURL, themeDisplay.getSessionId());
+		}
+
+		return previewURL;
 	}
 
 	public static OrderByComparator getRepositoryModelOrderByComparator(
@@ -419,6 +486,58 @@ public class DLUtil {
 		sb.append(version);
 		sb.append(StringPool.PERIOD);
 		sb.append(languageId);
+
+		return sb.toString();
+	}
+
+	public static String getThumbnailSrc(
+			FileEntry fileEntry, DLFileShortcut fileShortcut,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(themeDisplay.getPathThemeImages());
+		sb.append("/file_system/large/");
+		sb.append(DLUtil.getGenericName(fileEntry.getExtension()));
+		sb.append(".png");
+
+		String thumbnailSrc = sb.toString();
+
+		if (fileShortcut == null) {
+			String thumbnailQueryString = null;
+
+			if (ImageProcessorUtil.hasImages(fileVersion)) {
+				thumbnailQueryString = "&imageThumbnail=1";
+			}
+			else if (PDFProcessorUtil.hasImages(fileVersion)) {
+				thumbnailQueryString = "&documentThumbnail=1";
+			}
+			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
+				thumbnailQueryString = "&videoThumbnail=1";
+			}
+
+			if (Validator.isNotNull(thumbnailQueryString)) {
+				thumbnailSrc = getPreviewURL(
+					fileEntry, fileVersion, themeDisplay, thumbnailQueryString);
+			}
+		}
+
+		return thumbnailSrc;
+	}
+
+	public static String getThumbnailStyle() throws Exception {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("max-height: ");
+		sb.append(PrefsPropsUtil.getLong(
+			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
+		sb.append("px; max-width: ");
+		sb.append(PrefsPropsUtil.getLong(
+			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH));
+		sb.append("px;");
 
 		return sb.toString();
 	}

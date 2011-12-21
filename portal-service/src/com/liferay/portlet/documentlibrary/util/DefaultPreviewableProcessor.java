@@ -59,18 +59,6 @@ public abstract class DefaultPreviewableProcessor
 		return doGetPreviewFileSize(fileVersion, index, getPreviewType());
 	}
 
-	protected InputStream doGetThumbnailAsStream(FileVersion fileVersion)
-		throws Exception {
-
-		return doGetThumbnailAsStream(fileVersion, getThumbnailType());
-	}
-
-	protected long doGetThumbnailFileSize(FileVersion fileVersion)
-		throws Exception {
-
-		return doGetThumbnailFileSize(fileVersion, getThumbnailType());
-	}
-
 	protected String getPreviewFilePath(FileVersion fileVersion) {
 		return getPreviewFilePath(fileVersion, 0);
 	}
@@ -99,8 +87,6 @@ public abstract class DefaultPreviewableProcessor
 		return getPreviewTempFilePath(id, index, getPreviewType());
 	}
 
-	protected abstract String getPreviewType();
-
 	protected String getPreviewType(int index) {
 		String[] previewTypes = getPreviewTypes();
 
@@ -116,8 +102,11 @@ public abstract class DefaultPreviewableProcessor
 		return new String[] { getPreviewType() };
 	}
 
-	protected String getThumbnailFilePath(FileVersion fileVersion) {
-		return getThumbnailFilePath(fileVersion, getThumbnailType());
+	protected String getThumbnailFilePath(
+		FileVersion fileVersion, int thumbnailIndex) {
+
+		return getThumbnailFilePath(
+			fileVersion, getThumbnailType(), thumbnailIndex);
 	}
 
 	protected File getThumbnailTempFile(String id) {
@@ -128,8 +117,12 @@ public abstract class DefaultPreviewableProcessor
 		return getThumbnailTempFilePath(id, getThumbnailType());
 	}
 
+	protected String getPreviewType() {
+		return getPreviewType(null);
+	}
+
 	protected String getThumbnailType() {
-		return null;
+		return getThumbnailType(null);
 	}
 
 }

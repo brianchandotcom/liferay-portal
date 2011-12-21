@@ -75,7 +75,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
-import com.liferay.portlet.documentlibrary.util.PDFProcessor;
+import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -485,7 +485,7 @@ public class EditServerAction extends PortletAction {
 
 		preferences.store();
 
-		PDFProcessor.reset();
+		PDFProcessorUtil.reset();
 	}
 
 	protected void updateFileUploads(

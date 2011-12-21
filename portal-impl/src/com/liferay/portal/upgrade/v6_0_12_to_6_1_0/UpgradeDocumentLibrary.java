@@ -24,7 +24,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
-import com.liferay.portlet.documentlibrary.util.ImageProcessor;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -219,7 +219,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					FileVersion fileVersion = new LiferayFileVersion(
 						dlFileVersion);
 
-					ImageProcessor.generateImages(fileVersion);
+					ImageProcessorUtil.generateImages(fileVersion);
 				}
 			}
 		}

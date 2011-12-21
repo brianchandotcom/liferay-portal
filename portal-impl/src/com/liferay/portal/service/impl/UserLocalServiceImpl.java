@@ -45,7 +45,7 @@ import com.liferay.portal.UserSmsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageProcessorUtil;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -4379,7 +4379,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		try {
-			ImageBag imageBag = ImageProcessorUtil.read(bytes);
+			ImageBag imageBag = ImageToolUtil.read(bytes);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -4387,7 +4387,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				throw new UserPortraitTypeException();
 			}
 
-			renderedImage = ImageProcessorUtil.scale(
+			renderedImage = ImageToolUtil.scale(
 				renderedImage, PropsValues.USERS_IMAGE_MAX_HEIGHT,
 				PropsValues.USERS_IMAGE_MAX_WIDTH);
 
@@ -4395,7 +4395,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			imageLocalService.updateImage(
 				portraitId,
-				ImageProcessorUtil.getBytes(renderedImage, contentType));
+				ImageToolUtil.getBytes(renderedImage, contentType));
 		}
 		catch (IOException ioe) {
 			throw new ImageSizeException(ioe);

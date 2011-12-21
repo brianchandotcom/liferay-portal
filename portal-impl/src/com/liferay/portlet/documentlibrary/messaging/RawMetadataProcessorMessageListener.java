@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
 
 /**
  * @author Miguel Pastor
@@ -30,7 +30,7 @@ public class RawMetadataProcessorMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
-		RawMetadataProcessor.saveMetadata(fileVersion);
+		RawMetadataProcessorUtil.saveMetadata(fileVersion);
 
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			MessageBusUtil.sendMessage(

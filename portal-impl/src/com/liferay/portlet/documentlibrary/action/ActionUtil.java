@@ -32,7 +32,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,10 +101,10 @@ public class ActionUtil {
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
-				RawMetadataProcessor.generateMetadata(fileVersion);
+				RawMetadataProcessorUtil.generateMetadata(fileVersion);
 			}
 			else {
-				RawMetadataProcessor.generateMetadata(
+				RawMetadataProcessorUtil.generateMetadata(
 					fileEntry.getFileVersion());
 			}
 		}

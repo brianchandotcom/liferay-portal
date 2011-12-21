@@ -106,10 +106,10 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/api/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
-boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
-boolean hasImages = ImageProcessor.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessor.hasImages(fileVersion);
-boolean hasVideo = VideoProcessor.hasVideo(fileVersion);
+boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
+boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
+boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
+boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
@@ -204,23 +204,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<span class="document-thumbnail">
 
 						<%
-						String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(extension) + ".png";
+						DLFileShortcut fileShortcut = null;
 
-						String thumbnailQueryString = null;
-
-						if (hasImages) {
-							thumbnailQueryString = "&imageThumbnail=1";
-						}
-						else if (hasPDFImages) {
-							thumbnailQueryString = "&documentThumbnail=1";
-						}
-						else if (hasVideo) {
-							thumbnailQueryString = "&videoThumbnail=1";
-						}
-
-						if (Validator.isNotNull(thumbnailQueryString)) {
-							thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, thumbnailQueryString);
-						}
+						String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay);
 
 						if (layoutAssetEntry != null) {
 							AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry.getClassName(), assetClassPK);
@@ -297,16 +283,16 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							previewQueryString = "&imagePreview=1";
 						}
 						else if (hasPDFImages) {
-							previewFileCount = PDFProcessor.getPreviewFileCount(fileVersion);
+							previewFileCount = PDFProcessorUtil.getPreviewFileCount(fileVersion);
 
 							previewQueryString = "&previewFileIndex=";
 
-							previewFileURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
+							previewFileURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 						}
 						else if (hasVideo) {
 							previewQueryString = "&videoPreview=1";
 
-							videoThumbnailURL = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
+							videoThumbnailURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 						}
 
 						if (Validator.isNotNull(previewQueryString)) {
@@ -315,7 +301,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									previewFileURLs = new String[PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length];
 
 									for (int i = 0; i < PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS.length; i++) {
-										previewFileURLs[i] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
+										previewFileURLs[i] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString + "&type=" + PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS[i]);
 									}
 								}
 								else {
@@ -327,7 +313,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							else {
 								previewFileURLs = new String[1];
 
-								previewFileURLs[0] = _getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
+								previewFileURLs[0] = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, previewQueryString);
 							}
 
 							previewFileURL = previewFileURLs[0];
@@ -346,7 +332,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
-								<c:if test="<%= AudioProcessor.isAudioSupported(fileVersion) || ImageProcessor.isImageSupported(fileVersion) || PDFProcessor.isDocumentSupported(fileVersion) || VideoProcessor.isVideoSupported(fileVersion) %>">
+								<c:if test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
 									<div class="portlet-msg-info">
 										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 									</div>
@@ -472,7 +458,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image="download"
 								label="<%= true %>"
 								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileVersion.getSize(), locale) + "k)" %>'
-								url="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+								url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 							/>
 						</c:if>
 					</span>
@@ -488,7 +474,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								image='<%= "../file_system/small/" + conversion %>'
 								label="<%= true %>"
 								message="<%= conversion.toUpperCase() %>"
-								url='<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
+								url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
 							/>
 
 						<%
@@ -843,7 +829,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 					{
 						handler: function(event) {
-							location.href = '<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
+							location.href = '<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
 						},
 						icon: 'download',
 						label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.VideoProcessor;
+import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
 /**
  * @author Juan González
@@ -31,7 +31,7 @@ public class VideoProcessorMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
-		VideoProcessor.generateVideo(fileVersion);
+		VideoProcessorUtil.generateVideo(fileVersion);
 
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			MessageBusUtil.sendMessage(

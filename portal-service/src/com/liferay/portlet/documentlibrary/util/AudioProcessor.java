@@ -14,37 +14,37 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import java.io.InputStream;
+
+import java.util.Set;
+
 /**
- * Common interface for all the processors of the document library. All document
- * library processors must implement this interface.
- *
- * @author Alexander Chow
- * @author Mika Koivisto
- * @see    AudioProcessor
- * @see    DLPreviewableProcessor
- * @see    ImageProcessor
- * @see    PDFProcessor
- * @see    RawMetadataProcessor
- * @see    VideoProcessor
+ * @author Sergio González
  */
-public interface DLProcessor {
+public interface AudioProcessor {
 
-	public void cleanUp(FileEntry fileEntry);
+	public static final String PREVIEW_TYPE = "mp3";
 
-	public void cleanUp(FileVersion fileVersion);
+	public void generateAudio(FileVersion fileVersion) throws Exception;
 
-	public boolean isSupported(FileVersion fileVersion);
+	public Set<String> getAudioMimeTypes();
+
+	public InputStream getPreviewAsStream(FileVersion fileVersion)
+		throws Exception;
+
+	public long getPreviewFileSize(FileVersion fileVersion)
+		throws Exception;
+
+	public boolean hasAudio(FileVersion fileVersion);
+
+	public boolean isAudioSupported(FileVersion fileVersion);
+
+	public boolean isAudioSupported(String mimeType);
 
 	public boolean isSupported(String mimeType);
 
-	/**
-	 * Launches the processor's work with respect to the given file version.
-	 *
-	 * @param fileVersion the latest file version to process
-	 */
 	public void trigger(FileVersion fileVersion);
 
 }

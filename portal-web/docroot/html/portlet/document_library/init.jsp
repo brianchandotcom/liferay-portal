@@ -78,12 +78,12 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryT
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %><%@
-page import="com.liferay.portlet.documentlibrary.util.AudioProcessor" %><%@
+page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.ImageProcessor" %><%@
-page import="com.liferay.portlet.documentlibrary.util.PDFProcessor" %><%@
-page import="com.liferay.portlet.documentlibrary.util.VideoProcessor" %><%@
+page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.RequiredStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException" %><%@
@@ -176,5 +176,3 @@ String ddmResource = portletConfig.getInitParameter("ddm-resource");
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
-
-<%@ include file="/html/portlet/document_library/util.jspf" %>

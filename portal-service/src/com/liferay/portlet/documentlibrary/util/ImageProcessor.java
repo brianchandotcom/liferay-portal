@@ -17,34 +17,45 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import java.io.InputStream;
+
+import java.util.Set;
+
 /**
- * Common interface for all the processors of the document library. All document
- * library processors must implement this interface.
- *
- * @author Alexander Chow
- * @author Mika Koivisto
- * @see    AudioProcessor
- * @see    DLPreviewableProcessor
- * @see    ImageProcessor
- * @see    PDFProcessor
- * @see    RawMetadataProcessor
- * @see    VideoProcessor
+ * @author Sergio González
  */
-public interface DLProcessor {
+public interface ImageProcessor {
 
 	public void cleanUp(FileEntry fileEntry);
 
 	public void cleanUp(FileVersion fileVersion);
 
-	public boolean isSupported(FileVersion fileVersion);
+	public void generateImages(FileVersion fileVersion);
+
+	public Set<String> getImageMimeTypes();
+
+	public InputStream getThumbnailAsStream(
+			FileVersion fileVersion, int thumbnailIndex)
+		throws Exception;
+
+	public long getThumbnailFileSize(
+			FileVersion fileVersion, int thumbnailIndex)
+		throws Exception;
+
+	public boolean hasImages(FileVersion fileVersion);
+
+	public boolean isImageSupported(FileVersion fileVersion);
+
+	public boolean isImageSupported(String mimeType);
+
+	public void storeThumbnail(
+			long companyId, long groupId, long fileEntryId, long fileVersionId,
+			long custom1ImageId, long custom2ImageId,
+			InputStream is, String type)
+		throws Exception;
 
 	public boolean isSupported(String mimeType);
 
-	/**
-	 * Launches the processor's work with respect to the given file version.
-	 *
-	 * @param fileVersion the latest file version to process
-	 */
 	public void trigger(FileVersion fileVersion);
 
 }

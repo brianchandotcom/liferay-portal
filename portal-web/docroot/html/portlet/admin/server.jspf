@@ -549,7 +549,7 @@ numberFormat.setMinimumIntegerDigits(2);
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminImageMagickConversionPanel" persistState="<%= true %>" title="enabling-imagemagick-provides-document-preview-functionality">
 							<aui:input inlineLabel="right" label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
 
-							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessor.getGlobalSearchPath() %>" />
+							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessorUtil.getGlobalSearchPath() %>" />
 						</liferay-ui:panel>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminOpenOfficeConversionPanel" persistState="<%= true %>" title="enabling-openoffice-integration-provides-document-conversion-functionality">

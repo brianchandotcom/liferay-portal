@@ -33,7 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.ImageProcessor;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 import java.io.InputStream;
 
@@ -356,7 +356,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				else {
 					InputStream is = _sourceHook.getImageAsStream(image);
 
-					ImageProcessor.storeThumbnail(
+					ImageProcessorUtil.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						custom1ImageId, custom2ImageId, is, image.getType());
 				}

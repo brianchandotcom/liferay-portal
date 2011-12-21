@@ -31,7 +31,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 	%>
 
 	<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
-		<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? type : LanguageUtil.get(pageContext, "layout.types." + lte.getLayoutType()) %>' key="the-first-page-cannot-be-of-type-x" />
+		<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? type : "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
 	</c:if>
 
 	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">

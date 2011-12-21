@@ -215,53 +215,8 @@
 	.permission-scopes {
 		display: block;
 
-		&:after {
-			clear: both;
-			content: ".";
-			display: block;
-			height: 0;
-			visibility: hidden;
-		}
-
 		&.empty {
 			display: none;
-		}
-
-		.permission-scope {
-			background: #DFF4FF;
-			color: #1A1A1A;
-			border: 1px solid #A7CEDF;
-			float: left;
-			margin-right: 3px;
-			padding: 3px 20px 3px 6px;
-			padding-right: 20px;
-			position: relative;
-		}
-
-		.permission-scope:hover {
-			border-color: #AEB8BC;
-		}
-
-		.permission-scope-delete {
-			display: block;
-			padding: 6px;
-			position: absolute;
-			right: 0;
-			top: 3px;
-
-			span {
-				background: url(@theme_image_path@/application/close_small.png) no-repeat 0 0;
-				cursor: pointer;
-				display: block;
-				font-size: 0;
-				height: 7px;
-				text-indent: -9999px;
-				width: 7px;
-			}
-
-			&:hover span {
-				background-position: 0 100%;
-			}
 		}
 	}
 

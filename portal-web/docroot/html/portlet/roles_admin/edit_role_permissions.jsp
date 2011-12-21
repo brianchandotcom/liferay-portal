@@ -244,7 +244,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			var id = selectedGroupIds[i];
 			var name = selectedGroupNames[i];
 
-			groupsHTML += '<span class="permission-scope">' + name + '<a class="permission-scope-delete" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\' );"><span>x</span></a></span>';
+			groupsHTML += '<span class="lfr-token"><span class="lfr-token-text">' + name + '</span><a class="aui-icon aui-icon-close lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\' );"></a></span>';
 		}
 
 		if (groupsHTML == '') {

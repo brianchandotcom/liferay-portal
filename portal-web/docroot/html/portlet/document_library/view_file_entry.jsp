@@ -106,7 +106,7 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = themeDisplay.getPortalURL() + "/api/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
 }
 
-boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
+boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
 boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
@@ -332,7 +332,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
-								<c:if test="<%= AudioProcessor.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
+								<c:if test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
 									<div class="portlet-msg-info">
 										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 									</div>

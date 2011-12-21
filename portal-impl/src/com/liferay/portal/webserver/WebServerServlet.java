@@ -76,6 +76,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessor;
+import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
@@ -823,8 +824,8 @@ public class WebServerServlet extends HttpServlet {
 		else if (audioPreview) {
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(AudioProcessor.PREVIEW_TYPE);
-			inputStream = AudioProcessor.getPreviewAsStream(fileVersion);
-			contentLength = AudioProcessor.getPreviewFileSize(fileVersion);
+			inputStream = AudioProcessorUtil.getPreviewAsStream(fileVersion);
+			contentLength = AudioProcessorUtil.getPreviewFileSize(fileVersion);
 
 			converted = true;
 		}

@@ -43,7 +43,7 @@
 					<%
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
-					boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
+					boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
 					boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 					boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 					boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);

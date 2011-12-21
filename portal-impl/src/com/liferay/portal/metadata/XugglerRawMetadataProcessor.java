@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.AudioProcessor;
+import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
 import com.xuggle.xuggler.IContainer;
@@ -145,7 +145,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		if (PrefsPropsUtil.getBoolean(
 				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
 
-			if (AudioProcessor.isAudioSupported(mimeType)) {
+			if (AudioProcessorUtil.isAudioSupported(mimeType)) {
 				return true;
 			}
 

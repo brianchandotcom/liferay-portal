@@ -790,8 +790,7 @@ public class WebServerServlet extends HttpServlet {
 
 			inputStream = ImageProcessorUtil.getThumbnailAsStream(
 					fileVersion, thumbnailIndex);
-			contentLength = com.liferay.portlet.documentlibrary.util.
-				ImageProcessorUtil.getThumbnailFileSize(
+			contentLength = ImageProcessorUtil.getThumbnailFileSize(
 					fileVersion, thumbnailIndex);
 
 			converted = true;

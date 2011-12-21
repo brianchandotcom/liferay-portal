@@ -60,18 +60,55 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	var structure = <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>;
 	var columnset = Liferay.SpreadSheet.buildDataTableColumnset(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
 
-	var ignoreEmptyRecordsSort = function(recA, recB, field, desc) {
+	var ignoreEmptyRecordsNumericSort = function(recA, recB, field, desc) {
+		var a = recA.getValue(field);
+		var b = recB.getValue(field);
+
+		return A.ArraySort.compareIgnoreWhiteSpace(
+			a,
+			b,
+			desc,
+			function(a, b, desc) {
+				var n1 = parseFloat(a);
+				var n2 = parseFloat(b);
+
+				var result;
+
+				if (isNaN(n1) || isNaN(n2)) {
+					result = A.ArraySort.compare(a, b, desc);
+				}
+				else {
+					result = desc ? (n2 - n1) : (n1 - n2);
+				}
+
+				return result;
+			}
+		);
+	};
+
+	var ignoreEmptyRecordsStringSort = function(recA, recB, field, desc) {
 		var a = recA.getValue(field);
 		var b = recB.getValue(field);
 
 		return A.ArraySort.compareIgnoreWhiteSpace(a, b, desc);
 	};
 
+	var numericData = {
+		double: 1,
+		integer: 1,
+		number: 1
+	};
+
 	var keys = A.Array.map(
 		columnset,
 		function(item, index, collection) {
 			if (!item.sortFn) {
-				item.sortFn = ignoreEmptyRecordsSort;
+				if (numericData[item.dataType]) {
+					item.sortFn = ignoreEmptyRecordsNumericSort;
+				}
+				else {
+					item.sortFn = ignoreEmptyRecordsStringSort;
+				}
 			}
 
 			return item.key;

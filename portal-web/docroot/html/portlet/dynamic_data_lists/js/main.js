@@ -20,6 +20,7 @@ AUI().add(
 		var EMPTY_FN = A.Lang.emptyFn;
 
 		var STR_COMMA = ',';
+
 		var STR_EMPTY = '';
 
 		var DLFileEntryCellEditor = A.Component.create(
@@ -101,6 +102,7 @@ AUI().add(
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
+
 						var linkNode = contentBox.one('a');
 
 						if (!linkNode) {
@@ -117,24 +119,30 @@ AUI().add(
 						var instance = this;
 
 						if (val) {
-							if (instance.selectedTitle && instance.selectedURL) {
-								instance._syncFileLabel(instance.selectedTitle, instance.selectedURL);
+							var selectedTitle = instance.selectedTitle;
+							var selectedURL = instance.selectedURL;
+
+							if (selectedTitle && selectedURL) {
+								instance._syncFileLabel(selectedTitle, selectedURL);
 							}
 							else {
-								SpreadSheet.Util.getFileEntry(val, function(fileEntry) {
-									var url = SpreadSheet.Util.getFileEntryURL(fileEntry);
+								SpreadSheet.Util.getFileEntry(
+									val,
+									function(fileEntry) {
+										var url = SpreadSheet.Util.getFileEntryURL(fileEntry);
 
-									instance._syncFileLabel(fileEntry.title, url);
-								});
+										instance._syncFileLabel(fileEntry.title, url);
+									}
+								);
 							}
-
-							instance.elements.val(val);
 						}
 						else {
 							instance._syncFileLabel(STR_EMPTY, STR_EMPTY);
 
-							instance.elements.val(STR_EMPTY);
+							val = STR_EMPTY;
 						}
+
+						instance.elements.val(val);
 					}
 				}
 			}

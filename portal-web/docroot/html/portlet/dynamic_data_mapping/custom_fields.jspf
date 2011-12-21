@@ -155,7 +155,7 @@
 									var value = data.value;
 
 									if (value !== '') {
-										label = '(' + Liferay.Language.get('file') + ')';
+										label = '(<%= UnicodeLanguageUtil.get(pageContext, "file") %>)';
 									}
 
 									return label;

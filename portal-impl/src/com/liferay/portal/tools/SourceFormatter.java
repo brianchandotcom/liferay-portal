@@ -1684,6 +1684,14 @@ public class SourceFormatter {
 
 				return previousLine + StringPool.SPACE + line;
 			}
+
+			if ((trimmedPreviousLine.startsWith("if ") ||
+				 trimmedPreviousLine.startsWith("else ")) &&
+				(previousLine.endsWith("||") || previousLine.endsWith("&&")) &&
+				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+				return previousLine + StringPool.SPACE + line;
+			}
 		}
 
 		if (!previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {

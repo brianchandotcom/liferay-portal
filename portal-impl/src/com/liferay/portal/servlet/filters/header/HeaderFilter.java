@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.header;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -80,7 +81,9 @@ public class HeaderFilter extends BasePortalFilter {
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
-			if (name.equals(_URL_REGEX_PATTERN)) {
+			if (ArrayUtil.contains(
+					PropsValues.REQUEST_HEADER_IGNORE_INIT_PARAMS, name)) {
+
 				continue;
 			}
 

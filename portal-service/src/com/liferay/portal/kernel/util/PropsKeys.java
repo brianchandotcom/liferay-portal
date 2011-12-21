@@ -1647,6 +1647,8 @@ public interface PropsKeys {
 
 	public static final String REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP = "request.header.auth.import.from.ldap";
 
+	public static final String REQUEST_HEADER_IGNORE_INIT_PARAMS = "request.header.ignore.init.params";
+
 	public static final String REQUEST_SHARED_ATTRIBUTES = "request.shared.attributes";
 
 	public static final String RESOURCE_ACTIONS_CONFIGS = "resource.actions.configs";

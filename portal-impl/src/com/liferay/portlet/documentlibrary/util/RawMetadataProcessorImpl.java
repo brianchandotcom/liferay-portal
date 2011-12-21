@@ -42,21 +42,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Document library processor responsible for the generation of raw metadata
- * associated with all of the the files stored in the document library.
- *
- * <p>
- * This processor automatically and assynchronously extracts the metadata from
- * all of the files stored in the document library. The metadata extraction is
- * done with the help of {@link
- * com.liferay.portal.metadata.TikaRawMetadataProcessor}
- * </p>
- *
  * @author Alexander Chow
  * @author Mika Koivisto
  * @author Miguel Pastor
  */
-public class RawMetadataProcessor implements DLProcessor {
+public class RawMetadataProcessorImpl
+	implements DLProcessor, RawMetadataProcessor {
 
 	public void cleanUp(FileEntry fileEntry) {
 	}
@@ -64,15 +55,7 @@ public class RawMetadataProcessor implements DLProcessor {
 	public void cleanUp(FileVersion fileVersion) {
 	}
 
-	/**
-	 * Generates the raw metadata associated with the file entry.
-	 *
-	 * @param  fileVersion the file version from which the raw metatada is to be
-	 *         generated
-	 * @throws PortalException if an error occurred in the metadata extraction
-	 * @throws SystemException if a system exception occurred
-	 */
-	public static void generateMetadata(FileVersion fileVersion)
+	public void generateMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
 
 		long fileEntryMetadataCount =
@@ -93,20 +76,7 @@ public class RawMetadataProcessor implements DLProcessor {
 		return true;
 	}
 
-	/**
-	 * Saves the raw metadata present in the file version.
-	 *
-	 * <p>
-	 * The raw metadata present in the file version is extracted and persisted
-	 * using {@link com.liferay.portal.metadata.TikaRawMetadataProcessor}.
-	 * </p>
-	 *
-	 * @param  fileVersion the file version from which the raw metatada is to be
-	 *         extracted and persisted
-	 * @throws PortalException if an error occurred in the metadata extraction
-	 * @throws SystemException if a system exception occurred
-	 */
-	public static void saveMetadata(FileVersion fileVersion)
+	public void saveMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
 
 		Map<String, Fields> rawMetadataMap = null;
@@ -150,16 +120,6 @@ public class RawMetadataProcessor implements DLProcessor {
 			rawMetadataMap, serviceContext);
 	}
 
-	/**
-	 * Launches extraction of raw metadata from the file version.
-	 *
-	 * <p>
-	 * The raw metadata extraction is done asynchronously.
-	 * </p>
-	 *
-	 * @param fileVersion the latest file version from which the raw metadata is
-	 *        to be generated
-	 */
 	public void trigger(FileVersion fileVersion) {
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			try {
@@ -180,8 +140,10 @@ public class RawMetadataProcessor implements DLProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RawMetadataProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		RawMetadataProcessorImpl.class);
 
-	private static RawMetadataProcessor _instance = new RawMetadataProcessor();
+	private static RawMetadataProcessorImpl _instance =
+		new RawMetadataProcessorImpl();
 
 }

@@ -55,31 +55,30 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class AudioProcessor extends DefaultPreviewableProcessor {
+public class AudioProcessorImpl
+	extends DefaultPreviewableProcessor implements AudioProcessor {
 
-	public static final String PREVIEW_TYPE = "mp3";
-
-	public static void generateAudio(FileVersion fileVersion) throws Exception {
+	public void generateAudio(FileVersion fileVersion) throws Exception {
 		_instance._generateAudio(fileVersion);
 	}
 
-	public static Set<String> getAudioMimeTypes() {
+	public Set<String> getAudioMimeTypes() {
 		return _instance._audioMimeTypes;
 	}
 
-	public static InputStream getPreviewAsStream(FileVersion fileVersion)
+	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
 		return _instance.doGetPreviewAsStream(fileVersion);
 	}
 
-	public static long getPreviewFileSize(FileVersion fileVersion)
+	public long getPreviewFileSize(FileVersion fileVersion)
 		throws Exception {
 
 		return _instance.doGetPreviewFileSize(fileVersion);
 	}
 
-	public static boolean hasAudio(FileVersion fileVersion) {
+	public boolean hasAudio(FileVersion fileVersion) {
 		boolean hasAudio = false;
 
 		try {
@@ -96,15 +95,15 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		return hasAudio;
 	}
 
-	public static boolean isAudioSupported(FileVersion fileVersion) {
+	public boolean isAudioSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
 
-	public static boolean isAudioSupported(String mimeType) {
+	public boolean isAudioSupported(String mimeType) {
 		return _instance.isSupported(mimeType);
 	}
 
-	public AudioProcessor() {
+	public AudioProcessorImpl() {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 	}
 
@@ -319,9 +318,9 @@ public class AudioProcessor extends DefaultPreviewableProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AudioProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(AudioProcessorImpl.class);
 
-	private static AudioProcessor _instance = new AudioProcessor();
+	private static AudioProcessorImpl _instance = new AudioProcessorImpl();
 
 	private Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);

@@ -566,6 +566,11 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" />
 		</property>
 	</bean>
+    <bean id="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" class="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil">
+        <property name="audioProcessor">
+            <bean class="com.liferay.portlet.documentlibrary.util.AudioProcessorImpl" />
+        </property>
+    </bean>
 	<bean id="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" class="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil">
 		<property name="imageProcessor">
 			<bean class="com.liferay.portlet.documentlibrary.util.ImageProcessorImpl" />
@@ -576,6 +581,11 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.PDFProcessorImpl" />
 		</property>
 	</bean>
+    <bean id="com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil" class="com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil">
+        <property name="rawMetadataProcessor">
+            <bean class="com.liferay.portlet.documentlibrary.util.RawMetadataProcessorImpl" />
+        </property>
+    </bean>
 	<bean id="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" class="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil">
 		<property name="videoProcessor">
 			<bean class="com.liferay.portlet.documentlibrary.util.VideoProcessorImpl" />

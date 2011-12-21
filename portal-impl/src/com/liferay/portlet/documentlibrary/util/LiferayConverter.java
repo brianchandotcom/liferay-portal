@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.image.ImageProcessorImpl;
+import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -297,10 +297,9 @@ public abstract class LiferayConverter {
 
 				thumbnailFile.createNewFile();
 
-				ImageProcessorImpl imageProcessorImpl =
-					ImageProcessorImpl.getInstance();
+				ImageToolImpl imageToolImpl = ImageToolImpl.getInstance();
 
-				RenderedImage renderedImage = imageProcessorImpl.scale(
+				RenderedImage renderedImage = imageToolImpl.scale(
 					bufferedImage, thumbnailHeight, thumbnailWidth);
 
 				ImageIO.write(

@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  * @author Mika Koivisto
  * @see    AudioProcessor
  * @see    DLPreviewableProcessor
- * @see    com.liferay.portal.kernel.image.ImageProcessor
+ * @see    ImageProcessor
  * @see    PDFProcessor
- * @see    com.liferay.portal.kernel.metadata.RawMetadataProcessor
+ * @see    RawMetadataProcessor
  * @see    VideoProcessor
  */
 public interface DLProcessor {

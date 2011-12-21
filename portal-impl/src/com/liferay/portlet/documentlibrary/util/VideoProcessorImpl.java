@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageProcessorUtil;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -215,7 +215,7 @@ public class VideoProcessorImpl
 			getThumbnailFilePath(fileVersion, THUMBNAIL_INDEX_DEFAULT), file);
 
 		if (isCustomThumbnailsEnabled(1) || isCustomThumbnailsEnabled(2)) {
-			ImageBag imageBag = ImageProcessorUtil.read(file);
+			ImageBag imageBag = ImageToolUtil.read(file);
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 

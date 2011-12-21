@@ -148,9 +148,9 @@
 			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.image.ImageProcessorUtil" class="com.liferay.portal.kernel.image.ImageProcessorUtil">
+	<bean id="com.liferay.portal.kernel.image.ImageToolUtil" class="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageProcessor">
-			<bean class="com.liferay.portal.image.ImageProcessorImpl" />
+			<bean class="com.liferay.portal.image.ImageToolImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.SpriteProcessorUtil" class="com.liferay.portal.kernel.image.SpriteProcessorUtil">

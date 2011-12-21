@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
 import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageProcessorUtil;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -80,6 +80,7 @@ import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorImpl;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorImpl;
@@ -426,10 +427,9 @@ public class WebServerServlet extends HttpServlet {
 			InputStream is = null;
 
 			if (smallImage) {
-				is = com.liferay.portlet.documentlibrary.util
-						.ImageProcessorUtil.getThumbnailAsStream(
-							fileEntry.getFileVersion(),
-							ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
+				is = ImageProcessorUtil.getThumbnailAsStream(
+					fileEntry.getFileVersion(),
+					ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
 			}
 			else {
 				is = fileEntry.getContentStream();
@@ -463,7 +463,7 @@ public class WebServerServlet extends HttpServlet {
 			ImageBag imageBag = null;
 
 			if (image.getImageId() == 0) {
-				imageBag = ImageProcessorUtil.read(image.getTextObj());
+				imageBag = ImageToolUtil.read(image.getTextObj());
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -481,14 +481,13 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 			if (image.getImageId() != 0) {
-				imageBag = ImageProcessorUtil.read(image.getTextObj());
+				imageBag = ImageToolUtil.read(image.getTextObj());
 			}
 
-			RenderedImage renderedImage = ImageProcessorUtil.scale(
+			RenderedImage renderedImage = ImageToolUtil.scale(
 				imageBag.getRenderedImage(), height, width);
 
-			return ImageProcessorUtil.getBytes(
-				renderedImage, imageBag.getType());
+			return ImageToolUtil.getBytes(renderedImage, imageBag.getType());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -789,8 +788,7 @@ public class WebServerServlet extends HttpServlet {
 
 			int thumbnailIndex = imageThumbnail - 1;
 
-			inputStream = com.liferay.portlet.documentlibrary.util.
-				ImageProcessorUtil.getThumbnailAsStream(
+			inputStream = ImageProcessorUtil.getThumbnailAsStream(
 					fileVersion, thumbnailIndex);
 			contentLength = com.liferay.portlet.documentlibrary.util.
 				ImageProcessorUtil.getThumbnailFileSize(

@@ -15,7 +15,7 @@
 package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageProcessorUtil;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -138,7 +138,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			}
 
 			try {
-				ImageBag imageBag = ImageProcessorUtil.read(imageFile);
+				ImageBag imageBag = ImageToolUtil.read(imageFile);
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -218,7 +218,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			FileOutputStream fos = new FileOutputStream(spriteFile);
 
 			try {
-				ImageProcessorUtil.encodeGIF(renderedImage, fos);
+				ImageToolUtil.encodeGIF(renderedImage, fos);
 			}
 			finally {
 				fos.close();

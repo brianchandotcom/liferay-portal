@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.image.ImageProcessor;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
@@ -24,9 +24,9 @@ import java.io.InputStream;
  */
 public interface PDFProcessor {
 
-	public static final String PREVIEW_TYPE = ImageProcessor.TYPE_PNG;
+	public static final String PREVIEW_TYPE = ImageTool.TYPE_PNG;
 
-	public static final String THUMBNAIL_TYPE = ImageProcessor.TYPE_PNG;
+	public static final String THUMBNAIL_TYPE = ImageTool.TYPE_PNG;
 
 	public String getGlobalSearchPath() throws Exception;
 

@@ -242,11 +242,11 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</ech
 		<antcall target="clean-up-logs" />
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyy-MM-dd" />
+			<format property="log.tstamp.value" pattern="yyyy-MM-dd" />
 		</tstamp>
 
 		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:/WINDOWS/system32/config/systemprofile/liferay/logs/liferay.${tstamp.value}.log log" />
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:/WINDOWS/system32/config/systemprofile/liferay/logs/liferay.${log.tstamp.value}.log log" />
 		</exec>
 
 		<antcall target="evaluate-logs">

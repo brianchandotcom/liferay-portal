@@ -24,6 +24,11 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@title='Add New']/ul/li/strong/a</td>
 	<td>Add New</td>
@@ -46,6 +51,16 @@
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Blogs Entry</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe</td>
+	<td>Blogs Entry</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
 	<td>Blogs Entry</td>
 </tr>
 <tr>
@@ -89,6 +104,11 @@
 	<td>Publish</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//h3[@class='asset-title']/a</td>
 	<td>Blogs Entry Title</td>
@@ -103,6 +123,7 @@
 	<td>//div[@class='asset-summary']</td>
 	<td>Blogs Entry Content</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

@@ -30,8 +30,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@data-navigation='documents-home']</td>
-	<td>Documents Home</td>
+	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
+	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>

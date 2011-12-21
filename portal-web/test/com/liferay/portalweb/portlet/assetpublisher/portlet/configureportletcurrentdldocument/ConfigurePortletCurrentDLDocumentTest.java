@@ -44,6 +44,7 @@ public class ConfigurePortletCurrentDLDocumentTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -110,7 +111,7 @@ public class ConfigurePortletCurrentDLDocumentTest extends BaseTestCase {
 		}
 
 		selenium.addSelection("//select[@id='_86_availableClassNameIds']",
-			RuntimeVariables.replace("Document Library Document"));
+			RuntimeVariables.replace("Documents and Media Document"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -140,7 +141,7 @@ public class ConfigurePortletCurrentDLDocumentTest extends BaseTestCase {
 			try {
 				if (selenium.isPartialText(
 							"//select[@id='_86_currentClassNameIds']",
-							"Document Library Document")) {
+							"Documents and Media Document")) {
 					break;
 				}
 			}
@@ -152,7 +153,7 @@ public class ConfigurePortletCurrentDLDocumentTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_currentClassNameIds']",
-				"Document Library Document"));
+				"Documents and Media Document"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -161,6 +162,6 @@ public class ConfigurePortletCurrentDLDocumentTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_currentClassNameIds']",
-				"Document Library Document"));
+				"Documents and Media Document"));
 	}
 }

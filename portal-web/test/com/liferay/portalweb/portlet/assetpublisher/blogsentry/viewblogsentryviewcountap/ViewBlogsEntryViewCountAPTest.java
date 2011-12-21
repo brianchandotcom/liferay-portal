@@ -44,9 +44,9 @@ public class ViewBlogsEntryViewCountAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 
-		String viewCount = selenium.getFirstNumberIncrement(
+		String viewCount1 = selenium.getFirstNumberIncrement(
 				"//span[@class='metadata-entry metadata-view-count']");
-		RuntimeVariables.setValue("viewCount", viewCount);
+		RuntimeVariables.setValue("viewCount1", viewCount1);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -70,7 +70,11 @@ public class ViewBlogsEntryViewCountAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
 				"//span[@class='metadata-entry metadata-view-count']",
-				RuntimeVariables.getValue("viewCount")));
+				RuntimeVariables.getValue("viewCount1")));
+
+		String viewCount2 = selenium.getFirstNumberIncrement(
+				"//span[@class='metadata-entry metadata-view-count']");
+		RuntimeVariables.setValue("viewCount2", viewCount2);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -100,6 +104,6 @@ public class ViewBlogsEntryViewCountAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//span[@class='view-count']",
-				RuntimeVariables.getValue("viewCount")));
+				RuntimeVariables.getValue("viewCount2")));
 	}
 }

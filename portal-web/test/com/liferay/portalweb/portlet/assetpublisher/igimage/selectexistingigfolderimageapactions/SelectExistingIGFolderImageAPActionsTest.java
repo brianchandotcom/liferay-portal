@@ -110,7 +110,7 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document Library Document"),
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
 		selenium.click(RuntimeVariables.replace(
@@ -124,10 +124,9 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Document Library Document"),
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText("//td[1]/a"));
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='IG Folder Image Name']"));
+		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -152,6 +151,6 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isElementPresent(
-				"//img[@class='asset-small-image']"));
+				"//div[@class='asset-resource-info']/div"));
 	}
 }

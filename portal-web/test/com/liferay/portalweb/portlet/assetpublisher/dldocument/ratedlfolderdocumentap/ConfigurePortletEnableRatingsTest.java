@@ -69,8 +69,7 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("Configuration"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,10 +90,9 @@ public class ConfigurePortletEnableRatingsTest extends BaseTestCase {
 
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_enableRatingsCheckbox']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@id='_86_enableRatingsCheckbox']",
 			RuntimeVariables.replace("Enable Ratings"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_enableRatingsCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

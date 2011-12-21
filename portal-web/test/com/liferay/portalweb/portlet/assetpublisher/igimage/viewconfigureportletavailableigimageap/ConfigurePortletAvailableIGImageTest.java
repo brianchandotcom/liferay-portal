@@ -88,7 +88,7 @@ public class ConfigurePortletAvailableIGImageTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Select More Than One..."));
+			RuntimeVariables.replace("Select More Than One..."));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -108,7 +108,7 @@ public class ConfigurePortletAvailableIGImageTest extends BaseTestCase {
 		}
 
 		selenium.addSelection("//select[@id='_86_currentClassNameIds']",
-			RuntimeVariables.replace("label=Document Library Document"));
+			RuntimeVariables.replace("Documents and Media Document"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -138,7 +138,7 @@ public class ConfigurePortletAvailableIGImageTest extends BaseTestCase {
 			try {
 				if (selenium.isPartialText(
 							"//select[@id='_86_availableClassNameIds']",
-							"Document Library Document")) {
+							"Documents and Media Document")) {
 					break;
 				}
 			}
@@ -150,14 +150,14 @@ public class ConfigurePortletAvailableIGImageTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_availableClassNameIds']",
-				"Document Library Document"));
+				"Documents and Media Document"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Document Library Document"),
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText("//select[@id='_86_availableClassNameIds']"));
 	}
 }

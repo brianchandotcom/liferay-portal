@@ -89,11 +89,6 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//div/a/span[2]"));
-		selenium.clickAt("//div/a/span[2]",
-			RuntimeVariables.replace("DM Folder Name"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,7 +96,8 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@id='_20_folderContainer']")) {
+				if (selenium.isVisible(
+							"//button[@title='Icon View' and contains(@class,'aui-state-active')]")) {
 					break;
 				}
 			}
@@ -111,8 +107,33 @@ public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText("//div[@id='_20_folderContainer']",
-				"DM Folder Name"));
+		assertTrue(selenium.isVisible(
+				"//button[@title='Icon View' and contains(@class,'aui-state-active')]"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//div/a/span[2]"));
+		selenium.clickAt("//div/a/span[2]",
+			RuntimeVariables.replace("DM Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DM Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a/span[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isPartialText(
+				"//li[@class='folder selected']/a/span[2]", "DM Folder Name"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//div[@id='_20_entries']/div/a/span[2]"));
 		selenium.clickAt("//div[@id='_20_entries']/div/a/span[2]",

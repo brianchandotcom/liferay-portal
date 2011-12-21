@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//img[@class='asset-small-image']</td>
+	<td>//div[@class='asset-resource-info']/div</td>
 	<td>IG Folder Image Name</td>
 </tr>
 <tr>
@@ -40,42 +40,42 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Image Gallery Test Page</td>
-	<td></td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
+	<td>//div[@class='document-container']/div/a/span[2]</td>
+	<td>IG Folder Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='document-container']/div/a/span[2]</td>
+	<td>IG Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>IG Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>1</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[1]/a/strong</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>IG Folder Name</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='IG Folder Image Name - ']</td>
+	<td>assertVisible</td>
+	<td>//span[@class='document-thumbnail']/img</td>
 	<td>IG Folder Image Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='image-title']</td>
+	<td>//a[@class='document-link']/span[2]</td>
 	<td>IG Folder Image Name</td>
 </tr>
 

@@ -88,7 +88,9 @@ public class ConfigurePortletCurrentBookmarksEntryTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Select More Than One..."));
+			RuntimeVariables.replace("Select More Than One..."));
+		assertEquals("Select More Than One...",
+			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -108,7 +110,7 @@ public class ConfigurePortletCurrentBookmarksEntryTest extends BaseTestCase {
 		}
 
 		selenium.addSelection("//select[@id='_86_availableClassNameIds']",
-			RuntimeVariables.replace("label=Bookmarks Entry"));
+			RuntimeVariables.replace("Bookmarks Entry"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

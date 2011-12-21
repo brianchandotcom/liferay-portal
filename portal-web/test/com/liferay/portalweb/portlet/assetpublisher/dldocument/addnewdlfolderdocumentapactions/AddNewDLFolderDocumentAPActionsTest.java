@@ -66,11 +66,11 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document"),
+		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
-			RuntimeVariables.replace("Document"));
+			RuntimeVariables.replace("Basic Document"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -79,7 +79,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Documents Home")) {
+				if (selenium.isVisible("//iframe")) {
 					break;
 				}
 			}
@@ -89,17 +89,54 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Documents Home",
-			RuntimeVariables.replace("Documents Home"));
+		selenium.selectFrame("//iframe");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Home")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("DM Folder Name"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-info']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace(
+				"There are no documents or media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -108,7 +145,8 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Basic Document")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
 					break;
 				}
 			}
@@ -119,8 +157,10 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Basic Document"),
-			selenium.getText("link=Basic Document"));
-		selenium.click(RuntimeVariables.replace("link=Basic Document"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
@@ -151,6 +191,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

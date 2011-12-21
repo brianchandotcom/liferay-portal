@@ -59,6 +59,16 @@
 	<td>Icon View</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div/a/span[2]</td>
 	<td>DM Folder Name</td>
@@ -69,18 +79,13 @@
 	<td>DM Folder Name</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@id='_20_folderContainer']</td>
+	<td>waitForText</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[@id='_20_folderContainer']</td>
+	<td>//li[@class='folder selected']/a/span[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>

@@ -43,6 +43,7 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -130,7 +131,7 @@ public class DeleteAPArchivedSetupActionsTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("There are no archived setups."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("//form/div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Archive Name"));
 	}
 }

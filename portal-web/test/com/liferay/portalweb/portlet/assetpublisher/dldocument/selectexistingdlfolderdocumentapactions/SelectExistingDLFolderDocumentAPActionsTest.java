@@ -80,6 +80,24 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isVisible("//iframe")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible(
 							"//span[@title='Select Existing']/ul/li/strong/a/span")) {
 					break;
@@ -114,7 +132,7 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document Library Document"),
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[11]/a"));
 		selenium.click(RuntimeVariables.replace(
@@ -128,10 +146,11 @@ public class SelectExistingDLFolderDocumentAPActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Document Library Document"),
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//td[2]/a"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

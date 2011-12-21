@@ -32,5 +32,5 @@ Boolean hasLock = (Boolean)objArray[5];
 	image='<%= "../file_system/small/" + fileVersion.getIcon() %>'
 	label="<%= true %>"
 	message="<%= fileVersion.getExtension().toUpperCase() %>"
-	url="<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+	url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 />

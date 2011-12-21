@@ -42,7 +42,7 @@ for (int i = 0; i < conversions.length; i++) {
 			image='<%= "../file_system/small/" + conversion %>'
 			label="<%= true %>"
 			message="<%= conversion.toUpperCase() %>"
-			url='<%= _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
+			url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
 		/>
 	</td>
 

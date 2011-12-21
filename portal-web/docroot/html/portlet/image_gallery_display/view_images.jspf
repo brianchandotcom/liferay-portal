@@ -55,29 +55,29 @@
 					String videoDataOptions = StringPool.BLANK;
 
 					if (hasAudio) {
-						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1", false);
+						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, HtmlUtil.escapeURL("&audioPreview=1") + "&supportedAudio=1&mediaGallery=1", false);
 
 						playerHeight = 43;
 					}
 					else if (hasImages) {
-						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
-						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
+						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+						src = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
 					}
 					else if (hasPDFImages) {
-						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
-						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
+						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
+						src = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
 					}
 					else if (hasVideo) {
-						href = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1", false);
-						src = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
+						href = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1", false);
+						src = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
 
 						for (String videoContainer : PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
-							videoDataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
+							videoDataOptions += "&" + videoContainer + "PreviewURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&videoPreview=1&type=" + videoContainer));
 						}
 					}
 					%>
 
-					<a class="image-thumbnail preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(_getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + videoDataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+					<a class="image-thumbnail preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + videoDataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" fileEntryId="<%= fileEntry.getFileEntryId() %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
 						<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 
 						<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>

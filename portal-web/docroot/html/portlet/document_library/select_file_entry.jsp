@@ -168,7 +168,7 @@ if (folder != null) {
 
 		sb.setIndex(0);
 
-		sb.append(_getFileEntryImage(fileEntry, themeDisplay));
+		sb.append(DLUtil.getFileEntryImage(fileEntry, themeDisplay));
 		sb.append(fileEntry.getTitle());
 
 		if (Validator.isNotNull(fileEntry.getDescription())) {

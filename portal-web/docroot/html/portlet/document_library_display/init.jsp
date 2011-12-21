@@ -46,9 +46,7 @@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %>
+page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
@@ -154,5 +152,3 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		<%@ include file="/html/portlet/document_library_display/init-ext.jsp" %>
 	</c:otherwise>
 </c:choose>
-
-<%@ include file="/html/portlet/document_library/util.jspf" %>

@@ -144,14 +144,11 @@ if (folder != null) {
 	for (int i = 0; i < results.size(); i++) {
 		FileEntry fileEntry = (FileEntry)results.get(i);
 
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
 		DLFileShortcut fileShortcut = null;
-	%>
 
-		<%@ include file="/html/portlet/document_library/document_thumbnail.jspf" %>
+		String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay);
+		String thumbnailStyle = DLUtil.getThumbnailStyle();
 
-	<%
 		ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
 		String rowHREF = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + themeDisplay.getScopeGroupId() + StringPool.SLASH + folderId + StringPool.SLASH + HttpUtil.encodeURL(fileEntry.getTitle(), true);

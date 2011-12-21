@@ -87,5 +87,3 @@ boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
-
-<%@ include file="/html/portlet/document_library/util.jspf" %>

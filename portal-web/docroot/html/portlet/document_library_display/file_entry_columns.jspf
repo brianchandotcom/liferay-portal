@@ -66,21 +66,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 			>
 
 				<%
-				String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-
-				if (fileShortcut == null) {
-					FileVersion fileVersion = fileEntry.getFileVersion();
-
-					if (ImageProcessorUtil.hasImages(fileVersion)) {
-						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1");
-					}
-					else if (PDFProcessorUtil.hasImages(fileVersion)) {
-						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1");
-					}
-					else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-						thumbnailSrc = _getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
-					}
-				}
+				String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay);
 				%>
 
 				<span class="entry-thumbnail">

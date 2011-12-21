@@ -198,7 +198,7 @@ if (folder != null) {
 		sb.append(StringPool.SLASH);
 		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
 
-		Set<String> imageMimeTypes = ImageProcessor.getImageMimeTypes();
+		Set<String> imageMimeTypes = ImageProcessorUtil.getImageMimeTypes();
 
 		if (imageMimeTypes.contains(fileEntry.getMimeType())) {
 			sb.append("?t=");

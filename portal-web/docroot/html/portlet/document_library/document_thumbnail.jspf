@@ -21,13 +21,13 @@ String thumbnailStyle = "max-height: " + PrefsPropsUtil.getLong(PropsKeys.DL_FIL
 if (fileShortcut == null) {
 	String thumbnailQueryString = null;
 
-	if (ImageProcessor.hasImages(fileVersion)) {
+	if (ImageProcessorUtil.hasImages(fileVersion)) {
 		thumbnailQueryString = "&imageThumbnail=1";
 	}
-	else if (PDFProcessor.hasImages(fileVersion)) {
+	else if (PDFProcessorUtil.hasImages(fileVersion)) {
 		thumbnailQueryString = "&documentThumbnail=1";
 	}
-	else if (VideoProcessor.hasVideo(fileVersion)) {
+	else if (VideoProcessorUtil.hasVideo(fileVersion)) {
 		thumbnailQueryString = "&videoThumbnail=1";
 	}
 

@@ -107,9 +107,9 @@ if (portletDisplay.isWebDAVEnabled()) {
 }
 
 boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
-boolean hasImages = ImageProcessor.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessor.hasImages(fileVersion);
-boolean hasVideo = VideoProcessor.hasVideo(fileVersion);
+boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
+boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
+boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 User userDisplay = UserLocalServiceUtil.getUserById(fileEntry.getUserId());
 
@@ -297,7 +297,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							previewQueryString = "&imagePreview=1";
 						}
 						else if (hasPDFImages) {
-							previewFileCount = PDFProcessor.getPreviewFileCount(fileVersion);
+							previewFileCount = PDFProcessorUtil.getPreviewFileCount(fileVersion);
 
 							previewQueryString = "&previewFileIndex=";
 
@@ -346,7 +346,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
-								<c:if test="<%= AudioProcessor.isAudioSupported(fileVersion) || ImageProcessor.isImageSupported(fileVersion) || PDFProcessor.isDocumentSupported(fileVersion) || VideoProcessor.isVideoSupported(fileVersion) %>">
+								<c:if test="<%= AudioProcessor.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
 									<div class="portlet-msg-info">
 										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 									</div>

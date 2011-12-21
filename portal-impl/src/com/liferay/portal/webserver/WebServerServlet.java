@@ -78,9 +78,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessor;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
-import com.liferay.portlet.documentlibrary.util.ImageProcessor;
-import com.liferay.portlet.documentlibrary.util.PDFProcessor;
-import com.liferay.portlet.documentlibrary.util.VideoProcessor;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
+import com.liferay.portlet.documentlibrary.util.PDFProcessorImpl;
+import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.VideoProcessorImpl;
+import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -423,9 +425,10 @@ public class WebServerServlet extends HttpServlet {
 			InputStream is = null;
 
 			if (smallImage) {
-				is = ImageProcessor.getThumbnailAsStream(
-					fileEntry.getFileVersion(),
-					ImageProcessor.THUMBNAIL_INDEX_DEFAULT);
+				is = com.liferay.portlet.documentlibrary.util
+						.ImageProcessorUtil.getThumbnailAsStream(
+							fileEntry.getFileVersion(),
+							ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
 			}
 			else {
 				is = fileEntry.getContentStream();
@@ -785,32 +788,34 @@ public class WebServerServlet extends HttpServlet {
 
 			int thumbnailIndex = imageThumbnail - 1;
 
-			inputStream = ImageProcessor.getThumbnailAsStream(
-				fileVersion, thumbnailIndex);
-			contentLength = ImageProcessor.getThumbnailFileSize(
-				fileVersion, thumbnailIndex);
+			inputStream = com.liferay.portlet.documentlibrary.util.
+				ImageProcessorUtil.getThumbnailAsStream(
+					fileVersion, thumbnailIndex);
+			contentLength = com.liferay.portlet.documentlibrary.util.
+				ImageProcessorUtil.getThumbnailFileSize(
+					fileVersion, thumbnailIndex);
 
 			converted = true;
 		}
 		else if ((documentThumbnail > 0) && (documentThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
+				StringPool.PERIOD).concat(PDFProcessorImpl.THUMBNAIL_TYPE);
 
 			int thumbnailIndex = documentThumbnail - 1;
 
-			inputStream = PDFProcessor.getThumbnailAsStream(
+			inputStream = PDFProcessorUtil.getThumbnailAsStream(
 				fileVersion, thumbnailIndex);
-			contentLength = PDFProcessor.getThumbnailFileSize(
+			contentLength = PDFProcessorUtil.getThumbnailFileSize(
 				fileVersion, thumbnailIndex);
 
 			converted = true;
 		}
 		else if (previewFileIndex > 0) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
-			inputStream = PDFProcessor.getPreviewAsStream(
+				StringPool.PERIOD).concat(PDFProcessorImpl.PREVIEW_TYPE);
+			inputStream = PDFProcessorUtil.getPreviewAsStream(
 				fileVersion, previewFileIndex);
-			contentLength = PDFProcessor.getPreviewFileSize(
+			contentLength = PDFProcessorUtil.getPreviewFileSize(
 				fileVersion, previewFileIndex);
 
 			converted = true;
@@ -828,8 +833,9 @@ public class WebServerServlet extends HttpServlet {
 
 			fileName = FileUtil.stripExtension(fileName).concat(
 				StringPool.PERIOD).concat(type);
-			inputStream = VideoProcessor.getPreviewAsStream(fileVersion, type);
-			contentLength = VideoProcessor.getPreviewFileSize(
+			inputStream =
+				VideoProcessorUtil.getPreviewAsStream(fileVersion, type);
+			contentLength = VideoProcessorUtil.getPreviewFileSize(
 				fileVersion, type);
 
 			response.setHeader(
@@ -874,13 +880,13 @@ public class WebServerServlet extends HttpServlet {
 		}
 		else if ((videoThumbnail > 0) && (videoThumbnail <= 3)) {
 			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
+				StringPool.PERIOD).concat(VideoProcessorImpl.THUMBNAIL_TYPE);
 
 			int thumbnailIndex = videoThumbnail - 1;
 
-			inputStream = VideoProcessor.getThumbnailAsStream(
+			inputStream = VideoProcessorUtil.getThumbnailAsStream(
 				fileVersion, thumbnailIndex);
-			contentLength = VideoProcessor.getThumbnailFileSize(
+			contentLength = VideoProcessorUtil.getThumbnailFileSize(
 				fileVersion, thumbnailIndex);
 
 			converted = true;

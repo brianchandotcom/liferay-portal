@@ -44,9 +44,9 @@
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
 					boolean hasAudio = AudioProcessor.hasAudio(fileVersion);
-					boolean hasImages = ImageProcessor.hasImages(fileVersion);
-					boolean hasPDFImages = PDFProcessor.hasImages(fileVersion);
-					boolean hasVideo = VideoProcessor.hasVideo(fileVersion);
+					boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
+					boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
+					boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 					String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 					String src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";

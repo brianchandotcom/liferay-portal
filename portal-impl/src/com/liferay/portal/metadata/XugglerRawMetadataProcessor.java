@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.AudioProcessor;
-import com.liferay.portlet.documentlibrary.util.VideoProcessor;
+import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
 import com.xuggle.xuggler.IContainer;
 
@@ -149,7 +149,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 				return true;
 			}
 
-			if (VideoProcessor.isVideoSupported(mimeType)) {
+			if (VideoProcessorUtil.isVideoSupported(mimeType)) {
 				return true;
 			}
 		}

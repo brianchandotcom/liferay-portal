@@ -16,7 +16,10 @@ package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.PermissionModelImpl;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Miguel Pastor
@@ -43,7 +46,9 @@ public class MyWorkflowInstancesControlPanelEntry
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			0, PortletKeys.MY_WORKFLOW_INSTANCES, "0", ActionKeys.VIEW);
+
 	}
 
 }

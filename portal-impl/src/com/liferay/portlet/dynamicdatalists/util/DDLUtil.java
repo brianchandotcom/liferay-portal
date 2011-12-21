@@ -113,13 +113,22 @@ public class DDLUtil {
 			Field field = itr.next();
 
 			String fieldName = field.getName();
+			String fieldType = field.getType();
 			Object fieldValue = field.getValue();
 
 			if (fieldValue instanceof Date) {
 				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
 			}
+			else if ((fieldType.equals("radio") || fieldType.equals("select"))
+					&& Validator.isNotNull(fieldValue)) {
+
+				fieldValue = JSONFactoryUtil.createJSONArray(
+					String.valueOf(fieldValue));
+
+				jsonObject.put(fieldName, (JSONArray)fieldValue);
+			}
 			else {
-				jsonObject.put(fieldName, (String)fieldValue);
+				jsonObject.put(fieldName, String.valueOf(fieldValue));
 			}
 		}
 

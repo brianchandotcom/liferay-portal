@@ -14,8 +14,11 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
@@ -32,6 +35,10 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		String value = String.valueOf(field.getValue());
 
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
 		DDMStructure ddmStructure = field.getDDMStructure();
 
 		String fieldType = ddmStructure.getFieldType(field.getName());
@@ -40,13 +47,16 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 			return value;
 		}
 
-		String[] values = StringUtil.split(value);
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(value);
 
-		StringBundler sb = new StringBundler(values.length * 2);
+		int length = valuesJSONArray.length();
 
-		for (int i = 0; i < values.length; i++) {
+		StringBundler sb = new StringBundler(length * 2);
+
+		for (int i = 0; i < length; i++) {
 			Map<String, String> fields = ddmStructure.getFields(
-				field.getName(), FieldConstants.VALUE, values[i]);
+				field.getName(), FieldConstants.VALUE,
+				valuesJSONArray.getString(i));
 
 			if (fields == null) {
 				continue;
@@ -54,14 +64,12 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 			sb.append(fields.get(FieldConstants.LABEL));
 
-			if ((i + 1) < values.length) {
+			if ((i + 1) < length) {
 				sb.append(", ");
 			}
 		}
 
-		value = sb.toString();
-
-		return value;
+		return sb.toString();
 	}
 
 }

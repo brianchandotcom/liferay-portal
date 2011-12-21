@@ -14,12 +14,11 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -185,16 +184,11 @@ public class EditRecordAction extends PortletAction {
 				continue;
 			}
 
-			if (fieldType.equals("select")) {
-				boolean multiple = GetterUtil.getBoolean(
-					ddmStructure.getFieldProperty(fieldName, "multiple"));
+			if (fieldType.equals("radio") || fieldType.equals("select")) {
+				String[] valuesArray = ParamUtil.getParameterValues(
+					actionRequest, fieldName);
 
-				if (multiple) {
-					String[] fieldValues = ParamUtil.getParameterValues(
-						actionRequest, fieldName);
-
-					fieldValue = StringUtil.merge(fieldValues);
-				}
+				fieldValue = JSONFactoryUtil.serialize(valuesArray);
 			}
 
 			Serializable fieldValueSerializable =

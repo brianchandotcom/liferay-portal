@@ -87,7 +87,7 @@ AUI().add(
 
 						instance.set(
 							'value',
-							A.JSON.stringify(
+							JSON.stringify(
 								{
 									groupId: themeDisplay.getScopeGroupId(),
 									uuid: uuid,
@@ -267,9 +267,7 @@ AUI().add(
 									var type = field.type;
 
 									if ((type === 'radio') || (type === 'select')) {
-										if (Lang.isArray(item)) {
-											item = item.join();
-										}
+										item = JSON.stringify(item);
 									}
 								}
 
@@ -349,7 +347,7 @@ AUI().add(
 									workflowAction: Liferay.Workflow.ACTION_PUBLISH
 								}
 							),
-							serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+							serviceParameterTypes: JSON.stringify(serviceParameterTypes)
 						},
 						callback
 					);
@@ -478,25 +476,17 @@ AUI().add(
 									var label = [];
 									var value = data[name];
 
-									if (multiple) {
-										if (!Lang.isArray(value)) {
-											value = value.split(STR_COMMA);
+									AArray.each(
+										value,
+										function(item1, index1, collection1) {
+											label.push(options[item1]);
 										}
-
-										AArray.each(
-											value,
-											function(item1, index1, collection1) {
-												label.push(options[item1]);
-											}
-										);
-									}
-									else {
-										label.push(options[value]);
-									}
+									);
 
 									return label.join(', ');
 								};
 
+								config.inputFormatter = AArray;
 								config.multiple = multiple;
 								config.options = options;
 							}
@@ -606,7 +596,7 @@ AUI().add(
 									workflowAction: Liferay.Workflow.ACTION_PUBLISH
 								}
 							),
-							serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+							serviceParameterTypes: JSON.stringify(serviceParameterTypes)
 						},
 						callback
 					);
@@ -649,7 +639,7 @@ AUI().add(
 				var data = {};
 
 				try {
-					data = A.JSON.parse(value);
+					data = JSON.parse(value);
 				}
 				catch (e) {
 				}

@@ -252,11 +252,11 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 	</aui:column>
 
 	<aui:column columnWidth="75" last="<%= true %>">
-		<div id="<portlet:namespace />neverTable" style="display: none;">
+		<div class='<%= recurrenceType != Recurrence.NO_RECURRENCE ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />neverTable">
 			<liferay-ui:message key="do-not-repeat-this-event" />
 		</div>
 
-		<div id="<portlet:namespace />dailyTable" style="display: none;">
+		<div class='<%= recurrenceType != Recurrence.DAILY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />dailyTable">
 			<aui:input checked="<%= dailyType == 0 %>" cssClass="input-container" inlineField="<%= true %>" label="recur-every" name="dailyType" type="radio" value="0" />
 
 			<aui:input inlineField="<%= true %>" inlineLabel="right" label="day-s" maxlength="3" name="dailyInterval" size="3" type="text" value="<%= dailyInterval %>" />
@@ -264,7 +264,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 			<aui:input checked="<%= (dailyType == 1) %>" label="every-weekday" name="dailyType" type="radio" value="1" />
 		</div>
 
-		<div id="<portlet:namespace />weeklyTable" style="display: none;">
+		<div class='<%= recurrenceType != Recurrence.WEEKLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />weeklyTable">
 			<aui:input inlineField="<%= true %>" inlineLabel="left" label="recur-every" maxlength="2" name="weeklyInterval" size="2" suffix="weeks-on" type="text" value="<%= weeklyInterval %>" />
 
 			<%
@@ -296,7 +296,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 			</aui:layout>
 		</div>
 
-		<div id="<portlet:namespace />monthlyTable" style="display: none;">
+		<div class='<%= recurrenceType != Recurrence.MONTHLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />monthlyTable">
 			<span class="aui-field-row">
 				<aui:input checked="<%= monthlyType == 0 %>" cssClass="input-container" inlineField="<%= true %>" label="day" name="monthlyType" type="radio" value="0" />
 
@@ -335,7 +335,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 		String[] months = CalendarUtil.getMonths(locale);
 		%>
 
-		<div id="<portlet:namespace />yearlyTable" style="display: none;">
+		<div class='<%= recurrenceType != Recurrence.YEARLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />yearlyTable">
 			<span class="aui-field-row">
 				<aui:input checked="<%= yearlyType == 0 %>" cssClass="input-container" inlineField="<%= true %>" label="every" name="yearlyType" type="radio" value="0" />
 
@@ -400,15 +400,22 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 </aui:fieldset>
 
 <aui:script>
-	function <portlet:namespace />showTable(id) {
-		document.getElementById("<portlet:namespace />neverTable").style.display = "none";
-		document.getElementById("<portlet:namespace />dailyTable").style.display = "none";
-		document.getElementById("<portlet:namespace />weeklyTable").style.display = "none";
-		document.getElementById("<portlet:namespace />monthlyTable").style.display = "none";
-		document.getElementById("<portlet:namespace />yearlyTable").style.display = "none";
+	Liferay.provide(
+		window,
+		'<portlet:namespace />showTable',
+		function(id) {
+			var A = AUI();
 
-		document.getElementById(id).style.display = "block";
-	}
+			var tables = A.all('#<portlet:namespace />neverTable, #<portlet:namespace />dailyTable, #<portlet:namespace />weeklyTable, #<portlet:namespace />monthlyTable, #<portlet:namespace />yearlyTable');
+
+			tables.each(
+				function(item, index, collection) {
+					item.toggle((id == item.attr('id')));
+				}
+			);
+		},
+		['aui-base']
+	);
 </aui:script>
 
 <%!

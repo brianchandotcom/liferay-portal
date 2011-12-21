@@ -36,6 +36,10 @@ public class BaseModelContextTag extends com.liferay.taglib.util.IncludeTag {
 		return _bean;
 	}
 
+	public java.lang.String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
 	public java.lang.Class<?> getModel() {
 		return _model;
 	}
@@ -44,6 +48,12 @@ public class BaseModelContextTag extends com.liferay.taglib.util.IncludeTag {
 		_bean = bean;
 
 		setScopedAttribute("bean", bean);
+	}
+
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+
+		setScopedAttribute("defaultLanguageId", defaultLanguageId);
 	}
 
 	public void setModel(java.lang.Class<?> model) {
@@ -55,6 +65,7 @@ public class BaseModelContextTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_bean = null;
+		_defaultLanguageId = null;
 		_model = null;
 	}
 
@@ -69,6 +80,7 @@ public class BaseModelContextTag extends com.liferay.taglib.util.IncludeTag {
 		"/html/taglib/aui/model_context/page.jsp";
 
 	private java.lang.Object _bean = null;
+	private java.lang.String _defaultLanguageId = null;
 	private java.lang.Class<?> _model = null;
 
 }

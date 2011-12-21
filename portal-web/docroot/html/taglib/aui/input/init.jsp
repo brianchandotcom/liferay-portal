@@ -39,6 +39,7 @@ boolean checked = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui
 long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:input:classPK")));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:cssClass"));
 java.util.Map data = (java.util.Map)request.getAttribute("aui:input:data");
+java.lang.String defaultLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:defaultLanguageId"));
 boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:disabled")));
 java.lang.String field = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:field"));
 java.lang.String fieldParam = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:fieldParam"));
@@ -73,6 +74,7 @@ _updateOptions(_options, "checked", checked);
 _updateOptions(_options, "classPK", classPK);
 _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "data", data);
+_updateOptions(_options, "defaultLanguageId", defaultLanguageId);
 _updateOptions(_options, "disabled", disabled);
 _updateOptions(_options, "field", field);
 _updateOptions(_options, "fieldParam", fieldParam);

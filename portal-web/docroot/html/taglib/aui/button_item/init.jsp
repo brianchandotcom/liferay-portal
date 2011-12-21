@@ -35,7 +35,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 
 %>
 
-<%@ include file="/html/taglib/aui/init-alloy.jspf" %>
+<%@ include file="/html/taglib/aui/init-alloy.jsp" %>
 
 <%
 boolean activeState = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:button-item:activeState")), false);

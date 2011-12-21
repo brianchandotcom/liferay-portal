@@ -182,13 +182,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
+		_columnBitmask = -1L;
 
 		_companyId = companyId;
 	}
@@ -212,11 +206,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
-		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
-
-		if (_originalModifiedDate == null) {
-			_originalModifiedDate = _modifiedDate;
-		}
+		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
 	}
@@ -266,13 +256,7 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	}
 
 	public void setRepositoryId(long repositoryId) {
-		_columnBitmask |= REPOSITORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalRepositoryId) {
-			_setOriginalRepositoryId = true;
-
-			_originalRepositoryId = _repositoryId;
-		}
+		_columnBitmask = -1L;
 
 		_repositoryId = repositoryId;
 	}

@@ -207,13 +207,7 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	public void setEntryCount(int entryCount) {
-		_columnBitmask |= ENTRYCOUNT_COLUMN_BITMASK;
-
-		if (!_setOriginalEntryCount) {
-			_setOriginalEntryCount = true;
-
-			_originalEntryCount = _entryCount;
-		}
+		_columnBitmask = -1L;
 
 		_entryCount = entryCount;
 	}

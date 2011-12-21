@@ -151,6 +151,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	}
 
 	public void setRequestId(long requestId) {
+		_columnBitmask = -1L;
+
 		_requestId = requestId;
 	}
 

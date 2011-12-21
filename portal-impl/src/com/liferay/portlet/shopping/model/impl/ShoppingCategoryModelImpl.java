@@ -257,13 +257,7 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public void setParentCategoryId(long parentCategoryId) {
-		_columnBitmask |= PARENTCATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentCategoryId) {
-			_setOriginalParentCategoryId = true;
-
-			_originalParentCategoryId = _parentCategoryId;
-		}
+		_columnBitmask = -1L;
 
 		_parentCategoryId = parentCategoryId;
 	}
@@ -283,6 +277,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	}
 
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
 	}
 

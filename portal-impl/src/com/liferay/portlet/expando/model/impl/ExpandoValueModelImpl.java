@@ -181,13 +181,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setTableId(long tableId) {
-		_columnBitmask |= TABLEID_COLUMN_BITMASK;
-
-		if (!_setOriginalTableId) {
-			_setOriginalTableId = true;
-
-			_originalTableId = _tableId;
-		}
+		_columnBitmask = -1L;
 
 		_tableId = tableId;
 	}
@@ -202,13 +196,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setColumnId(long columnId) {
-		_columnBitmask |= COLUMNID_COLUMN_BITMASK;
-
-		if (!_setOriginalColumnId) {
-			_setOriginalColumnId = true;
-
-			_originalColumnId = _columnId;
-		}
+		_columnBitmask = -1L;
 
 		_columnId = columnId;
 	}
@@ -223,13 +211,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setRowId(long rowId) {
-		_columnBitmask |= ROWID_COLUMN_BITMASK;
-
-		if (!_setOriginalRowId) {
-			_setOriginalRowId = true;
-
-			_originalRowId = _rowId;
-		}
+		_columnBitmask = -1L;
 
 		_rowId = rowId;
 	}

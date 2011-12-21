@@ -235,6 +235,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	public void setWeight(int weight) {
+		_columnBitmask = -1L;
+
 		_weight = weight;
 	}
 

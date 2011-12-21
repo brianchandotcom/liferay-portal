@@ -181,13 +181,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	public void setMessageCount(int messageCount) {
-		_columnBitmask |= MESSAGECOUNT_COLUMN_BITMASK;
-
-		if (!_setOriginalMessageCount) {
-			_setOriginalMessageCount = true;
-
-			_originalMessageCount = _messageCount;
-		}
+		_columnBitmask = -1L;
 
 		_messageCount = messageCount;
 	}

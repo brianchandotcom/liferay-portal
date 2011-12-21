@@ -221,6 +221,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	}
 
 	public void setItemId(long itemId) {
+		_columnBitmask = -1L;
+
 		_itemId = itemId;
 	}
 

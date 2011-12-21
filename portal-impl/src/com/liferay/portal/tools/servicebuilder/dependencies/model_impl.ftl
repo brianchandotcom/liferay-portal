@@ -455,20 +455,24 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 				_uuid = uuid;
 			<#else>
-				<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
-					<#if columnBitmaskEnabled>
-						_columnBitmask |= ${column.name?upper_case}_COLUMN_BITMASK;
-					</#if>
+				<#if column.isOrderColumn()>
+					_columnBitmask = -1L;
+				<#else>
+					<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
+						<#if columnBitmaskEnabled>
+							_columnBitmask |= ${column.name?upper_case}_COLUMN_BITMASK;
+						</#if>
 
-					<#if column.isPrimitiveType()>
-						if (!_setOriginal${column.methodName}) {
-							_setOriginal${column.methodName} = true;
-					<#else>
-						if (_original${column.methodName} == null) {
-					</#if>
+						<#if column.isPrimitiveType()>
+							if (!_setOriginal${column.methodName}) {
+								_setOriginal${column.methodName} = true;
+						<#else>
+							if (_original${column.methodName} == null) {
+						</#if>
 
-						_original${column.methodName} = _${column.name};
-					}
+							_original${column.methodName} = _${column.name};
+						}
+					</#if>
 				</#if>
 
 				<#if (column.type == "Blob") && column.lazy>

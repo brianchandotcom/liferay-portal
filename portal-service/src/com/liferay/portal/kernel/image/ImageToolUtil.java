@@ -24,7 +24,7 @@ import java.io.OutputStream;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImageProcessorUtil {
+public class ImageToolUtil {
 
 	public static BufferedImage convertImageType(
 		BufferedImage sourceImage, int type) {
@@ -55,7 +55,7 @@ public class ImageProcessorUtil {
 		return getImageProcessor().getBytes(renderedImage, contentType);
 	}
 
-	public static ImageProcessor getImageProcessor() {
+	public static ImageTool getImageProcessor() {
 		return _imageProcessor;
 	}
 
@@ -77,10 +77,10 @@ public class ImageProcessorUtil {
 		return getImageProcessor().scale(renderedImage, maxHeight, maxWidth);
 	}
 
-	public void setImageProcessor(ImageProcessor imageProcessor) {
+	public void setImageProcessor(ImageTool imageProcessor) {
 		_imageProcessor = imageProcessor;
 	}
 
-	private static ImageProcessor _imageProcessor;
+	private static ImageTool _imageProcessor;
 
 }

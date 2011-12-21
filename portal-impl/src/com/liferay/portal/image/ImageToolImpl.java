@@ -15,7 +15,7 @@
 package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageProcessor;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -52,9 +52,9 @@ import net.jmge.gif.Gif89Encoder;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ImageProcessorImpl implements ImageProcessor {
+public class ImageToolImpl implements ImageTool {
 
-	public static ImageProcessorImpl getInstance() {
+	public static ImageToolImpl getInstance() {
 		return _instance;
 	}
 
@@ -360,9 +360,9 @@ public class ImageProcessorImpl implements ImageProcessor {
 		return multiBytes;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ImageProcessorImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);
 
-	private static ImageProcessorImpl _instance = new ImageProcessorImpl();
+	private static ImageToolImpl _instance = new ImageToolImpl();
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 

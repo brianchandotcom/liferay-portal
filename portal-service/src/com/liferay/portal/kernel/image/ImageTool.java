@@ -24,7 +24,7 @@ import java.io.OutputStream;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface ImageProcessor {
+public interface ImageTool {
 
 	public static final String TYPE_BMP = "bmp";
 

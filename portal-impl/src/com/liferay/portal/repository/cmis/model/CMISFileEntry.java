@@ -136,21 +136,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	public String getExtension() {
-		String extension = FileUtil.getExtension(getTitle());
-
-		if (Validator.isNotNull(extension)) {
-			return extension;
-		}
-
-		Set<String> extensions = MimeTypesUtil.getExtensions(getMimeType());
-
-		if (extensions.isEmpty()) {
-			return extension;
-		}
-
-		Iterator<String> iterator = extensions.iterator();
-
-		return iterator.next();
+		return FileUtil.getExtension(getTitle());
 	}
 
 	public long getFileEntryId() {

@@ -178,6 +178,22 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>Header Filter - NoCache</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.header.HeaderFilter</filter-class>
+		<init-param>
+			<param-name>Cache-Control</param-name>
+			<param-value>no-cache</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Pragma</param-name>
+			<param-value>no-cache</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Expires</param-name>
+			<param-value>-1</param-value>
+		</init-param>
+	</filter>
+	<filter>
 		<filter-name>Ignore Filter - FTL</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.ignore.IgnoreFilter</filter-class>
 	</filter>
@@ -684,6 +700,10 @@
 	<filter-mapping>
 		<filter-name>Header Filter - JSP</filter-name>
 		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Header Filter - NoCache</filter-name>
+		<url-pattern>/c/portal/logout</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ETag Filter</filter-name>

@@ -69,7 +69,7 @@ public class BigDecimalUtil {
 	public static double scale(double x, int scale, RoundingMode roundingMode) {
 		BigDecimal xBigDecimal = new BigDecimal(String.valueOf(x));
 
-		xBigDecimal.setScale(scale, roundingMode);
+		xBigDecimal = xBigDecimal.setScale(scale, roundingMode);
 
 		return xBigDecimal.doubleValue();
 	}

@@ -303,7 +303,7 @@ if (workflowEnabled) {
 	}
 
 	function <portlet:namespace />savePage() {
-		var message = '<%= LanguageUtil.get(pageContext, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
+		var message = '<%= UnicodeLanguageUtil.get(pageContext, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
 
 		var submit = true;
 

@@ -278,7 +278,7 @@ type = ParamUtil.getString(request, "type", type);
 
 			var displayArticleId = A.one('.displaying-article-id');
 
-			displayArticleId.set('innerHTML', articletTitle + ' (<%= LanguageUtil.get(pageContext, "modified") %>)');
+			displayArticleId.set('innerHTML', articletTitle + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
 			displayArticleId.addClass('modified');
 		},
 		['aui-base']

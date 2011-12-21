@@ -403,7 +403,7 @@ if (Validator.isNotNull(content)) {
 											}
 
 											String taglibEditArticleURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", LocaleUtil.toLanguageId(locales[i]));
-											String taglibEditURL = "javascript:Liferay.Util.openWindow({cache: false, id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + LanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "'});";
+											String taglibEditURL = "javascript:Liferay.Util.openWindow({cache: false, id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + UnicodeLanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "'});";
 										%>
 
 											<liferay-ui:icon
@@ -458,7 +458,7 @@ if (Validator.isNotNull(content)) {
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<a class="lfr-token journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({id: '<portlet:namespace /><%= translations[i] %>', title: '<%= LanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
+										<a class="lfr-token journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({id: '<portlet:namespace /><%= translations[i] %>', title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>
@@ -624,7 +624,7 @@ if (Validator.isNotNull(content)) {
 			else if (!translationLink) {
 				statusNode.removeClass('workflow-status-approved');
 				statusNode.addClass('workflow-status-draft');
-				statusNode.html('<%= LanguageUtil.get(pageContext, "draft") %>');
+				statusNode.html('<%= UnicodeLanguageUtil.get(pageContext, "draft") %>');
 
 				availableTranslationContainer.addClass('contains-translations');
 				availableTranslationsLinks.show();
@@ -650,7 +650,7 @@ if (Validator.isNotNull(content)) {
 						Liferay.Util.openWindow(
 							{
 								id: '<portlet:namespace />' + newLanguageId,
-								title: '<%= LanguageUtil.get(pageContext, "web-content-translation") %>',
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>',
 								uri: editTranslationURL
 							}
 						);

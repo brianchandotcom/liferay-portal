@@ -218,7 +218,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 								if (item.added) {
 									cssClass = 'file-saved';
 
-									childHTML = '<span class="success-message"><%= LanguageUtil.get(pageContext, "successfully-saved") %></span>';
+									childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(pageContext, "successfully-saved") %></span>';
 								}
 								else {
 									cssClass = 'upload-error';

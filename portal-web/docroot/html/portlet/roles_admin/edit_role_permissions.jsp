@@ -248,7 +248,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		}
 
 		if (groupsHTML == '') {
-			groupsHTML = '<%= LanguageUtil.get(pageContext, "portal") %>';
+			groupsHTML = '<%= UnicodeLanguageUtil.get(pageContext, "portal") %>';
 		}
 
 		nameEl.innerHTML = groupsHTML;

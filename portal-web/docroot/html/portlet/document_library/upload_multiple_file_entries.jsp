@@ -181,7 +181,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 										if (item.added) {
 											cssClass = 'file-saved';
 
-											childHTML = '<span class="success-message"><%= LanguageUtil.get(pageContext, "successfully-saved") %></span>';
+											childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(pageContext, "successfully-saved") %></span>';
 										}
 										else {
 											cssClass = 'upload-error';
@@ -208,7 +208,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 									selectedItems.removeClass('selectable').removeClass('selected').addClass('upload-error');
 
-									selectedItems.append('<span class="error-message"><%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
+									selectedItems.append('<span class="error-message"><%= UnicodeLanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-deleting-the-file") %></span>');
 
 									selectedItems.all('input').remove(true);
 

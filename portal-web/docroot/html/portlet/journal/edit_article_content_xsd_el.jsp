@@ -98,7 +98,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 	<span class="folder">
 		<div class="field-container">
-			<input class="journal-article-localized" type="hidden" value='<%= !elLanguageId.equals(StringPool.BLANK) ? languageId : "false" %>' />
+			<input class="journal-article-localized" type="hidden" value='<%= !elLanguageId.equals(StringPool.BLANK) ? elLanguageId : "false" %>' />
 
 			<div class="journal-article-move-handler"></div>
 

@@ -562,7 +562,7 @@ if (Validator.isNotNull(content)) {
 
 					<div class="structure-tree-wrapper" id="<portlet:namespace />structureTreeWrapper">
 						<ul class="structure-tree" id="<portlet:namespace />structureTree">
-							<% _format(groupId, contentDoc.getRootElement(), xsdDoc.getRootElement(), new IntegerWrapper(0), new Integer(-1), true, pageContext, request); %>
+							<% _format(groupId, contentDoc.getRootElement(), xsdDoc.getRootElement(), new IntegerWrapper(0), new Integer(-1), true, pageContext, defaultLanguageId, request); %>
 						</ul>
 					</div>
 				</c:otherwise>
@@ -809,7 +809,7 @@ private String _getTemplateImage(ThemeDisplay themeDisplay, JournalTemplate temp
 	return imageURL;
 }
 
-private void _format(long groupId, Element contentParentElement, Element xsdParentElement, IntegerWrapper count, Integer depth, boolean repeatablePrototype, PageContext pageContext, HttpServletRequest request) throws Exception {
+private void _format(long groupId, Element contentParentElement, Element xsdParentElement, IntegerWrapper count, Integer depth, boolean repeatablePrototype, PageContext pageContext, String defaultLanguageId, HttpServletRequest request) throws Exception {
 	depth = new Integer(depth.intValue() + 1);
 
 	String languageId = LanguageUtil.getLanguageId(request);
@@ -894,7 +894,7 @@ private void _format(long groupId, Element contentParentElement, Element xsdPare
 				}
 			}
 			else {
-				elLanguageId = languageId;
+				elLanguageId = defaultLanguageId;
 			}
 
 			if (!_hasRepeatedParent(contentElement)) {
@@ -925,7 +925,7 @@ private void _format(long groupId, Element contentParentElement, Element xsdPare
 			if (!elType.equals("list") && !elType.equals("multi-list") && !contentElement.elements().isEmpty()) {
 				pageContext.include("/html/portlet/journal/edit_article_content_xsd_el_top.jsp");
 
-				_format(groupId, contentElement, xsdElement, count, depth, repeatablePrototype, pageContext, request);
+				_format(groupId, contentElement, xsdElement, count, depth, repeatablePrototype, pageContext, defaultLanguageId, request);
 
 				request.setAttribute(WebKeys.JOURNAL_STRUCTURE_CLOSE_DROPPABLE_TAG, Boolean.TRUE.toString());
 

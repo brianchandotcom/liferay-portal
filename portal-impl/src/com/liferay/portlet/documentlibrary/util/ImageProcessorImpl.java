@@ -44,7 +44,8 @@ import java.util.Vector;
  * @author Sergio González
  * @author Alexander Chow
  */
-public class ImageProcessor extends DLPreviewableProcessor {
+public class ImageProcessorImpl
+	extends DLPreviewableProcessor implements ImageProcessor {
 
 	public void cleanUp(FileEntry fileEntry) {
 		deleteFiles(fileEntry, null);
@@ -56,29 +57,29 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		deleteFiles(fileVersion, type);
 	}
 
-	public static void generateImages(FileVersion fileVersion) {
+	public void generateImages(FileVersion fileVersion) {
 		_instance._generateImages(fileVersion);
 	}
 
-	public static Set<String> getImageMimeTypes() {
+	public Set<String> getImageMimeTypes() {
 		return _instance._imageMimeTypes;
 	}
 
-	public static InputStream getThumbnailAsStream(
+	public InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
 		return _instance.doGetThumbnailAsStream(fileVersion, thumbnailIndex);
 	}
 
-	public static long getThumbnailFileSize(
+	public long getThumbnailFileSize(
 			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
 		return _instance.doGetThumbnailFileSize(fileVersion, thumbnailIndex);
 	}
 
-	public static boolean hasImages(FileVersion fileVersion) {
+	public boolean hasImages(FileVersion fileVersion) {
 		if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
 			return false;
 		}
@@ -99,15 +100,15 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		return hasImages;
 	}
 
-	public static boolean isImageSupported(FileVersion fileVersion) {
+	public boolean isImageSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
 
-	public static boolean isImageSupported(String mimeType) {
+	public boolean isImageSupported(String mimeType) {
 		return _instance.isSupported(mimeType);
 	}
 
-	public static void storeThumbnail(
+	public void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
 			long custom1ImageId, long custom2ImageId,
 			InputStream is, String type)
@@ -264,9 +265,9 @@ public class ImageProcessor extends DLPreviewableProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ImageProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(ImageProcessorImpl.class);
 
-	private static ImageProcessor _instance = new ImageProcessor();
+	private static ImageProcessorImpl _instance = new ImageProcessorImpl();
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 	private Set<String> _imageMimeTypes = SetUtil.fromArray(

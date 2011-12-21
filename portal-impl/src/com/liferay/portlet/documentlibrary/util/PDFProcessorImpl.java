@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.image.ImageProcessor;
 import com.liferay.portal.kernel.image.ImageProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,14 +70,12 @@ import org.im4java.core.IMOperation;
  * @author Alexander Chow
  * @author Mika Koivisto
  * @author Juan González
+ * @author Sergio González
  */
-public class PDFProcessor extends DefaultPreviewableProcessor {
+public class PDFProcessorImpl
+	extends DefaultPreviewableProcessor implements PDFProcessor {
 
-	public static final String PREVIEW_TYPE = ImageProcessor.TYPE_PNG;
-
-	public static final String THUMBNAIL_TYPE = ImageProcessor.TYPE_PNG;
-
-	public static String getGlobalSearchPath() throws Exception {
+	public String getGlobalSearchPath() throws Exception {
 		PortletPreferences preferences = PrefsPropsUtil.getPreferences();
 
 		String globalSearchPath = preferences.getValue(
@@ -104,20 +101,25 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, new Filter(filterName));
 	}
 
-	public static void generateImages(FileVersion fileVersion)
+	public void generateImages(FileVersion fileVersion)
 		throws Exception {
+
+		_initialize();
 
 		_instance._generateImages(fileVersion);
 	}
 
-	public static InputStream getPreviewAsStream(
-			FileVersion fileVersion, int index)
+	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
 		throws Exception {
+
+		_initialize();
 
 		return _instance.doGetPreviewAsStream(fileVersion, index);
 	}
 
-	public static int getPreviewFileCount(FileVersion fileVersion) {
+	public int getPreviewFileCount(FileVersion fileVersion) {
+		_initialize();
+
 		try {
 			return _instance.doGetPreviewFileCount(fileVersion);
 		}
@@ -128,27 +130,31 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		return 0;
 	}
 
-	public static long getPreviewFileSize(FileVersion fileVersion, int index)
+	public long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception {
+
+		_initialize();
 
 		return _instance.doGetPreviewFileSize(fileVersion, index);
 	}
 
-	public static InputStream getThumbnailAsStream(
+	public InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
 		return _instance.doGetThumbnailAsStream(fileVersion, thumbnailIndex);
 	}
 
-	public static long getThumbnailFileSize(
+	public long getThumbnailFileSize(
 			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
 		return _instance.doGetThumbnailFileSize(fileVersion, thumbnailIndex);
 	}
 
-	public static boolean hasImages(FileVersion fileVersion) {
+	public boolean hasImages(FileVersion fileVersion) {
+		_initialize();
+
 		boolean hasImages = false;
 
 		try {
@@ -165,15 +171,19 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		return hasImages;
 	}
 
-	public static boolean isDocumentSupported(FileVersion fileVersion) {
+	public boolean isDocumentSupported(FileVersion fileVersion) {
+		_initialize();
+
 		return _instance.isSupported(fileVersion);
 	}
 
-	public static boolean isDocumentSupported(String mimeType) {
+	public boolean isDocumentSupported(String mimeType) {
+		_initialize();
+
 		return _instance.isSupported(mimeType);
 	}
 
-	public static boolean isImageMagickEnabled() throws Exception {
+	public boolean isImageMagickEnabled() throws Exception {
 		if (PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED)) {
 			return true;
 		}
@@ -194,21 +204,9 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		return false;
 	}
 
-	public static void reset() throws Exception {
+	public void reset() throws Exception {
 		if (isImageMagickEnabled()) {
 			_globalSearchPath = getGlobalSearchPath();
-		}
-	}
-
-	public PDFProcessor() {
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-
-		try {
-			reset();
-		}
-		catch (Exception e) {
-			_log.warn(e, e);
 		}
 	}
 
@@ -242,6 +240,8 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 	}
 
 	public void trigger(FileVersion fileVersion) {
+		_initialize();
+
 		_instance._queueGeneration(fileVersion);
 	}
 
@@ -621,6 +621,24 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		return true;
 	}
 
+	private void _initialize() {
+		if (_instance != null) {
+			return;
+		}
+
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
+
+		try {
+			reset();
+		}
+		catch (Exception e) {
+			_log.warn(e, e);
+		}
+
+		_instance = new PDFProcessorImpl();
+	}
+
 	private boolean _isGeneratePreview(FileVersion fileVersion)
 		throws Exception {
 
@@ -702,9 +720,9 @@ public class PDFProcessor extends DefaultPreviewableProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PDFProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(PDFProcessorImpl.class);
 
-	private static PDFProcessor _instance = new PDFProcessor();
+	private static PDFProcessorImpl _instance;
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 	private static String _globalSearchPath;

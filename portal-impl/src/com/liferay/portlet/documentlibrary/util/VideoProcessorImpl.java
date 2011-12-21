@@ -61,60 +61,58 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Sergio González
  * @author Mika Koivisto
  */
-public class VideoProcessor extends DefaultPreviewableProcessor {
+public class VideoProcessorImpl
+	extends DefaultPreviewableProcessor implements VideoProcessor {
 
-	public static final String THUMBNAIL_TYPE = "jpg";
-
-	public static void generateVideo(FileVersion fileVersion)
+	public void generateVideo(FileVersion fileVersion)
 		throws Exception {
 
 		_instance._generateVideo(fileVersion);
 	}
 
-	public static InputStream getPreviewAsStream(FileVersion fileVersion)
+	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
 		return _instance.doGetPreviewAsStream(fileVersion);
 	}
 
-	public static InputStream getPreviewAsStream(
-			FileVersion fileVersion, String type)
+	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return _instance.doGetPreviewAsStream(fileVersion, type);
 	}
 
-	public static long getPreviewFileSize(FileVersion fileVersion)
+	public long getPreviewFileSize(FileVersion fileVersion)
 		throws Exception {
 
 		return _instance.doGetPreviewFileSize(fileVersion);
 	}
 
-	public static long getPreviewFileSize(FileVersion fileVersion, String type)
+	public long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return _instance.doGetPreviewFileSize(fileVersion, type);
 	}
 
-	public static InputStream getThumbnailAsStream(
+	public InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
 		return _instance.doGetThumbnailAsStream(fileVersion, thumbnailIndex);
 	}
 
-	public static long getThumbnailFileSize(
+	public long getThumbnailFileSize(
 			FileVersion fileVersion, int thumbnailIndex)
 		throws Exception {
 
 		return _instance.doGetThumbnailFileSize(fileVersion, thumbnailIndex);
 	}
 
-	public static Set<String> getVideoMimeTypes() {
+	public Set<String> getVideoMimeTypes() {
 		return _instance._videoMimeTypes;
 	}
 
-	public static boolean hasVideo(FileVersion fileVersion) {
+	public boolean hasVideo(FileVersion fileVersion) {
 		boolean hasVideo = false;
 
 		try {
@@ -131,15 +129,15 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 		return hasVideo;
 	}
 
-	public static boolean isVideoSupported(FileVersion fileVersion) {
+	public boolean isVideoSupported(FileVersion fileVersion) {
 		return _instance.isSupported(fileVersion);
 	}
 
-	public static boolean isVideoSupported(String mimeType) {
+	public boolean isVideoSupported(String mimeType) {
 		return _instance.isSupported(mimeType);
 	}
 
-	public VideoProcessor() {
+	public VideoProcessorImpl() {
 		boolean valid = true;
 
 		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
@@ -582,9 +580,9 @@ public class VideoProcessor extends DefaultPreviewableProcessor {
 	private static final String[] _PREVIEW_TYPES =
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
 
-	private static Log _log = LogFactoryUtil.getLog(VideoProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(VideoProcessorImpl.class);
 
-	private static VideoProcessor _instance = new VideoProcessor();
+	private static VideoProcessorImpl _instance = new VideoProcessorImpl();
 
 	private Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);

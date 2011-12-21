@@ -758,7 +758,9 @@ public class WebServerServlet extends HttpServlet {
 
 		String extension = fileVersion.getExtension();
 
-		if (!fileName.endsWith(StringPool.PERIOD + extension)) {
+		if (Validator.isNotNull(extension) &&
+			!fileName.endsWith(StringPool.PERIOD + extension)) {
+
 			fileName += StringPool.PERIOD + extension;
 		}
 

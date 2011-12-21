@@ -200,11 +200,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	}
 
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
-		}
+		_columnBitmask = -1L;
 
 		_name = name;
 	}

@@ -4585,6 +4585,8 @@ public class ServiceBuilder {
 
 				EntityColumn col = Entity.getColumn(orderColName, columnList);
 
+				col.setOrderColumn(true);
+
 				col = (EntityColumn)col.clone();
 
 				col.setCaseSensitive(orderColCaseSensitive);

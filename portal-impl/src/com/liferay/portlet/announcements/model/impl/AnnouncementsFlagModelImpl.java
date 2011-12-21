@@ -169,13 +169,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
-
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
-		}
+		_columnBitmask = -1L;
 
 		_userId = userId;
 	}
@@ -198,6 +192,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	}
 
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 

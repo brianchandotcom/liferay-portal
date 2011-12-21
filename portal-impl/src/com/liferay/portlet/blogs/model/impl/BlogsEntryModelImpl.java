@@ -317,6 +317,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -401,11 +403,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	public void setDisplayDate(Date displayDate) {
-		_columnBitmask |= DISPLAYDATE_COLUMN_BITMASK;
-
-		if (_originalDisplayDate == null) {
-			_originalDisplayDate = _displayDate;
-		}
+		_columnBitmask = -1L;
 
 		_displayDate = displayDate;
 	}

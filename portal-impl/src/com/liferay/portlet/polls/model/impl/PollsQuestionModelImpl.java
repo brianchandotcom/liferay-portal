@@ -271,6 +271,8 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	}
 
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 

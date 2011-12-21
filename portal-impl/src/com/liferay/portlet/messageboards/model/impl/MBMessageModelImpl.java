@@ -233,6 +233,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setMessageId(long messageId) {
+		_columnBitmask = -1L;
+
 		_messageId = messageId;
 	}
 
@@ -327,6 +329,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 

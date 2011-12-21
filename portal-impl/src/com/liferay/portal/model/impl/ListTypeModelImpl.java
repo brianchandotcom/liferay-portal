@@ -159,6 +159,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	}
 
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
 	}
 

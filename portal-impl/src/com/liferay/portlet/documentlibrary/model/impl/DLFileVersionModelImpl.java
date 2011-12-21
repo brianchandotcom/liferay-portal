@@ -269,6 +269,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -317,13 +319,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	}
 
 	public void setFileEntryId(long fileEntryId) {
-		_columnBitmask |= FILEENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalFileEntryId) {
-			_setOriginalFileEntryId = true;
-
-			_originalFileEntryId = _fileEntryId;
-		}
+		_columnBitmask = -1L;
 
 		_fileEntryId = fileEntryId;
 	}

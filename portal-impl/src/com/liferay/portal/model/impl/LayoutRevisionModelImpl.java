@@ -288,6 +288,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
+		_columnBitmask = -1L;
+
 		_modifiedDate = modifiedDate;
 	}
 

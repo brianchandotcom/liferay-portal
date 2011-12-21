@@ -203,6 +203,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	}
 
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
 	}
 

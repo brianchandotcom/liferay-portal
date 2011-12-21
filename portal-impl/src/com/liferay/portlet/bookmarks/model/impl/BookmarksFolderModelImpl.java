@@ -319,13 +319,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	}
 
 	public void setParentFolderId(long parentFolderId) {
-		_columnBitmask |= PARENTFOLDERID_COLUMN_BITMASK;
-
-		if (!_setOriginalParentFolderId) {
-			_setOriginalParentFolderId = true;
-
-			_originalParentFolderId = _parentFolderId;
-		}
+		_columnBitmask = -1L;
 
 		_parentFolderId = parentFolderId;
 	}
@@ -345,6 +339,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	}
 
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
 	}
 

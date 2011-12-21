@@ -169,6 +169,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	public void setAssetCount(int assetCount) {
+		_columnBitmask = -1L;
+
 		_assetCount = assetCount;
 	}
 

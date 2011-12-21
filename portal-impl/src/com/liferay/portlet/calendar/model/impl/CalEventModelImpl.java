@@ -326,6 +326,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setTitle(String title) {
+		_columnBitmask = -1L;
+
 		_title = title;
 	}
 
@@ -363,6 +365,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	public void setStartDate(Date startDate) {
+		_columnBitmask = -1L;
+
 		_startDate = startDate;
 	}
 

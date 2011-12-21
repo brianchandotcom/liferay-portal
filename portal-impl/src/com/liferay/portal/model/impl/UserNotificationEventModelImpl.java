@@ -197,6 +197,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	public void setTimestamp(long timestamp) {
+		_columnBitmask = -1L;
+
 		_timestamp = timestamp;
 	}
 

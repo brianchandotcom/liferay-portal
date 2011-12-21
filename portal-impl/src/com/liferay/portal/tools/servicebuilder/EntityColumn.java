@@ -28,16 +28,17 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	public EntityColumn(String name) {
 		this(
 			name, null, null, false, false, false, null, null, null, true, true,
-			null, null, null, null, true, true, false, false);
+			false, null, null, null, null, true, true, false, false);
 	}
 
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
 		boolean accessor, boolean filterPrimary, String ejbName,
 		String mappingKey, String mappingTable, boolean caseSensitive,
-		boolean orderByAscending, String comparator, String arrayableOperator,
-		String idType, String idParam, boolean convertNull, boolean lazy,
-		boolean localized, boolean jsonEnabled) {
+		boolean orderByAscending, boolean orderColumn, String comparator,
+		String arrayableOperator, String idType, String idParam,
+		boolean convertNull, boolean lazy, boolean localized,
+		boolean jsonEnabled) {
 
 		_name = name;
 		_dbName = dbName;
@@ -52,6 +53,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_mappingTable = mappingTable;
 		_caseSensitive = caseSensitive;
 		_orderByAscending = orderByAscending;
+		_orderColumn = orderColumn;
 		_comparator = comparator;
 		_arrayableOperator = arrayableOperator;
 		_idType = idType;
@@ -71,8 +73,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
-			mappingKey, mappingTable, true, true, null, null, idType, idParam,
-			convertNull, lazy, localized, jsonEnabled);
+			mappingKey, mappingTable, true, true, false, null, null, idType,
+			idParam, convertNull, lazy, localized, jsonEnabled);
 	}
 
 	@Override
@@ -80,9 +82,9 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return new EntityColumn(
 			getName(), getDBName(), getType(), isPrimary(), isAccessor(),
 			isFilterPrimary(), getEJBName(), getMappingKey(), getMappingTable(),
-			isCaseSensitive(), isOrderByAscending(), getComparator(),
-			getArrayableOperator(), getIdType(), getIdParam(), isConvertNull(),
-			isLazy(), isLocalized(), isJsonEnabled());
+			isCaseSensitive(), isOrderByAscending(), isOrderColumn(),
+			getComparator(), getArrayableOperator(), getIdType(), getIdParam(),
+			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled());
 	}
 
 	public int compareTo(EntityColumn entityColumn) {
@@ -273,6 +275,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return _orderByAscending;
 	}
 
+	public boolean isOrderColumn() {
+		return _orderColumn;
+	}
+
 	public boolean isPrimary() {
 		return _primary;
 	}
@@ -366,6 +372,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_orderByAscending = orderByAscending;
 	}
 
+	public void setOrderColumn(boolean orderColumn) {
+		_orderColumn = orderColumn;
+	}
+
 	protected String convertComparatorToHtml(String comparator) {
 		if (comparator.equals(">")) {
 			return "&gt;";
@@ -410,6 +420,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private String _methodName;
 	private String _name;
 	private boolean _orderByAscending;
+	private boolean _orderColumn;
 	private boolean _primary;
 	private String _type;
 

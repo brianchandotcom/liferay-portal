@@ -356,6 +356,11 @@
 				<outputType>java.util.Map</outputType>
 			</attribute>
 			<attribute>
+				<name>defaultLanguageId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -510,6 +515,11 @@
 				<name>bean</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
+			</attribute>
+			<attribute>
+				<name>defaultLanguageId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<name>model</name>

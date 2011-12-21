@@ -168,7 +168,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 	<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-article-content-size-allowed" />
 
-	<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+	<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
 	<table class="lfr-table" id="<portlet:namespace />journalArticleWrapper" width="100%">
 	<tr>

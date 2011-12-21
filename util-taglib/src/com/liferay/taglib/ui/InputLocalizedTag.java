@@ -28,6 +28,10 @@ public class InputLocalizedTag extends IncludeTag {
 		_cssClass = cssClass;
 	}
 
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
 	}
@@ -78,6 +82,8 @@ public class InputLocalizedTag extends IncludeTag {
 
 		request.setAttribute("liferay-ui:input-localized:cssClass", _cssClass);
 		request.setAttribute(
+			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
+		request.setAttribute(
 			"liferay-ui:input-localized:disabled", String.valueOf(_disabled));
 		request.setAttribute(
 			"liferay-ui:input-localized:dynamicAttributes",
@@ -94,6 +100,7 @@ public class InputLocalizedTag extends IncludeTag {
 		"/html/taglib/ui/input_localized/page.jsp";
 
 	private String _cssClass;
+	private String _defaultLanguageId;
 	private boolean _disabled;
 	private String _formName;
 	private String _languageId;

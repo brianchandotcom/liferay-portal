@@ -159,7 +159,7 @@ if (Validator.isNotNull(content)) {
 
 <liferay-ui:error-marker key="errorSection" value="content" />
 
-<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
 <portlet:renderURL var="editArticleRenderPopUpURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/journal/edit_article" />

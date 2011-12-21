@@ -30,10 +30,13 @@ public class ModelContextTag extends BaseModelContextTag {
 
 		if (model != null) {
 			pageContext.setAttribute("aui:model-context:bean", getBean());
+			pageContext.setAttribute(
+				"aui:model-context:defaultLanguageId", getDefaultLanguageId());
 			pageContext.setAttribute("aui:model-context:model", model);
 		}
 		else {
 			pageContext.removeAttribute("aui:model-context:bean");
+			pageContext.removeAttribute("aui:model-context:defaultLanguageId");
 			pageContext.removeAttribute("aui:model-context::model");
 		}
 	}

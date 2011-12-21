@@ -33,6 +33,10 @@ public class InputFieldTag extends IncludeTag {
 		_cssClass = cssClass;
 	}
 
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
 	public void setDefaultValue(Object defaultValue) {
 		_defaultValue = defaultValue;
 	}
@@ -73,6 +77,7 @@ public class InputFieldTag extends IncludeTag {
 	protected void cleanUp() {
 		_bean = null;
 		_cssClass = null;
+		_defaultLanguageId = null;
 		_defaultValue = null;
 		_disabled = false;
 		_field = null;
@@ -94,6 +99,8 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-field:bean", _bean);
 		request.setAttribute("liferay-ui:input-field:cssClass", _cssClass);
 		request.setAttribute(
+			"liferay-ui:input-field:defaultLanguageId", _defaultLanguageId);
+		request.setAttribute(
 			"liferay-ui:input-field:defaultValue", _defaultValue);
 		request.setAttribute(
 			"liferay-ui:input-field:disabled", String.valueOf(_disabled));
@@ -111,6 +118,7 @@ public class InputFieldTag extends IncludeTag {
 
 	private Object _bean;
 	private String _cssClass;
+	private String _defaultLanguageId;
 	private Object _defaultValue;
 	private boolean _disabled;
 	private String _field;

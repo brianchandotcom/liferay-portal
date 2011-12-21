@@ -28,7 +28,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 <liferay-ui:error-marker key="errorSection" value="abstract" />
 
-<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
 <h3><liferay-ui:message key="abstract" /></h3>
 

@@ -285,14 +285,18 @@ public class DDMXSDImpl implements DDMXSD {
 
 			jsonObject.put("id", dynamicElementElement.attributeValue("name"));
 
+			String type = jsonObject.getString("type");
+
 			JSONArray hiddenAttributesJSONArray =
 				JSONFactoryUtil.createJSONArray();
+
+			if (type.equals(_TYPE_CHECKBOX)) {
+				hiddenAttributesJSONArray.put("required");
+			}
 
 			hiddenAttributesJSONArray.put("readOnly");
 
 			jsonObject.put("hiddenAttributes", hiddenAttributesJSONArray);
-
-			String type = jsonObject.getString("type");
 
 			String key = "fields";
 
@@ -469,6 +473,8 @@ public class DDMXSDImpl implements DDMXSD {
 
 	private static final String _TPL_PATH =
 		"com/liferay/portlet/dynamicdatamapping/dependencies/";
+
+	private static final String _TYPE_CHECKBOX = "checkbox";
 
 	private static final String _TYPE_RADIO = "radio";
 

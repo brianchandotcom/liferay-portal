@@ -135,19 +135,27 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 	<aui:script use="aui-base">
+		var hiddenAttributesMap = window.<portlet:namespace />formBuilder.HIDDEN_FIELD_ATTRS_MAP;
+
+		window.<portlet:namespace />getFieldHiddenAttributes = function(mode, field) {
+			var hiddenAttributes = A.Array(hiddenAttributesMap[field.get('type')] || hiddenAttributesMap.DEFAULT);
+
+			if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
+				A.Array.removeItem(hiddenAttributes, 'readOnly');
+			}
+
+			return hiddenAttributes;
+		};
+
 		window.<portlet:namespace />toggleMode = function(mode) {
 			var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
-
-			var hiddenAttributes = window.<portlet:namespace />formBuilder.HIDDEN_FIELD_ATTRS;
-
-			if (modeEdit) {
-				hiddenAttributes = [];
-			}
 
 			window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
 			window.<portlet:namespace />formBuilder.get('fields').each(
 				function(item, index, collection) {
+					var hiddenAttributes = window.<portlet:namespace />getFieldHiddenAttributes(mode, item);
+
 					item.set('hiddenAttributes', hiddenAttributes);
 				}
 			);
@@ -155,6 +163,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			A.Array.each(
 				window.<portlet:namespace />formBuilder.get('availableFields'),
 				function(item, index, collection) {
+					var hiddenAttributes = window.<portlet:namespace />getFieldHiddenAttributes(mode, item);
+
 					item.set('hiddenAttributes', hiddenAttributes);
 				}
 			);

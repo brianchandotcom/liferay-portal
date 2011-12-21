@@ -219,44 +219,24 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 	<aui:column columnWidth="25" first="<%= true %>">
 		<aui:field-wrapper label="repeat" name="recurrenceType">
 
-			<%
-			String taglibOnClick = namespace + "showTable('" + namespace + "neverTable');";
-			%>
+			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" />
 
-			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.DAILY %>" id="recurrenceTypeDaily" label="daily" name="recurrenceType" type="radio" value="<%= Recurrence.DAILY %>" />
 
-			<%
-			taglibOnClick = namespace + "showTable('" + namespace + "dailyTable');";
-			%>
+			<aui:input checked="<%= recurrenceType == Recurrence.WEEKLY %>" id="recurrenceTypeWeekly" label="weekly" name="recurrenceType" type="radio" value="<%= Recurrence.WEEKLY %>" />
 
-			<aui:input checked="<%= recurrenceType == Recurrence.DAILY %>" id="recurrenceTypeDaily" label="daily" name="recurrenceType" type="radio" value="<%= Recurrence.DAILY %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.MONTHLY %>" id="recurrenceTypeMonthly" label="monthly" name="recurrenceType" type="radio" value="<%= Recurrence.MONTHLY %>" />
 
-			<%
-			taglibOnClick = namespace + "showTable('" + namespace + "weeklyTable');";
-			%>
-
-			<aui:input checked="<%= recurrenceType == Recurrence.WEEKLY %>" id="recurrenceTypeWeekly" label="weekly" name="recurrenceType" type="radio" value="<%= Recurrence.WEEKLY %>" onClick="<%= taglibOnClick %>" />
-
-			<%
-			taglibOnClick = namespace + "showTable('" + namespace + "monthlyTable');";
-			%>
-
-			<aui:input checked="<%= recurrenceType == Recurrence.MONTHLY %>" id="recurrenceTypeMonthly" label="monthly" name="recurrenceType" type="radio" value="<%= Recurrence.MONTHLY %>" onClick="<%= taglibOnClick %>" />
-
-			<%
-			taglibOnClick = namespace + "showTable('" + namespace + "yearlyTable');";
-			%>
-
-			<aui:input checked="<%= recurrenceType == Recurrence.YEARLY %>" id="recurrenceTypeYearly" label="yearly" name="recurrenceType" type="radio" value="<%= Recurrence.YEARLY %>" onClick="<%= taglibOnClick %>" />
+			<aui:input checked="<%= recurrenceType == Recurrence.YEARLY %>" id="recurrenceTypeYearly" label="yearly" name="recurrenceType" type="radio" value="<%= Recurrence.YEARLY %>" />
 		</aui:field-wrapper>
 	</aui:column>
 
 	<aui:column columnWidth="75" last="<%= true %>">
-		<div class='<%= recurrenceType != Recurrence.NO_RECURRENCE ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />neverTable">
+		<div class='<%= recurrenceType != Recurrence.NO_RECURRENCE ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeNeverTable">
 			<liferay-ui:message key="do-not-repeat-this-event" />
 		</div>
 
-		<div class='<%= recurrenceType != Recurrence.DAILY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />dailyTable">
+		<div class='<%= recurrenceType != Recurrence.DAILY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeDailyTable">
 			<aui:input checked="<%= dailyType == 0 %>" cssClass="input-container" inlineField="<%= true %>" label="recur-every" name="dailyType" type="radio" value="0" />
 
 			<aui:input inlineField="<%= true %>" inlineLabel="right" label="day-s" maxlength="3" name="dailyInterval" size="3" type="text" value="<%= dailyInterval %>" />
@@ -264,7 +244,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 			<aui:input checked="<%= (dailyType == 1) %>" label="every-weekday" name="dailyType" type="radio" value="1" />
 		</div>
 
-		<div class='<%= recurrenceType != Recurrence.WEEKLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />weeklyTable">
+		<div class='<%= recurrenceType != Recurrence.WEEKLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeWeeklyTable">
 			<aui:input inlineField="<%= true %>" inlineLabel="left" label="recur-every" maxlength="2" name="weeklyInterval" size="2" suffix="weeks-on" type="text" value="<%= weeklyInterval %>" />
 
 			<%
@@ -296,7 +276,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 			</aui:layout>
 		</div>
 
-		<div class='<%= recurrenceType != Recurrence.MONTHLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />monthlyTable">
+		<div class='<%= recurrenceType != Recurrence.MONTHLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeMonthlyTable">
 			<span class="aui-field-row">
 				<aui:input checked="<%= monthlyType == 0 %>" cssClass="input-container" inlineField="<%= true %>" label="day" name="monthlyType" type="radio" value="0" />
 
@@ -335,7 +315,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 		String[] months = CalendarUtil.getMonths(locale);
 		%>
 
-		<div class='<%= recurrenceType != Recurrence.YEARLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />yearlyTable">
+		<div class='<%= recurrenceType != Recurrence.YEARLY ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeYearlyTable">
 			<span class="aui-field-row">
 				<aui:input checked="<%= yearlyType == 0 %>" cssClass="input-container" inlineField="<%= true %>" label="every" name="yearlyType" type="radio" value="0" />
 
@@ -399,22 +379,22 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 	</aui:column>
 </aui:fieldset>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />showTable',
-		function(id) {
-			var A = AUI();
+<aui:script use="aui-base">
+	var tables = A.all('#<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeYearlyTable');
 
-			var tables = A.all('#<portlet:namespace />neverTable, #<portlet:namespace />dailyTable, #<portlet:namespace />weeklyTable, #<portlet:namespace />monthlyTable, #<portlet:namespace />yearlyTable');
+	A.all('#<portlet:namespace />recurrenceTypeNever, #<portlet:namespace />recurrenceTypeDaily, #<portlet:namespace />recurrenceTypeWeekly, #<portlet:namespace />recurrenceTypeMonthly, #<portlet:namespace />recurrenceTypeYearly').on(
+		'change',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			var tableId = currentTarget.attr('id') + 'Table';
 
 			tables.each(
 				function(item, index, collection) {
-					item.toggle((id == item.attr('id')));
+					item.toggle((tableId == item.attr('id')));
 				}
 			);
-		},
-		['aui-base']
+		}
 	);
 </aui:script>
 

@@ -308,23 +308,6 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />showTable',
-		function(id) {
-			var A = AUI();
-
-			var tables = A.all('#<portlet:namespace />neverTable, #<portlet:namespace />dailyTable, #<portlet:namespace />weeklyTable, #<portlet:namespace />monthlyTable, #<portlet:namespace />yearlyTable');
-
-			tables.each(
-				function(item, index, collection) {
-					item.toggle((id == item.attr('id')));
-				}
-			);
-		},
-		['aui-base']
-	);
-
 	<%-- LEP-6018 --%>
 
 	document.<portlet:namespace />fm.<portlet:namespace />endDateHour.disabled = true;

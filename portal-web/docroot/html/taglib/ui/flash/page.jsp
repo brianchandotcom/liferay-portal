@@ -53,7 +53,6 @@ String wmode = (String)request.getAttribute("liferay-ui:flash:wmode");
 				base: '<%= base %>',
 				bgcolor: '<%= bgcolor %>',
 				devicefont: '<%= devicefont %>',
-				flashvars: '<%= flashvars %>',
 				loop: '<%= loop %>',
 				menu: '<%= menu %>',
 				play: '<%= play %>',
@@ -63,6 +62,7 @@ String wmode = (String)request.getAttribute("liferay-ui:flash:wmode");
 				swliveconnect: '<%= swliveconnect %>',
 				wmode: '<%= wmode %>'
 			},
+			flashVars: '<%= flashvars %>',
 			height: '<%= height %>',
 			id: '<%= id %>',
 			url: '<%= movie %>',

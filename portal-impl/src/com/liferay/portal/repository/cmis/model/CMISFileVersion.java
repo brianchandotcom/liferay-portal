@@ -104,21 +104,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public String getExtension() {
-		String extension = FileUtil.getExtension(getTitle());
-
-		if (Validator.isNotNull(extension)) {
-			return extension;
-		}
-
-		Set<String> extensions = MimeTypesUtil.getExtensions(getMimeType());
-
-		if (extensions.isEmpty()) {
-			return extension;
-		}
-
-		Iterator<String> iterator = extensions.iterator();
-
-		return iterator.next();
+		return FileUtil.getExtension(getTitle());
 	}
 
 	public String getExtraSettings() {

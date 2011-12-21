@@ -60,7 +60,7 @@ if (javadocMethod != null) {
 }
 %>
 
-<c:if test="<%= comment != null %>">
+<c:if test="<%= Validator.isNotNull(comment) %>">
 	<div class="comment">
 		<%= comment %>
 	</div>
@@ -99,7 +99,7 @@ for (int i = 0; i < methodParameters.length; i++) {
 		}
 		%>
 
-		<c:if test="<%= parameterComment != null %>">
+		<c:if test="<%= Validator.isNotNull(parameterComment) %>">
 			<div class="comment-param"><%= parameterComment %></div>
 		</c:if>
 	</div>
@@ -126,7 +126,7 @@ for (int i = 0; i < methodParameters.length; i++) {
 	}
 	%>
 
-	<c:if test="<%= returnComment != null %>">
+	<c:if test="<%= Validator.isNotNull(returnComment) %>">
 		<div class="comment-param">
 			<%= returnComment %>
 		</div>
@@ -153,7 +153,7 @@ for (int i = 0; i < exceptionTypeClasses.length; i++) {
 		}
 		%>
 
-		<c:if test="<%= throwsComment != null %>">
+		<c:if test="<%= Validator.isNotNull(throwsComment) %>">
 			<div class="comment-param"><%= throwsComment %></div>
 		</c:if>
 	</div>

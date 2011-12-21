@@ -20,6 +20,7 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_localized_page");
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:cssClass"));
+String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:disabled"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
 String formName = (String)request.getAttribute("liferay-ui:input-localized:formName");
@@ -28,8 +29,16 @@ String name = (String)request.getAttribute("liferay-ui:input-localized:name");
 String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 
-Locale defaultLocale = LocaleUtil.getDefault();
-String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+Locale defaultLocale = null;
+
+if (Validator.isNotNull(defaultLanguageId)) {
+	defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+}
+else {
+	defaultLocale = LocaleUtil.getDefault();
+	defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+}
+
 Locale[] locales = LanguageUtil.getAvailableLocales();
 
 String mainLanguageId = defaultLanguageId;
@@ -38,7 +47,15 @@ if (Validator.isNotNull(languageId)) {
 	mainLanguageId = languageId;
 }
 
-String mainLanguageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + mainLanguageId, LocalizationUtil.getLocalization(xml, mainLanguageId));
+String mainLanguageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + mainLanguageId);
+
+if (Validator.isNull(mainLanguageValue)) {
+	mainLanguageValue = LocalizationUtil.getLocalization(xml, mainLanguageId, false);
+}
+
+if (Validator.isNull(mainLanguageValue)) {
+	mainLanguageValue = LocalizationUtil.getLocalization(xml, defaultLanguageId, true);
+}
 %>
 
 <span class="taglib-input-localized">

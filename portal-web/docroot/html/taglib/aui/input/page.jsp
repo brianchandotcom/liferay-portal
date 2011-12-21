@@ -64,6 +64,7 @@
 		<liferay-ui:input-field
 			bean="<%= bean %>"
 			cssClass="<%= inputCss %>"
+			defaultLanguageId="<%= defaultLanguageId %>"
 			defaultValue="<%= value %>"
 			disabled="<%= disabled %>"
 			field="<%= field %>"

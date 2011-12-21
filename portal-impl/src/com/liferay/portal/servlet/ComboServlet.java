@@ -209,9 +209,7 @@ public class ComboServlet extends HttpServlet {
 
 		FileContentBag fileContentBag = _fileContentBags.get(fileContentKey);
 
-		if ((fileContentBag != null) &&
-			!PropsValues.COMBO_CHECK_TIMESTAMP) {
-
+		if ((fileContentBag != null) && !PropsValues.COMBO_CHECK_TIMESTAMP) {
 			return fileContentBag._fileContent;
 		}
 

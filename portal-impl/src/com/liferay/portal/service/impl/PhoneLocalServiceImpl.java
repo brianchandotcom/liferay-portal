@@ -186,9 +186,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 			while (itr.hasNext()) {
 				Phone phone = itr.next();
 
-				if ((phoneId <= 0) ||
-					(phone.getPhoneId() != phoneId)) {
-
+				if ((phoneId <= 0) || (phone.getPhoneId() != phoneId)) {
 					phone.setPrimary(false);
 
 					phonePersistence.update(phone, false);

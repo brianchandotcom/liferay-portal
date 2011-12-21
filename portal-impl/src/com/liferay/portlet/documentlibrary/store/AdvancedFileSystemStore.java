@@ -116,9 +116,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		String shortFileName = FileUtil.getShortFileName(fileName);
 
-		if (shortFileName.equals("DLFE") ||
-			Validator.isNumber(shortFileName)) {
-
+		if (shortFileName.equals("DLFE") || Validator.isNumber(shortFileName)) {
 			String[] curFileNames = FileUtil.listDirs(fileName);
 
 			for (String curFileName : curFileNames) {

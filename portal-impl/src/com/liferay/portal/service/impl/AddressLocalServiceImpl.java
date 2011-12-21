@@ -173,9 +173,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			while (itr.hasNext()) {
 				Address address = itr.next();
 
-				if ((addressId <= 0) ||
-					(address.getAddressId() != addressId)) {
-
+				if ((addressId <= 0) || (address.getAddressId() != addressId)) {
 					address.setMailing(false);
 
 					addressPersistence.update(address, false);
@@ -193,9 +191,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			while (itr.hasNext()) {
 				Address address = itr.next();
 
-				if ((addressId <= 0) ||
-					(address.getAddressId() != addressId)) {
-
+				if ((addressId <= 0) || (address.getAddressId() != addressId)) {
 					address.setPrimary(false);
 
 					addressPersistence.update(address, false);

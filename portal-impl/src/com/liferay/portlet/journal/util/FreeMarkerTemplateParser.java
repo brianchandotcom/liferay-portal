@@ -76,9 +76,7 @@ public class FreeMarkerTemplateParser extends VelocityTemplateParser {
 				unsyncStringWriter);
 		}
 		catch (Exception e) {
-			if (e instanceof ParseException ||
-				e instanceof TemplateException) {
-
+			if (e instanceof ParseException || e instanceof TemplateException) {
 				String errorTemplateId = getErrorTemplateId();
 				String errorTemplateContent = getErrorTemplateContent();
 

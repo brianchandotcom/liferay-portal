@@ -185,9 +185,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 		Element element = document.getDocumentElement();
 
-		if ((element == null) ||
-			!MIME_INFO_TAG.equals(element.getTagName())) {
-
+		if ((element == null) || !MIME_INFO_TAG.equals(element.getTagName())) {
 			throw new SystemException("Invalid configuration file");
 		}
 

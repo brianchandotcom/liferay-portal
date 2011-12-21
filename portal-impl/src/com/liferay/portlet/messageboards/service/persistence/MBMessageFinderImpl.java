@@ -203,9 +203,7 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_S);
 
-			if ((categoryIds == null) ||
-				(categoryIds.length == 0)) {
-
+			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -274,9 +272,7 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_A_S);
 
-			if ((categoryIds == null) ||
-				(categoryIds.length == 0)) {
-
+			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -346,9 +342,7 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_S);
 
-			if ((categoryIds == null) ||
-				(categoryIds.length == 0)) {
-
+			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -407,9 +401,7 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_A_S);
 
-			if ((categoryIds == null) ||
-				(categoryIds.length == 0)) {
-
+			if ((categoryIds == null) || (categoryIds.length == 0)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);

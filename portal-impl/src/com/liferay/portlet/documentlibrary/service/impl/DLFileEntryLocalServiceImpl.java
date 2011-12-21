@@ -552,9 +552,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
-			incrementCounter) {
-
+		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && incrementCounter) {
 			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + 1);
 
 			dlFileEntryPersistence.update(dlFileEntry, false);
@@ -583,9 +581,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED &&
-			incrementCounter) {
-
+		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && incrementCounter) {
 			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + 1);
 
 			dlFileEntryPersistence.update(dlFileEntry, false);

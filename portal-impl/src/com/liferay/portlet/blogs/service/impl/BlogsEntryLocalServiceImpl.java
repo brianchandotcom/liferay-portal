@@ -727,7 +727,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			// Statistics
 
 			blogsStatsUserLocalService.updateStatsUser(
-				entry.getGroupId(), entry.getUserId(), entry.getDisplayDate());
+				entry.getGroupId(), user.getUserId(), entry.getDisplayDate());
 
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 
@@ -740,7 +740,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				if (oldStatusByUserId == 0) {
 					socialActivityLocalService.addUniqueActivity(
-						entry.getUserId(), entry.getGroupId(),
+						user.getUserId(), entry.getGroupId(),
 						BlogsEntry.class.getName(), entryId,
 						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
 				}

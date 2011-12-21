@@ -14,7 +14,7 @@
 #set ($accountId = $counter.get())
 #set ($virtualHostId = $counter.get())
 
-insert into Company (companyId, accountId, webId, mx, active_) values ($companyId, $accountId, 'liferay.com', 'liferay.com', TRUE);
+insert into Company (companyId, accountId, webId, mx, active_, system) values ($companyId, $accountId, 'liferay.com', 'liferay.com', TRUE, FALSE);
 insert into Account_ (accountId, companyId, userId, userName, createDate, modifiedDate, parentAccountId, name, legalName, legalId, legalType, sicCode, tickerSymbol, industry, type_, size_) values ($accountId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 'Liferay', 'Liferay, Inc.', '', '', '', '', '', '', '');
 insert into VirtualHost (virtualHostId, companyId, layoutSetId, hostname) values ($virtualHostId, $companyId, 0, 'localhost');
 

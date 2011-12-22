@@ -187,7 +187,7 @@ public class BaseRepositoryProxyBean
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
 			folderId, mimeTypes, start, end, obc);
@@ -385,7 +385,7 @@ public class BaseRepositoryProxyBean
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<FileEntry> fileEntries = _baseRepository.getRepositoryFileEntries(
 			userId, rootFolderId, mimeTypes, status, start, end, obc);

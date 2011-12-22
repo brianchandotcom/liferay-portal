@@ -173,6 +173,10 @@ public class StringPool {
 
 	public static final String UTF8 = "UTF-8";
 
+	public static final String WHERE = " WHERE ";
+
+	public static final String WHERE_AND = " AND ";
+
 	static {
 		for (int i = 0; i < 128; i++) {
 			ASCII_TABLE[i] = String.valueOf((char)i);

@@ -34,14 +34,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		String layoutTemplateId = preferences.getValue("layoutTemplateId", PropsValues.NESTED_PORTLETS_LAYOUT_TEMPLATE_DEFAULT);
 
-		List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(theme.getThemeId());
+		List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(theme.getThemeId());
 
 		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
 		List unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(PropsKeys.NESTED_PORTLETS_LAYOUT_TEMPLATE_UNSUPPORTED));
 
 		for (int i = 0; i < layoutTemplates.size(); i++) {
-			LayoutTemplate curLayoutTemplate = (LayoutTemplate)layoutTemplates.get(i);
+			LayoutTemplate curLayoutTemplate = layoutTemplates.get(i);
 
 			if (unsupportedLayoutTemplates.contains(curLayoutTemplate.getLayoutTemplateId())) {
 				layoutTemplates.remove(i);
@@ -49,7 +49,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		}
 
 		for (int i = 0; i < layoutTemplates.size(); i++) {
-			LayoutTemplate curLayoutTemplate = (LayoutTemplate)layoutTemplates.get(i);
+			LayoutTemplate curLayoutTemplate = layoutTemplates.get(i);
 		%>
 
 			<c:if test="<%= (i % CELLS_PER_ROW) == 0 %>">

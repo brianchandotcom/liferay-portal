@@ -18,7 +18,7 @@
 	<aui:layout cssClass="lfr-page-layouts">
 
 		<%
-		layoutTemplates = (List<LayoutTemplate>)PluginUtil.restrictPlugins(layoutTemplates, user);
+		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
 		int i = 0;
 

@@ -135,10 +135,12 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 	<aui:script use="aui-base">
-		var hiddenAttributesMap = window.<portlet:namespace />formBuilder.HIDDEN_FIELD_ATTRS_MAP;
+		var hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
 
 		window.<portlet:namespace />getFieldHiddenAttributes = function(mode, field) {
-			var hiddenAttributes = A.Array(hiddenAttributesMap[field.get('type')] || hiddenAttributesMap.DEFAULT);
+			var hiddenAttributes = hiddenAttributesMap[field.get('type')] || hiddenAttributesMap.DEFAULT;
+
+			hiddenAttributes = A.Array(hiddenAttributes);
 
 			if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
 				A.Array.removeItem(hiddenAttributes, 'readOnly');

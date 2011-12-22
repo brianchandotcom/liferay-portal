@@ -34,8 +34,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 <div class="lfr-spreadsheet-container">
 	<div id="<portlet:namespace />spreadsheet">
-		<div class="yui3-widget yui3-datatable" id="<portlet:namespace />dataTableBB">
-			<div class="yui3-datatable-scrollable yui3-datatable-content" id="<portlet:namespace />dataTableCC"></div>
+		<div class="yui3-widget yui3-datatable" id="<portlet:namespace />dataTable">
+			<div class="yui3-datatable-scrollable yui3-datatable-content" id="<portlet:namespace />dataTableContent"></div>
 		</div>
 	</div>
 
@@ -109,9 +109,9 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var spreadSheet = new Liferay.SpreadSheet(
 		{
-			boundingBox: '#<portlet:namespace />dataTableBB',
+			boundingBox: '#<portlet:namespace />dataTable',
 			columnset: columnset,
-			contentBox: '#<portlet:namespace />dataTableCC',
+			contentBox: '#<portlet:namespace />dataTableContent',
 			editEvent: 'dblclick',
 			recordset: recordset,
 			recordsetId: <%= recordSet.getRecordSetId() %>,

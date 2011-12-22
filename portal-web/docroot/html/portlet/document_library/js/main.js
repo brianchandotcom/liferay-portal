@@ -42,7 +42,7 @@ AUI().add(
 
 		var DOCUMENT_LIBRARY_GROUP = 'document-library';
 
-        var EXPAND_FOLDER = 'expandFolder';
+		var EXPAND_FOLDER = 'expandFolder';
 
 		var PARENT_NODE = 'parentNode';
 
@@ -106,7 +106,7 @@ AUI().add(
 
 		var VIEW_ENTRIES = 'viewEntries';
 
-        var VIEW_ENTRIES_PAGE = 'viewEntriesPage';
+		var VIEW_ENTRIES_PAGE = 'viewEntriesPage';
 
 		var VIEW_FOLDERS = 'viewFolders';
 
@@ -298,11 +298,11 @@ AUI().add(
 
 						data[displayStyle] = History.get(displayStyle) || config.displayStyle;
 
-                        data[instance.ns(VIEW_ENTRIES)] = true;
+						data[instance.ns(VIEW_ENTRIES)] = true;
 
-                        data[instance.ns(VIEW_FOLDERS)] = true;
+						data[instance.ns(VIEW_FOLDERS)] = true;
 
-                        A.mix(data, requestParams, true);
+						A.mix(data, requestParams, true);
 
 						instance._documentLibraryContainer.loadingmask.show();
 
@@ -390,7 +390,7 @@ AUI().add(
 
 						item.ancestor('.folder').addClass(CSS_SELECTED);
 
-                        var dataExpandFolder = item.attr('data-expand-folder');
+						var dataExpandFolder = item.attr('data-expand-folder');
 						var dataFileEntryTypeId = item.attr('data-file-entry-type-id');
 						var dataFolderId = item.attr(DATA_FOLDER_ID);
 						var dataNavigation = item.attr('data-navigation');
@@ -415,9 +415,9 @@ AUI().add(
 						requestParams[instance.ns(STR_FOLDER_END)] = config.folderRowsPerPage || instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
 
-                        if (dataExpandFolder) {
-                            requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;
-                        }
+						if (dataExpandFolder) {
+							requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;
+						}
 
 						if (dataFolderId) {
 							requestParams[instance._folderId] = dataFolderId;
@@ -707,25 +707,25 @@ AUI().add(
 						requestParams[instance.ns(STR_ENTRY_END)] = instance._entryPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance.ns(STR_FOLDER_END)] = instance._folderPaginator.get(ROWS_PER_PAGE);
 						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-                        requestParams[instance.ns(EXPAND_FOLDER)] = false;
+						requestParams[instance.ns(EXPAND_FOLDER)] = false;
 						requestParams[instance.ns(STR_ENTRY_START)] = 0;
 						requestParams[instance.ns(STR_FOLDER_START)] = 0;
 
-                        var viewEntries = event.currentTarget.attr(DATA_VIEW_ENTRIES);
+						var viewEntries = event.currentTarget.attr(DATA_VIEW_ENTRIES);
 
-                        if (viewEntries) {
-                            requestParams[instance.ns(VIEW_ENTRIES)] = viewEntries;
-                        }
+						if (viewEntries) {
+							requestParams[instance.ns(VIEW_ENTRIES)] = viewEntries;
+						}
 
-                        var viewFolders = event.currentTarget.attr(DATA_VIEW_FOLDERS);
+						var viewFolders = event.currentTarget.attr(DATA_VIEW_FOLDERS);
 
-                        if (viewFolders) {
-                            requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
-                        }
+						if (viewFolders) {
+							requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
+						}
 
-                        instance._listView.set('direction', 'left');
+						instance._listView.set('direction', 'left');
 
-                        Liferay.fire(
+						Liferay.fire(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams
@@ -874,9 +874,9 @@ AUI().add(
 
 						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
 						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
-                        customParams[instance.ns(VIEW_ENTRIES)] = false;
-                        customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
-                        customParams[instance.ns(VIEW_FOLDERS)] = false;
+						customParams[instance.ns(VIEW_ENTRIES)] = false;
+						customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
+						customParams[instance.ns(VIEW_FOLDERS)] = false;
 
 						if (AObject.owns(requestParams, instance.ns('searchType'))) {
 							customParams[instance.ns(SEARCH_TYPE)] = SRC_SEARCH_FRAGMENT;
@@ -904,8 +904,8 @@ AUI().add(
 
 						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
 						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
-                        customParams[instance.ns(VIEW_ENTRIES)] = false;
-                        customParams[instance.ns(VIEW_FOLDERS)] = true;
+						customParams[instance.ns(VIEW_ENTRIES)] = false;
+						customParams[instance.ns(VIEW_FOLDERS)] = true;
 
 						A.mix(requestParams, customParams, true);
 
@@ -1039,22 +1039,24 @@ AUI().add(
 						var breadcrumb = instance.one('#breadcrumb', content);
 
 						if (breadcrumb) {
-                            var dlBreadcrumb = breadcrumb.one('.dlBreadcrumb');
+							var breadcrumbContainer;
 
-                            if (dlBreadcrumb) {
-                                var breadcrumbContainer = instance.byId('breadcrumbContainer');
+							var dlBreadcrumb = breadcrumb.one('.portlet-breadcrumb ul');
 
-                                breadcrumbContainer.setContent(dlBreadcrumb);
-                            }
+							if (dlBreadcrumb) {
+								breadcrumbContainer = instance.byId('breadcrumbContainer');
 
-                            var portalBreadcrumb = breadcrumb.one('.portalBreadcrumb ul');
+								breadcrumbContainer.setContent(dlBreadcrumb);
+							}
 
-                            if (portalBreadcrumb) {
-                                var breadcrumbContainer = A.one('#breadcrumbs ul');
+							var portalBreadcrumb = breadcrumb.one('.portal-breadcrumb ul');
 
-                                breadcrumbContainer.setContent(portalBreadcrumb.html());
-                            }
-                        }
+							if (portalBreadcrumb) {
+								breadcrumbContainer = A.one('#breadcrumbs ul');
+
+								breadcrumbContainer.setContent(portalBreadcrumb.html());
+							}
+						}
 					},
 
 					_setButtons: function(content) {
@@ -1141,7 +1143,7 @@ AUI().add(
 
 							listViewDataContainer.plug(A.Plugin.ParseContent);
 
-                            instance._listView.set(STR_DATA, folders.html());
+							instance._listView.set(STR_DATA, folders.html());
 						}
 					},
 

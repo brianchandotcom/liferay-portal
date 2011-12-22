@@ -150,6 +150,14 @@ public class DLFileEntryServiceUtil {
 			end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long groupId, long folderId, java.lang.String[] mimeTypes, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFileEntries(groupId, folderId, mimeTypes, start, end, obc);
+	}
+
 	public static int getFileEntriesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFileEntriesCount(groupId, folderId);
@@ -160,6 +168,12 @@ public class DLFileEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFileEntriesCount(groupId, folderId, fileEntryTypeId);
+	}
+
+	public static int getFileEntriesCount(long groupId, long folderId,
+		java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileEntriesCount(groupId, folderId, mimeTypes);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(

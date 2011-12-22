@@ -425,6 +425,14 @@ public class CMISRepository extends BaseCmisRepository {
 		return new ArrayList<FileEntry>();
 	}
 
+	public List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int start, int end,
+			OrderByComparator obc)
+			throws SystemException {
+		throw new UnsupportedOperationException(
+				"This methot has to be implemented.");
+	}
+
 	public int getFileEntriesCount(long folderId) throws SystemException {
 		List<FileEntry> fileEntries = getFileEntries(folderId);
 
@@ -435,6 +443,12 @@ public class CMISRepository extends BaseCmisRepository {
 		List<FileEntry> fileEntries = getFileEntries(folderId, fileEntryTypeId);
 
 		return fileEntries.size();
+	}
+
+	public int getFileEntriesCount(long folderId, String[] mimeTypes)
+		throws SystemException {
+		throw new UnsupportedOperationException(
+				"This methot has to be implemented.");
 	}
 
 	public FileEntry getFileEntry(long fileEntryId)

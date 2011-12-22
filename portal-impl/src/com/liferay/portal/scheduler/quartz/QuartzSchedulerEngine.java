@@ -715,8 +715,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 			if (dbType.equals(DB.TYPE_SQLSERVER)) {
 				properties.setProperty(
-					"org.quartz.jobStore.selectWithLockSQL",
-					"SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?");
+					"org.quartz.jobStore.lockHandler.class",
+					"org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore");
 			}
 
 			if (PropsValues.CLUSTER_LINK_ENABLED) {

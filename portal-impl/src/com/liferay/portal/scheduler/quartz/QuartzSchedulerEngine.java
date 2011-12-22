@@ -57,6 +57,7 @@ import org.quartz.Scheduler;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore;
 
 /**
  * @author Michael C. Han
@@ -716,7 +717,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			if (dbType.equals(DB.TYPE_SQLSERVER)) {
 				properties.setProperty(
 					"org.quartz.jobStore.lockHandler.class",
-					"org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore");
+					UpdateLockRowSemaphore.class.getName());
 			}
 
 			if (PropsValues.CLUSTER_LINK_ENABLED) {

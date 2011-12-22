@@ -247,13 +247,13 @@ AUI().add(
 
 						instance._initHover();
 
-                        if (instance._config.isUserSignedIn) {
-    						instance._initDragDrop();
+						if (themeDisplay.isSignedIn()) {
+							instance._initDragDrop();
 
-                            instance._initSelectAllCheckbox();
+							instance._initSelectAllCheckbox();
 
-                            instance._initToggleSelect();
-                        }
+							instance._initToggleSelect();
+						}
 
 						instance._repositoriesData = {};
 
@@ -595,21 +595,21 @@ AUI().add(
 					_initDropTargets: function() {
 						var instance = this;
 
-                        if (instance._config.isUserSignedIn) {
-                            var items = instance._documentLibraryContainer.all('[data-folder="true"]');
+						if (themeDisplay.isSignedIn()) {
+							var items = instance._documentLibraryContainer.all('[data-folder="true"]');
 
-                            items.each(
-                                function(item, index, collection) {
-                                    item.plug(
-                                        A.Plugin.Drop,
-                                        {
-                                            groups: [DOCUMENT_LIBRARY_GROUP],
-                                            padding: '-1px'
-                                        }
-                                    );
-                                }
-                            );
-                        }
+							items.each(
+								function(item, index, collection) {
+									item.plug(
+										A.Plugin.Drop,
+										{
+											groups: [DOCUMENT_LIBRARY_GROUP],
+											padding: '-1px'
+										}
+									);
+								}
+							);
+						}
 					},
 
 					_initHover: function() {

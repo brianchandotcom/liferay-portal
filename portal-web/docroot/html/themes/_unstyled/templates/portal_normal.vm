@@ -29,7 +29,15 @@ $theme.include($body_top_include)
 				</a>
 
 				#if ($show_site_name)
-					<span class="site-name" title="#language("go-to") $site_name">
+                    #if ($page_group.isLayoutPrototype())
+                        #set ($icon_template_class = "page-template")
+                    #end
+
+                    #if ($page_group.isLayoutSetPrototype())
+                        #set ($icon_template_class = "site-template")
+                    #end
+
+					<span class="site-name $icon_template_class" title="#language("go-to") $site_name">
 						$site_name
 					</span>
 				#end

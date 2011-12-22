@@ -1614,7 +1614,7 @@
 	Liferay.provide(
 		Util,
 		'toggleSelectBox',
-		function(selectBoxId, value, toggleBoxId) {
+		function(selectBoxId, value, toggleBoxId, displayWhenNotSelected) {
 			var selectBox = A.one('#' + selectBoxId);
 			var toggleBox = A.one('#' + toggleBoxId);
 
@@ -1622,7 +1622,9 @@
 				var toggle = function() {
 					var action = 'show';
 
-					if (selectBox.val() != value) {
+					if ((!displayWhenNotSelected && (selectBox.val() != value)) ||
+                        (displayWhenNotSelected && (selectBox.val() == value))) {
+
 						action = 'hide';
 					}
 

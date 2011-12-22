@@ -132,7 +132,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 					<c:choose>
 						<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
-							<aui:input helpMessage="keep-a-link-to-the-site-template-help" label="keep-a-link-to-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+							<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+								<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+							</div>
 						</c:when>
 						<c:otherwise>
 							<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
@@ -161,7 +163,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 								<c:choose>
 									<c:when test="<%= (publicLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
-										<aui:input helpMessage="enable-the-link-to-the-site-template-so-that-changes-done-to-the-template-are-propagate-to-the-site" label='<%= LanguageUtil.format(pageContext, "keep-a-link-to-the-site-template-x", publicLayoutSetPrototype.getName(user.getLanguageId())) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+										<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototype.getName(user.getLanguageId())) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 									</c:when>
 									<c:when test="<%= publicLayoutSetPrototype != null %>">
 										<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
@@ -197,7 +199,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 					<c:choose>
 						<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
-							<aui:input helpMessage="keep-a-link-to-the-site-template-help" label="keep-a-link-to-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+							<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+								<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+							</div>
 						</c:when>
 						<c:otherwise>
 							<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
@@ -225,7 +229,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 								<c:choose>
 									<c:when test="<%= (privateLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
-										<aui:input helpMessage="enable-the-link-to-the-site-template-so-that-changes-done-to-the-template-are-propagate-to-the-site" label='<%= LanguageUtil.format(pageContext, "keep-a-link-to-the-site-template-x", privateLayoutSetPrototype.getName(user.getLanguageId())) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+										<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototype.getName(user.getLanguageId())) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 									</c:when>
 									<c:when test="<%= privateLayoutSetPrototype != null %>">
 										<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
@@ -260,6 +264,9 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 	</c:if>
+
+	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', '', '<portlet:namespace />publicLayoutSetPrototypeIdOptions', true);
+	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', '', '<portlet:namespace />privateLayoutSetPrototypeIdOptions', true);
 </aui:script>
 
 <%

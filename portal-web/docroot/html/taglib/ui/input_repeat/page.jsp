@@ -216,7 +216,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 %>
 
 <aui:fieldset cssClass='<%= "taglib-input-repeat " + cssClass %>'>
-	<aui:column columnWidth="25" first="<%= true %>">
+	<aui:column columnWidth="25" id="eventsContainer" first="<%= true %>">
 		<aui:field-wrapper label="repeat" name="recurrenceType">
 
 			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" />
@@ -382,19 +382,20 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 <aui:script use="aui-base">
 	var tables = A.all('#<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeYearlyTable');
 
-	A.all('#<portlet:namespace />recurrenceTypeNever, #<portlet:namespace />recurrenceTypeDaily, #<portlet:namespace />recurrenceTypeWeekly, #<portlet:namespace />recurrenceTypeMonthly, #<portlet:namespace />recurrenceTypeYearly').on(
+	A.one('#<portlet:namespace />eventsContainer').delegate(
 		'change',
 		function(event) {
-			var currentTarget = event.currentTarget;
+			var target = event.target;
 
-			var tableId = currentTarget.attr('id') + 'Table';
+			var tableId = target.attr('id') + 'Table';
 
 			tables.each(
 				function(item, index, collection) {
 					item.toggle((tableId == item.attr('id')));
 				}
 			);
-		}
+		},
+		'.aui-field-input-choice'
 	);
 </aui:script>
 

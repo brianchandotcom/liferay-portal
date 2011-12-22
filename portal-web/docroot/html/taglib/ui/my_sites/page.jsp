@@ -191,7 +191,7 @@ List<Group> mySites = user.getMySites(true, max);
 									<a href="<%= themeDisplay.getURLControlPanel() %>">
 
 										<%
-										String siteName = mySite.getDescriptiveName();
+										String siteName = mySite.getDescriptiveName(locale);
 										%>
 
 										<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
@@ -219,7 +219,7 @@ List<Group> mySites = user.getMySites(true, max);
 												siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
 											}
 											else {
-												siteName = mySite.getDescriptiveName();
+												siteName = mySite.getDescriptiveName(locale);
 											}
 											%>
 
@@ -250,7 +250,7 @@ List<Group> mySites = user.getMySites(true, max);
 												siteName = HtmlUtil.escape(themeDisplay.getAccount().getName());
 											}
 											else {
-												siteName = mySite.getDescriptiveName();
+												siteName = mySite.getDescriptiveName(locale);
 											}
 											%>
 

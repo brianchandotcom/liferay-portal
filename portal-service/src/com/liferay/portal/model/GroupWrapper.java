@@ -440,6 +440,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getDescriptiveName();
 	}
 
+	public java.lang.String getDescriptiveName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _group.getDescriptiveName(locale);
+	}
+
 	public com.liferay.portal.model.Group getLiveGroup() {
 		return _group.getLiveGroup();
 	}
@@ -564,6 +570,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	public boolean isUserGroup() {
 		return _group.isUserGroup();
+	}
+
+	public boolean isUserPersonalSite() {
+		return _group.isUserPersonalSite();
 	}
 
 	public void setTypeSettingsProperties(

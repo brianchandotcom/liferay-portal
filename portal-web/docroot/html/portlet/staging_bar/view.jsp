@@ -592,11 +592,11 @@ if (layout != null) {
 											</c:when>
 											<c:otherwise>
 												<span class="staging-live-group-name">
-													<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key="x-is-staged" />
+													<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(locale) %>" key="x-is-staged" />
 												</span>
 
 												<span class="staging-live-help">
-													<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName() %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
+													<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(locale) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
 												</span>
 											</c:otherwise>
 										</c:choose>

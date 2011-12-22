@@ -82,7 +82,7 @@ if (showPrototypes && (group != null)) {
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
 			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<%= liveGroup.getDescriptiveName() %>
+				<%= liveGroup.getDescriptiveName(locale) %>
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>

@@ -203,7 +203,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 				if (refererLayout != null) {
 					Group refererGroup = refererLayout.getGroup();
 
-					refererGroupDescriptiveName = refererGroup.getDescriptiveName();
+					refererGroupDescriptiveName = refererGroup.getDescriptiveName(locale);
 
 					if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
 						if (refererLayout.isPublicLayout()) {

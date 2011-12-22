@@ -25,7 +25,7 @@ Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest
 				align="auto"
 				direction="right"
 				icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
-				message='<%= LanguageUtil.format(pageContext, "add", new Object[] {(GroupLocalServiceUtil.getGroup(scopeGroupId)).getDescriptiveName()}) %>'
+				message='<%= LanguageUtil.format(pageContext, "add", new Object[] {(GroupLocalServiceUtil.getGroup(scopeGroupId)).getDescriptiveName(locale)}) %>'
 				showWhenSingleIcon="<%= true %>"
 			>
 

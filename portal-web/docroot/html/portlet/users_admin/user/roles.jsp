@@ -118,7 +118,7 @@ userGroupRoles.addAll(organizationRoles);
 
 			<liferay-ui:search-container-column-text
 				name="group"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName()) %>"
+				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>
 			<liferay-ui:search-container-column-text
 				name="title"
@@ -167,7 +167,7 @@ userGroupRoles.addAll(organizationRoles);
 
 				<liferay-ui:search-container-column-text
 					name="organization"
-					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName()) %>"
+					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 				/>
 
 				<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
@@ -245,7 +245,7 @@ userGroupRoles.addAll(organizationRoles);
 
 				<liferay-ui:search-container-column-text
 					name="site"
-					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName()) %>"
+					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 				/>
 
 				<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">

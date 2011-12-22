@@ -86,7 +86,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Name
 
-	row.addText(group.getDescriptiveName());
+	row.addText(group.getDescriptiveName(locale));
 
 	// Type
 

@@ -112,7 +112,7 @@ portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPer
 			sb.append("selectGroup('");
 			sb.append(group.getGroupId());
 			sb.append("', '");
-			sb.append(UnicodeFormatter.toString(group.getDescriptiveName()));
+			sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
 			sb.append("', '");
 			sb.append(target);
 			sb.append("');");
@@ -124,7 +124,7 @@ portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPer
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName()) %>"
+				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

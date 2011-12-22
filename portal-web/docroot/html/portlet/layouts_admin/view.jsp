@@ -47,7 +47,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			<liferay-ui:header
 				backURL="<%= backURL %>"
 				localizeTitle="<%= false %>"
-				title="<%= liveGroup.getDescriptiveName() %>"
+				title="<%= liveGroup.getDescriptiveName(locale) %>"
 			/>
 		</c:if>
 

@@ -47,7 +47,7 @@ if (displayTerms.getGroupId() == 0) {
 					Group group = GroupLocalServiceUtil.getGroup(groupId);
 					%>
 
-					<aui:option label="<%= group.getDescriptiveName() %>" selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
+					<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
 				</aui:select>
 			</c:when>
 			<c:otherwise>

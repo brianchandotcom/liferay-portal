@@ -112,14 +112,11 @@
 
 				String curGroupName = null;
 
-				if (curGroup.isCompany()) {
-					curGroupName = LanguageUtil.get(pageContext, "global");
-				}
-				else if (curGroup.isUser() && (curGroup.getClassPK() == user.getUserId())) {
-					curGroupName = LanguageUtil.format(pageContext, "x-personal-site", curLiveGroup.getDescriptiveName());
+				if (curGroup.isUser() && (curGroup.getClassPK() == user.getUserId())) {
+					curGroupName = LanguageUtil.format(pageContext, "x-personal-site", curLiveGroup.getDescriptiveName(locale));
 				}
 				else {
-					curGroupName = curLiveGroup.getDescriptiveName();
+					curGroupName = curLiveGroup.getDescriptiveName(locale);
 				}
 
 				if (category.equals(PortletCategoryKeys.CONTENT)) {
@@ -163,7 +160,7 @@
 									Group group = manageableSites.get(i);
 
 									String image = "site_icon";
-									String message = group.getDescriptiveName();
+									String message = group.getDescriptiveName(locale);
 
 									if (group.isCompany()) {
 										image = "folder";
@@ -173,7 +170,7 @@
 									}
 									else if (group.isUser()) {
 										image = "user_icon";
-										message = LanguageUtil.format(pageContext, "x-personal-site", group.getDescriptiveName());
+										message = LanguageUtil.format(pageContext, "x-personal-site", group.getDescriptiveName(locale));
 									}
 
 									String url = null;

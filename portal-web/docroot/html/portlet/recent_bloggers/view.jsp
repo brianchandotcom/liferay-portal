@@ -64,7 +64,7 @@ else {
 				String blogType = LanguageUtil.get(pageContext, "personal");
 
 				if (group.isOrganization() || group.isRegularSite()) {
-					blogType = group.getDescriptiveName();// + " " + LanguageUtil.get(pageContext, "site");
+					blogType = group.getDescriptiveName(locale);// + " " + LanguageUtil.get(pageContext, "site");
 				}
 
 				Date now = new Date();

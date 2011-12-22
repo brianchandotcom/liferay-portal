@@ -258,7 +258,7 @@ if (step == 1) {
 					sb.append("', '");
 					sb.append("organizationRoles");
 					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(organization.getGroup().getDescriptiveName()));
+					sb.append(UnicodeFormatter.toString(organization.getGroup().getDescriptiveName(locale)));
 					sb.append("', '");
 					sb.append(organization.getGroup().getGroupId());
 					sb.append("');");

@@ -37,6 +37,10 @@ public interface Group extends GroupModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getDescriptiveName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portal.model.Group getLiveGroup();
 
 	public long getOrganizationId();
@@ -104,6 +108,8 @@ public interface Group extends GroupModel, PersistedModel {
 	public boolean isUser();
 
 	public boolean isUserGroup();
+
+	public boolean isUserPersonalSite();
 
 	public void setTypeSettings(java.lang.String typeSettings);
 

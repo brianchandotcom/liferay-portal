@@ -441,7 +441,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			groupName = fixMaxLength(
 				getOriginalGroupName(groupName), GROUP_NAME_MAX_LENGTH);
 
-			updateJobState(scheduler, new JobKey(jobName, groupName), null, true);
+			updateJobState(scheduler, new JobKey(jobName, groupName), null,
+				true);
 		}
 		catch (Exception e) {
 			throw new SchedulerException(
@@ -634,7 +635,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return quartzTrigger;
 	}
 
-	protected SchedulerResponse getScheduledJob(Scheduler scheduler, JobKey jobKey)
+	protected SchedulerResponse getScheduledJob(
+			Scheduler scheduler, JobKey jobKey)
 		throws Exception {
 
 		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
@@ -872,7 +874,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
 
-		TriggerKey triggerKey = new TriggerKey(jobKey.getName(), jobKey.getGroup());
+		TriggerKey triggerKey = new TriggerKey(jobKey.getName(),
+			jobKey.getGroup());
 
 		if (jobDetail == null) {
 			return;

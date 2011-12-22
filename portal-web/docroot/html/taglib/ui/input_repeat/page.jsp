@@ -385,13 +385,13 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 	A.one('#<portlet:namespace />eventsContainer').delegate(
 		'change',
 		function(event) {
-			var target = event.target;
+			var currentTarget = event.currentTarget;
 
-			var tableId = target.attr('id') + 'Table';
+			var tableId = currentTarget.attr('id') + 'Table';
 
 			tables.each(
 				function(item, index, collection) {
-					item.toggle((tableId == item.attr('id')));
+					item.toggle(item.attr('id') == tableId);
 				}
 			);
 		},

@@ -33,7 +33,7 @@ if (row != null) {
 else {
 	folder = (BookmarksFolder)request.getAttribute("view.jsp-folder");
 
-	folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+	folderId = curFolderId;
 }
 
 String modelResource = null;

@@ -1296,9 +1296,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		// Permissions
+		if (!MapUtil.getBoolean(
+				_parameterMap, PortletDataHandlerKeys.PERMISSIONS)) {
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+		}
 
 		// Asset
 

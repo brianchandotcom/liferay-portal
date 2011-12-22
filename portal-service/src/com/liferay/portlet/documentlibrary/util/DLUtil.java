@@ -149,7 +149,7 @@ public class DLUtil {
 			request, themeDisplay.translate("home"), portletURL.toString(),
 			data);
 
-		addPortletBreadcrumbEntries(folder, request, portletURL, false);
+		addPortletBreadcrumbEntries(folder, request, portletURL, true);
 	}
 
 	public static void addPortletBreadcrumbEntries(

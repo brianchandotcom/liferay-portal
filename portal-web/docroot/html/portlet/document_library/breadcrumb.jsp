@@ -22,4 +22,6 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 DLUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
 %>
 
-<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+<div class="dlBreadcrumb">
+	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+</div>

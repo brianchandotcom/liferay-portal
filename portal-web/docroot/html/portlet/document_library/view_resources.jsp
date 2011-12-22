@@ -49,6 +49,12 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
 <div>
 	<c:if test="<%= viewEntries %>">
+
+		<%
+		PortalUtil.addPortletBreadcrumbEntry(request, themeDisplay.getScopeGroup().getDescriptiveName(), null);
+		PortalUtil.addPortletBreadcrumbEntry(request, "Documents and Media", liferayPortletResponse.createRenderURL().toString());
+		%>
+
 		<div id="<portlet:namespace />entries">
 			<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
 		</div>
@@ -66,6 +72,10 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 		</span>
 		<span id="<portlet:namespace />breadcrumb">
 			<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+
+			<div class="portalBreadcrumb">
+				<liferay-ui:breadcrumb showCurrentGroup="<%= layout.isTypeControlPanel() %>" showParentGroups="<%= false %>" showCurrentPortlet="<%= layout.isTypeControlPanel() %>" showGuestGroup="<%= !layout.isTypeControlPanel() %>" showLayout="<%= true %>" showPortletBreadcrumb="<%= true %>" />
+			</div>
 		</span>
 	</c:if>
 

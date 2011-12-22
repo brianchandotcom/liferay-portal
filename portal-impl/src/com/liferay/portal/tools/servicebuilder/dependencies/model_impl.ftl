@@ -456,7 +456,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				_uuid = uuid;
 			<#else>
 				<#if column.isOrderColumn()>
-					_columnBitmask = -1L;
+					<#if columnBitmaskEnabled>
+						_columnBitmask = -1L;
+					</#if>
 				<#else>
 					<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
 						<#if columnBitmaskEnabled>

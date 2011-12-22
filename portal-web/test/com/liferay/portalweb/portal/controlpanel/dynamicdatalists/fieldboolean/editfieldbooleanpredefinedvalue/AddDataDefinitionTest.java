@@ -106,6 +106,7 @@ public class AddDataDefinitionTest extends BaseTestCase {
 
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("Data Definition"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",

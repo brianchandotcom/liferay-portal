@@ -61,7 +61,7 @@ portletURL.setParameter("tabs1", tabs1);
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(HtmlUtil.escape(chooseCallback));
+			sb.append(chooseCallback);
 			sb.append("('");
 			sb.append(structure.getStructureId());
 			sb.append("', '");

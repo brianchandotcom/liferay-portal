@@ -53,7 +53,7 @@ if (layoutSetBranchId > 0) {
 				List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 				%>
 
-				<aui:select label="copy-pages-from-site-pages-variation" name="copyLayoutSetBranchId">
+				<aui:select helpMessage="only-the-latest-version-marked-as-ready-for-publication-will-be-copied" label="copy-pages-from-site-pages-variation" name="copyLayoutSetBranchId">
 					<aui:option label="all-site-pages-variations" selected="<%= true %>" value="<%= LayoutSetBranchConstants.ALL_BRANCHES %>" />
 					<aui:option label="none-empty-site-pages-variation" value="<%= LayoutSetBranchConstants.NO_BRANCHES %>" />
 

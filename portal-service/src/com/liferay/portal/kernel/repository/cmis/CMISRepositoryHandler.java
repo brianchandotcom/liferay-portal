@@ -141,6 +141,15 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 			folderId, fileEntryTypeId, start, end, obc);
 	}
 
+	public List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return _baseCmisRepository.getFileEntries(
+			folderId, mimeTypes, start, end, obc);
+	}
+
 	public int getFileEntriesCount(long folderId) throws SystemException {
 		return _baseCmisRepository.getFileEntriesCount(folderId);
 	}
@@ -150,6 +159,13 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 		return _baseCmisRepository.getFileEntriesCount(
 			folderId, fileEntryTypeId);
+	}
+
+	public int getFileEntriesCount(long folderId, String[] mimeTypes)
+		throws SystemException {
+
+		return _baseCmisRepository.getFileEntriesCount(
+			folderId, mimeTypes);
 	}
 
 	public FileEntry getFileEntry(long fileEntryId)

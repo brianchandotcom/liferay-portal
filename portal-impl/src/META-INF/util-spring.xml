@@ -603,6 +603,11 @@
 			</map>
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLUtil" class="com.liferay.portlet.dynamicdatalists.util.DDLUtil">
+		<property name="DDL">
+			<bean class="com.liferay.portlet.dynamicdatalists.util.DDLImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory" class="com.liferay.portlet.dynamicdatamapping.storage.FieldRendererFactory">
 		<property name="fieldRenderers">
 			<map>

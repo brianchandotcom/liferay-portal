@@ -14,9 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,24 +23,13 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-
-import java.io.Serializable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -157,73 +144,11 @@ public class EditRecordAction extends PortletAction {
 	protected DDLRecord updateRecord(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
-
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
-		boolean majorVersion = ParamUtil.getBoolean(
-			actionRequest, "majorVersion");
 
-		DDLRecord record = DDLRecordLocalServiceUtil.fetchRecord(recordId);
-
-		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
-			recordSetId);
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		Fields fields = new Fields();
-
-		for (String fieldName : ddmStructure.getFieldNames()) {
-			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
-			String fieldType = ddmStructure.getFieldType(fieldName);
-			String fieldValue = ParamUtil.getString(actionRequest, fieldName);
-
-			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
-				continue;
-			}
-
-			if (fieldType.equals("radio") || fieldType.equals("select")) {
-				String[] fieldValues = ParamUtil.getParameterValues(
-					actionRequest, fieldName);
-
-				fieldValue = JSONFactoryUtil.serialize(fieldValues);
-			}
-
-			Serializable fieldValueSerializable =
-				FieldConstants.getSerializable(fieldDataType, fieldValue);
-
-			Field field = new Field(
-				ddmStructure.getStructureId(), fieldName,
-				fieldValueSerializable);
-
-			fields.put(field);
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), actionRequest);
-
-		if (record != null) {
-			record = DDLRecordServiceUtil.updateRecord(
-				recordId, majorVersion,
-				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, false,
-				serviceContext);
-		}
-		else {
-			record = DDLRecordServiceUtil.addRecord(
-				themeDisplay.getScopeGroupId(), recordSetId,
-				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
-				serviceContext);
-		}
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
-
-		DDLUtil.uploadRecordFieldFiles(
-			record, uploadPortletRequest, serviceContext);
-
-		return record;
+		return DDLUtil.updateRecord(
+			actionRequest, recordId, recordSetId, false);
 	}
 
 }

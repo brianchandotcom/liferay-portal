@@ -1,0 +1,151 @@
+/**
+ * Copyright (c) 2000-2011 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.dynamicdatalists.util;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+
+import java.io.InputStream;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+/**
+ * @author Eduardo Lundgren
+ */
+public class DDLUtil {
+
+	public static void addAllReservedEls(
+		Element rootElement, Map<String, String> tokens,
+		DDLRecordSet recordSet) {
+
+		getDDL().addAllReservedEls(rootElement, tokens, recordSet);
+	}
+
+	public static DDL getDDL() {
+		return _ddl;
+	}
+
+	public static Fields getFields(
+			ActionRequest actionRequest, long ddmStructureId)
+		throws PortalException, SystemException {
+
+		return getDDL().getFields(actionRequest, ddmStructureId);
+	}
+
+	public static Fields getFields(
+			ActionRequest actionRequest, long ddmStructureId,
+			long ddmTemplateId)
+		throws PortalException, SystemException {
+
+		return getDDL().getFields(actionRequest, ddmStructureId, ddmTemplateId);
+	}
+
+	public static String getRecordFileUploadPath(DDLRecord record) {
+		return getDDL().getRecordFileUploadPath(record);
+	}
+
+	public static JSONObject getRecordJSONObject(DDLRecord record)
+		throws Exception {
+
+		return getDDL().getRecordJSONObject(record);
+	}
+
+	public static JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
+		throws Exception {
+
+		return getDDL().getRecordSetJSONArray(recordSet);
+	}
+
+	public static JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
+		throws Exception {
+
+		return getDDL().getRecordsJSONArray(recordSet);
+	}
+
+	public static JSONArray getRecordsJSONArray(List<DDLRecord> records)
+		throws Exception {
+
+		return getDDL().getRecordsJSONArray(records);
+	}
+
+	public static String getTemplateContent(
+			long ddmTemplateId, DDLRecordSet recordSet,
+			ThemeDisplay themeDisplay, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		return getDDL().getTemplateContent(
+			ddmTemplateId, recordSet, themeDisplay, renderRequest,
+			renderResponse);
+	}
+
+	public static String storeRecordFieldFile(
+			DDLRecord record, String fieldName,
+			InputStream inputStream)
+		throws Exception {
+
+		return getDDL().storeRecordFieldFile(record, fieldName, inputStream);
+	}
+
+	public static DDLRecord updateRecord(
+			ActionRequest actionRequest, long recordId, long recordSetId,
+			boolean mergeFields)
+		throws Exception {
+
+		return getDDL().updateRecord(
+			actionRequest, recordId, recordSetId, mergeFields);
+	}
+
+	public static void uploadRecordFieldFile(
+			DDLRecord record, String fieldName,
+			UploadPortletRequest uploadPortletRequest,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		getDDL().uploadRecordFieldFile(
+			record, fieldName, uploadPortletRequest, serviceContext);
+	}
+
+	public static void uploadRecordFieldFiles(
+			DDLRecord record,
+			UploadPortletRequest uploadPortletRequest,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		getDDL().uploadRecordFieldFiles(
+			record, uploadPortletRequest, serviceContext);
+	}
+
+	public void setDDL(DDL ddl) {
+		_ddl = ddl;
+	}
+
+	private static DDL _ddl;
+
+}

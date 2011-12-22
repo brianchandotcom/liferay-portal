@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,15 +32,24 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
@@ -49,12 +60,15 @@ import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -62,9 +76,9 @@ import javax.portlet.RenderResponse;
  * @author Marcelllus Tavares
  * @author Eduardo Lundgren
  */
-public class DDLUtil {
+public class DDLImpl implements DDL {
 
-	public static void addAllReservedEls(
+	public void addAllReservedEls(
 		Element rootElement, Map<String, String> tokens,
 		DDLRecordSet recordSet) {
 
@@ -85,11 +99,72 @@ public class DDLUtil {
 			String.valueOf(recordSet.getDDMStructureId()));
 	}
 
-	public static String getRecordFileUploadPath(DDLRecord record) {
+	public Fields getFields(ActionRequest actionRequest, long ddmStructureId)
+		throws PortalException, SystemException {
+
+		return getFields(actionRequest, ddmStructureId, 0);
+	}
+
+	public Fields getFields(
+			ActionRequest actionRequest, long ddmStructureId,
+			long ddmTemplateId)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		try {
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+				ddmTemplateId);
+
+			ddmStructure.setXsd(ddmTemplate.getScript());
+		}
+		catch (NoSuchTemplateException nste) {
+		}
+
+		Set<String> fieldNames = ddmStructure.getFieldNames();
+
+		Fields fields = new Fields();
+
+		for (String fieldName : fieldNames) {
+			Field field = new Field();
+
+			field.setName(fieldName);
+
+			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+			String fieldType = ddmStructure.getFieldType(fieldName);
+			String fieldValue = actionRequest.getParameter(fieldName);
+
+			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
+				continue;
+			}
+
+			if (fieldType.equals("radio") || fieldType.equals("select")) {
+				String[] fieldValues = ParamUtil.getParameterValues(
+					actionRequest, fieldName);
+
+				fieldValue = JSONFactoryUtil.serialize(fieldValues);
+			}
+
+			if (fieldValue != null) {
+				Serializable fieldValueSerializable =
+					FieldConstants.getSerializable(
+						fieldDataType, GetterUtil.getString(fieldValue));
+
+				field.setValue(fieldValueSerializable);
+
+				fields.put(field);
+			}
+		}
+
+		return fields;
+	}
+
+	public String getRecordFileUploadPath(DDLRecord record) {
 		return "ddl_records/" + record.getRecordId();
 	}
 
-	public static JSONObject getRecordJSONObject(DDLRecord record)
+	public JSONObject getRecordJSONObject(DDLRecord record)
 		throws Exception {
 
 		DDLRecordSet recordSet = record.getRecordSet();
@@ -136,7 +211,7 @@ public class DDLUtil {
 		return jsonObject;
 	}
 
-	public static JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
+	public JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -186,13 +261,13 @@ public class DDLUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
+	public JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
 		throws Exception {
 
 		return getRecordsJSONArray(recordSet.getRecords());
 	}
 
-	public static JSONArray getRecordsJSONArray(List<DDLRecord> records)
+	public JSONArray getRecordsJSONArray(List<DDLRecord> records)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -206,7 +281,7 @@ public class DDLUtil {
 		return jsonArray;
 	}
 
-	public static String getTemplateContent(
+	public String getTemplateContent(
 			long ddmTemplateId, DDLRecordSet recordSet,
 			ThemeDisplay themeDisplay, RenderRequest renderRequest,
 			RenderResponse renderResponse)
@@ -248,7 +323,7 @@ public class DDLUtil {
 			template.getScript(), template.getLanguage());
 	}
 
-	public static String storeRecordFieldFile(
+	public String storeRecordFieldFile(
 			DDLRecord record, String fieldName, InputStream inputStream)
 		throws Exception {
 
@@ -278,7 +353,51 @@ public class DDLUtil {
 		return fileName;
 	}
 
-	public static void uploadRecordFieldFile(
+	public DDLRecord updateRecord(
+			ActionRequest actionRequest, long recordId, long recordSetId,
+			boolean mergeFields)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean majorVersion = ParamUtil.getBoolean(
+			actionRequest, "majorVersion");
+
+		DDLRecord record = DDLRecordLocalServiceUtil.fetchRecord(recordId);
+
+		DDLRecordSet recordSet =
+			DDLRecordSetLocalServiceUtil.getDDLRecordSet(recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		Fields fields = getFields(actionRequest, ddmStructure.getStructureId());
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecord.class.getName(), actionRequest);
+
+		if (record != null) {
+			record = DDLRecordServiceUtil.updateRecord(
+				recordId, majorVersion,
+				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, mergeFields,
+				serviceContext);
+		}
+		else {
+			record = DDLRecordServiceUtil.addRecord(
+				themeDisplay.getScopeGroupId(), recordSetId,
+				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
+				serviceContext);
+		}
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		uploadRecordFieldFiles(record, uploadPortletRequest, serviceContext);
+
+		return record;
+	}
+
+	public void uploadRecordFieldFile(
 			DDLRecord record, String fieldName,
 			UploadPortletRequest uploadPortletRequest,
 			ServiceContext serviceContext)
@@ -332,7 +451,7 @@ public class DDLUtil {
 		}
 	}
 
-	public static void uploadRecordFieldFiles(
+	public void uploadRecordFieldFiles(
 			DDLRecord record, UploadPortletRequest uploadPortletRequest,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -345,12 +464,12 @@ public class DDLUtil {
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 
 			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
-				DDLUtil.uploadRecordFieldFile(
+				uploadRecordFieldFile(
 					record, fieldName, uploadPortletRequest, serviceContext);
 			}
 		}
 	}
 
-	private static Transformer _transformer = new DDLTransformer();
+	private Transformer _transformer = new DDLTransformer();
 
 }

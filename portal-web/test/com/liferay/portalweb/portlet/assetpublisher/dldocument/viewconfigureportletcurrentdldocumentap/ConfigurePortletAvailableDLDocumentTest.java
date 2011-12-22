@@ -90,7 +90,9 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_anyAssetType']",
-			RuntimeVariables.replace("label=Select More Than One..."));
+			RuntimeVariables.replace("Select More Than One..."));
+		assertEquals("Select More Than One...",
+			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,7 +112,7 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 		}
 
 		selenium.addSelection("//select[@id='_86_currentClassNameIds']",
-			RuntimeVariables.replace("label=Document Library Document"));
+			RuntimeVariables.replace("Documents and Media Document"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -138,9 +140,9 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isPartialText(
-							"//select[@id='_86_availableClassNameIds']",
-							"Document Library Document")) {
+				if (RuntimeVariables.replace("Documents and Media Document")
+										.equals(selenium.getText(
+								"//select[@id='_86_availableClassNameIds']"))) {
 					break;
 				}
 			}
@@ -150,17 +152,15 @@ public class ConfigurePortletAvailableDLDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_availableClassNameIds']",
-				"Document Library Document"));
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
+			selenium.getText("//select[@id='_86_availableClassNameIds']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_availableClassNameIds']",
-				"Document Library Document"));
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
+			selenium.getText("//select[@id='_86_availableClassNameIds']"));
 	}
 }

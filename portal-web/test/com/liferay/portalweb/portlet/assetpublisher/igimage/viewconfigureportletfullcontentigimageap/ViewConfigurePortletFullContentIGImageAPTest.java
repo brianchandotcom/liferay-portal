@@ -46,16 +46,18 @@ public class ViewConfigurePortletFullContentIGImageAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertTrue(selenium.isElementPresent(
-				"//div[@class='asset-content']/img"));
-		assertEquals(RuntimeVariables.replace("View Album \u00bb"),
+		assertTrue(selenium.isVisible(
+				"//div[@class='asset-resource-info']/a/div/img"));
+		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
+			selenium.getText("//div[@class='asset-resource-info']/a/div"));
+		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
-			RuntimeVariables.replace("View Album \u00bb"));
+			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='IG Folder Image Name - ']"));
+		assertTrue(selenium.isVisible(
+				"//img[@class='lfr-preview-file-image-current']"));
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
-			selenium.getText("//span[@class='image-title']"));
+			selenium.getText("//h2[@class='document-title']"));
 	}
 }

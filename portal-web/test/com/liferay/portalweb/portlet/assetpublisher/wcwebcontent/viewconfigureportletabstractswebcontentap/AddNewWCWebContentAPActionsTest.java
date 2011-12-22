@@ -43,6 +43,7 @@ public class AddNewWCWebContentAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
@@ -65,11 +66,11 @@ public class AddNewWCWebContentAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
-			RuntimeVariables.replace("Basic Web Content"));
+			RuntimeVariables.replace("Web Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

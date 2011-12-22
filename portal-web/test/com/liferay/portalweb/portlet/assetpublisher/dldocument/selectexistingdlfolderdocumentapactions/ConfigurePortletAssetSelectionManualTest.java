@@ -70,8 +70,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("Configuration"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -91,7 +90,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_selectionStyle']",
-			RuntimeVariables.replace("label=Manual"));
+			RuntimeVariables.replace("Manual"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,8 +110,6 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals("Manual",
-			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

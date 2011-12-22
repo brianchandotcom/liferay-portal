@@ -46,7 +46,7 @@ public class ViewIGFolderImageAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isElementPresent(
-				"//img[@class='asset-small-image']"));
+				"//div[@class='asset-resource-info']/div"));
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -55,7 +55,7 @@ public class ViewIGFolderImageAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Image Gallery Test Page")) {
+				if (selenium.isVisible("link=Documents and Media Test Page")) {
 					break;
 				}
 			}
@@ -65,21 +65,36 @@ public class ViewIGFolderImageAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Test Page",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Documents and Media Test Page",
+			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("IG Folder Name"),
-			selenium.getText("//td[1]/a/strong"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//td[3]/a"));
-		selenium.clickAt("//td[1]/a/strong",
+			selenium.getText("//div[@class='document-container']/div/a/span[2]"));
+		selenium.clickAt("//div[@class='document-container']/div/a/span[2]",
 			RuntimeVariables.replace("IG Folder Name"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//img[@alt='IG Folder Image Name - ']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("IG Folder Name")
+										.equals(selenium.getText(
+								"//li[@class='folder selected']/a/span[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("IG Folder Name"),
+			selenium.getText("//li[@class='folder selected']/a/span[2]"));
+		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
-			selenium.getText("//span[@class='image-title']"));
+			selenium.getText("//a[@class='document-link']/span[2]"));
 	}
 }

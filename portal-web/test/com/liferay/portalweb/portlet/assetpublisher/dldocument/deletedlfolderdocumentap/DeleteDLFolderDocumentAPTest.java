@@ -88,7 +88,7 @@ public class DeleteDLFolderDocumentAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document Library Document"),
+		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//td[2]/a"));

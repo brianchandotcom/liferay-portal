@@ -46,7 +46,9 @@ public class ViewConfigurePortletCurrentIGImageAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertTrue(selenium.isElementPresent(
-				"//img[@class='asset-small-image']"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='asset-resource-info']/div/img"));
+		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
+			selenium.getText("//div[@class='asset-resource-info']/div"));
 	}
 }

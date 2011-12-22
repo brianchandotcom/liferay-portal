@@ -89,9 +89,7 @@ public class ConfigurePortletDisplayStyleTableTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_displayStyle']",
-			RuntimeVariables.replace("label=Table"));
-		assertEquals("Table",
-			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
+			RuntimeVariables.replace("Table"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

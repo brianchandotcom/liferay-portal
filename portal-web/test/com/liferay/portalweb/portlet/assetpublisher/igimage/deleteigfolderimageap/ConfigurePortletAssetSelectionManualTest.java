@@ -46,8 +46,9 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,7 +90,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_selectionStyle']",
-			RuntimeVariables.replace("label=Manual"));
+			RuntimeVariables.replace("Manual"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -118,7 +119,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Selection"),
-			selenium.getText("//div[@class='lfr-panel-title']/span"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
 		assertEquals(RuntimeVariables.replace("Display Settings"),
 			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
 	}

@@ -59,7 +59,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//a[@data-navigation='documents-home']")) {
+									"//button[@title='Icon View' and contains(@class,'aui-state-active')]")) {
 							break;
 						}
 					}
@@ -68,6 +68,9 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
+
+				assertTrue(selenium.isVisible(
+						"//button[@title='Icon View' and contains(@class,'aui-state-active')]"));
 
 				boolean dmDocumentPresent = selenium.isElementPresent(
 						"//span[@class='entry-title']");

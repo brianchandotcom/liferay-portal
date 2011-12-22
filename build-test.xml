@@ -2327,11 +2327,18 @@ upgrade.processes=\
 			<or>
 				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-6.1.0.27" />
 				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-7.0.0.7" />
+				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-8.0.0.0" />
 			</or>
 			<then>
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="resource.repositories.root=$${user.home}/liferay"
+					value="resource.repositories.root=C:/WINDOWS/system32/config/systemprofile/liferay"
+				/>
+
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-auto.deploy.dest.dir=${resource.repositories.root}/websphere-deploy</echo>
+auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy</echo>
 			</then>
 		</if>
 

@@ -89,9 +89,7 @@ public class ConfigurePortletDisplayStyleAbstractsTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_displayStyle']",
-			RuntimeVariables.replace("label=Abstracts"));
-		assertEquals("Abstracts",
-			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
+			RuntimeVariables.replace("Abstracts"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

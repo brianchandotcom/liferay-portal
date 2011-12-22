@@ -23,106 +23,83 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 	public void testConfigurePortletEnableCommentRatings()
 		throws Exception {
-		int label = 1;
+		selenium.open("/web/guest/home/");
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Asset Publisher Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Asset Publisher Test Page",
-					RuntimeVariables.replace("Asset Publisher Test Page"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Options"),
-					selenium.getText("//strong/a"));
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Options"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Configuration"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-					RuntimeVariables.replace("Configuration"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_86_enableCommentRatingsCheckbox']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				boolean enableCommentRatingsUnchecked = selenium.isChecked(
-						"_86_enableCommentRatingsCheckbox");
-
-				if (enableCommentRatingsUnchecked) {
-					label = 2;
-
-					continue;
-				}
-
-				assertFalse(selenium.isChecked(
-						"//input[@id='_86_enableCommentRatingsCheckbox']"));
-				selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
-					RuntimeVariables.replace("Enable Comment Ratings"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_86_enableCommentRatingsCheckbox']"));
-
-			case 2:
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"You have successfully updated the setup."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_86_enableCommentRatingsCheckbox']"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible("link=Asset Publisher Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@id='_86_enableCommentRatingsCheckbox']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isChecked(
+				"//input[@id='_86_enableCommentRatingsCheckbox']"));
+		selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
+			RuntimeVariables.replace("Enable Comment Ratings"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"You have successfully updated the setup."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_enableCommentRatingsCheckbox']"));
 	}
 }

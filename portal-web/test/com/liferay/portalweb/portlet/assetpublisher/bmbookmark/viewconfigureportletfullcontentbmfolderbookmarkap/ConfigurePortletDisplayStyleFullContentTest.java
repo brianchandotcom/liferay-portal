@@ -89,9 +89,7 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_86_displayStyle']",
-			RuntimeVariables.replace("label=Full Content"));
-		assertEquals("Full Content",
-			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
+			RuntimeVariables.replace("Full Content"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

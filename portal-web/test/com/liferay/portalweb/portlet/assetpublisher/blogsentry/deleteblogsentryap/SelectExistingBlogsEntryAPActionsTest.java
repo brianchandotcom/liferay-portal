@@ -44,6 +44,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -73,6 +74,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		Thread.sleep(5000);
+		selenium.selectFrame("//iframe");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -103,7 +105,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a[@id='_86_bqvz']")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
 					break;
 				}
 			}
@@ -115,9 +117,9 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a[@id='_86_bqvz']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a[@id='_86_bqvz']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//td[1]/a"));
@@ -131,6 +133,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//td[2]/a"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

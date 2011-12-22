@@ -455,26 +455,24 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 				_uuid = uuid;
 			<#else>
-				<#if column.isOrderColumn()>
-					<#if columnBitmaskEnabled>
-						_columnBitmask = -1L;
-					</#if>
-				<#else>
-					<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
-						<#if columnBitmaskEnabled>
-							_columnBitmask |= ${column.name?upper_case}_COLUMN_BITMASK;
-						</#if>
+				<#if column.isOrderColumn() && columnBitmaskEnabled>
+					_columnBitmask = -1L;
+				</#if>
 
-						<#if column.isPrimitiveType()>
-							if (!_setOriginal${column.methodName}) {
-								_setOriginal${column.methodName} = true;
-						<#else>
-							if (_original${column.methodName} == null) {
-						</#if>
-
-							_original${column.methodName} = _${column.name};
-						}
+				<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
+					<#if !column.isOrderColumn() && columnBitmaskEnabled>
+						_columnBitmask |= ${column.name?upper_case}_COLUMN_BITMASK;
 					</#if>
+
+					<#if column.isPrimitiveType()>
+						if (!_setOriginal${column.methodName}) {
+							_setOriginal${column.methodName} = true;
+					<#else>
+						if (_original${column.methodName} == null) {
+					</#if>
+
+						_original${column.methodName} = _${column.name};
+					}
 				</#if>
 
 				<#if (column.type == "Blob") && column.lazy>

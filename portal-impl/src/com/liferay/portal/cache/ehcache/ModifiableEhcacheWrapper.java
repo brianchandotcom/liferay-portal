@@ -471,11 +471,19 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public void removeAll() throws CacheException, IllegalStateException {
+		if (!_ehcache.getStatus().equals(Status.STATUS_ALIVE)) {
+			return;
+		}
+
 		_ehcache.removeAll();
 	}
 
 	public void removeAll(boolean doNotNotifyCacheReplicators)
 		throws CacheException, IllegalStateException {
+
+		if (!_ehcache.getStatus().equals(Status.STATUS_ALIVE)) {
+			return;
+		}
 
 		_ehcache.removeAll(doNotNotifyCacheReplicators);
 	}
@@ -487,6 +495,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public boolean removeElement(Element element) throws NullPointerException {
+		if (!_ehcache.getStatus().equals(Status.STATUS_ALIVE)) {
+			return true;
+		}
+
 		return _ehcache.removeElement(element);
 	}
 
@@ -497,10 +509,18 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public boolean removeQuiet(Object key) throws IllegalStateException {
+		if (!_ehcache.getStatus().equals(Status.STATUS_ALIVE)) {
+			return true;
+		}
+
 		return _ehcache.removeQuiet(key);
 	}
 
 	public boolean removeQuiet(Serializable key) throws IllegalStateException {
+		if (!_ehcache.getStatus().equals(Status.STATUS_ALIVE)) {
+			return true;
+		}
+
 		return _ehcache.removeQuiet(key);
 	}
 
@@ -510,6 +530,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public boolean removeWithWriter(Object key)
 		throws CacheException, IllegalStateException {
+
+		if (!_ehcache.getStatus().equals(Status.STATUS_ALIVE)) {
+			return true;
+		}
 
 		return _ehcache.removeWithWriter(key);
 	}

@@ -398,7 +398,7 @@ AUI().add(
 					_isHiddenRow: function(row) {
 						var instance = this;
 
-						return row.hasClass(row._hideClass);
+						return row.hasClass('aui-helper-hidden');
 					},
 
 					_makeSortable: function(sortableHandle) {

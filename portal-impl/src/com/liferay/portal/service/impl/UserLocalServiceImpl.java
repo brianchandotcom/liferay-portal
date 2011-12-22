@@ -112,6 +112,7 @@ import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PrincipalBean;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
+import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -137,6 +138,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -623,7 +625,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String greeting = LanguageUtil.format(
 			locale, "welcome-x", " " + fullName, false);
 
-		User user = userPersistence.create(userId);
+		final User user = userPersistence.create(userId);
 
 		if (serviceContext != null) {
 			String uuid = serviceContext.getUuid();
@@ -788,9 +790,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Indexer
 
 		if (serviceContext.isIndexingEnabled()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+			final Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-			indexer.reindex(user);
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
+
+					public Void call() throws Exception {
+						indexer.reindex(user);
+
+						return null;
+					}
+
+				});
+
 		}
 
 		// Workflow
@@ -4485,15 +4497,25 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User updateStatus(long userId, int status)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		final User user = userPersistence.findByPrimaryKey(userId);
 
 		user.setStatus(status);
 
 		userPersistence.update(user, false);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+		final Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
-		indexer.reindex(user);
+//		indexer.reindex(user);
+
+		TransactionCommitCallbackUtil.registerCallback(new Callable<Void>() {
+
+			public Void call() throws Exception {
+				indexer.reindex(user);
+
+				return null;
+			}
+
+		});
 
 		return user;
 	}

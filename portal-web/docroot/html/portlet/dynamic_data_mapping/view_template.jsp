@@ -77,7 +77,7 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(HtmlUtil.escape(chooseCallback));
+			sb.append(chooseCallback);
 			sb.append("('");
 			sb.append(template.getTemplateId());
 			sb.append("', '");

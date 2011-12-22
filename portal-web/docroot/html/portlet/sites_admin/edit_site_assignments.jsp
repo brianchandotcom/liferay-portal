@@ -68,7 +68,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		<liferay-ui:header
 			backURL="<%= redirect %>"
 			localizeTitle="<%= false %>"
-			title='<%= group.getDescriptiveName() %>'
+			title='<%= group.getDescriptiveName(locale) %>'
 		/>
 
 		<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
@@ -271,6 +271,6 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(group.getDescriptiveName()), null);
+PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(group.getDescriptiveName(locale)), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
 %>

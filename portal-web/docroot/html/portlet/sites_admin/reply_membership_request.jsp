@@ -45,7 +45,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
-		title='<%= LanguageUtil.format(pageContext, "reply-membership-request-for-x", group.getDescriptiveName()) %>'
+		title='<%= LanguageUtil.format(pageContext, "reply-membership-request-for-x", group.getDescriptiveName(locale)) %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />

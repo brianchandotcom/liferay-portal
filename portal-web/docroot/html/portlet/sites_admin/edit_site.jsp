@@ -97,7 +97,7 @@ String title = "new-site";
 
 if (group != null) {
 	localizeTitle= false;
-	title = group.getDescriptiveName();
+	title = group.getDescriptiveName(locale);
 }
 else if (layoutSetPrototype != null) {
 	localizeTitle= false;
@@ -187,13 +187,13 @@ else if (layoutSetPrototype != null) {
 				ok = false;
 
 				if (0 == currentValue) {
-					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName()) %>');
+					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale)) %>');
 				}
 				else if (1 == currentValue) {
-					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName()) %>');
+					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale)) %>');
 				}
 				else if (2 == currentValue) {
-					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName()) %>');
+					ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName(locale)) %>');
 				}
 			}
 		</c:if>
@@ -241,7 +241,7 @@ else if (layoutSetPrototype != null) {
 
 <%
 if (group != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(group.getDescriptiveName()), null);
+	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(group.getDescriptiveName(locale)), null);
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
 }
 else {

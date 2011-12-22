@@ -124,7 +124,7 @@ if (group.isOrganization()) {
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), null);
+	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "manage-teams"), redirect);

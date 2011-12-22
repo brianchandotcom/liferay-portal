@@ -64,7 +64,7 @@ if (Validator.isNotNull(structureId)) {
 					for (int i = 0; i < mySites.size(); i++) {
 						Group group = mySites.get(i);
 
-						String groupName = HtmlUtil.escape(group.getDescriptiveName());
+						String groupName = HtmlUtil.escape(group.getDescriptiveName(locale));
 
 						if (group.isUser()) {
 							groupName = LanguageUtil.get(pageContext, "my-site");

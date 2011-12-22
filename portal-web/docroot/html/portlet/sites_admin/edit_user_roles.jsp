@@ -26,7 +26,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
-String groupName = group.getDescriptiveName();
+String groupName = group.getDescriptiveName(locale);
 
 Role role = (Role)request.getAttribute(WebKeys.ROLE);
 
@@ -53,7 +53,7 @@ if (organization != null) {
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }
 else if (group != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(), null);
+	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-user-roles"), portletURL.toString());
@@ -83,7 +83,7 @@ request.setAttribute("edit_user_roles.jsp-portletURL", portletURL);
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= false %>"
-	title="<%= group.getDescriptiveName() %>"
+	title="<%= group.getDescriptiveName(locale) %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

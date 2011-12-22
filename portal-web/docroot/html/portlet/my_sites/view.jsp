@@ -152,12 +152,12 @@ pageContext.setAttribute("portletURL", portletURL);
 			sb.append("<a href=\"");
 			sb.append(rowURL.toString());
 			sb.append("\" target=\"_blank\"><strong>");
-			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
+			sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
 			sb.append("</strong></a>");
 		}
 		else {
 			sb.append("<strong>");
-			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
+			sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
 			sb.append("</strong>");
 		}
 

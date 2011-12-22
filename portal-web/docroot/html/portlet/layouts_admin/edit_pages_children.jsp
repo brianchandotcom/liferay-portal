@@ -264,14 +264,14 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 		boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(groupTypeSettings, request, "mergeGuestPublicPages");
 		%>
 
-		<liferay-ui:message arguments="<%= company.getGroup().getDescriptiveName() %>" key="you-can-configure-the-top-level-pages-of-this-public-site-to-merge-with-the-top-level-pages-of-the-public-x-site" />
+		<liferay-ui:message arguments="<%= company.getGroup().getDescriptiveName(locale) %>" key="you-can-configure-the-top-level-pages-of-this-public-site-to-merge-with-the-top-level-pages-of-the-public-x-site" />
 
 		<br /><br />
 
 		<table class="lfr-table">
 		<tr>
 			<td class="lfr-label">
-				<liferay-ui:message arguments="<%= company.getGroup().getDescriptiveName() %>" key="merge-x-public-pages" />
+				<liferay-ui:message arguments="<%= company.getGroup().getDescriptiveName(locale) %>" key="merge-x-public-pages" />
 			</td>
 			<td>
 				<liferay-ui:input-checkbox param="mergeGuestPublicPages" defaultValue="<%= mergeGuestPublicPages %>" />

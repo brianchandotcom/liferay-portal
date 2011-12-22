@@ -227,7 +227,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				scopesLeftList.add(new KeyValuePair(_getKey(group), _getName(group, pageContext)));
+				scopesLeftList.add(new KeyValuePair(_getKey(group), _getName(group, locale)));
 			}
 
 			// Right list
@@ -245,11 +245,11 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					<%
 					for (Group group : groups) {
 						if (Arrays.binarySearch(groupIds, group.getGroupId()) < 0) {
-							scopesRightList.add(new KeyValuePair(_getKey(group), _getName(group, pageContext)));
+							scopesRightList.add(new KeyValuePair(_getKey(group), _getName(group, locale)));
 						}
 					%>
 
-						<aui:option label="<%= _getName(group, pageContext) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= group.getGroupId() %>" />
+						<aui:option label="<%= _getName(group, locale) %>" selected="<%= (groupIds.length == 1) && (group.getGroupId() == groupIds[0]) %>" value="<%= group.getGroupId() %>" />
 
 					<%
 					}
@@ -868,14 +868,14 @@ private String _getKey(Group group) throws Exception {
 	return key;
 }
 
-private String _getName(Group group, PageContext pageContext) throws Exception {
+private String _getName(Group group, Locale locale) throws Exception {
 	String name = null;
 
 	if (group.isLayoutPrototype()) {
-		name = LanguageUtil.get(pageContext, "default");
+		name = LanguageUtil.get(locale, "default");
 	}
 	else {
-		name = HtmlUtil.escape(group.getDescriptiveName());
+		name = HtmlUtil.escape(group.getDescriptiveName(locale));
 	}
 
 	return name;

@@ -76,7 +76,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
-		<liferay-ui:message arguments="<%= group.getDescriptiveName() %>" key="site-x-does-not-have-any-private-pages" />
+		<liferay-ui:message arguments="<%= group.getDescriptiveName(locale) %>" key="site-x-does-not-have-any-private-pages" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= RequiredGroupException.class %>">
@@ -144,7 +144,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		sb.append("<a href=\"");
 		sb.append(rowURL.toString());
 		sb.append("\">");
-		sb.append(HtmlUtil.escape(group.getDescriptiveName()));
+		sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
 		sb.append("</a>");
 
 		if (group.isOrganization()) {
@@ -210,10 +210,10 @@ pageContext.setAttribute("portletURL", portletURL);
 				}
 
 				if (names.size() == 1) {
-					message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName()), names.get(0)});
+					message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), names.get(0)});
 				}
 				else {
-					message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName()), namesSB, names.get(names.size() - 1)});
+					message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), namesSB, names.get(names.size() - 1)});
 				}
 	%>
 

@@ -101,7 +101,7 @@ if (step == 1) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="name"
-						value="<%= HtmlUtil.escape(group.getDescriptiveName()) %>"
+						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -145,7 +145,7 @@ if (step == 1) {
 
 			portletURL.setParameter("step", "1");
 
-			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName());
+			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
 			%>
 
 			<div class="breadcrumbs">
@@ -211,7 +211,7 @@ if (step == 1) {
 					sb.append("', '");
 					sb.append("communityRoles");
 					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(group.getDescriptiveName()));
+					sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
 					sb.append("', '");
 					sb.append(group.getGroupId());
 					sb.append("');");

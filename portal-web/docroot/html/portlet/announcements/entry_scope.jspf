@@ -24,7 +24,7 @@ String scopeClassName = StringPool.BLANK;
 if (entryClassName.equals(Group.class.getName())) {
 	Group group = GroupLocalServiceUtil.getGroup(entryClassPK);
 
-	scopeName = group.getDescriptiveName();
+	scopeName = group.getDescriptiveName(locale);
 	scopeClassName = "site";
 }
 else if (entryClassName.equals(Organization.class.getName())) {

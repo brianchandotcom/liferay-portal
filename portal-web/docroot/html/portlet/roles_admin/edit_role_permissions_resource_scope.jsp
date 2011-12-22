@@ -44,7 +44,7 @@ List groupNames = (List)objArray[8];
 		%>
 
 				<span class="lfr-token">
-					<span class="lfr-token-text"><%= group.getDescriptiveName() %></span>
+					<span class="lfr-token-text"><%= group.getDescriptiveName(locale) %></span>
 
 					<aui:a cssClass="aui-icon aui-icon-close lfr-token-close" href="<%= taglibHREF %>" />
 				</span>

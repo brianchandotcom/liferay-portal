@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
@@ -39,6 +40,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.UserPersonalSite;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -55,6 +57,7 @@ import com.liferay.portal.util.PortalUtil;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -98,29 +101,35 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	public String getDescriptiveName() throws PortalException, SystemException {
+		return getDescriptiveName(LocaleUtil.getDefault());
+	}
+
+	public String getDescriptiveName(Locale locale)
+		throws PortalException, SystemException {
+
 		String name = getName();
 
 		if (isCompany()) {
-			name = "global";
+			name = LanguageUtil.get(locale, "global");
 		}
 		else if (isLayout()) {
 			Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());
 
-			name = layout.getName(LocaleUtil.getDefault());
+			name = layout.getName(locale);
 		}
 		else if (isLayoutPrototype()) {
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
 					getClassPK());
 
-			name = layoutPrototype.getName(LocaleUtil.getDefault());
+			name = layoutPrototype.getName(locale);
 		}
 		else if (isLayoutSetPrototype()) {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 					getClassPK());
 
-			name = layoutSetPrototype.getName(LocaleUtil.getDefault());
+			name = layoutSetPrototype.getName(locale);
 		}
 		else if (isOrganization()) {
 			long organizationId = getOrganizationId();
@@ -144,6 +153,9 @@ public class GroupImpl extends GroupBaseImpl {
 				userGroupId);
 
 			name = userGroup.getName();
+		}
+		else if (isUserPersonalSite()) {
+			name = LanguageUtil.get(locale, "user-personal-site");
 		}
 		else if (name.equals(GroupConstants.GUEST)) {
 			Company company = CompanyLocalServiceUtil.getCompany(
@@ -521,6 +533,10 @@ public class GroupImpl extends GroupBaseImpl {
 
 	public boolean isUserGroup() {
 		return hasClassName(UserGroup.class);
+	}
+
+	public boolean isUserPersonalSite() {
+		return hasClassName(UserPersonalSite.class);
 	}
 
 	@Override

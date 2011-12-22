@@ -54,6 +54,7 @@
 	th, td {
 		color: #7B7C7F;
 		padding: 5px 10px;
+		word-wrap: break-word;
 	}
 
 	th.sort-desc .result-column-name {
@@ -672,8 +673,13 @@
 	}
 
 	.aui-toolbar {
+		.aui-toolbar-content {
+			display: block;
+		}
+
 		.aui-toolbar-item {
 			border-right-width: 0;
+			float: left;
 		}
 
 		.aui-toolbar-last {

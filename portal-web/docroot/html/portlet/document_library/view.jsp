@@ -219,6 +219,7 @@ if (folder != null) {
 			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 			folderStart: <%= folderStart %>,
 			foldersTotal: <%= foldersTotal %>,
+			isUserSignedIn: <%= !user.isDefaultUser() %>,
 			mainUrl: '<%= mainURL %>',
 			namespace: '<portlet:namespace />',
 			strutsAction: '/document_library/view'

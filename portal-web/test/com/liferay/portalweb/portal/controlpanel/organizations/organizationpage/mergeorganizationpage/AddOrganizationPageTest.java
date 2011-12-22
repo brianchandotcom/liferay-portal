@@ -197,8 +197,9 @@ public class AddOrganizationPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[1]/fieldset/div/span[1]/span/span/span/input")) {
+						if (RuntimeVariables.replace("Public Pages")
+												.equals(selenium.getText(
+										"//div[3]/a"))) {
 							break;
 						}
 					}
@@ -208,10 +209,53 @@ public class AddOrganizationPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//div[1]/fieldset/div/span[1]/span/span/span/input",
+				assertEquals(RuntimeVariables.replace("Public Pages"),
+					selenium.getText("//div[3]/a"));
+				selenium.clickAt("//div[3]/a",
+					RuntimeVariables.replace("Public Pages"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("Add Page")
+												.equals(selenium.getText(
+										"//div[2]/span/button"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Add Page"),
+					selenium.getText("//div[2]/span/button"));
+				selenium.click("//div[2]/span/button");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@id='_88_name_en_US']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.type("//input[@id='_88_name_en_US']",
 					RuntimeVariables.replace("Selenium Test Home Page"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
+				selenium.clickAt("//input[@value='Add Page']",
+					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
 
 				for (int second = 0;; second++) {
@@ -257,7 +301,7 @@ public class AddOrganizationPageTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Selenium Test Home Page")
 												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
+										"link=Selenium Test Home Page"))) {
 							break;
 						}
 					}
@@ -268,7 +312,7 @@ public class AddOrganizationPageTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Selenium Test Home Page"),
-					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+					selenium.getText("link=Selenium Test Home Page"));
 
 			case 100:
 				label = -1;

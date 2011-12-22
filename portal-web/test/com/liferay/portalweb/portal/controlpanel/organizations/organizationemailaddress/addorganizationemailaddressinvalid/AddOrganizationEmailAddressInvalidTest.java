@@ -133,8 +133,10 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='portlet-msg-error'])[1]")) {
+				if (RuntimeVariables.replace(
+							"Please enter a valid email address.")
+										.equals(selenium.getText(
+								"//div[@role='alert']"))) {
 					break;
 				}
 			}
@@ -145,10 +147,10 @@ public class AddOrganizationEmailAddressInvalidTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace(
 				"Please enter a valid email address."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+			selenium.getText("//div[@role='alert']"));
+		assertEquals(RuntimeVariables.replace(
+				"Additional Email Addresses (Modified)"),
+			selenium.getText("//li[contains(@class,'section-error')]"));
 	}
 }

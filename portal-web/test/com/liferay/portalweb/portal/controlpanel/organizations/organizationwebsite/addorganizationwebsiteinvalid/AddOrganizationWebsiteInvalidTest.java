@@ -113,8 +113,9 @@ public class AddOrganizationWebsiteInvalidTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='portlet-msg-error'])[1]")) {
+				if (RuntimeVariables.replace("Please enter a valid URL.")
+										.equals(selenium.getText(
+								"//div[@role='alert']"))) {
 					break;
 				}
 			}
@@ -124,10 +125,9 @@ public class AddOrganizationWebsiteInvalidTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Please enter a valid URL."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+			selenium.getText("//div[@role='alert']"));
+		assertEquals(RuntimeVariables.replace("Websites (Modified)"),
+			selenium.getText("//li[contains(@class,'section-error')]"));
 	}
 }

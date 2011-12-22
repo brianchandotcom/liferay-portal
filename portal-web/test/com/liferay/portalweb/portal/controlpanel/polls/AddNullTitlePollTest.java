@@ -58,8 +58,29 @@ public class AddNullTitlePollTest extends BaseTestCase {
 			RuntimeVariables.replace("Null Title Poll Test Choice B"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("This field is required.")
+										.equals(selenium.getText(
+								"//div[@role='alert']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("This field is required."),
+			selenium.getText("//div[@role='alert']"));
+		assertEquals(RuntimeVariables.replace("Title (Required)"),
+			selenium.getText(
+				"//span[contains(@class,'aui-form-validator-error-container')]/span/label"));
 	}
 }

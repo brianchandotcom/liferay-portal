@@ -1688,7 +1688,7 @@ public class SourceFormatter {
 			if ((trimmedPreviousLine.startsWith("if ") ||
 				 trimmedPreviousLine.startsWith("else ")) &&
 				(previousLine.endsWith("||") || previousLine.endsWith("&&")) &&
-				 line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+				line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 
 				return previousLine + StringPool.SPACE + line;
 			}

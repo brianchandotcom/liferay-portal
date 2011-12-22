@@ -1561,6 +1561,8 @@ public interface PropsKeys {
 
 	public static final String PERMISSIONS_VIEW_DYNAMIC_INHERITANCE = "permissions.view.dynamic.inheritance";
 
+	public static final String PERSITED_SCHEDULER_ORG_QUARTZ_SCHEDULER_INSTANCENAME = "persisted.scheduler.org.quartz.scheduler.instanceName";
+
 	public static final String PERSISTENCE_PROVIDER = "persistence.provider";
 
 	public static final String PLUGIN_NOTIFICATIONS_ENABLED = "plugin.notifications.enabled";

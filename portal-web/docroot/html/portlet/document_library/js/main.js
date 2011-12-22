@@ -259,14 +259,18 @@ AUI().add(
 					},
 
 					_addHistoryState: function(data) {
+						var instance = this;
+
 						var historyState = A.clone(data);
 
 						var currentHistoryState = History.get();
 
+						var defaultParams = instance._config.defaultParams;
+
 						AObject.each(
 							currentHistoryState,
 							function(index, item, collection) {
-								if (!owns(historyState, item)) {
+								if (!owns(historyState, item) && !owns(defaultParams, item)) {
 									historyState[item] = null;
 								}
 							}

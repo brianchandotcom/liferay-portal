@@ -221,7 +221,8 @@ AUI().add(
 				var queueError = SWFUpload.QUEUE_ERROR;
 
 				if (error_code == queueError.FILE_EXCEEDS_SIZE_LIMIT || error_code == queueError.ZERO_BYTE_FILE) {
-					var dataBuffer = [file.name, instance._invalidFileSizeText.replace('{0}', instance._maxFileSize)];
+					var sizeLimitInKb = Math.floor(instance._maxFileSize.replace(/\D/g,'') / 1024);
+					var dataBuffer = [file.name, instance._invalidFileSizeText.replace('{0}', sizeLimitInKb)];
 
 					if (error_code == queueError.ZERO_BYTE_FILE) {
 						dataBuffer[1] = instance._zeroByteFileText;

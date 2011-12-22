@@ -128,6 +128,23 @@ public class TearDownTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//input[@id='_125_keywords']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("Selenium"));
 				selenium.click(RuntimeVariables.replace(

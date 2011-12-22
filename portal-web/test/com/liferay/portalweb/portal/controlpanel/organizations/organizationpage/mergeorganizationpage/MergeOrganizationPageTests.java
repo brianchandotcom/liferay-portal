@@ -28,6 +28,7 @@ public class MergeOrganizationPageTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTestSuite(AddOrganizationTest.class);
+		testSuite.addTestSuite(EditSiteTemplateLayoutsUpdateableTest.class);
 		testSuite.addTestSuite(AddOrganizationPageTest.class);
 		testSuite.addTestSuite(AssertNotMergeOrganizationPageTest.class);
 		testSuite.addTestSuite(MergeOrganizationPageTest.class);

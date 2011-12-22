@@ -36,11 +36,13 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 int columnWidth = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:column:columnWidth")));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:column:cssClass"));
 boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:column:first")));
+java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:column:id"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:column:last")));
 
 _updateOptions(_options, "columnWidth", columnWidth);
 _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "first", first);
+_updateOptions(_options, "id", id);
 _updateOptions(_options, "last", last);
 %>
 

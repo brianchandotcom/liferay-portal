@@ -45,6 +45,10 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 		return _first;
 	}
 
+	public java.lang.String getId() {
+		return _id;
+	}
+
 	public boolean getLast() {
 		return _last;
 	}
@@ -67,6 +71,12 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("first", first);
 	}
 
+	public void setId(java.lang.String id) {
+		_id = id;
+
+		setScopedAttribute("id", id);
+	}
+
 	public void setLast(boolean last) {
 		_last = last;
 
@@ -78,6 +88,7 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 		_columnWidth = 0;
 		_cssClass = null;
 		_first = false;
+		_id = null;
 		_last = false;
 	}
 
@@ -96,6 +107,7 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "columnWidth", _columnWidth);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "first", _first);
+		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "last", _last);
 	}
 
@@ -110,6 +122,7 @@ public class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 	private int _columnWidth = 0;
 	private java.lang.String _cssClass = null;
 	private boolean _first = false;
+	private java.lang.String _id = null;
 	private boolean _last = false;
 
 }

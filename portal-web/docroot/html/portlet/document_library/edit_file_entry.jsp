@@ -365,16 +365,16 @@ else if (dlFileEntryType != null) {
 					<aui:input classPK="<%= assetClassPK %>" model="<%= DLFileEntry.class %>" name="tags" type="assetTags" />
 				</aui:fieldset>
 			</liferay-ui:panel>
-		</c:if>
 
-		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-			<aui:fieldset>
-				<liferay-ui:input-asset-links
-					className="<%= DLFileEntry.class.getName() %>"
-					classPK="<%= assetClassPK %>"
-				/>
-			</aui:fieldset>
-		</liferay-ui:panel>
+			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
+				<aui:fieldset>
+					<liferay-ui:input-asset-links
+						className="<%= DLFileEntry.class.getName() %>"
+						classPK="<%= assetClassPK %>"
+					/>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</c:if>
 
 		<c:if test="<%= fileEntry == null %>">
 			<aui:field-wrapper label="permissions">

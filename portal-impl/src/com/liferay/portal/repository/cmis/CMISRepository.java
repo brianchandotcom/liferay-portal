@@ -640,25 +640,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		List<Folder> folders = getFolders(parentFolderId);
 
-		if (obc != null) {
-			if (obc instanceof RepositoryModelCreateDateComparator ||
-				obc instanceof RepositoryModelModifiedDateComparator) {
-
-				folders = ListUtil.sort(folders, obc);
-			}
-			else if (obc instanceof RepositoryModelNameComparator) {
-				if (!obc.isAscending()) {
-					folders = ListUtil.sort(folders, obc);
-				}
-			}
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			return folders;
-		}
-		else {
-			return ListUtil.subList(folders, start, end);
-		}
+		return sortAndPage(folders, start, end, obc);
 	}
 
 	@Override
@@ -668,28 +650,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		List<Object> foldersAndFileEntries = getFoldersAndFileEntries(folderId);
 
-		if (obc != null) {
-			if (obc instanceof RepositoryModelCreateDateComparator ||
-				obc instanceof RepositoryModelModifiedDateComparator ||
-				obc instanceof RepositoryModelSizeComparator) {
-
-				foldersAndFileEntries = ListUtil.sort(
-					foldersAndFileEntries, obc);
-			}
-			else if (obc instanceof RepositoryModelNameComparator) {
-				if (!obc.isAscending()) {
-					foldersAndFileEntries = ListUtil.sort(
-						foldersAndFileEntries, obc);
-				}
-			}
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			return foldersAndFileEntries;
-		}
-		else {
-			return ListUtil.subList(foldersAndFileEntries, start, end);
-		}
+		return sortAndPage(foldersAndFileEntries, start, end, obc);
 	}
 
 	public List<Object> getFoldersAndFileEntries(
@@ -717,28 +678,7 @@ public class CMISRepository extends BaseCmisRepository {
 			}
 		}
 
-		if (obc != null) {
-			if (obc instanceof RepositoryModelCreateDateComparator ||
-				obc instanceof RepositoryModelModifiedDateComparator ||
-				obc instanceof RepositoryModelSizeComparator) {
-
-				foldersAndFileEntries = ListUtil.sort(
-					foldersAndFileEntries, obc);
-			}
-			else if (obc instanceof RepositoryModelNameComparator) {
-				if (!obc.isAscending()) {
-					foldersAndFileEntries = ListUtil.sort(
-						foldersAndFileEntries, obc);
-				}
-			}
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			return foldersAndFileEntries;
-		}
-		else {
-			return ListUtil.subList(foldersAndFileEntries, start, end);
-		}
+		return sortAndPage(foldersAndFileEntries, start, end, obc);
 	}
 
 	@Override
@@ -756,7 +696,7 @@ public class CMISRepository extends BaseCmisRepository {
 		int size = 0;
 
 		if (mimeTypes != null && mimeTypes.length > 0) {
-			getFolders(folderId).size();
+			size = getFolders(folderId).size();
 
 			try {
 				size += getCmisDocumentIds(
@@ -768,7 +708,6 @@ public class CMISRepository extends BaseCmisRepository {
 		else {
 			size = getFoldersAndFileEntries(folderId).size();
 		}
-
 
 			return size;
 	}
@@ -2155,27 +2094,27 @@ public class CMISRepository extends BaseCmisRepository {
 			_sessionKey, new TransientValue<Session>(session));
 	}
 
-	protected List<FileEntry> sortAndPage(List<FileEntry> fileEntries,
+	protected <E> List<E> sortAndPage(List<E> list,
 			int start, int end, OrderByComparator obc) {
 		if (obc != null) {
 			if (obc instanceof RepositoryModelCreateDateComparator ||
 				obc instanceof RepositoryModelModifiedDateComparator ||
 				obc instanceof RepositoryModelSizeComparator) {
 
-				fileEntries = ListUtil.sort(fileEntries, obc);
+				list = ListUtil.sort(list, obc);
 			}
 			else if (obc instanceof RepositoryModelNameComparator) {
 				if (!obc.isAscending()) {
-					fileEntries = ListUtil.sort(fileEntries, obc);
+					list = ListUtil.sort(list, obc);
 				}
 			}
 		}
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			return fileEntries;
+			return list;
 		}
 		else {
-			return ListUtil.subList(fileEntries, start, end);
+			return ListUtil.subList(list, start, end);
 		}
 	}
 

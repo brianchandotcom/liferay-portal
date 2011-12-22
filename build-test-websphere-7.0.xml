@@ -255,6 +255,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</ech
 
 		<antcall target="evaluate-logs">
 			<param name="print.logs" value="true" />
+			<param name="test.evaluate.logs" value="true" />
 		</antcall>
 	</target>
 </project>

@@ -54,14 +54,24 @@
 	<td>Null Title Poll Test Choice B</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div[@role='alert']</td>
+	<td>This field is required.</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-error']</td>
-	<td>Please enter a valid title.</td>
+	<td>//div[@role='alert']</td>
+	<td>This field is required.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(@class,'aui-form-validator-error-container')]/span/label</td>
+	<td>Title (Required)</td>
 </tr>
 </tbody></table>
 </body>

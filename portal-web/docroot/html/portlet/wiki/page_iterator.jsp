@@ -26,7 +26,7 @@ String tagName = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+portletURL.setParameter("nodeName", node.getName());
 
 if (wikiPage != null) {
 	portletURL.setParameter("title", wikiPage.getTitle());

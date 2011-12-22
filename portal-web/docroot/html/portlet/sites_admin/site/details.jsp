@@ -306,6 +306,10 @@ if (showPrototypes && (group != null)) {
 </aui:fieldset>
 
 <aui:script>
-	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', '', '<portlet:namespace />publicLayoutSetPrototypeIdOptions', true);
-	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', '', '<portlet:namespace />privateLayoutSetPrototypeIdOptions', true);
+	function <portlet:namespace />testVisibility(currentValue, value) {
+		return currentValue != '';
+	}
+
+	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
 </aui:script>

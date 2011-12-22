@@ -1614,21 +1614,23 @@
 	Liferay.provide(
 		Util,
 		'toggleSelectBox',
-		function(selectBoxId, value, toggleBoxId, displayWhenNotSelected) {
+		function(selectBoxId, value, toggleBoxId) {
 			var selectBox = A.one('#' + selectBoxId);
 			var toggleBox = A.one('#' + toggleBoxId);
 
 			if (selectBox && toggleBox) {
+				var dynamicValue = Lang.isFunction(value);
+
 				var toggle = function() {
-					var action = 'show';
+					var currentValue = selectBox.val();
 
-					if ((!displayWhenNotSelected && (selectBox.val() != value)) ||
-                        (displayWhenNotSelected && (selectBox.val() == value))) {
+					var visible = (value == currentValue);
 
-						action = 'hide';
+					if (dynamicValue) {
+						visible = value(currentValue, value);
 					}
 
-					toggleBox[action]();
+					toggleBox.toggle(visible);
 				};
 
 				toggle();

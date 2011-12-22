@@ -261,12 +261,16 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>");
 	}
 
+	function <portlet:namespace />testVisibility(currentValue, value) {
+		return currentValue != '';
+	}
+
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 	</c:if>
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', '', '<portlet:namespace />publicLayoutSetPrototypeIdOptions', true);
-	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', '', '<portlet:namespace />privateLayoutSetPrototypeIdOptions', true);
+	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
 </aui:script>
 
 <%

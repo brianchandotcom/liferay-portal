@@ -171,7 +171,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 </aui:script>
 
 <%
-DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse, true);
+DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move"), currentURL);
 %>

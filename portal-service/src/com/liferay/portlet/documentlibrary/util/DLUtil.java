@@ -78,7 +78,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			DLFileShortcut dlFileShortcut, HttpServletRequest request,
-			RenderResponse renderResponse, boolean showGlobally)
+			RenderResponse renderResponse)
 		throws Exception {
 
 		Folder folder = dlFileShortcut.getFolder();
@@ -86,8 +86,7 @@ public class DLUtil {
 		if (folder.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			addPortletBreadcrumbEntries(
-				folder, request, renderResponse, showGlobally);
+			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
 
 		PortletURL portletURL = renderResponse.createRenderURL();
@@ -104,7 +103,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			FileEntry fileEntry, HttpServletRequest request,
-			RenderResponse renderResponse, boolean showGlobally)
+			RenderResponse renderResponse)
 		throws Exception {
 
 		Folder folder = fileEntry.getFolder();
@@ -112,8 +111,7 @@ public class DLUtil {
 		if (folder.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			addPortletBreadcrumbEntries(
-				folder, request, renderResponse, showGlobally);
+			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
 
 		PortletURL portletURL = renderResponse.createRenderURL();
@@ -149,12 +147,11 @@ public class DLUtil {
 			request, themeDisplay.translate("home"), portletURL.toString(),
 			data);
 
-		addPortletBreadcrumbEntries(folder, request, portletURL, true);
+		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
 
 	public static void addPortletBreadcrumbEntries(
-			Folder folder, HttpServletRequest request,
-			PortletURL portletURL, boolean showGlobally)
+			Folder folder, HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
 
 		long defaultFolderId = _getDefaultFolderId(request);
@@ -188,7 +185,6 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", ancestorFolder.getFolderId());
-			data.put("show-globally", String.valueOf(showGlobally));
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorFolder.getName(), portletURL.toString(), data);
@@ -208,7 +204,6 @@ public class DLUtil {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folder-id", folderId);
-			data.put("show-globally", String.valueOf(showGlobally));
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, folder.getName(), portletURL.toString(), data);
@@ -217,7 +212,7 @@ public class DLUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			Folder folder, HttpServletRequest request,
-			RenderResponse renderResponse, boolean showGlobally)
+			RenderResponse renderResponse)
 		throws Exception {
 
 		String strutsAction = ParamUtil.getString(request, "struts_action");
@@ -254,12 +249,12 @@ public class DLUtil {
 			portletURL.setParameter("struts_action", "/document_library/view");
 		}
 
-		addPortletBreadcrumbEntries(folder, request, portletURL, showGlobally);
+		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
 
 	public static void addPortletBreadcrumbEntries(
 			long folderId, HttpServletRequest request,
-			RenderResponse renderResponse, boolean showGlobally)
+			RenderResponse renderResponse)
 		throws Exception {
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -268,8 +263,7 @@ public class DLUtil {
 			if (folder.getFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				addPortletBreadcrumbEntries(
-					folder, request, renderResponse, showGlobally);
+				addPortletBreadcrumbEntries(folder, request, renderResponse);
 			}
 		}
 	}

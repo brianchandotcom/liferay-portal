@@ -965,5 +965,5 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 </aui:script>
 
 <%
-DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse, true);
+DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
 %>

@@ -62,10 +62,7 @@
 
 		String groupName = HtmlUtil.escape(group.getDescriptiveName(locale));
 
-		if (group.isCompany()) {
-			groupName = LanguageUtil.get(pageContext, "global");
-		}
-		else if (group.isUser()) {
+		if (group.isUser()) {
 			groupName = LanguageUtil.get(pageContext, "my-site");
 		}
 

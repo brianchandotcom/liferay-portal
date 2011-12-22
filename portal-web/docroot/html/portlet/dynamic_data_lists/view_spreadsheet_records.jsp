@@ -69,16 +69,16 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			b,
 			desc,
 			function(a, b, desc) {
-				var n1 = parseFloat(a);
-				var n2 = parseFloat(b);
+				var num1 = parseFloat(a);
+				var num2 = parseFloat(b);
 
 				var result;
 
-				if (isNaN(n1) || isNaN(n2)) {
+				if (isNaN(num1) || isNaN(num2)) {
 					result = A.ArraySort.compare(a, b, desc);
 				}
 				else {
-					result = desc ? (n2 - n1) : (n1 - n2);
+					result = desc ? (num2 - num1) : (num1 - num2);
 				}
 
 				return result;
@@ -94,7 +94,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	};
 
 	var numericData = {
-		double: 1,
+		'double': 1,
 		integer: 1,
 		number: 1
 	};

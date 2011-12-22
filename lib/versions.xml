@@ -2762,18 +2762,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/slf4j-log4j12.jar</file-name>
-		<version>1.5.11</version>
-		<project-name>SLF4J</project-name>
-		<project-url>http://www.slf4j.org</project-url>
-		<licenses>
-			<license>
-				<license-name>MIT License</license-name>
-				<copyright-notice>Copyright (c) 2004-2007 QOS.ch</copyright-notice>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>portal/soap.jar</file-name>
 		<version>2.2</version>
 		<project-name>Apache Simple Object Access Protocol</project-name>

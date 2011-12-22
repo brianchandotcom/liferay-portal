@@ -686,6 +686,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
+		fileEntryElement.addAttribute(
+			"fileEntryTypeUuid", dlFileEntryType.getUuid());
+
 		if (!isFileEntryTypeExportable(
 				portletDataContext.getCompanyId(), dlFileEntryType)) {
 
@@ -694,9 +697,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		exportFileEntryType(
 			portletDataContext, fileEntryTypesElement, dlFileEntryType);
-
-		fileEntryElement.addAttribute(
-			"fileEntryTypeUuid", dlFileEntryType.getUuid());
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 

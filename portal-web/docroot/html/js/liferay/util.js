@@ -1619,14 +1619,18 @@
 			var toggleBox = A.one('#' + toggleBoxId);
 
 			if (selectBox && toggleBox) {
-				var toggle = function() {
-					var action = 'show';
+				var dynamicValue = Lang.isFunction(value);
 
-					if (selectBox.val() != value) {
-						action = 'hide';
+				var toggle = function() {
+					var currentValue = selectBox.val();
+
+					var visible = (value == currentValue);
+
+					if (dynamicValue) {
+						visible = value(currentValue, value);
 					}
 
-					toggleBox[action]();
+					toggleBox.toggle(visible);
 				};
 
 				toggle();

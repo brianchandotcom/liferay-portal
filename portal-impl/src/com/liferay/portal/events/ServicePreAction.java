@@ -246,7 +246,9 @@ public class ServicePreAction extends Action {
 			signedIn = true;
 		}
 
-		if (PropsValues.BROWSER_CACHE_SIGNED_IN_DISABLED && signedIn) {
+		if (PropsValues.BROWSER_CACHE_DISABLED ||
+			(PropsValues.BROWSER_CACHE_SIGNED_IN_DISABLED && signedIn)) {
+
 			response.setDateHeader(HttpHeaders.EXPIRES, 0);
 			response.setHeader(
 				HttpHeaders.CACHE_CONTROL,

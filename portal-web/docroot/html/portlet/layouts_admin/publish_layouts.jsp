@@ -223,6 +223,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		display: inline;
 	}
 
+	#<portlet:namespace />exportPagesFm .page-not-exportable {
+		color: #933;
+	}
+
 	#<portlet:namespace />exportPagesFm .portlet-data-section legend {
 		font-size: 110%;
 	}

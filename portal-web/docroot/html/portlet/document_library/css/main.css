@@ -128,6 +128,10 @@
 			background-color: #D3E8F1;
 		}
 
+		&.error:hover {
+			background-color: #FFDDDD;
+		}
+
 		.active-area, .active-area.hover {
 			background-color: #5AD300;
 		}
@@ -603,12 +607,12 @@
 			}
 		}
 
-		li a {
+		li a, li.folder.error {
 			display: block;
 			padding: 6px 8px;
 		}
 
-		ul li a {
+		ul li a, ul li.folder.error {
 			color: #34404F;
 			text-decoration: none;
 		}

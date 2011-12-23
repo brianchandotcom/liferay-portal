@@ -434,59 +434,62 @@ public class EditGroupAction extends PortletAction {
 		liveGroup = GroupServiceUtil.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 
+		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
+
 		// Layout set prototypes
 
-		long publicLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "publicLayoutSetPrototypeId");
-		long privateLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "privateLayoutSetPrototypeId");
+		if (!liveGroup.isStaged()) {
+			long publicLayoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "publicLayoutSetPrototypeId");
+			long privateLayoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "privateLayoutSetPrototypeId");
 
-		if ((publicLayoutSetPrototypeId == 0) &&
-			(privateLayoutSetPrototypeId == 0)) {
+			if ((publicLayoutSetPrototypeId == 0) &&
+				(privateLayoutSetPrototypeId == 0)) {
 
-			long layoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "layoutSetPrototypeId");
-			int layoutSetVisibility = ParamUtil.getInteger(
-				actionRequest, "layoutSetVisibility");
+				long layoutSetPrototypeId = ParamUtil.getLong(
+					actionRequest, "layoutSetPrototypeId");
+				int layoutSetVisibility = ParamUtil.getInteger(
+					actionRequest, "layoutSetVisibility");
 
-			if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
-				privateLayoutSetPrototypeId = layoutSetPrototypeId;
+				if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
+					privateLayoutSetPrototypeId = layoutSetPrototypeId;
+				}
+				else {
+					publicLayoutSetPrototypeId = layoutSetPrototypeId;
+				}
+			}
+
+			if ((publicLayoutSetPrototypeId > 0) ||
+				(privateLayoutSetPrototypeId > 0)) {
+
+				SitesUtil.applyLayoutSetPrototypes(
+					liveGroup, publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId, serviceContext);
 			}
 			else {
-				publicLayoutSetPrototypeId = layoutSetPrototypeId;
-			}
-		}
-
-		if ((publicLayoutSetPrototypeId > 0) ||
-			(privateLayoutSetPrototypeId > 0)) {
-
-			SitesUtil.applyLayoutSetPrototypes(
-				liveGroup, publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId, serviceContext);
-		}
-		else {
-			LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
-
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				serviceContext, "privateLayoutSetPrototypeLinkEnabled");
 
-			if (privateLayoutSetPrototypeLinkEnabled !=
+				if (privateLayoutSetPrototypeLinkEnabled !=
 					privateLayoutSet.getLayoutSetPrototypeLinkEnabled()) {
 
-				LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-					liveGroupId, true, privateLayoutSetPrototypeLinkEnabled);
-			}
+					LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
+						liveGroupId, true,
+						privateLayoutSetPrototypeLinkEnabled);
+				}
 
 			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				serviceContext, "publicLayoutSetPrototypeLinkEnabled");
 
-			LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
-
-			if (publicLayoutSetPrototypeLinkEnabled !=
+				if (publicLayoutSetPrototypeLinkEnabled !=
 					publicLayoutSet.getLayoutSetPrototypeLinkEnabled()) {
 
-				LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-					liveGroupId, false, publicLayoutSetPrototypeLinkEnabled);
+					LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
+						liveGroupId, false,
+						publicLayoutSetPrototypeLinkEnabled);
+				}
 			}
 		}
 
@@ -497,28 +500,44 @@ public class EditGroupAction extends PortletAction {
 		long refererPlid = GetterUtil.getLong(
 			HttpUtil.getParameter(redirect, "refererPlid", false));
 
-		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
-			(themeDisplay.getScopeGroupId() != liveGroup.getGroupId())) {
+		boolean stagingAllowed = true;
 
-			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				liveGroup.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		if (privateLayoutSet.isLayoutSetPrototypeLinkEnabled() &&
+			Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid())) {
 
-			if (firstLayout == null) {
-				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-					liveGroup.getGroupId(), true,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (firstLayout != null) {
-				refererPlid = firstLayout.getPlid();
-			}
-			else {
-				refererPlid = 0;
-			}
+			stagingAllowed = false;
 		}
 
-		StagingUtil.updateStaging(actionRequest, liveGroup);
+		if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() &&
+			Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
+
+			stagingAllowed = false;
+		}
+
+		if (stagingAllowed) {
+			if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
+				(themeDisplay.getScopeGroupId() != liveGroup.getGroupId())) {
+
+				Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+					liveGroup.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (firstLayout == null) {
+					firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+						liveGroup.getGroupId(), true,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				}
+
+				if (firstLayout != null) {
+					refererPlid = firstLayout.getPlid();
+				}
+				else {
+					refererPlid = 0;
+				}
+			}
+
+			StagingUtil.updateStaging(actionRequest, liveGroup);
+		}
 
 		return new Object[] {
 			liveGroup, oldFriendlyURL, oldStagingFriendlyURL, refererPlid};

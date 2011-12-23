@@ -35,7 +35,7 @@ boolean publicLayoutSetPrototypeLinkEnabled = true;
 if (showPrototypes && (group != null)) {
 	if (group.getPrivateLayoutsPageCount() > 0) {
 		try {
-			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), true);
+			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
 
 			privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.getLayoutSetPrototypeLinkEnabled();
 
@@ -51,7 +51,7 @@ if (showPrototypes && (group != null)) {
 
 	if (group.getPublicLayoutsPageCount() > 0) {
 		try {
-			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false);
+			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
 
 			publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.getLayoutSetPrototypeLinkEnabled();
 
@@ -162,13 +162,13 @@ if (showPrototypes && (group != null)) {
 									/>
 
 									<c:choose>
-										<c:when test="<%= (publicLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+										<c:when test="<%= (publicLayoutSetPrototype != null) && !liveGroup.isStaged() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
 											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototype.getName(user.getLanguageId())) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 										</c:when>
 										<c:when test="<%= publicLayoutSetPrototype != null %>">
 											<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
 
-											<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+											<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 										</c:when>
 									</c:choose>
 								</c:when>
@@ -230,13 +230,13 @@ if (showPrototypes && (group != null)) {
 									/>
 
 									<c:choose>
-										<c:when test="<%= (privateLayoutSetPrototype != null) && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+										<c:when test="<%= (privateLayoutSetPrototype != null) && !liveGroup.isStaged() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
 											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototype.getName(user.getLanguageId())) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 										</c:when>
 										<c:when test="<%= privateLayoutSetPrototype != null %>">
 											<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="these-pages-are-linked-to-site-template-x" />
 
-											<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+											<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 										</c:when>
 									</c:choose>
 								</c:when>

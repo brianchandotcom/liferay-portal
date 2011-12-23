@@ -20,11 +20,29 @@
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 long liveGroupId = ((Long)request.getAttribute("site.liveGroupId")).longValue();
 UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribute("site.liveGroupTypeSettings");
+
+LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
+LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
+
+boolean linkEnabled = (Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid()) && privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) || (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid()) && publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
 %>
 
 <liferay-ui:error-marker key="errorSection" value="staging" />
 
 <c:choose>
+	<c:when test="<%= linkEnabled %>">
+		<div class="portlet-msg-info">
+			<liferay-ui:message key="staging-cannot-be-used-for-this-site-because-the-propagation-of-changes-from-the-site-template-is-enabled" />
+			<c:choose>
+				<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+					<liferay-ui:message key="change-the-configuration-in-the-details-section" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="contact-your-administrator-to-change-the-configuration" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</c:when>
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.MANAGE_STAGING) %>">
 		<liferay-ui:error exception="<%= SystemException.class %>">
 

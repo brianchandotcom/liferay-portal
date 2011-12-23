@@ -43,6 +43,7 @@
 		<log-activity>false</log-activity>
 		<contribution-value>5</contribution-value>
 		<contribution-limit enabled="false" />
+		<participation-value>1</participation-value>
 		<counter>
 			<name>asset.votes</name>
 			<owner-type>asset</owner-type>
@@ -141,6 +142,7 @@
 		<log-activity>false</log-activity>
 		<contribution-value>5</contribution-value>
 		<contribution-limit enabled="false" />
+		<participation-value>1</participation-value>
 		<counter>
 			<name>asset.votes</name>
 			<owner-type>asset</owner-type>

@@ -54,7 +54,7 @@
 				</dynamic-element>
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Instant Messenger Service]]></entry>
-					<entry name="predefinedValue"><![CDATA[gtalk]]></entry>
+					<entry name="predefinedValue"><![CDATA[["gtalk"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
 					<entry name="showLabel"><![CDATA[true]]></entry>
 				</meta-data>
@@ -387,7 +387,7 @@
 				</dynamic-element>
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Severity]]></entry>
-					<entry name="predefinedValue"><![CDATA[minor]]></entry>
+					<entry name="predefinedValue"><![CDATA[["minor"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
 					<entry name="showLabel"><![CDATA[true]]></entry>
 				</meta-data>
@@ -411,7 +411,7 @@
 				</dynamic-element>
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Status]]></entry>
-					<entry name="predefinedValue"><![CDATA[open]]></entry>
+					<entry name="predefinedValue"><![CDATA[["open"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
 					<entry name="showLabel"><![CDATA[true]]></entry>
 				</meta-data>
@@ -593,7 +593,7 @@
 				</dynamic-element>
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Severity]]></entry>
-					<entry name="predefinedValue"><![CDATA[minor]]></entry>
+					<entry name="predefinedValue"><![CDATA[["minor"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
 					<entry name="showLabel"><![CDATA[true]]></entry>
 				</meta-data>
@@ -625,7 +625,7 @@
 				</dynamic-element>
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Status]]></entry>
-					<entry name="predefinedValue"><![CDATA[open]]></entry>
+					<entry name="predefinedValue"><![CDATA[["open"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
 					<entry name="showLabel"><![CDATA[true]]></entry>
 				</meta-data>

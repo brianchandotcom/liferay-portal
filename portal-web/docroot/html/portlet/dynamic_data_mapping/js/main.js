@@ -373,8 +373,10 @@ AUI().add(
 
 											var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
 
-											if (attributeName === 'folder') {
-												attributeValue = A.JSON.stringify(attributeValue);
+											if (attributeName === 'predefinedValue') {
+												if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
+													attributeValue = A.JSON.stringify(AArray(attributeValue));
+												}
 											}
 
 											buffer.push(

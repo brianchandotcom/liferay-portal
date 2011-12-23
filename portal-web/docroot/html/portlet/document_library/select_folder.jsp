@@ -28,7 +28,7 @@ if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 	folderName = folder.getName();
 
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse, true);
+	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 %>
 

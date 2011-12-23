@@ -107,68 +107,85 @@ else {
 		);
 	</c:if>
 
-	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 
 		<%
 		List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
-		%>
 
-		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
+		boolean enabled = !layoutRevision.isPending() && pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead();
 
-			<%
-			String icon = null;
-			String label = null;
+		String icon = null;
+		String label = null;
 
-			if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-				icon = "circle-check";
-				label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
+		if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			icon = "circle-check";
+			label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
+		}
+		else {
+			if(WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName())) {
+				icon = "shuffle";
+				label = "submit-for-publication";
 			}
 			else {
-				if(WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName())) {
-					icon = "shuffle";
-					label = "submit-for-publication";
-				}
-				else {
-					icon = "circle-check";
-					label = "mark-as-ready-for-publication";
-				}
+				icon = "circle-check";
+				label = "mark-as-ready-for-publication";
 			}
-			%>
+		}
+		%>
 
-			stagingBar.layoutRevisionToolbar.add(
-				{
-					type: 'ToolbarSpacer'
-				}
-			);
+		stagingBar.layoutRevisionToolbar.add(
+			{
+				type: 'ToolbarSpacer'
+			}
+		);
 
-			<portlet:actionURL var="publishURL">
-				<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
-				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
-				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-				<portlet:param name="major" value="true" />
-				<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-			</portlet:actionURL>
+		<portlet:actionURL var="publishURL">
+			<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
+			<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+			<portlet:param name="major" value="true" />
+			<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+		</portlet:actionURL>
 
-			stagingBar.layoutRevisionToolbar.add(
-				{
-					handler: function(event) {
-						A.io.request(
-							'<%= publishURL %>',
-							{
-								after: {
-									success: function() {
-										Liferay.fire('updatedLayout');
+		stagingBar.layoutRevisionToolbar.add(
+			{
+				<c:choose>
+					<c:when test="<%= enabled %>">
+						handler: function(event) {
+							A.io.request(
+								'<%= publishURL %>',
+								{
+									after: {
+										success: function() {
+											Liferay.fire('updatedLayout');
+										}
 									}
 								}
-							}
-						);
-					},
-					icon: '<%= icon %>',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
-				}
-			);
-		</c:if>
+							);
+						},
+					</c:when>
+					<c:otherwise>
+
+						<%
+						String submitMessage = "you-can-not-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
+
+						LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
+
+						if (pendingLayoutRevision != null && (pendingLayoutRevision.getUserId() == user.getUserId())) {
+							submitMessage = "you-can-not-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
+						}
+						%>
+
+						title: '<%= UnicodeLanguageUtil.get(pageContext, submitMessage) %>',
+						disabled: true,
+					</c:otherwise>
+				</c:choose>
+
+				icon: '<%= icon %>',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
+			}
+		);
 	</c:if>
 </aui:script>

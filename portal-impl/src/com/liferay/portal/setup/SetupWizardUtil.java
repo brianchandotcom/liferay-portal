@@ -404,16 +404,12 @@ public class SetupWizardUtil {
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
 
-        // User Language
-
-        user.setLanguageId(themeDisplay.getLanguageId());
-
 		user = UserLocalServiceUtil.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, false, user.getReminderQueryQuestion(),
 			user.getReminderQueryAnswer(), user.getScreenName(),
 			user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
-			user.getLanguageId(), user.getTimeZoneId(), greeting,
+			themeDisplay.getLanguageId(), user.getTimeZoneId(), greeting,
 			user.getComments(), PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 			user.getMiddleName(), PropsValues.DEFAULT_ADMIN_LAST_NAME,
 			contact.getPrefixId(), contact.getSuffixId(), contact.isMale(),

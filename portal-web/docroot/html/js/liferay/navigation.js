@@ -83,10 +83,6 @@ AUI.add(
 
 						var navBlock = instance.get('navBlock');
 
-						if (!Navigation._INSTANCE) {
-							Navigation._INSTANCE = instance;
-						}
-
 						if (navBlock) {
 							instance._updateURL = themeDisplay.getPathMain() + '/layouts_admin/update_page';
 
@@ -118,11 +114,11 @@ AUI.add(
 							);
 
 							instance._makeAddable();
-							Liferay.Navigation._makeDeletable();
-							Liferay.Navigation._makeSortable();
+							instance._makeDeletable();
+							instance._makeSortable();
 							instance._makeEditable();
 
-							instance.on('savePage', A.bind('_savePage', Navigation));
+							instance.on('savePage', A.bind('_savePage', instance));
 							instance.on('cancelPage', instance._cancelPage);
 
 							navBlock.delegate('keypress', A.bind(instance._onKeypress, instance), 'input');
@@ -144,7 +140,7 @@ AUI.add(
 
 						navBlock.one('ul').append(addBlock);
 
-						Liferay.Navigation._createEditor(
+						instance._createEditor(
 							addBlock,
 							{
 								prevVal: ''
@@ -203,8 +199,8 @@ AUI.add(
 					_handleKeyDown: function(event) {
 						var instance = this;
 
-						if (event.isKey('DELETE')) {
-							Liferay.Navigation._removePage(event);
+						if (event.isKey('DELETE') && !event.currentTarget.ancestor('li.selected')) {
+							instance._removePage(event);
 						}
 					},
 
@@ -212,10 +208,6 @@ AUI.add(
 						var instance = this;
 
 						if (instance.get('isModifiable')) {
-							var navList = instance.get('navBlock').one('ul');
-
-							var themeImages = themeDisplay.getPathThemeImages();
-
 							var prototypeMenuNode = A.one('#layoutPrototypeTemplate');
 
 							if (prototypeMenuNode) {
@@ -229,6 +221,46 @@ AUI.add(
 									addPageButton.on('click', instance._addPage, instance);
 								}
 							}
+						}
+					},
+
+					_makeDeletable: function() {
+						var instance = this;
+
+						if (instance.get('isModifiable')) {
+							var navBlock = instance.get('navBlock');
+
+							var navItems = navBlock.all('> ul > li').filter(
+								function(item, index, collection) {
+									return !item.hasClass('selected');
+								}
+							);
+
+							navBlock.delegate(
+								['click', 'touchstart'],
+								A.bind('_removePage', instance),
+								'.delete-tab'
+							);
+
+							navBlock.delegate(
+								'keydown',
+								A.bind('_handleKeyDown', instance),
+								'> ul > li a'
+							);
+
+							navBlock.delegate(
+								'mouseenter',
+								A.rbind(instance._toggleDeleteButton, instance, 'removeClass'),
+								'li'
+							);
+
+							navBlock.delegate(
+								'mouseleave',
+								A.rbind(instance._toggleDeleteButton, instance, 'addClass'),
+								'li'
+							);
+
+							instance._deleteButton(navItems);
 						}
 					},
 
@@ -279,7 +311,7 @@ AUI.add(
 												var actionNode = textNode.get('parentNode');
 												var currentText = textNode.text();
 
-												Liferay.Navigation._createEditor(
+												instance._createEditor(
 													currentItem,
 													{
 														actionNode: actionNode,
@@ -332,7 +364,7 @@ AUI.add(
 			Navigation,
 			'_createEditor',
 			function(listItem, options) {
-				var instance = Navigation._INSTANCE;
+				var instance = this;
 
 				var prototypeTemplate = instance._prototypeMenuTemplate || '';
 
@@ -491,55 +523,15 @@ AUI.add(
 					instance.fire('editPage');
 				}
 			},
-			['aui-form-combobox', 'overlay']
-		);
-
-		Liferay.provide(
-			Navigation,
-			'_makeDeletable',
-			function() {
-				var instance = Navigation._INSTANCE;
-
-				if (instance.get('isModifiable')) {
-					var navBlock = instance.get('navBlock');
-
-					var navItems = navBlock.all('> ul > li').filter(':not(.selected)');
-
-					navBlock.delegate(
-						['click', 'touchstart'],
-						A.bind('_removePage', Navigation),
-						'.delete-tab'
-					);
-
-					navBlock.delegate(
-						'keydown',
-						A.bind('_handleKeyDown', Navigation),
-						'> ul > li:not(.selected) a'
-					);
-
-					navBlock.delegate(
-						'mouseenter',
-						A.rbind(instance._toggleDeleteButton, instance, 'removeClass'),
-						'li'
-					);
-
-					navBlock.delegate(
-						'mouseleave',
-						A.rbind(instance._toggleDeleteButton, instance, 'addClass'),
-						'li'
-					);
-
-					instance._deleteButton(navItems);
-				}
-			},
-			['selector-css3']
+			['aui-form-combobox', 'overlay'],
+			true
 		);
 
 		Liferay.provide(
 			Navigation,
 			'_makeSortable',
 			function() {
-				var instance = Navigation._INSTANCE;
+				var instance = this;
 
 				if (instance.get('isSortable')) {
 					var navBlock = instance.get('navBlock');
@@ -583,14 +575,15 @@ AUI.add(
 					sortable.delegate.dd.removeInvalid('a');
 				}
 			},
-			['dd-constrain', 'sortable']
+			['dd-constrain', 'sortable'],
+			true
 		);
 
 		Liferay.provide(
 			Navigation,
 			'_removePage',
 			function(event) {
-				var instance = Navigation._INSTANCE;
+				var instance = this;
 
 				var navBlock = instance.get('navBlock');
 
@@ -631,14 +624,15 @@ AUI.add(
 					);
 				}
 			},
-			['aui-io-request']
+			['aui-io-request'],
+			true
 		);
 
 		Liferay.provide(
 			Navigation,
 			'_savePage',
 			function(event, obj, oldName) {
-				var instance = Navigation._INSTANCE;
+				var instance = this;
 
 				var actionNode = event.actionNode;
 				var comboBox = event.comboBox;
@@ -667,8 +661,6 @@ AUI.add(
 							};
 
 							onSuccess = function(event, id, obj) {
-								var data = this.get('responseData');
-
 								var doc = A.getDoc();
 
 								textNode.text(pageTitle);
@@ -761,14 +753,15 @@ AUI.add(
 					}
 				}
 			},
-			['aui-io-request', 'selector-css3']
+			['aui-io-request'],
+			true
 		);
 
 		Liferay.provide(
 			Navigation,
 			'_saveSortables',
 			function(node) {
-				var instance = Navigation._INSTANCE;
+				var instance = this;
 
 				var priority = instance.get('navBlock').all('li').indexOf(node);
 
@@ -788,7 +781,8 @@ AUI.add(
 					}
 				);
 			},
-			['aui-io-request']
+			['aui-io-request'],
+			true
 		);
 
 		Liferay.Navigation = Navigation;

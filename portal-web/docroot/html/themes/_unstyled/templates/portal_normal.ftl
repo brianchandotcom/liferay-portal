@@ -29,7 +29,15 @@ ${theme.include(body_top_include)}
 				</a>
 
 				<#if show_site_name>
-					<span class="site-name" title="<@liferay.language key="go-to" /> ${site_name}">
+					<#if page_group.isLayoutPrototype()>
+						<#assign icon_template_class = "page-template" />
+					</#if>
+
+					<#if page_group.isLayoutSetPrototype()>
+						<#assign icon_template_class = "site-template" />
+					</#if>
+
+					<span class="site-name ${icon_template_class}" title="<@liferay.language key="go-to" /> ${site_name}">
 						${site_name}
 					</span>
 				</#if>

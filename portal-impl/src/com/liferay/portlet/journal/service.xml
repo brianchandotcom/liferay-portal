@@ -136,7 +136,7 @@
 		<finder name="G_A_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="articleId" />
-			<finder-column name="status" arrayable-operator="or"/>
+			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
 		<finder name="G_UT_ST" return-type="Collection">
 			<finder-column name="groupId" />

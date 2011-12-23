@@ -70,7 +70,7 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 		List<SocialActivityDefinition> activityDefinitions = SocialConfigurationUtil.getActivityDefinitions(modelName);
 
 		for (SocialActivityDefinition activityDefinition : activityDefinitions) {
-			activityDefinitionLanguageKeys.add("'" + modelName + "." + activityDefinition.getLanguageKey() + "': '" + activityDefinition.getName(locale) + "'");
+			activityDefinitionLanguageKeys.add("'" + modelName + "." + activityDefinition.getLanguageKey() + "': \"" + activityDefinition.getName(locale) + "\"");
 		}
 	}
 	%>

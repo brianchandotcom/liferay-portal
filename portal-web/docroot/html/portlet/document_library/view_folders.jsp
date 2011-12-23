@@ -255,12 +255,12 @@ if (folder != null) {
 							}
 
 							for (Folder mountFolder : mountFolders) {
+								request.setAttribute("view_entries.jsp-folder", mountFolder);
+								request.setAttribute("view_entries.jsp-folderId", String.valueOf(mountFolder.getFolderId()));
+								request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(mountFolder.getRepositoryId()));
+
 								try {
 									int mountFoldersCount = DLAppServiceUtil.getFoldersCount(mountFolder.getRepositoryId(), mountFolder.getFolderId());
-
-									request.setAttribute("view_entries.jsp-folder", mountFolder);
-									request.setAttribute("view_entries.jsp-folderId", String.valueOf(mountFolder.getFolderId()));
-									request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 							%>
 
 									<liferay-portlet:renderURL varImpl="viewURL">
@@ -296,6 +296,8 @@ if (folder != null) {
 							%>
 
 									<li class="folder error" title='<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>'>
+										<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+
 										<span class="browse-folder">
 											<liferay-ui:icon image="drive_error" />
 

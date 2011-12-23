@@ -130,8 +130,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 			jobName = fixMaxLength(jobName, JOB_NAME_MAX_LENGTH);
 			groupName = fixMaxLength(
-				getOriginalGroupName(groupName),
-				GROUP_NAME_MAX_LENGTH);
+				getOriginalGroupName(groupName), GROUP_NAME_MAX_LENGTH);
 
 			scheduler.deleteJob(new JobKey(jobName, groupName));
 		}

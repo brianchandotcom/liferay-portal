@@ -60,11 +60,11 @@ hr, .separator {
 }
 
 .site-title .page-template {
-    background: #555 url(/html/icons/layout_prototypes.png) no-repeat 15px 50%;
+    background-image: url(../images/common/layout_prototypes.png);
 }
 
 .site-title .site-template {
-    background: #555 url(/html/icons/layout_set_prototypes.png) no-repeat 15px 50%;
+    background-image: url(../images/common/layout_set_prototypes.png);
 }
 
 .company-site .site-title .site-name {

@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatalists.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
@@ -144,11 +146,15 @@ public class EditRecordAction extends PortletAction {
 	protected DDLRecord updateRecord(ActionRequest actionRequest)
 		throws Exception {
 
-		long recordId = ParamUtil.getLong(actionRequest, "recordId");
-		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		long recordId = ParamUtil.getLong(uploadPortletRequest, "recordId");
+		long recordSetId = ParamUtil.getLong(
+			uploadPortletRequest, "recordSetId");
 
 		return DDLUtil.updateRecord(
-			actionRequest, recordId, recordSetId, false);
+			uploadPortletRequest, recordId, recordSetId, false);
 	}
 
 }

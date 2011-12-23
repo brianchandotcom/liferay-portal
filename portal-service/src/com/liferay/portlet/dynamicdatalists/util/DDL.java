@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -44,11 +43,12 @@ public interface DDL {
 		Element rootElement, Map<String, String> tokens,
 		DDLRecordSet recordSet);
 
-	public Fields getFields(ActionRequest actionRequest, long ddmStructureId)
+	public Fields getFields(
+			UploadPortletRequest uploadPortletRequest, long ddmStructureId)
 		throws PortalException, SystemException;
 
 	public Fields getFields(
-			ActionRequest actionRequest, long ddmStructureId,
+			UploadPortletRequest uploadPortletRequest, long ddmStructureId,
 			long ddmTemplateId)
 		throws PortalException, SystemException;
 
@@ -77,8 +77,8 @@ public interface DDL {
 		throws Exception;
 
 	public DDLRecord updateRecord(
-			ActionRequest actionRequest, long recordId, long recordSetId,
-			boolean mergeFields)
+			UploadPortletRequest uploadPortletRequest, long recordId,
+			long recordSetId, boolean mergeFields)
 		throws Exception;
 
 	public void uploadRecordFieldFile(

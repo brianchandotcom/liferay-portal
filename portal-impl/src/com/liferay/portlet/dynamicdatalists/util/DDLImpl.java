@@ -34,7 +34,6 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -68,7 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -99,14 +97,15 @@ public class DDLImpl implements DDL {
 			String.valueOf(recordSet.getDDMStructureId()));
 	}
 
-	public Fields getFields(ActionRequest actionRequest, long ddmStructureId)
+	public Fields getFields(
+			UploadPortletRequest uploadPortletRequest, long ddmStructureId)
 		throws PortalException, SystemException {
 
-		return getFields(actionRequest, ddmStructureId, 0);
+		return getFields(uploadPortletRequest, ddmStructureId, 0);
 	}
 
 	public Fields getFields(
-			ActionRequest actionRequest, long ddmStructureId,
+			UploadPortletRequest uploadPortletRequest, long ddmStructureId,
 			long ddmTemplateId)
 		throws PortalException, SystemException {
 
@@ -133,7 +132,7 @@ public class DDLImpl implements DDL {
 
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 			String fieldType = ddmStructure.getFieldType(fieldName);
-			String fieldValue = actionRequest.getParameter(fieldName);
+			String fieldValue = uploadPortletRequest.getParameter(fieldName);
 
 			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
 				continue;
@@ -141,7 +140,7 @@ public class DDLImpl implements DDL {
 
 			if (fieldType.equals("radio") || fieldType.equals("select")) {
 				String[] fieldValues = ParamUtil.getParameterValues(
-					actionRequest, fieldName);
+					uploadPortletRequest, fieldName);
 
 				fieldValue = JSONFactoryUtil.serialize(fieldValues);
 			}
@@ -354,15 +353,16 @@ public class DDLImpl implements DDL {
 	}
 
 	public DDLRecord updateRecord(
-			ActionRequest actionRequest, long recordId, long recordSetId,
-			boolean mergeFields)
+			UploadPortletRequest uploadPortletRequest, long recordId,
+			long recordSetId, boolean mergeFields)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		boolean majorVersion = ParamUtil.getBoolean(
-			actionRequest, "majorVersion");
+			uploadPortletRequest, "majorVersion");
 
 		DDLRecord record = DDLRecordLocalServiceUtil.fetchRecord(recordId);
 
@@ -371,10 +371,11 @@ public class DDLImpl implements DDL {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		Fields fields = getFields(actionRequest, ddmStructure.getStructureId());
+		Fields fields = getFields(
+			uploadPortletRequest, ddmStructure.getStructureId());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), actionRequest);
+			uploadPortletRequest);
 
 		if (record != null) {
 			record = DDLRecordServiceUtil.updateRecord(
@@ -388,9 +389,6 @@ public class DDLImpl implements DDL {
 				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
 				serviceContext);
 		}
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		uploadRecordFieldFiles(record, uploadPortletRequest, serviceContext);
 

@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -52,18 +51,19 @@ public class DDLUtil {
 	}
 
 	public static Fields getFields(
-			ActionRequest actionRequest, long ddmStructureId)
+			UploadPortletRequest uploadPortletRequest, long ddmStructureId)
 		throws PortalException, SystemException {
 
-		return getDDL().getFields(actionRequest, ddmStructureId);
+		return getDDL().getFields(uploadPortletRequest, ddmStructureId);
 	}
 
 	public static Fields getFields(
-			ActionRequest actionRequest, long ddmStructureId,
+			UploadPortletRequest uploadPortletRequest, long ddmStructureId,
 			long ddmTemplateId)
 		throws PortalException, SystemException {
 
-		return getDDL().getFields(actionRequest, ddmStructureId, ddmTemplateId);
+		return getDDL().getFields(
+			uploadPortletRequest, ddmStructureId, ddmTemplateId);
 	}
 
 	public static String getRecordFileUploadPath(DDLRecord record) {
@@ -114,12 +114,12 @@ public class DDLUtil {
 	}
 
 	public static DDLRecord updateRecord(
-			ActionRequest actionRequest, long recordId, long recordSetId,
-			boolean mergeFields)
+			UploadPortletRequest uploadPortletRequest, long recordId,
+			long recordSetId, boolean mergeFields)
 		throws Exception {
 
 		return getDDL().updateRecord(
-			actionRequest, recordId, recordSetId, mergeFields);
+			uploadPortletRequest, recordId, recordSetId, mergeFields);
 	}
 
 	public static void uploadRecordFieldFile(

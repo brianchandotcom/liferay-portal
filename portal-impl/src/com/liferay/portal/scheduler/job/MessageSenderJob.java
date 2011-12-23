@@ -130,8 +130,8 @@ public class MessageSenderJob implements Job {
 						storageType.equals(StorageType.MEMORY_CLUSTERED)) {
 
 						notifyClusterMember(
-							trigger.getJobName(), trigger.getGroup(),
-							storageType);
+							trigger.getKey().getName(),
+							trigger.getKey().getGroup(), storageType);
 					}
 				}
 			}

@@ -325,12 +325,14 @@ public class SocialConfigurationUtil {
 		activityCounterDefinition.setOwnerType(
 			SocialActivityCounterConstants.TYPE_CREATOR);
 
-		if (contributionValueElement != null) {
-			int increment = GetterUtil.getInteger(
-				contributionValueElement.getText());
+		int increment = 0;
 
-			activityCounterDefinition.setIncrement(increment);
+		if (contributionValueElement != null) {
+			increment = GetterUtil.getInteger(
+				contributionValueElement.getText());
 		}
+
+		activityCounterDefinition.setIncrement(increment);
 
 		if (contributionLimitElement != null) {
 			String limitEnabled = contributionLimitElement.attributeValue(
@@ -397,12 +399,15 @@ public class SocialConfigurationUtil {
 		activityCounterDefinition.setOwnerType(
 			SocialActivityCounterConstants.TYPE_ACTOR);
 
+		int increment = 0;
+
 		if (participationValueElement != null) {
-			int increment = GetterUtil.getInteger(
+			increment = GetterUtil.getInteger(
 				participationValueElement.getText());
 
-			activityCounterDefinition.setIncrement(increment);
 		}
+
+		activityCounterDefinition.setIncrement(increment);
 
 		if (participationLimitElement != null) {
 			String limitEnabled = participationLimitElement.attributeValue(

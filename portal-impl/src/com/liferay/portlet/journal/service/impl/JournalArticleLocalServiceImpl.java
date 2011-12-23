@@ -3113,15 +3113,16 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 		else if (emailType.equals("denied") &&
-			JournalUtil.getEmailArticleApprovalDeniedEnabled(preferences)) {
+				 JournalUtil.getEmailArticleApprovalDeniedEnabled(
+					 preferences)) {
 		}
 		else if (emailType.equals("granted") &&
 				 JournalUtil.getEmailArticleApprovalGrantedEnabled(
-					preferences)) {
+					 preferences)) {
 		}
 		else if (emailType.equals("requested") &&
 				 JournalUtil.getEmailArticleApprovalRequestedEnabled(
-					preferences)) {
+					 preferences)) {
 		}
 		else if (emailType.equals("review") &&
 				 JournalUtil.getEmailArticleReviewEnabled(preferences)) {

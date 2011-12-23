@@ -95,7 +95,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryTypeId, ddmStructureIds);
 
 		if (serviceContext.getAddGroupPermissions() ||
-			 serviceContext.getAddGuestPermissions()) {
+			serviceContext.getAddGuestPermissions()) {
 
 			addFileEntryTypeResources(
 				dlFileEntryType, serviceContext.getAddGroupPermissions(),

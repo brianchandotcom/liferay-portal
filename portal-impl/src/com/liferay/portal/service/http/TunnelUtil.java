@@ -78,7 +78,7 @@ public class TunnelUtil {
 			String ioeMessage = ioe.getMessage();
 
 			if ((ioeMessage != null) &&
-					(ioeMessage.indexOf("HTTP response code: 401") != -1)) {
+				(ioeMessage.indexOf("HTTP response code: 401") != -1)) {
 
 				throw new PrincipalException(ioeMessage);
 			}
@@ -128,7 +128,7 @@ public class TunnelUtil {
 			String ioeMessage = ioe.getMessage();
 
 			if ((ioeMessage != null) &&
-					(ioeMessage.indexOf("HTTP response code: 401") != -1)) {
+				(ioeMessage.indexOf("HTTP response code: 401") != -1)) {
 
 				throw new PrincipalException(ioeMessage);
 			}

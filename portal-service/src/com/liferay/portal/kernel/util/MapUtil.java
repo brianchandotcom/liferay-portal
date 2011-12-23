@@ -170,22 +170,22 @@ public class MapUtil {
 					map.put(kvp[0], new Boolean(kvp[1]));
 				}
 				else if (type.equalsIgnoreCase("double") ||
-					type.equals(Double.class.getName())) {
+						 type.equals(Double.class.getName())) {
 
 					map.put(kvp[0], new Double(kvp[1]));
 				}
 				else if (type.equalsIgnoreCase("int") ||
-					type.equals(Integer.class.getName())) {
+						 type.equals(Integer.class.getName())) {
 
 					map.put(kvp[0], new Integer(kvp[1]));
 				}
 				else if (type.equalsIgnoreCase("long") ||
-					type.equals(Long.class.getName())) {
+						 type.equals(Long.class.getName())) {
 
 					map.put(kvp[0], new Long(kvp[1]));
 				}
 				else if (type.equalsIgnoreCase("short") ||
-					type.equals(Short.class.getName())) {
+						 type.equals(Short.class.getName())) {
 
 					map.put(kvp[0], new Short(kvp[1]));
 				}

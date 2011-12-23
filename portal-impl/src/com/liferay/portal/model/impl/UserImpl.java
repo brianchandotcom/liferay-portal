@@ -398,7 +398,7 @@ public class UserImpl extends UserBaseImpl {
 					organization.getParentOrganization();
 
 				while ((organizationQuestions.size() == 0) &&
-						(parentOrganization != null)) {
+					   (parentOrganization != null)) {
 
 					organizationQuestions =
 						parentOrganization.getReminderQueryQuestions(

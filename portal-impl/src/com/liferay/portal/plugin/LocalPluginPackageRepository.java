@@ -69,7 +69,7 @@ public class LocalPluginPackageRepository {
 			if ((pluginPackage.getGroupId().equals(groupId)) &&
 				(pluginPackage.getArtifactId().equals(artifactId)) &&
 				((latestPluginPackage == null) ||
-					pluginPackage.isLaterVersionThan(latestPluginPackage))) {
+				 pluginPackage.isLaterVersionThan(latestPluginPackage))) {
 
 				latestPluginPackage = pluginPackage;
 			}

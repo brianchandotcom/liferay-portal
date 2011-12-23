@@ -179,7 +179,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 			if ((conditionXPath == null) ||
 				((conditionXPath != null) &&
-				  conditionXPath.booleanValueOf(document))) {
+				 conditionXPath.booleanValueOf(document))) {
 
 				count++;
 			}

@@ -341,7 +341,7 @@ public class TabsTag extends IncludeTag {
 	public boolean getSectionSelected() {
 		if ((_names.length == 0) ||
 			((_names.length > _namesPos) &&
-				(_names[_namesPos].equals(_value)))) {
+			 (_names[_namesPos].equals(_value)))) {
 
 			return true;
 		}

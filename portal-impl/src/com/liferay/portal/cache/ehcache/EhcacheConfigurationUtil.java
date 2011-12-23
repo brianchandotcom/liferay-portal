@@ -201,8 +201,8 @@ public class EhcacheConfigurationUtil {
 
 		boolean clearCachePeerProviderConfigurations = false;
 
-		if (((usingDefault && enableClusterLinkReplication) ||
-			(usingDefault && !PropsValues.CLUSTER_LINK_ENABLED))) {
+		if ((usingDefault && enableClusterLinkReplication) ||
+			(usingDefault && !PropsValues.CLUSTER_LINK_ENABLED)) {
 
 			clearCachePeerProviderConfigurations = true;
 		}

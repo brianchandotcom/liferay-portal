@@ -127,7 +127,6 @@ public class EditQuestionAction extends PortletAction {
 					 e instanceof QuestionChoiceException ||
 					 e instanceof QuestionDescriptionException ||
 					 e instanceof QuestionExpirationDateException ||
-
 					 e instanceof QuestionTitleException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());

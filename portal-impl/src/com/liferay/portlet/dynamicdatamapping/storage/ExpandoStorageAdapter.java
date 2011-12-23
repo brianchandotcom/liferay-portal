@@ -311,8 +311,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 					if (ddmStructure.hasField(fieldName) &&
 						((fieldNames == null) ||
-						((fieldNames != null) &&
-						 fieldNames.contains(fieldName)))) {
+						 ((fieldNames != null) &&
+						  fieldNames.contains(fieldName)))) {
 
 						Field field = new Field(
 							ddmStructureId, fieldName, fieldValue);

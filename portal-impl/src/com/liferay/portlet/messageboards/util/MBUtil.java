@@ -197,7 +197,7 @@ public class MBUtil {
 		String contentType = part.getContentType().toLowerCase();
 
 		if ((part.getDisposition() != null) &&
-			 (part.getDisposition().equalsIgnoreCase(MimeMessage.ATTACHMENT))) {
+			(part.getDisposition().equalsIgnoreCase(MimeMessage.ATTACHMENT))) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Processing attachment");

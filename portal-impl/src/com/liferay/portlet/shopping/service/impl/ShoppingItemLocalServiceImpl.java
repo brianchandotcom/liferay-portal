@@ -145,9 +145,9 @@ public class ShoppingItemLocalServiceImpl
 
 			if ((sale == null) && (itemPrice.getDiscount() > 0) &&
 				((itemPrice.getStatus() ==
-					ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
-				(itemPrice.getStatus() ==
-					ShoppingItemPriceConstants.STATUS_ACTIVE))) {
+					 ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
+				 (itemPrice.getStatus() ==
+					 ShoppingItemPriceConstants.STATUS_ACTIVE))) {
 
 				sale = Boolean.TRUE;
 			}
@@ -510,9 +510,9 @@ public class ShoppingItemLocalServiceImpl
 
 			if ((sale == null) && (itemPrice.getDiscount() > 0) &&
 				((itemPrice.getStatus() ==
-					ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
-				(itemPrice.getStatus() ==
-					ShoppingItemPriceConstants.STATUS_ACTIVE))) {
+					 ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
+				 (itemPrice.getStatus() ==
+					 ShoppingItemPriceConstants.STATUS_ACTIVE))) {
 
 				sale = Boolean.TRUE;
 			}
@@ -911,7 +911,7 @@ public class ShoppingItemLocalServiceImpl
 
 			if ((mediumImageMaxSize > 0) &&
 				((mediumImageBytes == null) ||
-					(mediumImageBytes.length > mediumImageMaxSize))) {
+				 (mediumImageBytes.length > mediumImageMaxSize))) {
 
 				throw new ItemMediumImageSizeException();
 			}
@@ -948,7 +948,7 @@ public class ShoppingItemLocalServiceImpl
 
 			if ((largeImageMaxSize > 0) &&
 				((largeImageBytes == null) ||
-					(largeImageBytes.length > largeImageMaxSize))) {
+				 (largeImageBytes.length > largeImageMaxSize))) {
 
 				throw new ItemLargeImageSizeException();
 			}

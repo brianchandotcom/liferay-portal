@@ -77,7 +77,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		throws Exception {
 
 		if (parameterName.equals("serviceContext") &&
-				parameterType.equals(ServiceContext.class)) {
+			parameterType.equals(ServiceContext.class)) {
 
 			return new ServiceContext();
 		}

@@ -185,7 +185,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				actionIds.add(actionId);
 			}
 			else if (includePreselected &&
-				name.startsWith(roleId + "_PRESELECTED_")) {
+					 name.startsWith(roleId + "_PRESELECTED_")) {
 
 				int pos = name.indexOf("_PRESELECTED_");
 

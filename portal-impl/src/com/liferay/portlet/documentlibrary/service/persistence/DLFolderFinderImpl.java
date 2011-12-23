@@ -172,7 +172,7 @@ public class DLFolderFinderImpl
 				sql = CustomSQLUtil.get(COUNT_FE_BY_G_F_S);
 
 				if ((inlineSQLHelper &&
-					InlineSQLHelperUtil.isEnabled(groupId)) ||
+					 InlineSQLHelperUtil.isEnabled(groupId)) ||
 					((mimeTypes != null) && (mimeTypes.length > 0))) {
 
 					sql = StringUtil.replace(

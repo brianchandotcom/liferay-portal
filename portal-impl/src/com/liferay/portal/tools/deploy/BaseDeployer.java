@@ -254,7 +254,7 @@ public class BaseDeployer implements Deployer {
 
 			if ((!appServerType.equals(ServerDetector.TOMCAT_ID)) ||
 				(appServerType.equals(ServerDetector.TOMCAT_ID) &&
-					!jarFullName.equals("util-java.jar"))) {
+				 !jarFullName.equals("util-java.jar"))) {
 
 				FileUtil.copyFile(
 					jarFullName, srcFile + "/WEB-INF/lib/" + jarName, true);

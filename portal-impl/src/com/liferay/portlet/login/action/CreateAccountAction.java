@@ -145,32 +145,32 @@ public class CreateAccountAction extends PortletAction {
 				}
 			}
 			else if (e instanceof AddressCityException ||
-				e instanceof AddressStreetException ||
-				e instanceof AddressZipException ||
-				e instanceof CaptchaMaxChallengesException ||
-				e instanceof CaptchaTextException ||
-				e instanceof CompanyMaxUsersException ||
-				e instanceof ContactFirstNameException ||
-				e instanceof ContactFullNameException ||
-				e instanceof ContactLastNameException ||
-				e instanceof EmailAddressException ||
-				e instanceof NoSuchCountryException ||
-				e instanceof NoSuchListTypeException ||
-				e instanceof NoSuchOrganizationException ||
-				e instanceof NoSuchRegionException ||
-				e instanceof OrganizationParentException ||
-				e instanceof PhoneNumberException ||
-				e instanceof RequiredFieldException ||
-				e instanceof RequiredUserException ||
-				e instanceof ReservedUserEmailAddressException ||
-				e instanceof ReservedUserScreenNameException ||
-				e instanceof TermsOfUseException ||
-				e instanceof UserEmailAddressException ||
-				e instanceof UserIdException ||
-				e instanceof UserPasswordException ||
-				e instanceof UserScreenNameException ||
-				e instanceof UserSmsException ||
-				e instanceof WebsiteURLException) {
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof CaptchaMaxChallengesException ||
+					 e instanceof CaptchaTextException ||
+					 e instanceof CompanyMaxUsersException ||
+					 e instanceof ContactFirstNameException ||
+					 e instanceof ContactFullNameException ||
+					 e instanceof ContactLastNameException ||
+					 e instanceof EmailAddressException ||
+					 e instanceof NoSuchCountryException ||
+					 e instanceof NoSuchListTypeException ||
+					 e instanceof NoSuchOrganizationException ||
+					 e instanceof NoSuchRegionException ||
+					 e instanceof OrganizationParentException ||
+					 e instanceof PhoneNumberException ||
+					 e instanceof RequiredFieldException ||
+					 e instanceof RequiredUserException ||
+					 e instanceof ReservedUserEmailAddressException ||
+					 e instanceof ReservedUserScreenNameException ||
+					 e instanceof TermsOfUseException ||
+					 e instanceof UserEmailAddressException ||
+					 e instanceof UserIdException ||
+					 e instanceof UserPasswordException ||
+					 e instanceof UserScreenNameException ||
+					 e instanceof UserSmsException ||
+					 e instanceof WebsiteURLException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName(), e);
 			}

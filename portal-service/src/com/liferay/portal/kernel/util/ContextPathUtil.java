@@ -56,7 +56,7 @@ public class ContextPathUtil {
 		contextPath = GetterUtil.getString(contextPath);
 
 		if ((contextPath.length() == 0) ||
-			 contextPath.equals(StringPool.SLASH)) {
+			contextPath.equals(StringPool.SLASH)) {
 
 			contextPath = StringPool.BLANK;
 		}

@@ -169,7 +169,7 @@ public class LiferayDefaultSelenium
 				 className.startsWith("com.liferay.portalweb.portal") ||
 				 className.startsWith("com.liferay.portalweb.portlet") ||
 				 className.startsWith("com.liferay.portalweb.properties")) &&
-				 className.endsWith("Test")) {
+				className.endsWith("Test")) {
 
 				String dirName = className.substring(22, className.length());
 

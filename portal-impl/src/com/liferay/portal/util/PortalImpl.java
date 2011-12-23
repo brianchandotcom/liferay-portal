@@ -2114,8 +2114,8 @@ public class PortalImpl implements Portal {
 			String tempI18nPath = null;
 
 			if (((I18nFilter.getLanguageIds().contains(locale.toString())) &&
-				((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-				 (!locale.equals(LocaleUtil.getDefault())))) ||
+				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+				  (!locale.equals(LocaleUtil.getDefault())))) ||
 				(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
 
 				tempI18nLanguageId = locale.toString();
@@ -3858,7 +3858,7 @@ public class PortalImpl implements Portal {
 		}
 
 		if ((!PropsValues.PORTAL_JAAS_ENABLE &&
-			  PropsValues.PORTAL_IMPERSONATION_ENABLE) ||
+			 PropsValues.PORTAL_IMPERSONATION_ENABLE) ||
 			(alwaysAllowDoAsUser)) {
 
 			String doAsUserIdString = ParamUtil.getString(
@@ -5581,7 +5581,7 @@ public class PortalImpl implements Portal {
 
 			if (Validator.isNotNull(virtualHostname) &&
 				(canonicalURL ||
-					!virtualHostname.equalsIgnoreCase(_LOCALHOST))) {
+				 !virtualHostname.equalsIgnoreCase(_LOCALHOST))) {
 
 				virtualHostname = getPortalURL(
 					virtualHostname, themeDisplay.getServerPort(),

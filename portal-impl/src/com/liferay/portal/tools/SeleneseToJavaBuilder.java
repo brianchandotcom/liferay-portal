@@ -887,7 +887,7 @@ public class SeleneseToJavaBuilder {
 					sb.append("\".equals(selenium.getConfirmation())");
 				}
 				else if (param1.equals("waitForElementNotPresent") ||
-					param1.equals("waitForElementPresent")) {
+						 param1.equals("waitForElementPresent")) {
 
 					sb.append("selenium.isElementPresent");
 					sb.append("(\"");

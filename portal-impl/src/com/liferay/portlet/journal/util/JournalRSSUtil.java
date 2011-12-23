@@ -174,7 +174,7 @@ public class JournalRSSUtil {
 			}
 		}
 		else if (parameters.containsKey("folderId") &&
-			parameters.containsKey("name")) {
+				 parameters.containsKey("name")) {
 
 			try {
 				long fileEntryId = GetterUtil.getLong(

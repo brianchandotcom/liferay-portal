@@ -97,7 +97,7 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (e instanceof PrincipalException ||
-				e instanceof SystemException) {
+					 e instanceof SystemException) {
 
 				SessionErrors.add(actionRequest, e.getClass().getName());
 

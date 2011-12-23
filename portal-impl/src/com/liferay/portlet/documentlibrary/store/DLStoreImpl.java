@@ -613,20 +613,20 @@ public class DLStoreImpl implements DLStore {
 
 	protected boolean isValidName(String name) {
 		if ((name == null) ||
-			(name.contains("\\")) ||
-			(name.contains("\\\\")) ||
-			(name.contains("//")) ||
-			(name.contains(":")) ||
-			(name.contains("*")) ||
-			(name.contains("?")) ||
-			(name.contains("\"")) ||
-			(name.contains("<")) ||
-			(name.contains(">")) ||
-			(name.contains("|")) ||
-			(name.contains("[")) ||
-			(name.contains("]")) ||
-			(name.contains("../")) ||
-			(name.contains("/.."))) {
+			name.contains("\\") ||
+			name.contains("\\\\") ||
+			name.contains("//") ||
+			name.contains(":") ||
+			name.contains("*") ||
+			name.contains("?") ||
+			name.contains("\"") ||
+			name.contains("<") ||
+			name.contains(">") ||
+			name.contains("|") ||
+			name.contains("[") ||
+			name.contains("]") ||
+			name.contains("../") ||
+			name.contains("/..")) {
 
 			return false;
 		}

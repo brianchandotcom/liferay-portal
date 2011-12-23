@@ -1031,7 +1031,7 @@ public class PortletImporter {
 				}
 
 				if (((ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) ||
-					(ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) &&
+					 (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) &&
 					!importPortletSetup) {
 
 					continue;

@@ -1067,7 +1067,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				(portletId.endsWith(
 					PortletConstants.WAR_SEPARATOR +
 						PortalUtil.getJsSafePortletId(servletContextName)) &&
-				(!portletIds.contains(portletId)))) {
+				 (!portletIds.contains(portletId)))) {
 
 				undefinedPortletIds.add(portletId);
 			}

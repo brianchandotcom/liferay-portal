@@ -176,7 +176,7 @@ public class OrganizationFinderImpl
 			Long groupId = (Long)params.get("permissionsGroupId");
 
 			if (Validator.isNotNull(groupId) &&
-					Validator.isNotNull(resourceId)) {
+				Validator.isNotNull(resourceId)) {
 
 				return countByPermissions(
 					companyId, parentOrganizationId,
@@ -417,7 +417,7 @@ public class OrganizationFinderImpl
 			Long groupId = (Long)params.get("permissionsGroupId");
 
 			if (Validator.isNotNull(groupId) &&
-					Validator.isNotNull(resourceId)) {
+				Validator.isNotNull(resourceId)) {
 
 				return findByPermissions(
 					companyId, parentOrganizationId,

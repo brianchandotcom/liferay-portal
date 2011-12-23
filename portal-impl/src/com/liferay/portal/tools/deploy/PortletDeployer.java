@@ -443,7 +443,7 @@ public class PortletDeployer extends BaseDeployer {
 		facesContextFactoryEl = factoryEl.element("faces-context-factory");
 
 		if ((appServerType.equals("orion") && (_sunFacesPortlet) &&
-			(renderKitFactoryEl == null))) {
+			 (renderKitFactoryEl == null))) {
 
 			renderKitFactoryEl = factoryEl.addElement("render-kit-factory");
 

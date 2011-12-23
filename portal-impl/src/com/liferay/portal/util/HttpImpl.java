@@ -191,7 +191,7 @@ public class HttpImpl implements Http {
 			sb.append(StringPool.QUESTION);
 		}
 		else if (!url.endsWith(StringPool.QUESTION) &&
-			!url.endsWith(StringPool.AMPERSAND)) {
+				 !url.endsWith(StringPool.AMPERSAND)) {
 
 			sb.append(StringPool.AMPERSAND);
 		}

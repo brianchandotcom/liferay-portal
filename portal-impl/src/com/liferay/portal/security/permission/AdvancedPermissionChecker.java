@@ -425,7 +425,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 					if (group.isSite() &&
 						(userGroups.contains(group) ||
-							userOrgGroups.contains(group))) {
+						 userOrgGroups.contains(group))) {
 
 						Role siteMemberRole = RoleLocalServiceUtil.getRole(
 							group.getCompanyId(), RoleConstants.SITE_MEMBER);

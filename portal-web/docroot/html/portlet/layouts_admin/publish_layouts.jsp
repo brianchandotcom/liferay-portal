@@ -302,6 +302,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 					<liferay-util:param name="selectableTree" value="1" />
 					<liferay-util:param name="treeId" value="<%= treeKey %>" />
+					<liferay-util:param name="incomplete" value="<%= String.valueOf(false) %>" />
 				</liferay-util:include>
 			</div>
 

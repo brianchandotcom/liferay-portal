@@ -26,6 +26,7 @@ boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDis
 boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true);
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
+boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
 
 boolean rootNodeExpanded = GetterUtil.getBoolean(SessionClicks.get(request, treeId + "RootNode", null), true);
 
@@ -300,6 +301,7 @@ if (!selectableTree) {
 
 						return {
 							groupId: <%= groupId %>,
+							incomplete: <%= incomplete %>,
 							privateLayout: <%= privateLayout %>,
 							parentLayoutId: parentLayoutId,
 							selPlid: '<%= selPlid %>'

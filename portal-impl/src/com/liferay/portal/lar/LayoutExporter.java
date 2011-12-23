@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -630,22 +631,27 @@ public class LayoutExporter {
 		LayoutRevision layoutRevision = null;
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
-			layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			long layoutSetBranchId = ParamUtil.getLong(
+				serviceContext, "layoutSetBranchId");
+
+			if (layoutSetBranchId <= 0) {
+				return;
+			}
 
 			layoutRevision = LayoutRevisionUtil.fetchByL_H_P(
-				layoutRevision.getLayoutSetBranchId(), true, layout.getPlid());
+				layoutSetBranchId, true, layout.getPlid());
 
-			if (layoutRevision != null) {
-				if (!layoutRevision.isHead()) {
+			if (layoutRevision == null) {
 					return;
-				}
-				else {
-					LayoutStagingHandler layoutStagingHandler =
-						LayoutStagingUtil.getLayoutStagingHandler(layout);
-
-					layoutStagingHandler.setLayoutRevision(layoutRevision);
-				}
 			}
+
+			LayoutStagingHandler layoutStagingHandler =
+				LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+			layoutStagingHandler.setLayoutRevision(layoutRevision);
 		}
 
 		Element layoutElement = layoutsElement.addElement("layout");

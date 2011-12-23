@@ -38,35 +38,31 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
-		List unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(PropsKeys.NESTED_PORTLETS_LAYOUT_TEMPLATE_UNSUPPORTED));
+		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(PropsKeys.NESTED_PORTLETS_LAYOUT_TEMPLATE_UNSUPPORTED));
 
-		for (int i = 0; i < layoutTemplates.size(); i++) {
-			LayoutTemplate curLayoutTemplate = layoutTemplates.get(i);
+		int i = 0;
+		for (LayoutTemplate layoutTemplate : layoutTemplates) {
 
-			if (unsupportedLayoutTemplates.contains(curLayoutTemplate.getLayoutTemplateId())) {
-				layoutTemplates.remove(i);
-			}
-		}
-
-		for (int i = 0; i < layoutTemplates.size(); i++) {
-			LayoutTemplate curLayoutTemplate = layoutTemplates.get(i);
+			if (!unsupportedLayoutTemplates.contains(layoutTemplate.getLayoutTemplateId())) {
 		%>
 
-			<c:if test="<%= (i % CELLS_PER_ROW) == 0 %>">
-				<tr>
-			</c:if>
+				<c:if test="<%= (i % CELLS_PER_ROW) == 0 %>">
+					<tr>
+				</c:if>
 
-			<td align="center" width="<%= 100 / CELLS_PER_ROW %>%">
-				<img onclick="document.getElementById('<portlet:namespace />layoutTemplateId<%= i %>').checked = true;" src="<%= curLayoutTemplate.getStaticResourcePath() %><%= curLayoutTemplate.getThumbnailPath() %>" /><br />
+				<td align="center" width="<%= 100 / CELLS_PER_ROW %>%">
+					<img onclick="document.getElementById('<portlet:namespace />layoutTemplateId<%= i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= layoutTemplate.getThumbnailPath() %>" /><br />
 
-				<aui:input checked="<%= layoutTemplateId.equals(curLayoutTemplate.getLayoutTemplateId()) %>" id='<%= "layoutTemplateId" + i %>' label="<%= curLayoutTemplate.getName() %>" name="preferences--layoutTemplateId--" type="radio" value="<%= curLayoutTemplate.getLayoutTemplateId() %>" />
-			</td>
+					<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= "layoutTemplateId" + i %>' label="<%= layoutTemplate.getName() %>" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
+				</td>
 
-			<c:if test="<%= (i % CELLS_PER_ROW) == (CELLS_PER_ROW - 1) %>">
-				</tr>
-			</c:if>
+				<c:if test="<%= (i % CELLS_PER_ROW) == (CELLS_PER_ROW - 1) %>">
+					</tr>
+				</c:if>
 
 		<%
+				++i;
+			}
 		}
 		%>
 

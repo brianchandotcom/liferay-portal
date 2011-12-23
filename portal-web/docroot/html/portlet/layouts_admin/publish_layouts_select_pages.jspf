@@ -48,16 +48,31 @@ for (int i = 0; i < results.size(); i++) {
 
 	<%
 	LayoutRevision layoutRevision = null;
+	String layoutBranchName = null;
 
 	if (LayoutStagingUtil.isBranchingLayout(curLayout)) {
 		if (layoutSetBranchId > 0) {
 			layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, curLayout.getPlid(), true);
+		
+			if (layoutRevision != null) {
+				List<LayoutBranch> layoutBranches = LayoutBranchLocalServiceUtil.getLayoutBranches(layoutSetBranchId, curLayout.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				
+				if (layoutBranches.size() > 1) {
+					LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+
+					layoutBranchName = layoutBranch.getName();
+				}
+			}
 		}
 	}
 	%>
 
 	<span class='nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>'>
 		<%= curLayout.getName(locale) %>
+
+		<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
+			<span class="layout-variation-name">[<liferay-ui:message key="<%= layoutBranchName %>" />]</span>
+		</c:if>
 
 		<c:if test="<%= layoutRevision == null %>">
 			<liferay-ui:icon-help message="there-is-not-any-version-of-this-page-marked-as-ready-for-publication" />

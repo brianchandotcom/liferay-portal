@@ -459,8 +459,4 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(SpriteProcessorImpl.class);
 
-	static {
-		System.setProperty("com.sun.media.jai.disableMediaLib", "true");
-	}
-
 }

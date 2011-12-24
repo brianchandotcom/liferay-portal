@@ -24,7 +24,7 @@ import org.slf4j.spi.LoggerFactoryBinder;
  */
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
-	public static String REQUESTED_API_VERSION = "1.5.11";
+	public static String REQUESTED_API_VERSION = "1.6.4";
 
 	public static final StaticLoggerBinder getSingleton() {
 		return _SINGLETON;

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import java.io.Serializable;
 
 import org.slf4j.Marker;
+import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
 import org.slf4j.spi.LocationAwareLogger;
@@ -39,26 +40,30 @@ public class LiferayLoggerAdapter
 
 	public void debug(String format, Object argument) {
 		if (isDebugEnabled()) {
-			String message = MessageFormatter.format(format, argument);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument);
 
-			_log.debug(message);
+			_log.debug(formattingTuple.getMessage());
 		}
 	}
 
 	public void debug(String format, Object argument1, Object argument2) {
 		if (isDebugEnabled()) {
-			String message = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.format(
 				format, argument1, argument2);
 
-			_log.debug(message);
+			_log.debug(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void debug(String format, Object[] arguments) {
 		if (isDebugEnabled()) {
-			String message = MessageFormatter.format(format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, arguments);
 
-			_log.debug(message);
+			_log.debug(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
@@ -72,26 +77,31 @@ public class LiferayLoggerAdapter
 
 	public void error(String format, Object argument) {
 		if (isErrorEnabled()) {
-			String message = MessageFormatter.format(format, argument);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument);
 
-			_log.error(message);
+			_log.error(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void error(String format, Object argument1, Object argument2) {
 		if (isErrorEnabled()) {
-			String message = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.format(
 				format, argument1, argument2);
 
-			_log.error(message);
+			_log.error(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void error(String format, Object[] arguments) {
 		if (isErrorEnabled()) {
-			String message = MessageFormatter.format(format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, arguments);
 
-			_log.error(message);
+			_log.error(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
@@ -105,26 +115,31 @@ public class LiferayLoggerAdapter
 
 	public void info(String format, Object argument) {
 		if (isInfoEnabled()) {
-			String message = MessageFormatter.format(format, argument);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument);
 
-			_log.info(message);
+			_log.info(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void info(String format, Object argument1, Object argument2) {
 		if (isInfoEnabled()) {
-			String message = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.format(
 				format, argument1, argument2);
 
-			_log.info(message);
+			_log.info(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void info(String format, Object[] arguments) {
 		if (isInfoEnabled()) {
-			String message = MessageFormatter.format(format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, arguments);
 
-			_log.info(message);
+			_log.info(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
@@ -153,9 +168,36 @@ public class LiferayLoggerAdapter
 	}
 
 	public void log(
-		Marker marker, String fqcn, int level, String message, Throwable t) {
+		Marker marker, String fqcn, int level,
+		String message, Object[] arguments, Throwable t) {
 
-		throw new UnsupportedOperationException();
+		FormattingTuple formattingTuple = MessageFormatter.format(
+			message, arguments);
+
+		switch (level) {
+			case LocationAwareLogger.TRACE_INT:
+				_log.trace(formattingTuple.getMessage(), t);
+
+				break;
+			case LocationAwareLogger.DEBUG_INT:
+				_log.debug(formattingTuple.getMessage(), t);
+
+				break;
+			case LocationAwareLogger.INFO_INT:
+				_log.info(formattingTuple.getMessage(), t);
+
+				break;
+			case LocationAwareLogger.WARN_INT:
+				_log.warn(formattingTuple.getMessage(), t);
+
+				break;
+			case LocationAwareLogger.ERROR_INT:
+				_log.error(formattingTuple.getMessage(), t);
+
+				break;
+			default:
+				_log.info(formattingTuple.getMessage(), t);
+		}
 	}
 
 	public void trace(String message) {
@@ -164,26 +206,31 @@ public class LiferayLoggerAdapter
 
 	public void trace(String format, Object argument) {
 		if (isTraceEnabled()) {
-			String message = MessageFormatter.format(format, argument);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument);
 
-			_log.trace(message);
+			_log.trace(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void trace(String format, Object argument1, Object argument2) {
 		if (isTraceEnabled()) {
-			String message = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.format(
 				format, argument1, argument2);
 
-			_log.trace(message);
+			_log.trace(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void trace(String format, Object[] arguments) {
 		if (isTraceEnabled()) {
-			String message = MessageFormatter.format(format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, arguments);
 
-			_log.trace(message);
+			_log.trace(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
@@ -197,26 +244,31 @@ public class LiferayLoggerAdapter
 
 	public void warn(String format, Object argument) {
 		if (isWarnEnabled()) {
-			String message = MessageFormatter.format(format, argument);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, argument);
 
-			_log.warn(message);
+			_log.warn(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void warn(String format, Object argument1, Object argument2) {
 		if (isWarnEnabled()) {
-			String message = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.format(
 				format, argument1, argument2);
 
-			_log.warn(message);
+			_log.warn(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 
 	public void warn(String format, Object[] arguments) {
 		if (isWarnEnabled()) {
-			String message = MessageFormatter.format(format, arguments);
+			FormattingTuple formattingTuple = MessageFormatter.format(
+				format, arguments);
 
-			_log.warn(message);
+			_log.warn(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 

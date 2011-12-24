@@ -506,6 +506,10 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getWapColorScheme();
 	}
 
+	public boolean isLayoutSetPrototypeLinkActive() {
+		return _layoutSet.isLayoutSetPrototypeLinkActive();
+	}
+
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
 		_layoutSet.setSettingsProperties(settingsProperties);

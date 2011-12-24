@@ -1415,6 +1415,10 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.isInheritLookAndFeel();
 	}
 
+	public boolean isLayoutPrototypeLinkActive() {
+		return _layout.isLayoutPrototypeLinkActive();
+	}
+
 	public boolean isInheritWapLookAndFeel() {
 		return _layout.isInheritWapLookAndFeel();
 	}

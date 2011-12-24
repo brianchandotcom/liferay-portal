@@ -306,8 +306,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 	protected void mergeLayoutProtypeLayout(Group group, Layout layout)
 		throws Exception {
 
-		if (!layout.getLayoutPrototypeLinkEnabled() ||
-			Validator.isNull(layout.getLayoutPrototypeUuid()) ||
+		if (!layout.isLayoutPrototypeLinkActive() ||
 			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 
 			return;
@@ -414,8 +413,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			Group group, LayoutSet layoutSet)
 		throws Exception {
 
-		if (!layoutSet.isLayoutSetPrototypeLinkEnabled() ||
-			Validator.isNull(layoutSet.getLayoutSetPrototypeUuid()) ||
+		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
 			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 
 			return;

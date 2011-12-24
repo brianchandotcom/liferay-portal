@@ -28,7 +28,7 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 <liferay-ui:error-marker key="errorSection" value="staging" />
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid()) && privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) || (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid()) && publicLayoutSet.isLayoutSetPrototypeLinkEnabled() %>">
+	<c:when test="<%= privateLayoutSet.isLayoutSetPrototypeLinkActive() || publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
 		<div class="portlet-msg-info">
 			<liferay-ui:message key="staging-cannot-be-used-for-this-site-because-the-propagation-of-changes-from-the-site-template-is-enabled" />
 			<c:choose>

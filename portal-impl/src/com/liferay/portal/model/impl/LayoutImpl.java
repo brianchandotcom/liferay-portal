@@ -533,6 +533,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
+	public boolean isLayoutPrototypeLinkActive() {
+		if (isLayoutPrototypeLinkEnabled() &&
+			Validator.isNotNull(getLayoutPrototypeUuid())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPublicLayout() {
 		return !isPrivateLayout();
 	}

@@ -590,8 +590,35 @@ public class SitesUtil {
 			parameterMap, inputStream);
 	}
 
+	public static boolean isLayoutModifiedSinceLastMerge(Layout layout)
+		throws PortalException, SystemException {
+
+		if ((layout == null) ||
+			Validator.isNull(layout.getSourcePrototypeLayoutUuid()) ||
+			layout.isLayoutPrototypeLinkActive()) {
+
+			return false;
+		}
+
+		LayoutSet existingLayoutSet = layout.getLayoutSet();
+
+		long lastMergeTime = GetterUtil.getLong(
+			existingLayoutSet.getSettingsProperty("last-merge-time"));
+
+		Date existingLayoutModifiedDate = layout.getModifiedDate();
+
+		if ((existingLayoutModifiedDate != null) &&
+			(existingLayoutModifiedDate.getTime() > lastMergeTime) &&
+			isLayoutUpdateable(layout)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
-		if (!layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
 			return true;
 		}
 
@@ -626,7 +653,7 @@ public class SitesUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (!layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
 			return false;
 		}
 
@@ -674,10 +701,13 @@ public class SitesUtil {
 				return false;
 			}
 
+			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+				return true;
+			}
+
 			LayoutSet layoutSet = layout.getLayoutSet();
 
-			if (layoutSet.isLayoutSetPrototypeLinkEnabled() &&
-				Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
+			if (layoutSet.isLayoutSetPrototypeLinkActive()) {
 
 				boolean layoutSetPrototypeUpdateable =
 					isLayoutSetPrototypeUpdateable(layoutSet);
@@ -693,7 +723,11 @@ public class SitesUtil {
 					layoutTypePortlet.getSourcePrototypeLayoutProperty(
 						"layoutUpdateable");
 
-				return GetterUtil.getBoolean(layoutUpdateable, true);
+				if (Validator.isNull(layoutUpdateable)) {
+					return true;
+				}
+
+				return GetterUtil.getBoolean(layoutUpdateable);
 			}
 		}
 		catch (Exception e) {

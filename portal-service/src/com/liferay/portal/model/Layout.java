@@ -155,6 +155,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isInheritLookAndFeel();
 
+	public boolean isLayoutPrototypeLinkActive();
+
 	public boolean isInheritWapLookAndFeel();
 
 	public boolean isPublicLayout();

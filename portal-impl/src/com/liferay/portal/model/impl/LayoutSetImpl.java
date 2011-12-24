@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Theme;
@@ -157,6 +158,16 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getWapTheme().getThemeId(), getWapColorSchemeId(),
 			true);
+	}
+
+	public boolean isLayoutSetPrototypeLinkActive() {
+		if (isLayoutSetPrototypeLinkEnabled() &&
+			Validator.isNotNull(getLayoutSetPrototypeUuid())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

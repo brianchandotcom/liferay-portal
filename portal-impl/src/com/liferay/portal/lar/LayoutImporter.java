@@ -876,6 +876,12 @@ public class LayoutImporter {
 
 			existingLayout = LayoutUtil.fetchByG_P_SPLU(
 				groupId, privateLayout, layout.getUuid());
+
+			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
+				newLayoutsMap.put(oldLayoutId, existingLayout);
+
+				return;
+			}
 		}
 		else {
 
@@ -921,14 +927,17 @@ public class LayoutImporter {
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
 				importedLayout.setSourcePrototypeLayoutUuid(layout.getUuid());
+
+				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
+					groupId, privateLayout);
 			}
 			else {
 				importedLayout.setUuid(layout.getUuid());
 			}
 
 			importedLayout.setGroupId(groupId);
-			importedLayout.setPrivateLayout(privateLayout);
 			importedLayout.setLayoutId(layoutId);
+			importedLayout.setPrivateLayout(privateLayout);
 
 			if (layout.isIconImage()) {
 				long iconImageId = CounterLocalServiceUtil.increment();

@@ -57,6 +57,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	public com.liferay.portal.model.ColorScheme getWapColorScheme()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public boolean isLayoutSetPrototypeLinkActive();
+
 	public void setSettings(java.lang.String settings);
 
 	public void setSettingsProperties(

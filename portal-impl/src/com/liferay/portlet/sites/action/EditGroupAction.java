@@ -502,21 +502,9 @@ public class EditGroupAction extends PortletAction {
 		long refererPlid = GetterUtil.getLong(
 			HttpUtil.getParameter(redirect, "refererPlid", false));
 
-		boolean stagingAllowed = true;
+		if (!privateLayoutSet.isLayoutSetPrototypeLinkActive() &&
+			!publicLayoutSet.isLayoutSetPrototypeLinkActive()) {
 
-		if (privateLayoutSet.isLayoutSetPrototypeLinkEnabled() &&
-			Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid())) {
-
-			stagingAllowed = false;
-		}
-
-		if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() &&
-			Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
-
-			stagingAllowed = false;
-		}
-
-		if (stagingAllowed) {
 			if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
 				(themeDisplay.getScopeGroupId() != liveGroup.getGroupId())) {
 

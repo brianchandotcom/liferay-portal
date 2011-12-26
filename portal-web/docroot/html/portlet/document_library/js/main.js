@@ -44,6 +44,8 @@ AUI().add(
 
 		var EXPAND_FOLDER = 'expandFolder';
 
+		var MESSAGE_TYPE_ERROR = 'error';
+
 		var PARENT_NODE = 'parentNode';
 
 		var ROWS_PER_PAGE = 'rowsPerPage';
@@ -104,6 +106,8 @@ AUI().add(
 
 		var TOUCH = A.UA.touch;
 
+		var TPL_MESSAGES_DL = '<div class="lfr-message-response" id="dl-messages" />';
+
 		var VIEW_ENTRIES = 'viewEntries';
 
 		var VIEW_ENTRIES_PAGE = 'viewEntriesPage';
@@ -153,6 +157,8 @@ AUI().add(
 						instance._entriesContainer = instance.byId('documentContainer');
 
 						instance._selectAllCheckbox = instance.byId('allRowIdsCheckbox');
+
+						instance._portletMessageContainer = A.Node.create(TPL_MESSAGES_DL);
 
 						instance._displayStyle = instance.ns('displayStyle');
 						instance._folderId = instance.ns('folderId');
@@ -204,6 +210,7 @@ AUI().add(
 
 						folderPaginator.on('changeRequest', instance._onFolderPaginatorChangeRequest, instance);
 
+						Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance);
 						Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance);
 						Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance);
 						Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance);
@@ -691,6 +698,14 @@ AUI().add(
 						instance._processDefaultParams(event);
 
 						instance._updatePaginatorValues(event);
+					},
+
+					_onDataRetrieveFailure: function(event) {
+						var instance = this;
+
+						instance._documentLibraryContainer.loadingmask.hide();
+
+						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'));
 					},
 
 					_onDocumentLibraryContainerClick: function(event) {
@@ -1271,6 +1286,21 @@ AUI().add(
 								responseData: reponseData
 							}
 						);
+					},
+
+					_sendMessage: function(type, message) {
+						var instance = this;
+
+						var output = instance._portletMessageContainer;
+						var typeClass = 'portlet-msg-' + type;
+
+						output.removeClass('portlet-msg-error').removeClass('portlet-msg-success');
+						output.addClass(typeClass);
+						output.html(message);
+
+						output.show();
+
+						instance._entriesContainer.setContent(output);
 					},
 
 					_syncDisplayStyleToolbar: function(content) {

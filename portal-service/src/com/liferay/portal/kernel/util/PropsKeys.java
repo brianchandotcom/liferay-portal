@@ -539,6 +539,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PREVIEW_ENABLED = "dl.file.entry.preview.enabled";
 
+	public static final String DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED = "dl.file.entry.preview.fork.process.enabled";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES = "dl.file.entry.preview.image.mime.types";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_VIDEO = "dl.file.entry.preview.video.";

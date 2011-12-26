@@ -245,18 +245,30 @@ public class VideoProcessorImpl
 
 		try {
 			try {
-				ProcessCallable<String> processCallable =
-					new LiferayVideoThumbnailProcessCallable(
-						ServerDetector.getServerId(),
-						PropsUtil.get(PropsKeys.LIFERAY_HOME),
-						Log4JUtil.getCustomLogSettings(),
-						file.getCanonicalPath(),
-						thumbnailTempFile, THUMBNAIL_TYPE, height, width,
-						PropsValues.
-							DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
+				if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+					ProcessCallable<String> processCallable =
+						new LiferayVideoThumbnailProcessCallable(
+							ServerDetector.getServerId(),
+							PropsUtil.get(PropsKeys.LIFERAY_HOME),
+							Log4JUtil.getCustomLogSettings(),
+							file.getCanonicalPath(),
+							thumbnailTempFile, THUMBNAIL_TYPE, height, width,
+							PropsValues.
+								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
-				ProcessExecutor.execute(
-					processCallable, ClassPathUtil.getPortalClassPath());
+					ProcessExecutor.execute(
+						processCallable, ClassPathUtil.getPortalClassPath());
+				}
+				else {
+					LiferayConverter liferayConverter =
+						new LiferayVideoThumbnailConverter(
+							file.getCanonicalPath(), thumbnailTempFile,
+							THUMBNAIL_TYPE, height, width,
+							PropsValues.
+								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
+
+					liferayConverter.convert();
+				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -380,18 +392,31 @@ public class VideoProcessorImpl
 			stopWatch.start();
 		}
 
-		ProcessCallable<String> processCallable =
-			new LiferayVideoProcessCallable(
-				ServerDetector.getServerId(),
-				PropsUtil.get(PropsKeys.LIFERAY_HOME),
-				Log4JUtil.getCustomLogSettings(), srcFile.getCanonicalPath(),
-				destFile.getCanonicalPath(), FileUtil.createTempFileName(),
-				PropsUtil.getProperties(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO,
-					false),
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+			ProcessCallable<String> processCallable =
+				new LiferayVideoProcessCallable(
+					ServerDetector.getServerId(),
+					PropsUtil.get(PropsKeys.LIFERAY_HOME),
+					Log4JUtil.getCustomLogSettings(),
+					srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+					FileUtil.createTempFileName(),
+					PropsUtil.getProperties(
+						PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false),
+					PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
+
+			ProcessExecutor.execute(
+				processCallable, ClassPathUtil.getPortalClassPath());
+		}
+		else {
+			LiferayConverter liferayConverter = new LiferayVideoConverter(
+				srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
+				FileUtil.createTempFileName(),
+				PropsUtil.getProperties(
+					PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false),
 				PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
 
-		ProcessExecutor.execute(
-			processCallable, ClassPathUtil.getPortalClassPath());
+			liferayConverter.convert();
+		}
 
 		addFileToStore(
 			fileVersion.getCompanyId(), PREVIEW_PATH,

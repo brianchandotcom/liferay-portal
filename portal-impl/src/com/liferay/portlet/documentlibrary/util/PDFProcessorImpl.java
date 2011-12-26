@@ -64,7 +64,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
 
+import org.im4java.core.ConvertCmd;
 import org.im4java.core.IMOperation;
+import org.im4java.process.ProcessStarter;
 
 /**
  * @author Alexander Chow
@@ -233,7 +235,14 @@ public class PDFProcessorImpl
 
 	public void reset() throws Exception {
 		if (isImageMagickEnabled()) {
-			_globalSearchPath = getGlobalSearchPath();
+			String globalSearchPath = getGlobalSearchPath();
+
+			ProcessStarter.setGlobalSearchPath(globalSearchPath);
+
+			_convertCmd = new ConvertCmd();
+		}
+		else {
+			_convertCmd = null;
 		}
 	}
 
@@ -410,12 +419,17 @@ public class PDFProcessorImpl
 			_log.info("Excecuting command 'convert " + imOperation + "'");
 		}
 
-		ProcessCallable<String> processCallable =
-			new ImageMagickProcessCallable(
-				_globalSearchPath, imOperation.getCmdArgs());
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+			ProcessCallable<String> processCallable =
+				new ImageMagickProcessCallable(
+					_globalSearchPath, imOperation.getCmdArgs());
 
-		ProcessExecutor.execute(
-			processCallable, ClassPathUtil.getPortalClassPath());
+			ProcessExecutor.execute(
+				processCallable, ClassPathUtil.getPortalClassPath());
+		}
+		else {
+			_convertCmd.run(imOperation);
+		}
 
 		// Store images
 
@@ -721,6 +735,8 @@ public class PDFProcessorImpl
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessorImpl.class);
 
 	private static PDFProcessorImpl _instance;
+
+	private static ConvertCmd _convertCmd;
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 	private String _globalSearchPath;

@@ -209,15 +209,24 @@ public class AudioProcessorImpl
 		}
 
 		try {
-			ProcessCallable<String> processCallable =
-				new LiferayAudioProcessCallable(
-					ServerDetector.getServerId(),
-					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(),
+			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+				ProcessCallable<String> processCallable =
+					new LiferayAudioProcessCallable(
+						ServerDetector.getServerId(),
+						PropsUtil.get(PropsKeys.LIFERAY_HOME),
+						Log4JUtil.getCustomLogSettings(),
+						srcFile.getCanonicalPath(),
+						destFile.getCanonicalPath());
+
+				ProcessExecutor.execute(
+					processCallable, ClassPathUtil.getPortalClassPath());
+			}
+			else {
+				LiferayConverter liferayConverter = new LiferayAudioConverter(
 					srcFile.getCanonicalPath(), destFile.getCanonicalPath());
 
-			ProcessExecutor.execute(
-				processCallable, ClassPathUtil.getPortalClassPath());
+				liferayConverter.convert();
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

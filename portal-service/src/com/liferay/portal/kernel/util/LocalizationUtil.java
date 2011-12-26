@@ -15,7 +15,11 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -93,6 +97,29 @@ public class LocalizationUtil {
 
 		return getLocalization().getLocalizedParameter(
 			portletRequest, parameter);
+	}
+
+	public static List<Locale> getModifiedLocales(
+		Map<Locale, String> oldMap, Map<Locale, String> newMap) {
+
+		if ((newMap == null) || newMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Locale> modifiedLocales = new ArrayList<Locale>();
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String oldValue = oldMap.get(locale);
+			String newValue = newMap.get(locale);
+
+			if (!oldValue.equals(newValue)) {
+				modifiedLocales.add(locale);
+			}
+		}
+
+		return modifiedLocales;
 	}
 
 	public static String getPreferencesKey(String key, String languageId) {

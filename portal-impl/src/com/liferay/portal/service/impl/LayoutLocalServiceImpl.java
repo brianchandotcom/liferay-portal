@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -83,7 +84,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1581,7 +1581,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		List<Locale> modifiedLocales = getModifiedLocales(
+		List<Locale> modifiedLocales = LocalizationUtil.getModifiedLocales(
 			layout.getNameMap(), nameMap);
 
 		if (parentLayoutId != layout.getParentLayoutId()) {
@@ -2201,29 +2201,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	protected String getFriendlyURL(String friendlyURL) {
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
-	}
-
-	protected List<Locale> getModifiedLocales(
-		Map<Locale, String> oldMap, Map<Locale, String> newMap) {
-
-		if ((newMap == null) || newMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<Locale> modifiedLocales = new ArrayList<Locale>();
-
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			String oldValue = oldMap.get(locale);
-			String newValue = newMap.get(locale);
-
-			if (!oldValue.equals(newValue)) {
-				modifiedLocales.add(locale);
-			}
-		}
-
-		return modifiedLocales;
 	}
 
 	protected int getNextPriority(

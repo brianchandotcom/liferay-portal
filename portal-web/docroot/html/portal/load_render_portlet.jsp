@@ -43,12 +43,13 @@ String portletId = portlet.getPortletId();
 			Liferay.Portlet.addHTML(
 				{
 					onComplete: function(portlet, portletId) {
-						portlet.refreshURL = '<%= url %>';
+						portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
 					},
 					placeHolder: A.one('#p_load' + ns),
-					url: '<%= url %>'
+					url: '<%= HtmlUtil.escapeJS(url) %>'
 				}
 			);
 		</aui:script>
+		
 	</c:otherwise>
 </c:choose>

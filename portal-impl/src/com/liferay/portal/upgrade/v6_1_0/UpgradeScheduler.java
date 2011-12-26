@@ -79,13 +79,19 @@ public class UpgradeScheduler extends UpgradeProcess {
 		for (Object[] array : arrays) {
 			String jobName = (String)array[0];
 			String jobGroup = (String)array[1];
-			byte[] jobData = (byte[])array[2];
+			String schedName = (String)array[2];
+			byte[] jobData = (byte[])array[3];
 
 			if (jobData == null) {
 				deleteJob(jobName, jobGroup);
 			}
 			else {
-				updateJobDetail(jobName, jobGroup, jobData);
+				updateJobDetail(jobName, jobGroup, schedName, jobData);
+				updateTrigger(jobName, jobGroup, schedName, "QUARTZ_TRIGGERS");
+				updateTrigger(
+					jobName, jobGroup, schedName, "QUARTZ_SIMPLE_TRIGGERS");
+				updateTrigger(
+					jobName, jobGroup, schedName, "QUARTZ_CRON_TRIGGERS");
 			}
 		}
 	}
@@ -99,23 +105,26 @@ public class UpgradeScheduler extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"select JOB_NAME, JOB_GROUP, JOB_DATA from QUARTZ_JOB_DETAILS");
+				"select SCHED_NAME, JOB_NAME, JOB_GROUP, JOB_DATA from " +
+					"QUARTZ_JOB_DETAILS");
 
 			rs = ps.executeQuery();
 
 			List<Object[]> arrays = new ArrayList<Object[]>();
 
 			while (rs.next()) {
+				String schedName = rs.getString("SCHED_NAME");
 				String jobName = rs.getString("JOB_NAME");
 				String jobGroup = rs.getString("JOB_GROUP");
 				byte[] jobData = rs.getBytes("JOB_DATA");
 
-				Object[] array = new Object[3];
+				Object[] array = new Object[4];
 
 				if (jobData == null) {
 					array[0] = jobName;
 					array[1] = jobGroup;
-					array[2] = null;
+					array[2] = schedName;
+					array[3] = null;
 
 					arrays.add(array);
 
@@ -141,7 +150,8 @@ public class UpgradeScheduler extends UpgradeProcess {
 
 					array[0] = jobName;
 					array[1] = jobGroup;
-					array[2] = null;
+					array[2] = schedName;
+					array[3] = null;
 
 					arrays.add(array);
 
@@ -187,7 +197,8 @@ public class UpgradeScheduler extends UpgradeProcess {
 
 				array[0] = jobName;
 				array[1] = jobGroup;
-				array[2] = jobData;
+				array[2] = _DEFAULT_SCHED_NAME;
+				array[3] = jobData;
 
 				arrays.add(array);
 			}
@@ -200,7 +211,7 @@ public class UpgradeScheduler extends UpgradeProcess {
 	}
 
 	protected void updateJobDetail(
-			String jobName, String jobGroup, byte[] jobData)
+			String jobName, String jobGroup, String schedName, byte[] jobData)
 		throws Exception {
 
 		Connection con = null;
@@ -211,12 +222,13 @@ public class UpgradeScheduler extends UpgradeProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"update QUARTZ_JOB_DETAILS set JOB_DATA = ? where JOB_NAME = " +
-					"? and JOB_GROUP = ?");
+				"update QUARTZ_JOB_DETAILS set JOB_DATA = ? , SCHED_NAME = ? " +
+					"where JOB_NAME = ? and JOB_GROUP = ?");
 
 			ps.setBytes(1, jobData);
-			ps.setString(2, jobName);
-			ps.setString(3, jobGroup);
+			ps.setString(2, schedName);
+			ps.setString(3, jobName);
+			ps.setString(4, jobGroup);
 
 			ps.executeUpdate();
 		}
@@ -224,5 +236,35 @@ public class UpgradeScheduler extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	protected void updateTrigger(
+			String triggerName, String triggerGroup, String schedName,
+			String tableName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update " + tableName + " set SCHED_NAME = ? where " +
+					"TRIGGER_NAME = ? and TRIGGER_GROUP = ?");
+
+			ps.setString(1, schedName);
+			ps.setString(2, triggerName);
+			ps.setString(3, triggerGroup);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	private static final String _DEFAULT_SCHED_NAME =
+		PropsValues.PERSITED_SCHEDULER_ORG_QUARTZ_SCHEDULER_INSTANCENAME;
 
 }

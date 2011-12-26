@@ -1126,6 +1126,8 @@ public class PropsValues {
 
 	public static boolean PERMISSIONS_VIEW_DYNAMIC_INHERITANCE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE));
 
+	public static final String PERSITED_SCHEDULER_ORG_QUARTZ_SCHEDULER_INSTANCENAME = GetterUtil.getString(PropsUtil.get(PropsKeys.PERSITED_SCHEDULER_ORG_QUARTZ_SCHEDULER_INSTANCENAME));
+
 	public static final String PERSISTENCE_PROVIDER= GetterUtil.getString(PropsUtil.get(PropsKeys.PERSISTENCE_PROVIDER));
 
 	public static final boolean PLUGIN_NOTIFICATIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_ENABLED));

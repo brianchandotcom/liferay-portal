@@ -18,11 +18,12 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Edward Han
@@ -33,7 +34,9 @@ public class ChannelLoginPostAction extends Action {
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			User user = PortalUtil.getUser(request);
+			HttpSession session = request.getSession();
+
+			User user = (User)session.getAttribute(WebKeys.USER);
 
 			if (!user.isDefaultUser()) {
 				ChannelHubManagerUtil.getChannel(

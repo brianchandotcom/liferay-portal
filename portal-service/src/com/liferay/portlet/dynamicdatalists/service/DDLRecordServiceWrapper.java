@@ -51,6 +51,13 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 			fieldsMap, serviceContext);
 	}
 
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordService.getRecord(recordId);
+	}
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,

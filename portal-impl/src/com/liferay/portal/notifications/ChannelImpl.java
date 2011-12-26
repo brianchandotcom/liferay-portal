@@ -173,10 +173,9 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			TreeSet<NotificationEvent> notificationEvents =
-				_getNotificationEvents();
-
-			notificationEvents.clear();
+			if (_notificationEvents != null) {
+				_notificationEvents.clear();
+			}
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -187,10 +186,11 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			TreeSet<NotificationEvent> notificationEvents =
-				_getNotificationEvents();
+			if (_notificationEvents == null) {
+				return;
+			}
 
-			Iterator<NotificationEvent> itr = notificationEvents.iterator();
+			Iterator<NotificationEvent> itr = _notificationEvents.iterator();
 
 			while (itr.hasNext()) {
 				NotificationEvent notificationEvent = itr.next();
@@ -245,10 +245,9 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			TreeSet<NotificationEvent> notificationEventsSet =
-				_getNotificationEvents();
-
-			notificationEventsSet.removeAll(notificationEvents);
+			if (_notificationEvents != null) {
+				_notificationEvents.removeAll(notificationEvents);
+			}
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -264,10 +263,11 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			TreeSet<NotificationEvent> notificationEvents =
-				_getNotificationEvents();
+			if (_notificationEvents == null) {
+				return;
+			}
 
-			Iterator<NotificationEvent> itr = notificationEvents.iterator();
+			Iterator<NotificationEvent> itr = _notificationEvents.iterator();
 
 			while (itr.hasNext()) {
 				NotificationEvent notificationEvent = itr.next();

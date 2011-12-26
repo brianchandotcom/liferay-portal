@@ -12,7 +12,7 @@
 
 <@aui["field-wrapper"] label=label>
 	<a href="<@liferay_portlet.actionURL windowState="exclusive">
-				<@liferay_portlet.param name="struts_action" value="/dynamic_data_lists/get_file_upload" />
+				<@liferay_portlet.param name="struts_action" value="/dynamic_data_lists/get_record_file" />
 				<@liferay_portlet.param name="recordId" value=recordId />
 				<@liferay_portlet.param name="fieldName" value=fieldName />
 				<@liferay_portlet.param name="fileName" value=fileName />

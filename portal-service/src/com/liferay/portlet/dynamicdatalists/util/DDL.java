@@ -34,6 +34,9 @@ import java.util.Map;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eduardo Lundgren
  */
@@ -51,6 +54,16 @@ public interface DDL {
 			UploadPortletRequest uploadPortletRequest, long ddmStructureId,
 			long ddmTemplateId)
 		throws PortalException, SystemException;
+
+	public void getRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception;
+
+	public void getRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			long recordId, String fieldName)
+		throws Exception;
 
 	public String getRecordFileUploadPath(DDLRecord record);
 

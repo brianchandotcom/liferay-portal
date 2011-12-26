@@ -170,7 +170,7 @@
 
 					portletURL.setParameter('fieldName', instance.get('elementName'));
 					portletURL.setParameter('recordId', data.recordId);
-					portletURL.setParameter('struts_action', '/dynamic_data_list_display/get_file_upload');
+					portletURL.setParameter('struts_action', '/dynamic_data_lists/get_record_file');
 
 					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
 

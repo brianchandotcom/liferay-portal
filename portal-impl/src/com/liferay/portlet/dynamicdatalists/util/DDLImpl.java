@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -69,6 +71,9 @@ import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marcelllus Tavares
@@ -159,6 +164,39 @@ public class DDLImpl implements DDL {
 		}
 
 		return fields;
+	}
+
+	public void getRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception {
+
+		Serializable fieldValue = record.getFieldValue(fieldName);
+
+		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(fieldValue));
+
+		String fileName = fileJSONObject.getString("name");
+		String filePath = fileJSONObject.getString("path");
+
+		InputStream is = DLStoreUtil.getFileAsStream(
+			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
+		long contentLength = DLStoreUtil.getFileSize(
+			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
+		String contentType = MimeTypesUtil.getContentType(fileName);
+
+		ServletResponseUtil.sendFile(
+			request, response, fileName, is, contentLength, contentType);
+	}
+
+	public void getRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			long recordId, String fieldName)
+		throws Exception {
+
+		DDLRecord record = DDLRecordServiceUtil.getRecord(recordId);
+
+		getRecordFileUpload(request, response, record, fieldName);
 	}
 
 	public String getRecordFileUploadPath(DDLRecord record) {

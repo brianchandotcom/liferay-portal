@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -73,7 +74,7 @@ public class FieldConstants {
 		if (type.equals(BOOLEAN)) {
 			return GetterUtil.getBoolean(value);
 		}
-		else if (type.equals(DATE)) {
+		else if (type.equals(DATE) && Validator.isNotNull(value)) {
 			return new Date(GetterUtil.getLong(value));
 		}
 		else if (type.equals(DOUBLE)) {

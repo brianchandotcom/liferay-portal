@@ -15,8 +15,11 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.io.Serializable;
 import java.text.Format;
 
 /**
@@ -26,10 +29,16 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(ThemeDisplay themeDisplay, Field field) {
+		Serializable value = field.getValue();
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
 		Format format = FastDateFormatFactoryUtil.getDate(
 			themeDisplay.getLocale());
 
-		return format.format(field.getValue());
+		return format.format(value);
 	}
 
 }

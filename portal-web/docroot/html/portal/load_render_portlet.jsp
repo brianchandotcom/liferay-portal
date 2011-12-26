@@ -50,6 +50,5 @@ String portletId = portlet.getPortletId();
 				}
 			);
 		</aui:script>
-		
 	</c:otherwise>
 </c:choose>

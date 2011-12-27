@@ -71,11 +71,13 @@ for (int i = 0; i < results.size(); i++) {
 	}
 	%>
 
-	<span class='nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>'>
+	<span class="nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>">
 		<%= curLayout.getName(locale) %>
 
 		<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
-			<span class="layout-variation-name">[<liferay-ui:message key="<%= layoutBranchName %>" />]</span>
+			<span class="layout-variation-name">
+				[<liferay-ui:message key="<%= layoutBranchName %>" />]
+			</span>
 		</c:if>
 
 		<c:if test="<%= layoutRevision == null %>">

@@ -114,11 +114,10 @@ else {
 
 		boolean enabled = !layoutRevision.isPending() && pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead();
 
-		String icon = null;
+		String icon = "circle-check";
 		String label = null;
 
 		if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-			icon = "circle-check";
 			label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
 		}
 		else {
@@ -127,7 +126,6 @@ else {
 				label = "submit-for-publication";
 			}
 			else {
-				icon = "circle-check";
 				label = "mark-as-ready-for-publication";
 			}
 		}

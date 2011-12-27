@@ -21,6 +21,8 @@ import com.liferay.portal.model.Lock;
  */
 public interface SchedulerEngineClusterManager {
 
+	public void initialize() throws SchedulerException;
+
 	public Lock updateMemorySchedulerClusterMaster() throws SchedulerException;
 
 }

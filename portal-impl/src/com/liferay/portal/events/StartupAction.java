@@ -171,7 +171,7 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Initialize scheduler engine lifecycle");
 		}
 
-		SchedulerEngineUtil.initLifecycle();
+		SchedulerEngineUtil.initialize();
 
 		// Verify
 

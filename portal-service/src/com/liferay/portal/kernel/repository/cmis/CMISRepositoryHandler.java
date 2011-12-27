@@ -144,7 +144,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
 			OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return _baseCmisRepository.getFileEntries(
 			folderId, mimeTypes, start, end, obc);

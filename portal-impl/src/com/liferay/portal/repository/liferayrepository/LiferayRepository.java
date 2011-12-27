@@ -273,8 +273,7 @@ public class LiferayRepository
 		throws SystemException {
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
-			getGroupId(), toFolderId(folderId), mimeTypes, start, end,
-			obc);
+			getGroupId(), toFolderId(folderId), mimeTypes, start, end, obc);
 
 		return toFileEntries(dlFileEntries);
 	}

@@ -207,7 +207,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return getFileEntries(rootFolderId, mimeTypes, start, end, obc);
 	}

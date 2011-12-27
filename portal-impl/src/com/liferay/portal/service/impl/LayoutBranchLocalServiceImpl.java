@@ -74,7 +74,7 @@ public class LayoutBranchLocalServiceImpl
 		LayoutRevision layoutRevision =
 			layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
 
-		validate(
+		validateAdd(
 			layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(),
 			name);
 
@@ -163,7 +163,7 @@ public class LayoutBranchLocalServiceImpl
 		LayoutBranch layoutBranch =
 			layoutBranchPersistence.findByPrimaryKey(layoutBranchId);
 
-		validate(
+		validateUpdate(
 			layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(), name);
 
 		layoutBranch.setName(name);
@@ -174,7 +174,22 @@ public class LayoutBranchLocalServiceImpl
 		return layoutBranch;
 	}
 
-	protected void validate(long layoutSetBranchId, long plid, String name)
+	protected void validateAdd(long layoutSetBranchId, long plid, String name)
+		throws PortalException, SystemException {
+
+		validateUpdate(layoutSetBranchId, plid, name);
+
+		try {
+			layoutBranchPersistence.findByL_P_N(layoutSetBranchId, plid, name);
+
+			throw new LayoutBranchNameException(
+				LayoutBranchNameException.DUPLICATE);
+		}
+		catch (NoSuchLayoutBranchException nsbe) {
+		}
+	}
+
+	protected void validateUpdate(long layoutSetBranchId, long plid, String name)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(name) || (name.length() < 4)) {
@@ -185,15 +200,6 @@ public class LayoutBranchLocalServiceImpl
 		if (name.length() > 100) {
 			throw new LayoutBranchNameException(
 				LayoutBranchNameException.TOO_LONG);
-		}
-
-		try {
-			layoutBranchPersistence.findByL_P_N(layoutSetBranchId, plid, name);
-
-			throw new LayoutBranchNameException(
-				LayoutBranchNameException.DUPLICATE);
-		}
-		catch (NoSuchLayoutBranchException nsbe) {
 		}
 	}
 

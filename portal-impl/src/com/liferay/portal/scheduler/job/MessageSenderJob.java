@@ -42,6 +42,7 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 
 /**
  * @author Michael C. Han
@@ -129,9 +130,7 @@ public class MessageSenderJob implements Job {
 					if (PropsValues.CLUSTER_LINK_ENABLED &&
 						storageType.equals(StorageType.MEMORY_CLUSTERED)) {
 
-						notifyClusterMember(
-							trigger.getJobName(), trigger.getGroup(),
-							storageType);
+						notifyClusterMember(trigger.getKey(), storageType);
 					}
 				}
 			}
@@ -147,12 +146,12 @@ public class MessageSenderJob implements Job {
 		}
 	}
 
-	protected void notifyClusterMember(
-			String jobName, String groupName, StorageType storageType)
+	protected void notifyClusterMember(TriggerKey triggerKey, StorageType storageType)
 		throws Exception {
 
 		MethodHandler methodHandler = new MethodHandler(
-			_deleteJobMethodKey, jobName, groupName, storageType);
+			_deleteJobMethodKey, triggerKey.getName(), triggerKey.getGroup(),
+			storageType);
 
 		ClusterRequest clusterRequest =
 			ClusterRequest.createMulticastRequest(methodHandler, true);

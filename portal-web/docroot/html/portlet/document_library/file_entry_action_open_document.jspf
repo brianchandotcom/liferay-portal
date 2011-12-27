@@ -83,21 +83,14 @@
 
 	<aui:script>
 		function <portlet:namespace />openDocument(fileUrl, webDavUrl, officeDoc) {
-			<c:choose>
-				<c:when test="<%= officeDoc != null %>">
-					var officeDoc = new ActiveXObject("<%= officeDoc %>");
+			var officeDoc = new ActiveXObject("<%= officeDoc %>");
 
-					if (officeDoc) {
-						officeDoc.EditDocument(webDavUrl);
-					}
-					else {
-						window.location.href = fileUrl;
-					}
-				</c:when>
-				<c:otherwise>
-					window.location.href = fileUrl;
-				</c:otherwise>
-			</c:choose>
+			if (officeDoc) {
+				officeDoc.EditDocument(webDavUrl);
+			}
+			else {
+				window.location.href = fileUrl;
+			}
 		}
 	</aui:script>
 </c:if>

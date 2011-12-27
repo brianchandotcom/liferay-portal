@@ -98,6 +98,11 @@ public interface Repository {
 			OrderByComparator obc)
 		throws SystemException;
 
+	public List<FileEntry> getFileEntries(
+			long folderId, String[] mimeTypes, int start, int end,
+			OrderByComparator obc)
+		throws SystemException;
+
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws SystemException;
@@ -109,6 +114,9 @@ public interface Repository {
 		throws SystemException;
 
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
+		throws SystemException;
+
+	public int getFileEntriesCount(long folderId, String[] mimeTypes)
 		throws SystemException;
 
 	public FileEntry getFileEntry(long fileEntryId)

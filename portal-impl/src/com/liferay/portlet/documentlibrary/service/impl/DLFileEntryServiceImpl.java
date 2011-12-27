@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -36,6 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -230,6 +232,19 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			groupId, folderId, fileEntryTypeId, start, end, obc);
 	}
 
+	public List<DLFileEntry> getFileEntries(
+			long groupId, long folderId, String[] mimeTypes, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+		folderIds.add(folderId);
+
+		return dlFileEntryFinder.findByG_U_F_M_S(
+				groupId, 0, folderIds, mimeTypes, WorkflowConstants.STATUS_ANY,
+				start, end, obc);
+	}
+
 	public int getFileEntriesCount(long groupId, long folderId)
 		throws SystemException {
 
@@ -242,6 +257,18 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryPersistence.filterCountByG_F_F(
 			groupId, folderId, fileEntryTypeId);
+	}
+
+	public int getFileEntriesCount(
+			long groupId, long folderId, String[] mimeTypes)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+		folderIds.add(folderId);
+
+		return dlFileEntryFinder.countByG_U_F_M_S(
+				groupId, 0L, folderIds, mimeTypes,
+				WorkflowConstants.STATUS_ANY);
 	}
 
 	public DLFileEntry getFileEntry(long fileEntryId)

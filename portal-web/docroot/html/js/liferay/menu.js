@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-menu',
 	function(A) {
 		var Lang = A.Lang;

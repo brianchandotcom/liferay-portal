@@ -23,7 +23,6 @@
 		var name = config.name;
 
 		delete config.group;
-		delete config.name;
 
 		var module = GROUPS[group].modules[trigger];
 
@@ -193,4 +192,10 @@
 			trigger: 'aui-calendar'
 		}
 	);
+
+	var loader = A.Env._loader;
+
+	loader.addGroup(GROUPS.liferay, 'liferay');
+	loader.addGroup(GROUPS.misc, 'misc');
+	loader.addGroup(GROUPS.portal, 'portal');
 })(AUI(), Liferay);

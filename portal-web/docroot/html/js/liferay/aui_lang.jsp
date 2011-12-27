@@ -66,7 +66,7 @@ Calendar cal = new GregorianCalendar();
 cal.setTime(selectedDate);
 %>
 
-AUI().add(
+AUI.add(
 	'portal-aui-lang',
 	function(A) {
 		A.DataType.Date.Locale['<%= languageId %>'] = A.merge(

@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-history-manager',
 	function(A) {
 		var HistoryBase = A.HistoryBase;

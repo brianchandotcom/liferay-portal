@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-translation-manager',
 	function(A) {
 		var AArray = A.Array;

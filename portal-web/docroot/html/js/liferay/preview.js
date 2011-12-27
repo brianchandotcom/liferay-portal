@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-preview',
 	function(A) {
 		var Lang = A.Lang;
@@ -443,7 +443,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-toolbar'],
-		use: []
+		requires: ['aui-base', 'aui-toolbar']
 	}
 );

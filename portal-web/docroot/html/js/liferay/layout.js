@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-layout',
 	function(A) {
 		var Util = Liferay.Util;
@@ -796,7 +796,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-portal-layout', 'aui-resize', 'dd'],
-		use: []
+		requires: ['aui-io-request', 'aui-portal-layout', 'aui-resize', 'dd']
 	}
 );

@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-navigation-interaction',
 	function(A) {
 		var ACTIVE_DESCENDANT = 'activeDescendant';

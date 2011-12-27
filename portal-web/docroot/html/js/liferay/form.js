@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-form',
 	function(A) {
 		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
@@ -220,7 +220,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-form-validator'],
-		use: []
+		requires: ['aui-base', 'aui-form-validator']
 	}
 );

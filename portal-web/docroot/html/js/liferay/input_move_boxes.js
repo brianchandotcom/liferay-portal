@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-input-move-boxes',
 	function(A) {
 		var Lang = A.Lang;

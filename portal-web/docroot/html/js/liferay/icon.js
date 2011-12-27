@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-icon',
 	function(A) {
 		var Icon = {

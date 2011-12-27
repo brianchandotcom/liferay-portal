@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-category-admin',
 	function(A) {
 		var AObject = A.Object;
@@ -27,7 +27,7 @@ AUI().add(
 
 		var CSS_COLUMN_WIDTH_CATEGORY_FULL = 'aui-w75';
 
-		var EVENT_CLICK  = 'click';
+		var EVENT_CLICK = 'click';
 
 		var EVENT_SUBMIT = 'submit';
 

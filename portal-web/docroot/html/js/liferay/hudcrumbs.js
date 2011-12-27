@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-hudcrumbs',
 	function(A) {
 		var Lang = A.Lang,
@@ -117,7 +117,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'plugin'],
-		use: []
+		requires: ['aui-base', 'plugin']
 	}
 );

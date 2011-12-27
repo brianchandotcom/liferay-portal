@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-poller',
 	function(A) {
 		var Util = Liferay.Util;
@@ -332,7 +332,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'io', 'json'],
-		use: []
+		requires: ['aui-base', 'io', 'json']
 	}
 );

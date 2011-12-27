@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-history-html5',
 	function(A) {
 		var AObject = A.Object;

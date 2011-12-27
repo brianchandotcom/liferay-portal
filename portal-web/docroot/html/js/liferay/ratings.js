@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-ratings',
 	function(A) {
 		var Lang = A.Lang;

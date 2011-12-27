@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-undo-manager',
 	function(A) {
 		var Lang = A.Lang;

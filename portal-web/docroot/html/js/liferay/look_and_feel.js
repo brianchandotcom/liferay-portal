@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-look-and-feel',
 	function(A) {
 		var Browser = Liferay.Browser;
@@ -1830,7 +1830,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-color-picker', 'aui-dialog', 'aui-io-request', 'aui-tabs-base'],
-		use: []
+		requires: ['aui-color-picker', 'aui-dialog', 'aui-io-request', 'aui-tabs-base']
 	}
 );

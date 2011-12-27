@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-util-window',
 	function(A) {
 		var Util = Liferay.Util;

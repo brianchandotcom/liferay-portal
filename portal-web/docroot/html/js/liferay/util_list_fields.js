@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-util-list-fields',
 	function(A) {
 		var Util = Liferay.Util;

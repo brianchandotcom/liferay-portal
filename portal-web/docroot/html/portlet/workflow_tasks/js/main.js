@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-workflow-tasks',
 	function(A) {
 		var WorkflowTasks = {

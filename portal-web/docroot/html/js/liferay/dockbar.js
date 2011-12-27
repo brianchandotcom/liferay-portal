@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-dockbar',
 	function(A) {
 		var Lang = A.Lang;

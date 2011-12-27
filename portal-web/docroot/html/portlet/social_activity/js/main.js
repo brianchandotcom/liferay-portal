@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-social-activity-admin',
 	function(A) {
 		var Lang = A.Lang;

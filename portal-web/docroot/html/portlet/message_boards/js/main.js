@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-bbcode-editor',
 	function(A) {
 		var bbCode = function(options) {

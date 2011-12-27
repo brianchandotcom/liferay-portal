@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-form-placeholders',
 	function(A) {
 		var PLACEHOLDER_TEXT_CLASS = 'aui-text-placeholder';

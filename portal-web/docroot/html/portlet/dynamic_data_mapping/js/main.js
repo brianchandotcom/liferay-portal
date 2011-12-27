@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-portlet-dynamic-data-mapping',
 	function(A) {
 		var AArray = A.Array;

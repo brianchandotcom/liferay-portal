@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-auto-fields',
 	function(A) {
 		var Lang = A.Lang;

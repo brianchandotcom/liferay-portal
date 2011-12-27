@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-staging-branch',
 	function(A) {
 		var Lang = A.Lang;

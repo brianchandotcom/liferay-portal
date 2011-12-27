@@ -201,7 +201,7 @@ public class LoginUtil {
 
 		if ((login == null) || (login.equals(StringPool.NULL))) {
 			login = GetterUtil.getString(
-				CookieKeys.getCookie(request, CookieKeys.LOGIN));
+				CookieKeys.getCookie(request, CookieKeys.LOGIN, false));
 
 			if (PropsValues.COMPANY_LOGIN_PREPOPULATE_DOMAIN &&
 				Validator.isNull(login) &&

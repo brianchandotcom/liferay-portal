@@ -42,11 +42,12 @@ public class RememberMeAutoLogin implements AutoLogin {
 		try {
 			String[] credentials = null;
 
-			String autoUserId = CookieKeys.getCookie(request, CookieKeys.ID);
+			String autoUserId = CookieKeys.getCookie(
+				request, CookieKeys.ID, false);
 			String autoPassword = CookieKeys.getCookie(
-				request, CookieKeys.PASSWORD);
+				request, CookieKeys.PASSWORD, false);
 			String rememberMe = CookieKeys.getCookie(
-				request, CookieKeys.REMEMBER_ME);
+				request, CookieKeys.REMEMBER_ME, false);
 
 			// LEP-5188
 

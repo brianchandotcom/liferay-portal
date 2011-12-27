@@ -107,7 +107,7 @@ public class I18nFilter extends BasePortalFilter {
 			LocaleUtil.getDefault());
 
 		String guestLanguageId = CookieKeys.getCookie(
-			request, CookieKeys.GUEST_LANGUAGE_ID);
+			request, CookieKeys.GUEST_LANGUAGE_ID, false);
 
 		if (Validator.isNull(guestLanguageId)) {
 			guestLanguageId = defaultLanguageId;

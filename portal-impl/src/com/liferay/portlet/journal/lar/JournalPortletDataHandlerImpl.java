@@ -203,7 +203,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportTemplate(
 				portletDataContext, templatesElement, dlFileEntryTypesElement,
 				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				template, checkDateRange);
+				template);
 		}
 
 		Image smallImage = ImageUtil.fetchByPrimaryKey(
@@ -262,7 +262,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			String content = exportReferencedContent(
 				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
 				dlFileEntriesElement, dlFileRanksElement, articleElement,
-				article.getContent(), checkDateRange);
+				article.getContent());
 
 			article.setContent(content);
 		}
@@ -275,7 +275,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element entityElement, String content, boolean checkDateRange)
+			Element entityElement, String content)
 		throws Exception {
 
 		content = exportDLFileEntries(
@@ -1741,7 +1741,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element templatesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			JournalTemplate template, boolean checkDateRange)
+			JournalTemplate template)
 		throws Exception {
 
 		String path = getTemplatePath(portletDataContext, template);
@@ -1778,7 +1778,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			String content = exportReferencedContent(
 				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
 				dlFileEntriesElement, dlFileRanksElement, templateElement,
-				template.getXsl(), checkDateRange);
+				template.getXsl());
 
 			template.setXsl(content);
 		}
@@ -2143,7 +2143,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				exportTemplate(
 					portletDataContext, templatesElement,
 					dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-					dlFileRanksElement, template, true);
+					dlFileRanksElement, template);
 			}
 		}
 

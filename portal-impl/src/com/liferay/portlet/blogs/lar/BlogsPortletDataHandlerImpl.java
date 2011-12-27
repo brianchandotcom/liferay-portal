@@ -124,7 +124,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportEntry(
 				portletDataContext, entriesElement, dlFileEntryTypesElement,
 				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				entry, false);
+				entry);
 		}
 
 		return document.formattedString();
@@ -178,7 +178,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element entriesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			BlogsEntry entry, boolean checkDateRange)
+			BlogsEntry entry)
 		throws Exception {
 
 		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
@@ -210,7 +210,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		String content = JournalPortletDataHandlerImpl.exportReferencedContent(
 			portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
 			dlFileEntriesElement, dlFileRanksElement, entryElement,
-			entry.getContent(), checkDateRange);
+			entry.getContent());
 
 		entry.setContent(content);
 

@@ -336,7 +336,7 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 				JournalPortletDataHandlerImpl.exportReferencedContent(
 					portletDataContext, dlFileEntryTypesElement,
 					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-					pageElement, page.getContent(), checkDateRange);
+					pageElement, page.getContent());
 
 			page.setContent(content);
 

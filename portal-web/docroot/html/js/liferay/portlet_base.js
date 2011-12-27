@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-portlet-base',
 	function(A) {
 		var Lang = A.Lang;

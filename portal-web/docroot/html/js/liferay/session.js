@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-session',
 	function(A) {
 		var Lang = A.Lang;

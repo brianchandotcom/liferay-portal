@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-panel',
 	function(A) {
 

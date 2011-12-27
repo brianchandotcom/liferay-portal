@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-logo-selector',
 	function(A) {
 		var DELETE_LOGO = 'DELETE_LOGO';
@@ -127,7 +127,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base'],
-		use: []
+		requires: ['aui-base']
 	}
 );

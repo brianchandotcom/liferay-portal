@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-portlet-url',
 	function(A) {
 		var PortletURL = function(lifecycle, params) {

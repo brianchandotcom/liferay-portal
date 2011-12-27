@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-portlet-journal',
 	function(A) {
 		var D = A.DataType;

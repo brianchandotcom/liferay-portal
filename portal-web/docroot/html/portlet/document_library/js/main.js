@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-document-library',
 	function(A) {
 		var AObject = A.Object;

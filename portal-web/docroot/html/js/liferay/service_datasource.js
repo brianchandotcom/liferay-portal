@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-service-datasource',
 	function(A) {
 		var ServiceDataSource = A.Component.create(

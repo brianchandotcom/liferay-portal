@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-dynamic-select',
 	function(A) {
 

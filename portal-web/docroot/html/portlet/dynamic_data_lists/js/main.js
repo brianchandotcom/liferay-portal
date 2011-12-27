@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-portlet-dynamic-data-lists',
 	function(A) {
 		var AArray = A.Array;

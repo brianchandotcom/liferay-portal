@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-asset-tags-selector',
 	function(A) {
 		var Lang = A.Lang;

@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-search-container',
 	function(A) {
 		var Lang = A.Lang;

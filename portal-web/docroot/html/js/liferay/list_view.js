@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-list-view',
 	function(A) {
 		var Lang = A.Lang;

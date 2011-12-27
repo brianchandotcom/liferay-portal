@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-navigation',
 	function(A) {
 		var Dockbar = Liferay.Dockbar;

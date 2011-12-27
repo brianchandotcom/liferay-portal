@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-users-admin',
 	function(A) {
 		var Addresses = {

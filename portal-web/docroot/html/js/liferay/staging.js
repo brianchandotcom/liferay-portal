@@ -1,4 +1,4 @@
-AUI().add(
+AUI.add(
 	'liferay-staging',
 	function(A) {
 		var Lang = A.Lang;

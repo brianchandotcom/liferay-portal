@@ -549,8 +549,7 @@
 		},
 		'',
 		{
-			requires: ['aui-live-search', 'dd', 'liferay-layout'],
-			use: []
+			requires: ['aui-live-search', 'dd', 'liferay-layout']
 		}
 	);
 

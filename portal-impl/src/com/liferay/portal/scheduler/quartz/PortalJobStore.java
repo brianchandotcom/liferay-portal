@@ -27,6 +27,7 @@ import org.quartz.impl.jdbcjobstore.MSSQLDelegate;
 import org.quartz.impl.jdbcjobstore.NoSuchDelegateException;
 import org.quartz.impl.jdbcjobstore.PostgreSQLDelegate;
 import org.quartz.impl.jdbcjobstore.StdJDBCDelegate;
+import org.quartz.impl.jdbcjobstore.SybaseDelegate;
 
 /**
  * @author Brian Wing Shun Chan

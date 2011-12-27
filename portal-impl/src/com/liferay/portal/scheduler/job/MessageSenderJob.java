@@ -146,7 +146,8 @@ public class MessageSenderJob implements Job {
 		}
 	}
 
-	protected void notifyClusterMember(TriggerKey triggerKey, StorageType storageType)
+	protected void notifyClusterMember(
+			TriggerKey triggerKey, StorageType storageType)
 		throws Exception {
 
 		MethodHandler methodHandler = new MethodHandler(

@@ -116,8 +116,6 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element dlFileEntriesElement = entriesElement.addElement(
 			"dl-file-entries");
 		Element dlFileRanksElement = entriesElement.addElement("dl-file-ranks");
-		Element igFoldersElement = entriesElement.addElement("ig-folders");
-		Element igImagesElement = entriesElement.addElement("ig-images");
 
 		List<BlogsEntry> entries = BlogsEntryUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
@@ -126,7 +124,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportEntry(
 				portletDataContext, entriesElement, dlFileEntryTypesElement,
 				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				igFoldersElement, igImagesElement, entry, false);
+				entry, false);
 		}
 
 		return document.formattedString();
@@ -180,8 +178,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element entriesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element igFoldersElement, Element igImagesElement, BlogsEntry entry,
-			boolean checkDateRange)
+			BlogsEntry entry, boolean checkDateRange)
 		throws Exception {
 
 		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
@@ -212,8 +209,8 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		String content = JournalPortletDataHandlerImpl.exportReferencedContent(
 			portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-			dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
-			igImagesElement, entryElement, entry.getContent(), checkDateRange);
+			dlFileEntriesElement, dlFileRanksElement, entryElement,
+			entry.getContent(), checkDateRange);
 
 		entry.setContent(content);
 

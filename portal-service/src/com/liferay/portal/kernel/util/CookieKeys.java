@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.util;
 
 /**
+ * All keys defined in this interface should be in upper case to avoid the
+ * runtime {@link String#toUpperCase()} conversion.
+ *
  * @author Brian Wing Shun Chan
  * @author Minhchau Dang
  */
@@ -28,7 +31,7 @@ public interface CookieKeys {
 
 	public static final String ID = "ID";
 
-	public static final String JSESSIONID = "jsessionid";
+	public static final String JSESSIONID = "JSESSIONID";
 
 	public static final String LOGIN = "LOGIN";
 

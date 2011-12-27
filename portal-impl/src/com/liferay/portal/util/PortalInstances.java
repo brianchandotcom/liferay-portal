@@ -165,7 +165,7 @@ public class PortalInstances {
 
 		if (companyId <= 0) {
 			long cookieCompanyId = GetterUtil.getLong(
-				CookieKeys.getCookie(request, CookieKeys.COMPANY_ID));
+				CookieKeys.getCookie(request, CookieKeys.COMPANY_ID, false));
 
 			if (cookieCompanyId > 0) {
 				try {

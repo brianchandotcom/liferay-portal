@@ -90,7 +90,13 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 	}
 
 	public static String getCookie(HttpServletRequest request, String name) {
-		String value = CookieUtil.get(request, name);
+		return getCookie(request, name, true);
+	}
+
+	public static String getCookie(
+		HttpServletRequest request, String name, boolean doNameUpperCase) {
+
+		String value = CookieUtil.get(request, name, doNameUpperCase);
 
 		if ((value != null) && isEncodedCookie(name)) {
 			try {
@@ -172,7 +178,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 	}
 
 	public static boolean hasSessionId(HttpServletRequest request) {
-		String jsessionid = getCookie(request, JSESSIONID);
+		String jsessionid = getCookie(request, JSESSIONID, false);
 
 		if (jsessionid != null) {
 			return true;
@@ -199,7 +205,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 		if (PropsValues.SESSION_ENABLE_PERSISTENT_COOKIES &&
 			PropsValues.SESSION_TEST_COOKIE_SUPPORT) {
 
-			String cookieSupport = getCookie(request, COOKIE_SUPPORT);
+			String cookieSupport = getCookie(request, COOKIE_SUPPORT, false);
 
 			if (Validator.isNull(cookieSupport)) {
 				throw new CookieNotSupportedException();

@@ -312,7 +312,7 @@ public class ServicePreAction extends Action {
 				// User previously set their preferred language
 
 				String languageId = CookieKeys.getCookie(
-					request, CookieKeys.GUEST_LANGUAGE_ID);
+					request, CookieKeys.GUEST_LANGUAGE_ID, false);
 
 				if (Validator.isNotNull(languageId)) {
 					locale = LocaleUtil.fromLanguageId(languageId);

@@ -30,9 +30,19 @@ import javax.servlet.http.HttpServletRequest;
 public class CookieUtil {
 
 	public static String get(HttpServletRequest request, String name) {
+		return get(request, name, true);
+	}
+
+	public static String get(
+		HttpServletRequest request, String name, boolean doNameUpperCase) {
+
 		Map<String, Cookie> cookieMap = _getCookieMap(request);
 
-		Cookie cookie = cookieMap.get(name.toUpperCase());
+		if (doNameUpperCase) {
+			name = name.toUpperCase();
+		}
+
+		Cookie cookie = cookieMap.get(name);
 
 		if (cookie == null) {
 			return null;

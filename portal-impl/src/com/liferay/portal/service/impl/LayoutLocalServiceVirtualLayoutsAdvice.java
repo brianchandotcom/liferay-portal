@@ -382,15 +382,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 		try {
 			SitesUtil.applyLayoutPrototype(layoutPrototype, layout, true);
-
-			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-
-			typeSettingsProperties = layout.getTypeSettingsProperties();
-
-			typeSettingsProperties.setProperty(
-				"last-merge-time", String.valueOf(modifiedDate.getTime()));
-
-			LayoutLocalServiceUtil.updateLayout(layout, false);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

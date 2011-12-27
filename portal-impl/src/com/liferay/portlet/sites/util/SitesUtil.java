@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -149,7 +150,7 @@ public class SitesUtil {
 		serviceContext.setAttribute(
 			"layoutPrototypeUuid", layoutPrototype.getUuid());
 
-		targetLayout = LayoutServiceUtil.updateLayout(
+		targetLayout = LayoutLocalServiceUtil.updateLayout(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(),
 			targetLayout.getParentLayoutId(), targetLayout.getNameMap(),
@@ -159,7 +160,7 @@ public class SitesUtil {
 			targetLayout.getFriendlyURL(), targetLayout.getIconImage(), null,
 			serviceContext);
 
-		targetLayout = LayoutServiceUtil.updateLayout(
+		targetLayout = LayoutLocalServiceUtil.updateLayout(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(),
 			layoutPrototypeLayout.getTypeSettings());
@@ -171,6 +172,25 @@ public class SitesUtil {
 		copyPortletSetups(layoutPrototypeLayout, targetLayout);
 
 		copyLookAndFeel(targetLayout, layoutPrototypeLayout);
+
+		targetLayout = LayoutLocalServiceUtil.getLayout(targetLayout.getPlid());
+
+		UnicodeProperties typeSettingsProperties =
+			targetLayout.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"last-merge-time",
+			String.valueOf(targetLayout.getModifiedDate().getTime()));
+
+		LayoutLocalServiceUtil.updateLayout(targetLayout, false);
+
+		UnicodeProperties prototypeTypeSettingsProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		prototypeTypeSettingsProperties.setProperty(
+			"merge-fail-count", "0");
+
+		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout, false);
 	}
 
 	public static void applyLayoutSetPrototypes(
@@ -275,12 +295,12 @@ public class SitesUtil {
 	public static void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
-		LayoutServiceUtil.updateLookAndFeel(
+		LayoutLocalServiceUtil.updateLookAndFeel(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
 			sourceLayout.getColorSchemeId(), sourceLayout.getCss(), false);
 
-		LayoutServiceUtil.updateLookAndFeel(
+		LayoutLocalServiceUtil.updateLookAndFeel(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(), sourceLayout.getWapThemeId(),
 			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);

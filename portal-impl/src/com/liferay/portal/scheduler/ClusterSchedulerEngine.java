@@ -238,6 +238,35 @@ public class ClusterSchedulerEngine
 		}
 	}
 
+	public void initialize() throws SchedulerException {
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return;
+		}
+
+		try {
+			ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+			_readLock = readWriteLock.readLock();
+			_writeLock = readWriteLock.writeLock();
+
+			_localClusterNodeAddress = getSerializedString(
+				ClusterExecutorUtil.getLocalClusterNodeAddress());
+
+			_clusterEventListener = new MemorySchedulerClusterEventListener();
+
+			ClusterExecutorUtil.addClusterEventListener(_clusterEventListener);
+
+			if (!isMemorySchedulerClusterLockOwner(
+					lockMemorySchedulerCluster(null))) {
+
+				initMemoryClusteredJobs();
+			}
+		}
+		catch (Exception e) {
+			throw new SchedulerException("Unable to initialize scheduler", e);
+		}
+	}
+
 	@Clusterable
 	public void pause(String groupName) throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
@@ -447,29 +476,6 @@ public class ClusterSchedulerEngine
 	public void start() throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
-		}
-
-		try {
-			ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
-			_readLock = readWriteLock.readLock();
-			_writeLock = readWriteLock.writeLock();
-
-			_localClusterNodeAddress = getSerializedString(
-				ClusterExecutorUtil.getLocalClusterNodeAddress());
-
-			_clusterEventListener = new MemorySchedulerClusterEventListener();
-
-			ClusterExecutorUtil.addClusterEventListener(_clusterEventListener);
-
-			if (!isMemorySchedulerClusterLockOwner(
-					lockMemorySchedulerCluster(null))) {
-
-				initMemoryClusteredJobs();
-			}
-		}
-		catch (Exception e) {
-			throw new SchedulerException("Unable to start scheduler", e);
 		}
 
 		_schedulerEngine.start();

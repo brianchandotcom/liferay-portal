@@ -373,10 +373,8 @@ AUI().add(
 
 											var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
 
-											if (attributeName === 'predefinedValue') {
-												if (instanceOf(field, A.FormBuilderMultipleChoiceField)) {
-													attributeValue = A.JSON.stringify(AArray(attributeValue));
-												}
+											if (attributeName === 'predefinedValue' && instanceOf(field, A.FormBuilderMultipleChoiceField)) {
+												attributeValue = A.JSON.stringify(AArray(attributeValue));
 											}
 
 											buffer.push(

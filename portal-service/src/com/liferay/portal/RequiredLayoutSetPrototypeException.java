@@ -19,21 +19,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RequiredSiteTemplateException extends PortalException {
+public class RequiredLayoutSetPrototypeException extends PortalException {
 
-	public RequiredSiteTemplateException() {
+	public RequiredLayoutSetPrototypeException() {
 		super();
 	}
 
-	public RequiredSiteTemplateException(String msg) {
+	public RequiredLayoutSetPrototypeException(String msg) {
 		super(msg);
 	}
 
-	public RequiredSiteTemplateException(String msg, Throwable cause) {
+	public RequiredLayoutSetPrototypeException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public RequiredSiteTemplateException(Throwable cause) {
+	public RequiredLayoutSetPrototypeException(Throwable cause) {
 		super(cause);
 	}
 

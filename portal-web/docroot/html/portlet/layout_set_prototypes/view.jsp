@@ -24,7 +24,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 %>
 
-<liferay-ui:error exception="<%= RequiredSiteTemplateException.class %>" message="you-cannot-delete-this-site-template-that-related-to-a-site" />
+<liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-being-used-by-a-site" />
 
 <liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp">
 	<liferay-util:param name="toolbarItem" value="view-all" />

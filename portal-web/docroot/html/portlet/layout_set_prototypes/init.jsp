@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.NoSuchLayoutSetPrototypeException" %><%@
-page import="com.liferay.portal.RequiredSiteTemplateException" %><%@
+page import="com.liferay.portal.RequiredLayoutSetPrototypeException" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %>

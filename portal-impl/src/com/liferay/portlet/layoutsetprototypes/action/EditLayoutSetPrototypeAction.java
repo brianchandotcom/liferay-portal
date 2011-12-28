@@ -15,7 +15,7 @@
 package com.liferay.portlet.layoutsetprototypes.action;
 
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
-import com.liferay.portal.RequiredSiteTemplateException;
+import com.liferay.portal.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -76,17 +76,14 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 				setForward(
 					actionRequest, "portlet.layout_set_prototypes.error");
 			}
-			else if (e instanceof RequiredSiteTemplateException) {
-
+			else if (e instanceof RequiredLayoutSetPrototypeException) {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
-				if (cmd.equals(Constants.DELETE)) {
-					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
+				String redirect = PortalUtil.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
 
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
 				}
 			}
 			else {

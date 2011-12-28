@@ -409,7 +409,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		long classPK = ParamUtil.getLong(request, "classPK");
 
-		attachedModel.setClassPK(classPK);
+		if (classPK > 0) {
+			attachedModel.setClassPK(classPK);
+		}
 	}
 
 	protected void updateAuditedModel(BaseModel<?> baseModel) throws Exception {

@@ -100,6 +100,7 @@ public class AddDLDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Document Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

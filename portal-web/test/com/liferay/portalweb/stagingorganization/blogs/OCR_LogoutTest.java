@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class OCR_LogoutTest extends BaseTestCase {
 	public void testOCR_Logout() throws Exception {
+		selenium.open("/web/guest/home/");
+
 		for (int second = 0;; second++) {
 			if (second >= 90) {
 				fail("timeout");

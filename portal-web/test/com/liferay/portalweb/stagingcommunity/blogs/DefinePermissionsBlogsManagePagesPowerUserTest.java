@@ -84,7 +84,7 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']",
 				"User Personal Site"));
-		selenium.clickAt("xPath=(//a[@class='permission-scope-delete'])[1]",
+		selenium.clickAt("//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span/a",
 			RuntimeVariables.replace("x"));
 
 		for (int second = 0;; second++) {
@@ -143,7 +143,7 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']",
 				"User Personal Site"));
-		selenium.clickAt("xPath=(//a[@class='permission-scope-delete'])[1]",
+		selenium.clickAt("//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']/span/a",
 			RuntimeVariables.replace("x"));
 
 		for (int second = 0;; second++) {

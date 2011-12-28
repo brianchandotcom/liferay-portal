@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[1]/span/span</td>
+	<td>//body[contains(@class,'live-view')]</td>
 	<td>Live View</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[2]/span/span/span</td>
+	<td>//body[contains(@class,'local-staging')]</td>
 	<td>Staging View</td>
 </tr>
 <tr>
@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[2]/span/span/span</td>
+	<td>//body[contains(@class,'local-staging')]</td>
 	<td>Staging View</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[1]/span/span</td>
+	<td>//body[contains(@class,'live-view')]</td>
 	<td>Live View</td>
 </tr>
 <tr>
@@ -74,29 +74,44 @@
 	<td>Document Library Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[@class='document-link']</td>
 	<td>DL Document Title</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//a[@id='_170_0publishNowLink']</td>
+	<td>clickAt</td>
+	<td>//strong/a</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Publish to Live Now</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_170_0publishNowLink']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Change Selection']</td>
-	<td>Change Selection</td>
 </tr>
 <tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Change Selection']</td>
+	<td>Change Selection</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -127,6 +142,11 @@
 	<td>assertText</td>
 	<td>//li/ul/li[1]/div/div[4]</td>
 	<td>Document Library Test Page</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@class='aui-helper-clearfix aui-tree-node-content aui-tree-data-content aui-tree-node-content aui-tree-node-io-content aui-tree-node-check-content aui-tree-node-task-content lfr-root-node aui-tree-node-selected aui-tree-expanded']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -214,12 +234,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
@@ -228,7 +253,6 @@
 	<td>Are you sure you want to publish these pages?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

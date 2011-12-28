@@ -67,8 +67,9 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Select All"));
 				assertTrue(selenium.isChecked(
 						"xPath=(//input[@name='_125_allRowIds'])[2]"));
-				selenium.clickAt("//input[@value='Deactivate']",
-					RuntimeVariables.replace("Deactivate"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Deactivate']"));
+				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
 

@@ -257,29 +257,18 @@ public class AddUserPowerUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 3:
-
-				boolean newPasswordVisible1 = selenium.isElementPresent(
-						"//span/input");
-
-				if (!newPasswordVisible1) {
-					label = 4;
-
-					continue;
-				}
-
+				Thread.sleep(5000);
 				selenium.type("password1", RuntimeVariables.replace("test"));
 				selenium.type("password2", RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 
-			case 4:
-
 				boolean passwordReminderVisible1 = selenium.isElementPresent(
 						"reminderQueryAnswer");
 
 				if (!passwordReminderVisible1) {
-					label = 5;
+					label = 4;
 
 					continue;
 				}
@@ -293,7 +282,7 @@ public class AddUserPowerUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 
-			case 5:
+			case 4:
 				selenium.open("/web/guest/home/");
 
 				for (int second = 0;; second++) {
@@ -343,7 +332,7 @@ public class AddUserPowerUserTest extends BaseTestCase {
 						"_58_rememberMeCheckbox");
 
 				if (rememberMeCheckboxChecked2) {
-					label = 6;
+					label = 5;
 
 					continue;
 				}
@@ -351,7 +340,7 @@ public class AddUserPowerUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
 
-			case 6:
+			case 5:
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");

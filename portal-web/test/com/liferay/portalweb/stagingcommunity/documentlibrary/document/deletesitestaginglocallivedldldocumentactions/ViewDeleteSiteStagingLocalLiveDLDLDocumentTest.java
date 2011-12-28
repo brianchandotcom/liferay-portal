@@ -47,9 +47,9 @@ public class ViewDeleteSiteStagingLocalLiveDLDLDocumentTest extends BaseTestCase
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[1]/span/span"));
+				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//a[@class='document-link']"));
 		selenium.clickAt("//a[@class='document-link']",
@@ -77,9 +77,9 @@ public class ViewDeleteSiteStagingLocalLiveDLDLDocumentTest extends BaseTestCase
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+				"//body[contains(@class,'local-staging')]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[1]/span/span"));
+				"//body[contains(@class,'live-view')]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

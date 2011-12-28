@@ -71,7 +71,6 @@ public class BlogsTests extends BaseTests {
 		testSuite.addTestSuite(
 			Guest_AssertBlogsEntryOrganizationSiteTest.class);
 		testSuite.addTestSuite(LoginTest.class);
-		testSuite.addTestSuite(DeactivateStagingOrganizationSiteTest.class);
 		testSuite.addTestSuite(
 			TearDownWorkflowConfigurationOrganizationSiteTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryOrganizationSiteTest.class);

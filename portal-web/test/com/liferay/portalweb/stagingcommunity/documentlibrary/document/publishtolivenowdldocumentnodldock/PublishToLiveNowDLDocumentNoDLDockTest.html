@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[1]/span/span</td>
+	<td>//body[contains(@class,'live-view')]</td>
 	<td>Live View</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[2]/span/span/span</td>
+	<td>//body[contains(@class,'local-staging')]</td>
 	<td>Staging View</td>
 </tr>
 <tr>
@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[2]/span/span/span</td>
+	<td>//body[contains(@class,'local-staging')]</td>
 	<td>Staging View</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='staging-bar']/ul/li[1]/span/span</td>
+	<td>//body[contains(@class,'live-view')]</td>
 	<td>Live View</td>
 </tr>
 <tr>
@@ -74,24 +74,44 @@
 	<td>The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging.</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[@class='document-link']</td>
 	<td>DL Document Title</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//a[@id='_170_0publishNowLink']</td>
+	<td>clickAt</td>
+	<td>//strong/a</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Publish to Live Now</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_170_0publishNowLink']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[2]/div[1]/a</td>
 	<td>Plus</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>store</td>
@@ -159,7 +179,7 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
@@ -168,7 +188,6 @@
 	<td>Are you sure you want to publish these pages?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

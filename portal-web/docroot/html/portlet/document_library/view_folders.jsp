@@ -295,7 +295,7 @@ if (folder != null) {
 								catch (Exception e) {
 							%>
 
-									<li class="folder error" title='<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>'>
+									<li class="folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 										<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 										<span class="browse-folder">

@@ -129,7 +129,7 @@
 		}
 
 		&.error:hover {
-			background-color: #FFDDDD;
+			background-color: #FDD;
 		}
 
 		.active-area, .active-area.hover {

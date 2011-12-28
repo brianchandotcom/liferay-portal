@@ -1,5 +1,9 @@
 <#include "../init.ftl">
 
+<#if !(fields?? && fields.get(fieldName)??) && (fieldRawValue == "")>
+	<#assign fieldRawValue = predefinedValue>
+</#if>
+
 <#if fieldRawValue == "">
 	<#assign fieldRawValue = "[]">
 </#if>

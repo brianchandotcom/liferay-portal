@@ -1438,10 +1438,11 @@ AUI.add(
 
 					_resetTagsProperties: function(event) {
 						var instance = this;
+						var namespace = instance._prefixedPortletId;
 
 						var contextPanel = event.currentTarget;
 						var boundingBox = contextPanel.get('boundingBox');
-						var propertiesTrigger = boundingBox.one('fieldset#tagProperties');
+						var propertiesTrigger = boundingBox.one('fieldset#' + namespace + 'tagProperties');
 
 						var autoFieldsInstance = propertiesTrigger.getData('autoFieldsInstance');
 

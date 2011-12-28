@@ -148,12 +148,12 @@ else {
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{
-			contentBox: 'fieldset#tagProperties',
+			contentBox: 'fieldset#<portlet:namespace />tagProperties',
 			fieldIndexes: '<portlet:namespace />tagPropertiesIndexes'
 		}
 	).render();
 
-	var tagPropertiesTrigger = A.one('fieldset#tagProperties');
+	var tagPropertiesTrigger = A.one('fieldset#<portlet:namespace />tagProperties');
 
 	if (tagPropertiesTrigger) {
 		tagPropertiesTrigger.setData('autoFieldsInstance', autoFields);

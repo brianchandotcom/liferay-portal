@@ -172,12 +172,12 @@ else {
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{
-			contentBox: 'fieldset#categoryProperties',
+			contentBox: 'fieldset#<portlet:namespace />categoryProperties',
 			fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes'
 		}
 	).render();
 
-	var categoryPropertiesTrigger = A.one('fieldset#categoryProperties');
+	var categoryPropertiesTrigger = A.one('fieldset#<portlet:namespace />categoryProperties');
 
 	if (categoryPropertiesTrigger) {
 		categoryPropertiesTrigger.setData('autoFieldsInstance', autoFields);

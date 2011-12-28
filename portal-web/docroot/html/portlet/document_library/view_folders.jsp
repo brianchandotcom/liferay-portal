@@ -109,10 +109,6 @@ if (folder != null) {
 	</div>
 </div>
 
-<div class="portlet-msg-error aui-helper-hidden" id="<portlet:namespace />errorContainer">
-	<liferay-ui:message key="your-request-failed-to-complete" />
-</div>
-
 <div class="body-row">
 	<div id="<portlet:namespace />listViewContainer">
 		<div class="folder-display-style lfr-list-view-content" id="<portlet:namespace />folderContainer">

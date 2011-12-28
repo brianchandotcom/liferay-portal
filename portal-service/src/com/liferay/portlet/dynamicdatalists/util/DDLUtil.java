@@ -34,6 +34,9 @@ import java.util.Map;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eduardo Lundgren
  */
@@ -103,6 +106,22 @@ public class DDLUtil {
 		return getDDL().getTemplateContent(
 			ddmTemplateId, recordSet, themeDisplay, renderRequest,
 			renderResponse);
+	}
+
+	public static void getRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception {
+
+		getDDL().sendRecordFileUpload(request, response, record, fieldName);
+	}
+
+	public static void sendRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			long recordId, String fieldName)
+		throws Exception {
+
+		getDDL().sendRecordFileUpload(request, response, recordId, fieldName);
 	}
 
 	public static String storeRecordFieldFile(

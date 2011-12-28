@@ -587,8 +587,6 @@
 
 		<action path="/dynamic_data_list_display/edit_record_file" type="com.liferay.portlet.dynamicdatalists.action.EditRecordFileAction" />
 
-		<action path="/dynamic_data_list_display/get_file_upload" type="com.liferay.portlet.dynamicdatalists.action.GetFileUploadAction" />
-
 		<action path="/dynamic_data_list_display/view" forward="portlet.dynamic_data_list_display.view" />
 
 		<action path="/dynamic_data_list_display/view_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
@@ -616,8 +614,6 @@
 		</action>
 
 		<action path="/dynamic_data_lists/export" type="com.liferay.portlet.dynamicdatalists.action.ExportRecordSetAction" />
-
-		<action path="/dynamic_data_lists/get_file_upload" type="com.liferay.portlet.dynamicdatalists.action.GetFileUploadAction" />
 
 		<action path="/dynamic_data_lists/view" forward="portlet.dynamic_data_lists.view" />
 

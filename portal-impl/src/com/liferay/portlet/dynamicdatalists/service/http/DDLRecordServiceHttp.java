@@ -134,6 +134,42 @@ public class DDLRecordServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord(
+		HttpPrincipal httpPrincipal, long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
+					"getRecord", _getRecordParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, recordId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.dynamicdatalists.model.DDLRecord)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
 		HttpPrincipal httpPrincipal, long recordId, boolean majorVersion,
 		int displayIndex,
@@ -144,7 +180,7 @@ public class DDLRecordServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
-					"updateRecord", _updateRecordParameterTypes2);
+					"updateRecord", _updateRecordParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					recordId, majorVersion, displayIndex, fields, mergeFields,
@@ -185,7 +221,7 @@ public class DDLRecordServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
-					"updateRecord", _updateRecordParameterTypes3);
+					"updateRecord", _updateRecordParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					recordId, displayIndex, fieldsMap, mergeFields,
@@ -227,12 +263,15 @@ public class DDLRecordServiceHttp {
 			long.class, long.class, int.class, java.util.Map.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateRecordParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getRecordParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateRecordParameterTypes3 = new Class[] {
 			long.class, boolean.class, int.class,
 			com.liferay.portlet.dynamicdatamapping.storage.Fields.class,
 			boolean.class, com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateRecordParameterTypes3 = new Class[] {
+	private static final Class<?>[] _updateRecordParameterTypes4 = new Class[] {
 			long.class, int.class, java.util.Map.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

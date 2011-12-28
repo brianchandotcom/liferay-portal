@@ -821,6 +821,7 @@ Liferay.Service.registerClass(
 	Liferay.Service.DDL, "DDLRecord",
 	{
 		addRecord: true,
+		getRecord: true,
 		updateRecord: true
 	}
 );

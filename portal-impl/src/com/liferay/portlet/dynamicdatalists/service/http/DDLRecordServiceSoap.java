@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.dynamicdatalists.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -58,4 +65,19 @@ package com.liferay.portlet.dynamicdatalists.service.http;
  * @generated
  */
 public class DDLRecordServiceSoap {
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap getRecord(
+		long recordId) throws RemoteException {
+		try {
+			com.liferay.portlet.dynamicdatalists.model.DDLRecord returnValue = DDLRecordServiceUtil.getRecord(recordId);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(DDLRecordServiceSoap.class);
 }

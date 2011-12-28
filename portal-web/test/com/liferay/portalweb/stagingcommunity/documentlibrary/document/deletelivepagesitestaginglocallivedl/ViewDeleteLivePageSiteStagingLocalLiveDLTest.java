@@ -44,25 +44,63 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[1]/span/span"));
+				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+				"//body[contains(@class,'local-staging')]"));
 		assertFalse(selenium.isElementPresent("link=Document Library Test Page"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam live-view controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue yui3-skin-sam staging local-staging controls-visible signed-in public-page dockbar-ready staging-ready']"));
+				"//body[contains(@class,'local-staging')]"));
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DL Document Title")
+										.equals(selenium.getText(
+								"//a[@class='document-link']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//a[@class='document-link']"));
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DL Document Title")
+										.equals(selenium.getText(
+								"//h2[@class='document-title']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("DL Document Description"),

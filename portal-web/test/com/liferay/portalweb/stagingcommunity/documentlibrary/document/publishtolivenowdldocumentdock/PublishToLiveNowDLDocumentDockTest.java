@@ -52,9 +52,9 @@ public class PublishToLiveNowDLDocumentDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
-						"//div[@class='staging-bar']/ul/li[1]/span/span"));
+						"//body[contains(@class,'live-view')]"));
 				assertFalse(selenium.isElementPresent(
-						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+						"//body[contains(@class,'local-staging')]"));
 				assertEquals(RuntimeVariables.replace(
 						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
@@ -64,17 +64,39 @@ public class PublishToLiveNowDLDocumentDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isElementPresent(
-						"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+						"//body[contains(@class,'local-staging')]"));
 				assertFalse(selenium.isElementPresent(
-						"//div[@class='staging-bar']/ul/li[1]/span/span"));
+						"//body[contains(@class,'live-view')]"));
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("DL Document Title"),
 					selenium.getText("//a[@class='document-link']"));
-				assertTrue(selenium.isElementPresent(
-						"//a[@id='_170_0publishNowLink']"));
-				selenium.clickAt("//a[@id='_170_0publishNowLink']",
+				selenium.clickAt("//strong/a",
+					RuntimeVariables.replace("Staging"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 					RuntimeVariables.replace("Publish to Live Now"));
 
 				for (int second = 0;; second++) {
@@ -92,6 +114,8 @@ public class PublishToLiveNowDLDocumentDockTest extends BaseTestCase {
 
 					Thread.sleep(1000);
 				}
+
+				Thread.sleep(5000);
 
 				boolean documentLibraryVisible = selenium.isVisible(
 						"_88_PORTLET_DATA_20Checkbox");
@@ -161,8 +185,8 @@ public class PublishToLiveNowDLDocumentDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//input[@value='Publish']",
-					RuntimeVariables.replace("Publish"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Publish']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));

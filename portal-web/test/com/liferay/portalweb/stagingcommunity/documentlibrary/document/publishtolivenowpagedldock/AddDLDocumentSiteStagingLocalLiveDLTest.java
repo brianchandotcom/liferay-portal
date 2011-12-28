@@ -45,9 +45,9 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+				"//body[contains(@class,'local-staging')]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[1]/span/span"));
+				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isTextPresent(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."));
 		assertFalse(selenium.isElementPresent(
@@ -94,6 +94,7 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Document Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

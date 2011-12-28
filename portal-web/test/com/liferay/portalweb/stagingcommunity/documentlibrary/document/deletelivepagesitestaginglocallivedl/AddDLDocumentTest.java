@@ -62,9 +62,9 @@ public class AddDLDocumentTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/ul/li/strong/a"));
-		Thread.sleep(5000);
 		selenium.clickAt("//span[3]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
@@ -100,6 +100,7 @@ public class AddDLDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("DL Document Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
+		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

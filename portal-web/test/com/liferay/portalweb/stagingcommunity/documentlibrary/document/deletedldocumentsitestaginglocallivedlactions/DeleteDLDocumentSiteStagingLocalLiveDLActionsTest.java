@@ -65,9 +65,9 @@ public class DeleteDLDocumentSiteStagingLocalLiveDLActionsTest
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[1]/span/span"));
+				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
-				"//div[@class='staging-bar']/ul/li[2]/span/span/span"));
+				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");

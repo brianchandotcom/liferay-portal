@@ -137,6 +137,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 
 			case 3:
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -154,8 +155,8 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//input[@value='Publish']",
-					RuntimeVariables.replace("Publish"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Publish']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));

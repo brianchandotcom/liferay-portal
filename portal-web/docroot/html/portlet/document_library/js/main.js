@@ -106,7 +106,7 @@ AUI().add(
 
 		var TOUCH = A.UA.touch;
 
-		var TPL_MESSAGES_DL = '<div class="lfr-message-response" id="dl-messages" />';
+		var TPL_MESSAGE_RESPONSE = '<div class="lfr-message-response" />';
 
 		var VIEW_ENTRIES = 'viewEntries';
 
@@ -158,7 +158,7 @@ AUI().add(
 
 						instance._selectAllCheckbox = instance.byId('allRowIdsCheckbox');
 
-						instance._portletMessageContainer = A.Node.create(TPL_MESSAGES_DL);
+						instance._portletMessageContainer = A.Node.create(TPL_MESSAGE_RESPONSE);
 
 						instance._displayStyle = instance.ns('displayStyle');
 						instance._folderId = instance.ns('folderId');
@@ -1292,10 +1292,11 @@ AUI().add(
 						var instance = this;
 
 						var output = instance._portletMessageContainer;
-						var typeClass = 'portlet-msg-' + type;
 
 						output.removeClass('portlet-msg-error').removeClass('portlet-msg-success');
-						output.addClass(typeClass);
+
+						output.addClass('portlet-msg-' + type);
+
 						output.html(message);
 
 						output.show();

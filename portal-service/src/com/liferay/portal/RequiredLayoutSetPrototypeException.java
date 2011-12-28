@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,30 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portal;
 
-<%@ page import="com.liferay.portal.NoSuchLayoutSetPrototypeException" %><%@
-page import="com.liferay.portal.RequiredLayoutSetPrototypeException" %><%@
-page import="com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
-page import="com.liferay.portal.util.CustomJspRegistryUtil" %>
+import com.liferay.portal.kernel.exception.PortalException;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class RequiredLayoutSetPrototypeException extends PortalException {
+
+	public RequiredLayoutSetPrototypeException() {
+		super();
+	}
+
+	public RequiredLayoutSetPrototypeException(String msg) {
+		super(msg);
+	}
+
+	public RequiredLayoutSetPrototypeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public RequiredLayoutSetPrototypeException(Throwable cause) {
+		super(cause);
+	}
+
+}

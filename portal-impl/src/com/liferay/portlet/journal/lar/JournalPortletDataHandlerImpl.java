@@ -1337,10 +1337,11 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			int endPos1 = content.indexOf(CharPool.APOSTROPHE, beginPos);
 			int endPos2 = content.indexOf(CharPool.CLOSE_BRACKET, beginPos);
-			int endPos3 = content.indexOf(CharPool.CLOSE_PARENTHESIS, beginPos);
-			int endPos4 = content.indexOf(CharPool.LESS_THAN, beginPos);
-			int endPos5 = content.indexOf(CharPool.QUOTE, beginPos);
-			int endPos6 = content.indexOf(CharPool.SPACE, beginPos);
+			int endPos3 = content.indexOf(CharPool.CLOSE_CURLY_BRACE, beginPos);
+			int endPos4 = content.indexOf(CharPool.CLOSE_PARENTHESIS, beginPos);
+			int endPos5 = content.indexOf(CharPool.LESS_THAN, beginPos);
+			int endPos6 = content.indexOf(CharPool.QUOTE, beginPos);
+			int endPos7 = content.indexOf(CharPool.SPACE, beginPos);
 
 			int endPos = endPos1;
 
@@ -1362,6 +1363,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if ((endPos == -1) || ((endPos6 != -1) && (endPos6 < endPos))) {
 				endPos = endPos6;
+			}
+
+			if ((endPos == -1) || ((endPos7 != -1) && (endPos7 < endPos))) {
+				endPos = endPos7;
 			}
 
 			if ((beginPos == -1) || (endPos == -1)) {

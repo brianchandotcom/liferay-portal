@@ -603,14 +603,11 @@ public class LayoutExporter {
 		Element dlFoldersElement = layoutElement.addElement("dl-folders");
 		Element dlFilesElement = layoutElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = layoutElement.addElement("dl-file-ranks");
-		Element igFoldersElement = layoutElement.addElement("ig-folders");
-		Element igImagesElement = layoutElement.addElement("ig-images");
 
 		JournalPortletDataHandlerImpl.exportArticle(
 			portletDataContext, layoutElement, layoutElement, layoutElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-			dlFileRanksElement, igFoldersElement, igImagesElement, article,
-			false);
+			dlFileRanksElement, article, false);
 	}
 
 	protected void exportLayout(

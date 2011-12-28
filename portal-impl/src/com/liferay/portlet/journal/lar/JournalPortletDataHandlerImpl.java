@@ -130,7 +130,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element structuresElement, Element templatesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element igFoldersElement, Element igImagesElement,
 			JournalArticle article, boolean checkDateRange)
 		throws Exception {
 
@@ -204,7 +203,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportTemplate(
 				portletDataContext, templatesElement, dlFileEntryTypesElement,
 				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				igFoldersElement, igImagesElement, template, checkDateRange);
+				template);
 		}
 
 		Image smallImage = ImageUtil.fetchByPrimaryKey(
@@ -262,9 +261,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			String content = exportReferencedContent(
 				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
-				igImagesElement, articleElement, article.getContent(),
-				checkDateRange);
+				dlFileEntriesElement, dlFileRanksElement, articleElement,
+				article.getContent());
 
 			article.setContent(content);
 		}
@@ -277,8 +275,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element igFoldersElement, Element igImagesElement,
-			Element entityElement, String content, boolean checkDateRange)
+			Element entityElement, String content)
 		throws Exception {
 
 		content = exportDLFileEntries(
@@ -1744,8 +1741,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element templatesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element igFoldersElement, Element igImagesElement,
-			JournalTemplate template, boolean checkDateRange)
+			JournalTemplate template)
 		throws Exception {
 
 		String path = getTemplatePath(portletDataContext, template);
@@ -1781,9 +1777,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			String content = exportReferencedContent(
 				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, igFoldersElement,
-				igImagesElement, templateElement, template.getXsl(),
-				checkDateRange);
+				dlFileEntriesElement, dlFileRanksElement, templateElement,
+				template.getXsl());
 
 			template.setXsl(content);
 		}
@@ -2137,8 +2132,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element dlFoldersElement = rootElement.addElement("dl-folders");
 		Element dlFilesElement = rootElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
-		Element igFoldersElement = rootElement.addElement("ig-folders");
-		Element igImagesElement = rootElement.addElement("ig-images");
 
 		List<JournalTemplate> templates = JournalTemplateUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
@@ -2150,8 +2143,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				exportTemplate(
 					portletDataContext, templatesElement,
 					dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-					dlFileRanksElement, igFoldersElement, igImagesElement,
-					template, true);
+					dlFileRanksElement, template);
 			}
 		}
 
@@ -2177,8 +2169,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				exportArticle(
 					portletDataContext, articlesElement, structuresElement,
 					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, igFoldersElement,
-					igImagesElement, article, true);
+					dlFilesElement, dlFileRanksElement, article, true);
 			}
 		}
 

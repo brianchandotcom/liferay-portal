@@ -223,6 +223,14 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		display: inline;
 	}
 
+	#<portlet:namespace />exportPagesFm .layout-variation-name {
+		color: #999;
+	}
+
+	#<portlet:namespace />exportPagesFm .page-not-exportable {
+		color: #933;
+	}
+
 	#<portlet:namespace />exportPagesFm .portlet-data-section legend {
 		font-size: 110%;
 	}
@@ -298,6 +306,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 					<liferay-util:param name="selectableTree" value="1" />
 					<liferay-util:param name="treeId" value="<%= treeKey %>" />
+					<liferay-util:param name="incomplete" value="<%= String.valueOf(false) %>" />
 				</liferay-util:include>
 			</div>
 

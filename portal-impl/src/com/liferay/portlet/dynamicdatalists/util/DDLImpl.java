@@ -166,39 +166,6 @@ public class DDLImpl implements DDL {
 		return fields;
 	}
 
-	public void getRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName)
-		throws Exception {
-
-		Serializable fieldValue = record.getFieldValue(fieldName);
-
-		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
-			String.valueOf(fieldValue));
-
-		String fileName = fileJSONObject.getString("name");
-		String filePath = fileJSONObject.getString("path");
-
-		InputStream is = DLStoreUtil.getFileAsStream(
-			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
-		long contentLength = DLStoreUtil.getFileSize(
-			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
-		String contentType = MimeTypesUtil.getContentType(fileName);
-
-		ServletResponseUtil.sendFile(
-			request, response, fileName, is, contentLength, contentType);
-	}
-
-	public void getRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			long recordId, String fieldName)
-		throws Exception {
-
-		DDLRecord record = DDLRecordServiceUtil.getRecord(recordId);
-
-		getRecordFileUpload(request, response, record, fieldName);
-	}
-
 	public String getRecordFileUploadPath(DDLRecord record) {
 		return "ddl_records/" + record.getRecordId();
 	}
@@ -358,6 +325,39 @@ public class DDLImpl implements DDL {
 		return _transformer.transform(
 			themeDisplay, tokens, viewMode, languageId, xml,
 			template.getScript(), template.getLanguage());
+	}
+
+	public void sendRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception {
+
+		Serializable fieldValue = record.getFieldValue(fieldName);
+
+		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(fieldValue));
+
+		String fileName = fileJSONObject.getString("name");
+		String filePath = fileJSONObject.getString("path");
+
+		InputStream is = DLStoreUtil.getFileAsStream(
+			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
+		long contentLength = DLStoreUtil.getFileSize(
+			record.getCompanyId(), CompanyConstants.SYSTEM, filePath);
+		String contentType = MimeTypesUtil.getContentType(fileName);
+
+		ServletResponseUtil.sendFile(
+			request, response, fileName, is, contentLength, contentType);
+	}
+
+	public void sendRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			long recordId, String fieldName)
+		throws Exception {
+
+		DDLRecord record = DDLRecordServiceUtil.getRecord(recordId);
+
+		sendRecordFileUpload(request, response, record, fieldName);
 	}
 
 	public String storeRecordFieldFile(

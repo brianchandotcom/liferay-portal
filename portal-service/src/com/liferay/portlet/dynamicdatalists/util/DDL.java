@@ -55,16 +55,6 @@ public interface DDL {
 			long ddmTemplateId)
 		throws PortalException, SystemException;
 
-	public void getRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName)
-		throws Exception;
-
-	public void getRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			long recordId, String fieldName)
-		throws Exception;
-
 	public String getRecordFileUploadPath(DDLRecord record);
 
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
@@ -82,6 +72,16 @@ public interface DDL {
 			long ddmTemplateId, DDLRecordSet recordSet,
 			ThemeDisplay themeDisplay, RenderRequest renderRequest,
 			RenderResponse renderResponse)
+		throws Exception;
+
+	public void sendRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception;
+
+	public void sendRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			long recordId, String fieldName)
 		throws Exception;
 
 	public String storeRecordFieldFile(

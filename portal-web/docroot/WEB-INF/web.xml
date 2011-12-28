@@ -138,11 +138,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>DDL Record File Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.DDLRecordFileServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>Facebook Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.facebook.FacebookServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -332,10 +327,6 @@
 	<servlet-mapping>
 		<servlet-name>Display Chart</servlet-name>
 		<url-pattern>/display_chart/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DDL Record File Servlet</servlet-name>
-		<url-pattern>/dynamic_data_lists/get_record_file</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Facebook Servlet</servlet-name>
@@ -728,6 +719,10 @@
 	<servlet-mapping>
 		<servlet-name>Software Catalog Servlet</servlet-name>
 		<url-pattern>/software_catalog/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Web Server Servlet</servlet-name>
+		<url-pattern>/documents/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Web Server Servlet</servlet-name>

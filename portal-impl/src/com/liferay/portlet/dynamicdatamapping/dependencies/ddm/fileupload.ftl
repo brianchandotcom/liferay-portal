@@ -17,15 +17,7 @@
 		<#assign fileName = fileJSONObject.getString("name")>
 		<#assign recordId = fileJSONObject.getString("recordId")>
 
-		<a href="
-			<@liferay_portlet.actionURL windowState="exclusive">
-				<@liferay_portlet.param name="struts_action" value="/dynamic_data_lists/get_record_file" />
-				<@liferay_portlet.param name="recordId" value=recordId />
-				<@liferay_portlet.param name="fieldName" value=fieldName />
-			</@>">
-
-			${fileName}
-		</a>
+		<a href="/documents/ddl/${recordId}/${fieldName}">${fileName}</a>
 
 		<#if !required>
 			-

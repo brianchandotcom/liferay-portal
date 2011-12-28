@@ -166,17 +166,14 @@
 					var value = instance.get('value');
 					var data = SpreadSheet.Util.parseJSON(value);
 
-					var portletURL = Liferay.PortletURL.createActionURL();
+					var url = [
+						'/documents/ddl/',
+						data.recordId,
+						'/',
+						instance.get('elementName')
+					];
 
-					portletURL.setParameter('fieldName', instance.get('elementName'));
-					portletURL.setParameter('recordId', data.recordId);
-					portletURL.setParameter('struts_action', '/dynamic_data_lists/get_record_file');
-
-					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
-
-					portletURL.setWindowState('exclusive');
-
-					location.href = portletURL.toString();
+					location.href = url.join(STR_EMPTY);
 				},
 
 				_handleException: function(exception) {

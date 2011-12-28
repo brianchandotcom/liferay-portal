@@ -294,6 +294,10 @@ public class DDMXSDImpl implements DDMXSD {
 				hiddenAttributesJSONArray.put("required");
 			}
 
+			if (type.equals(_TYPE_DDM_FILEUPLOAD)) {
+				hiddenAttributesJSONArray.put("predefinedValue");
+			}
+
 			hiddenAttributesJSONArray.put("readOnly");
 
 			jsonObject.put("hiddenAttributes", hiddenAttributesJSONArray);
@@ -475,6 +479,8 @@ public class DDMXSDImpl implements DDMXSD {
 		"com/liferay/portlet/dynamicdatamapping/dependencies/";
 
 	private static final String _TYPE_CHECKBOX = "checkbox";
+
+	private static final String _TYPE_DDM_FILEUPLOAD = "ddm-fileupload";
 
 	private static final String _TYPE_RADIO = "radio";
 

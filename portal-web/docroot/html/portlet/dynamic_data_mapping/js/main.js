@@ -15,6 +15,8 @@ AUI.add(
 		var MAP_HIDDEN_FIELD_ATTRS = {
 			checkbox: ['readOnly', 'required'],
 
+			'ddm-fileupload': ['predefinedValue'],
+
 			DEFAULT: ['readOnly']
 		};
 
@@ -673,7 +675,7 @@ AUI.add(
 					type: 'ddm-documentlibrary'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS['ddm-fileupload'],
 					iconClass: 'aui-form-builder-field-icon aui-form-builder-field-icon-fileupload',
 					label: Liferay.Language.get('file-upload'),
 					type: 'ddm-fileupload'

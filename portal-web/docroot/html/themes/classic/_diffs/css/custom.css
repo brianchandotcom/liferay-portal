@@ -44,6 +44,8 @@ hr, .separator {
 #banner {
 	background: none;
 	height: auto;
+	margin-top: 1.4em;
+	position: relative;
 }
 
 .site-title .site-name {
@@ -94,7 +96,7 @@ hr, .separator {
 	padding: 5px 5px 5px 25px;
 	position: absolute;
 	right: 0;
-	top: 1.4em;
+	top: -1.2em;
 }
 
 .ie6 #banner {

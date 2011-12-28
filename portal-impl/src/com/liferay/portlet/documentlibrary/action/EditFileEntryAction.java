@@ -51,6 +51,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -394,7 +395,33 @@ public class EditFileEntryAction extends PortletAction {
 
 		String errorMessage = null;
 
-		if (e instanceof DuplicateFileException) {
+		if (e instanceof AssetCategoryException) {
+			AssetCategoryException ace = (AssetCategoryException)e;
+
+			AssetVocabulary vocabulary = ace.getVocabulary();
+
+			String vocabularyTitle = StringPool.BLANK;
+
+			if (vocabulary != null) {
+				vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
+			}
+
+			if (ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getLocale(),
+					"please-select-at-least-one-category-for-x",
+					vocabularyTitle);
+			}
+			else if (
+				ace.getType() == AssetCategoryException.TOO_MANY_CATEGORIES) {
+
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getLocale(),
+					"you-cannot-select-more-than-one-category-for-x",
+					vocabularyTitle);
+			}
+		}
+		else if (e instanceof DuplicateFileException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getLocale(),
 				"the-folder-you-selected-already-has-an-entry-with-this-name." +

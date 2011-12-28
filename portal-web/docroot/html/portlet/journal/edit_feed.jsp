@@ -377,7 +377,9 @@ if (feed != null) {
 		<c:if test="<%= feed != null %>">
 
 			<%
-			String taglibPreviewButton = "Liferay.Util.openWindow({uri: '" + feedURL + "', title: '" + UnicodeLanguageUtil.get(pageContext, "feed") + "'});";
+			String taglibPreviewButton = "Liferay.Util.openWindow({" +
+					"dialog:{after:{render: function(event){var instance = this;setTimeout(function(){instance.iframe._bodyNode.loadingmask.hide();},1000);}}, constrain2view: true, centered: true, height: 450}," +
+					"uri: '" + feedURL + "', title: '" + UnicodeLanguageUtil.get(pageContext, "feed") + "'});";
 			%>
 
 			<aui:button onClick="<%= taglibPreviewButton %>" value="preview" />

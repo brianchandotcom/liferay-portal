@@ -48,6 +48,7 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 				selenium.clickAt("//div/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Scope: Default"));
 
@@ -81,6 +82,7 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 
 				boolean webContent1Present = selenium.isElementPresent(
 						"_15_rowIds");

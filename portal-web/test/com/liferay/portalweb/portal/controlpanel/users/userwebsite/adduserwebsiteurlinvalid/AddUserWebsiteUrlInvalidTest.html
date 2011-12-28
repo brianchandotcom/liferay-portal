@@ -69,21 +69,20 @@
 	<td>label=Business</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xpath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>waitForVisible</td>
+	<td>//div[@role='alert']</td>
+	<td>Please enter a valid URL.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xpath=(//div[@class='portlet-msg-error'])[2]</td>
+	<td>//div[@role='alert']</td>
 	<td>Please enter a valid URL.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

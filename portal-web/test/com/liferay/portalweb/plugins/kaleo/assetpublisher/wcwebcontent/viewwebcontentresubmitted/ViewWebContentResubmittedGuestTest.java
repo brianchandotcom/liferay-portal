@@ -43,8 +43,6 @@ public class ViewWebContentResubmittedGuestTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Page",
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isElementPresent("//section"));
-		assertFalse(selenium.isElementPresent("//h1/span[2]"));
 		assertFalse(selenium.isTextPresent("Web Content Name"));
 		assertFalse(selenium.isTextPresent("Web Content Content"));
 	}

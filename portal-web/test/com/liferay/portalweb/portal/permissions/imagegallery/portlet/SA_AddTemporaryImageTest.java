@@ -51,8 +51,8 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a",
 			RuntimeVariables.replace("Add Media"));
 		Thread.sleep(5000);
 
@@ -62,7 +62,7 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//tr[4]/td/a")) {
+				if (selenium.isVisible("//tr[3]/td/a")) {
 					break;
 				}
 			}
@@ -72,9 +72,9 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText("//tr[4]/td/a"));
-		selenium.click("//tr[4]/td/a");
+		assertEquals(RuntimeVariables.replace("Basic Document"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.click("//tr[3]/td/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

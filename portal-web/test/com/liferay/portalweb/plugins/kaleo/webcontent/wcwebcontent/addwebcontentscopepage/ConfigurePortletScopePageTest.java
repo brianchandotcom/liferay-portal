@@ -90,6 +90,23 @@ public class ConfigurePortletScopePageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("label=Select Layout"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//select[@id='_86_scopeLayoutUuid']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace(
 				"label=Current Page (Web Content Display Page)"));

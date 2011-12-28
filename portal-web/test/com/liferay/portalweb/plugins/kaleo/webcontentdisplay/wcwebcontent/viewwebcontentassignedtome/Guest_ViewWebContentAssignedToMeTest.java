@@ -44,8 +44,6 @@ public class Guest_ViewWebContentAssignedToMeTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isElementPresent("//section"));
-		assertFalse(selenium.isElementPresent(
-				"//h1[@class='portlet-title']/span[2]"));
+		assertFalse(selenium.isTextPresent("WC Web Content Content"));
 	}
 }

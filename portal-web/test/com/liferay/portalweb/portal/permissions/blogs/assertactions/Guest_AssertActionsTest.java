@@ -117,10 +117,10 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Email Address (Required)"),
+		assertEquals(RuntimeVariables.replace("Email Address"),
 			selenium.getText("//label[@for='_164_login']"));
 		assertTrue(selenium.isVisible("//input[@id='_164_login']"));
-		assertEquals(RuntimeVariables.replace("Password (Required)"),
+		assertEquals(RuntimeVariables.replace("Password"),
 			selenium.getText("//label[@for='_164_password']"));
 		assertTrue(selenium.isVisible("//input[@id='_164_password']"));
 		assertFalse(selenium.isChecked("//input[@id='_164_rememberMeCheckbox']"));

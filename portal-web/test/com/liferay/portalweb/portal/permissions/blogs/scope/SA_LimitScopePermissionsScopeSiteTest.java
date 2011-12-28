@@ -90,7 +90,6 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Scope Site",
 			RuntimeVariables.replace("Scope Site"));
-		selenium.selectWindow("null");
 		Thread.sleep(5000);
 		selenium.selectWindow("null");
 
@@ -100,9 +99,9 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Scope Sitex")
+				if (RuntimeVariables.replace("Scope Site")
 										.equals(selenium.getText(
-								"//span[@class='permission-scope']"))) {
+								"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span"))) {
 					break;
 				}
 			}
@@ -112,8 +111,9 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Scope Sitex"),
-			selenium.getText("//span[@class='permission-scope']"));
+		assertEquals(RuntimeVariables.replace("Scope Site"),
+			selenium.getText(
+				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -127,7 +127,7 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		assertTrue(selenium.isChecked("//td/input"));
 		assertEquals(RuntimeVariables.replace("Add Entry"),
 			selenium.getText("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Scope Sitex"),
+		assertEquals(RuntimeVariables.replace("Scope Site"),
 			selenium.getText("//tr[3]/td[3]"));
 	}
 }

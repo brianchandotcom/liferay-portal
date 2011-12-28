@@ -65,10 +65,33 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isVisible("//section"));
-				assertTrue(selenium.isElementPresent(
-						"//a[@id='_170_0publishNowLink']"));
-				selenium.clickAt("//a[@id='_170_0publishNowLink']",
+				Thread.sleep(5000);
+				selenium.clickAt("//strong/a",
+					RuntimeVariables.replace("Staging"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 					RuntimeVariables.replace("Publish to Live Now"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -154,8 +177,8 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//input[@value='Publish']",
-					RuntimeVariables.replace("Publish"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Publish']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));

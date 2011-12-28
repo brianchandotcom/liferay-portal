@@ -84,6 +84,23 @@ public class ActivateStagingOrganizationSiteTest extends BaseTestCase {
 					RuntimeVariables.replace("Edit Settings"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText(
+						"//a[@id='_165_detailsLink']", "Details"));
+				selenium.clickAt("//a[@id='_165_detailsLink']",
+					RuntimeVariables.replace("Details"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
+				selenium.clickAt("//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']",
+					RuntimeVariables.replace(
+						"Enable propagation of changes from the site template Community Site."));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isPartialText(
 						"//a[@id='_165_stagingLink']", "Staging"));
 				selenium.clickAt("//a[@id='_165_stagingLink']",
 					RuntimeVariables.replace("Staging"));

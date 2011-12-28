@@ -59,14 +59,34 @@
 	<td>Portlet</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//a[@id='_170_0publishNowLink']</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//strong/a</td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>Publish to Live Now</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_170_0publishNowLink']</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Publish to Live Now</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -139,7 +159,7 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
@@ -148,7 +168,6 @@
 	<td>Are you sure you want to publish these pages?</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

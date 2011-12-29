@@ -69,6 +69,7 @@ public class AddSubfolder2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a[2]"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",

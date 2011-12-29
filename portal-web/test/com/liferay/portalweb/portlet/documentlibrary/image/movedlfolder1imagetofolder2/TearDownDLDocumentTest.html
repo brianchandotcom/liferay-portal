@@ -24,44 +24,24 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
-	<td>iconViewNotSelected</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${iconViewNotSelected}</td>
-	<td>IconViewSelected</td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[contains(@class,'item-focused') and @title='Icon View']</td>
-	<td>Icon View Selected</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>IconViewSelected</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>eval(selenium.isElementPresent('//div[1]/a/span[1]/img'))</td>
-	<td>dlDocumentPresent</td>
+	<td>dmlDocumentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${dlDocumentPresent}</td>
-	<td>DLDocumentNotPresent</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>!${dmlDocumentPresent}</td>
+	<td>DMLDocumentNotPresent</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -99,7 +79,7 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
@@ -110,25 +90,9 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>DLDocumentNotPresent</td>
+	<td>DMLDocumentNotPresent</td>
 	<td></td>
 </tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

@@ -74,7 +74,6 @@ public class AddDLFolderImageFileNullTest extends BaseTestCase {
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

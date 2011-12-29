@@ -95,7 +95,6 @@ public class AddDLSubfolderImageTest extends BaseTestCase {
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -188,6 +187,7 @@ public class AddDLSubfolderImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download (12.9k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
-			selenium.getText("//div[2]/div[2]/div/div[2]/div[2]/div"));
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 	}
 }

@@ -24,38 +24,48 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div/a/span[1]/img'))</td>
-	<td>dlFolder1Present</td>
+	<td>eval(selenium.isElementPresent('//div[1]/a/span[1]/img'))</td>
+	<td>dmlDocumentPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${dlFolder1Present}</td>
-	<td>DLFolder1NotPresent</td>
+	<td>!${dmlDocumentPresent}</td>
+	<td>DMLDocumentNotPresent</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Check Box</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Check Box</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td>All Entries Check Box</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -80,245 +90,9 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>DLFolder1NotPresent</td>
+	<td>DMLDocumentNotPresent</td>
 	<td></td>
 </tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div/a/span[1]/img'))</td>
-	<td>dlFolder2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${dlFolder2Present}</td>
-	<td>DLFolder2NotPresent</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>DLFolder2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div/a/span[1]/img'))</td>
-	<td>dlFolder3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${dlFolder3Present}</td>
-	<td>DLFolder3NotPresent</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>DLFolder3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div/a/span[1]/img'))</td>
-	<td>dlFolder4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${dlFolder4Present}</td>
-	<td>DLFolder4NotPresent</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>DLFolder4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div/a/span[1]/img'))</td>
-	<td>dlFolder5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${dlFolder5Present}</td>
-	<td>DLFolder5NotPresent</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//form/div[1]/div/span[1]/span/span/input[2]</td>
-	<td>Document Checkbox</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>DLFolder5NotPresent</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

@@ -248,7 +248,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for Temp_DL_Folder2_Document3_Title.txt in every folder.")
+							"Searched for Temp_DL_Folder2_Document3_Title.txt everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -326,7 +326,7 @@ public class DownloadPage2DLFolder2Document3Test extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for Temp_DL_Folder2_Document3_Title.txt in every folder.")
+							"Searched for Temp_DL_Folder2_Document3_Title.txt everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;

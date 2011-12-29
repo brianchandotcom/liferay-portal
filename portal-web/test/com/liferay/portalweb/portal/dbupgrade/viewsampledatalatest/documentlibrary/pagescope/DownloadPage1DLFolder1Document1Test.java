@@ -246,7 +246,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for Temp_DL_Folder1_Document1_Title.doc in every folder.")
+							"Searched for Temp_DL_Folder1_Document1_Title.doc everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;

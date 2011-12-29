@@ -40,11 +40,37 @@ public class AddUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
+		Thread.sleep(5000);
+		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("_125_prefixId", RuntimeVariables.replace("label=Mr."));
 		selenium.type("_125_screenName", RuntimeVariables.replace("selenium01"));
@@ -53,18 +79,18 @@ public class AddUserTest extends BaseTestCase {
 		selenium.type("_125_firstName", RuntimeVariables.replace("selen01"));
 		selenium.type("_125_middleName", RuntimeVariables.replace("lenn"));
 		selenium.type("_125_lastName", RuntimeVariables.replace("nium01"));
-		selenium.select("_125_suffixId", RuntimeVariables.replace("label=PhD."));
 		selenium.select("_125_birthdayMonth",
 			RuntimeVariables.replace("label=April"));
 		selenium.select("_125_birthdayDay", RuntimeVariables.replace("label=10"));
 		selenium.select("_125_birthdayYear",
 			RuntimeVariables.replace("label=1986"));
 		selenium.select("_125_male", RuntimeVariables.replace("label=Male"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("selenium01", selenium.getValue("_125_screenName"));
 		assertEquals("test01@selenium.com",
 			selenium.getValue("_125_emailAddress"));

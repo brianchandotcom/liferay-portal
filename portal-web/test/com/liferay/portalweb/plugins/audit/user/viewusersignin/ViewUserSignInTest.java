@@ -63,7 +63,7 @@ public class ViewUserSignInTest extends BaseTestCase {
 		}
 
 		selenium.type("_1_WAR_auditportlet_toggle_id_audit_event_searchkeywords",
-			RuntimeVariables.replace("selen"));
+			RuntimeVariables.replace("selen01"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");

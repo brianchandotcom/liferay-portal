@@ -77,7 +77,7 @@ public class RatePage1DLFolder1Document1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[@id='_20_breadcrumb']/ul/li[2]/span/a")) {
+							"//div[@id='_20_breadcrumbContainer']/ul/li[2]/span/a")) {
 					break;
 				}
 			}
@@ -88,7 +88,8 @@ public class RatePage1DLFolder1Document1Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//span[@id='_20_breadcrumb']/ul/li[2]/span/a"));
+			selenium.getText(
+				"//div[@id='_20_breadcrumbContainer']/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

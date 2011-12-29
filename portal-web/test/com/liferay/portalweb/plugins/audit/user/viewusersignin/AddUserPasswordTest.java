@@ -46,9 +46,15 @@ public class AddUserPasswordTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Users", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Users and Organizations",
+					RuntimeVariables.replace("Users and Organizations"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
+					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
@@ -60,18 +66,23 @@ public class AddUserPasswordTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
-				selenium.type("_125_keywords",
-					RuntimeVariables.replace("selenium"));
+				selenium.type("//input[@name='_125_keywords']",
+					RuntimeVariables.replace("selenium01"));
 				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("selen01"),
+					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//td[2]/a",
-					RuntimeVariables.replace("User Name"));
+					RuntimeVariables.replace("selen01"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("passwordLink", RuntimeVariables.replace(""));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_passwordLink']", "Password"));
+				selenium.clickAt("//a[@id='_125_passwordLink']",
+					RuntimeVariables.replace("Password"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -79,7 +90,7 @@ public class AddUserPasswordTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("_125_password1")) {
+						if (selenium.isVisible("//input[@id='_125_password1']")) {
 							break;
 						}
 					}
@@ -89,14 +100,16 @@ public class AddUserPasswordTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("_125_password1", RuntimeVariables.replace("test"));
-				selenium.type("_125_password2", RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='_125_password1']",
+					RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='_125_password2']",
+					RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
-					selenium.getText("//section/div/div/div/div[1]"));
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 100:
 				label = -1;

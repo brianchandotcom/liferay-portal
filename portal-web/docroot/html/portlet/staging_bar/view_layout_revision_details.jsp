@@ -149,9 +149,11 @@ else {
 					<c:otherwise>
 
 						<%
-						String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
+						String submitMessage = StringPool.BLANK;
 
 						if (!pendingLayoutRevisions.isEmpty()) {
+							submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
+
 							LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
 
 							if (pendingLayoutRevision != null && (pendingLayoutRevision.getUserId() == user.getUserId())) {

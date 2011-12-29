@@ -68,6 +68,7 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow"));
 

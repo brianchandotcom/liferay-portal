@@ -599,6 +599,11 @@ set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix
 					</then>
 				</if>
 
+				<replace file="${app.server.dir}/conf/jonas.properties">
+					<replacetoken><![CDATA[jonas.development    true]]></replacetoken>
+					<replacevalue><![CDATA[jonas.development    false]]></replacevalue>
+				</replace>
+
 				<replace file="${app.server.dir}/conf/tomcat6-server.xml">
 					<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
 					<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>

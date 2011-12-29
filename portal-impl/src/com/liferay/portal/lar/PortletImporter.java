@@ -1082,9 +1082,7 @@ public class PortletImporter {
 				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
 					String userUuid = element.attributeValue("user-uuid");
 
-					long userId = portletDataContext.getUserId(userUuid);
-
-					ownerId = userId;
+					ownerId = portletDataContext.getUserId(userUuid);
 				}
 
 				if (defaultUser) {

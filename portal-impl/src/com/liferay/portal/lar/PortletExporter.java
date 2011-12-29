@@ -803,40 +803,42 @@ public class PortletExporter {
 		if (exportPortletSetup) {
 			exportPortletPreferences(
 				portletDataContext, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, false, layout, portletId,
-				portletElement, plid);
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, false, layout, plid,
+				portletId, portletElement);
 
 			exportPortletPreferences(
 				portletDataContext, portletDataContext.getScopeGroupId(),
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, false, layout, portletId,
-				portletElement, plid);
+				PortletKeys.PREFS_OWNER_TYPE_GROUP, false, layout, plid,
+				portletId, portletElement);
 
 			exportPortletPreferences(
 				portletDataContext, portletDataContext.getCompanyId(),
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY, false, layout, portletId,
-				portletElement, plid);
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY, false, layout, plid,
+				portletId, portletElement);
 		}
 
 		// Portlet preferences
 
 		if (exportPortletUserPreferences) {
-			List<PortletPreferences> portletPreferences =
+			List<PortletPreferences> portletPreferencesList =
 				PortletPreferencesLocalServiceUtil.getUserPortletPreferences(
 					plid, portletId);
 
-			for (PortletPreferences portletPreference : portletPreferences) {
+			for (PortletPreferences portletPreferences :
+					portletPreferencesList) {
+
 				boolean defaultUser = false;
 
-				if (portletPreference.getOwnerId() ==
+				if (portletPreferences.getOwnerId() ==
 						PortletKeys.PREFS_OWNER_ID_DEFAULT) {
 
 					defaultUser = true;
 				}
 
-			exportPortletPreferences(
-				portletDataContext, portletPreference.getOwnerId(),
-				PortletKeys.PREFS_OWNER_TYPE_USER, defaultUser, layout,
-				portletId, portletElement, plid);
+				exportPortletPreferences(
+					portletDataContext, portletPreferences.getOwnerId(),
+					PortletKeys.PREFS_OWNER_TYPE_USER, defaultUser, layout,
+					plid, portletId, portletElement);
 			}
 
 			try {
@@ -869,8 +871,8 @@ public class PortletExporter {
 			for (PortletItem portletItem : portletItems) {
 				exportPortletPreferences(
 					portletDataContext, portletItem.getPortletItemId(),
-					PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, false, null,
-					portletItem.getPortletId(), portletElement, plid);
+					PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, false, null, plid,
+					portletItem.getPortletId(), portletElement);
 			}
 		}
 
@@ -1062,7 +1064,7 @@ public class PortletExporter {
 			rootElement.addAttribute("archive-name", portletItem.getName());
 		}
 		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-			User user = UserLocalServiceUtil.fetchUser(ownerId);
+			User user = UserLocalServiceUtil.fetchUserById(ownerId);
 
 			if (user == null) {
 				return;
@@ -1095,8 +1097,8 @@ public class PortletExporter {
 
 	protected void exportPortletPreferences(
 			PortletDataContext portletDataContext, long ownerId, int ownerType,
-			boolean defaultUser, Layout layout, String portletId,
-			Element parentElement, long plid)
+			boolean defaultUser, Layout layout, long plid, String portletId,
+			Element parentElement)
 		throws Exception {
 
 		PortletPreferences portletPreferences = null;

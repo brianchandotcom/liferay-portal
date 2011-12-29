@@ -49,6 +49,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
@@ -793,30 +794,50 @@ public class PortletExporter {
 
 		// Portlet preferences
 
+		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+
+		if (layout != null) {
+			plid = layout.getPlid();
+		}
+
 		if (exportPortletSetup) {
 			exportPortletPreferences(
 				portletDataContext, PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, false, layout, portletId,
-				portletElement);
+				portletElement, plid);
 
 			exportPortletPreferences(
 				portletDataContext, portletDataContext.getScopeGroupId(),
 				PortletKeys.PREFS_OWNER_TYPE_GROUP, false, layout, portletId,
-				portletElement);
+				portletElement, plid);
 
 			exportPortletPreferences(
 				portletDataContext, portletDataContext.getCompanyId(),
 				PortletKeys.PREFS_OWNER_TYPE_COMPANY, false, layout, portletId,
-				portletElement);
+				portletElement, plid);
 		}
 
 		// Portlet preferences
 
 		if (exportPortletUserPreferences) {
+			List<PortletPreferences> portletPreferences =
+				PortletPreferencesLocalServiceUtil.getUserPortletPreferences(
+					plid, portletId);
+
+			for (PortletPreferences portletPreference : portletPreferences) {
+				boolean defaultUser = false;
+
+				if (portletPreference.getOwnerId() ==
+						PortletKeys.PREFS_OWNER_ID_DEFAULT) {
+
+					defaultUser = true;
+				}
+
 			exportPortletPreferences(
-				portletDataContext, defaultUserId,
-				PortletKeys.PREFS_OWNER_TYPE_USER, true, layout, portletId,
-				portletElement);
+				portletDataContext, portletPreference.getOwnerId(),
+				PortletKeys.PREFS_OWNER_TYPE_USER, defaultUser, layout,
+				portletId, portletElement, plid);
+			}
 
 			try {
 				PortletPreferences groupPortletPreferences =
@@ -849,7 +870,7 @@ public class PortletExporter {
 				exportPortletPreferences(
 					portletDataContext, portletItem.getPortletItemId(),
 					PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, false, null,
-					portletItem.getPortletId(), portletElement);
+					portletItem.getPortletId(), portletElement, plid);
 			}
 		}
 
@@ -1040,6 +1061,15 @@ public class PortletExporter {
 				"archive-user-uuid", portletItem.getUserUuid());
 			rootElement.addAttribute("archive-name", portletItem.getName());
 		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+			User user = UserLocalServiceUtil.fetchUser(ownerId);
+
+			if (user == null) {
+				return;
+			}
+
+			rootElement.addAttribute("user-uuid", user.getUserUuid());
+		}
 
 		List<Node> nodes = document.selectNodes(
 			"/portlet-preferences/preference[name/text() = " +
@@ -1066,16 +1096,10 @@ public class PortletExporter {
 	protected void exportPortletPreferences(
 			PortletDataContext portletDataContext, long ownerId, int ownerType,
 			boolean defaultUser, Layout layout, String portletId,
-			Element parentElement)
+			Element parentElement, long plid)
 		throws Exception {
 
 		PortletPreferences portletPreferences = null;
-
-		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-
-		if (layout != null) {
-			plid = layout.getPlid();
-		}
 
 		if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) ||
 			(ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) ||

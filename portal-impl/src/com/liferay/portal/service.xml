@@ -1405,6 +1405,11 @@
 			<finder-column name="ownerType" />
 			<finder-column name="plid" />
 		</finder>
+		<finder name="O_P_P" return-type="Collection">
+			<finder-column name="ownerType" />
+			<finder-column name="plid" />
+			<finder-column name="portletId" />
+		</finder>
 		<finder name="O_O_P_P" return-type="PortletPreferences" unique="true">
 			<finder-column name="ownerId" />
 			<finder-column name="ownerType" />

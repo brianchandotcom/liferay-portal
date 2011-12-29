@@ -109,6 +109,7 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=folder");
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -128,12 +129,30 @@ public class MoveDLSubfolderToFolder2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
-			RuntimeVariables.replace("DL Folder2 Name"));
+		selenium.click(RuntimeVariables.replace("//tr[4]/td[1]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.click("//input[@value='Choose This Folder']");
 		Thread.sleep(5000);
-		selenium.click("//input[@value='Choose this Folder']");
 		selenium.selectWindow("null");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("DL Folder2 Name")
+										.equals(selenium.getText(
+								"//a[@id='_20_folderName']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Move']",

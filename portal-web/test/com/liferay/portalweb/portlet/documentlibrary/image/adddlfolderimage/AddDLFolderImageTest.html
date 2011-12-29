@@ -44,6 +44,11 @@
 	<td>DL Folder Name</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
@@ -72,6 +77,11 @@
 	<td>type</td>
 	<td>//input[@id='_20_file']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentlibrary\dependencies\test_image.jpg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_20_file']</td>
+	<td>L:\projects\trunk-portal\portal-web\test\com\liferay\portalweb\portlet\documentlibrary\dependencies\test_image.jpg</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -140,10 +150,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div[2]/div/div[2]/div[2]/div</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div</td>
 	<td>Content Type image/jpeg</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -74,7 +74,6 @@ public class AddDLFolderImageTitleNullTest extends BaseTestCase {
 			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -166,6 +165,7 @@ public class AddDLFolderImageTitleNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download (12.9k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
-			selenium.getText("//div[2]/div[2]/div/div[2]/div[2]/div"));
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 	}
 }

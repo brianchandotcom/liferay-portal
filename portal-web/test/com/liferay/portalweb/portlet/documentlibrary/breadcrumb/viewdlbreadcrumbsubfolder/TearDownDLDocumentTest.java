@@ -59,7 +59,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//button[contains(@class,'item-focused') and @title='Icon View']")) {
+									"//button[contains(@class,'aui-state-active') and @title='Icon View']")) {
 							break;
 						}
 					}
@@ -69,13 +69,11 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-			case 2:
-
 				boolean dmlDocumentPresent = selenium.isElementPresent(
 						"//div[1]/a/span[1]/img");
 
 				if (!dmlDocumentPresent) {
-					label = 3;
+					label = 2;
 
 					continue;
 				}
@@ -112,35 +110,13 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
-					RuntimeVariables.replace("Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 
-			case 3:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-info']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace(
-						"There are no documents or media files in this folder."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
-
+			case 2:
 			case 100:
 				label = -1;
 			}

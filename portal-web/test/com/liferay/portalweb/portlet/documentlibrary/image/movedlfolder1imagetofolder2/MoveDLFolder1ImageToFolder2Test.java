@@ -131,7 +131,7 @@ public class MoveDLFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("DL Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//input[@value='Choose this Folder']");
+		selenium.click("//input[@value='Choose This Folder']");
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {

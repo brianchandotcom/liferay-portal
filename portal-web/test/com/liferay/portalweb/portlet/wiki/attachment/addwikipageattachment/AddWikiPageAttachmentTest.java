@@ -57,6 +57,26 @@ public class AddWikiPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//div[6]/div[1]/span[2]/a/span",
 			RuntimeVariables.replace("0 Attachments"));
 		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace(
+							"This page does not have any file attachments.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-info']"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
 				"This page does not have any file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -103,7 +123,7 @@ public class AddWikiPageAttachmentTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_36_file1']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\wiki\\wikipage\\addfrontpagecreoleimage\\dependencies\\Wiki_Attachment.jpg"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\wiki\\attachment\\addfrontpageattachment\\dependencies\\Wiki_Attachment.jpg"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -156,6 +156,7 @@ public class EditDLSubfolderImageDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download (12.9k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
-			selenium.getText("//div[2]/div[2]/div/div[2]/div[2]/div"));
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 	}
 }

@@ -99,12 +99,12 @@ public class ViewDLBreadcrumbSubfolderTest extends BaseTestCase {
 				"//div[@class='document-library-breadcrumb']"));
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
-				"//div[@class='document-library-breadcrumb']/span/ul/li[1]/span/a"));
+				"//div[@class='document-library-breadcrumb']/ul/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("DML Folder Name"),
 			selenium.getText(
-				"//div[@class='document-library-breadcrumb']/span/ul/li[2]/span/a"));
+				"//div[@class='document-library-breadcrumb']/ul/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("DML Subfolder Name"),
 			selenium.getText(
-				"//div[@class='document-library-breadcrumb']/span/ul/li[3]/span/a"));
+				"//div[@class='document-library-breadcrumb']/ul/li[3]/span/a"));
 	}
 }

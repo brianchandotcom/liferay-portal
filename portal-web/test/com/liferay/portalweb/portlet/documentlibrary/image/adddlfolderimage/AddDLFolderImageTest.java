@@ -69,6 +69,7 @@ public class AddDLFolderImageTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
@@ -100,6 +101,9 @@ public class AddDLFolderImageTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_image.jpg"));
+		selenium.type("//input[@id='_20_file']",
+			RuntimeVariables.replace(
+				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_image.jpg"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Folder Image Title"));
 		selenium.type("//textarea[@id='_20_description']",
@@ -165,6 +169,7 @@ public class AddDLFolderImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download (12.9k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
-			selenium.getText("//div[2]/div[2]/div/div[2]/div[2]/div"));
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
 	}
 }

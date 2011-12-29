@@ -27,7 +27,10 @@ import com.liferay.portal.kernel.util.URLCodec;
 
 import java.io.File;
 
+import java.lang.reflect.Method;
+
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -89,10 +92,33 @@ public class ClassPathUtil {
 
 		URL url = classloader.getResource(pathOfClass);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("build class path from: " + url);
+		}
+
+		String protocol = url.getProtocol();
+
+		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
+			try {
+				URLConnection urlConnection = url.openConnection();
+
+				Method getLocalUrlMethod =
+					urlConnection.getClass().getDeclaredMethod("getLocalURL");
+
+				getLocalUrlMethod.setAccessible(true);
+
+				url = (URL) getLocalUrlMethod.invoke(urlConnection);
+			}
+			catch (Exception e) {
+				_log.error("Failed to resolve local url from bundle.", e);
+
+				return StringPool.BLANK;
+			}
+		}
+
 		String path = URLCodec.decodeURL(url.getPath());
 
 		if (ServerDetector.isWebLogic()) {
-			String protocol = url.getProtocol();
 
 			if (protocol.equals("zip")) {
 				path = "file:".concat(path);
@@ -102,8 +128,6 @@ public class ClassPathUtil {
 		if (ServerDetector.isJBoss()) {
 			path = StringUtil.replace(
 				path, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String protocol = url.getProtocol();
 
 			if (protocol.equals("vfs")) {
 				int pos = path.indexOf(".jar/");

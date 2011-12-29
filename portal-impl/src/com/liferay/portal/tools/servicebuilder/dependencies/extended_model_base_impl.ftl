@@ -30,7 +30,12 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 
 	<#if entity.hasLocalService() && entity.hasColumns()>
 		public void persist() throws SystemException {
-			${entity.name}LocalServiceUtil.update${entity.name}(this);
+			if (this.isNew()) {
+				${entity.name}LocalServiceUtil.add${entity.name}(this);
+			}
+			else {
+				${entity.name}LocalServiceUtil.update${entity.name}(this);
+			}
 		}
 	</#if>
 

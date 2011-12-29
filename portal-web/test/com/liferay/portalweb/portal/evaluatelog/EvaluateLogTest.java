@@ -58,6 +58,16 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			// LPS-23498
+
+			if (line.contains(
+					"JBREM00200: Remote connection failed: " +
+					"java.io.IOException: An existing connection was " +
+					"forcibly closed by the remote host")) {
+
+				continue;
+			}
+
 			if (line.matches(
 					".*The web application \\[.*\\] appears to have started " +
 						"a thread.*")) {

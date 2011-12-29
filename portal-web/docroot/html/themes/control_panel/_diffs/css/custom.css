@@ -700,6 +700,15 @@ body.portal-popup:after, body.portal-popup:before {
 	padding: 10px 5px;
 	padding-left: 25px;
 	position: relative;
+
+	.warn {
+		display: block;
+		margin: 0;
+
+		strong {
+			color: #B00;
+		}
+	}
 }
 
 .portlet-description .hide-notices-control {

@@ -72,7 +72,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 
 				<liferay-ui:search-container>
 					<liferay-ui:search-container-results
-						results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid(), searchContainer.getStart(), searchContainer.getEnd(), new LayoutRevisionIdComparator(false)) %>"
+						results="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisions(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(false)) %>"
 						total="<%= LayoutRevisionLocalServiceUtil.getLayoutRevisionsCount(rootLayoutRevision.getLayoutSetBranchId(), rootLayoutRevision.getLayoutBranchId(), rootLayoutRevision.getPlid()) %>"
 					/>
 
@@ -207,7 +207,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						/>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 				</liferay-ui:search-container>
 			</div>
 

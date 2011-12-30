@@ -148,9 +148,14 @@ html > .lfr-dockbar-pinned {
 		display: block;
 	}
 
+	.current-version-pointer {
+		display: inline-block;
+		width: 0;
+	}
+
 	.current-version-pointer img {
-		left: 5px;
-		position: absolute;
+		left: -25px;
+		position: relative;
 	}
 
 	.layout-variation-name {

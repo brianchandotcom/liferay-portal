@@ -122,7 +122,7 @@ if (folder != null) {
 
 						<liferay-portlet:renderURL varImpl="viewDocumentsHomeURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 							<portlet:param name="entryStart" value="0" />
 							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 							<portlet:param name="folderStart" value="0" />
@@ -140,12 +140,12 @@ if (folder != null) {
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 							<c:if test="<%= (foldersCount > 0) %>">
-								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
+								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
 									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 								</a>
 							</c:if>
 
-							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-view-folders="<%= Boolean.FALSE.toString() %>" data-title="<%= LanguageUtil.get(pageContext, "home") %>" href="<%= viewDocumentsHomeURL.toString() %>">
+							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-navigation="home" data-view-folders="<%= Boolean.FALSE.toString() %>" data-title="<%= LanguageUtil.get(pageContext, "home") %>" href="<%= viewDocumentsHomeURL.toString() %>">
 								<liferay-ui:icon image="../aui/home" message="" />
 
 								<span class="entry-title">

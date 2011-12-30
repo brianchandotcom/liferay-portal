@@ -415,7 +415,7 @@ int total = 0;
 	<c:when test="<%= searchType == DLSearchConstants.MULTIPLE %>">
 		<c:choose>
 			<c:when test="<%= (searchRepositoryId == scopeGroupId) %>">
-				<span class="search-results-container" id="<portlet:namespace />searchResultsContainer">
+				<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
 					<liferay-ui:tabs
 						names='<%= "local," + ListUtil.toString(mountFolders, "name") %>'
 						refresh="<%= false %>"
@@ -443,7 +443,7 @@ int total = 0;
 						%>
 
 					</liferay-ui:tabs>
-				</span>
+				</div>
 
 				<span id="<portlet:namespace />displayStyleButtons">
 					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />

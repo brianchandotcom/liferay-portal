@@ -591,7 +591,7 @@ AUI.add(
 
 							dd.after(
 								'afterMouseDown',
-								function(event){
+								function(event) {
 									instance._dragTask(event.target.get('node').one('.document-link'));
 								},
 								instance

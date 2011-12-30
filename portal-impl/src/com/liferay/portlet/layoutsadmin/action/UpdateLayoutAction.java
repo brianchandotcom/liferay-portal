@@ -152,16 +152,18 @@ public class UpdateLayoutAction extends JSONAction {
 		Layout layout = null;
 
 		if (layoutPrototypeId > 0) {
-			layout = LayoutServiceUtil.addLayout(
-				groupId, privateLayout, parentLayoutId, name, title,
-				description, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-				serviceContext);
-
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeServiceUtil.getLayoutPrototype(
 					layoutPrototypeId);
 
-			SitesUtil.applyLayoutPrototype(layoutPrototype, layout, true);
+			serviceContext.setAttribute(
+				"layoutPrototypeUuid", layoutPrototype.getUuid());
+			serviceContext.setAttribute("layoutPrototypeLinkEnabled", true);
+
+			layout = LayoutServiceUtil.addLayout(
+				groupId, privateLayout, parentLayoutId, name, title,
+				description, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+				serviceContext);
 		}
 		else {
 			layout = LayoutServiceUtil.addLayout(

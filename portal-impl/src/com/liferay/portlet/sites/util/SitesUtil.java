@@ -56,6 +56,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -144,7 +145,8 @@ public class SitesUtil {
 
 		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		serviceContext.setAttribute("layoutPrototypeLinkEnabled", linkEnabled);
 		serviceContext.setAttribute(
@@ -367,6 +369,9 @@ public class SitesUtil {
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					sourceLayout, sourcePortletId, null);
 
+			PortletPreferencesImpl sourcePreferencesImpl =
+				(PortletPreferencesImpl)sourcePreferences;
+
 			PortletPreferences targetPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					targetLayout, sourcePortletId, null);
@@ -379,6 +384,32 @@ public class SitesUtil {
 				targetPreferencesImpl.getOwnerType(),
 				targetPreferencesImpl.getPlid(), sourcePortletId,
 				sourcePreferences);
+
+			if ((sourcePreferencesImpl.getOwnerId() !=
+					PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
+				(sourcePreferencesImpl.getOwnerType() !=
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
+
+				sourcePreferences =
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+						sourceLayout, sourcePortletId);
+
+				sourcePreferencesImpl =
+					(PortletPreferencesImpl)sourcePreferences;
+
+				targetPreferences =
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+						targetLayout, sourcePortletId);
+
+				targetPreferencesImpl =
+					(PortletPreferencesImpl)targetPreferences;
+
+				PortletPreferencesLocalServiceUtil.updatePreferences(
+					targetPreferencesImpl.getOwnerId(),
+					targetPreferencesImpl.getOwnerType(),
+					targetPreferencesImpl.getPlid(), sourcePortletId,
+					sourcePreferences);
+			}
 		}
 	}
 

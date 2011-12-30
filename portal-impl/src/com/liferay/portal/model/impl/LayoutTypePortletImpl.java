@@ -101,7 +101,7 @@ public class LayoutTypePortletImpl
 		try {
 			Group group = null;
 
-			if (Validator.isNotNull(layout.getLayoutPrototypeUuid())) {
+			if (layout.isLayoutPrototypeLinkActive()) {
 				LayoutPrototype layoutPrototype =
 					LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuid(
 						layout.getLayoutPrototypeUuid());
@@ -111,7 +111,7 @@ public class LayoutTypePortletImpl
 			else {
 				LayoutSet layoutSet = layout.getLayoutSet();
 
-				if (Validator.isNull(layoutSet.getLayoutSetPrototypeUuid())) {
+				if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
 					return null;
 				}
 

@@ -1150,18 +1150,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.hasOrganization();
 	}
 
-	public boolean hasPrivateLayouts()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _user.hasPrivateLayouts();
-	}
-
-	public boolean hasPublicLayouts()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _user.hasPublicLayouts();
-	}
-
 	public boolean hasReminderQuery() {
 		return _user.hasReminderQuery();
 	}

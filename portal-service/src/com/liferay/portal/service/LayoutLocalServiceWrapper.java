@@ -912,6 +912,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			parentLayoutId);
 	}
 
+	public boolean hasLayouts(long companyId, long userId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.hasLayouts(companyId, userId, privateLayout);
+	}
+
 	/**
 	* Imports the layouts from the byte array.
 	*

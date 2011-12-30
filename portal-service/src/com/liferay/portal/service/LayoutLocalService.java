@@ -837,6 +837,11 @@ public interface LayoutLocalService extends PersistedModelLocalService {
 		long parentLayoutId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayouts(long companyId, long userId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Imports the layouts from the byte array.
 	*

@@ -65,6 +65,7 @@ import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -1220,6 +1221,45 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return layoutPersistence.countByG_P_P(
 			groupId, privateLayout, parentLayoutId) > 0;
+	}
+
+	public boolean hasLayouts(
+			long companyId, long userId, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		long userClassNameId = classNameLocalService.getClassNameId(User.class);
+
+		Group group = groupPersistence.findByC_C_C(
+			companyId, userClassNameId, userId);
+
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+			group.getGroupId(), privateLayout);
+
+		if (layoutSet.getPageCount() > 0) {
+			return true;
+		}
+
+		List<UserGroup> userGroups = userPersistence.getUserGroups(userId);
+
+		if (!userGroups.isEmpty()) {
+			long userGroupClassNameId = classNameLocalService.getClassNameId(
+				UserGroup.class);
+
+			for (UserGroup userGroup : userGroups) {
+				group = groupPersistence.findByC_C_C(
+					companyId, userGroupClassNameId,
+					userGroup.getUserGroupId());
+
+				layoutSet = layoutSetPersistence.findByG_P(
+					group.getGroupId(), privateLayout);
+
+				if (layoutSet.getPageCount() > 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	/**

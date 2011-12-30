@@ -1975,8 +1975,15 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (addDefaultUserPrivateLayouts && !user.hasPrivateLayouts()) {
-			addDefaultUserPrivateLayouts(user);
+		Boolean hasPrivateLayouts = null;
+
+		if (addDefaultUserPrivateLayouts) {
+			hasPrivateLayouts = LayoutLocalServiceUtil.hasLayouts(
+				user.getCompanyId(), user.getUserId(), true);
+
+			if (!hasPrivateLayouts) {
+				addDefaultUserPrivateLayouts(user);
+			}
 		}
 
 		boolean deleteDefaultUserPrivateLayouts = false;
@@ -1994,8 +2001,15 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (deleteDefaultUserPrivateLayouts && user.hasPrivateLayouts()) {
-			deleteDefaultUserPrivateLayouts(user);
+		if (deleteDefaultUserPrivateLayouts) {
+			if (hasPrivateLayouts == null) {
+				hasPrivateLayouts = LayoutLocalServiceUtil.hasLayouts(
+					user.getCompanyId(), user.getUserId(), true);
+			}
+
+			if (hasPrivateLayouts) {
+				deleteDefaultUserPrivateLayouts(user);
+			}
 		}
 
 		// Public pages
@@ -2018,8 +2032,15 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (addDefaultUserPublicLayouts && !user.hasPublicLayouts()) {
-			addDefaultUserPublicLayouts(user);
+		Boolean hasPublicLayouts = null;
+
+		if (addDefaultUserPublicLayouts) {
+			hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(
+				user.getCompanyId(), user.getUserId(), false);
+
+			if (!hasPublicLayouts) {
+				addDefaultUserPublicLayouts(user);
+			}
 		}
 
 		boolean deleteDefaultUserPublicLayouts = false;
@@ -2037,8 +2058,15 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (deleteDefaultUserPublicLayouts && user.hasPublicLayouts()) {
-			deleteDefaultUserPublicLayouts(user);
+		if (deleteDefaultUserPublicLayouts) {
+			if (hasPublicLayouts == null) {
+				hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(
+					user.getCompanyId(), user.getUserId(), false);
+			}
+
+			if (hasPublicLayouts) {
+				deleteDefaultUserPublicLayouts(user);
+			}
 		}
 	}
 

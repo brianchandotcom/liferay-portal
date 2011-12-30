@@ -2728,7 +2728,7 @@ public class PortalImpl implements Portal {
 		String serverName = request.getServerName();
 
 		if (!Validator.isDomain(serverName)) {
-			throw new RuntimeException("Invalid server name - " + serverName);
+			throw new RuntimeException("Invalid server name " + serverName);
 		}
 
 		return getPortalURL(serverName, request.getServerPort(), secure);

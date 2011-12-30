@@ -29,7 +29,7 @@ import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -100,8 +100,8 @@ public class EditVocabularyAction extends PortletAction {
 		int[] indexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
-		Set<Long> selectedClassNameIds = new HashSet<Long>();
-		Set<Long> requiredClassNameIds = new HashSet<Long>();
+		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
+		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
 
 		for (int index : indexes) {
 			long classNameId = ParamUtil.getLong(

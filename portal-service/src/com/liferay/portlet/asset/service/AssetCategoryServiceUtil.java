@@ -129,6 +129,16 @@ public class AssetCategoryServiceUtil {
 			end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategoriesByKeyword(
+		long groupId, java.lang.String keyword, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesByKeyword(groupId, keyword,
+			vocabularyId, start, end, obc);
+	}
+
 	public static int getVocabularyCategoriesCount(long groupId,
 		long vocabularyId)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -187,6 +187,17 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			groupId, name, vocabularyId, start, end, obc);
 	}
 
+	public List<AssetCategory> getVocabularyCategoriesByKeyword(
+			long groupId, String keyword, long vocabularyId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return filterCategories(
+			assetCategoryFinder.findByG_N_V(
+				groupId, CustomSQLUtil.keywords(keyword)[0], vocabularyId,
+				start, end, obc));
+	}
+
 	public int getVocabularyCategoriesCount(long groupId, long vocabularyId)
 		throws SystemException {
 

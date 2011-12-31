@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -187,7 +188,7 @@ public class SchedulerEngineUtil {
 
 		SchedulerLifecycle schedulerLifecycle = new SchedulerLifecycle();
 
-		schedulerLifecycle.registerPortalLifecycle();
+		schedulerLifecycle.registerPortalLifecycle(PortalLifecycle.METHOD_INIT);
 	}
 
 	public static String namespaceGroupName(

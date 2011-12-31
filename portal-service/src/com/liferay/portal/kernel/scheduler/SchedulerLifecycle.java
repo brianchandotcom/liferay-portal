@@ -23,7 +23,7 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalDestroy() throws Exception {
-		SchedulerEngineUtil.shutdown();
+
 	}
 
 	@Override

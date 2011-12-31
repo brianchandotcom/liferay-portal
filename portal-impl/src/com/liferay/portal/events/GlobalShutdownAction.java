@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -177,7 +178,14 @@ public class GlobalShutdownAction extends SimpleAction {
 		catch (Exception e) {
 		}
 
-		// Wait 1 second so Quartz threads can cleanly shutdown
+		// Shutdown scheduler engine and wait 1 second so Quartz threads can
+		// cleanly shutdown
+
+		try {
+			SchedulerEngineUtil.shutdown();
+		}
+		catch (Exception e) {
+		}
 
 		try {
 			Thread.sleep(1000);

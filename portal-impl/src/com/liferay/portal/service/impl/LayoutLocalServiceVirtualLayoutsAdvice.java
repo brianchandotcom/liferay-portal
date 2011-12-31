@@ -207,6 +207,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
 			PortletDataHandlerKeys.THEME,
 			new String[] {Boolean.FALSE.toString()});
 		parameterMap.put(

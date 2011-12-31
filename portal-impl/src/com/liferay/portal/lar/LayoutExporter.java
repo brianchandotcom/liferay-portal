@@ -992,6 +992,8 @@ public class LayoutExporter {
 			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 		boolean exportPortletSetup = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_SETUP);
+		boolean exportPortletSetupAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export portlet data " + exportPortletData);
@@ -1037,17 +1039,21 @@ public class LayoutExporter {
 							PortletDataHandlerKeys.PORTLET_DATA +
 								StringPool.UNDERLINE + rootPortletId);
 
-					// PORTLET_DATA and the PORTLET_SETUP for this specific
+					// PORTLET_SETUP and the PORTLET_SETUP for this specific
 					// data handler must be true
 
 					exportCurPortletSetup =
-						exportPortletData &&
+						exportPortletSetup &&
 						MapUtil.getBoolean(
 							parameterMap,
 							PortletDataHandlerKeys.PORTLET_SETUP +
 								StringPool.UNDERLINE + rootPortletId);
 				}
 			}
+		}
+
+		if (exportPortletSetupAll) {
+			exportCurPortletSetup = true;
 		}
 
 		return new boolean[] {exportCurPortletData, exportCurPortletSetup};

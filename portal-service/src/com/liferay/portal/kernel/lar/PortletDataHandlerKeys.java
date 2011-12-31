@@ -72,6 +72,8 @@ public class PortletDataHandlerKeys {
 
 	public static final String PORTLET_SETUP = "PORTLET_SETUP";
 
+	public static final String PORTLET_SETUP_ALL = "PORTLET_SETUP_ALL";
+
 	public static final String PORTLET_USER_PREFERENCES =
 		"PORTLET_USER_PREFERENCES";
 

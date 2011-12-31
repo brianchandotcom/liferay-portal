@@ -193,6 +193,7 @@ public class ThemeUtil {
 
 		freeMarkerContext.put("taglibLiferay", velocityTaglib);
 		freeMarkerContext.put("theme", velocityTaglib);
+		freeMarkerContext.put("writer", writer);
 
 		// Portal JSP tag library factory
 

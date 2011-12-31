@@ -103,7 +103,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
-				defaultUserId, companyId, nameMap, description, true, false,
+				defaultUserId, companyId, nameMap, description, true, true,
 				new ServiceContext());
 
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();

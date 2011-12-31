@@ -14,28 +14,80 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.tagext.BodyTag;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class SuccessTag extends IncludeTag implements BodyTag {
+public class SuccessTag extends TagSupport {
 
 	@Override
-	public int doStartTag() {
+	public int doEndTag() throws JspException {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		request.setAttribute("liferay-ui:success:key", _key);
-		request.setAttribute("liferay-ui:success:message", _message);
-		request.setAttribute(
-			"liferay-ui:success:translateMessage",
-			String.valueOf(_translateMessage));
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		return EVAL_BODY_BUFFERED;
+		boolean contains = SessionMessages.contains(portletRequest, _key);
+
+		if (contains) {
+			// Do output, only when there is an actual message.
+
+			String message = _message;
+
+			if (_translateMessage) {
+				message = LanguageUtil.get(pageContext, message);
+			}
+
+			ServletContext servletContext =
+				(ServletContext)request.getAttribute(WebKeys.CTX);
+
+			if (FileAvailabilityUtil.isAvailable(servletContext, _PAGE)) {
+				// Do jsp output, if there is an overwritten jsp.
+
+				request.setAttribute("liferay-ui:success:message", message);
+
+				try {
+					PortalIncludeUtil.include(pageContext, _PAGE);
+				}
+				catch (Exception e) {
+					throw new JspException(e);
+				}
+			}
+			else {
+				// Do inline output by default for best performance.
+
+				JspWriter jspWriter = pageContext.getOut();
+
+				try {
+					jspWriter.write("<div class=\"portlet-msg-success\">");
+					jspWriter.write(message);
+					jspWriter.write("</div>");
+				}
+				catch (IOException ioe) {
+					throw new JspException(ioe);
+				}
+			}
+		}
+
+		return EVAL_PAGE;
 	}
 
 	public void setKey(String key) {
@@ -48,11 +100,6 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 	public void setTranslateMessage(boolean translateMessage) {
 		_translateMessage = translateMessage;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/success/page.jsp";

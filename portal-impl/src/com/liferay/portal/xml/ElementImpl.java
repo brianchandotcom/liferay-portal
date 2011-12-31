@@ -294,6 +294,18 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj instanceof NodeImpl) {
+			NodeImpl nodeImpl = (NodeImpl)obj;
+
+			if (nodeImpl.getWrappedNode() instanceof org.dom4j.Element) {
+				obj = new ElementImpl(
+					(org.dom4j.Element)nodeImpl.getWrappedNode());
+			}
+			else {
+				return false;
+			}
+		}
+
 		org.dom4j.Element element = ((ElementImpl)obj).getWrappedElement();
 
 		return _element.equals(element);

@@ -702,6 +702,7 @@ Liferay.Service.registerClass(
 		getGroupFileEntries: true,
 		getGroupFileEntriesCount: true,
 		getMountFolders: true,
+		getMountFoldersCount: true,
 		getSubfolderIds: true,
 		getTempFileEntryNames: true,
 		lockFileEntry: true,

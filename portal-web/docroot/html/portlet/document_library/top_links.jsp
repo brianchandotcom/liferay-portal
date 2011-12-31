@@ -97,6 +97,7 @@
 							<liferay-portlet:renderURLParams varImpl="searchURL" />
 							<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 							<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+							<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 							<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
 							<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 

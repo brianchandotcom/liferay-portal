@@ -1376,6 +1376,24 @@ public interface DLAppService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the number of immediate subfolders of the parent folder that are
+	* used for mounting third-party repositories. This method is only supported
+	* by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param parentFolderId the primary key of the parent folder
+	* @return the number of folders of the parent folder that are used for
+	mounting third-party repositories
+	* @throws PortalException if the repository or parent folder could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMountFoldersCount(long repositoryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(long repositoryId,
 		java.util.List<java.lang.Long> folderIds, long folderId)

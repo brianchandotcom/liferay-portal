@@ -1728,6 +1728,27 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return repository.getMountFolders(parentFolderId, start, end, obc);
 	}
 
+	/**
+	 * Returns the number of immediate subfolders of the parent folder that are
+	 * used for mounting third-party repositories. This method is only supported
+	 * by the Liferay repository.
+	 *
+	 * @param  repositoryId the primary key of the repository
+	 * @param  parentFolderId the primary key of the parent folder
+	 * @return the number of folders of the parent folder that are used for
+	 *         mounting third-party repositories
+	 * @throws PortalException if the repository or parent folder could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getMountFoldersCount(long repositoryId, long parentFolderId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.getMountFoldersCount(parentFolderId);
+	}
+
 	public void getSubfolderIds(
 			long repositoryId, List<Long> folderIds, long folderId)
 		throws PortalException, SystemException {

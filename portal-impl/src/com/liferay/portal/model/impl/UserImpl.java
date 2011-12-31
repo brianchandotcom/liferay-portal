@@ -546,24 +546,6 @@ public class UserImpl extends UserBaseImpl {
 		}
 	}
 
-	public boolean hasPrivateLayouts() throws PortalException, SystemException {
-		if (getPrivateLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	public boolean hasPublicLayouts() throws PortalException, SystemException {
-		if (getPublicLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	public boolean hasReminderQuery() {
 		if (Validator.isNotNull(getReminderQueryQuestion()) &&
 			Validator.isNotNull(getReminderQueryAnswer())) {

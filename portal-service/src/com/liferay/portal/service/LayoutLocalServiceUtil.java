@@ -927,6 +927,13 @@ public class LayoutLocalServiceUtil {
 		return getService().hasLayouts(groupId, privateLayout, parentLayoutId);
 	}
 
+	public static boolean hasLayouts(long companyId, long userId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().hasLayouts(companyId, userId, privateLayout);
+	}
+
 	/**
 	* Imports the layouts from the byte array.
 	*

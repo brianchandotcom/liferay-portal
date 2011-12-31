@@ -182,7 +182,7 @@ public class SecureFilter extends BasePortalFilter {
 				User user = PortalUtil.getUser(request);
 
 				if ((user != null) && !user.isDefaultUser()) {
-					setCredentials(
+					request = setCredentials(
 						request, request.getSession(), user.getUserId());
 				}
 				else {

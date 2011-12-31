@@ -78,9 +78,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.error(
-			"[ERROR] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.error("[ERROR]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventInfo(FrameworkEvent frameworkEvent)
@@ -94,7 +92,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info("[INFO] " + frameworkEvent.getSource());
+		log.info("[INFO]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventPackagesRefreshed(
@@ -109,9 +107,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info(
-			"[PACKAGES_REFRESHED] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.info("[PACKAGES_REFRESHED]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventStarted(FrameworkEvent frameworkEvent)
@@ -125,9 +121,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info(
-			"[STARTED] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.info("[STARTED]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventStartLevelChanged(
@@ -142,9 +136,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info(
-			"[STARTLEVEL_CHANGED] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.info("[STARTLEVEL_CHANGED]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventStopped(FrameworkEvent frameworkEvent)
@@ -158,9 +150,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info(
-			"[STOPPED] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.info("[STOPPED]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventStoppedBootClasspathModified(
@@ -176,8 +166,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 		}
 
 		log.info(
-			"[STOPPED_BOOTCLASSPATH_MODIFIED] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+			"[STOPPED_BOOTCLASSPATH_MODIFIED]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventStoppedUpdate(FrameworkEvent frameworkEvent)
@@ -191,9 +180,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info(
-			"[STOPPED_UPDATE] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.info("[STOPPED_UPDATE]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventWaitTimedout(FrameworkEvent frameworkEvent)
@@ -207,9 +194,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.info(
-			"[WAIT_TIMEDOUT] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.info("[WAIT_TIMEDOUT]", frameworkEvent.getThrowable());
 	}
 
 	protected void frameworkEventWarning(FrameworkEvent frameworkEvent)
@@ -223,9 +208,7 @@ public class FrameworkListener implements org.osgi.framework.FrameworkListener {
 			return;
 		}
 
-		log.warn(
-			"[WARNING] " + frameworkEvent.getSource(),
-			frameworkEvent.getThrowable());
+		log.warn("[WARNING]", frameworkEvent.getThrowable());
 	}
 
 }

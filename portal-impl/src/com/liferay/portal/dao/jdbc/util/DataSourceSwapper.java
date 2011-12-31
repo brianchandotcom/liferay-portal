@@ -35,6 +35,9 @@ import javax.sql.DataSource;
 
 import org.hibernate.engine.SessionFactoryImplementor;
 
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
+
 /**
  * @author Shuyang Zhou
  */
@@ -155,6 +158,26 @@ public class DataSourceSwapper {
 
 		sessionFactoryImpl.setSessionFactoryImplementor(
 			sessionFactoryImplementor);
+
+		AbstractPlatformTransactionManager abstractPlatformTransactionManager =
+			(AbstractPlatformTransactionManager)PortalBeanLocatorUtil.locate(
+				"liferayTransactionManager");
+
+		if (abstractPlatformTransactionManager instanceof
+			HibernateTransactionManager) {
+
+			HibernateTransactionManager hibernateTransactionManager =
+				(HibernateTransactionManager)abstractPlatformTransactionManager;
+
+			hibernateTransactionManager.setSessionFactory(
+				sessionFactoryImplementor);
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn("Non-HibernateTransactionManager is detected for " +
+				"Hibernate Persistence infrastructure. Unable to swap to new " +
+				"SessionFactoryImplementor. This may cause subsequence " +
+				"transaction failure.");
+		}
 	}
 
 	private static void _reinitializeJPA(String name, DataSource dataSource)

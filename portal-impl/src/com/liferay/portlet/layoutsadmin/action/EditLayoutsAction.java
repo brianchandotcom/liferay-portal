@@ -834,17 +834,19 @@ public class EditLayoutsAction extends PortletAction {
 				}
 			}
 			else if (layoutPrototypeId > 0) {
+				LayoutPrototype layoutPrototype =
+					LayoutPrototypeServiceUtil.getLayoutPrototype(
+						layoutPrototypeId);
+
+				serviceContext.setAttribute(
+					"layoutPrototypeUuid", layoutPrototype.getUuid());
+				serviceContext.setAttribute("layoutPrototypeLinkEnabled", true);
+
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					titleMap, descriptionMap, keywordsMap, robotsMap,
 					LayoutConstants.TYPE_PORTLET, hidden, friendlyURL,
 					serviceContext);
-
-				LayoutPrototype layoutPrototype =
-					LayoutPrototypeServiceUtil.getLayoutPrototype(
-						layoutPrototypeId);
-
-				SitesUtil.applyLayoutPrototype(layoutPrototype, layout, true);
 			}
 			else {
 				layout = LayoutServiceUtil.addLayout(

@@ -387,6 +387,10 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		// Control panel layouts are only viewable by authenticated users
 
 		if (group.isControlPanel()) {
+			if (!permissionChecker.isSignedIn()) {
+				return false;
+			}
+
 			if (PortalPermissionUtil.contains(
 					permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 

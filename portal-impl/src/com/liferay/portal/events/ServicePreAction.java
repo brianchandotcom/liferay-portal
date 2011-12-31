@@ -126,6 +126,7 @@ import org.apache.struts.Globals;
 /**
  * @author Brian Wing Shun Chan
  * @author Felix Ventero
+ * @author Jorge Ferrer
  */
 public class ServicePreAction extends Action {
 
@@ -973,6 +974,9 @@ public class ServicePreAction extends Action {
 				pageSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 				pageSettingsURL.setParameter("selPlid", String.valueOf(plid));
+				pageSettingsURL.setParameter(
+					"controlPanelCategory",
+					_PORTLET_CATEGORY_PREFIX + PortletKeys.LAYOUTS_ADMIN);
 
 				themeDisplay.setURLPageSettings(pageSettingsURL);
 
@@ -1005,6 +1009,10 @@ public class ServicePreAction extends Action {
 						"groupId", String.valueOf(scopeGroupId));
 					manageSiteMembershipsURL.setParameter(
 						"selPlid", String.valueOf(plid));
+					manageSiteMembershipsURL.setParameter(
+						"controlPanelCategory",
+						_PORTLET_CATEGORY_PREFIX +
+							PortletKeys.SITE_MEMBERSHIPS_ADMIN);
 
 					themeDisplay.setURLManageSiteMemberships(
 						manageSiteMembershipsURL);
@@ -1049,6 +1057,9 @@ public class ServicePreAction extends Action {
 				siteSettingsURL.setParameter("closeRedirect", currentURL);
 				siteSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
+				siteSettingsURL.setParameter(
+					"controlPanelCategory",
+					_PORTLET_CATEGORY_PREFIX + PortletKeys.SITE_SETTINGS);
 
 				themeDisplay.setURLSiteSettings(siteSettingsURL);
 			}
@@ -1079,6 +1090,9 @@ public class ServicePreAction extends Action {
 				siteMapSettingsURL.setParameter("closeRedirect", currentURL);
 				siteMapSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
+				siteMapSettingsURL.setParameter(
+					"controlPanelCategory",
+					_PORTLET_CATEGORY_PREFIX + PortletKeys.LAYOUTS_ADMIN);
 
 				themeDisplay.setURLSiteMapSettings(siteMapSettingsURL);
 			}
@@ -2046,6 +2060,7 @@ public class ServicePreAction extends Action {
 	protected File publicLARFile;
 
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
+	private static final String _PORTLET_CATEGORY_PREFIX = "portlet_";
 
 	private static Log _log = LogFactoryUtil.getLog(ServicePreAction.class);
 

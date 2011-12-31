@@ -87,6 +87,9 @@ long groupId = ParamUtil.getLong(request, "groupId");
 		if (Validator.isNotNull(structure.getDescription(locale))) {
 			row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowHREF);
 		}
+		else {
+			row.addText(StringPool.BLANK);
+		}
 
 		// Add result row
 

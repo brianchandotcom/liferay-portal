@@ -933,6 +933,12 @@ public class LayoutImporter {
 			}
 			else {
 				importedLayout.setUuid(layout.getUuid());
+				importedLayout.setLayoutPrototypeUuid(
+					layout.getLayoutPrototypeUuid());
+				importedLayout.setLayoutPrototypeLinkEnabled(
+					layout.getLayoutPrototypeLinkEnabled());
+				importedLayout.setSourcePrototypeLayoutUuid(
+					layout.getSourcePrototypeLayoutUuid());
 			}
 
 			importedLayout.setGroupId(groupId);

@@ -374,12 +374,12 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 	</div>
 </c:if>
 
-<c:if test="<%= !SitesUtil.isLayoutUpdateable(layout) || layout.isLayoutPrototypeLinkActive() %>">
+<c:if test="<%= !SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup()) %>">
 	<div class="page-customization-bar">
 		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />
 
 		<c:choose>
-			<c:when test="<%= layout.isLayoutPrototypeLinkActive() %>">
+			<c:when test="<%= (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup()) %>">
 				<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
 			</c:when>
 			<c:when test="<%= layout instanceof VirtualLayout %>">

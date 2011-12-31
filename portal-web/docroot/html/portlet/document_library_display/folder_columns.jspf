@@ -18,12 +18,19 @@
 int curFoldersCount = 0;
 int curFileEntriesCount = 0;
 
+boolean accessRepository = true;
+
 try {
 	curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
 	curFileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
 }
 catch (RepositoryException re) {
 	_log.error(re.getMessage());
+}
+catch (Exception e) {
+	accessRepository = false;
+
+	row.setClassName("repository-error");
 }
 
 for (int j = 0; j < folderColumns.length; j++) {
@@ -55,19 +62,22 @@ for (int j = 0; j < folderColumns.length; j++) {
 		<c:when test='<%= folderColumn.equals("folder") || folderColumn.equals("name") %>'>
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
-				href="<%= rowURL %>"
+				href="<%= accessRepository ? rowURL : null %>"
 				name="<%= folderColumn %>"
 			>
 
 				<%
-				buffer.append("<a href=\"");
-				buffer.append(rowURL);
-				buffer.append("\">");
+				if (accessRepository) {
+					buffer.append("<a href=\"");
+					buffer.append(rowURL);
+					buffer.append("\">");
+				}
+
 				buffer.append("<img align=\"left\" border=\"0\" src=\"");
 				buffer.append(themeDisplay.getPathThemeImages());
 
 				if (curFolder.isMountPoint()) {
-					buffer.append("/common/drive.png\">");
+					buffer.append(accessRepository ? "/common/drive.png\">" : "/common/drive_error.png\">");
 				}
 				else {
 					if ((curFoldersCount + curFileEntriesCount) > 0) {
@@ -78,16 +88,28 @@ for (int j = 0; j < folderColumns.length; j++) {
 					}
 				}
 
+				if (!accessRepository) {
+					buffer.append("<span title=\"");
+					buffer.append(LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository"));
+					buffer.append("\">");
+				}
+
 				buffer.append("<strong>");
 				buffer.append(curFolder.getName());
 				buffer.append("</strong>");
+
+				if (!accessRepository) {
+					buffer.append("</span>");
+				}
 
 				if (Validator.isNotNull(curFolder.getDescription())) {
 					buffer.append("<br />");
 					buffer.append(curFolder.getDescription());
 				}
 
-				buffer.append("</a>");
+				if (accessRepository) {
+					buffer.append("</a>");
+				}
 
 				if (showSubfolders) {
 					List subfolders = new ArrayList();
@@ -144,21 +166,21 @@ for (int j = 0; j < folderColumns.length; j++) {
 			%>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
+				href="<%= accessRepository ? rowURL : null %>"
 				name="<%= folderColumn %>"
 				value='<%= LanguageUtil.get(pageContext, isLocked ? "yes" : "no") %>'
 			/>
 		</c:when>
 		<c:when test='<%= folderColumn.equals("num-of-documents") %>'>
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
+				href="<%= accessRepository ? rowURL : null %>"
 				name="<%= folderColumn %>"
 				value="<%= String.valueOf(curFileEntriesCount) %>"
 			/>
 		</c:when>
 		<c:when test='<%= folderColumn.equals("num-of-folders") %>'>
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
+				href="<%= accessRepository ? rowURL : null %>"
 				name="<%= folderColumn %>"
 				value="<%= String.valueOf(curFoldersCount) %>"
 			/>

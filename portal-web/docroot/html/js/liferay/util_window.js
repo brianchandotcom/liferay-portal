@@ -74,7 +74,34 @@ AUI.add(
 					dialogIframeConfig,
 					{
 						bindLoadHandler: function() {
-							Liferay.on('popupReady', A.bind(this.fire, this, 'load'));
+							var instance = this;
+
+							var popupReady = false;
+
+							Liferay.on(
+								'popupReady',
+								function(event) {
+									instance.fire('load', event);
+
+									popupReady = true;
+								}
+							);
+
+							instance.node.on(
+								'load',
+								function(event) {
+									if (!popupReady) {
+										Liferay.fire(
+											'popupReady',
+											{
+												windowName: id
+											}
+										);
+									}
+
+									popupReady = false;
+								}
+							);
 						},
 						id: id,
 						iframeId: id,
@@ -111,13 +138,15 @@ AUI.add(
 							event.dialog = dialog;
 							event.details[0].dialog = dialog;
 
-							Util.afterIframeLoaded(event);
+							if (event.doc) {
+								Util.afterIframeLoaded(event);
 
-							var dialogUtil = event.win.Liferay.Util;
+								var dialogUtil = event.win.Liferay.Util;
 
-							dialogUtil.Window._opener = openingWindow;
+								dialogUtil.Window._opener = openingWindow;
 
-							dialogUtil.Window._name = id;
+								dialogUtil.Window._name = id;
+							}
 						}
 					}
 				);

@@ -591,7 +591,7 @@ AUI.add(
 
 							dd.after(
 								'afterMouseDown',
-								function(event){
+								function(event) {
 									instance._dragTask(event.target.get('node').one('.document-link'));
 								},
 								instance
@@ -1260,6 +1260,8 @@ AUI.add(
 
 						if (repositorySearchResults) {
 							var repositorySearchResultsContainer = entriesContainer.one('#' + instance.ns('repositorySearchResultsContainer') + repositoryId);
+
+							repositorySearchResultsContainer.empty();
 
 							repositorySearchResultsContainer.plug(A.Plugin.ParseContent);
 

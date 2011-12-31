@@ -49,6 +49,10 @@
 		}
 	}
 
+	.document-container .search-results-container .aui-tabview-list {
+		margin-bottom: 0;
+	}
+
 	.move-list {
 		.move-file, .move-folder {
 			background: #F0FAF0 url() no-repeat 5px 50%;

@@ -207,7 +207,7 @@ int total = 0;
 				headerNames.add(headerName);
 			}
 
-			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, entriesPerPage, portletURL, headerNames, LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, entriesPerPage, portletURL, headerNames, null);
 
 			Map<String, String> orderableHeaders = new HashMap<String, String>();
 
@@ -372,8 +372,14 @@ int total = 0;
 				}
 				%>
 
+				<c:if test="<%= results.isEmpty() %>">
+					<div class="portlet-msg-info">
+						<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
+					</div>
+				</c:if>
+
 				<c:if test='<%= displayStyle.equals("list") %>'>
-					<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" type="more" />
+					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" type="more" />
 				</c:if>
 
 			<%
@@ -409,7 +415,7 @@ int total = 0;
 	<c:when test="<%= searchType == DLSearchConstants.MULTIPLE %>">
 		<c:choose>
 			<c:when test="<%= (searchRepositoryId == scopeGroupId) %>">
-				<span id="<portlet:namespace />searchResultsContainer">
+				<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
 					<liferay-ui:tabs
 						names='<%= "local," + ListUtil.toString(mountFolders, "name") %>'
 						refresh="<%= false %>"
@@ -425,7 +431,11 @@ int total = 0;
 						%>
 
 							<liferay-ui:section>
-								<div id="<portlet:namespace />repositorySearchResultsContainer<%= mountFolder.getRepositoryId() %>"></div>
+								<div id="<portlet:namespace />repositorySearchResultsContainer<%= mountFolder.getRepositoryId() %>">
+									<div class="portlet-msg-info">
+										<%= LanguageUtil.get(pageContext, "searching-please-wait") %>
+									</div>
+								</div>
 							</liferay-ui:section>
 
 						<%
@@ -433,7 +443,7 @@ int total = 0;
 						%>
 
 					</liferay-ui:tabs>
-				</span>
+				</div>
 
 				<span id="<portlet:namespace />displayStyleButtons">
 					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />

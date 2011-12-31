@@ -129,6 +129,8 @@ else {
 
 				<%
 				List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
+
+				boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 				%>
 
 				<c:choose>
@@ -149,17 +151,23 @@ else {
 					<c:otherwise>
 
 						<%
-						String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
+						if (workflowEnabled) {
+							String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
 
-						LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
+							LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
 
-						if (pendingLayoutRevision != null && (pendingLayoutRevision.getUserId() == user.getUserId())) {
-							submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
+							if (pendingLayoutRevision != null && (pendingLayoutRevision.getUserId() == user.getUserId())) {
+								submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
+							}
+						%>
+
+							title: '<%= UnicodeLanguageUtil.get(pageContext, submitMessage) %>',
+							disabled: true,
+
+						<%
 						}
 						%>
 
-						title: '<%= UnicodeLanguageUtil.get(pageContext, submitMessage) %>',
-						disabled: true,
 					</c:otherwise>
 				</c:choose>
 
@@ -171,7 +179,7 @@ else {
 					label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
 				}
 				else {
-					if(WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName())) {
+					if (workflowEnabled) {
 						icon = "shuffle";
 						label = "submit-for-publication";
 					}

@@ -362,6 +362,13 @@ public class PortletPreferencesLocalServiceWrapper
 		return _portletPreferencesLocalService.getStrictPreferences(portletPreferencesIds);
 	}
 
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getUserPortletPreferences(
+		long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _portletPreferencesLocalService.getUserPortletPreferences(plid,
+			portletId);
+	}
+
 	public com.liferay.portal.model.PortletPreferences updatePreferences(
 		long ownerId, int ownerType, long plid, java.lang.String portletId,
 		javax.portlet.PortletPreferences portletPreferences)

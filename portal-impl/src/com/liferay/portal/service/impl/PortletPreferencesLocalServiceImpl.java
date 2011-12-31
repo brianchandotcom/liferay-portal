@@ -29,6 +29,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BasePreferencesImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -286,6 +287,14 @@ public class PortletPreferencesLocalServiceImpl
 			portletPreferencesIds.getOwnerType(),
 			portletPreferencesIds.getPlid(),
 			portletPreferencesIds.getPortletId());
+	}
+
+	public List<PortletPreferences> getUserPortletPreferences(
+			long plid, String portletId)
+		throws SystemException {
+
+		return portletPreferencesPersistence.findByO_P_P(
+			PortletKeys.PREFS_OWNER_TYPE_USER, plid, portletId);
 	}
 
 	public PortletPreferences updatePreferences(

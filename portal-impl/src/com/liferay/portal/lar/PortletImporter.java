@@ -1079,6 +1079,11 @@ public class PortletImporter {
 					plid = 0;
 					ownerId = portletItem.getPortletItemId();
 				}
+				else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+					String userUuid = element.attributeValue("user-uuid");
+
+					ownerId = portletDataContext.getUserId(userUuid);
+				}
 
 				if (defaultUser) {
 					ownerId = defaultUserId;

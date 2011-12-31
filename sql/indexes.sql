@@ -545,6 +545,7 @@ create index IX_33B8CE8D on PortletItem (groupId, portletId, name);
 
 create index IX_E4F13E6E on PortletPreferences (ownerId, ownerType, plid);
 create unique index IX_C7057FF7 on PortletPreferences (ownerId, ownerType, plid, portletId);
+create index IX_D5EDA3A1 on PortletPreferences (ownerType, plid, portletId);
 create index IX_F15C1C4F on PortletPreferences (plid);
 create index IX_D340DB76 on PortletPreferences (plid, portletId);
 

@@ -114,7 +114,8 @@ public class SocialActivityCounterLocalServiceImpl
 
 			if (lock.isNew()) {
 				lockLocalService.unlock(
-					SocialActivityCounter.class.getName(), lockKey);
+					SocialActivityCounter.class.getName(), lockKey, lockKey,
+					false);
 			}
 
 			break;

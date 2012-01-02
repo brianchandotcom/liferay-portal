@@ -44,28 +44,26 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 	@Override
 	public int doEndTag() {
-		if (!ServerDetector.isResin()) {
-			_curParam = SearchContainer.DEFAULT_CUR_PARAM;
-			_delta = SearchContainer.DEFAULT_DELTA;
-			_deltaConfigurable = SearchContainer.DEFAULT_DELTA_CONFIGURABLE;
-			_deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
-			_displayTerms = null;
-			_emptyResultsMessage = null;
-			_hasResults = false;
-			_headerNames = null;
-			_hover = false;
-			_id = null;
-			_iteratorURL = null;
-			_orderByCol = null;
-			_orderByColParam = SearchContainer.DEFAULT_ORDER_BY_COL_PARAM;
-			_orderByComparator = null;
-			_orderByType = null;
-			_orderByTypeParam = SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM;
-			_rowChecker = null;
-			_searchContainer = null;
-			_searchTerms = null;
-			_var = DEFAULT_VAR;
-		}
+		_curParam = SearchContainer.DEFAULT_CUR_PARAM;
+		_delta = SearchContainer.DEFAULT_DELTA;
+		_deltaConfigurable = SearchContainer.DEFAULT_DELTA_CONFIGURABLE;
+		_deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
+		_displayTerms = null;
+		_emptyResultsMessage = null;
+		_hasResults = false;
+		_headerNames = null;
+		_hover = false;
+		_id = null;
+		_iteratorURL = null;
+		_orderByCol = null;
+		_orderByColParam = SearchContainer.DEFAULT_ORDER_BY_COL_PARAM;
+		_orderByComparator = null;
+		_orderByType = null;
+		_orderByTypeParam = SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM;
+		_rowChecker = null;
+		_searchContainer = null;
+		_searchTerms = null;
+		_var = DEFAULT_VAR;
 
 		return EVAL_PAGE;
 	}

@@ -55,7 +55,7 @@
 
 #set ($company_id = $company.getCompanyId())
 #set ($company_name = $company.getName())
-#set ($company_logo = $theme_display.getCompanyLogo())
+#set ($company_logo = $htmlUtil.escape($theme_display.getCompanyLogo()))
 #set ($company_logo_height = $theme_display.getCompanyLogoHeight())
 #set ($company_logo_width = $theme_display.getCompanyLogoWidth())
 

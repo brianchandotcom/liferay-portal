@@ -215,6 +215,14 @@
 		#set ($css_class = $css_class + " private-page")
 	#end
 
+	#if ($page_group.isLayoutPrototype())
+		#set ($css_class = $css_class + " page-template")
+	#end
+
+	#if ($page_group.isLayoutSetPrototype())
+		#set ($css_class = $css_class + " site-template")
+	#end
+
 	#if($page_group.isCompany())
 		#set ($site_type = "company-site")
 	#elseif ($page_group.isOrganization())

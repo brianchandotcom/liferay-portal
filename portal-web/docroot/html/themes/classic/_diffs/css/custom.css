@@ -61,6 +61,14 @@ hr, .separator {
 	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
 
+.page-template .site-title .site-name {
+	background-image: url(../images/common/page_template.png);
+}
+
+.site-template .site-title .site-name {
+	background-image: url(../images/common/site_template.png);
+}
+
 .company-site .site-title .site-name {
 	background-image: url(../images/common/folder.png);
 }

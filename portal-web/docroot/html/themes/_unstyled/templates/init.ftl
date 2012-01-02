@@ -219,6 +219,13 @@
 		<#assign css_class = css_class + " private-page" />
 	</#if>
 
+	<#if page_group.isLayoutPrototype()>
+		<#assign css_class = css_class + " page-template" />
+	</#if>
+
+	<#if page_group.isLayoutSetPrototype()>
+		<#assign css_class = css_class + " site-template" />
+	</#if>
 
 	<#if page_group.isCompany()>
 		<#assign site_type = "company-site" />

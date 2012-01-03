@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
@@ -577,6 +578,16 @@ public class EditArticleAction extends PortletAction {
 			uploadPortletRequest, "templateId");
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
+
+		// The target page must exist within the group of the article
+
+		Layout targetLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, groupId);
+
+		if (targetLayout == null) {
+			layoutUuid = null;
+		}
 
 		int displayDateMonth = ParamUtil.getInteger(
 			uploadPortletRequest, "displayDateMonth");

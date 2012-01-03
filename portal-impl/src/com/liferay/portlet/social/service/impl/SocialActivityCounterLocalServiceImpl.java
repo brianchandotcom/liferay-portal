@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,6 +30,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityCounterException;
 import com.liferay.portlet.social.model.SocialAchievement;
@@ -50,6 +54,7 @@ import java.util.Map;
 
 /**
  * @author Zsolt Berentey
+ * @author Shuyang Zhou
  */
 public class SocialActivityCounterLocalServiceImpl
 	extends SocialActivityCounterLocalServiceBaseImpl {
@@ -81,44 +86,47 @@ public class SocialActivityCounterLocalServiceImpl
 				continue;
 			}
 
-			activityCounter = fetchLatestActivityCounter(
-				groupId, classNameId, classPK, name, ownerType, false);
-
-			if (activityCounter == null) {
-				if (!lock.isNew()) {
-					continue;
+			if (lock.isNew()) {
+				try {
+					activityCounter =
+						socialActivityCounterLocalService.createActivityCounter(
+							groupId, classNameId, classPK, name, ownerType,
+							currentValue, totalValue);
+				}
+				finally {
+					lockLocalService.unlock(
+						SocialActivityCounter.class.getName(), lockKey, lockKey,
+						false);
 				}
 
-				Group group = groupPersistence.findByPrimaryKey(groupId);
-
-				long activityCounterId = counterLocalService.increment();
-
-				activityCounter = socialActivityCounterPersistence.create(
-					activityCounterId);
-
-				activityCounter.setGroupId(groupId);
-				activityCounter.setCompanyId(group.getCompanyId());
-				activityCounter.setClassNameId(classNameId);
-				activityCounter.setClassPK(classPK);
-				activityCounter.setName(name);
-				activityCounter.setOwnerType(ownerType);
-				activityCounter.setCurrentValue(currentValue);
-				activityCounter.setTotalValue(totalValue);
-				activityCounter.setStartPeriod(
-					SocialCounterPeriodUtil.getStartPeriod());
-				activityCounter.setEndPeriod(
-					SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
-
-				socialActivityCounterPersistence.update(activityCounter, false);
+				break;
 			}
 
-			if (lock.isNew()) {
+			long elapsedTime = System.currentTimeMillis() -
+				lock.getCreateDate().getTime();
+
+			if (elapsedTime >= _lockTimeout) {
+
 				lockLocalService.unlock(
-					SocialActivityCounter.class.getName(), lockKey, lockKey,
-					false);
-			}
+					SocialActivityCounter.class.getName(), lockKey,
+					lock.getOwner(), false);
 
-			break;
+				if (_log.isWarnEnabled()) {
+					_log.warn("Forcibly removed timeout Lock : " + lock +
+						". Please increase the " + _lockTimeoutKey +
+						" value, if this is a false remove.");
+				}
+			}
+			else {
+				try {
+					Thread.sleep(_lockRetryDelay);
+				}
+				catch (InterruptedException ie) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Interrupted from Lock retry delay.", ie);
+					}
+				}
+			}
 		}
 
 		return activityCounter;
@@ -193,6 +201,51 @@ public class SocialActivityCounterLocalServiceImpl
 				SocialActivityCounterConstants.TYPE_ASSET, 1,
 				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public SocialActivityCounter createActivityCounter(
+			long groupId, long classNameId, long classPK, String name,
+			int ownerType, int currentValue, int totalValue)
+		throws PortalException, SystemException {
+
+		SocialActivityCounter activityCounter = fetchLatestActivityCounter(
+			groupId, classNameId, classPK, name, ownerType, false);
+
+		if (activityCounter != null) {
+
+			// Brian, please remove this line. I added it here just to prove my
+			// point that, within current new tx, you can see previously
+			// concurrent added SocialActivityCounter.
+			System.out.println("Found a concurrent added " +
+				"SocialActivityCounter : " + activityCounter);
+
+			return activityCounter;
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		long activityCounterId = counterLocalService.increment();
+
+		activityCounter = socialActivityCounterPersistence.create(
+			activityCounterId);
+
+		activityCounter.setGroupId(groupId);
+		activityCounter.setCompanyId(group.getCompanyId());
+		activityCounter.setClassNameId(classNameId);
+		activityCounter.setClassPK(classPK);
+		activityCounter.setName(name);
+		activityCounter.setOwnerType(ownerType);
+		activityCounter.setCurrentValue(currentValue);
+		activityCounter.setTotalValue(totalValue);
+		activityCounter.setStartPeriod(
+			SocialCounterPeriodUtil.getStartPeriod());
+		activityCounter.setEndPeriod(
+			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
+
+		socialActivityCounterPersistence.update(activityCounter, false);
+
+		return activityCounter;
 	}
 
 	public void deleteActivityCounters(AssetEntry assetEntry)
@@ -602,5 +655,14 @@ public class SocialActivityCounterLocalServiceImpl
 
 	private static Log _log = LogFactoryUtil.getLog(
 		SocialActivityCounterLocalService.class);
+
+	private long _lockRetryDelay =
+		PropsValues.SOCIAL_ACTIVITY_COUNTER_CONCURRENT_ADD_LOCK_RETRY_DELAY;
+
+	private long _lockTimeout =
+		PropsValues.SOCIAL_ACTIVITY_COUNTER_CONCURRENT_ADD_LOCK_TIMEOUT;
+
+	private String _lockTimeoutKey =
+		PropsKeys.SOCIAL_ACTIVITY_COUNTER_CONCURRENT_ADD_LOCK_TIMEOUT;
 
 }

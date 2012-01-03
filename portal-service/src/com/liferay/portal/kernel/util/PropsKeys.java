@@ -1863,6 +1863,10 @@ public interface PropsKeys {
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES = "social.activity.contribution.limit.values";
 
+	public static final String SOCIAL_ACTIVITY_COUNTER_CONCURRENT_ADD_LOCK_RETRY_DELAY = "social.activity.counter.concurrent.add.lock.retry.delay";
+	
+	public static final String SOCIAL_ACTIVITY_COUNTER_CONCURRENT_ADD_LOCK_TIMEOUT = "social.activity.counter.concurrent.add.lock.timeout";
+	
 	public static final String SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH = "social.activity.counter.period.length";
 
 	public static final String SOCIAL_ACTIVITY_PARTICIPATION_INCREMENTS = "social.activity.participation.increments";

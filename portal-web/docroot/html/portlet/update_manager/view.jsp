@@ -20,7 +20,7 @@
 List updatablePackageIds = new ArrayList();
 %>
 
-<liferay-ui:success key="plugin-is-undeploying.-the-undeploy-process-will-complete-in-a-separate-process" message="triggeredPortletUndeploy" />
+<liferay-ui:success key="triggeredPortletUndeploy" message="plugin-is-undeploying.-the-undeploy-process-will-complete-in-a-separate-process" />
 
 <c:choose>
 	<c:when test="<%= permissionChecker.isOmniadmin() %>">

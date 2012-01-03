@@ -132,6 +132,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		searchContainer.setResults(results);
 
 		List scores = null;
+
+		String[] mediaGalleryMimeTypes = null;
 		%>
 
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>

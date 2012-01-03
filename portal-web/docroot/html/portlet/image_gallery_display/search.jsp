@@ -122,6 +122,10 @@ boolean useAssetEntryQuery = false;
 
 		<br /><br />
 
+		<%
+		String[] mediaGalleryMimeTypes = null;
+		%>
+
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
 
 	<%

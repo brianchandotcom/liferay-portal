@@ -672,7 +672,7 @@ AUI.add(
 										TPL_TAB_LINK,
 										{
 											url: data.url,
-											pageTitle: pageTitle
+											pageTitle: Lang.String.escapeHTML(pageTitle)
 										}
 									);
 

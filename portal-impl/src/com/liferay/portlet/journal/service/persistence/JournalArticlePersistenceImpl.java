@@ -17473,7 +17473,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		return sql;
 	}
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalArticle.id_";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "journalArticle.resourcePrimKey";
 	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_WHERE = "SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ";
 	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1 =
 		"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ";

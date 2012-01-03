@@ -355,16 +355,15 @@
 			</c:if>
 		</c:if>
 
+		<%
+		Group group = null;
+
+		if (layout != null) {
+			group = layout.getGroup();
+		}
+		%>
+
 		<c:if test="<%= themeDisplay.isSignedIn() %>">
-
-			<%
-			Group group = null;
-
-			if (layout != null) {
-				group = layout.getGroup();
-			}
-			%>
-
 			<c:choose>
 				<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
 					Liferay._editControlsState = 'visible';
@@ -376,3 +375,29 @@
 		</c:if>
 	// ]]>
 </script>
+
+<%-- Google Analytics --%>
+
+<%
+UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+
+String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+%>
+
+<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+
+		_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script');
+
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			ga.setAttribute('async', 'true');
+
+			document.documentElement.firstChild.appendChild(ga);
+		})();
+	</script>
+</c:if>

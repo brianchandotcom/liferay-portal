@@ -72,7 +72,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 				}
 			}
 
-			if (!systemId.endsWith(".dtd") || !systemId.endsWith(".xsd")) {
+			if (!systemId.endsWith(".dtd") && !systemId.endsWith(".xsd")) {
 				throw new XNIException("Invalid system id " + systemId);
 			}
 

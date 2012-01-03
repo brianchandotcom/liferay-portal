@@ -19,13 +19,11 @@ int end = searchContainer.getEnd();
 int start = searchContainer.getStart();
 
 assetEntryQuery.setGroupIds(groupIds);
-assetEntryQuery.setEnd(end);
 assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
 assetEntryQuery.setOrderByCol1(orderByColumn1);
 assetEntryQuery.setOrderByCol2(orderByColumn2);
 assetEntryQuery.setOrderByType1(orderByType1);
 assetEntryQuery.setOrderByType2(orderByType2);
-assetEntryQuery.setStart(start);
 
 List<AssetEntry> results = new ArrayList<AssetEntry>();
 int total = 0;
@@ -52,6 +50,9 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
 			total += groupTotal;
+
+			assetEntryQuery.setEnd(end);
+			assetEntryQuery.setStart(start);
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
@@ -85,8 +86,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 			}
 
 			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
+			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+			assetEntryQuery.setStart(QueryUtil.ALL_POS);
 		}
 
 		searchContainer.setTotal(total);
@@ -95,9 +96,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 		if (!anyAssetType) {
 			assetEntryQuery.setClassNameIds(classNameIds);
 		}
-
-		assetEntryQuery.setStart(QueryUtil.ALL_POS);
-		assetEntryQuery.setEnd(QueryUtil.ALL_POS);
 
 		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
@@ -118,15 +116,12 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 	<%
 	}
 	else {
-		int maxGroupTotal = 0;
-
 		for (long classNameId : classNameIds) {
+			long[] oldGroupClassNameIds = assetEntryQuery.getClassNameIds();
+
 			long[] groupClassNameIds = {classNameId};
 
 			assetEntryQuery.setClassNameIds(groupClassNameIds);
-
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
 
 			String groupClassName = PortalUtil.getClassName(classNameId);
 
@@ -134,11 +129,10 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
-			if (groupTotal > maxGroupTotal) {
-				maxGroupTotal = groupTotal;
-			}
-
 			total += groupTotal;
+
+			assetEntryQuery.setEnd(end);
+			assetEntryQuery.setStart(start);
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
@@ -155,9 +149,29 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 	<%
 			}
+
+			if (groupTotal > 0) {
+				if ((end > 0) && (end > groupTotal)) {
+					end -= groupTotal;
+				}
+				else {
+					end = 0;
+				}
+
+				if ((start > 0) && (start > groupTotal)) {
+					start -= groupTotal;
+				}
+				else {
+					start = 0;
+				}
+			}
+
+			assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
+			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+			assetEntryQuery.setStart(QueryUtil.ALL_POS);
 		}
 
-		searchContainer.setTotal(maxGroupTotal);
+		searchContainer.setTotal(total);
 	}
 }
 

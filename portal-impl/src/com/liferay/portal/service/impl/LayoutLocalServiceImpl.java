@@ -284,6 +284,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		boolean addGuestPermissions = false;
 
+		if (group.isLayoutSetPrototype()) {
+			addGuestPermissions = true;
+		}
+
 		if (!privateLayout || type.equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
 			addGuestPermissions = true;
 		}

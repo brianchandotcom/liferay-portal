@@ -35,6 +35,7 @@ WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
 String keywords = ParamUtil.getString(request, "keywords");
+long categoryId = ParamUtil.getLong(request, "categoryId");
 
 List<WikiNode> nodes = WikiUtil.getNodes(allNodes, hiddenNodes, permissionChecker);
 
@@ -42,7 +43,10 @@ boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT)
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("categoryId", "0");
+if (categoryId > 0)	{
+	portletURL.setParameter("categoryId", "0");
+}
+
 portletURL.setParameter("nodeName", node.getName());
 %>
 

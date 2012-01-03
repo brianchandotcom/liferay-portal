@@ -223,6 +223,8 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 				layoutsContainer.io.set('uri', requestUri);
 
 				layoutsContainer.io.start();
+
+				location.hash = '';
 			},
 			'.layout-tree'
 		);

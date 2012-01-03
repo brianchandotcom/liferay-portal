@@ -1105,6 +1105,9 @@ public class LayoutImporter {
 		importedLayout.setWapColorSchemeId(layout.getWapColorSchemeId());
 		importedLayout.setCss(layout.getCss());
 		importedLayout.setPriority(layout.getPriority());
+		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
+		importedLayout.setLayoutPrototypeLinkEnabled(
+			layout.isLayoutPrototypeLinkEnabled());
 
 		StagingUtil.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);

@@ -354,7 +354,7 @@
 				Liferay.Portlet.list = ['<%= ListUtil.toString(allPortlets, Portlet.PORTLET_ID_ACCESSOR, "','") %>'];
 			</c:if>
 		</c:if>
-		
+
 		<%
 		Group group = null;
 
@@ -364,7 +364,6 @@
 		%>
 
 		<c:if test="<%= themeDisplay.isSignedIn() %>">
-
 			<c:choose>
 				<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
 					Liferay._editControlsState = 'visible';
@@ -383,10 +382,9 @@
 UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
 
 String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
-
-if (Validator.isNotNull(googleAnalyticsId)) {
 %>
 
+<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 
@@ -402,7 +400,4 @@ if (Validator.isNotNull(googleAnalyticsId)) {
 			document.documentElement.firstChild.appendChild(ga);
 		})();
 	</script>
-
-<%
-}
-%>
+</c:if>

@@ -96,6 +96,8 @@ StringBundler pageBottomSB = (StringBundler)request.getAttribute(WebKeys.PAGE_BO
 	<%-- User Inputted Layout and LayoutSet JavaScript --%>
 
 	<%
+		group.getTypeSettingsProperties();
+
 	LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
 	UnicodeProperties layoutSetSettings = layoutSet.getSettingsProperties();

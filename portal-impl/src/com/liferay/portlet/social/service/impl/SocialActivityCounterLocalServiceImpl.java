@@ -62,7 +62,8 @@ public class SocialActivityCounterLocalServiceImpl
 
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int currentValue, int totalValue)
+			int ownerType, int currentValue, int totalValue, int startPeriod,
+			int endPeriod)
 		throws PortalException, SystemException {
 
 		SocialActivityCounter activityCounter = null;
@@ -75,8 +76,8 @@ public class SocialActivityCounterLocalServiceImpl
 		while (true) {
 			try {
 				lock = lockLocalService.lock(
-					SocialActivityCounter.class.getName(), lockKey,
-					lockKey, false);
+					SocialActivityCounter.class.getName(), lockKey, lockKey,
+					false);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -92,7 +93,7 @@ public class SocialActivityCounterLocalServiceImpl
 					activityCounter =
 						socialActivityCounterLocalService.createActivityCounter(
 							groupId, classNameId, classPK, name, ownerType,
-							currentValue, totalValue);
+							currentValue, totalValue, startPeriod, endPeriod);
 				}
 				finally {
 					lockLocalService.unlock(
@@ -209,11 +210,14 @@ public class SocialActivityCounterLocalServiceImpl
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter createActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int currentValue, int totalValue)
+			int ownerType, int currentValue, int totalValue, int startPeriod,
+			int endPeriod)
 		throws PortalException, SystemException {
 
-		SocialActivityCounter activityCounter = fetchLatestActivityCounter(
-			groupId, classNameId, classPK, name, ownerType, false);
+		SocialActivityCounter activityCounter =
+			socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
+				groupId, classNameId, classPK, name, ownerType, endPeriod,
+				false);
 
 		if (activityCounter != null) {
 			return activityCounter;
@@ -234,10 +238,8 @@ public class SocialActivityCounterLocalServiceImpl
 		activityCounter.setOwnerType(ownerType);
 		activityCounter.setCurrentValue(currentValue);
 		activityCounter.setTotalValue(totalValue);
-		activityCounter.setStartPeriod(
-			SocialCounterPeriodUtil.getStartPeriod());
-		activityCounter.setEndPeriod(
-			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
+		activityCounter.setStartPeriod(startPeriod);
+		activityCounter.setEndPeriod(endPeriod);
 
 		socialActivityCounterPersistence.update(activityCounter, false);
 
@@ -308,32 +310,30 @@ public class SocialActivityCounterLocalServiceImpl
 		socialActivityCounterPersistence.removeByC_C(classNameId, classPK);
 	}
 
-	public SocialActivityCounter fetchLatestActivityCounter(
+	public SocialActivityCounter fetchActivityCounterByEndPeriod(
 			long groupId, long classNameId, long classPK, String name,
-			int ownerType)
-		throws SystemException {
-
-		return fetchLatestActivityCounter(
-			groupId, classNameId, classPK, name, ownerType, true);
-	}
-
-	public SocialActivityCounter fetchLatestActivityCounter(
-			long groupId, long classNameId, long classPK, String name,
-			int ownerType, boolean retrieveFromCache)
+			int ownerType, int endPeriod)
 		throws SystemException {
 
 		return socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
-			groupId, classNameId, classPK, name, ownerType,
-			SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
-			retrieveFromCache);
+			groupId, classNameId, classPK, name, ownerType, endPeriod);
 	}
 
-	public SocialActivityCounter getLatestActivityCounter(
+	public SocialActivityCounter fetchActivityCounterByStartPeriod(
+			long groupId, long classNameId, long classPK, String name,
+			int ownerType, int startPeriod)
+		throws SystemException {
+
+		return socialActivityCounterPersistence.fetchByG_C_C_N_O_S(
+			groupId, classNameId, classPK, name, ownerType, startPeriod);
+	}
+
+	public SocialActivityCounter fetchLatestActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType)
-		throws NoSuchActivityCounterException, SystemException {
+		throws SystemException {
 
-		return socialActivityCounterPersistence.findByG_C_C_N_O_E(
+		return socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
 			groupId, classNameId, classPK, name, ownerType,
 			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
 	}
@@ -508,7 +508,9 @@ public class SocialActivityCounterLocalServiceImpl
 		return addActivityCounter(
 			activityCounter.getGroupId(), activityCounter.getClassNameId(),
 			activityCounter.getClassPK(), activityCounter.getName(),
-			activityCounter.getOwnerType(), 0, activityCounter.getTotalValue());
+			activityCounter.getOwnerType(), 0, activityCounter.getTotalValue(),
+			SocialCounterPeriodUtil.getStartPeriod(),
+			SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
 	}
 
 	protected boolean checkActivityLimit(
@@ -598,7 +600,9 @@ public class SocialActivityCounterLocalServiceImpl
 
 		if (activityCounter == null) {
 			activityCounter = addActivityCounter(
-				groupId, classNameId, classPK, name, ownerType, 0, 0);
+				groupId, classNameId, classPK, name, ownerType, 0, 0,
+				SocialCounterPeriodUtil.getStartPeriod(),
+				SocialActivityCounterConstants.END_PERIOD_UNDEFINED);
 
 			if (periodLength > 0) {
 				activityCounter.setStartPeriod(

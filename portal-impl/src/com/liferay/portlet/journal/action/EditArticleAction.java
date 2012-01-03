@@ -320,10 +320,10 @@ public class EditArticleAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
-		for (int i = 0; i < deleteArticleIds.length; i++) {
-			int pos = deleteArticleIds[i].lastIndexOf(VERSION_SEPARATOR);
+		for (String deleteArticleId : deleteArticleIds) {
+			int pos = deleteArticleId.lastIndexOf(VERSION_SEPARATOR);
 
-			String articleId = deleteArticleIds[i];
+			String articleId = deleteArticleId;
 
 			String articleURL = ParamUtil.getString(
 				actionRequest, "articleURL");
@@ -337,7 +337,7 @@ public class EditArticleAction extends PortletAction {
 			else {
 				articleId = articleId.substring(0, pos);
 				version = GetterUtil.getDouble(
-					deleteArticleIds[i].substring(
+					deleteArticleId.substring(
 						pos + VERSION_SEPARATOR.length()));
 
 				JournalArticleServiceUtil.deleteArticle(
@@ -359,10 +359,10 @@ public class EditArticleAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
 
-		for (int i = 0; i < expireArticleIds.length; i++) {
-			int pos = expireArticleIds[i].lastIndexOf(VERSION_SEPARATOR);
+		for (String expireArticleId : expireArticleIds) {
+			int pos = expireArticleId.lastIndexOf(VERSION_SEPARATOR);
 
-			String articleId = expireArticleIds[i];
+			String articleId = expireArticleId;
 
 			String articleURL = ParamUtil.getString(
 				actionRequest, "articleURL");
@@ -376,7 +376,7 @@ public class EditArticleAction extends PortletAction {
 			else {
 				articleId = articleId.substring(0, pos);
 				version = GetterUtil.getDouble(
-					expireArticleIds[i].substring(
+					expireArticleId.substring(
 						pos + VERSION_SEPARATOR.length()));
 
 				JournalArticleServiceUtil.expireArticle(
@@ -470,12 +470,12 @@ public class EditArticleAction extends PortletAction {
 		String[] removeArticleLocaleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteArticleIds"));
 
-		for (int i = 0; i < removeArticleLocaleIds.length; i++) {
-			int pos = removeArticleLocaleIds[i].lastIndexOf(VERSION_SEPARATOR);
+		for (String removeArticleLocaleId : removeArticleLocaleIds) {
+			int pos = removeArticleLocaleId.lastIndexOf(VERSION_SEPARATOR);
 
-			String articleId = removeArticleLocaleIds[i].substring(0, pos);
+			String articleId = removeArticleLocaleId.substring(0, pos);
 			double version = GetterUtil.getDouble(
-				removeArticleLocaleIds[i].substring(
+				removeArticleLocaleId.substring(
 					pos + VERSION_SEPARATOR.length()));
 			String languageId = ParamUtil.getString(
 				actionRequest, "languageId");

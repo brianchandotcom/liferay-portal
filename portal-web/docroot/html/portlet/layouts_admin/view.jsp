@@ -213,18 +213,25 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			}
 		);
 
+		var <portlet:namespace />getCurrentSectionName = function() {
+			return location.hash.replace('#_LFR_FN_<portlet:namespace />', '');
+		};
+
 		A.one('#<portlet:namespace />layoutsTreeOutput').delegate(
 			'click',
 			function(event) {
 				event.preventDefault();
 
-				var requestUri = event.currentTarget.get('href');
+				var requestUri = A.Lang.sub(
+					event.currentTarget.get('href'),
+					{
+						historyKey: <portlet:namespace />getCurrentSectionName()
+					}
+				);
 
 				layoutsContainer.io.set('uri', requestUri);
 
 				layoutsContainer.io.start();
-
-				location.hash = '';
 			},
 			'.layout-tree'
 		);

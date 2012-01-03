@@ -43,7 +43,7 @@ if (!selectableTree) {
 
 	var Util = Liferay.Util;
 
-	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid=" %>';
+	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid={selPlid}" + StringPool.AMPERSAND + portletDisplay.getNamespace() + "historyKey={historyKey}" %>';
 
 	var TreeUtil = {
 		DEFAULT_PARENT_LAYOUT_ID: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
@@ -86,7 +86,15 @@ if (!selectableTree) {
 				className += ' layout-page-invalid';
 			}
 
-			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + LAYOUT_URL + data.plid + '" title="' + data.title + '">' + data.label + '</a>';
+			var href = Lang.sub(
+				LAYOUT_URL,
+				{
+					historyKey: data.historyKey,
+					selPlid: data.plid
+				}
+			);
+
+			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + href + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
 		extractLayoutId: function(node) {
@@ -457,7 +465,15 @@ if (!selectableTree) {
 
 						var io = layoutsContainer.io;
 
-						io.set('uri', LAYOUT_URL + nodePlid);
+						var uri = Lang.sub(
+							LAYOUT_URL,
+							{
+								historyKey: '',
+								selPlid: nodePlid
+							}
+						);
+
+						io.set('uri', uri);
 
 						io.start();
 					}

@@ -33,7 +33,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 <liferay-ui:search-container
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 >
-	<aui:input name="usersRedirect" disabled="true" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input disabled="true" name="usersRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();

@@ -23,7 +23,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 <liferay-ui:search-container
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 >
-	<aui:input name="organizationsRedirect" disabled="true" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input disabled="true" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-form
 		page="/html/portlet/directory/organization_search.jsp"

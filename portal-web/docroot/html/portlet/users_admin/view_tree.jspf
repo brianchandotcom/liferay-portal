@@ -305,7 +305,7 @@ int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCom
 			%>
 
 			<aui:input name="deleteOrganizationIds" type="hidden" />
-			<aui:input name="organizationsRedirect" disabled="true" type="hidden" value="<%= portletURL.toString() %>" />
+			<aui:input disabled="true" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 			<c:if test="<%= showOrganizations %>">
 				<liferay-util:buffer var="organizationsPanelTitle">

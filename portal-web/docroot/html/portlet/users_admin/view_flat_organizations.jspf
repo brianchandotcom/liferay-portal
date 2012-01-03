@@ -19,7 +19,7 @@
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 >
 	<aui:input name="deleteOrganizationIds" type="hidden" />
-	<aui:input name="organizationsRedirect" disabled="true" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input disabled="true" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-form
 		page="/html/portlet/users_admin/organization_search.jsp"

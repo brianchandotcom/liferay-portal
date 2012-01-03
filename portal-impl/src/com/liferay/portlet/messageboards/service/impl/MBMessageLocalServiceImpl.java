@@ -1761,7 +1761,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		String contentURL = (String)serviceContext.getAttribute("redirect");
+		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
 		String userAddress = StringPool.BLANK;
 		String userName = (String)serviceContext.getAttribute(

@@ -19,7 +19,7 @@
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
 	<aui:input name="deleteUserGroupIds" type="hidden" />
-	<aui:input name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="userGroupsRedirect" disabled="true" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-form
 		page="/html/portlet/user_groups_admin/user_group_search.jsp"

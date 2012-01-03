@@ -11,7 +11,7 @@
 
 		<!-- Resource -->
 
-		<column name="resourcePrimKey" type="long" />
+		<column name="resourcePrimKey" filter-primary="true" type="long" />
 
 		<!-- Group instance -->
 

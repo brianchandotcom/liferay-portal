@@ -70,6 +70,11 @@ public interface DLFolderService {
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
+		int status, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,

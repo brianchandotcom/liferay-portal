@@ -78,6 +78,14 @@ public class DLFolderServiceUtil {
 			status);
 	}
 
+	public static int getFileEntriesAndFileShortcutsCount(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFileEntriesAndFileShortcutsCount(groupId, folderId,
+			status, mimeTypes);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,

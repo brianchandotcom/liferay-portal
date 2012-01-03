@@ -124,6 +124,22 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static int getFileEntriesAndFileShortcutsCount(long groupId,
+		long folderId, int status, java.lang.String[] mimeTypes)
+		throws RemoteException {
+		try {
+			int returnValue = DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(groupId,
+					folderId, status, mimeTypes);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap getFolder(
 		long folderId) throws RemoteException {
 		try {

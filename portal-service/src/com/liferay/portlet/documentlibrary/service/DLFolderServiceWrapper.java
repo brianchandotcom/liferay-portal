@@ -68,6 +68,13 @@ public class DLFolderServiceWrapper implements DLFolderService,
 			folderId, status);
 	}
 
+	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
+		int status, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderService.getFileEntriesAndFileShortcutsCount(groupId,
+			folderId, status, mimeTypes);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.ServletRequestUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -766,7 +765,7 @@ public class ServicePreAction extends Action {
 		themeDisplay.setThemeImagesFastLoad(themeImagesFastLoad);
 		themeDisplay.setThemeJsBarebone(themeJsBarebone);
 		themeDisplay.setThemeJsFastLoad(themeJsFastLoad);
-		themeDisplay.setServerName(ServletRequestUtil.getServerName(request));
+		themeDisplay.setServerName(request.getServerName());
 		themeDisplay.setServerPort(request.getServerPort());
 		themeDisplay.setSecure(PortalUtil.isSecure(request));
 		themeDisplay.setLifecycle(lifecycle);

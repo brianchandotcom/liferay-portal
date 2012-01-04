@@ -1,6 +1,54 @@
 AUI().add(
 	'liferay-dockbar-underlay',
 	function(A) {
+		Liferay.Dockbar._addUnderlay = function(options) {
+			var instance = this;
+
+			var autoShow = true;
+
+			var underlay;
+			var name = options.name;
+
+			if (name) {
+				autoShow = options.visible !== false;
+
+				underlay = instance[name];
+
+				if (!underlay) {
+					delete options.name;
+
+					options.zIndex = instance.underlayZIndex++;
+
+					options.align = options.align || {
+						node: instance.dockBar,
+						points: ['tl', 'bl']
+					};
+
+					underlay = new Liferay.Dockbar.Underlay(options);
+
+					underlay.render(instance.dockBar);
+
+					var ioOptions = options.io;
+
+					if (ioOptions) {
+						ioOptions.loadingMask = {
+							background: 'transparent'
+						};
+
+						underlay.plug(A.Plugin.IO, ioOptions);
+					}
+
+					instance[name] = underlay;
+				}
+
+				if (autoShow && underlay && underlay instanceof A.Overlay) {
+					underlay.show();
+				}
+			}
+
+			return underlay;
+		};
+
 		var Underlay = A.Component.create(
 			{
 				ATTRS: {
@@ -60,6 +108,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-button-item', 'aui-overlay-manager']
+		requires: ['aui-button-item', 'aui-io-plugin', 'aui-overlay-manager']
 	}
 );

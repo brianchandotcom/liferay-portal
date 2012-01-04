@@ -78,14 +78,10 @@ AUI.add(
 		var Menu = function() {
 			var instance = this;
 
+			instance._handles = [];
+
 			if (!Menu._INSTANCE) {
 				Menu._INSTANCE = instance;
-
-				Liferay.on('portletDragStart', instance._closeActiveMenu, instance);
-
-				A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance));
-
-				A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance);
 			}
 		};
 
@@ -96,6 +92,12 @@ AUI.add(
 				var menu = instance._activeMenu;
 
 				if (menu) {
+					var handles = instance._handles;
+
+					A.Array.invoke(handles, 'detach');
+
+					handles.length = 0;
+
 					instance._overlay.hide();
 
 					var trigger = instance._activeTrigger;
@@ -477,6 +479,14 @@ AUI.add(
 
 								instance._activeMenu = menu;
 								instance._activeTrigger = trigger;
+
+								if (!instance._handles.length) {
+									instance._handles.push(
+										Liferay.on('portletDragStart', instance._closeActiveMenu, instance),
+										A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance)),
+										A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance)
+									);
+								}
 
 								instance._positionActiveMenu();
 

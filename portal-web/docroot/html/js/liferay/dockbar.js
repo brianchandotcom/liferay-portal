@@ -20,7 +20,7 @@ AUI.add(
 
 					instance._namespace = dockBar.attr('data-namespace');
 
-					Liferay.once('initDockbar', Liferay.Dockbar._init, instance);
+					Liferay.once('initDockbar', instance._init, instance);
 
 					var eventHandle = dockBar.on(
 						['focus', 'mousemove', 'touchstart'],
@@ -164,7 +164,7 @@ AUI.add(
 								next: 'down:40',
 								previous: 'down:38'
 							}
-						 }
+						}
 					);
 
 					var focusManager = contentBox.focusManager;
@@ -241,54 +241,6 @@ AUI.add(
 				}
 
 				return menu;
-			},
-
-			_addUnderlay: function(options) {
-				var instance = this;
-
-				var autoShow = true;
-
-				var underlay;
-				var name = options.name;
-
-				if (name) {
-					autoShow = options.visible !== false;
-
-					underlay = instance[name];
-
-					if (!underlay) {
-						delete options.name;
-
-						options.zIndex = instance.underlayZIndex++;
-
-						options.align = options.align || {
-							node: instance.dockBar,
-							points: ['tl', 'bl']
-						};
-
-						underlay = new Liferay.Dockbar.Underlay(options);
-
-						underlay.render(instance.dockBar);
-
-						var ioOptions = options.io;
-
-						if (ioOptions) {
-							ioOptions.loadingMask = {
-								background: 'transparent'
-							};
-
-							underlay.plug(A.Plugin.IO, ioOptions);
-						}
-
-						instance[name] = underlay;
-					}
-
-					if (autoShow && underlay && underlay instanceof A.Overlay) {
-						underlay.show();
-					}
-				}
-
-				return underlay;
 			},
 
 			_createCustomizationMask: function(column) {
@@ -414,7 +366,7 @@ AUI.add(
 			function(options) {
 				var instance = this;
 
-				Liferay.Dockbar._addMenu(options);
+				instance._addMenu(options);
 			},
 			['aui-overlay-context', 'node-focusmanager']
 		);
@@ -425,9 +377,9 @@ AUI.add(
 			function(options) {
 				var instance = this;
 
-				Liferay.Dockbar._addUnderlay(options);
+				instance._addUnderlay(options);
 			},
-			['aui-io-plugin', 'liferay-dockbar-underlay']
+			['liferay-dockbar-underlay']
 		);
 
 		Liferay.provide(
@@ -649,7 +601,7 @@ AUI.add(
 										className: 'add-application',
 										io: {
 											after: {
-												success: Liferay.Dockbar._loadAddApplications
+												success: Dockbar._loadAddApplications
 											},
 											data: {
 												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
@@ -724,12 +676,21 @@ AUI.add(
 
 						var columns = A.all('.portlet-column .portlet-dropzone:not(.portlet-dropzone-disabled)');
 
-						BODY.delegate('click', Liferay.Dockbar._onChangeCustomization, '.layout-customizable-checkbox', instance);
+						var customizationsHandle;
 
 						manageCustomizationLink.on(
 							'click',
 							function(event) {
 								event.halt();
+
+								if (!customizationsHandle) {
+									customizationsHandle = BODY.delegate('click', instance._onChangeCustomization, '.layout-customizable-checkbox', instance);
+								}
+								else {
+									customizationsHandle.detach();
+
+									customizationsHandle = null;
+								}
 
 								manageContent.hide();
 
@@ -810,7 +771,7 @@ AUI.add(
 					'.aui-toolbar a'
 				);
 			},
-			['aui-io-plugin', 'aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'node-focusmanager']
+			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'node-focusmanager']
 		);
 
 		Liferay.provide(

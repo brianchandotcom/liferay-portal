@@ -80,7 +80,7 @@ public class AddPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@id='_20_breadcrumbContainer']/ul/li[2]/span/a")) {
+							"//div[@id='_20_breadcrumbContainer']/ul/li[3]/span/a")) {
 					break;
 				}
 			}
@@ -92,7 +92,7 @@ public class AddPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText(
-				"//div[@id='_20_breadcrumbContainer']/ul/li[2]/span/a"));
+				"//div[@id='_20_breadcrumbContainer']/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));

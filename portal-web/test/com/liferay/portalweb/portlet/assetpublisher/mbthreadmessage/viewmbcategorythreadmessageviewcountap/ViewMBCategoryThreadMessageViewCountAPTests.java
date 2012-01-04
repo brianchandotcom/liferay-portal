@@ -38,7 +38,6 @@ public class ViewMBCategoryThreadMessageViewCountAPTests extends BaseTests {
 		testSuite.addTestSuite(ConfigurePortletShowMetadataViewCountTest.class);
 		testSuite.addTestSuite(
 			ViewMBCategoryThreadMessageViewCountAPTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

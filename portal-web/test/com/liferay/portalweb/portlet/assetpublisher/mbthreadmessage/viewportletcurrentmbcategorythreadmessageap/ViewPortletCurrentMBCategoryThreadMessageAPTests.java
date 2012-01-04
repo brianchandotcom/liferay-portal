@@ -40,7 +40,6 @@ public class ViewPortletCurrentMBCategoryThreadMessageAPTests
 		testSuite.addTestSuite(ConfigurePortletCurrentMBMessageTest.class);
 		testSuite.addTestSuite(
 			ViewPortletCurrentMBCategoryThreadMessageAPTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -37,7 +37,6 @@ public class ViewPortletAvailableMBCategoryThreadMessageAPTests
 		testSuite.addTestSuite(ConfigurePortletAvailableMBMessageTest.class);
 		testSuite.addTestSuite(
 			ViewPortletAvailableMBCategoryThreadMessageAPTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

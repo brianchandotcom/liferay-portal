@@ -37,7 +37,6 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTests
 		testSuite.addTestSuite(ConfigurePortletDisplayStyleAbstractsTest.class);
 		testSuite.addTestSuite(
 			ViewPortletAbstractsMBCategoryThreadMessageAPTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

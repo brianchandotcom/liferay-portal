@@ -47,7 +47,6 @@ public class ViewPortletPaginationRegularMBCategoryThread6APTests
 		testSuite.addTestSuite(NextButtonAPTest.class);
 		testSuite.addTestSuite(PreviousButtonAPTest.class);
 		testSuite.addTestSuite(SelectPageAPTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

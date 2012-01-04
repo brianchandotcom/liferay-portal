@@ -44,7 +44,6 @@ public class ViewPortletMaximumItems5MBCategoryMessage6APTests
 			ConfigurePortletMaximumItemsToDisplay5Test.class);
 		testSuite.addTestSuite(
 			ViewPortletMaximumItems5MBCategoryMessage6APTest.class);
-		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

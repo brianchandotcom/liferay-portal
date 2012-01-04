@@ -320,6 +320,18 @@ public class LayoutRevisionLocalServiceImpl
 			layoutSetBranchId, layoutBranchId, plid);
 	}
 
+	public LayoutRevision getLastLayoutRevision(long plid, boolean head)
+		throws SystemException {
+
+		try {
+			return layoutRevisionPersistence.findByH_P_Last(
+				head, plid, new LayoutRevisionCreateDateComparator(true));
+		}
+		catch(NoSuchLayoutRevisionException nslre) {
+			return null;
+		}
+	}
+
 	public LayoutRevision updateLayoutRevision(
 			long userId, long layoutRevisionId, long layoutBranchId,
 			String name, String title, String description, String keywords,

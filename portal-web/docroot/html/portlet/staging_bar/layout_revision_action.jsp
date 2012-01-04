@@ -78,7 +78,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			/>
 		</c:if>
 
-		<c:if test="<%= !layoutRevision.isHead() && layoutRevision.isApproved() %>">
+		<c:if test="<%= !layoutRevision.isHead() && !layoutRevision.isPending() %>">
 			<portlet:actionURL var="deleteURL">
 				<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="delete_layout_revision" />

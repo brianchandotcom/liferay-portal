@@ -168,8 +168,8 @@ public class DLFolderFinderImpl
 					sql, DLFolder.class.getName(), "DLFolder.folderId",
 					groupId);
 			}
-			sb.append(sql);
 
+			sb.append(sql);
 			sb.append(") UNION ALL (");
 
 			sb.append(getFileEntriesQuery(
@@ -185,7 +185,7 @@ public class DLFolderFinderImpl
 			sql = sb.toString();
 
 			sql = replaceFolderTemplates(
-					sql, folderId, includeMountFolders, status);
+				sql, folderId, includeMountFolders, status);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -305,14 +305,13 @@ public class DLFolderFinderImpl
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
 			String sql = getFileEntriesQuery(
-					groupId, inlineSQLHelper, status, mimeTypes);
+				groupId, inlineSQLHelper, status, mimeTypes);
 
 			sb.append(sql);
-
 			sb.append(") UNION ALL (");
 
 			sb.append(getFileShortcutsQuery(
-					groupId, inlineSQLHelper, status, mimeTypes));
+				groupId, inlineSQLHelper, status, mimeTypes));
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 

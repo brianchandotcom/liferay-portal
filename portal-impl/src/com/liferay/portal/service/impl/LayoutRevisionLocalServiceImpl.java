@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutRevisionConstants;
 import com.liferay.portal.model.LayoutSetBranch;
@@ -46,12 +47,13 @@ public class LayoutRevisionLocalServiceImpl
 
 	public LayoutRevision addLayoutRevision(
 			long userId, long layoutSetBranchId, long layoutBranchId,
-			long parentLayoutRevisionId, boolean head, long plid,
-			boolean privateLayout, String name, String title,
-			String description, String keywords, String robots,
-			String typeSettings, boolean iconImage, long iconImageId,
-			String themeId, String colorSchemeId, String wapThemeId,
-			String wapColorSchemeId, String css, ServiceContext serviceContext)
+			long parentLayoutRevisionId, boolean head,
+			long plid, long portletPreferencesPlid, boolean privateLayout,
+			String name, String title, String description, String keywords,
+			String robots, String typeSettings, boolean iconImage,
+			long iconImageId, String themeId, String colorSchemeId,
+			String wapThemeId, String wapColorSchemeId, String css,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout revision
@@ -78,14 +80,6 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setLayoutBranchId(layoutBranchId);
 		layoutRevision.setParentLayoutRevisionId(parentLayoutRevisionId);
 		layoutRevision.setHead(head);
-
-		long mergeLayoutRevisionId = ParamUtil.getLong(
-			serviceContext, "mergeLayoutRevisionId");
-
-		if (mergeLayoutRevisionId > 0) {
-			layoutRevision.setMajor(true);
-		}
-
 		layoutRevision.setPlid(plid);
 		layoutRevision.setPrivateLayout(privateLayout);
 		layoutRevision.setName(name);
@@ -114,20 +108,12 @@ public class LayoutRevisionLocalServiceImpl
 
 		// Portlet preferences
 
-		if (parentLayoutRevisionId ==
-				LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) {
-
-			parentLayoutRevisionId = layoutRevision.getPlid();
-		}
-
-		long sourceParentLayoutRevisionId = parentLayoutRevisionId;
-
-		if (mergeLayoutRevisionId > 0) {
-			sourceParentLayoutRevisionId = mergeLayoutRevisionId;
+		if (portletPreferencesPlid == LayoutConstants.DEFAULT_PLID) {
+			portletPreferencesPlid = plid;
 		}
 
 		copyPortletPreferences(
-			layoutRevision, sourceParentLayoutRevisionId, serviceContext);
+			layoutRevision, portletPreferencesPlid, serviceContext);
 
 		// Workflow
 

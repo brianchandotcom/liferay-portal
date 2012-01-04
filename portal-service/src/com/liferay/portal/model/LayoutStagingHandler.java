@@ -244,9 +244,10 @@ public class LayoutStagingHandler implements InvocationHandler {
 			serviceContext.getUserId(), layoutSetBranchId,
 			layoutBranch.getLayoutBranchId(),
 			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, false,
-			layout.getPlid(), layout.isPrivateLayout(), layout.getName(),
-			layout.getTitle(), layout.getDescription(), layout.getKeywords(),
-			layout.getRobots(), layout.getTypeSettings(), layout.getIconImage(),
+			layout.getPlid(), LayoutConstants.DEFAULT_PLID,
+			layout.isPrivateLayout(), layout.getName(), layout.getTitle(),
+			layout.getDescription(), layout.getKeywords(), layout.getRobots(),
+			layout.getTypeSettings(), layout.getIconImage(),
 			layout.getIconImageId(), layout.getThemeId(),
 			layout.getColorSchemeId(), layout.getWapThemeId(),
 			layout.getWapColorSchemeId(), layout.getCss(), serviceContext);

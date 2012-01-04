@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutBranchConstants;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutRevisionConstants;
 import com.liferay.portal.model.LayoutSet;
@@ -103,9 +104,11 @@ public class LayoutSetBranchLocalServiceImpl
 						serviceContext);
 
 				layoutRevisionLocalService.addLayoutRevision(
-					userId, layoutSetBranchId, layoutBranch.getLayoutBranchId(),
+					userId, layoutSetBranchId,
+					layoutBranch.getLayoutBranchId(),
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
-					true, layout.getPlid(), layout.getPrivateLayout(),
+					true, layout.getPlid(), LayoutConstants.DEFAULT_PLID,
+					layout.getPrivateLayout(),
 					layout.getName(), layout.getTitle(),
 					layout.getDescription(), layout.getKeywords(),
 					layout.getRobots(), layout.getTypeSettings(),
@@ -133,6 +136,7 @@ public class LayoutSetBranchLocalServiceImpl
 					layoutBranch.getLayoutBranchId(),
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
 					true, layoutRevision.getPlid(),
+					layoutRevision.getLayoutRevisionId(),
 					layoutRevision.getPrivateLayout(), layoutRevision.getName(),
 					layoutRevision.getTitle(), layoutRevision.getDescription(),
 					layoutRevision.getKeywords(), layoutRevision.getRobots(),
@@ -278,15 +282,13 @@ public class LayoutSetBranchLocalServiceImpl
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		for (LayoutRevision layoutRevision : layoutRevisions) {
-			serviceContext.setAttribute(
-				"mergeLayoutRevisionId", layoutRevision.getLayoutRevisionId());
-
 			layoutRevisionLocalService.addLayoutRevision(
 				layoutRevision.getUserId(),
 				layoutSetBranch.getLayoutSetBranchId(),
 				layoutRevision.getLayoutBranchId(),
 				LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID,
 				false, layoutRevision.getPlid(),
+				layoutRevision.getLayoutRevisionId(),
 				layoutRevision.isPrivateLayout(), layoutRevision.getName(),
 				layoutRevision.getTitle(), layoutRevision.getDescription(),
 				layoutRevision.getKeywords(), layoutRevision.getRobots(),

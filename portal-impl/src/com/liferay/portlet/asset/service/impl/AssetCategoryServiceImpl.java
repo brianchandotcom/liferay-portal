@@ -222,6 +222,17 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			categoryId, parentCategoryId, vocabularyId, serviceContext);
 	}
 
+	public List<AssetCategory> search(
+			long groupId, String keywords, long vocabularyId, int start,
+			int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return filterCategories(
+			assetCategoryFinder.findByG_N_V(
+				groupId, CustomSQLUtil.keywords(keywords)[0], vocabularyId,
+				start, end, obc));
+	}
+
 	public JSONArray search(
 			long groupId, String name, String[] categoryProperties, int start,
 			int end)
@@ -233,17 +244,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		categories = filterCategories(categories);
 
 		return Autocomplete.listToJson(categories, "name", "name");
-	}
-
-	public List<AssetCategory> search(
-			long groupId, String keywords, long vocabularyId, int start,
-			int end, OrderByComparator obc)
-		throws PortalException, SystemException {
-
-		return filterCategories(
-			assetCategoryFinder.findByG_N_V(
-				groupId, CustomSQLUtil.keywords(keywords)[0], vocabularyId,
-				start, end, obc));
 	}
 
 	public AssetCategory updateCategory(

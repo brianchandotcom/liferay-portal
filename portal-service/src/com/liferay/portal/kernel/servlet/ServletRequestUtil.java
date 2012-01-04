@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -25,19 +24,6 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @author Brian Wing Shun Chan
  */
 public class ServletRequestUtil {
-
-	/**
-	 * @see {@link PortletRequestUtil#getServerName(PortletRequest)}
-	 */
-	public static String getServerName(HttpServletRequest request) {
-		String serverName = request.getServerName();
-
-		if (!Validator.isDomain(serverName)) {
-			throw new RuntimeException("Invalid server name " + serverName);
-		}
-
-		return serverName;
-	}
 
 	public static void logRequestWrappers(HttpServletRequest request) {
 		HttpServletRequest tempRequest = request;

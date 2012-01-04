@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
-import com.liferay.portal.kernel.servlet.ServletRequestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -152,7 +151,7 @@ public class SecureFilter extends BasePortalFilter {
 			StringBundler redirectURL = new StringBundler(5);
 
 			redirectURL.append(Http.HTTPS_WITH_SLASH);
-			redirectURL.append(ServletRequestUtil.getServerName(request));
+			redirectURL.append(request.getServerName());
 			redirectURL.append(request.getServletPath());
 
 			String queryString = request.getQueryString();

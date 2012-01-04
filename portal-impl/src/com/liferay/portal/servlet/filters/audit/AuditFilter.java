@@ -15,7 +15,6 @@
 package com.liferay.portal.servlet.filters.audit;
 
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
-import com.liferay.portal.kernel.servlet.ServletRequestUtil;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -51,8 +50,7 @@ public class AuditFilter extends BasePortalFilter implements TryFilter {
 
 		auditRequestThreadLocal.setRequestURL(
 			request.getRequestURL().toString());
-		auditRequestThreadLocal.setServerName(
-			ServletRequestUtil.getServerName(request));
+		auditRequestThreadLocal.setServerName(request.getServerName());
 		auditRequestThreadLocal.setServerPort(request.getServerPort());
 		auditRequestThreadLocal.setSessionID(session.getId());
 

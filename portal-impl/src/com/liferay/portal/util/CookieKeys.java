@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.portal.CookieNotSupportedException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletRequestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -133,7 +132,7 @@ public class CookieKeys implements com.liferay.portal.kernel.util.CookieKeys {
 			return PropsValues.SESSION_COOKIE_DOMAIN;
 		}
 
-		String host = ServletRequestUtil.getServerName(request);
+		String host = request.getServerName();
 
 		return getDomain(host);
 	}

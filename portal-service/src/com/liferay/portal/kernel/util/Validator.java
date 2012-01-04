@@ -501,6 +501,38 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the string is a valid host name.
+	 *
+	 * @param  name the string to check
+	 * @return <code>true</code> if the string is a valid host name;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isHostName(String name) {
+		if (isNull(name)) {
+			return false;
+		}
+
+		char[] nameCharArray = name.toCharArray();
+
+		if ((nameCharArray[0] == CharPool.DASH) ||
+			(nameCharArray[0] == CharPool.PERIOD) ||
+			(nameCharArray[nameCharArray.length - 1] == CharPool.DASH)) {
+
+			return false;
+		}
+
+		for (char c : nameCharArray) {
+			if (!isChar(c) && !isDigit(c) && (c != CharPool.DASH) &&
+				(c != CharPool.PERIOD)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Returns <code>true</code> if the string is an HTML document. The only
 	 * requirement is that it contain the opening and closing html tags.
 	 *

@@ -470,6 +470,10 @@
 		<filter-class>com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter</filter-class>
 	</filter>
 	<filter>
+		<filter-name>Valid Server Name Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.validservername.ValidServerNameFilter</filter-class>
+	</filter>
+	<filter>
 		<filter-name>Virtual Host Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter</filter-class>
 		<init-param>
@@ -496,6 +500,10 @@
 	<filter-mapping>
 		<filter-name>Ignore Filter - VM</filter-name>
 		<url-pattern>*.vm</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Valid Server Name Filter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Thread Dump Filter</filter-name>

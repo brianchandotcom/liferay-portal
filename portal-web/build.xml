@@ -256,6 +256,20 @@
 				</copy>
 			</else>
 		</if>
+
+		<replace file="docroot/html/js/editor/ckeditor/_source/plugins/link/dialogs/link.js">
+			<replacetoken><![CDATA[return 'mailto:' +]]></replacetoken>
+				<replacevalue><![CDATA[rest = decodeURIComponent(rest);
+
+							return "mailto:" + ]]></replacevalue>
+		</replace>
+
+		<replace file="docroot/html/js/editor/ckeditor/_source/plugins/link/dialogs/link.js">
+			<replacetoken><![CDATA[body = encodeURIComponent( email.body || '' );]]></replacetoken>
+			<replacevalue><![CDATA[body = email.body || '';
+
+							body = encodeURIComponent(body).replace(/%/g, '%25');]]></replacevalue>
+			</replace>
 	</target>
 
 	<target name="build-ckeditor-plugins-bbcode">
@@ -397,6 +411,25 @@
 				<replace file="docroot/html/js/editor/fckeditor/editor/dialog/fck_link/fck_link.js">
 					<replacetoken><![CDATA[return 'javascript:location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\'' ;]]></replacetoken>
 					<replacevalue><![CDATA[return 'javascript:void(location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\')' ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/dialog/fck_link/fck_link.js">
+					<replacetoken><![CDATA[if ( aMatch ) oEMailParams.Body = decodeURIComponent( aMatch[2] ) ;]]></replacetoken>
+					<replacevalue><![CDATA[if ( aMatch ) {
+			oEMailParams.Body = decodeURIComponent( aMatch[2] ) ;
+			oEMailParams.Body = decodeURIComponent( oEMailParams.Body ) ;
+		}]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/dialog/fck_link/fck_link.js">
+					<replacetoken><![CDATA[aParams.push( 'body=' + encodeURIComponent( body ) ) ;]]></replacetoken>
+					<replacevalue><![CDATA[{
+				var encodedBody = encodeURIComponent( body );
+
+				encodedBody = encodedBody.replace(/%/g, '%25');
+
+				aParams.push( 'body=' + encodedBody ) ;
+			}]]></replacevalue>
 				</replace>
 
 				<!-- browser.html -->

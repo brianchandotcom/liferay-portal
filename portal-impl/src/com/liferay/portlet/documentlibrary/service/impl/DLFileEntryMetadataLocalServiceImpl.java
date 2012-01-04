@@ -125,21 +125,20 @@ public class DLFileEntryMetadataLocalServiceImpl
 			ServiceContext serviceContext)
 		throws StorageException, SystemException {
 
-		try {
-			DLFileEntryMetadata fileEntryMetadata =
-				dlFileEntryMetadataPersistence.findByD_F(
-					ddmStructure.getStructureId(), fileVersionId);
+		DLFileEntryMetadata fileEntryMetadata =
+			dlFileEntryMetadataPersistence.fetchByD_F(
+				ddmStructure.getStructureId(), fileVersionId);
 
+		if (fileEntryMetadata != null) {
 			StorageEngineUtil.update(
 				fileEntryMetadata.getDDMStorageId(), fields, serviceContext);
 		}
-		catch (NoSuchFileEntryMetadataException nsdmse) {
-
+		else {
 			// File entry metadata
 
 			long fileEntryMetadataId = counterLocalService.increment();
 
-			DLFileEntryMetadata fileEntryMetadata =
+			fileEntryMetadata =
 				dlFileEntryMetadataPersistence.create(fileEntryMetadataId);
 
 			long ddmStorageId = StorageEngineUtil.create(

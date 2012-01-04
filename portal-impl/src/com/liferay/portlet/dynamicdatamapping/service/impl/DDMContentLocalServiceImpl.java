@@ -48,7 +48,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 			xml = DDMXMLUtil.formatXML(xml);
 		}
 		catch (Exception e) {
-			throw new ContentXmlException();
+			throw new ContentXmlException(e);
 		}
 
 		Date now = new Date();

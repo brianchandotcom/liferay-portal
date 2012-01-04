@@ -273,12 +273,6 @@ public class SitesUtil {
 		setLayoutSetPrototypeLinkEnabledParameter(
 			parameterMap, targetLayoutSet, serviceContext);
 
-		if (!targetLayoutSet.isPrivateLayout()) {
-			parameterMap.put(
-				PortletDataHandlerKeys.PUBLIC_LAYOUT_PERMISSIONS,
-				new String[] {Boolean.TRUE.toString()});
-		}
-
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			sourceLayoutSet.getGroupId(), sourceLayoutSet.isPrivateLayout(),
 			null, parameterMap, null, null);

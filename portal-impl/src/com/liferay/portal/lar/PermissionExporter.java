@@ -346,15 +346,15 @@ public class PermissionExporter {
 			Set<String> availableActionIds = roleIdsToActionIds.get(
 				role.getRoleId());
 
-			if ((availableActionIds == null) || availableActionIds.isEmpty()) {
-				continue;
-			}
-
 			Element roleElement = permissionsElement.addElement("role");
 
 			roleElement.addAttribute("name", role.getName());
 			roleElement.addAttribute("description", role.getDescription());
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
+
+			if ((availableActionIds == null) || availableActionIds.isEmpty()) {
+				continue;
+			}
 
 			for (String action : availableActionIds) {
 				Element actionKeyElement = roleElement.addElement("action-key");

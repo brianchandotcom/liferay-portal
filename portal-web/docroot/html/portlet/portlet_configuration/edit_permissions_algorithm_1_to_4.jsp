@@ -151,7 +151,7 @@ request.setAttribute("edit_permissions_algorithm_1_to_4.jsp-portletURL", portlet
 
 			// Private layouts should not have guest assignments
 
-			if (selLayout.isPrivateLayout()) {
+			if (selLayout.isPrivateLayout() && !selLayout.getGroup().isLayoutSetPrototype()) {
 				tabs2Names = StringUtil.replace(tabs2Names, ",guest", StringPool.BLANK);
 			}
 		}

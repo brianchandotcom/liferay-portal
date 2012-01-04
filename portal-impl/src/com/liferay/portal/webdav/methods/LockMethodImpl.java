@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Lock;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -37,10 +40,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 /**
  * @author Alexander Chow
@@ -85,9 +84,7 @@ public class LockMethodImpl implements Method {
 					_log.debug("Request XML\n" + XMLFormatter.toString(xml));
 				}
 
-				SAXReader reader = new SAXReader();
-
-				Document doc = reader.read(new UnsyncStringReader(xml));
+				Document doc = SAXReaderUtil.read(new UnsyncStringReader(xml));
 
 				Element root = doc.getRootElement();
 

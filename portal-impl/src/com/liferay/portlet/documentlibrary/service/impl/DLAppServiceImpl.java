@@ -892,6 +892,27 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the number of file entries and shortcuts in the folder.
+	 *
+	 * @param  repositoryId the primary key of the repository
+	 * @param  folderId the primary key of the folder
+	 * @param  status the workflow status
+	 * @param  mimeTypes allowed media types
+	 * @return the number of file entries and shortcuts in the folder
+	 * @throws PortalException if the folder ould not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getFileEntriesAndFileShortcutsCount(
+			long repositoryId, long folderId, int status, String[] mimeTypes)
+			throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.getFileEntriesAndFileShortcutsCount(
+				folderId, status, mimeTypes);
+	}
+
+	/**
 	 * Returns the number of file entries in the folder.
 	 *
 	 * @param  repositoryId the primary key of the file entry's repository

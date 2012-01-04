@@ -92,7 +92,23 @@ public class ViewCategoryViewableByOwnerTest extends BaseTestCase {
 			selenium.getText("//div[@class='view-category']/div[2]"));
 		selenium.clickAt("//input[@id='updateCategoryPermissions']",
 			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[3]/td[6]/input")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertFalse(selenium.isChecked("//tr[3]/td[6]/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td[6]/input"));
 		assertFalse(selenium.isChecked("//tr[5]/td[6]/input"));

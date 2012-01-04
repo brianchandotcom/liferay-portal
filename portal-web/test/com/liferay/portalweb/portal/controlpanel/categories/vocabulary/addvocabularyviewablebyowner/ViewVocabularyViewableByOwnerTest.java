@@ -73,7 +73,23 @@ public class ViewVocabularyViewableByOwnerTest extends BaseTestCase {
 			selenium.getText("//textarea[@id='_147_description_en_US']"));
 		selenium.clickAt("//input[@value='Permissions']",
 			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[3]/td[5]/input")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertFalse(selenium.isChecked("//tr[3]/td[5]/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td[5]/input"));
 		assertFalse(selenium.isChecked("//tr[5]/td[5]/input"));

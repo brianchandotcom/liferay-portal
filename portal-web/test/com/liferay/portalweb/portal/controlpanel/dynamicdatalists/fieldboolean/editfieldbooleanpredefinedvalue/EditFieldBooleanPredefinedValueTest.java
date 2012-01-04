@@ -159,10 +159,10 @@ public class EditFieldBooleanPredefinedValueTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Predefined Value"),
-			selenium.getText("//tr[6]/td[1]/div"));
+			selenium.getText("//tr[5]/td[1]/div"));
 		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//tr[6]/td[2]/div"));
-		selenium.doubleClickAt("//tr[6]/td[2]/div",
+			selenium.getText("//tr[5]/td[2]/div"));
+		selenium.doubleClickAt("//tr[5]/td[2]/div",
 			RuntimeVariables.replace("No"));
 
 		for (int second = 0;; second++) {
@@ -186,7 +186,7 @@ public class EditFieldBooleanPredefinedValueTest extends BaseTestCase {
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[6]/td[2]/div"));
+			selenium.getText("//tr[5]/td[2]/div"));
 		assertTrue(selenium.isChecked(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input"));
 		selenium.clickAt("//input[@value='Save']",

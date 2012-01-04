@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.validservername;
+package com.liferay.portal.servlet.filters.validhostname;
 
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,8 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Shuyang Zhou
  */
-public class ValidServerNameFilter
-	extends BasePortalFilter implements TryFilter {
+public class ValidHostNameFilter extends BasePortalFilter implements TryFilter {
 
 	public Object doFilterTry(
 			HttpServletRequest request, HttpServletResponse response)

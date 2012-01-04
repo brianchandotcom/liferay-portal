@@ -466,12 +466,12 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>Valid Html Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter</filter-class>
+		<filter-name>Valid Host Name Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.validhostname.ValidHostNameFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>Valid Server Name Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.validservername.ValidServerNameFilter</filter-class>
+		<filter-name>Valid Html Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter</filter-class>
 	</filter>
 	<filter>
 		<filter-name>Virtual Host Filter</filter-name>
@@ -502,7 +502,7 @@
 		<url-pattern>*.vm</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>Valid Server Name Filter</filter-name>
+		<filter-name>Valid Host Name Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

@@ -81,7 +81,8 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 				value = valueDate.getTime();
 			}
 
-			_appendField(rootElement, field.getName(), String.valueOf(value));
+			_appendField(
+				rootElement, field.getName(), String.valueOf(value).trim());
 		}
 
 		DDMContent ddmContent = DDMContentLocalServiceUtil.addContent(

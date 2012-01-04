@@ -20,4 +20,6 @@
 	</div>
 </c:if>
 
-<form action="" id="hrefFm" method="post" name="hrefFm"></form>
+<form action="#" id="hrefFm" method="post" name="hrefFm">
+	<span></span>
+</form>

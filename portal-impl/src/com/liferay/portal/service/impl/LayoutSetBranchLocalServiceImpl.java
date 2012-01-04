@@ -338,11 +338,14 @@ public class LayoutSetBranchLocalServiceImpl
 		}
 
 		try {
-			layoutSetBranchPersistence.findByG_P_N(
-				groupId, privateLayout, name);
+			LayoutSetBranch layoutSetBranch =
+				layoutSetBranchPersistence.findByG_P_N(
+					groupId, privateLayout, name);
 
-			throw new LayoutSetBranchNameException(
-				LayoutSetBranchNameException.DUPLICATE);
+			if (layoutSetBranch.getLayoutSetBranchId() != layoutSetBranchId) {
+				throw new LayoutSetBranchNameException(
+					LayoutSetBranchNameException.DUPLICATE);
+			}
 		}
 		catch (NoSuchLayoutSetBranchException nsbe) {
 		}

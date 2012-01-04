@@ -41,8 +41,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(PropsUtil.getArray(PropsKeys.NESTED_PORTLETS_LAYOUT_TEMPLATE_UNSUPPORTED));
 
 		int i = 0;
-		for (LayoutTemplate layoutTemplate : layoutTemplates) {
 
+		for (LayoutTemplate layoutTemplate : layoutTemplates) {
 			if (!unsupportedLayoutTemplates.contains(layoutTemplate.getLayoutTemplateId())) {
 		%>
 

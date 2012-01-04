@@ -304,13 +304,13 @@ public class AssetCategoryServiceSoap {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategorySoap[] search(
-		long groupId, java.lang.String keyword, long vocabularyId, int start,
+		long groupId, java.lang.String keywords, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.asset.model.AssetCategory> returnValue =
-				AssetCategoryServiceUtil.search(groupId, keyword, vocabularyId,
-					start, end, obc);
+				AssetCategoryServiceUtil.search(groupId, keywords,
+					vocabularyId, start, end, obc);
 
 			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModels(returnValue);
 		}

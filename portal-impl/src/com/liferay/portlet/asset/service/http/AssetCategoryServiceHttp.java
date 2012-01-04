@@ -648,7 +648,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> search(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String keyword,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -658,7 +658,7 @@ public class AssetCategoryServiceHttp {
 					"search", _searchParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					keyword, vocabularyId, start, end, obc);
+					keywords, vocabularyId, start, end, obc);
 
 			Object returnObj = null;
 

@@ -17,6 +17,14 @@ AUI.add(
 
 		var STR_PREV_EXPANDED = '_LFR_prevExpanded';
 
+		var TPL_CHECKED = ' checked="checked" ';
+
+		var TPL_INPUT = '<label title="{name}"><input data-categoryId="{categoryId}" type="checkbox" value="{name}" {checked} />{name}</label>';
+
+		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
+
+		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
+
 		/**
 		 * OPTIONS
 		 *
@@ -28,6 +36,7 @@ AUI.add(
 		 * instanceVar {string}: The instance variable for this class.
 		 * labelNode {String|A.Node}: The node of the label element for this selector.
 		 * vocabularyIds (string): The ids of the vocabularies.
+		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
@@ -71,6 +80,18 @@ AUI.add(
 						value: false
 					},
 					vocabularyIds: {
+						setter: function(value) {
+							var instance = this;
+
+							if (Lang.isString(value) && value) {
+								value = value.split(',');
+							}
+
+							return value;
+						},
+						value: []
+					},
+					vocabularyGroupIds: {
 						setter: function(value) {
 							var instance = this;
 
@@ -277,52 +298,40 @@ AUI.add(
 
 						var popup = instance._popup;
 
-						var options = {
-							after: {
-								search: function(event) {
-									var results = event.liveSearch.results;
+						var vocabularyIds = instance.get('vocabularyIds');
+						var vocabularyGroupIds = instance.get('vocabularyGroupIds');
 
-									var searchValue = event.currentTarget.get('searchValue');
+						var searchResults = instance._searchResultsNode;
 
-									A.each(
-										results,
-										function(item, index, collection) {
-											var widget = A.Widget.getByNode(item.node);
+						if (!searchResults) {
+							searchResults = A.Node.create(TPL_SEARCH_RESULTS);
 
-											widget.eachParent(
-												function(parent) {
-													if (searchValue) {
-														parent.get(BOUNDING_BOX).show();
-
-														if (!(STR_PREV_EXPANDED in parent)) {
-															parent[STR_PREV_EXPANDED] = parent.get(STR_EXPANDED);
-														}
-
-														parent.set(STR_EXPANDED, true);
-													}
-													else if (STR_PREV_EXPANDED in parent) {
-														parent.set(STR_EXPANDED, parent[STR_PREV_EXPANDED]);
-
-														delete parent[STR_PREV_EXPANDED];
-													}
-												}
-											);
-										}
-									);
-								}
-							},
-							data: function(node) {
-								return node.one('.aui-tree-label').html();
-							},
-							input: popup.searchField.get('node'),
-							nodes: popup.entriesNode.all('.aui-tree-node')
-						};
-
-						if (popup.liveSearch) {
-							popup.liveSearch.destroy();
+							instance._searchResultsNode = searchResults;
 						}
 
-						popup.liveSearch = new A.LiveSearch(options);
+						popup.entriesNode.append(searchResults);
+
+						instance._searchBuffer = [];
+
+						var processSearchResults = A.bind(
+							instance._processSearchResults,
+							instance,
+							searchResults
+						);
+
+						var searchCategoriesTask = A.debounce(
+							instance._searchCategories,
+							350,
+							instance,
+							searchResults,
+							vocabularyIds,
+							vocabularyGroupIds,
+							processSearchResults
+						);
+
+						var input = popup.searchField.get('node');
+
+						input.on('keypress', searchCategoriesTask);
 					},
 
 					_onBoundingBoxClick: EMPTY_FN,
@@ -330,15 +339,29 @@ AUI.add(
 					_onCheckboxCheck: function(event) {
 						var instance = this;
 
-						var treeNode = event.currentTarget;
-						var assetId = instance._getTreeNodeAssetId(treeNode);
+						var currentTarget = event.currentTarget;
+
+						var assetId;
+						var entryMatchKey;
+
+						if (A.instanceOf(currentTarget, A.Node)) {
+							assetId = currentTarget.attr('data-categoryId');
+
+							entryMatchKey = currentTarget.val();
+						}
+						else {
+							assetId = instance._getTreeNodeAssetId(currentTarget);
+
+							entryMatchKey = currentTarget.get('label');
+						}
+
 						var matchKey = instance.get('matchKey');
 
 						var entry = {
 							categoryId: assetId
 						};
 
-						entry[matchKey] = treeNode.get('label');
+						entry[matchKey] = entryMatchKey;
 
 						instance.entries.add(entry);
 					},
@@ -354,13 +377,62 @@ AUI.add(
 						}
 					},
 
+					_onCheckboxClick: function(event) {
+						var instance = this;
+
+						var method = '_onCheckboxUncheck';
+
+						if (event.currentTarget.attr('checked')) {
+							method = '_onCheckboxCheck';
+						}
+
+						instance[method](event);
+					},
+
 					_onCheckboxUncheck: function(event) {
 						var instance = this;
 
-						var treeNode = event.currentTarget;
-						var assetId = instance._getTreeNodeAssetId(treeNode);
+						var currentTarget = event.currentTarget;
+						var assetId;
+
+						if (A.instanceOf(currentTarget, A.Node)) {
+							assetId = currentTarget.attr('data-categoryId');
+						}
+						else {
+							assetId = instance._getTreeNodeAssetId(currentTarget);
+						}
 
 						instance.entries.removeKey(assetId);
+					},
+
+					_processSearchResults: function(searchResults, results) {
+						var instance = this;
+
+						var buffer = instance._searchBuffer;
+
+						buffer.length = 0;
+
+						if (results.length > 0) {
+							A.each(
+								results,
+								function(item, index, collection) {
+									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
+
+									var input = Lang.sub(TPL_INPUT, item);
+
+									buffer.push(input);
+								}
+							);
+						}
+						else {
+							var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-categories-found')]);
+
+							buffer.push(message);
+						}
+
+						searchResults.removeClass('loading-animation');
+
+						searchResults.html(buffer.join(''));
 					},
 
 					_renderIcons: function() {
@@ -386,6 +458,34 @@ AUI.add(
 						var iconsBoundingBox = instance.icons.get(BOUNDING_BOX);
 
 						instance.entryHolder.placeAfter(iconsBoundingBox);
+					},
+
+					_searchCategories: function(event, searchResults, vocabularyIds, vocabularyGroupIds, callback) {
+						var instance = this;
+
+						var searchValue = Lang.trim(event.currentTarget.val());
+
+						if (searchValue && !event.isNavKey()) {
+							searchResults.empty();
+
+							searchResults.addClass('loading-animation');
+
+							Liferay.Service.Asset.AssetCategory.search(
+								{
+									groupId: vocabularyGroupIds[0],
+									keyword: searchValue,
+									vocabularyId: vocabularyIds[0],
+									start: -1,
+									end: -1,
+									obc: null
+								},
+								callback
+							);
+						}
+
+						searchResults.toggle(!!searchValue);
+
+						instance.TREEVIEWS[vocabularyIds[0]].toggle(!searchValue);
 					},
 
 					_showSelectPopup: function(event) {

@@ -235,6 +235,17 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return Autocomplete.listToJson(categories, "name", "name");
 	}
 
+	public List<AssetCategory> search(
+			long groupId, String keyword, long vocabularyId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return filterCategories(
+			assetCategoryFinder.findByG_N_V(
+				groupId, CustomSQLUtil.keywords(keyword)[0], vocabularyId,
+				start, end, obc));
+	}
+
 	public AssetCategory updateCategory(
 			long categoryId, long parentCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,

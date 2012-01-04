@@ -69,6 +69,14 @@ public class DDLUtil {
 			uploadPortletRequest, ddmStructureId, ddmTemplateId);
 	}
 
+	public static void getRecordFileUpload(
+			HttpServletRequest request, HttpServletResponse response,
+			DDLRecord record, String fieldName)
+		throws Exception {
+
+		getDDL().sendRecordFileUpload(request, response, record, fieldName);
+	}
+
 	public static String getRecordFileUploadPath(DDLRecord record) {
 		return getDDL().getRecordFileUploadPath(record);
 	}
@@ -108,14 +116,6 @@ public class DDLUtil {
 			renderResponse);
 	}
 
-	public static void getRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName)
-		throws Exception {
-
-		getDDL().sendRecordFileUpload(request, response, record, fieldName);
-	}
-
 	public static void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
 			long recordId, String fieldName)
@@ -138,6 +138,16 @@ public class DDLUtil {
 
 		return getDDL().updateRecord(
 			uploadPortletRequest, recordId, recordSetId, mergeFields);
+	}
+
+	public static DDLRecord updateRecord(
+			UploadPortletRequest uploadPortletRequest, long recordId,
+			long recordSetId, boolean mergeFields, boolean checkPermission)
+		throws Exception {
+
+		return getDDL().updateRecord(
+			uploadPortletRequest, recordId, recordSetId, mergeFields,
+			checkPermission);
 	}
 
 	public static void uploadRecordFieldFile(

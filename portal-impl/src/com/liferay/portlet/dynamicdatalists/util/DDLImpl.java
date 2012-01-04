@@ -395,6 +395,15 @@ public class DDLImpl implements DDL {
 			long recordSetId, boolean mergeFields)
 		throws Exception {
 
+		return updateRecord(
+			uploadPortletRequest, recordId, recordSetId, mergeFields, true);
+	}
+
+	public DDLRecord updateRecord(
+			UploadPortletRequest uploadPortletRequest, long recordId,
+			long recordSetId, boolean mergeFields, boolean checkPermission)
+		throws Exception {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -416,16 +425,33 @@ public class DDLImpl implements DDL {
 			uploadPortletRequest);
 
 		if (record != null) {
-			record = DDLRecordServiceUtil.updateRecord(
-				recordId, majorVersion,
-				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, mergeFields,
-				serviceContext);
+			if (checkPermission) {
+				record = DDLRecordServiceUtil.updateRecord(
+					recordId, majorVersion,
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
+					mergeFields, serviceContext);
+			}
+			else {
+				record = DDLRecordLocalServiceUtil.updateRecord(
+					themeDisplay.getUserId(), recordId, majorVersion,
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
+					mergeFields, serviceContext);
+			}
 		}
 		else {
-			record = DDLRecordServiceUtil.addRecord(
-				themeDisplay.getScopeGroupId(), recordSetId,
-				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
-				serviceContext);
+			if (checkPermission) {
+				record = DDLRecordServiceUtil.addRecord(
+					themeDisplay.getScopeGroupId(), recordSetId,
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
+					serviceContext);
+			}
+			else {
+				record = DDLRecordLocalServiceUtil.addRecord(
+					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+					recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
+					fields, serviceContext);
+			}
+
 		}
 
 		uploadRecordFieldFiles(record, uploadPortletRequest, serviceContext);

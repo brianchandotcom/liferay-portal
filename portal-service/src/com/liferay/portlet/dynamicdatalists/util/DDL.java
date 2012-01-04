@@ -93,6 +93,11 @@ public interface DDL {
 			long recordSetId, boolean mergeFields)
 		throws Exception;
 
+	public DDLRecord updateRecord(
+			UploadPortletRequest uploadPortletRequest, long recordId,
+			long recordSetId, boolean mergeFields, boolean checkPermission)
+		throws Exception;
+
 	public void uploadRecordFieldFile(
 			DDLRecord record, String fieldName,
 			UploadPortletRequest uploadPortletRequest,

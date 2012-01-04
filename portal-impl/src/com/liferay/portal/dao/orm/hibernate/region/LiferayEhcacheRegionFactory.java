@@ -174,6 +174,11 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 			manager = new CacheManager(configuration);
 
 			mbeanRegistrationHelper.registerMBean(manager, properties);
+
+			MBeanRegisteringPortalLifecycle mBeanRegisteringPortalLifecycle =
+				new MBeanRegisteringPortalLifecycle(manager);
+
+			mBeanRegisteringPortalLifecycle.registerPortalLifecycle();
 		}
 		catch (net.sf.ehcache.CacheException ce) {
 			throw new CacheException(ce);

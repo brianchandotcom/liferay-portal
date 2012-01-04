@@ -118,6 +118,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		selenium.downloadFile("DL_Folder2_Document2_Title.xls");
+		Thread.sleep(5000);
 		selenium.open("/web/document-library-page-scope-community/");
 
 		for (int second = 0;; second++) {
@@ -248,7 +249,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for Temp_DL_Folder2_Document2_Title.xls in every folder.")
+							"Searched for Temp_DL_Folder2_Document2_Title.xls everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -326,7 +327,7 @@ public class DownloadPage2DLFolder2Document2Test extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for Temp_DL_Folder2_Document2_Title.xls in every folder.")
+							"Searched for Temp_DL_Folder2_Document2_Title.xls everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;

@@ -478,18 +478,18 @@ AUI.add(
 			closeField: function(source) {
 				var instance = this;
 
-				if (instance._hasParentField(source) || instance._hasFirstLevelFields() ) {
-					if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-field-and-all-its-children'))) {
-						var fieldInstance = instance.getFieldInstance(source);
+				if ((instance._hasParentField(source) || instance._hasFirstLevelFields()) &&
+					confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-field-and-all-its-children'))) {
 
-						fieldInstance.destroy();
+					var fieldInstance = instance.getFieldInstance(source);
 
-						instance.closeRepeatedSiblings(source);
-						instance.closeEditFieldOptions();
+					fieldInstance.destroy();
 
-						if (source.inDoc()) {
-							source.remove();
-						}
+					instance.closeRepeatedSiblings(source);
+					instance.closeEditFieldOptions();
+
+					if (source.inDoc()) {
+						source.remove();
 					}
 				}
 			},
@@ -828,7 +828,7 @@ AUI.add(
 
 				return A.all(structureTreeId + ' li');
 			},
-			
+
 			getGroupId: function() {
 				var instance = this;
 
@@ -2556,7 +2556,9 @@ AUI.add(
 
 				var id = source.get('id');
 
-				return A.one('.folder-droppable #' + id);
+				var node = A.one('#' + id);
+
+				return node && node.ancestor().hasClass('folder-droppable');
 			},
 
 			_initializePageLoadFieldInstances: function() {

@@ -474,7 +474,7 @@ AUI.add(
 							Liferay.Service.Asset.AssetCategory.search(
 								{
 									groupId: vocabularyGroupIds[0],
-									keyword: searchValue,
+									keywords: searchValue,
 									vocabularyId: vocabularyIds[0],
 									start: -1,
 									end: -1,

@@ -85,13 +85,13 @@ public class FindEntryAction extends FindAction {
 	}
 
 	@Override
-	protected void setFindKey(PortletURL portletURL, long primaryKey)
+	protected void setPrimaryKeyParameter(
+			PortletURL portletURL, long primaryKey)
 		throws PortalException, SystemException {
 
-		BlogsEntry blogEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			primaryKey);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(primaryKey);
 
-		portletURL.setParameter("urlTitle", blogEntry.getUrlTitle());
+		portletURL.setParameter("urlTitle", entry.getUrlTitle());
 	}
 
 }

@@ -86,7 +86,7 @@ public abstract class FindAction extends Action {
 				portletURL.setParameter("redirect", redirect);
 			}
 
-			setFindKey(portletURL, primaryKey);
+			setPrimaryKeyParameter(portletURL, primaryKey);
 
 			portletURL.setPortletMode(PortletMode.VIEW);
 			portletURL.setWindowState(WindowState.NORMAL);
@@ -182,7 +182,8 @@ public abstract class FindAction extends Action {
 		return portletURL;
 	}
 	
-	protected void setFindKey(PortletURL portletURL, long primaryKey)
+	protected void setPrimaryKeyParameter(
+			PortletURL portletURL, long primaryKey)
 		throws PortalException, SystemException {
 	
 		portletURL.setParameter(

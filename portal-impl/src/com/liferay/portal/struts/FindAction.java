@@ -15,6 +15,8 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -84,8 +86,7 @@ public abstract class FindAction extends Action {
 				portletURL.setParameter("redirect", redirect);
 			}
 
-			portletURL.setParameter(
-				getPrimaryKeyParameterName(), String.valueOf(primaryKey));
+			setFindKey(portletURL, primaryKey);
 
 			portletURL.setPortletMode(PortletMode.VIEW);
 			portletURL.setWindowState(WindowState.NORMAL);
@@ -179,6 +180,13 @@ public abstract class FindAction extends Action {
 		throws Exception {
 
 		return portletURL;
+	}
+	
+	protected void setFindKey(PortletURL portletURL, long primaryKey)
+		throws PortalException, SystemException {
+	
+		portletURL.setParameter(
+			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FindAction.class);

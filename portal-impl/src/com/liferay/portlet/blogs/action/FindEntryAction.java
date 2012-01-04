@@ -14,12 +14,16 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.struts.FindAction;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,6 +82,16 @@ public class FindEntryAction extends FindAction {
 			PortletKeys.BLOGS_ADMIN, PortletKeys.BLOGS,
 			PortletKeys.BLOGS_AGGREGATOR
 		};
+	}
+
+	@Override
+	protected void setFindKey(PortletURL portletURL, long primaryKey)
+		throws PortalException, SystemException {
+
+		BlogsEntry blogEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			primaryKey);
+
+		portletURL.setParameter("urlTitle", blogEntry.getUrlTitle());
 	}
 
 }

@@ -261,7 +261,10 @@ AUI.add(
 					trigger.setData('menuHeight', menuHeight);
 
 					listContainer.addClass('lfr-menu-list-overflow');
-					listContainer.setStyle('maxHeight', menuHeight);
+
+					if (menuHeight != AUTO) {
+						listContainer.setStyle('maxHeight', menuHeight);
+					}
 				}
 
 				instance._getFocusManager().refresh();

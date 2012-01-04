@@ -382,22 +382,30 @@ public class LayoutExporter {
 				group = group.getLiveGroup();
 			}
 
-			for (Portlet portlet : portlets) {
-				String portletId = portlet.getRootPortletId();
-
-				if (!group.isStagedPortlet(portletId)) {
-					continue;
-				}
-
-				String key = PortletPermissionUtil.getPrimaryKey(0, portletId);
-
-				if (portletIds.get(key) == null) {
-					portletIds.put(
-						key,
-						new Object[] {
-							portletId, firstLayout.getPlid(), groupId,
-							StringPool.BLANK, StringPool.BLANK
-						});
+			LayoutRevision firstLayoutRevision = 
+				LayoutStagingUtil.getLayoutRevision(firstLayout);
+			
+			if (firstLayoutRevision == null ||
+				firstLayoutRevision.isApproved()) {
+				
+				for (Portlet portlet : portlets) {
+					String portletId = portlet.getRootPortletId();
+	
+					if (!group.isStagedPortlet(portletId)) {
+						continue;
+					}
+	
+					String key = 
+						PortletPermissionUtil.getPrimaryKey(0, portletId);
+	
+					if (portletIds.get(key) == null) {
+						portletIds.put(
+							key,
+							new Object[] {
+								portletId, firstLayout.getPlid(), groupId,
+								StringPool.BLANK, StringPool.BLANK
+							});
+					}
 				}
 			}
 		}
@@ -405,10 +413,16 @@ public class LayoutExporter {
 		Element layoutsElement = rootElement.addElement("layouts");
 
 		for (Layout layout : layouts) {
-			exportLayout(
-				portletDataContext, layoutConfigurationPortlet, layoutCache,
-				portlets, portletIds, exportPermissions, exportUserPermissions,
-				layout, layoutsElement);
+			
+			LayoutRevision layoutRevision = 
+				LayoutStagingUtil.getLayoutRevision(layout);
+			
+			if (layoutRevision == null || layoutRevision.isApproved() ) {
+				exportLayout(
+					portletDataContext, layoutConfigurationPortlet,
+					layoutCache, portlets, portletIds, exportPermissions, 
+					exportUserPermissions, layout, layoutsElement);
+			}
 		}
 
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM < 5) {

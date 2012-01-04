@@ -572,7 +572,7 @@ if (layout != null) {
 															<span class="last-publication-variation-details">(
 																<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
 																	<span class="variation-name">
-																		<liferay-ui:message key="variation" />: <strong><%= lastImportLayoutBranchName %></strong>
+																		<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= lastImportLayoutBranchName %>" /></strong>
 																	</span>
 																</c:if>
 

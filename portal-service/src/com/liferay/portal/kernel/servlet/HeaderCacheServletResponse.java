@@ -150,7 +150,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 	public void sendRedirect(String location) throws IOException {
 		super.sendRedirect(location);
 
-		setStatus(SC_MOVED_TEMPORARILY);
+		setStatus(SC_MOVED_PERMANENTLY);
 	}
 
 	@Override

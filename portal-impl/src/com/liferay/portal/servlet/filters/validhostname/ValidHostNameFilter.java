@@ -32,8 +32,8 @@ public class ValidHostNameFilter extends BasePortalFilter implements TryFilter {
 
 		String serverName = request.getServerName();
 
-		if (!Validator.isDomain(serverName)) {
-			throw new RuntimeException("Invalid server name " + serverName);
+		if (!Validator.isHostName(serverName)) {
+			throw new RuntimeException("Invalid host name " + serverName);
 		}
 
 		return null;

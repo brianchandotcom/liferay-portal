@@ -98,7 +98,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Selection")
+				if (RuntimeVariables.replace("Source")
 										.equals(selenium.getText(
 								"//div[@class='lfr-panel-title']/span"))) {
 					break;

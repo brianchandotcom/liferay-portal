@@ -90,6 +90,11 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe");
+		assertEquals("Select",
+			selenium.getValue("//input[@id='_20_openFolderSelectorButton']"));
+		selenium.click("//input[@id='_20_openFolderSelectorButton']");
+		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
+		selenium.selectWindow("name=folder");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,7 +102,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Home")) {
+				if (selenium.isVisible("//input[@value='Choose']")) {
 					break;
 				}
 			}
@@ -107,61 +112,9 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//div/a/span[2]"));
-		selenium.clickAt("//div/a/span[2]",
-			RuntimeVariables.replace("DM Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-info']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace(
-				"There are no documents or media files in this folder."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+		selenium.click("//input[@value='Choose']");
+		selenium.selectWindow("null");
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Basic Document"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.waitForPageToLoad("30000");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -171,7 +124,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DM Folder Name")
 										.equals(selenium.getText(
-								"link=DM Folder Name"))) {
+								"//a[@id='_20_folderName']"))) {
 					break;
 				}
 			}
@@ -182,7 +135,7 @@ public class AddNewDLFolderDocumentAPActionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("link=DM Folder Name"));
+			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\assetpublisher\\dependencies\\DLDocument.txt"));

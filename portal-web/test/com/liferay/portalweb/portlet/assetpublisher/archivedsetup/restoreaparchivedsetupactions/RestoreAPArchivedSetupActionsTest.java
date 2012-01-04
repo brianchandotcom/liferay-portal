@@ -97,6 +97,7 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong",

@@ -69,34 +69,39 @@
 	<td>Documents and Media Document IFrame</td>
 </tr>
 <tr>
+	<td>assertValue</td>
+	<td>//input[@id='_20_openFolderSelectorButton']</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='_20_openFolderSelectorButton']</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td>folder</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>name=folder</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>link=Home</td>
-	<td>Home</td>
+	<td>//input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Home</td>
-	<td>Home</td>
+	<td>click</td>
+	<td>//input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -104,38 +109,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Basic Document</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Basic Document</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
-	<td>Basic Document</td>
-</tr>
-<tr>
 	<td>waitForText</td>
-	<td>link=DM Folder Name</td>
+	<td>//a[@id='_20_folderName']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=DM Folder Name</td>
+	<td>//a[@id='_20_folderName']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
@@ -188,7 +168,6 @@
 	<td>//div[@class='asset-resource-info']/span/a/span</td>
 	<td>DM Folder Document Title</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

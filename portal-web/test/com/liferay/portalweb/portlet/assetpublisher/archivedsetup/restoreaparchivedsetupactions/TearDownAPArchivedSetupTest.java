@@ -110,6 +110,7 @@ public class TearDownAPArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong",
@@ -150,6 +151,7 @@ public class TearDownAPArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong",
@@ -190,6 +192,7 @@ public class TearDownAPArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong",
@@ -230,6 +233,7 @@ public class TearDownAPArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong",
@@ -270,6 +274,7 @@ public class TearDownAPArchivedSetupTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong",

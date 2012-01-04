@@ -38,7 +38,7 @@ AUI.add(
 									'<input type="hidden" value="false" name="{portletNamespace}{instanceId}localized-checkbox">' +
 									'<input type="checkbox" onclick="Liferay.Util.updateCheckboxValue(this); " name="{portletNamespace}{instanceId}localized-checkboxCheckbox" id="{portletNamespace}{instanceId}localized-checkboxCheckbox" class="aui-field-input aui-field-input-choice"> </span>' +
 									'<label for="{portletNamespace}{instanceId}localized-checkboxCheckbox" class="aui-field-label">{localizedLabelLanguage}</label>' +
-								'</span>'+
+								'</span>' +
 							'</span>' +
 						'<div class="journal-article-required-message portlet-msg-error">{requiredFieldLanguage}</div>' +
 						'<div class="journal-article-buttons {articleButtonsRowCSSClass}">' +
@@ -381,8 +381,8 @@ AUI.add(
 						structureId: structureId,
 						autoStructureId: autoStructureId,
 						parentStructureId: parentStructureId,
-						nameMap:  '{' + defaultLocale + ':' + name + '}',
-						descriptionMap:  '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
+						nameMap: '{' + defaultLocale + ':' + name + '}',
+						descriptionMap: '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
 						xsd: xsd,
 						serviceContext: A.JSON.stringify(
 							{
@@ -792,7 +792,7 @@ AUI.add(
 
 				var defaultLocale = instance.getById('defaultLocale');
 
-				if (defaultLocale){
+				if (defaultLocale) {
 					defaultLocale = defaultLocale.val();
 				}
 
@@ -1661,8 +1661,8 @@ AUI.add(
 						groupId: groupId,
 						structureId: structureId,
 						parentStructureId: parentStructureId || '',
-						nameMap:  '{' + defaultLocale + ':' + name + '}',
-						descriptionMap:  '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
+						nameMap: '{' + defaultLocale + ':' + name + '}',
+						descriptionMap: '{' + defaultLocale + ':' + (description == '' ? null : description ) + '}',
 						xsd: xsd,
 						serviceContext: A.JSON.stringify(
 							{
@@ -2391,7 +2391,7 @@ AUI.add(
 				}
 
 				if (saveStructureTriggers) {
-				    saveStructureTriggers.detach('click');
+					saveStructureTriggers.detach('click');
 
 					saveStructureTriggers.on(
 						'click',
@@ -2406,7 +2406,7 @@ AUI.add(
 				var body = A.getBody();
 
 				if (editStructureButton) {
-				    editStructureButton.detach('click');
+					editStructureButton.detach('click');
 
 					editStructureButton.on(
 						'click',
@@ -2419,7 +2419,7 @@ AUI.add(
 				}
 
 				if (editStructureLink) {
-				    editStructureLink.detach('click');
+					editStructureLink.detach('click');
 
 					editStructureLink.on(
 						'click',
@@ -2584,8 +2584,10 @@ AUI.add(
 							var repeatable = item.attr('dataRepeatable');
 							var required = item.attr('dataRequired');
 
+							var localizedValue;
+
 							if (localized) {
-								var localizedValue = localized.val();
+								localizedValue = localized.val();
 							}
 
 							var isLocalized = (String(localizedValue) != 'false');
@@ -2738,7 +2740,6 @@ AUI.add(
 				var instance = this;
 
 				var isLocalized = checkbox.get('checked');
-				var fieldInstance = instance.getFieldInstance(source);
 				var defaultLocale = instance.getDefaultLocale();
 				var localizedValue = source.one('.journal-article-localized');
 
@@ -2766,7 +2767,7 @@ AUI.add(
 
 				fieldInstance.set('localized', checkbox.get('checked'));
 
-                fieldInstance.setInstanceId(fieldInstance.get('instanceId'));
+				fieldInstance.setInstanceId(fieldInstance.get('instanceId'));
 			},
 
 			_updateOriginalStructureXSD: function() {
@@ -2778,7 +2779,7 @@ AUI.add(
 
 				var structureXSDInput = instance.getByName(form, 'structureXSD');
 
-				if (structureXSDInput){
+				if (structureXSDInput) {
 					structureXSDInput.val(currentXSD);
 				}
 			}
@@ -3089,7 +3090,7 @@ AUI.add(
 					getAttribute: function(key, defaultValue) {
 						var instance = this;
 
-						var value = undefined;
+						var value;
 						var source = instance.get('source');
 
 						if (source) {
@@ -3292,8 +3293,10 @@ AUI.add(
 
 						var source = instance.get('source');
 
+						var input;
+
 						if (source) {
-							var input = source.one('.journal-article-localized');
+							input = source.one('.journal-article-localized');
 						}
 
 						return input ? input.val() : 'false';
@@ -3510,10 +3513,12 @@ AUI.add(
 		var registerFieldModel = function(namespace, type, variableName, optionsEditable) {
 			var instance = this;
 
-			var typeEl = A.one('#journalFieldModelContainer div[dataType="'+ type +'"]');
+			var typeEl = A.one('#journalFieldModelContainer div[dataType="' + type + '"]');
+
+			var innerHTML;
 
 			if (typeEl) {
-				var innerHTML = typeEl.html();
+				innerHTML = typeEl.html();
 			}
 
 			fieldModel[namespace] = {
@@ -3540,6 +3545,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-data-set', 'aui-datatype','aui-dialog', 'aui-dialog-iframe', 'aui-io-request', 'aui-nested-list', 'aui-overlay-context-panel', 'json']
+		requires: ['aui-base', 'aui-data-set', 'aui-datatype', 'aui-dialog', 'aui-dialog-iframe', 'aui-io-request', 'aui-nested-list', 'aui-overlay-context-panel', 'json']
 	}
 );

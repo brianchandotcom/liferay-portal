@@ -133,6 +133,16 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Note that selecting no pages from the tree reverts to implicit selection of all pages."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
+
+				boolean treeNotExpanded = selenium.isElementPresent(
+						"//div[contains(@class,'aui-tree-expanded')]");
+
+				if (treeNotExpanded) {
+					label = 2;
+
+					continue;
+				}
+
 				selenium.clickAt("//li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
@@ -142,7 +152,8 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//li/ul/li[1]/div/div[4]")) {
+						if (selenium.isVisible(
+									"//div[contains(@class,'aui-tree-expanded')]")) {
 							break;
 						}
 					}
@@ -152,13 +163,15 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertTrue(selenium.isVisible(
+						"//div[contains(@class,'aui-tree-expanded')]"));
+				assertTrue(selenium.isVisible(
+						"//div[contains(@class,'aui-tree-collapsed')]"));
+
+			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"Document Library Test Page"),
 					selenium.getText("//li/ul/li[1]/div/div[4]"));
-				assertTrue(selenium.isElementPresent(
-						"//div[@class='aui-helper-clearfix aui-tree-node-content aui-tree-data-content aui-tree-node-content aui-tree-node-io-content aui-tree-node-check-content aui-tree-node-task-content lfr-root-node aui-tree-node-selected aui-tree-expanded']"));
-				assertTrue(selenium.isElementPresent(
-						"//div[@class='aui-helper-clearfix aui-tree-node-content aui-tree-data-content aui-tree-node-content aui-tree-node-io-content aui-tree-node-check-content aui-tree-node-task-content aui-tree-collapsed']"));
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
 
@@ -189,7 +202,7 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 						"_88_PORTLET_DATA_20Checkbox");
 
 				if (documentLibraryVisible) {
-					label = 2;
+					label = 3;
 
 					continue;
 				}
@@ -197,7 +210,7 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/div[1]/a",
 					RuntimeVariables.replace("Plus"));
 
-			case 2:
+			case 3:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -223,7 +236,7 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 						"_88_PORTLET_DATA_20Checkbox");
 
 				if (documentLibraryChecked) {
-					label = 3;
+					label = 4;
 
 					continue;
 				}
@@ -235,7 +248,7 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_88_PORTLET_DATA_20Checkbox']"));
 
-			case 3:
+			case 4:
 				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {

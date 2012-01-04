@@ -156,8 +156,8 @@ public class EditFieldSelectOptionsUTF8Test extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//tr[9]/td[1]/div"));
-		selenium.doubleClickAt("//tr[9]/td[1]/div",
+			selenium.getText("//tr[8]/td[1]/div"));
+		selenium.doubleClickAt("//tr[8]/td[1]/div",
 			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -189,7 +189,7 @@ public class EditFieldSelectOptionsUTF8Test extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace(
 				"\u308a\u3093\u3054, \u30d0\u30ca\u30ca, \u30af\u30e9\u30f3\u30d9\u30ea\u30fc"),
-			selenium.getText("//tr[9]/td[2]/div"));
+			selenium.getText("//tr[8]/td[2]/div"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

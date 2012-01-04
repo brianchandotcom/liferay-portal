@@ -53,7 +53,7 @@ public class TearDownDMContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean documentPresent = selenium.isElementPresent(
-						"//div/div/a/span/img");
+						"//input[@id='_20_rowIdsFileEntryCheckbox']");
 
 				if (!documentPresent) {
 					label = 2;

@@ -213,10 +213,6 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			}
 		);
 
-		var <portlet:namespace />getCurrentSectionName = function() {
-			return location.hash.replace('#_LFR_FN_<portlet:namespace />', '');
-		};
-
 		A.one('#<portlet:namespace />layoutsTreeOutput').delegate(
 			'click',
 			function(event) {
@@ -225,7 +221,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 				var requestUri = A.Lang.sub(
 					event.currentTarget.get('href'),
 					{
-						historyKey: <portlet:namespace />getCurrentSectionName()
+						historyKey: location.hash.replace('#_LFR_FN_<portlet:namespace />', '')
 					}
 				);
 

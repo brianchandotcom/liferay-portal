@@ -261,6 +261,7 @@ for (int i = 0; i < results.size(); i++) {
 							data="<%= data %>"
 							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 							label="<%= true %>"
+							method="get"
 							message="<%= fileEntry.getTitle() %>"
 							url="<%= rowURL.toString() %>"
 						/>
@@ -405,6 +406,7 @@ for (int i = 0; i < results.size(); i++) {
 							data="<%= data %>"
 							image="<%= folderImage %>"
 							label="<%= true %>"
+							method="get"
 							message="<%= curFolder.getName() %>"
 							url="<%= rowURL.toString() %>"
 						/>

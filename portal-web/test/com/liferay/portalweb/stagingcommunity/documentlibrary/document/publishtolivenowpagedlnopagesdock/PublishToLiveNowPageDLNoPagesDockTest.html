@@ -109,29 +109,44 @@
 	<td>Note that selecting no pages from the tree reverts to implicit selection of all pages.</td>
 </tr>
 <tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>treeNotExpanded</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${treeNotExpanded}</td>
+	<td>TreeExpanded</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//li/div/div[1]</td>
 	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li/ul/li[1]/div/div[4]</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'aui-tree-collapsed')]</td>
 	<td>Document Library Test Page</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TreeExpanded</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//li/ul/li[1]/div/div[4]</td>
 	<td>Document Library Test Page</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//div[@class='aui-helper-clearfix aui-tree-node-content aui-tree-data-content aui-tree-node-content aui-tree-node-io-content aui-tree-node-check-content aui-tree-node-task-content lfr-root-node aui-tree-node-selected aui-tree-expanded']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//div[@class='aui-helper-clearfix aui-tree-node-content aui-tree-data-content aui-tree-node-content aui-tree-node-io-content aui-tree-node-check-content aui-tree-node-task-content aui-tree-collapsed']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -258,6 +273,7 @@
 	<td>//li[1]/span/a</td>
 	<td>Live</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

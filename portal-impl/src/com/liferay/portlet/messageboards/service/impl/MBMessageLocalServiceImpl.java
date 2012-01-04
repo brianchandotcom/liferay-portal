@@ -1929,12 +1929,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			signature = MBUtil.getEmailMessageAddedSignature(preferences);
 		}
 
-		String subject = message.getSubject();
-
-		if (subject.indexOf(subjectPrefix) == -1) {
-			subject = subjectPrefix.trim() + " " + subject.trim();
-		}
-
 		if (Validator.isNotNull(signature)) {
 			body += "\n--\n" + signature;
 		}
@@ -1973,7 +1967,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setReplyToAddress(mailingListAddress);
 		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
-		subscriptionSenderPrototype.setSubject(subject);
+		subscriptionSenderPrototype.setSubject(message.getSubject());
 		subscriptionSenderPrototype.setUserId(message.getUserId());
 
 		SubscriptionSender subscriptionSender =

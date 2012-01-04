@@ -236,13 +236,13 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	public List<AssetCategory> search(
-			long groupId, String keyword, long vocabularyId, int start, int end,
-			OrderByComparator obc)
+			long groupId, String keywords, long vocabularyId, int start,
+			int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		return filterCategories(
 			assetCategoryFinder.findByG_N_V(
-				groupId, CustomSQLUtil.keywords(keyword)[0], vocabularyId,
+				groupId, CustomSQLUtil.keywords(keywords)[0], vocabularyId,
 				start, end, obc));
 	}
 

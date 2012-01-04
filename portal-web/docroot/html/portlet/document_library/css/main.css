@@ -528,6 +528,10 @@
 			margin: 0 auto;
 		}
 
+		.sync-notification {
+			border-top-width: 1px;
+		}
+
 		.lfr-app-column-view-content {
 			background-color: #FAFAFA;
 		}

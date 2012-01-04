@@ -190,11 +190,20 @@ searchContainer.setTotal(total);
 request.setAttribute("view_entries.jsp-total", String.valueOf(total));
 %>
 
-<c:if test="<%= results.isEmpty() %>">
-	<div class="portlet-msg-info">
-		<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
-	</div>
-</c:if>
+<c:choose>
+	<c:when test="<%= results.isEmpty() %>">
+		<div class="portlet-msg-info">
+			<%= LanguageUtil.get(pageContext, "there-are-no-documents-or-media-files-in-this-folder") %>
+		</div>	
+	</c:when>
+	<c:when test="<%= true %>">
+		<div class="portlet-msg-info sync-notification">
+			<a href="http://liferay.com">
+				<%= LanguageUtil.get(pageContext, "access-these-files-offline-using-liferay-sync") %>
+			</a>
+		</div>
+	</c:when>
+</c:choose>
 
 <%
 for (int i = 0; i < results.size(); i++) {

@@ -398,6 +398,12 @@ public class LayoutRevisionLocalServiceUtil {
 			plid);
 	}
 
+	public static com.liferay.portal.model.LayoutRevision getLastLayoutRevision(
+		long plid, boolean head)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLastLayoutRevision(plid, head);
+	}
+
 	public static com.liferay.portal.model.LayoutRevision updateLayoutRevision(
 		long userId, long layoutRevisionId, long layoutBranchId,
 		java.lang.String name, java.lang.String title,

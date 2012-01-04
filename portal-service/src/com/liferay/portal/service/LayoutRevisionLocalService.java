@@ -332,6 +332,11 @@ public interface LayoutRevisionLocalService extends PersistedModelLocalService {
 		long layoutBranchId, long plid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutRevision getLastLayoutRevision(
+		long plid, boolean head)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portal.model.LayoutRevision updateLayoutRevision(
 		long userId, long layoutRevisionId, long layoutBranchId,
 		java.lang.String name, java.lang.String title,

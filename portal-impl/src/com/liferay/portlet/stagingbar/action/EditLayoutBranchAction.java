@@ -64,7 +64,7 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateLayoutSetBranch(actionRequest);
+				updateLayoutBranch(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteLayoutBranch(actionRequest, portletConfig);
@@ -168,14 +168,14 @@ public class EditLayoutBranchAction extends EditLayoutsAction {
 		}
 	}
 
-	protected void updateLayoutSetBranch(ActionRequest actionRequest)
+	protected void updateLayoutBranch(ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutBranchId = ParamUtil.getLong(
 			actionRequest, "layoutBranchId");
 
 		long layoutRevisionId = ParamUtil.getLong(
-			actionRequest, "mergeLayoutRevisionId");
+			actionRequest, "copyLayoutRevisionId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 

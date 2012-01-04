@@ -218,7 +218,12 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			function(event) {
 				event.preventDefault();
 
-				var requestUri = event.currentTarget.get('href');
+				var requestUri = A.Lang.sub(
+					event.currentTarget.get('href'),
+					{
+						historyKey: location.hash.replace('#_LFR_FN_<portlet:namespace />', '')
+					}
+				);
 
 				layoutsContainer.io.set('uri', requestUri);
 

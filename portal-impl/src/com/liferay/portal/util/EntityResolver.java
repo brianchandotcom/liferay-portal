@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.io.InputStream;
@@ -76,17 +77,22 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 				throw new XNIException("Invalid system id " + systemId);
 			}
 
-			InputStream inputStream = classLoader.getResourceAsStream(systemId);
+			if (!systemId.startsWith(Http.HTTP_WITH_SLASH) &&
+				!systemId.startsWith(Http.HTTPS_WITH_SLASH)) {
 
-			if (inputStream != null) {
-				InputSource inputSource = new InputSource(inputStream);
+				InputStream inputStream = classLoader.getResourceAsStream(
+					systemId);
 
-				inputSource.setSystemId(systemId);
+				if (inputStream != null) {
+					InputSource inputSource = new InputSource(inputStream);
 
-				return inputSource;
-			}
-			else {
-				throw new XNIException("Invalid system id " + systemId);
+					inputSource.setSystemId(systemId);
+
+					return inputSource;
+				}
+				else {
+					throw new XNIException("Invalid system id " + systemId);
+				}
 			}
 		}
 

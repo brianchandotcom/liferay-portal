@@ -500,17 +500,13 @@ public class SAXReaderImpl implements SAXReader {
 			reader.setEntityResolver(new EntityResolver());
 
 			reader.setFeature(_FEATURES_DYNAMIC, validate);
+			reader.setFeature(_FEATURES_EXTERNAL_GENERAL_ENTITIES, validate);
+			reader.setFeature(_FEATURES_LOAD_DTD_GRAMMAR, validate);
+			reader.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, validate);
 			reader.setFeature(_FEATURES_VALIDATION, validate);
 			reader.setFeature(_FEATURES_VALIDATION_SCHEMA, validate);
 			reader.setFeature(
 				_FEATURES_VALIDATION_SCHEMA_FULL_CHECKING, validate);
-
-			if (!validate) {
-				reader.setFeature(
-					_FEATURES_EXTERNAL_GENERAL_ENTITIES, validate);
-				reader.setFeature(_FEATURES_LOAD_DTD_GRAMMAR, validate);
-				reader.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, validate);
-			}
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

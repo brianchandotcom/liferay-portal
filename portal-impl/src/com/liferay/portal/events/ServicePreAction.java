@@ -835,8 +835,8 @@ public class ServicePreAction extends Action {
 			siteContentPortlets.remove(siteSettingsPortlet);
 
 			showSiteContentIcon = PortletPermissionUtil.contains(
-				permissionChecker, controlPanelGroup.getGroupId(),
-				controlPanelPlid, siteContentPortlets, ActionKeys.VIEW);
+				permissionChecker, scopeGroupId, controlPanelPlid,
+				siteContentPortlets, ActionKeys.VIEW);
 		}
 
 		themeDisplay.setShowSiteContentIcon(showSiteContentIcon);

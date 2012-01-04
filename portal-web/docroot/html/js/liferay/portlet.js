@@ -648,9 +648,9 @@
 						cache: false,
 						dialog: {
 							align: Util.Window.ALIGN_CENTER,
-							on: {
+							after: {
 								render: function(event) {
-									this.set('y', this.get('y') + 100);
+									this.set('y', this.get('y') + 50);
 								}
 							},
 							width: 820

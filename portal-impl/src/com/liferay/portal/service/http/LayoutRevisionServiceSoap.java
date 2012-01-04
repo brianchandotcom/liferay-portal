@@ -67,7 +67,8 @@ public class LayoutRevisionServiceSoap {
 	public static com.liferay.portal.model.LayoutRevisionSoap addLayoutRevision(
 		long userId, long layoutSetBranchId, long layoutBranchId,
 		long parentLayoutRevisionId, boolean head, long plid,
-		boolean privateLayout, java.lang.String name, java.lang.String title,
+		long portletPreferencesPlid, boolean privateLayout,
+		java.lang.String name, java.lang.String title,
 		java.lang.String description, java.lang.String keywords,
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
@@ -78,10 +79,10 @@ public class LayoutRevisionServiceSoap {
 		try {
 			com.liferay.portal.model.LayoutRevision returnValue = LayoutRevisionServiceUtil.addLayoutRevision(userId,
 					layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
-					head, plid, privateLayout, name, title, description,
-					keywords, robots, typeSettings, iconImage, iconImageId,
-					themeId, colorSchemeId, wapThemeId, wapColorSchemeId, css,
-					serviceContext);
+					head, plid, portletPreferencesPlid, privateLayout, name,
+					title, description, keywords, robots, typeSettings,
+					iconImage, iconImageId, themeId, colorSchemeId, wapThemeId,
+					wapColorSchemeId, css, serviceContext);
 
 			return com.liferay.portal.model.LayoutRevisionSoap.toSoapModel(returnValue);
 		}

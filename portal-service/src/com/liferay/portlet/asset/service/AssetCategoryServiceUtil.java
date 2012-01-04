@@ -161,6 +161,15 @@ public class AssetCategoryServiceUtil {
 			serviceContext);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> search(
+		long groupId, java.lang.String keywords, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(groupId, keywords, vocabularyId, start, end, obc);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray search(
 		long groupId, java.lang.String name,
 		java.lang.String[] categoryProperties, int start, int end)

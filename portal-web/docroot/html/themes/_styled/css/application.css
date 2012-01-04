@@ -674,12 +674,12 @@
 
 	.aui-toolbar {
 		.aui-toolbar-content {
-			display: block;
+			white-space: normal;
+			word-wrap: normal;
 		}
 
 		.aui-toolbar-item {
 			border-right-width: 0;
-			float: left;
 		}
 
 		.aui-toolbar-last {
@@ -722,5 +722,13 @@
 .ie6, .ie7 {
 	.aui-toolbar li {
 		display: inline;
+	}
+
+	.lfr-header-row .aui-buttonitem-content {
+		white-space: normal;
+
+		.aui-buttonitem-label {
+			white-space: nowrap;
+		}
 	}
 }

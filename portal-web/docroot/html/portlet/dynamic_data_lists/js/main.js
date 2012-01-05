@@ -277,6 +277,10 @@ AUI.add(
 									var type = field.type;
 
 									if ((type === 'radio') || (type === 'select')) {
+										if (!Lang.isArray(item)) {
+											item = AArray(item);
+										}
+
 										item = JSON.stringify(item);
 									}
 								}

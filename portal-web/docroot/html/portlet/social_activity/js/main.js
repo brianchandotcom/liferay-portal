@@ -284,10 +284,6 @@ AUI.add(
 
 						var modelName = menuItem.attr(STR_DATA_MODEL_NAME);
 
-						if (settingsDisplay) {
-							settingsDisplay.remove();
-						}
-
 						menuItem.radioClass(STR_SELECTED);
 
 						instance._getSocialActivitySettingMapping(
@@ -302,7 +298,7 @@ AUI.add(
 					_addSettingsDisplay: function(config) {
 						var instance = this;
 
-						instance.settingsDisplay = new SettingsDisplay(config).render(instance._contentBox);
+						instance.settingsDisplay = new SettingsDisplay(config).render(instance._contentBox.empty());
 					},
 
 					_getItemByName: function(currentForm, name, ignoreNamespace) {

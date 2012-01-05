@@ -90,7 +90,7 @@ public class VideoProcessorUtil {
 	}
 
 	public static boolean isVideoSupported(FileVersion fileVersion) {
-		return getVideoProcessor().hasVideo(fileVersion);
+		return getVideoProcessor().isVideoSupported(fileVersion);
 	}
 
 	public static boolean isVideoSupported(String mimeType) {

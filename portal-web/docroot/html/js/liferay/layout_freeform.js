@@ -1,35 +1,13 @@
-AUI().add(
+AUI.add(
 	'liferay-layout-freeform',
 	function(A) {
 		var DDM = A.DD.DDM;
 
-		var getTitle = A.cached(
-			function(id) {
-				var portletBoundary = A.one('#' + id);
+		var Layout = Liferay.Layout;
 
-				var portletTitle = portletBoundary.one('.portlet-title');
-
-				if (!portletTitle) {
-					portletTitle = Layout.PROXY_NODE_ITEM.one('.portlet-title');
-
-					var title = portletBoundary.one('.portlet-title-default');
-
-					var titleText = '';
-
-					if (title) {
-						titleText = title.html();
-					}
-
-					portletTitle.html(titleText);
-				}
-
-				return portletTitle.outerHTML();
-			}
-		);
-
-		Liferay.Layout.register = function(id) {
+		Layout.register = function() {
 			var freeformLayoutDefaults = A.merge(
-				Liferay.Layout.DEFAULT_LAYOUT_OPTIONS,
+				Layout.DEFAULT_LAYOUT_OPTIONS,
 				{
 					after: {
 						'drag:start': function(event) {
@@ -39,11 +17,10 @@ AUI().add(
 							var node = DDM.activeDrag.get('node');
 							var nodeId = node.get('id');
 
-							proxyNode.one('.portlet-topper').html(getTitle(nodeId));
+							proxyNode.one('.portlet-topper').html(Layout._getPortletTitle(nodeId));
 						}
 					},
-					lazyStart: false,
-					on: {}
+					lazyStart: false
 				}
 			);
 
@@ -51,7 +28,7 @@ AUI().add(
 
 			dragConfig.startCentered = false;
 
-			Liferay.Layout.layoutHandler = new Liferay.Layout.FreeFormLayout(freeformLayoutDefaults);
+			Layout.layoutHandler = new Layout.FreeFormLayout(freeformLayoutDefaults);
 		};
 
 		var FreeFormLayout = A.Component.create(
@@ -62,7 +39,7 @@ AUI().add(
 					}
 				},
 
-				EXTENDS: Liferay.Layout.ColumnLayout,
+				EXTENDS: A.PortalLayout,
 
 				NAME: 'FreeFormLayout',
 
@@ -75,10 +52,10 @@ AUI().add(
 						var placeholder = instance.get('placeholder');
 
 						if (placeholder) {
-							placeholder.addClass(Liferay.Layout.options.freeformPlaceholderClass);
+							placeholder.addClass(Layout.options.freeformPlaceholderClass);
 						}
 
-						Liferay.Layout.getPortlets().each(
+						Layout.getPortlets().each(
 							function(item, index, collection) {
 								instance._setupNodeResize(item);
 								instance._setupNodeStack(item);
@@ -99,7 +76,7 @@ AUI().add(
 
 						var heightNode = portletNode.one('.portlet-content-container') || portletNode;
 
-						Liferay.Layout.saveLayout(
+						Layout.saveLayout(
 							{
 								cmd: 'drag',
 								height: heightNode.getStyle('height'),
@@ -129,7 +106,7 @@ AUI().add(
 						var activeDrop = instance.activeDrop;
 
 						if (activeDrop) {
-							FreeFormLayout.superclass._positionNode.apply(this, arguments);
+							Layout._positionNode(event);
 						}
 
 						dragNode.setStyle('display', 'block');
@@ -210,10 +187,10 @@ AUI().add(
 			}
 		);
 
-		Liferay.Layout.FreeFormLayout = FreeFormLayout;
+		Layout.FreeFormLayout = FreeFormLayout;
 	},
 	'',
 	{
-		requires: ['aui-resize', 'dd', 'liferay-layout-column']
+		requires: ['aui-portal-layout', 'aui-resize']
 	}
 );

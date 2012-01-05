@@ -80,44 +80,34 @@ if (layout != null) {
 
 	<c:if test="<%= layout.isTypePortlet() %>">
 		<aui:script>
-			var layoutOptions = {
+			Liferay.Data.layoutConfig = {
+				container: '#main-content',
+
+				<c:choose>
+					<c:when test="<%= !themeDisplay.isFreeformLayout() %>">
+						dropNodes: '.portlet-column',
+						handles: ['.portlet-title', '.portlet-title-default'],
+					</c:when>
+					<c:otherwise>
+						dropNodes: '.portlet-boundary',
+						freeForm: true,
+						freeformPlaceholderClass: 'lfr-freeform-layout-drag-indicator',
+						handles: ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
+					</c:otherwise>
+				</c:choose>
+
 				disabledDropContainerClass: 'portlet-dropzone-disabled',
-				dragNodes: '#main-content .portlet-boundary:not(.portlet-static)',
+				dragNodes: '.portlet-boundary:not(.portlet-static)',
 				dropContainer: '.portlet-dropzone',
-				dropNodes: '.portlet-column',
 				emptyColumnClass: 'empty',
-				handles: ['.portlet-title', '.portlet-title-default'],
 				invalid: '.portlet-static',
 				nestedPortletId: '_<%= PortletKeys.NESTED_PORTLETS %>_INSTANCE',
 				portletBoundary: '.portlet-boundary'
 			};
-
-			<c:if test="<%= themeDisplay.isFreeformLayout() %>">
-				layoutOptions.dropNodes = "#main-content .portlet-boundary";
-				layoutOptions.freeForm = true;
-				layoutOptions.freeformPlaceholderClass = 'lfr-freeform-layout-drag-indicator';
-				layoutOptions.handles = ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'];
-			</c:if>
 		</aui:script>
 
 		<aui:script use="liferay-layout">
-			Liferay.once(
-				'initLayout',
-				function() {
-					Liferay.Layout.init(layoutOptions);
-				}
-			);
-
-			var mainContent = A.one('#main-content');
-
-			if (mainContent) {
-				mainContent.once(
-					'mousemove',
-					function() {
-						Liferay.fire('initLayout');
-					}
-				);
-			}
+			<%-- aui:script won't accept a null body --%>
 		</aui:script>
 	</c:if>
 

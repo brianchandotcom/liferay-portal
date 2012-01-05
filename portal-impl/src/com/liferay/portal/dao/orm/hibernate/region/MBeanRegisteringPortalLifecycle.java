@@ -32,7 +32,7 @@ public class MBeanRegisteringPortalLifecycle extends BasePortalLifecycle {
 	}
 
 	@Override
-	protected void doPortalDestroy() throws Exception {
+	protected void doPortalDestroy() {
 		_managementService.dispose();
 
 		_cacheManager = null;

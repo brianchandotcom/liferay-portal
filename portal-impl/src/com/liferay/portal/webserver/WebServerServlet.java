@@ -85,7 +85,7 @@ import com.liferay.portlet.documentlibrary.util.PDFProcessorImpl;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorImpl;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 
 import java.awt.image.RenderedImage;
@@ -1054,7 +1054,7 @@ public class WebServerServlet extends HttpServlet {
 		if (pathArray.length == 2) {
 			long recordId = GetterUtil.getLong(pathArray[1]);
 
-			DDLRecordServiceUtil.getRecord(recordId);
+			DDLRecordLocalServiceUtil.getRecord(recordId);
 		}
 	}
 

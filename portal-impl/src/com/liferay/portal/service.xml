@@ -676,7 +676,7 @@
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
 		</finder>
-		<finder name="Plid_NotS" return-type="Collection">
+		<finder name="P_NotS" return-type="Collection">
 			<finder-column name="plid" />
 			<finder-column name="status" comparator="!=" />
 		</finder>

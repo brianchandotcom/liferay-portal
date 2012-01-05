@@ -441,10 +441,10 @@ public class LayoutRevisionUtil {
 	* @return the matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid_NotS(
+	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
 		long plid, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPlid_NotS(plid, status);
+		return getPersistence().findByP_NotS(plid, status);
 	}
 
 	/**
@@ -461,10 +461,10 @@ public class LayoutRevisionUtil {
 	* @return the range of matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid_NotS(
+	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
 		long plid, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPlid_NotS(plid, status, start, end);
+		return getPersistence().findByP_NotS(plid, status, start, end);
 	}
 
 	/**
@@ -482,12 +482,12 @@ public class LayoutRevisionUtil {
 	* @return the ordered range of matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid_NotS(
+	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
 		long plid, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByPlid_NotS(plid, status, start, end, orderByComparator);
+				   .findByP_NotS(plid, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -504,13 +504,13 @@ public class LayoutRevisionUtil {
 	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByPlid_NotS_First(
+	public static com.liferay.portal.model.LayoutRevision findByP_NotS_First(
 		long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByPlid_NotS_First(plid, status, orderByComparator);
+				   .findByP_NotS_First(plid, status, orderByComparator);
 	}
 
 	/**
@@ -527,13 +527,13 @@ public class LayoutRevisionUtil {
 	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByPlid_NotS_Last(
+	public static com.liferay.portal.model.LayoutRevision findByP_NotS_Last(
 		long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByPlid_NotS_Last(plid, status, orderByComparator);
+				   .findByP_NotS_Last(plid, status, orderByComparator);
 	}
 
 	/**
@@ -551,13 +551,13 @@ public class LayoutRevisionUtil {
 	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByPlid_NotS_PrevAndNext(
+	public static com.liferay.portal.model.LayoutRevision[] findByP_NotS_PrevAndNext(
 		long layoutRevisionId, long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByPlid_NotS_PrevAndNext(layoutRevisionId, plid, status,
+				   .findByP_NotS_PrevAndNext(layoutRevisionId, plid, status,
 			orderByComparator);
 	}
 
@@ -1626,9 +1626,9 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByPlid_NotS(long plid, int status)
+	public static void removeByP_NotS(long plid, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByPlid_NotS(plid, status);
+		getPersistence().removeByP_NotS(plid, status);
 	}
 
 	/**
@@ -1778,9 +1778,9 @@ public class LayoutRevisionUtil {
 	* @return the number of matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByPlid_NotS(long plid, int status)
+	public static int countByP_NotS(long plid, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByPlid_NotS(plid, status);
+		return getPersistence().countByP_NotS(plid, status);
 	}
 
 	/**

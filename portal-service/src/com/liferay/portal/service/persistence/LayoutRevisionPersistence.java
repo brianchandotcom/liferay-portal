@@ -314,7 +314,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @return the matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid_NotS(
+	public java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
 		long plid, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -332,7 +332,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @return the range of matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid_NotS(
+	public java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
 		long plid, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -351,7 +351,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @return the ordered range of matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid_NotS(
+	public java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
 		long plid, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -370,7 +370,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.LayoutRevision findByPlid_NotS_First(
+	public com.liferay.portal.model.LayoutRevision findByP_NotS_First(
 		long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
@@ -390,7 +390,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.LayoutRevision findByPlid_NotS_Last(
+	public com.liferay.portal.model.LayoutRevision findByP_NotS_Last(
 		long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
@@ -411,7 +411,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.LayoutRevision[] findByPlid_NotS_PrevAndNext(
+	public com.liferay.portal.model.LayoutRevision[] findByP_NotS_PrevAndNext(
 		long layoutRevisionId, long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException,
@@ -1328,7 +1328,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByPlid_NotS(long plid, int status)
+	public void removeByP_NotS(long plid, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1453,7 +1453,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @return the number of matching layout revisions
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByPlid_NotS(long plid, int status)
+	public int countByP_NotS(long plid, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

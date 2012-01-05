@@ -113,28 +113,27 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
 			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PLID_NOTS =
-		new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_NOTS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutRevisionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPlid_NotS",
+			"findByP_NotS",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID_NOTS =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_NOTS =
 		new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutRevisionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid_NotS",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_NotS",
 			new String[] { Long.class.getName(), Integer.class.getName() },
 			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK |
 			LayoutRevisionModelImpl.STATUS_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_PLID_NOTS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_P_NOTS = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid_NotS",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_NotS",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_L_H = new FinderPath(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
@@ -595,15 +594,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			}
 
 			if ((layoutRevisionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID_NOTS.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_NOTS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(layoutRevisionModelImpl.getOriginalPlid()),
 						Integer.valueOf(layoutRevisionModelImpl.getOriginalStatus())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID_NOTS,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID_NOTS,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_NOTS, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_NOTS,
 					args);
 
 				args = new Object[] {
@@ -611,9 +609,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 						Integer.valueOf(layoutRevisionModelImpl.getStatus())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PLID_NOTS,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID_NOTS,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_NOTS, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_NOTS,
 					args);
 			}
 
@@ -1657,10 +1654,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @return the matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<LayoutRevision> findByPlid_NotS(long plid, int status)
+	public List<LayoutRevision> findByP_NotS(long plid, int status)
 		throws SystemException {
-		return findByPlid_NotS(plid, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByP_NotS(plid, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
@@ -1677,9 +1674,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @return the range of matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<LayoutRevision> findByPlid_NotS(long plid, int status,
-		int start, int end) throws SystemException {
-		return findByPlid_NotS(plid, status, start, end, null);
+	public List<LayoutRevision> findByP_NotS(long plid, int status, int start,
+		int end) throws SystemException {
+		return findByP_NotS(plid, status, start, end, null);
 	}
 
 	/**
@@ -1697,19 +1694,18 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @return the ordered range of matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<LayoutRevision> findByPlid_NotS(long plid, int status,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+	public List<LayoutRevision> findByP_NotS(long plid, int status, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID_NOTS;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_NOTS;
 			finderArgs = new Object[] { plid, status };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PLID_NOTS;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_P_NOTS;
 			finderArgs = new Object[] {
 					plid, status,
 					
@@ -1733,9 +1729,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			query.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
 
-			query.append(_FINDER_COLUMN_PLID_NOTS_PLID_2);
+			query.append(_FINDER_COLUMN_P_NOTS_PLID_2);
 
-			query.append(_FINDER_COLUMN_PLID_NOTS_STATUS_2);
+			query.append(_FINDER_COLUMN_P_NOTS_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1798,10 +1794,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutRevision findByPlid_NotS_First(long plid, int status,
+	public LayoutRevision findByP_NotS_First(long plid, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutRevisionException, SystemException {
-		List<LayoutRevision> list = findByPlid_NotS(plid, status, 0, 1,
+		List<LayoutRevision> list = findByP_NotS(plid, status, 0, 1,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -1838,12 +1834,12 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutRevision findByPlid_NotS_Last(long plid, int status,
+	public LayoutRevision findByP_NotS_Last(long plid, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchLayoutRevisionException, SystemException {
-		int count = countByPlid_NotS(plid, status);
+		int count = countByP_NotS(plid, status);
 
-		List<LayoutRevision> list = findByPlid_NotS(plid, status, count - 1,
+		List<LayoutRevision> list = findByP_NotS(plid, status, count - 1,
 				count, orderByComparator);
 
 		if (list.isEmpty()) {
@@ -1881,7 +1877,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public LayoutRevision[] findByPlid_NotS_PrevAndNext(long layoutRevisionId,
+	public LayoutRevision[] findByP_NotS_PrevAndNext(long layoutRevisionId,
 		long plid, int status, OrderByComparator orderByComparator)
 		throws NoSuchLayoutRevisionException, SystemException {
 		LayoutRevision layoutRevision = findByPrimaryKey(layoutRevisionId);
@@ -1893,13 +1889,13 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			LayoutRevision[] array = new LayoutRevisionImpl[3];
 
-			array[0] = getByPlid_NotS_PrevAndNext(session, layoutRevision,
-					plid, status, orderByComparator, true);
+			array[0] = getByP_NotS_PrevAndNext(session, layoutRevision, plid,
+					status, orderByComparator, true);
 
 			array[1] = layoutRevision;
 
-			array[2] = getByPlid_NotS_PrevAndNext(session, layoutRevision,
-					plid, status, orderByComparator, false);
+			array[2] = getByP_NotS_PrevAndNext(session, layoutRevision, plid,
+					status, orderByComparator, false);
 
 			return array;
 		}
@@ -1911,7 +1907,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		}
 	}
 
-	protected LayoutRevision getByPlid_NotS_PrevAndNext(Session session,
+	protected LayoutRevision getByP_NotS_PrevAndNext(Session session,
 		LayoutRevision layoutRevision, long plid, int status,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -1926,9 +1922,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		query.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
 
-		query.append(_FINDER_COLUMN_PLID_NOTS_PLID_2);
+		query.append(_FINDER_COLUMN_P_NOTS_PLID_2);
 
-		query.append(_FINDER_COLUMN_PLID_NOTS_STATUS_2);
+		query.append(_FINDER_COLUMN_P_NOTS_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -4999,9 +4995,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @param status the status
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByPlid_NotS(long plid, int status)
-		throws SystemException {
-		for (LayoutRevision layoutRevision : findByPlid_NotS(plid, status)) {
+	public void removeByP_NotS(long plid, int status) throws SystemException {
+		for (LayoutRevision layoutRevision : findByP_NotS(plid, status)) {
 			remove(layoutRevision);
 		}
 	}
@@ -5251,11 +5246,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 * @return the number of matching layout revisions
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByPlid_NotS(long plid, int status)
-		throws SystemException {
+	public int countByP_NotS(long plid, int status) throws SystemException {
 		Object[] finderArgs = new Object[] { plid, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_PLID_NOTS,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_P_NOTS,
 				finderArgs, this);
 
 		if (count == null) {
@@ -5263,9 +5257,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			query.append(_SQL_COUNT_LAYOUTREVISION_WHERE);
 
-			query.append(_FINDER_COLUMN_PLID_NOTS_PLID_2);
+			query.append(_FINDER_COLUMN_P_NOTS_PLID_2);
 
-			query.append(_FINDER_COLUMN_PLID_NOTS_STATUS_2);
+			query.append(_FINDER_COLUMN_P_NOTS_STATUS_2);
 
 			String sql = query.toString();
 
@@ -5292,7 +5286,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PLID_NOTS,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_NOTS,
 					finderArgs, count);
 
 				closeSession(session);
@@ -6003,8 +5997,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_LAYOUTSETBRANCHID_LAYOUTSETBRANCHID_2 =
 		"layoutRevision.layoutSetBranchId = ?";
 	private static final String _FINDER_COLUMN_PLID_PLID_2 = "layoutRevision.plid = ?";
-	private static final String _FINDER_COLUMN_PLID_NOTS_PLID_2 = "layoutRevision.plid = ? AND ";
-	private static final String _FINDER_COLUMN_PLID_NOTS_STATUS_2 = "layoutRevision.status != ?";
+	private static final String _FINDER_COLUMN_P_NOTS_PLID_2 = "layoutRevision.plid = ? AND ";
+	private static final String _FINDER_COLUMN_P_NOTS_STATUS_2 = "layoutRevision.status != ?";
 	private static final String _FINDER_COLUMN_L_H_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";
 	private static final String _FINDER_COLUMN_L_H_HEAD_2 = "layoutRevision.head = ?";
 	private static final String _FINDER_COLUMN_L_P_LAYOUTSETBRANCHID_2 = "layoutRevision.layoutSetBranchId = ? AND ";

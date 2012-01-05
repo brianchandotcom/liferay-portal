@@ -28,6 +28,7 @@ page import="com.liferay.portal.DuplicateUserEmailAddressException" %><%@
 page import="com.liferay.portal.DuplicateUserIdException" %><%@
 page import="com.liferay.portal.DuplicateUserScreenNameException" %><%@
 page import="com.liferay.portal.EmailAddressException" %><%@
+page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.NoSuchCountryException" %><%@
 page import="com.liferay.portal.NoSuchListTypeException" %><%@
 page import="com.liferay.portal.NoSuchRegionException" %><%@

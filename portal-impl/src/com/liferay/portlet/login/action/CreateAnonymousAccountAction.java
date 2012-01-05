@@ -20,6 +20,7 @@ import com.liferay.portal.ContactFullNameException;
 import com.liferay.portal.ContactLastNameException;
 import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.EmailAddressException;
+import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -137,6 +138,7 @@ public class CreateAnonymousAccountAction extends PortletAction {
 					 e instanceof ContactFullNameException ||
 					 e instanceof ContactLastNameException ||
 					 e instanceof EmailAddressException ||
+					 e instanceof GroupFriendlyURLException ||
 					 e instanceof ReservedUserEmailAddressException ||
 					 e instanceof UserEmailAddressException) {
 

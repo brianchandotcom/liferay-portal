@@ -35,6 +35,17 @@
 	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" message="the-email-address-you-requested-is-reserved" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 
+	<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">
+
+		<%
+		GroupFriendlyURLException gfurle = (GroupFriendlyURLException)errorException;
+		%>
+
+		<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.POSSIBLE_DUPLICATE %>">
+			<liferay-ui:message key="the-friendly-url-may-conflict-with-another-page" />
+		</c:if>
+	</liferay-ui:error>
+
 	<aui:fieldset>
 		<aui:column>
 			<aui:input model="<%= User.class %>" name="firstName" />

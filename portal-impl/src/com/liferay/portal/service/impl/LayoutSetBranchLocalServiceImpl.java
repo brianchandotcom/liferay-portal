@@ -136,7 +136,7 @@ public class LayoutSetBranchLocalServiceImpl
 						layoutBranch.getLayoutBranchId(),
 						LayoutRevisionConstants.
 							DEFAULT_PARENT_LAYOUT_REVISION_ID,
-						true, layout.getPlid(), LayoutConstants.DEFAULT_PLID,
+						false, layout.getPlid(), LayoutConstants.DEFAULT_PLID,
 						layout.getPrivateLayout(), layout.getName(),
 						layout.getTitle(), layout.getDescription(),
 						layout.getKeywords(), layout.getRobots(),

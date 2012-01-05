@@ -41,6 +41,7 @@ if (layoutSetBranchId > 0) {
 		<aui:input name="groupId" type="hidden" value="<%= stagingGroup.getGroupId() %>" />
 		<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT%>" />
 
 		<aui:fieldset>
 			<aui:input name="name" />

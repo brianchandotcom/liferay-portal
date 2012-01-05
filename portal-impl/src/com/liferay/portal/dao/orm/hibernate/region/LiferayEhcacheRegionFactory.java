@@ -187,13 +187,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 	}
 
-	@Override
-	public void stop() {
-		super.stop();
-
-		_mBeanRegisteringPortalLifecycle.doPortalDestroy();
-	}
-
 	protected void configureCache(String regionName) {
 		synchronized (manager) {
 			Ehcache ehcache = manager.getEhcache(regionName);

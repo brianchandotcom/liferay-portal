@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class LastButtonAPTest extends BaseTestCase {
 	public void testLastButtonAP() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,10 +44,12 @@ public class LastButtonAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -55,6 +58,7 @@ public class LastButtonAPTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent("//a[@class='last']"));
 		assertEquals("3", selenium.getSelectedLabel("//select"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -75,13 +79,16 @@ public class LastButtonAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("//select", RuntimeVariables.replace("2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals("2", selenium.getSelectedLabel("//select"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),

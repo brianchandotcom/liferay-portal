@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ExportLARBlogsEntryTest extends BaseTestCase {
 	public void testExportLARBlogsEntry() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ExportLARBlogsEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -71,6 +73,7 @@ public class ExportLARBlogsEntryTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Export the selected data to the given LAR file name."),
 			selenium.getText("//div/span/span/label"));

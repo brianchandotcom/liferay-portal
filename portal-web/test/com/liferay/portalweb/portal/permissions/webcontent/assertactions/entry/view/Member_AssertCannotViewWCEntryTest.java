@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Member_AssertCannotViewWCEntryTest extends BaseTestCase {
 	public void testMember_AssertCannotViewWCEntry() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,9 +44,11 @@ public class Member_AssertCannotViewWCEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Web Content Name"));

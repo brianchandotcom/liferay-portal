@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ImportLARTest extends BaseTestCase {
 	public void testImportLAR() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -68,6 +69,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='category-portlets']/li[3]/a",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText(
@@ -99,8 +101,10 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\Document_Library-Selenium.portlet.lar"));
@@ -111,6 +115,7 @@ public class ImportLARTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

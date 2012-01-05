@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RemovePortletPMTest extends BaseTestCase {
 	public void testRemovePortletPM() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class RemovePortletPMTest extends BaseTestCase {
 		selenium.clickAt("link=Private Messaging Test Page",
 			RuntimeVariables.replace("Private Messaging Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));

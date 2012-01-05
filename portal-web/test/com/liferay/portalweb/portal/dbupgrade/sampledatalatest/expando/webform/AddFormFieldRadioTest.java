@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddFormFieldRadioTest extends BaseTestCase {
 	public void testAddFormFieldRadio() throws Exception {
 		selenium.open("/web/expando-web-form-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -128,6 +130,7 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -168,6 +171,7 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("Gender"));
 		assertTrue(selenium.isElementPresent("//input[@value='Male']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Female']"));

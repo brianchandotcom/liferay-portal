@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWebContentLocalizedTest extends BaseTestCase {
 	public void testViewWebContentLocalized() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,14 +44,17 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
 			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Hello World Localized Article"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertEquals("Hello World Localized Article",
 			selenium.getValue("//input[@id='_15_title_en_US']"));

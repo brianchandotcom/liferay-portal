@@ -24,6 +24,7 @@ public class SOFo_ViewEditMicroblogsContentFollowersTest extends BaseTestCase {
 	public void testSOFo_ViewEditMicroblogsContentFollowers()
 		throws Exception {
 		selenium.open("/user/socialofficefollowersn/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOFo_ViewEditMicroblogsContentFollowersTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -52,6 +54,7 @@ public class SOFo_ViewEditMicroblogsContentFollowersTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 		assertTrue(selenium.isVisible("//div[@class='entry-bubble ']"));

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchRenameWikiPageTitleQuotesTest extends BaseTestCase {
 	public void testSearchRenameWikiPageTitleQuotes() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,11 +44,13 @@ public class SearchRenameWikiPageTitleQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_36_keywords']",
 			RuntimeVariables.replace("\"Wiki Page Test\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("link=Wiki Page Test Renamed"));
 		assertFalse(selenium.isElementPresent("link=Wiki Page Test"));
 	}

@@ -50,6 +50,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 			case 2:
 
@@ -66,6 +67,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 			case 3:
 
@@ -109,6 +111,7 @@ public class GmailServer_TearDownMailingListMessageTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				Thread.sleep(5000);
 				selenium.close();
 				selenium.selectWindow("null");

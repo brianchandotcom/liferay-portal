@@ -24,6 +24,7 @@ public class Member_AssertEditWCSConfigurationTest extends BaseTestCase {
 	public void testMember_AssertEditWCSConfiguration()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Member_AssertEditWCSConfigurationTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Search Permissions Page",
 			RuntimeVariables.replace("Web Content Search Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 

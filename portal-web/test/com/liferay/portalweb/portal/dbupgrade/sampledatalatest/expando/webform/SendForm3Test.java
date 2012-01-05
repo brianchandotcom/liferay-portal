@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SendForm3Test extends BaseTestCase {
 	public void testSendForm3() throws Exception {
 		selenium.open("/web/expando-web-form-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class SendForm3Test extends BaseTestCase {
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@type='text']", RuntimeVariables.replace("Houn"));
 		selenium.clickAt("//input[@type='checkbox']",
 			RuntimeVariables.replace(""));
@@ -54,6 +56,7 @@ public class SendForm3Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

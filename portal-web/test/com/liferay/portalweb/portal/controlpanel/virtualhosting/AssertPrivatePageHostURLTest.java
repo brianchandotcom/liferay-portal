@@ -28,6 +28,7 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("http://www.baker.com:8080/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean LoggedOut = selenium.isElementPresent("_58_login");
 
@@ -46,6 +47,7 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -57,6 +59,7 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 				selenium.clickAt("link=Private Page",
 					RuntimeVariables.replace("Private Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"http://www.baker.com:8080/private-page"),
 					selenium.getLocation());

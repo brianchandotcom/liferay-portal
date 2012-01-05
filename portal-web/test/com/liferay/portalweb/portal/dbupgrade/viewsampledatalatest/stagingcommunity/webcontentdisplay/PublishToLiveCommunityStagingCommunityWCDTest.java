@@ -30,6 +30,7 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 			case 1:
 				selenium.open(
 					"/web/community-staging-community-web-content-display-staging/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -52,6 +53,7 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 					RuntimeVariables.replace(
 						"Page Staging Community Web Content Display"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean markAsReadyPresent = selenium.isElementPresent(
 						"//button[3]");
@@ -139,6 +141,7 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
 

@@ -28,6 +28,7 @@ public class SearchTemplateTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,12 +49,15 @@ public class SearchTemplateTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -89,6 +93,7 @@ public class SearchTemplateTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace(
@@ -102,6 +107,7 @@ public class SearchTemplateTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace(""));
 				assertFalse(selenium.isTextPresent("Web Content Template Name"));

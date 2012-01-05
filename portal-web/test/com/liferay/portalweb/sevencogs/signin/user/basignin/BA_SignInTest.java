@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class BA_SignInTest extends BaseTestCase {
 	public void testBA_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class BA_SignInTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='express_login']",
 			RuntimeVariables.replace("Login as Bruno."));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Bruno Admin"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(

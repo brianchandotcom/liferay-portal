@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewCheckOutOrderTest extends BaseTestCase {
 	public void testViewCheckOutOrder() throws Exception {
 		selenium.open("/web/shopping-order-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,10 +44,13 @@ public class ViewCheckOutOrderTest extends BaseTestCase {
 		selenium.clickAt("link=Shopping Order Page",
 			RuntimeVariables.replace("Shopping Order Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Orders", RuntimeVariables.replace("Orders"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Order Number"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Joe"),
 			selenium.getText("//td[1]/table/tbody/tr[1]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Joe"),

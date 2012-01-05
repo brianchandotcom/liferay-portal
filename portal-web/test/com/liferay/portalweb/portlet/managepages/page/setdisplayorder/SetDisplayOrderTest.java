@@ -28,6 +28,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -264,6 +265,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

@@ -42,7 +42,9 @@ public class ScreengrabSignInTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.open("web/themetesting/testpage01");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
 		selenium.type("_58_password", RuntimeVariables.replace("test"));
 		selenium.click("//input[@type='checkbox']");
@@ -53,5 +55,6 @@ public class ScreengrabSignInTest extends BaseTestCase {
 			"");
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

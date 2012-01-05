@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMCCoworkerProfileTest extends BaseTestCase {
 	public void testViewMCCoworkerProfile() throws Exception {
 		selenium.open("/web/joebloggs/profile/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Profile"),
 			selenium.getText("//nav/ul/li[2]/a/span"));
 		assertEquals(RuntimeVariables.replace("My Contacts"),
@@ -56,6 +57,7 @@ public class ViewMCCoworkerProfileTest extends BaseTestCase {
 		selenium.clickAt("//div/a/img",
 			RuntimeVariables.replace("Social Office Coworker"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isVisible("//span/input"));
 		assertTrue(selenium.isVisible("//div/a/img"));
 		selenium.mouseOver("//div/a/img");

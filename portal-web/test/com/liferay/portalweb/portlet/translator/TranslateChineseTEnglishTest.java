@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class TranslateChineseTEnglishTest extends BaseTestCase {
 	public void testTranslateChineseTEnglish() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class TranslateChineseTEnglishTest extends BaseTestCase {
 		selenium.clickAt("link=Translator Test Page",
 			RuntimeVariables.replace("Translator Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//textarea[@id='_26_text']",
 			RuntimeVariables.replace(
 				"\u6211\u7684\u540d\u5b57\u662fLiferay\u8bd1\u8005\uff0c\u6d41\u5229\u5b8c\u5168\u6210\u529f6\u901a\u4fe1\u7684\u767e\u4e07\u4e2a\u5f62\u5f0f\u3002"));
@@ -51,6 +53,7 @@ public class TranslateChineseTEnglishTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Translate']",
 			RuntimeVariables.replace("Translate"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent(
 				"My name is the Liferay translator, fluent completely successful 6 correspondence 1,000,000 forms."));
 	}

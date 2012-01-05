@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddFolderImageNameNullTest extends BaseTestCase {
 	public void testAddFolderImageNameNull() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,11 +44,13 @@ public class AddFolderImageNameNullTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//div/h1/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -85,6 +88,7 @@ public class AddFolderImageNameNullTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//tr[4]/td/a", RuntimeVariables.replace("Image"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_31_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\imagegallery\\image\\addfolderimagenamenull\\dependencies\\test_image.jpg"));
@@ -94,6 +98,7 @@ public class AddFolderImageNameNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -102,6 +107,7 @@ public class AddFolderImageNameNullTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//div/h1/span"));
 		assertEquals(RuntimeVariables.replace("test_image.jpg"),

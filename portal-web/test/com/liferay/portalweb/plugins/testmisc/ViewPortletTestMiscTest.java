@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletTestMiscTest extends BaseTestCase {
 	public void testViewPortletTestMisc() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewPortletTestMiscTest extends BaseTestCase {
 		selenium.clickAt("link=Test Misc Page",
 			RuntimeVariables.replace("Test Misc Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Portlet Request"),
 			selenium.getText("//div/div/h3[1]"));
 		assertEquals(RuntimeVariables.replace("Attribute Sharing"),

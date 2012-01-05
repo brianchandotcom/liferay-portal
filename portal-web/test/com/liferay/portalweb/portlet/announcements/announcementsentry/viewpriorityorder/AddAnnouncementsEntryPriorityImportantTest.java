@@ -24,6 +24,7 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 	public void testAddAnnouncementsEntryPriorityImportant()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,15 +45,19 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("General"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='Add Entry']",
 			RuntimeVariables.replace("Add Entry"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_84_title']",
 			RuntimeVariables.replace(
 				"Announcements Entry Title Priority Important"));
@@ -88,6 +93,7 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Important"),
 			selenium.getText("//td[1]/a"));
@@ -97,6 +103,7 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Announcements Entry Title Priority Important"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals("Announcements Entry Title Priority Important",
 			selenium.getValue("//input[@id='_84_title']"));
 
@@ -125,6 +132,7 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		assertEquals("Important",
 			selenium.getSelectedLabel("//select[@id='_84_priority']"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -145,6 +153,7 @@ public class AddAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Important"),
 			selenium.getText("//h3[@class='entry-title']/a"));

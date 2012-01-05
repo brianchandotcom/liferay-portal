@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CreateAccountExpando2Test extends BaseTestCase {
 	public void testCreateAccountExpando2() throws Exception {
 		selenium.open("/web/expando-web-content-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,15 +44,18 @@ public class CreateAccountExpando2Test extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='Create Account']",
 			RuntimeVariables.replace("Create Account"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//td[2]/input", RuntimeVariables.replace("JR"));
 		selenium.type("//tr[2]/td[2]/input", RuntimeVariables.replace("Houn"));
 		selenium.type("//tr[3]/td[2]/input", RuntimeVariables.replace("1000000"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("JR"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Houn"),

@@ -24,6 +24,7 @@ public class SOFo_ViewWHContentViewableByFollowersTest extends BaseTestCase {
 	public void testSOFo_ViewWHContentViewableByFollowers()
 		throws Exception {
 		selenium.open("/web/socialofficefollowersn/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOFo_ViewWHContentViewableByFollowersTest extends BaseTestCase {
 		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isElementPresent("//textarea"));
@@ -52,6 +54,7 @@ public class SOFo_ViewWHContentViewableByFollowersTest extends BaseTestCase {
 		selenium.clickAt("//ul[2]/li[2]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[2]/div/div/section/header/h1"));
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),

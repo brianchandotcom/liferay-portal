@@ -24,6 +24,7 @@ public class SOFr_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 	public void testSOFr_ConfirmNotificationsJoinPrivateSite()
 		throws Exception {
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOFr_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Notifications"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 
@@ -71,10 +73,12 @@ public class SOFr_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[1]/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -95,6 +99,7 @@ public class SOFr_ConfirmNotificationsJoinPrivateSiteTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 

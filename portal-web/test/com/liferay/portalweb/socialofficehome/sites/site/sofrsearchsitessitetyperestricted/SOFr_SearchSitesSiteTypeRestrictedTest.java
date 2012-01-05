@@ -24,6 +24,7 @@ public class SOFr_SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 	public void testSOFr_SearchSitesSiteTypeRestricted()
 		throws Exception {
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOFr_SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div/ul/li/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace(

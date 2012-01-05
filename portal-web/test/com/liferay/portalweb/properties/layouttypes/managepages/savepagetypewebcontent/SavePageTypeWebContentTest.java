@@ -28,6 +28,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,13 +49,16 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				String articleID = selenium.getText("//td[2]/a");
 				RuntimeVariables.setValue("articleID", articleID);
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 
@@ -203,10 +207,12 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -227,6 +233,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Manage Pages Test Page",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Web Content Content"),
 					selenium.getText("//p"));
 

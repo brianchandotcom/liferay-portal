@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RemovePortletKBSTest extends BaseTestCase {
 	public void testRemovePortletKBS() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class RemovePortletKBSTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Section Test Page",
 			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isVisible("//section"));
 		selenium.click("//img[@title='Remove']");
 		assertTrue(selenium.getConfirmation()

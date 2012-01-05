@@ -25,6 +25,7 @@ public class ViewEditVocabulary1CategoryToVocabulary2DADTest
 	public void testViewEditVocabulary1CategoryToVocabulary2DAD()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,9 +46,11 @@ public class ViewEditVocabulary1CategoryToVocabulary2DADTest
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Name"),
 			selenium.getText("xPath=(//span[@class='vocabulary-item']/a)[1]"));
 		selenium.clickAt("xPath=(//span[@class='vocabulary-item']/a)[1]",

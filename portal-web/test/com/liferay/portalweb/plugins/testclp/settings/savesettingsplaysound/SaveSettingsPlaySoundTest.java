@@ -28,6 +28,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,6 +49,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("true"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[8]"));
@@ -108,6 +110,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 				assertFalse(selenium.isElementPresent(
 						"//li[@class='chat-settings saved']"));
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -128,6 +131,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("false"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[8]"));

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CalculateLoanTest extends BaseTestCase {
 	public void testCalculateLoan() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class CalculateLoanTest extends BaseTestCase {
 		selenium.clickAt("link=Loan Calculator Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("_61_loanAmount", RuntimeVariables.replace("1,000"));
 		selenium.type("_61_interest", RuntimeVariables.replace("4.75"));
 		selenium.type("_61_years", RuntimeVariables.replace("20"));

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 	public void testCompareVersionEditWikiFrontPage() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,13 +43,16 @@ public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
 		selenium.clickAt("//div[3]/span[2]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("1.2"),
 			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.1"),
@@ -61,6 +65,7 @@ public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Compare Versions']",
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Comparing Versions 1.1 and 1.2 (Last Version)"),
 			selenium.getText("//span[@class='central-title']/span"));
@@ -70,6 +75,7 @@ public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 			selenium.getText("//div[3]/div/a"));
 		selenium.clickAt("//div[3]/div/a", RuntimeVariables.replace("Text Mode"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("FrontPage 1.1"),
 			selenium.getText(
 				"xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[1]"));

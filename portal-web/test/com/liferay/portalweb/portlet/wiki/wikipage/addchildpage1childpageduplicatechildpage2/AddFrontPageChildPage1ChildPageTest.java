@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddFrontPageChildPage1ChildPageTest extends BaseTestCase {
 	public void testAddFrontPageChildPage1ChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,17 +44,20 @@ public class AddFrontPageChildPage1ChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[6]/div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[6]/div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
@@ -84,6 +88,7 @@ public class AddFrontPageChildPage1ChildPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -94,6 +99,7 @@ public class AddFrontPageChildPage1ChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));

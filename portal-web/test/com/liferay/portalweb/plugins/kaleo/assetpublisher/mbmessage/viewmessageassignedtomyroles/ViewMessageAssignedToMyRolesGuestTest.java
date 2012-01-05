@@ -24,6 +24,7 @@ public class ViewMessageAssignedToMyRolesGuestTest extends BaseTestCase {
 	public void testViewMessageAssignedToMyRolesGuest()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewMessageAssignedToMyRolesGuestTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Page",
 			RuntimeVariables.replace("Asset Publisher Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("Message Boards Message Subject"));
 		assertFalse(selenium.isTextPresent("Message Boards Message Body"));
 	}

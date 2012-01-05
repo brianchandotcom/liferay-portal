@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurationTest extends BaseTestCase {
 	public void testConfiguration() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ConfigurationTest extends BaseTestCase {
 		selenium.clickAt("link=Sample LAR Test Page",
 			RuntimeVariables.replace("Sample LAR Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent(
 				"This is the Sample LAR Portlet. This was made to demonstrate the portlet LAR plugin feature."));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
@@ -65,11 +67,13 @@ public class ConfigurationTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Export / Import"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_86_exportFileName']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Export']"));
 		selenium.click(RuntimeVariables.replace("link=Import"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_86_importFileName']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Import']"));

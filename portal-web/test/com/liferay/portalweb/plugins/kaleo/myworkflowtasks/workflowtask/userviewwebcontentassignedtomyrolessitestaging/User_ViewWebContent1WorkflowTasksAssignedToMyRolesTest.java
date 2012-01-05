@@ -25,6 +25,7 @@ public class User_ViewWebContent1WorkflowTasksAssignedToMyRolesTest
 	public void testUser_ViewWebContent1WorkflowTasksAssignedToMyRoles()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,9 +46,11 @@ public class User_ViewWebContent1WorkflowTasksAssignedToMyRolesTest
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("//td[1]/a/span"));
 		assertEquals(RuntimeVariables.replace("Web Content1 Name"),
@@ -57,6 +60,7 @@ public class User_ViewWebContent1WorkflowTasksAssignedToMyRolesTest
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Preview of Web Content"),
 			selenium.getText(
 				"//div[2]/div/div[1]/div/div[2]/div[1]/div[1]/div/span"));

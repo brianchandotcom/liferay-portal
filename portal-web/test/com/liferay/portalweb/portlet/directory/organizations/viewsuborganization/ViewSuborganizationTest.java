@@ -28,6 +28,7 @@ public class ViewSuborganizationTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,9 +49,11 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -69,6 +72,7 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Test Child"),
 					selenium.getText("//tr[3]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
@@ -119,6 +123,7 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Test Child"),
 					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Test Organization"),
@@ -134,6 +139,7 @@ public class ViewSuborganizationTest extends BaseTestCase {
 				selenium.clickAt("//td[1]/a",
 					RuntimeVariables.replace("Test Child"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Test Child"),
 					selenium.getText(
 						"//div[@class='organization-information']/div[1]/h2"));

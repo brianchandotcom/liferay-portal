@@ -24,6 +24,7 @@ public class ViewActivityBlogsEntryHTMLEscapeCharactersTest extends BaseTestCase
 	public void testViewActivityBlogsEntryHTMLEscapeCharacters()
 		throws Exception {
 		selenium.open("/group/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewActivityBlogsEntryHTMLEscapeCharactersTest extends BaseTestCase
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new blog entry, &amp;, in Liferay."),
 			selenium.getText("//td[2]/div[1]"));

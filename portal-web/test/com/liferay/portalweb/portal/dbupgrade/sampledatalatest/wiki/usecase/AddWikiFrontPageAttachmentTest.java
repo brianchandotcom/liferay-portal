@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 	public void testAddWikiFrontPageAttachment() throws Exception {
 		selenium.open("/web/wiki-use-case-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,17 +44,20 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("0 Attachments"),
 			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
 		selenium.clickAt("//div[6]/div[1]/span[2]/a/span",
 			RuntimeVariables.replace("0 Attachments"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"This page does not have any file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -83,6 +87,7 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -91,6 +96,7 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("3.1k"),
 			selenium.getText("//td[2]/a"));
 		selenium.open("/web/wiki-use-case-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,6 +117,7 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("1 Attachment"),
 			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
 		assertFalse(selenium.isTextPresent("0 Attachments"));

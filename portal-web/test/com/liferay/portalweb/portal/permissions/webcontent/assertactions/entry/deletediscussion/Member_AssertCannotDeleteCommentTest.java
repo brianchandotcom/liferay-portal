@@ -24,6 +24,7 @@ public class Member_AssertCannotDeleteCommentTest extends BaseTestCase {
 	public void testMember_AssertCannotDeleteComment()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Member_AssertCannotDeleteCommentTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("WC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertFalse(selenium.isElementPresent("link=Delete"));

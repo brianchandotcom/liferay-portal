@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertImportLARTest extends BaseTestCase {
 	public void testAssertImportLAR() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,9 +44,11 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Test Web Content Article"),
 			selenium.getText("//td[3]/a"));
@@ -67,6 +70,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Structures",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Test Web Content Structure"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -74,6 +78,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("link=Templates", RuntimeVariables.replace("Templates"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Test Web Content Template"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace(

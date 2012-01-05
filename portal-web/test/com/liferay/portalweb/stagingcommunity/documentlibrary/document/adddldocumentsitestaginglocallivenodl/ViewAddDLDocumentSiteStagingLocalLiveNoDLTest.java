@@ -24,6 +24,7 @@ public class ViewAddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase 
 	public void testViewAddDLDocumentSiteStagingLocalLiveNoDL()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,9 +44,11 @@ public class ViewAddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase 
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
@@ -53,11 +56,13 @@ public class ViewAddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase 
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//a[@class='document-link']"));
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("DL Document Description"),
@@ -77,9 +82,11 @@ public class ViewAddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase 
 			selenium.getText("//li[1]/span/a"));
 		selenium.clickAt("//li[1]/span/a", RuntimeVariables.replace("Live"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
@@ -89,6 +96,7 @@ public class ViewAddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase 
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("DL Document Description"),

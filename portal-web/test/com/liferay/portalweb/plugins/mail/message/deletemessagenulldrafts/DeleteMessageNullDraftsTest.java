@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteMessageNullDraftsTest extends BaseTestCase {
 	public void testDeleteMessageNullDrafts() throws Exception {
 		selenium.open("/web/guest/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,6 +43,7 @@ public class DeleteMessageNullDraftsTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"liferay.qa.testing.trunk@gmail.com"),
 			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));

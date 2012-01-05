@@ -24,6 +24,7 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 	public void testSelectPortletScopePage2WCWebContentWCD()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Select existing web content or add some web content to be displayed in this portlet."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

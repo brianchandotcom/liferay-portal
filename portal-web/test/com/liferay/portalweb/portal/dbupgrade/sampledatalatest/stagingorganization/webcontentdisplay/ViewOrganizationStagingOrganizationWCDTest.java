@@ -24,6 +24,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 	public void testViewOrganizationStagingOrganizationWCD()
 		throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,12 +46,14 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//body[@class='blue live-view controls-visible signed-in public-page']"));
 		assertFalse(selenium.isElementPresent(
 				"//body[@class='blue staging controls-visible signed-in public-page']"));
 		selenium.clickAt("link=View Staged Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent(
 				"//body[@class='blue live-view controls-visible signed-in public-page']"));
 		assertTrue(selenium.isElementPresent(
@@ -59,8 +62,10 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			selenium.getText("//p"));
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Organization Staging Organization Web Content Display"),
 			selenium.getText("//nav/ul/li[2]/span"));
@@ -76,6 +81,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[8]/a"));
 		selenium.open("/web/staging-organization-wcd/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,13 +103,16 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent(
 				"//body[@class='blue staging controls-visible signed-in public-page']"));
 		assertFalse(selenium.isTextPresent("WC Web Content Content"));
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Organization Staging Organization Web Content Display"),
 			selenium.getText("//nav/ul/li[2]/span"));

@@ -24,6 +24,7 @@ public class AddWikiFrontPageChildPageComment2Test extends BaseTestCase {
 	public void testAddWikiFrontPageChildPageComment2()
 		throws Exception {
 		selenium.open("/web/wiki-use-case-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +45,13 @@ public class AddWikiFrontPageChildPageComment2Test extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText("//fieldset/div/span/a/span"));
 		selenium.clickAt("//fieldset/div/span/a/span",

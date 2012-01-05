@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
 	public void testPortlet_AssertCannotViewEntry() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("Blogs Entry Title Temporary"));
 		assertFalse(selenium.isElementPresent("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("Showing 0 results."),

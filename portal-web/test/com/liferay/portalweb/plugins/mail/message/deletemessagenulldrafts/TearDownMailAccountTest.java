@@ -28,6 +28,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,6 +49,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				Thread.sleep(5000);
 
 				boolean enterYourPasswordPresent = selenium.isElementPresent(
@@ -174,6 +176,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 
 			case 3:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -194,6 +197,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertFalse(selenium.isTextPresent(
 						"liferay.qa.testing.trunk@gmail.com"));
 

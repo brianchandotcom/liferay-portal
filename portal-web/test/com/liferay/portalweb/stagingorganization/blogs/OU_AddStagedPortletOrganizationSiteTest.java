@@ -24,6 +24,7 @@ public class OU_AddStagedPortletOrganizationSiteTest extends BaseTestCase {
 	public void testOU_AddStagedPortletOrganizationSite()
 		throws Exception {
 		selenium.open("/web/selenium/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("//div[@class='staging-bar']"));
 		assertEquals(RuntimeVariables.replace("Live"),
 			selenium.getText("//li[1]/span/span"));
@@ -34,6 +35,7 @@ public class OU_AddStagedPortletOrganizationSiteTest extends BaseTestCase {
 			selenium.getText("//li[2]/span/a"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"You are viewing the staged version of Selenium. You can make changes here and publish them to Live afterwards to make them public."),
 			selenium.getText("//span[@class='staging-live-help']"));
@@ -57,6 +59,7 @@ public class OU_AddStagedPortletOrganizationSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));

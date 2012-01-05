@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletHWTest extends BaseTestCase {
 	public void testAddPortletHW() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AddPortletHWTest extends BaseTestCase {
 		selenium.clickAt("link=Hello World Test Page",
 			RuntimeVariables.replace("Hello World Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("More\u2026"),
 			selenium.getText("//a[@id='_145_addApplication']"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

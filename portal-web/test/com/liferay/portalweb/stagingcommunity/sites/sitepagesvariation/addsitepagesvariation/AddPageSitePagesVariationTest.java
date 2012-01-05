@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageSitePagesVariationTest extends BaseTestCase {
 	public void testAddPageSitePagesVariation() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,6 +43,7 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertFalse(selenium.isElementPresent(
@@ -49,6 +51,7 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Main Variation"),
 			selenium.getText("//li[1]/span/span/span[1]"));
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
@@ -56,6 +59,7 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 		selenium.clickAt("//li[2]/span/span/a",
 			RuntimeVariables.replace("Site Pages Variation Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText("//li[2]/span/span/span[1]"));
 		selenium.clickAt("//nav[@id='navigation']",
@@ -119,5 +123,6 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 
 		selenium.clickAt("link=Test Page", RuntimeVariables.replace("Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

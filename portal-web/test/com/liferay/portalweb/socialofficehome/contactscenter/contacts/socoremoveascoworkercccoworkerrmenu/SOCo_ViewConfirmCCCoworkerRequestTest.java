@@ -24,6 +24,7 @@ public class SOCo_ViewConfirmCCCoworkerRequestTest extends BaseTestCase {
 	public void testSOCo_ViewConfirmCCCoworkerRequest()
 		throws Exception {
 		selenium.open("/user/socialofficecoworkersn/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOCo_ViewConfirmCCCoworkerRequestTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isVisible("//div[1]/a/img"));
 		assertEquals(RuntimeVariables.replace("Manage 1 coworkers."),
 			selenium.getText("//div[1]/div/div/div/div[2]/a"));

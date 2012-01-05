@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 	public void testViewPortletARLookAndFeel() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		selenium.clickAt("link=Amazon Rankings Test Page",
 			RuntimeVariables.replace("Amazon Rankings Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertImportLARTest extends BaseTestCase {
 	public void testAssertImportLAR() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -78,6 +80,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_showFoldersSearchCheckbox']"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -98,6 +101,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
@@ -105,9 +109,11 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("MG Folder1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder1 Subfolder Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -128,16 +134,19 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[2]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("MG Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder2 Subfolder Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("MG Folder2 Subfolder Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MG Folder2 Subfolder Name"),
 			selenium.getText("//div/h1/span"));
 

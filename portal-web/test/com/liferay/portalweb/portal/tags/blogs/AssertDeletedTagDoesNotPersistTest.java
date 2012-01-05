@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 	public void testAssertDeletedTagDoesNotPersist() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,11 +44,13 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Tags Blog Entry1 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[3]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[3]",
 			RuntimeVariables.replace("Tags Blog Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 
 		for (int second = 0;; second++) {
@@ -69,6 +72,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -93,6 +97,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
 			RuntimeVariables.replace("Tags Blog Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 
 		for (int second = 0;; second++) {
@@ -114,6 +119,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -138,6 +144,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
 			RuntimeVariables.replace("Tags Blog Entry3 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 	}
 }

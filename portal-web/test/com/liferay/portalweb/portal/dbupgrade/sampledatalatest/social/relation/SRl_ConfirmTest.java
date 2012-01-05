@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRl_ConfirmTest extends BaseTestCase {
 	public void testSRl_Confirm() throws Exception {
 		selenium.open("/web/socialrelationsn1/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,11 +43,13 @@ public class SRl_ConfirmTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Confirm"),
 			selenium.getText("//td[2]/ul/li[1]/a/span"));
 		selenium.clickAt("//td[2]/ul/li[1]/a/span",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("Confirm"));
 	}
 }

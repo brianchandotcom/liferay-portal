@@ -24,6 +24,7 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 	public void testSendMembersInvitationPrivateSite()
 		throws Exception {
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div/ul/li/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 
@@ -70,6 +72,7 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Private Site Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Private Site Name"),
 			selenium.getText("//h2/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
@@ -77,6 +80,7 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[7]/a/span",
 			RuntimeVariables.replace("Members"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Invite Members"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace("Invite members to this site."),

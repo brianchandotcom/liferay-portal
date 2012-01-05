@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOFr_SearchSitesSiteTypePrivateTest extends BaseTestCase {
 	public void testSOFr_SearchSitesSiteTypePrivate() throws Exception {
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class SOFr_SearchSitesSiteTypePrivateTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div/ul/li/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[3]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace(

@@ -25,6 +25,7 @@ public class ViewScopeDefaultWCWebContentListCurrentPageCPTest
 	public void testViewScopeDefaultWCWebContentListCurrentPageCP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,9 +46,11 @@ public class ViewScopeDefaultWCWebContentListCurrentPageCPTest
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 				"Scope: Default"));
 		selenium.clickAt("//div/span/ul/li/strong/a",
@@ -57,6 +60,7 @@ public class ViewScopeDefaultWCWebContentListCurrentPageCPTest
 		selenium.clickAt("//li[2]/a",
 			RuntimeVariables.replace("Web Content Display Test Page2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 				"Scope: Web Content Display Test Page2"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewTransactionTest extends BaseTestCase {
 	public void testViewTransaction() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewTransactionTest extends BaseTestCase {
 		selenium.clickAt("link=Test Transaction Page",
 			RuntimeVariables.replace("Test Transaction Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isPartialText("//p[1]",
 				"BarLocalServiceUtil.addBar_Success=PASSED"));
 		assertTrue(selenium.isPartialText("//p[1]",

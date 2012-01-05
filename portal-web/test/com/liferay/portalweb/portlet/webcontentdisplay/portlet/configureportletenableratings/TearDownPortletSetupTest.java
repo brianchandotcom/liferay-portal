@@ -28,6 +28,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,6 +50,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Test Page",
 					RuntimeVariables.replace("Web Content Display Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(""),
 					selenium.getText("//img[@alt='Select Web Content']"));
 				Thread.sleep(5000);
@@ -96,6 +98,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 
 				selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.isElementPresent(
 						"//input[@id='_86_showAvailableLocalesCheckbox']"));
 
@@ -179,6 +182,7 @@ public class TearDownPortletSetupTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

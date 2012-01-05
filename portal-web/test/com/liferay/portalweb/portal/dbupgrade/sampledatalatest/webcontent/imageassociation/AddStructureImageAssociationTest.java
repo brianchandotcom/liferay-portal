@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddStructureImageAssociationTest extends BaseTestCase {
 	public void testAddStructureImageAssociation() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,15 +44,19 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Structures",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='Add Structure']",
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_15_name']",
 			RuntimeVariables.replace("Image Structure Test"));
 		selenium.type("//textarea[@id='_15_description']",
@@ -59,6 +64,7 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("image-gallery-test"));
 		selenium.select("//select[@id='_15_structure_el0_type']",
@@ -66,6 +72,7 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("image-test"));
 		selenium.select("//select[@id='_15_structure_el0_type']",
@@ -73,6 +80,7 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("//select[@id='_15_structure_el0_type']",
 			RuntimeVariables.replace("label=Text"));
 		selenium.type("//input[@id='_15_structure_el0_name']",
@@ -80,6 +88,7 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

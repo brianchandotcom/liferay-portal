@@ -24,6 +24,7 @@ public class ConfigurePage2PortletEntriesPerPage5Test extends BaseTestCase {
 	public void testConfigurePage2PortletEntriesPerPage5()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ConfigurePage2PortletEntriesPerPage5Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -117,6 +119,7 @@ public class ConfigurePage2PortletEntriesPerPage5Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

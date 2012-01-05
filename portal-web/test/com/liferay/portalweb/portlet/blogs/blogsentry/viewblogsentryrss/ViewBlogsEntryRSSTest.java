@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewBlogsEntryRSSTest extends BaseTestCase {
 	public void testViewBlogsEntryRSS() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewBlogsEntryRSSTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
@@ -54,6 +56,7 @@ public class ViewBlogsEntryRSSTest extends BaseTestCase {
 				"//div[@class='subscribe']/span[1]/a@href");
 		RuntimeVariables.setValue("rssURL", rssURL);
 		selenium.open(RuntimeVariables.getValue("rssURL"));
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//x:h1[@id='feedTitleText']"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
@@ -65,6 +68,7 @@ public class ViewBlogsEntryRSSTest extends BaseTestCase {
 		selenium.clickAt("//x:div[@id='feedContent']/x:div[1]/x:h3/x:a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

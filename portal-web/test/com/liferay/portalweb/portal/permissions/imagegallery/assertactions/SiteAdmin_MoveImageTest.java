@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SiteAdmin_MoveImageTest extends BaseTestCase {
 	public void testSiteAdmin_MoveImage() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
 			selenium.getText(
@@ -51,6 +53,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder"),
 			selenium.getText(
@@ -58,6 +61,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Permissions Image Test"),
 			selenium.getText("//a[@title='Permissions Image Test - ']"));
 		selenium.clickAt("//a[@title='Permissions Image Test - ']",
@@ -101,6 +105,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 			selenium.getText("//button[3]"));
 		selenium.clickAt("//button[3]", RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
@@ -126,6 +131,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 			selenium.getText("link=Home"));
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -149,6 +155,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder 2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -173,6 +180,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -258,6 +266,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -279,6 +288,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2"),
 			selenium.getText(
@@ -286,6 +296,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder 2 - ']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder 2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"),
 			selenium.getText(
@@ -294,6 +305,7 @@ public class SiteAdmin_MoveImageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Permissions Image Test"),
 			selenium.getText("//a[@title='Permissions Image Test - ']"));
 	}

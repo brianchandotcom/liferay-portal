@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 	public void testDeleteAnnouncementsEntryGeneral() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),
 			selenium.getText("//h3[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
@@ -55,6 +57,7 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//td[@class='delete-entry']/span/a/span"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertFalse(selenium.isTextPresent("Announcements Entry Title"));

@@ -28,6 +28,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,6 +49,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 					RuntimeVariables.replace("Settings"));
 				Thread.sleep(5000);

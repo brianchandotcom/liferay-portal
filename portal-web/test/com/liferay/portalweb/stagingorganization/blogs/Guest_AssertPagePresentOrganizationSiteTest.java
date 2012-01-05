@@ -24,6 +24,7 @@ public class Guest_AssertPagePresentOrganizationSiteTest extends BaseTestCase {
 	public void testGuest_AssertPagePresentOrganizationSite()
 		throws Exception {
 		selenium.open("/web/selenium/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class Guest_AssertPagePresentOrganizationSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isVisible("//section"));
 	}
 }

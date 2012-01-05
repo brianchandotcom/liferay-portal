@@ -74,6 +74,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				selenium.clickAt("//a[@id='button']",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 			case 3:
 			case 4:
@@ -94,6 +95,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 			case 5:
 
@@ -137,6 +139,7 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				Thread.sleep(5000);
 				selenium.close();
 				selenium.selectWindow("null");

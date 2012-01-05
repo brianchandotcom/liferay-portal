@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 	public void testDownloadPage1DLFolder1Document1() throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -118,6 +120,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.downloadFile("DL_Folder1_Document1_Title.doc");
 		Thread.sleep(5000);
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -138,6 +141,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -187,6 +191,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uploadFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("DL_Folder1_Document1_Title.doc"));
 		selenium.type("//input[@id='_20_title']",
@@ -194,6 +199,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -215,6 +221,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -235,6 +242,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Temp_DL_Folder1_Document1_Title.doc"));
 		selenium.clickAt("//input[@value='Search']",
@@ -293,6 +301,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("10.0k"),
 			selenium.getText("//tr[3]/td[3]"));
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -313,6 +322,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Temp_DL_Folder1_Document1_Title.doc"));
 		selenium.clickAt("//input[@value='Search']",
@@ -369,6 +379,7 @@ public class DownloadPage1DLFolder1Document1Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 	}

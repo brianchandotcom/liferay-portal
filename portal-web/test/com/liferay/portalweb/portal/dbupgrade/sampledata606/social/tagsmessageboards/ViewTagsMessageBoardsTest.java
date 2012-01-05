@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewTagsMessageBoardsTest extends BaseTestCase {
 	public void testViewTagsMessageBoards() throws Exception {
 		selenium.open("/web/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,6 +43,7 @@ public class ViewTagsMessageBoardsTest extends BaseTestCase {
 
 		selenium.clickAt("link=Activities Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("link=Message1 Tag1 Test1"));
 		assertTrue(selenium.isTextPresent(
 				"Joe wrote a new message board post, Message1 Tag1 Test1, in Tags Message Board Community."));

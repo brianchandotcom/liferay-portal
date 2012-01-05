@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 	public void testSearchFolderDocumentQuotes() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("\"DL Folder Document Title\""));
 		selenium.clickAt("//input[@value='Search']",
@@ -71,6 +73,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,6 +94,7 @@ public class SearchFolderDocumentQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("\"DL Folder Document Title 1\""));
 		selenium.clickAt("//input[@value='Search']",

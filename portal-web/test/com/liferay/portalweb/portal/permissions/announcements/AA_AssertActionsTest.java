@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AA_AssertActionsTest extends BaseTestCase {
 	public void testAA_AssertActions() throws Exception {
 		selenium.open("/web/site-name/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Permissions Page",
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("link=Edit"));
 		assertTrue(selenium.isElementPresent("link=Delete"));
 		assertTrue(selenium.isElementPresent("link=Mark as Read"));
@@ -120,6 +122,7 @@ public class AA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("//input[@value='Add Entry']"));
 	}
 }

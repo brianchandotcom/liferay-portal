@@ -24,6 +24,7 @@ public class N1_AssertMessageBoardsContentUpdatedTest extends BaseTestCase {
 	public void testN1_AssertMessageBoardsContentUpdated()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -47,6 +48,7 @@ public class N1_AssertMessageBoardsContentUpdatedTest extends BaseTestCase {
 			RuntimeVariables.replace("test"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("link=Test Category 2"));
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_1$]"),
 			selenium.getText("//div[@id='content']/div[3]"));

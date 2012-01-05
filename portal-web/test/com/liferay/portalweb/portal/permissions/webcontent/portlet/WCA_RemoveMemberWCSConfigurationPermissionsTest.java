@@ -25,6 +25,7 @@ public class WCA_RemoveMemberWCSConfigurationPermissionsTest
 	public void testWCA_RemoveMemberWCSConfigurationPermissions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,6 +47,7 @@ public class WCA_RemoveMemberWCSConfigurationPermissionsTest
 		selenium.clickAt("link=Web Content Search Permissions Page",
 			RuntimeVariables.replace("Web Content Search Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
@@ -87,6 +89,7 @@ public class WCA_RemoveMemberWCSConfigurationPermissionsTest
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

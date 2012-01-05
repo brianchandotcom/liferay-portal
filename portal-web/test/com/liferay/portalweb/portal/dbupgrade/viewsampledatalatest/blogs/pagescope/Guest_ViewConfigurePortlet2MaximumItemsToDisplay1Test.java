@@ -25,6 +25,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 	public void testGuest_ViewConfigurePortlet2MaximumItemsToDisplay1()
 		throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -86,6 +88,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -124,6 +127,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -161,6 +165,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -199,6 +204,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -236,6 +242,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -274,6 +281,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -310,6 +318,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
 		selenium.open("/web/blogs-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -330,6 +339,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("link=Blogs Test Page3",
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -389,6 +399,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -427,6 +438,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.select("//select[@id='_33_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -464,6 +476,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -502,6 +515,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -539,6 +553,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -577,6 +592,7 @@ public class Guest_ViewConfigurePortlet2MaximumItemsToDisplay1Test
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

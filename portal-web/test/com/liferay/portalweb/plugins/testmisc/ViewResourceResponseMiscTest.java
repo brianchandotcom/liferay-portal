@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewResourceResponseMiscTest extends BaseTestCase {
 	public void testViewResourceResponseMisc() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.clickAt("link=Test Misc Page",
 			RuntimeVariables.replace("Test Misc Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ResourceResponse)"),
 			selenium.getText("//h3[4]"));
@@ -54,6 +56,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 			RuntimeVariables.replace("Download File"));
 		selenium.downloadFile("Portlet_Response_Resource_Response.png");
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -74,6 +77,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/ul/li/strong/a/span",
@@ -102,6 +106,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uploadFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Portlet_Response_Resource_Response.png"));
 		selenium.type("//input[@id='_20_title']",
@@ -111,6 +116,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -140,6 +146,7 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 		selenium.clickAt("link=Portlet Response (ResourceResponse)",
 			RuntimeVariables.replace("Portlet Response (ResourceResponse)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ResourceResponse)"),
 			selenium.getText("//h2[@class='document-title']"));

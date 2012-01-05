@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddToShoppingCartCategoryItem3Test extends BaseTestCase {
 	public void testAddToShoppingCartCategoryItem3() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AddToShoppingCartCategoryItem3Test extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"),
 			selenium.getText("//td[1]/a"));
@@ -50,6 +52,7 @@ public class AddToShoppingCartCategoryItem3Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Item3 Name\nShopping Category Item3 Description\nShopping: Category Item3 Properties"),
 			selenium.getText("//tr[5]/td[2]/a"));
@@ -57,6 +60,7 @@ public class AddToShoppingCartCategoryItem3Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category Item3 Name\nShopping Category Item3 Description\nShopping: Category Item3 Properties"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Shopping Category Item3 Name"),
 			selenium.getText("//span[1]/strong"));
 		assertEquals(RuntimeVariables.replace(
@@ -65,10 +69,12 @@ public class AddToShoppingCartCategoryItem3Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add to Shopping Cart']",
 			RuntimeVariables.replace("Add to Shopping Cart"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,8 +95,10 @@ public class AddToShoppingCartCategoryItem3Test extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Item1 Name\nShopping Category Item1 Description\n\nAvailability: In Stock\n\n\nPrice for 1 Items and Above:$9.99"),
 			selenium.getText("//td[2]/a"));

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class InternationalizationVerifyTest extends BaseTestCase {
 	public void testInternationalizationVerify() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,19 +44,23 @@ public class InternationalizationVerifyTest extends BaseTestCase {
 		selenium.clickAt("link=Language Test Page",
 			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//img[@alt='\u65e5\u672c\u8a9e (\u65e5\u672c) - Beta']",
 			RuntimeVariables.replace("\u65e5\u672c\u8a9e (\u65e5\u672c) - Beta"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"link=\u8a00\u8a9e\u30c6\u30b9\u30c8\u30da\u30fc\u30b8"));
 		selenium.clickAt("//img[@alt='espa\u00f1ol (Espa\u00f1a)']",
 			RuntimeVariables.replace("espa\u00f1ol (Espa\u00f1a)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"link=P\u00e1gina de la prueba de lengua"));
 		selenium.clickAt("//img[@alt='English (United States)']",
 			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("link=Language Test Page"));
 	}
 }

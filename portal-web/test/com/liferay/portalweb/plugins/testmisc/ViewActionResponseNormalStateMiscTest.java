@@ -24,6 +24,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 	public void testViewActionResponseNormalStateMisc()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		selenium.clickAt("link=Test Misc Page",
 			RuntimeVariables.replace("Test Misc Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ActionResponse, Normal State)"),
 			selenium.getText("//h3[2]"));
@@ -52,6 +54,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		selenium.clickAt("//p[2]/a", RuntimeVariables.replace("Download File"));
 		selenium.downloadFile("Portlet_Response_Normal_State.png");
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -72,6 +75,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/ul/li/strong/a/span",
@@ -100,6 +104,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uploadFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Portlet_Response_Normal_State.png"));
 		selenium.type("//input[@id='_20_title']",
@@ -111,6 +116,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -142,6 +148,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Portlet Response (ActionResponse,Normal State)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ActionResponse,Normal State)"),
 			selenium.getText("//h2[@class='document-title']"));

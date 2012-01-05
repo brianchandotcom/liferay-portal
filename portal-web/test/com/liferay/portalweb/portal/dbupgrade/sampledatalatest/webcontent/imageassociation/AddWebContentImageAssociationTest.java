@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWebContentImageAssociationTest extends BaseTestCase {
 	public void testAddWebContentImageAssociation() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,9 +44,11 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//div/span/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
@@ -72,6 +75,7 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Image Web Content Test"));
 		selenium.clickAt("//img[@alt='Change']",
@@ -144,12 +148,14 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("link=Folder Test",
 			RuntimeVariables.replace("Folder Test"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {

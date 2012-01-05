@@ -24,6 +24,7 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 	public void testDeleteWebContentCompletedEditedDetails()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,9 +45,11 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Pending"),
@@ -58,6 +61,7 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Web Content Name Edited"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process."),
@@ -67,6 +71,7 @@ public class DeleteWebContentCompletedEditedDetailsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//button[2]"));
 		selenium.click(RuntimeVariables.replace("//button[3]"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this article version[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(

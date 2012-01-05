@@ -28,6 +28,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,6 +49,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.clickAt("link=Asset Publisher Test Page",
 					RuntimeVariables.replace("Asset Publisher Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean blogsEntry1Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -62,6 +64,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -78,6 +81,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -94,6 +98,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -110,6 +115,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -126,6 +132,7 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

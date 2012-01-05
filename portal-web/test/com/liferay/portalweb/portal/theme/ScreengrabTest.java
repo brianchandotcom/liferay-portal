@@ -26,6 +26,7 @@ public class ScreengrabTest extends BaseTestCase {
 	public void testScreengrab() throws Exception {
 		selenium.click(RuntimeVariables.replace("link=Theme Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -49,6 +50,7 @@ public class ScreengrabTest extends BaseTestCase {
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\ScreengrabTest.jpg"),
 			"");
 		selenium.open("/user/joebloggs/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

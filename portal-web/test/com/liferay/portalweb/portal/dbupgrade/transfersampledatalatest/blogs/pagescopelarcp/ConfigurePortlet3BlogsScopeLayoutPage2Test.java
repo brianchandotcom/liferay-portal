@@ -24,6 +24,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 	public void testConfigurePortlet3BlogsScopeLayoutPage2()
 		throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page3",
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,6 +112,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -139,6 +142,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -147,6 +151,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		assertEquals("Blogs Test Page2",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.open("/web/blogs-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -167,6 +172,7 @@ public class ConfigurePortlet3BlogsScopeLayoutPage2Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page3",
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

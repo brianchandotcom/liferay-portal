@@ -28,6 +28,7 @@ public class AdvancedSearchUserScreenNameTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,8 +49,10 @@ public class AdvancedSearchUserScreenNameTest extends BaseTestCase {
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=Users", RuntimeVariables.replace("Users"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -89,6 +92,7 @@ public class AdvancedSearchUserScreenNameTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.type("//input[@id='_11_screenName']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.isElementPresent("link=userfn"));
@@ -97,6 +101,7 @@ public class AdvancedSearchUserScreenNameTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("All"));
 				selenium.type("//input[@id='_11_screenName']",

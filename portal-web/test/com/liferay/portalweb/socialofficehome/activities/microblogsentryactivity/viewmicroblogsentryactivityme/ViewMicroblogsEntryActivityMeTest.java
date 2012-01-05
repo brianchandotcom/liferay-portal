@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 	public void testViewMicroblogsEntryActivityMe() throws Exception {
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Activities"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 		assertEquals(RuntimeVariables.replace("Me"),
@@ -50,6 +52,7 @@ public class ViewMicroblogsEntryActivityMeTest extends BaseTestCase {
 		selenium.clickAt("//section/div/div/div/ul/li[5]/span/a",
 			RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isVisible("//div[1]/span[1]/img"));
 		assertTrue(selenium.isVisible("//span[2]/span/img"));
 		assertEquals(RuntimeVariables.replace("Microblogs Content"),

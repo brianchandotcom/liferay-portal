@@ -24,6 +24,7 @@ public class ViewPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 	public void testViewPage2DLFolder2Document2Comment1()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -121,6 +123,7 @@ public class ViewPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -141,6 +144,7 @@ public class ViewPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page3 Name",
 			RuntimeVariables.replace("DL Page3 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

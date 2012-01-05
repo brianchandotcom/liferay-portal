@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 	public void testConfirmNotificationsMultiple() throws Exception {
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Notifications"),
 			selenium.getText("//div[2]/div/section/header/h1/span"));
 
@@ -70,10 +72,12 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[1]/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln wants to be your friend."),
 			selenium.getText("//section/div/div/div/div/div[2]/div[1]"));
@@ -82,10 +86,12 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[1]/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -106,6 +112,7 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		selenium.clickAt("//section/div/div/div/div/ul/li[2]/a",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Friends"),
 			selenium.getText(
 				"//div/div/div/div[2]/div/div/div/div/div/div/div/span"));
@@ -132,6 +139,7 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Manage 1 coworkers."),
 			selenium.getText("//div[2]/div[2]/a"));
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent(
 				"xPath=(//div[@class='notification-entry'])[1]"));
 		assertFalse(selenium.isElementPresent(

@@ -24,6 +24,7 @@ public class ExportLARPortletPage2BlogsPageScopeTest extends BaseTestCase {
 	public void testExportLARPortletPage2BlogsPageScope()
 		throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ExportLARPortletPage2BlogsPageScopeTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -93,6 +95,7 @@ public class ExportLARPortletPage2BlogsPageScopeTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Page2.Portlet.lar"));
 		assertFalse(selenium.isChecked(

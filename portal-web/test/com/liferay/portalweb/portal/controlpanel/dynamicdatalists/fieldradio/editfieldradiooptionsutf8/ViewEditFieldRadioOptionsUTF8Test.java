@@ -24,6 +24,7 @@ public class ViewEditFieldRadioOptionsUTF8Test extends BaseTestCase {
 	public void testViewEditFieldRadioOptionsUTF8() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,9 +45,11 @@ public class ViewEditFieldRadioOptionsUTF8Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -132,6 +135,7 @@ public class ViewEditFieldRadioOptionsUTF8Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("\u308a\u3093\u3054"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/div/div[1]/label"));

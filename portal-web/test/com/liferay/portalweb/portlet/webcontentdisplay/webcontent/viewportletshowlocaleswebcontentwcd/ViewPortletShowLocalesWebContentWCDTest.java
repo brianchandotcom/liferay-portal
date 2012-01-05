@@ -24,6 +24,7 @@ public class ViewPortletShowLocalesWebContentWCDTest extends BaseTestCase {
 	public void testViewPortletShowLocalesWebContentWCD()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +45,13 @@ public class ViewPortletShowLocalesWebContentWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//img[@title='English (United States)']"));
 		selenium.clickAt("//img[@title='English (United States)']",
 			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		assertTrue(selenium.isElementPresent(
@@ -56,6 +59,7 @@ public class ViewPortletShowLocalesWebContentWCDTest extends BaseTestCase {
 		selenium.clickAt("//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']",
 			RuntimeVariables.replace("\u4e2d\u6587 (\u4e2d\u56fd)"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Description"),
 			selenium.getText("//div[@class='journal-content-article']/p"));

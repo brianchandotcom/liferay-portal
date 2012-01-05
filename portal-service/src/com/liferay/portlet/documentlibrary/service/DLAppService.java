@@ -107,6 +107,50 @@ public interface DLAppService {
 	* @param description the file's description
 	* @param changeLog the file's version change log
 	* @param file the file's data (optionally <code>null</code>)
+	* @param defaultPermissions whether to add default permissions to the
+	serviceContext. This is primarily used by web services clients
+	* @param serviceContext the service context to be applied. Can set the
+	asset category IDs, asset tag names, and expando bridge
+	attributes for the file entry. In a Liferay repository, it may
+	include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	type </li> <li> fieldsMap - mapping for fields associated with a
+	custom file entry type </li> </ul>
+	* @return the file entry
+	* @throws PortalException if the parent folder could not be found or if the
+	file entry's information was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		java.io.File file, boolean defaultPermissions,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds a file entry and associated metadata. It is created based on a
+	* {@link File} object.
+	*
+	* <p>
+	* This method takes two file names, the <code>sourceFileName</code> and the
+	* <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	* name of the actual file being uploaded. The <code>title</code>
+	* corresponds to a name the client wishes to assign this file after it has
+	* been uploaded to the portal. If it is <code>null</code>, the <code>
+	* sourceFileName</code> will be used.
+	* </p>
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the file entry's parent folder
+	* @param sourceFileName the original file's name
+	* @param mimeType the file's MIME type
+	* @param title the name to be assigned to the file (optionally <code>null
+	</code>)
+	* @param description the file's description
+	* @param changeLog the file's version change log
+	* @param file the file's data (optionally <code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry. In a Liferay repository, it may
@@ -187,6 +231,30 @@ public interface DLAppService {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
 		long repositoryId, long folderId, long toFileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds a folder.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param name the folder's name
+	* @param description the folder's description
+	* @param defaultPermissions whether to add default permissions to the
+	serviceContext. This is primarily used by web services clients
+	* @param serviceContext the service context to be applied. In a Liferay
+	repository, it may include boolean mountPoint specifying whether
+	folder is a facade for mounting a third-party repository
+	* @return the folder
+	* @throws PortalException if the parent folder could not be found or if the
+	new folder's information was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.kernel.repository.model.Folder addFolder(
+		long repositoryId, long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean defaultPermissions,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

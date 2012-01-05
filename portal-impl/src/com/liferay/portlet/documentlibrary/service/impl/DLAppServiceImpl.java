@@ -35,11 +35,19 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
@@ -140,6 +148,59 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	/**
+	 * Adds a file entry and associated metadata. It is created based on a
+	 * {@link File} object.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param  repositoryId the primary key of the repository
+	 * @param  folderId the primary key of the file entry's parent folder
+	 * @param  sourceFileName the original file's name
+	 * @param  mimeType the file's MIME type
+	 * @param  title the name to be assigned to the file (optionally <code>null
+	 *         </code>)
+	 * @param  description the file's description
+	 * @param  changeLog the file's version change log
+	 * @param  file the file's data (optionally <code>null</code>)
+	 * @param  defaultPermissions whether to add default permissions to the 
+	 *         serviceContext. This is primarily used by web services clients
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         asset category IDs, asset tag names, and expando bridge
+	 *         attributes for the file entry. In a Liferay repository, it may
+	 *         include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 *         type </li> <li> fieldsMap - mapping for fields associated with a
+	 *         custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if the parent folder could not be found or if the
+	 *         file entry's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public FileEntry addFileEntry(
+			long repositoryId, long folderId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			File file, boolean defaultPermissions,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (defaultPermissions) {
+			addDefaultPermissions(
+				repositoryId, DLFileEntryConstants.getClassName(),
+				serviceContext);
+		}
+
+		return addFileEntry(
+			repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
 	}
 
 	/**
@@ -278,6 +339,38 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return dlFileShortcutService.addFileShortcut(
 			repositoryId, folderId, toFileEntryId, serviceContext);
+	}
+
+	/**
+	 * Adds a folder.
+	 *
+	 * @param  repositoryId the primary key of the repository
+	 * @param  parentFolderId the primary key of the folder's parent folder
+	 * @param  name the folder's name
+	 * @param  description the folder's description
+	 * @param  defaultPermissions whether to add default permissions to the 
+	 *         serviceContext. This is primarily used by web services clients
+	 * @param  serviceContext the service context to be applied. In a Liferay
+	 *         repository, it may include boolean mountPoint specifying whether
+	 *         folder is a facade for mounting a third-party repository
+	 * @return the folder
+	 * @throws PortalException if the parent folder could not be found or if the
+	 *         new folder's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Folder addFolder(
+			long repositoryId, long parentFolderId, String name,
+			String description, boolean defaultPermissions,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		if (defaultPermissions) {
+			addDefaultPermissions(
+				repositoryId, DLFolderConstants.getClassName(), serviceContext);
+		}
+
+		return addFolder(
+			repositoryId, parentFolderId, name, description, serviceContext);
 	}
 
 	/**
@@ -2471,6 +2564,110 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.verifyInheritableLock(folderId, lockUuid);
+	}
+
+	protected void addDefaultPermissions(
+			long repositoryId, String modelName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long parentGroupId = PortalUtil.getParentGroupId(repositoryId);
+
+		Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
+			parentGroupId);
+
+		String[] roleNames = new String[] {
+			RoleConstants.GUEST, defaultGroupRole.getName()};
+
+		List<String> supportedActions =
+			ResourceActionsUtil.getModelResourceActions(modelName);
+		List<String> groupDefaultActions =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(modelName);
+		List<String> guestDefaultActions =
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(modelName);
+		List<String> guestUnsupportedActions =
+			ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+				modelName);
+
+		List<String> guestPermissions = new ArrayList<String>();
+		List<String> groupPermissions = new ArrayList<String>();
+
+		for (String roleName : roleNames) {
+			for (String action: supportedActions) {
+				if (roleName.equals(RoleConstants.GUEST) &&
+					!guestUnsupportedActions.contains(action) &&
+					guestDefaultActions.contains(action) &&
+					parentGroup.hasPublicLayouts()) {
+
+					guestPermissions.add(action);
+				}
+				else if (roleName.equals(defaultGroupRole.getName()) &&
+					groupDefaultActions.contains(action)) {
+
+					groupPermissions.add(action);
+				}
+			}
+		}
+
+		serviceContext.setGuestPermissions(
+			guestPermissions.toArray(new String[0]));
+
+		serviceContext.setGroupPermissions(
+			groupPermissions.toArray(new String[0]));
+	}
+
+	protected void addDefaultPermissions(
+			long repositoryId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long parentGroupId = PortalUtil.getParentGroupId(repositoryId);
+
+		Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
+			parentGroupId);
+
+		String[] roleNames = new String[] {
+			RoleConstants.GUEST, defaultGroupRole.getName()};
+
+		String modelName = DLFileEntryConstants.getClassName();
+
+		List<String> supportedActions =
+			ResourceActionsUtil.getModelResourceActions(modelName);
+		List<String> groupDefaultActions =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(modelName);
+		List<String> guestDefaultActions =
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(modelName);
+		List<String> guestUnsupportedActions =
+			ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+				modelName);
+
+		List<String> guestPermissions = new ArrayList<String>();
+		List<String> groupPermissions = new ArrayList<String>();
+
+		for (String roleName : roleNames) {
+			for (String action: supportedActions) {
+				if (roleName.equals(RoleConstants.GUEST) &&
+					!guestUnsupportedActions.contains(action) &&
+					guestDefaultActions.contains(action) &&
+					parentGroup.hasPublicLayouts()) {
+
+					guestPermissions.add(action);
+				}
+				else if (roleName.equals(defaultGroupRole.getName()) &&
+					groupDefaultActions.contains(action)) {
+
+					groupPermissions.add(action);
+				}
+			}
+		}
+
+		serviceContext.setGuestPermissions(
+			guestPermissions.toArray(new String[0]));
+
+		serviceContext.setGroupPermissions(
+			groupPermissions.toArray(new String[0]));
 	}
 
 	protected FileEntry copyFileEntry(

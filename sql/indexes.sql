@@ -370,6 +370,7 @@ create index IX_30616AAA on LayoutPrototype (companyId);
 create index IX_557A639F on LayoutPrototype (companyId, active_);
 create index IX_CEF72136 on LayoutPrototype (uuid_);
 
+create index IX_43E8286A on LayoutRevision (head, plid);
 create index IX_314B621A on LayoutRevision (layoutSetBranchId);
 create index IX_A9AC086E on LayoutRevision (layoutSetBranchId, head);
 create index IX_E10AC39 on LayoutRevision (layoutSetBranchId, head, plid);

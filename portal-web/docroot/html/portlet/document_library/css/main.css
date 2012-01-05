@@ -879,3 +879,15 @@
 		}
 	}
 }
+
+.ie7 {
+	.portlet-document-library {
+		.lfr-actions {
+			.lfr-trigger {
+				strong {
+					min-width: 0px;
+				}
+			}
+		}
+	}
+}

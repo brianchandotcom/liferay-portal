@@ -74,7 +74,6 @@ if (groupId <= 0) {
 layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 
 if (group.isStaged() && group.isStagedRemotely()) {
-
 	if (layoutSetBranchId > 0 && (layoutSetBranches.size() > 1)) {
 		publishNowDialogTitle = "publish-x-to-remote-live-now";
 		publishScheduleDialogTitle = "schedule-publication-of-x-to-remote-live";
@@ -123,7 +122,7 @@ else {
 				String publishNowMessage = null;
 				String publishScheduleMessage = null;
 
-				if (layoutSetBranchId > 0) {
+				if (layoutSetBranchId > 0 && (layoutSetBranches.size() > 1)) {
 					layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
 
 					publishToLiveURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
@@ -133,6 +132,12 @@ else {
 					publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, layoutSetBranch.getName());
 				}
 				else {
+					if (layoutSetBranches.size() == 1) {
+						layoutSetBranch = layoutSetBranches.get(0);
+
+						publishToLiveURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
+					}
+
 					publishNowMessage = LanguageUtil.get(pageContext, publishNowDialogTitle);
 					publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDialogTitle);
 				}

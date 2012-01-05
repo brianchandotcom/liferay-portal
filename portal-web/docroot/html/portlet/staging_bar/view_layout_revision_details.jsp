@@ -107,22 +107,12 @@ else {
 		);
 	</c:if>
 
-	<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 		stagingBar.layoutRevisionToolbar.add(
 			{
 				type: 'ToolbarSpacer'
 			}
 		);
-
-		<portlet:actionURL var="publishURL">
-			<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
-			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
-			<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-			<portlet:param name="major" value="true" />
-			<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-		</portlet:actionURL>
 
 		stagingBar.layoutRevisionToolbar.add(
 			{
@@ -134,7 +124,17 @@ else {
 				%>
 
 				<c:choose>
-					<c:when test="<%= !layoutRevision.isPending() && pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
+					<c:when test="<%= pendingLayoutRevisions.isEmpty() %>">
+						<portlet:actionURL var="publishURL">
+							<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
+							<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+							<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+							<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
+							<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+							<portlet:param name="major" value="true" />
+							<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+						</portlet:actionURL>
+
 						handler: function(event) {
 							A.io.request(
 								'<%= publishURL %>',
@@ -148,7 +148,7 @@ else {
 							);
 						},
 					</c:when>
-					<c:when test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
+					<c:when test="<%= workflowEnabled %>">
 
 						<%
 						String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
@@ -162,7 +162,6 @@ else {
 
 						disabled: true,
 						title: '<%= UnicodeLanguageUtil.get(pageContext, submitMessage) %>',
-
 					</c:when>
 				</c:choose>
 

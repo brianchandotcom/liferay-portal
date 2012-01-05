@@ -42,53 +42,58 @@ for (int i = 0; i < results.size(); i++) {
 	Layout curLayout = (Layout)results.get(i);
 
 	ResultRow row = new ResultRow(curLayout, curLayout.getPrimaryKey(), i);
-%>
-
-<liferay-util:buffer var="layoutDetails">
-
-	<%
-	LayoutRevision layoutRevision = null;
-
-	String layoutBranchName = null;
 
 	if (LayoutStagingUtil.isBranchingLayout(curLayout)) {
-		if (layoutSetBranchId > 0) {
-			try {
-				layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, curLayout.getPlid(), true);
-			}
-			catch (NoSuchLayoutRevisionException nslre) {
-			}
 
-			if (layoutRevision != null) {
-				List<LayoutBranch> layoutBranches = LayoutBranchLocalServiceUtil.getLayoutBranches(layoutSetBranchId, curLayout.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+%>
 
-				if (layoutBranches.size() > 1) {
-					LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+		<liferay-util:buffer var="layoutDetails">
 
-					layoutBranchName = layoutBranch.getName();
+			<%
+			LayoutRevision layoutRevision = null;
+
+			String layoutBranchName = null;
+
+			if (layoutSetBranchId > 0) {
+				try {
+					layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, curLayout.getPlid(), true);
+				}
+				catch (NoSuchLayoutRevisionException nslre) {
+				}
+
+				if (layoutRevision != null) {
+					List<LayoutBranch> layoutBranches = LayoutBranchLocalServiceUtil.getLayoutBranches(layoutSetBranchId, curLayout.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+					if (layoutBranches.size() > 1) {
+						LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+
+						layoutBranchName = layoutBranch.getName();
+					}
 				}
 			}
-		}
-	}
-	%>
+			%>
 
-	<span class="nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>">
-		<%= curLayout.getName(locale) %>
+			<span class="nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>">
+				<%= curLayout.getName(locale) %>
 
-		<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
-			<span class="layout-variation-name">
-				[<liferay-ui:message key="<%= layoutBranchName %>" />]
+				<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
+					<span class="layout-variation-name">
+						[<liferay-ui:message key="<%= layoutBranchName %>" />]
+					</span>
+				</c:if>
+
+				<c:if test="<%= layoutRevision == null %>">
+					<liferay-ui:icon-help message="there-is-not-a-version-of-this-page-marked-as-ready-for-publication" />
+				</c:if>
 			</span>
-		</c:if>
-
-		<c:if test="<%= layoutRevision == null %>">
-			<liferay-ui:icon-help message="there-is-not-a-version-of-this-page-marked-as-ready-for-publication" />
-		</c:if>
-	</span>
-</liferay-util:buffer>
+		</liferay-util:buffer>
 
 <%
-	row.addText("left", "top", layoutDetails);
+		row.addText("left", "top", layoutDetails);
+	}
+	else {
+		row.addText("left", "top", curLayout.getName(locale));
+	}
 
 	JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
 

@@ -24,10 +24,12 @@ String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-locali
 boolean disabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:disabled"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
 String formName = (String)request.getAttribute("liferay-ui:input-localized:formName");
+boolean ignoreRequestValue = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:ignoreRequestValue"));
 String languageId = (String)request.getAttribute("liferay-ui:input-localized:languageId");
 String name = (String)request.getAttribute("liferay-ui:input-localized:name");
-String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
+String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
+
 
 Locale defaultLocale = null;
 
@@ -47,10 +49,10 @@ if (Validator.isNotNull(languageId)) {
 	mainLanguageId = languageId;
 }
 
-String mainLanguageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + mainLanguageId);
+String mainLanguageValue = LocalizationUtil.getLocalization(xml, mainLanguageId, false);
 
-if (Validator.isNull(mainLanguageValue)) {
-	mainLanguageValue = LocalizationUtil.getLocalization(xml, mainLanguageId, false);
+if (!ignoreRequestValue) {
+	mainLanguageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + mainLanguageId);
 }
 
 if (Validator.isNull(mainLanguageValue)) {
@@ -84,7 +86,7 @@ if (Validator.isNull(mainLanguageValue)) {
 					String selLanguageId = LocaleUtil.toLanguageId(locales[i]);
 					String languageValue = LocalizationUtil.getLocalization(xml, selLanguageId, false);
 
-					if (Validator.isNotNull(languageValue) || (request.getParameter(name + StringPool.UNDERLINE + selLanguageId) != null)) {
+					if (Validator.isNotNull(languageValue) || ((!ignoreRequestValue) && (request.getParameter(name + StringPool.UNDERLINE + selLanguageId) != null))) {
 						languageIds.add(selLanguageId);
 					}
 				}
@@ -147,7 +149,11 @@ if (Validator.isNull(mainLanguageValue)) {
 								</select>
 
 								<%
-								String languageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId);
+								String languageValue = StringPool.BLANK;
+								
+								if (!ignoreRequestValue){
+									languageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId);
+								}
 
 								if (Validator.isNotNull(xml) && Validator.isNull(languageValue)) {
 									languageValue = LocalizationUtil.getLocalization(xml, curLanguageId, false);

@@ -156,9 +156,16 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		throws PortalException, SystemException {
 
 		if (!actionId.equals(ActionKeys.VIEW) &&
+			!actionId.equals(ActionKeys.CUSTOMIZE) &&
 			(layout instanceof VirtualLayout)) {
 
 			return false;
+		}
+
+		if (actionId.equals(ActionKeys.CUSTOMIZE) &&
+			(layout instanceof VirtualLayout)) {
+
+			layout = ((VirtualLayout)layout).getWrappedModel();
 		}
 
 		if ((layout.isPrivateLayout() &&

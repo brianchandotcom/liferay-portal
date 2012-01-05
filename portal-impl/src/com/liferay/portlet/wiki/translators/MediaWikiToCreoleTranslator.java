@@ -32,6 +32,14 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		initNowikiRegexps();
 	}
 
+	public boolean isStrictImportMode() {
+		return strictImportMode;
+	}
+
+	public void setStrictImportMode(boolean mode) {
+		strictImportMode = mode;
+	}
+
 	protected void initNowikiRegexps() {
 
 		// Preformat protected
@@ -69,6 +77,14 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		// Remove work in progress
 
 		regexps.put("\\{{2}Work in progress\\}{2}", StringPool.BLANK);
+
+		// Remove references
+
+		//regexps.put("(?s)(<ref)(.*?)(</ref>)", StringPool.BLANK);
+
+		//regexps.put("<ref(.*?)>", StringPool.BLANK);
+
+		regexps.put("\\[{2}Wikipedia:([^\\]]*)\\]{2}", StringPool.BLANK);
 
 		// Bold and italics
 
@@ -123,6 +139,24 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 	@Override
 	protected String postProcess(String content) {
 
+		if (strictImportMode) {
+			content = runRegexp(content, "\\{{2}Special:(.*?)\\}{2}",
+				StringPool.BLANK);
+			content = runRegexp(content, "\\{{2}(.*?)\\}{2}",
+				StringPool.BLANK);
+			content = runRegexp(content, "(?s)\\{{2}(.*?)\\}{2}",
+				StringPool.BLANK);
+		}
+		else {
+			content = runRegexp(content, "\\{{2}Special:(.*?)\\}{2}",
+				"{{{$1}}}\n");
+			content = runRegexp(content, "\\{{2}(.*?)\\}{2}", "{{{$1}}}");
+			content = runRegexp(content, "([^\\{])(\\{{2})([^\\{])",
+				"$1\n{{{\n$3");
+			content = runRegexp(content, "([^\\}])(\\}{2})([^\\}])",
+				"$1\n}}}\n$3");
+		}
+
 		// LEP-6118
 
 		Matcher matcher = Pattern.compile(
@@ -143,24 +177,91 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		// Images
 
 		matcher = Pattern.compile(
-			"\\[{2}Image:([^\\]]*)\\]{2}", Pattern.DOTALL).matcher(content);
+			"(\\[{2})(Image|File)(:)", Pattern.DOTALL).matcher(content);
 
 		StringBuffer sb = new StringBuffer(content);
 
 		int offset = 0;
+		int originalLength = 0;
+		int level = 0;
+		int prefixLength = 0;
 
 		while (matcher.find()) {
+			prefixLength = matcher.end(2) - matcher.start(2);
+			level = 0;
+
+			for (int i = matcher.start(0) + offset; i < sb.length()-1; i++) {
+				if ((sb.charAt(i) == '[') && (sb.charAt(i+1) == '[')) {
+					level++;
+				} else if ((sb.charAt(i) == ']') && (sb.charAt(i+1) == ']')) {
+					level--;
+					if (level == 0) {
+						originalLength = (i + 2) - (matcher.start(0) + offset);
+						break;
+					}
+				}
+			}
+
 			String image =
 				"{{" + MediaWikiImporter.SHARED_IMAGES_TITLE + "/" +
-					matcher.group(1).toLowerCase() + "}}";
+				sb.substring(matcher.end(3) + offset,
+				matcher.start(2) + offset + originalLength - 4).toLowerCase() +
+				"}}";
 
-			sb.replace(
-				matcher.start(0) + offset, matcher.end(0) + offset, image);
+			int lengthBeforeLinksRemoved = image.length();
+			image = image.replaceAll("\\[{2}", StringPool.BLANK);
+			image = image.replaceAll("\\]{2}", StringPool.BLANK);
 
-			offset += MediaWikiImporter.SHARED_IMAGES_TITLE.length() - 5;
+			sb.replace(matcher.start(0) + offset,
+				matcher.start(0) + originalLength + offset,
+				image);
+
+			offset += MediaWikiImporter.SHARED_IMAGES_TITLE.length() -
+				prefixLength - (lengthBeforeLinksRemoved - image.length());
 		}
 
 		content = sb.toString();
+
+		// Tables
+
+		matcher = Pattern.compile(
+			"\\{\\|(.*?)\\|\\}", Pattern.DOTALL).matcher(content);
+
+		sb = new StringBuffer(content);
+
+		String mediaWikiTable;
+		offset = 0;
+		originalLength = 0;
+
+		while (matcher.find()) {
+			mediaWikiTable = sb.substring(matcher.start(1) + offset,
+				matcher.end(1) + offset);
+			originalLength = mediaWikiTable.length() + 4;
+			mediaWikiTable =
+				mediaWikiTable.replaceAll("class=(.*?)[|\n\r]",
+					StringPool.BLANK);
+			mediaWikiTable =
+				mediaWikiTable.replaceAll("(\\|\\-)(.*)", "$1");
+			mediaWikiTable =
+				mediaWikiTable.replaceAll("\\|\\+(.*)", "===$1===");
+			mediaWikiTable = mediaWikiTable.replaceAll("(?m)^!(.+)", "|=$1|");
+			mediaWikiTable =
+				mediaWikiTable.replaceAll("[\n\r]", StringPool.BLANK);
+			mediaWikiTable = mediaWikiTable.replaceAll("\\|\\-", "\n\r");
+			mediaWikiTable = mediaWikiTable.replaceAll("\\|\\|", "|");
+			mediaWikiTable =
+				mediaWikiTable.replaceAll("/{4}", StringPool.BLANK);
+
+			sb.replace(matcher.start(0) + offset,
+				matcher.start(0) + originalLength + offset, mediaWikiTable);
+
+			offset = mediaWikiTable.length() - originalLength;
+		}
+
+		content = sb.toString();
+
+		content = runRegexp(content, "/{2}(\\{{3})", "$1");
+		content = runRegexp(content, "(\\}{3})/{2}", "$1");
 
 		// Remove underscores from links
 
@@ -178,6 +279,8 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		return TABLE_OF_CONTENTS + super.postProcess(sb.toString());
 	}
+
+	private boolean strictImportMode = Boolean.FALSE;
 
 	private static final String[] _HTML_TAGS = {
 		"<blockquote>", "</blockquote>", "<br>", "<br/>", "<br />", "<center>",

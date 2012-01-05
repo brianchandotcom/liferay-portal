@@ -355,9 +355,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 
 			if (layout.isPrivateLayout()) {
-				if (UserPermissionUtil.contains(
-						permissionChecker, groupUserId,
-						groupUser.getOrganizationIds(),
+				if (GroupPermissionUtil.contains(
+						permissionChecker, groupUser.getGroupId(),
 						ActionKeys.MANAGE_LAYOUTS) ||
 					UserPermissionUtil.contains(
 						permissionChecker, groupUserId,

@@ -78,19 +78,26 @@ List resultRows = searchContainer.getResultRows();
 for (int i = 0; i < results.size(); i++) {
 	DDLRecord record = results.get(i);
 
-	Fields fieldsModel = record.getFields();
+	DDLRecordVersion recordVersion = record.getRecordVersion();
+
+	if (editable) {
+		recordVersion = record.getLatestRecordVersion();
+	}
+
+	Fields fieldsModel = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
 
 	ResultRow row = new ResultRow(record, record.getRecordId(), i);
 
 	row.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
+	row.setParameter("editable", String.valueOf(editable));
 
 	PortletURL rowURL = renderResponse.createRenderURL();
 
 	rowURL.setParameter("struts_action", "/dynamic_data_lists/view_record");
 	rowURL.setParameter("redirect", currentURL);
 	rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
-	rowURL.setParameter("version", record.getVersion());
 	rowURL.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
+	rowURL.setParameter("editable", String.valueOf(editable));
 
 	// Columns
 
@@ -118,9 +125,9 @@ for (int i = 0; i < results.size(); i++) {
 	}
 
 	if (editable) {
-		row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(record.getStatus())), rowURL);
+		row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(recordVersion.getStatus())), rowURL);
 		row.addText(dateFormatDateTime.format(record.getModifiedDate()), rowURL);
-		row.addText(HtmlUtil.escape(PortalUtil.getUserName(record.getUserId(), record.getUserName())), rowURL);
+		row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion.getUserId(), recordVersion.getUserName())), rowURL);
 
 		// Action
 

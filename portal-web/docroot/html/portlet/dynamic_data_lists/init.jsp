@@ -26,6 +26,7 @@ page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetNameException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecord" %><%@
+page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" %><%@

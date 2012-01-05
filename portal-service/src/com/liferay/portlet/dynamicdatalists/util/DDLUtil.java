@@ -87,22 +87,30 @@ public class DDLUtil {
 		return getDDL().getRecordJSONObject(record);
 	}
 
+	public static JSONObject getRecordJSONObject(
+			DDLRecord record, boolean latestRecordVersion)
+		throws Exception {
+
+		return getDDL().getRecordJSONObject(record, latestRecordVersion);
+	}
+
 	public static JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
 		throws Exception {
 
 		return getDDL().getRecordSetJSONArray(recordSet);
 	}
 
-	public static JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
-		throws Exception {
-
-		return getDDL().getRecordsJSONArray(recordSet);
-	}
-
 	public static JSONArray getRecordsJSONArray(List<DDLRecord> records)
 		throws Exception {
 
 		return getDDL().getRecordsJSONArray(records);
+	}
+
+	public static JSONArray getRecordsJSONArray(
+			List<DDLRecord> records, boolean latestRecordVersion)
+		throws Exception {
+
+		return getDDL().getRecordsJSONArray(records, latestRecordVersion);
 	}
 
 	public static String getTemplateContent(

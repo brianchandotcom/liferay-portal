@@ -125,9 +125,15 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, 0, 1000, null);
 
 	int totalEmptyRecords = Math.max(recordSet.getMinDisplayRows(), records.size());
+
+	boolean latestRecordVersion = false;
+
+	if (editable) {
+		latestRecordVersion = true;
+	}
 	%>
 
-	var records = <%= DDLUtil.getRecordsJSONArray(records) %>;
+	var records = <%= DDLUtil.getRecordsJSONArray(records, latestRecordVersion) %>;
 
 	records.sort(
 		function(a, b) {

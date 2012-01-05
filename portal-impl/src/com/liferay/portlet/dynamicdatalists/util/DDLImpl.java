@@ -171,6 +171,13 @@ public class DDLImpl implements DDL {
 	}
 
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception {
+		return getRecordJSONObject(record, false);
+	}
+
+	public JSONObject getRecordJSONObject(
+			DDLRecord record, boolean latestRecordVersion)
+		throws Exception {
+
 		DDLRecordSet recordSet = record.getRecordSet();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
@@ -184,7 +191,14 @@ public class DDLImpl implements DDL {
 		jsonObject.put("displayIndex", record.getDisplayIndex());
 		jsonObject.put("recordId", record.getRecordId());
 
-		Fields fields = record.getFields();
+		DDLRecordVersion recordVersion = record.getRecordVersion();
+
+		if (latestRecordVersion) {
+			recordVersion = record.getLatestRecordVersion();
+		}
+
+		Fields fields = StorageEngineUtil.getFields(
+			recordVersion.getDDMStorageId());
 
 		Iterator<Field> itr = fields.iterator();
 
@@ -268,7 +282,23 @@ public class DDLImpl implements DDL {
 	public JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
 		throws Exception {
 
-		return getRecordsJSONArray(recordSet.getRecords());
+		return getRecordsJSONArray(recordSet.getRecords(), false);
+	}
+
+	public JSONArray getRecordsJSONArray(
+			List<DDLRecord> records, boolean latestRecordVersion)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDLRecord record : records) {
+			JSONObject jsonObject = getRecordJSONObject(
+				record, latestRecordVersion);
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	public JSONArray getRecordsJSONArray(List<DDLRecord> records)

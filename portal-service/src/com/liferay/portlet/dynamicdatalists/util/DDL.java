@@ -59,6 +59,10 @@ public interface DDL {
 
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
 
+	public JSONObject getRecordJSONObject(
+			DDLRecord record, boolean latestRecordVersion)
+		throws Exception;
+
 	public JSONArray getRecordSetJSONArray(DDLRecordSet recordSet)
 		throws Exception;
 
@@ -66,6 +70,10 @@ public interface DDL {
 		throws Exception;
 
 	public JSONArray getRecordsJSONArray(List<DDLRecord> records)
+		throws Exception;
+
+	public JSONArray getRecordsJSONArray(
+			List<DDLRecord> records, boolean latestRecordVersion)
 		throws Exception;
 
 	public String getTemplateContent(

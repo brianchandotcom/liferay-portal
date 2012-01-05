@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import javax.management.MBeanServer;
 
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
 import net.sf.ehcache.management.ManagementService;
 
 /**
@@ -33,10 +34,6 @@ public class MBeanRegisteringPortalLifecycle extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalDestroy() {
-		_managementService.dispose();
-
-		_cacheManager = null;
-		_managementService = null;
 	}
 
 	@Override
@@ -48,6 +45,12 @@ public class MBeanRegisteringPortalLifecycle extends BasePortalLifecycle {
 			_cacheManager, mBeanServer, true, true, true, true);
 
 		_managementService.init();
+
+		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
+			_cacheManager.getCacheManagerEventListenerRegistry();
+
+		cacheManagerEventListenerRegistry.unregisterListener(
+			_managementService);
 	}
 
 	private static final String _MBEAN_SERVER_BEAN_NAME =

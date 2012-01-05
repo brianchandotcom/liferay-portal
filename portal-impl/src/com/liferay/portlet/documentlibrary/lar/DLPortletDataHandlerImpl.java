@@ -768,14 +768,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
-		Element repositoryElement =
-			repositoriesElement.addElement("repository");
-
 		String path = getRepositoryPath(portletDataContext, repository);
 
 		if (!portletDataContext.isPathNotProcessed(path)) {
 			return;
 		}
+
+		Element repositoryElement =
+			repositoriesElement.addElement("repository");
 
 		repositoryElement.addAttribute(
 			"repositoryClassName", repository.getClassName());

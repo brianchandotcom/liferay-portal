@@ -66,7 +66,5 @@ public class ExecuteGenerateCustomRolesTest extends BaseTestCase {
 				"//input[@id='_137_com.liferay.portal.convert.ConvertPermissionAlgorithm.generate-custom-rolesCheckbox']"));
 		selenium.clickAt("//input[@value='Execute' and @type='button' and @onclick=\"_137_saveServer('convertProcess.com.liferay.portal.convert.ConvertPermissionAlgorithm');\"]",
 			RuntimeVariables.replace("Execute"));
-		selenium.waitForPageToLoad("30000");
-		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

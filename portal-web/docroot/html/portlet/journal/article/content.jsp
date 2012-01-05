@@ -458,7 +458,7 @@ if (Validator.isNotNull(content)) {
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<a class="lfr-token journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({id: '<portlet:namespace /><%= translations[i] %>', title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
+										<a class="lfr-token journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({cache: false, id: '<portlet:namespace /><%= translations[i] %>', title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>
@@ -898,7 +898,7 @@ private void _format(long groupId, Element contentParentElement, Element xsdPare
 				}
 			}
 			else {
-				elLanguageId = defaultLanguageId;
+				elLanguageId = (Validator.isNotNull(toLanguageId))? toLanguageId: defaultLanguageId;
 			}
 
 			if (!_hasRepeatedParent(contentElement)) {

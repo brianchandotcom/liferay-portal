@@ -57,9 +57,7 @@ public class LayoutSetBranchLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		validate(
-			LayoutSetBranchConstants.NO_BRANCHES, groupId, privateLayout, name,
-			master);
+		validate(0, groupId, privateLayout, name, master);
 
 		long layoutSetBranchId = counterLocalService.increment();
 

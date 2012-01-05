@@ -29,6 +29,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.isElementPresent(
 						"//div[@class='staging-bar']"));
 				assertEquals(RuntimeVariables.replace("Live"),
@@ -41,6 +42,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"You are viewing the staged version of Liferay. You can make changes here and publish them to Live afterwards to make them public."),
 					selenium.getText("//span[@class='staging-live-help']"));
@@ -64,6 +66,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.isVisible("//section"));
 				assertTrue(selenium.isElementPresent(
 						"//a[@id='_170_0publishNowLink']"));
@@ -158,6 +161,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Publish']"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
 

@@ -24,9 +24,11 @@ public class CA_WebContentRolesTest extends BaseTestCase {
 	public void testCA_WebContentRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.check("_128_rowIds");
 		selenium.check(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journal.model.JournalArticleDELETE']");
@@ -76,20 +78,24 @@ public class CA_WebContentRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portlet.journal.model.JournalTemplateVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.typeKeys("_128_add-permissions",
 			RuntimeVariables.replace("wwwwwwwwww"));
 		selenium.keyPress("_128_add-permissions",
 			RuntimeVariables.replace("\\13"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.check("//input[@value='15ACCESS_IN_CONTROL_PANEL']");
 		selenium.check("//input[@value='15ADD_TO_PAGE']");
 		selenium.check("//input[@value='15CONFIGURATION']");
 		selenium.check("//input[@value='15VIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

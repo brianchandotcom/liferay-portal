@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ApproveUserJoinSitesTest extends BaseTestCase {
 	public void testApproveUserJoinSites() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,13 +44,16 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Restricted"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//td[7]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
@@ -78,21 +82,25 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"There are 1 membership requests pending."),
 			selenium.getText("//span[3]/a/span"));
 		selenium.clickAt("//span[3]/a/span",
 			RuntimeVariables.replace("There are 1 membership requests pending."));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText("//span/a/span"));
 		selenium.clickAt("//span/a/span", RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//textarea[@id='_174_replyComments']",
 			RuntimeVariables.replace("You are welcome"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[1]"));
@@ -101,6 +109,7 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[2]"));
 		selenium.clickAt("link=Approved", RuntimeVariables.replace("Approved"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"selen01 lenn nium01 (test01@selenium.com)"),

@@ -25,6 +25,7 @@ public class Guest_ViewPermissionsShoppingItemGuestViewOffTest
 	public void testGuest_ViewPermissionsShoppingItemGuestViewOff()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Guest_ViewPermissionsShoppingItemGuestViewOffTest
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("Shopping Item Name"));
 	}
 }

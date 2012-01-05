@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOCo_AddAsCoworkerProfileTest extends BaseTestCase {
 	public void testSOCo_AddAsCoworkerProfile() throws Exception {
 		selenium.open("/web/joebloggs/profile/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Profile"),
 			selenium.getText("//nav[@id='navigation']/ul/li/a/span"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -49,11 +50,13 @@ public class SOCo_AddAsCoworkerProfileTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Add as Coworker"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Coworker Requested"),
 			selenium.getText("//div[2]/ul/li[2]/span"));
 		selenium.open("/user/socialofficecoworkersn/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

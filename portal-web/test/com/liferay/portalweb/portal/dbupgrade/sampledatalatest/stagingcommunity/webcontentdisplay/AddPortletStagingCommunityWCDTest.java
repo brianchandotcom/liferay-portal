@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletStagingCommunityWCDTest extends BaseTestCase {
 	public void testAddPortletStagingCommunityWCD() throws Exception {
 		selenium.open("/web/community-staging-community-web-content-display/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class AddPortletStagingCommunityWCDTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Page Staging Community Web Content Display"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

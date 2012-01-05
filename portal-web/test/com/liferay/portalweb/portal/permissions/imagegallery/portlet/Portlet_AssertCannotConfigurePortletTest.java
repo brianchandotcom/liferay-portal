@@ -24,6 +24,7 @@ public class Portlet_AssertCannotConfigurePortletTest extends BaseTestCase {
 	public void testPortlet_AssertCannotConfigurePortlet()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Portlet_AssertCannotConfigurePortletTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent(
 				"//span[@title='Options']/ul/li/strong/a"));
 		assertFalse(selenium.isElementPresent("link=Configuration"));

@@ -24,6 +24,7 @@ public class ViewConfigurePortletAvailableDLDocumentAPTest extends BaseTestCase 
 	public void testViewConfigurePortletAvailableDLDocumentAP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewConfigurePortletAvailableDLDocumentAPTest extends BaseTestCase 
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("DM Folder Document Title"));
 	}
 }

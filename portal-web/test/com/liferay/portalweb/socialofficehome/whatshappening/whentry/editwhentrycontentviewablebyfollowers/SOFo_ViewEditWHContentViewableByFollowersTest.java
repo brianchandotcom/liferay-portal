@@ -24,6 +24,7 @@ public class SOFo_ViewEditWHContentViewableByFollowersTest extends BaseTestCase 
 	public void testSOFo_ViewEditWHContentViewableByFollowers()
 		throws Exception {
 		selenium.open("/web/socialofficefollowersn/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOFo_ViewEditWHContentViewableByFollowersTest extends BaseTestCase 
 		selenium.clickAt("//div/div[1]/div/div/div/ul[1]/li[1]/a",
 			RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("What's happening?"),
 			selenium.getText("//div[1]/h1/span"));
 		assertTrue(selenium.isVisible("//div[@class='entry-bubble ']"));

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConvertCurrencyTest extends BaseTestCase {
 	public void testConvertCurrency() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ConvertCurrencyTest extends BaseTestCase {
 		selenium.clickAt("link=Currency Converter Test Page",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -88,6 +90,7 @@ public class ConvertCurrencyTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Convert']",
 			RuntimeVariables.replace("Convert"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals("2.5", selenium.getValue("//input[@name='_16_number']"));
 		assertTrue(selenium.isTextPresent("KRW"));
 		assertTrue(selenium.isTextPresent("BHD"));

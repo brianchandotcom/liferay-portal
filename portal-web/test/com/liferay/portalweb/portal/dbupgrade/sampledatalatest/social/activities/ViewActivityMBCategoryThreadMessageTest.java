@@ -24,6 +24,7 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 	public void testViewActivityMBCategoryThreadMessage()
 		throws Exception {
 		selenium.open("/web/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new message board post, MB Category Thread Message Subject, in Liferay."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));

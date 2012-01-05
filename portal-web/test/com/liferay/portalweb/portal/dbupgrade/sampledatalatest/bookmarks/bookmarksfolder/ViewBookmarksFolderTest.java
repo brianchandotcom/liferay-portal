@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewBookmarksFolderTest extends BaseTestCase {
 	public void testViewBookmarksFolder() throws Exception {
 		selenium.open("/web/bookmarks-folder-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Entry Page",
 			RuntimeVariables.replace("Bookmarks Entry Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Bookmarks Folder Name"),
 			selenium.getText("//a/strong"));
 		assertTrue(selenium.isPartialText("//tr[3]/td[1]/a",
@@ -50,6 +52,7 @@ public class ViewBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("Bookmarks Folder Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Bookmarks Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 	}

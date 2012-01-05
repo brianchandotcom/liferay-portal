@@ -28,6 +28,7 @@ public class AddMultipleTagsTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,16 +49,19 @@ public class AddMultipleTagsTest extends BaseTestCase {
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Tags Blog Entry2 Title"),
 					selenium.getText(
 						"xPath=(//div[@class='entry-title']/h2/a)[2]"));
 				selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
 					RuntimeVariables.replace("Tags Blog Entry2 Title"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText("//span/a/span"));
 				selenium.click(RuntimeVariables.replace("//span/a/span"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -164,6 +168,7 @@ public class AddMultipleTagsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

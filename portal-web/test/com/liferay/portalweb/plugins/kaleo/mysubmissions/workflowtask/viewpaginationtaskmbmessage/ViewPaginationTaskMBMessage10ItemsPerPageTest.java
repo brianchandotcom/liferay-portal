@@ -24,6 +24,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 	public void testViewPaginationTaskMBMessage10ItemsPerPage()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,14 +45,18 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("//select[@id='_158_itemsPerPage']",
 			RuntimeVariables.replace("label=10"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -75,6 +80,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.select("//select[@id='_158_page']",
 			RuntimeVariables.replace("label=2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 11 - 20 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -98,6 +104,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.select("//select[@id='_158_page']",
 			RuntimeVariables.replace("label=3"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 21 - 21 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -121,6 +128,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.select("//select[@id='_158_page']",
 			RuntimeVariables.replace("label=1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -144,6 +152,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//div[@class='page-links']/a[1]",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 11 - 20 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -167,6 +176,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//div[@class='page-links']/a[3]",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 21 - 21 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -190,6 +200,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//div[@class='page-links']/a[2]",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 11 - 20 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -213,6 +224,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//div[@class='page-links']/a[2]",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -236,6 +248,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//div[@class='page-links']/a[2]",
 			RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 21 - 21 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -259,6 +272,7 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//div[@class='page-links']/a[1]",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(

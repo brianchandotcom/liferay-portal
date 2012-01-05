@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_JoinSitesRestrictedTest extends BaseTestCase {
 	public void testUser_JoinSitesRestricted() throws Exception {
 		selenium.open("/user/selenium01/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,9 +43,11 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/user/selenium01/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -65,11 +68,13 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 		selenium.clickAt("link=Available Sites",
 			RuntimeVariables.replace("Available Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Restricted Community"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Test Restricted Community\nThis is an restricted test community!"),
 			selenium.getText("//div[1]/div/table/tbody/tr[4]/td[1]"));
@@ -80,12 +85,14 @@ public class User_JoinSitesRestrictedTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[4]/span/a/span",
 			RuntimeVariables.replace("Request Membership"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//textarea[@id='_29_comments']",
 			RuntimeVariables.replace(
 				"I want to join this really cool community please."));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[1]"));

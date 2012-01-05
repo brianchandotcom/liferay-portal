@@ -24,14 +24,17 @@ public class Writer_WebContentDisplayRolesTest extends BaseTestCase {
 	public void testWriter_WebContentDisplayRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Web Content Display"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.check("//input[@value='56ADD_TO_PAGE']");
 		selenium.check("//input[@value='56CONFIGURATION']");
 		selenium.check("//input[@value='56VIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

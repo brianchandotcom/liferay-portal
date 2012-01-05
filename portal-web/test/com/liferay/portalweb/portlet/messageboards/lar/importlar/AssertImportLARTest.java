@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertImportLARTest extends BaseTestCase {
 	public void testAssertImportLAR() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"),
 			selenium.getText("//td[1]/a"));
@@ -67,6 +69,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
 			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace("1"),
@@ -78,6 +81,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
 			selenium.getText("//a/strong"));
@@ -100,10 +104,12 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/div[2]/div/div[1]/table/tbody/tr[3]/td[1]/a",
 			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9 Edited"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st m\u00e9ssag\u00e9 edited!"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -126,6 +132,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"),
 			selenium.getText("//td[1]/a"));
@@ -133,11 +140,13 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -147,6 +156,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!"),
 			selenium.getText("xPath=(//div[@class='thread-body'])[1]"));
@@ -155,6 +165,7 @@ public class AssertImportLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("This is a third reply message."),
 			selenium.getText("xPath=(//div[@class='thread-body'])[3]"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -177,12 +188,14 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
 			selenium.getText("//tr[4]/td[1]/a/strong"));
 		selenium.clickAt("//tr[4]/td[1]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -191,6 +204,7 @@ public class AssertImportLARTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("Moved to Sujr"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Trust and paths will be straightened."),
 			selenium.getText("//div[@class='thread-body']"));

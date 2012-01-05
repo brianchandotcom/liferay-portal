@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWCJournalFeedURLTest extends BaseTestCase {
 	public void testViewWCJournalFeedURL() throws Exception {
 		selenium.open("/web/wc-journal-feed-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,13 +44,16 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("WC Journal Feed Community"),
 			selenium.getText("//strong/a/span"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Feeds", RuntimeVariables.replace("Feeds"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -93,12 +97,14 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Feed Name"),
 			selenium.getText("//div[1]/h1/span"));
 
 		String URL = selenium.getValue("//div/input");
 		RuntimeVariables.setValue("URL", URL);
 		selenium.open(RuntimeVariables.getValue("URL"));
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Feed Name"),
 			selenium.getText("//x:h1"));
 		assertEquals(RuntimeVariables.replace("Feed Description"),

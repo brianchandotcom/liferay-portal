@@ -24,6 +24,7 @@ public class AssertConfigurePortletDisplayStyle2Test extends BaseTestCase {
 	public void testAssertConfigurePortletDisplayStyle2()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AssertConfigurePortletDisplayStyle2Test extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
 				"//div/ul[@class='breadcrumbs breadcrumbs-vertical lfr-component']/li[1]/span/a"));

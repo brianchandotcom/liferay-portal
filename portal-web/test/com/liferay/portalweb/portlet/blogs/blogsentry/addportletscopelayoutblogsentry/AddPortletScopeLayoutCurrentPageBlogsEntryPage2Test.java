@@ -25,6 +25,7 @@ public class AddPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 	public void testAddPortletScopeLayoutCurrentPageBlogsEntryPage2()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,9 +46,11 @@ public class AddPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 		selenium.clickAt("link=Blogs2 Test2 Page2",
 			RuntimeVariables.replace("Blogs2 Test2 Page2"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		Thread.sleep(5000);
@@ -75,6 +78,7 @@ public class AddPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

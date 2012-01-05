@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMessage5Test extends BaseTestCase {
 	public void testAddMessage5() throws Exception {
 		selenium.open("/user/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +45,16 @@ public class AddMessage5Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Test Category"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.click(RuntimeVariables.replace("//tr[3]/td/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.click(RuntimeVariables.replace(
 				"//input[@value='Post New Thread']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Test Message 5 Subject"));
 		Thread.sleep(5000);
@@ -78,6 +82,7 @@ public class AddMessage5Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Test Message 5 Content"),
 			selenium.getText("//div[@class='thread-body']"));
 		assertEquals(RuntimeVariables.replace("Test Message 5 Subject"),
@@ -87,6 +92,7 @@ public class AddMessage5Test extends BaseTestCase {
 		selenium.clickAt("//nav[@id='breadcrumbs']/ul/li[5]/span/a",
 			RuntimeVariables.replace("Test Category"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Test Message 5 Subject"),
 			selenium.getText("//tr[3]/td/a"));
 		System.out.println("Sample data 5 added successfully.\\");

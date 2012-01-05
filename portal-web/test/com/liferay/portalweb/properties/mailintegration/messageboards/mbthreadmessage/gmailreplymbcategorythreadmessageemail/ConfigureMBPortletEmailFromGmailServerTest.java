@@ -24,6 +24,7 @@ public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 	public void testConfigureMBPortletEmailFromGmailServer()
 		throws Exception {
 		selenium.open("/web/site-name");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
@@ -91,6 +93,7 @@ public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 		selenium.clickAt("link=Email From",
 			RuntimeVariables.replace("Email From"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_86_emailFromName']",
 			RuntimeVariables.replace("Administrator"));
 		selenium.type("//input[@id='_86_emailFromAddress']",
@@ -98,6 +101,7 @@ public class ConfigureMBPortletEmailFromGmailServerTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

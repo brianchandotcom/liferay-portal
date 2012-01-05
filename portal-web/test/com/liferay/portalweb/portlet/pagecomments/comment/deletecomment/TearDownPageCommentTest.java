@@ -28,6 +28,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,6 +49,7 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				selenium.clickAt("link=Page Comments Test Page",
 					RuntimeVariables.replace("Page Comments Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				boolean pageComment1Present = selenium.isElementPresent(
 						"//li[4]/span/a/span");

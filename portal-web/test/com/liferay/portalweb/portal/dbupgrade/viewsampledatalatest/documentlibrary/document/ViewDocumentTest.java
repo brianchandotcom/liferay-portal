@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewDocumentTest extends BaseTestCase {
 	public void testViewDocument() throws Exception {
 		selenium.open("/web/document-library-document-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewDocumentTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
 		Thread.sleep(3000);
@@ -68,6 +70,7 @@ public class ViewDocumentTest extends BaseTestCase {
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Document1.txt"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("This is test1 document1."),
 			selenium.getText("//div[2]/div[1]/span[4]"));
 	}

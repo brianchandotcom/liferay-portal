@@ -28,6 +28,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,6 +50,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Microblogs"),
 					selenium.getText(
 						"//div[2]/div/div/div/section/header/h1/span[2]"));
@@ -67,6 +69,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//span[.='Delete' and count(*)=0]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -84,6 +87,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//span[.='Delete' and count(*)=0]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -101,6 +105,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//span[.='Delete' and count(*)=0]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -118,6 +123,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//span[.='Delete' and count(*)=0]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -135,6 +141,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//span[.='Delete' and count(*)=0]"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

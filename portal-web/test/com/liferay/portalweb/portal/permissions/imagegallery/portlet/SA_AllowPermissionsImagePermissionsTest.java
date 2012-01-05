@@ -24,6 +24,7 @@ public class SA_AllowPermissionsImagePermissionsTest extends BaseTestCase {
 	public void testSA_AllowPermissionsImagePermissions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +46,13 @@ public class SA_AllowPermissionsImagePermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
 			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
 		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
 			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Permissions Image 2 Test Title"),
 			selenium.getText(
@@ -76,6 +79,7 @@ public class SA_AllowPermissionsImagePermissionsTest extends BaseTestCase {
 		selenium.clickAt("//img[@alt='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isChecked("//tr[5]/td[5]/input"));
 		selenium.clickAt("//tr[5]/td[5]/input",
 			RuntimeVariables.replace("Media Gallery Permissions"));
@@ -83,6 +87,7 @@ public class SA_AllowPermissionsImagePermissionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

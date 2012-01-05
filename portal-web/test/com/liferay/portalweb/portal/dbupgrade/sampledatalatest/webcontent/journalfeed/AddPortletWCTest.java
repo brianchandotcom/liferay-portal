@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletWCTest extends BaseTestCase {
 	public void testAddPortletWC() throws Exception {
 		selenium.open("/web/wc-journal-feed-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AddPortletWCTest extends BaseTestCase {
 		selenium.clickAt("link=WC Journal Feed Page",
 			RuntimeVariables.replace("WC Journal Feed Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

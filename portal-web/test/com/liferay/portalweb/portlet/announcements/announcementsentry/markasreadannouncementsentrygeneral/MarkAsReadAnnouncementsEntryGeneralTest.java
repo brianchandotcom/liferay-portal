@@ -24,6 +24,7 @@ public class MarkAsReadAnnouncementsEntryGeneralTest extends BaseTestCase {
 	public void testMarkAsReadAnnouncementsEntryGeneral()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class MarkAsReadAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Mark as Read"),
 			selenium.getText("//td[@class='control-entry']/a"));
 		selenium.clickAt("//td[@class='control-entry']/a",

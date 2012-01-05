@@ -24,6 +24,7 @@ public class SOFr_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 	public void testSOFr_DeleteRepostMicroblogsContent()
 		throws Exception {
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class SOFr_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 		selenium.clickAt("//div/div/div/div[1]/ul/li[3]/a",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[2]/div/div/div/section/header/h1/span[2]"));
 
@@ -93,6 +95,7 @@ public class SOFr_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 			selenium.getText("//span[2]/a/span"));
 		selenium.click(RuntimeVariables.replace("//span[2]/a/span"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(

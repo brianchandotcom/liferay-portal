@@ -28,6 +28,7 @@ public class MoveThreadTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -48,20 +49,24 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=Message Boards",
 					RuntimeVariables.replace("Message Boards"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"),
 					selenium.getText("//tr[4]/td[2]/a[1]/strong"));
 				selenium.clickAt("//tr[4]/td[2]/a[1]/strong",
 					RuntimeVariables.replace("T\u00e9st Cat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"T\u00e9st Subcat\u00e9gory"),
 					selenium.getText("//td[2]/a/strong"));
 				selenium.clickAt("//td[2]/a/strong",
 					RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
 					selenium.getText("//td[2]/a/strong"));
@@ -69,15 +74,18 @@ public class MoveThreadTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"S\u00e9cond T\u00e9st Subcat\u00e9gory"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("link=T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d",
 					RuntimeVariables.replace(
 						"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.isTextPresent(
 						"This m\u00e9ssag\u00e9 will b\u00e9 d\u00e9l\u00e9t\u00e9d!"));
 				selenium.clickAt("link=Move Thread",
 					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertFalse(selenium.isChecked(
 						"//input[@id='_162_addExplanationPostCheckbox']"));
 				selenium.clickAt("//input[@id='_162_addExplanationPostCheckbox']",
@@ -147,6 +155,7 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.clickAt("link=Categories",
 					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 			case 2:
 				selenium.click("//input[@value='Choose']");
@@ -156,6 +165,7 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Move Thread']",
 					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertTrue(selenium.isElementPresent("link=Sujr"));
 				assertTrue(selenium.isElementPresent(
 						"link=T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));

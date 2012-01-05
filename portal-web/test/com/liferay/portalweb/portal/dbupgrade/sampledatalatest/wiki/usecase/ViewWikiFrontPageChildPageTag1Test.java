@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWikiFrontPageChildPageTag1Test extends BaseTestCase {
 	public void testViewWikiFrontPageChildPageTag1() throws Exception {
 		selenium.open("/web/wiki-use-case-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,16 +44,19 @@ public class ViewWikiFrontPageChildPageTag1Test extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("wiki tag 1"),
 			selenium.getText("xPath=(//a[@class='tag'])[1]"));
 		selenium.clickAt("xPath=(//a[@class='tag'])[1]",
 			RuntimeVariables.replace("wiki tag 1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Pages with tag wiki tag 1."),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
@@ -67,6 +71,7 @@ public class ViewWikiFrontPageChildPageTag1Test extends BaseTestCase {
 			RuntimeVariables.replace("\"wiki tag 1\""));
 		selenium.click(RuntimeVariables.replace("//input[@value='Search']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Main"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),

@@ -24,6 +24,7 @@ public class ViewWDFrontPageChildPageIncomingLinksNullTest extends BaseTestCase 
 	public void testViewWDFrontPageChildPageIncomingLinksNull()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,12 +45,14 @@ public class ViewWDFrontPageChildPageIncomingLinksNullTest extends BaseTestCase 
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -61,9 +64,11 @@ public class ViewWDFrontPageChildPageIncomingLinksNullTest extends BaseTestCase 
 		selenium.clickAt("//div[3]/span[2]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=Incoming Links",
 			RuntimeVariables.replace("Incoming Links"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pages that link to this page."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

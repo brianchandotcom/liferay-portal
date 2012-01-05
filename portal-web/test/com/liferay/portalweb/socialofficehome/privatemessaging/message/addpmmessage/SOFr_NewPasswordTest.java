@@ -24,6 +24,7 @@ public class SOFr_NewPasswordTest extends BaseTestCase {
 	public void testSOFr_NewPassword() throws Exception {
 		selenium.setTimeout("180000");
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class SOFr_NewPasswordTest extends BaseTestCase {
 
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -102,6 +104,7 @@ public class SOFr_NewPasswordTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("Terms of Use"));
 		assertEquals(RuntimeVariables.replace("Please set a new password."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -162,6 +165,7 @@ public class SOFr_NewPasswordTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Please choose a reminder query."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 
@@ -202,6 +206,8 @@ public class SOFr_NewPasswordTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.open("/user/socialofficefriendsn/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

@@ -24,6 +24,7 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 	public void testViewFrontPageChildPage1ChildPage()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,12 +45,14 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
@@ -57,6 +60,7 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -64,6 +68,7 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 				"Wiki Front Page Child Page1 Child Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -84,12 +89,14 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page2 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
 			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent(
 				"Wiki Front Page Child Page1 Child Page Title"));
 	}

@@ -24,6 +24,7 @@ public class ExportLARPortletDefaultDLPageScopeTest extends BaseTestCase {
 	public void testExportLARPortletDefaultDLPageScope()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ExportLARPortletDefaultDLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -93,6 +95,7 @@ public class ExportLARPortletDefaultDLPageScopeTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("DL_Page_Scope.Default.Portlet.lar"));
 		assertFalse(selenium.isChecked(

@@ -25,6 +25,7 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(60000);
 
 		for (int second = 0;; second++) {
@@ -46,11 +47,13 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MB Message Subject"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -62,6 +65,7 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Message Subject"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Re: [MB Category Name] MB Message Subject"),
 			selenium.getText("xpath=(//div[@class='subject']/a/strong)[2]"));

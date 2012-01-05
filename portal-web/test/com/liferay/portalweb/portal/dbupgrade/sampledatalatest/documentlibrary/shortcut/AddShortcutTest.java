@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddShortcutTest extends BaseTestCase {
 	public void testAddShortcut() throws Exception {
 		selenium.open("/web/document-library-shortcut-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//div[2]/a/span[2]",
 			RuntimeVariables.replace("Test2 Folder2"));
 
@@ -89,6 +91,7 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//div/span[2]/span/input",
 			RuntimeVariables.replace("Select Site"));
 		selenium.waitForPopUp("Document Library",
@@ -115,6 +118,7 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Shortcut Community",
 			RuntimeVariables.replace("Document Library Shortcut Community"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -160,6 +164,7 @@ public class AddShortcutTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.click("//td[1]/a");
 		selenium.selectWindow("null");
 
@@ -184,6 +189,7 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

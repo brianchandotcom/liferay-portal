@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class GetDirectionsTest extends BaseTestCase {
 	public void testGetDirections() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class GetDirectionsTest extends BaseTestCase {
 		selenium.clickAt("link=Google Maps Test Page",
 			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//form/input[1]",
 			RuntimeVariables.replace("17730 Antonio Ave, Cerritos, CA, 90703"));
 		selenium.type("//form/input[3]",

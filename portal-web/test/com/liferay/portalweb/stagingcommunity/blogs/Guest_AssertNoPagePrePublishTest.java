@@ -22,6 +22,7 @@ import com.liferay.portalweb.portal.BaseTestCase;
 public class Guest_AssertNoPagePrePublishTest extends BaseTestCase {
 	public void testGuest_AssertNoPagePrePublish() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent("link=Blogs Test Page"));
 	}
 }

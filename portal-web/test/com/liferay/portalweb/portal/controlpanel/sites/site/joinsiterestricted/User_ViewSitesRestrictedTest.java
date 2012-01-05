@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_ViewSitesRestrictedTest extends BaseTestCase {
 	public void testUser_ViewSitesRestricted() throws Exception {
 		selenium.open("/user/selenium01/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,11 +43,13 @@ public class User_ViewSitesRestrictedTest extends BaseTestCase {
 
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Restricted Community"));
 		selenium.clickAt("//form/span/span[2]/span/input",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Test Restricted Community"),
 			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[1]"));
 	}

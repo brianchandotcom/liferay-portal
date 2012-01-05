@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewGroupsPageScopeTest extends BaseTestCase {
 	public void testViewGroupsPageScope() throws Exception {
 		selenium.open("/web/joebloggs/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,6 +43,7 @@ public class ViewGroupsPageScopeTest extends BaseTestCase {
 
 		selenium.clickAt("link=Activities Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent(
 				"Joe wrote a new blog entry, Blogs Entry Scope Current Page, in Group Page Scope Community."));
 		assertTrue(selenium.isElementPresent(

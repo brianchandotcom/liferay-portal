@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MR_RequestCommunityTest extends BaseTestCase {
 	public void testMR_RequestCommunity() throws Exception {
 		selenium.open("/user/requestmembersn/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,22 +44,26 @@ public class MR_RequestCommunityTest extends BaseTestCase {
 		selenium.clickAt("link=Available Communities",
 			RuntimeVariables.replace("Available Communities"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("_29_name",
 			RuntimeVariables.replace("Membership Request Community Name"));
 		selenium.clickAt("//form/span/span[2]/span/input",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Request Membership"),
 			selenium.getText("//span/a/span"));
 		selenium.clickAt("//span/a/span",
 			RuntimeVariables.replace("Request Membership"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("_29_comments",
 			RuntimeVariables.replace(
 				"Community Description comments request to join"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-success'])[1]"));

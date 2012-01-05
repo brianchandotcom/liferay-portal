@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRq_AddPortletSummaryTest extends BaseTestCase {
 	public void testSRq_AddPortletSummary() throws Exception {
 		selenium.open("/web/socialrequestsn1/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,6 +43,7 @@ public class SRq_AddPortletSummaryTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("More\u2026"),
 			selenium.getText("//a[@id='_145_addApplication']"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

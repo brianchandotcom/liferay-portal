@@ -25,6 +25,7 @@ public class Guest_AssertNoBlogsEntryPreApprovalOrganizationSiteTest
 	public void testGuest_AssertNoBlogsEntryPreApprovalOrganizationSite()
 		throws Exception {
 		selenium.open("/web/selenium/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Guest_AssertNoBlogsEntryPreApprovalOrganizationSiteTest
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isVisible("//section"));
 		assertFalse(selenium.isTextPresent("Pending Approval"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));

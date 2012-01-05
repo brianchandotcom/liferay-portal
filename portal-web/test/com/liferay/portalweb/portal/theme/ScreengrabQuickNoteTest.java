@@ -42,6 +42,7 @@ public class ScreengrabQuickNoteTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Test Page 4"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		Thread.sleep(5000);
 		FileUtil.mkdirs(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\"));

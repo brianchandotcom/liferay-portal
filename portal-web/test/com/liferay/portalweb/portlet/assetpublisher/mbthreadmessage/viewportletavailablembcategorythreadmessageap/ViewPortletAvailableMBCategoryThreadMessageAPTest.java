@@ -25,6 +25,7 @@ public class ViewPortletAvailableMBCategoryThreadMessageAPTest
 	public void testViewPortletAvailableMBCategoryThreadMessageAP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class ViewPortletAvailableMBCategoryThreadMessageAPTest
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent("MB Category Thread Message Subject"));
 		assertFalse(selenium.isTextPresent("MB Category Thread Message Body"));
 	}

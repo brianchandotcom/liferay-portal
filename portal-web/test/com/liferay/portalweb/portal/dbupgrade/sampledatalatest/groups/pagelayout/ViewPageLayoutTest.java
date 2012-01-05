@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPageLayoutTest extends BaseTestCase {
 	public void testViewPageLayout() throws Exception {
 		selenium.open("/web/group-page-layout-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewPageLayoutTest extends BaseTestCase {
 		selenium.clickAt("link=Page Layout Page",
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isElementPresent(
 				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first']"));
 		assertTrue(selenium.isElementPresent(

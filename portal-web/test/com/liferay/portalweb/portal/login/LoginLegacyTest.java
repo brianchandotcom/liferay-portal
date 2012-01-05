@@ -24,6 +24,7 @@ public class LoginLegacyTest extends BaseTestCase {
 	public void testLoginLegacy() throws Exception {
 		selenium.setTimeout("180000");
 		selenium.open("/web/guest/home");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class LoginLegacyTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("liferaySignInLink"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
 		selenium.type("_58_password", RuntimeVariables.replace("test"));
 		selenium.click("_58_rememberMeCheckbox");
@@ -65,6 +67,7 @@ public class LoginLegacyTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -84,6 +87,7 @@ public class LoginLegacyTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='I Agree']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.type("reminderQueryAnswer", RuntimeVariables.replace("Test"));
 
 		for (int second = 0;; second++) {
@@ -104,6 +108,7 @@ public class LoginLegacyTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -125,5 +130,6 @@ public class LoginLegacyTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div/div[4]/div/ul/li[2]/a/span[1]"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

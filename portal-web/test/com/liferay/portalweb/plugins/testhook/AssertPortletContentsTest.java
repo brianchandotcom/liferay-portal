@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertPortletContentsTest extends BaseTestCase {
 	public void testAssertPortletContents() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class AssertPortletContentsTest extends BaseTestCase {
 		selenium.clickAt("link=Test Hook Page",
 			RuntimeVariables.replace("Test Hook Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("terms.of.use.required=PASSED"),
 			selenium.getText("//div[@class='portlet-body']/p[1]"));
 		assertEquals(RuntimeVariables.replace(

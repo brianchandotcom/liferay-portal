@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWebContentImageAssociationTest extends BaseTestCase {
 	public void testViewWebContentImageAssociation() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,6 +44,7 @@ public class ViewWebContentImageAssociationTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Text Test"),
 			selenium.getText("//h1[@id='web-content-title']"));
 		assertEquals(RuntimeVariables.replace("Image Test:"),

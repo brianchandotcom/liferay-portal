@@ -24,6 +24,7 @@ public class ViewSelectScopePage2WebContentListDefaultTest extends BaseTestCase 
 	public void testViewSelectScopePage2WebContentListDefault()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,6 +45,7 @@ public class ViewSelectScopePage2WebContentListDefaultTest extends BaseTestCase 
 		selenium.clickAt("link=Web Content Display Test Page1",
 			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		Thread.sleep(5000);
@@ -89,6 +91,7 @@ public class ViewSelectScopePage2WebContentListDefaultTest extends BaseTestCase 
 
 		selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.selectFrame("//iframe");
 		assertTrue(selenium.isPartialText(
 				"xPath=(//div[@class='portlet-msg-info'])[1]",

@@ -65,5 +65,6 @@ public class ConfirmNoSessionExpireTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"link=Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 	}
 }

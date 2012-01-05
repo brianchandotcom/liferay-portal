@@ -24,6 +24,7 @@ public class SplitThreadCategoryMessageReplyBackButtonTest extends BaseTestCase 
 	public void testSplitThreadCategoryMessageReplyBackButton()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +45,13 @@ public class SplitThreadCategoryMessageReplyBackButtonTest extends BaseTestCase 
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isTextPresent(
 				"RE: MB Category Thread Message Subject"));
 		assertEquals(RuntimeVariables.replace(
@@ -57,6 +60,7 @@ public class SplitThreadCategoryMessageReplyBackButtonTest extends BaseTestCase 
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"RE: MB Category Thread Message Subject"),
 			selenium.getText("//tr[2]/td[1]/a"));
@@ -72,10 +76,13 @@ public class SplitThreadCategoryMessageReplyBackButtonTest extends BaseTestCase 
 		selenium.clickAt("//div[5]/table/tbody/tr[2]/td/ul/li[4]/span/a/span",
 			RuntimeVariables.replace("Split Thread"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.keyPress("//div[1]/span", RuntimeVariables.replace("\\8"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(

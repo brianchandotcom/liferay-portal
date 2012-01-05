@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRq2_AddAsFriendTest extends BaseTestCase {
 	public void testSRq2_AddAsFriend() throws Exception {
 		selenium.open("/web/socialrequestsn1/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -42,11 +43,13 @@ public class SRq2_AddAsFriendTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("Add as Friend"),
 			selenium.getText("//p[@class='add-as-friend']/span/a/span"));
 		selenium.clickAt("//p[@class='add-as-friend']/span/a/span",
 			RuntimeVariables.replace("Add as Friend"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -28,6 +28,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 
@@ -173,6 +174,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -249,6 +251,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
 				selenium.open("/web/guest/home/");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -288,6 +291,7 @@ public class AddChildPageBreadcrumbTest extends BaseTestCase {
 				selenium.clickAt("link=Child Test Page",
 					RuntimeVariables.replace("Child Test Page"));
 				selenium.waitForPageToLoad("30000");
+				selenium.getEval("window.Liferay.fire('initDockbar');");
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
 

@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewUserGroupUserTest extends BaseTestCase {
 	public void testViewUserGroupUser() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,9 +44,11 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("link=Directory Test Page",
 			RuntimeVariables.replace("Directory Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("User Group Name"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("User Group Description"),
@@ -54,6 +57,7 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 			selenium.getText("//span/a/span"));
 		selenium.clickAt("//span/a/span", RuntimeVariables.replace("View Users"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("userln"),
@@ -64,6 +68,7 @@ public class ViewUserGroupUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[5]/a"));
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("userfn"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace("userfn usermn userln"),
 			selenium.getText("//div[@class='user-information']/div[1]/h2"));
 		assertEquals(RuntimeVariables.replace("Email Address"),

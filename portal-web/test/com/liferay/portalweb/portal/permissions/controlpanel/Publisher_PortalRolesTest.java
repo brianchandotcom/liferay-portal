@@ -24,9 +24,11 @@ public class Publisher_PortalRolesTest extends BaseTestCase {
 	public void testPublisher_PortalRoles() throws Exception {
 		selenium.clickAt("link=Define Permissions", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Communities"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uncheck("_128_rowIds");
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupASSIGN_MEMBERS']");
@@ -50,10 +52,12 @@ public class Publisher_PortalRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.GroupUPDATE']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Organizations"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uncheck("_128_rowIds");
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.OrganizationASSIGN_MEMBERS']");
@@ -83,10 +87,12 @@ public class Publisher_PortalRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.OrganizationVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=Roles"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uncheck("_128_rowIds");
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.RoleDEFINE_PERMISSIONS']");
@@ -102,10 +108,12 @@ public class Publisher_PortalRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.RoleVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 		selenium.select("_128_add-permissions",
 			RuntimeVariables.replace("label=User Groups"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		selenium.uncheck("_128_rowIds");
 		selenium.uncheck(
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.UserGroupDELETE']");
@@ -121,6 +129,7 @@ public class Publisher_PortalRolesTest extends BaseTestCase {
 			"//input[@name='_128_rowIds' and @value='com.liferay.portal.model.UserGroupVIEW']");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertTrue(selenium.isTextPresent("The role permissions were updated."));
 	}
 }

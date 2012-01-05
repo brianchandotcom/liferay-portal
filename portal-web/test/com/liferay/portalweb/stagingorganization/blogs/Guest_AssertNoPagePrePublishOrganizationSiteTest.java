@@ -24,6 +24,7 @@ public class Guest_AssertNoPagePrePublishOrganizationSiteTest
 	public void testGuest_AssertNoPagePrePublishOrganizationSite()
 		throws Exception {
 		selenium.open("/web/selenium/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent("link=Blogs Test Page"));
 	}
 }

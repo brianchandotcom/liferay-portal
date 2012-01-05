@@ -24,6 +24,7 @@ public class Portlet_AssertCannotDeleteFolderTest extends BaseTestCase {
 	public void testPortlet_AssertCannotDeleteFolder()
 		throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,6 +46,7 @@ public class Portlet_AssertCannotDeleteFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Temporary Folder Edited"),
 			selenium.getText(
@@ -52,6 +54,7 @@ public class Portlet_AssertCannotDeleteFolderTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Temporary Folder Edited - ']",
 			RuntimeVariables.replace("Media Gallery Temporary Folder Edited"));
 		selenium.waitForPageToLoad("30000");
+		selenium.getEval("window.Liferay.fire('initDockbar');");
 		assertFalse(selenium.isElementPresent("link=Delete"));
 	}
 }

@@ -111,7 +111,7 @@ if (showPrototypes && (group != null)) {
 	<c:choose>
 		<c:when test="<%= showPrototypes && ((group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null))) %>">
 			<liferay-ui:panel-container extended="<%= false %>">
-				<liferay-ui:panel defaultState='<%= (group.getPublicLayoutsPageCount() > 0) ? "open" : "closed" %>' collapsible="<%= true %>" title="public-pages">
+				<liferay-ui:panel defaultState='<%= ((group != null) && (group.getPublicLayoutsPageCount() > 0)) ? "open" : "closed" %>' collapsible="<%= true %>" title="public-pages">
 					<c:choose>
 						<c:when test="<%= ((group == null) || (group.getPublicLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="publicLayoutSetPrototypeId">
@@ -179,7 +179,7 @@ if (showPrototypes && (group != null)) {
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:panel>
-				<liferay-ui:panel defaultState='<%= (group.getPrivateLayoutsPageCount() > 0) ? "open" : "closed" %>' collapsible="<%= true %>" title="private-pages">
+				<liferay-ui:panel defaultState='<%= ((group != null) && (group.getPrivateLayoutsPageCount() > 0)) ? "open" : "closed" %>' collapsible="<%= true %>" title="private-pages">
 					<c:choose>
 						<c:when test="<%= ((group == null) || (group.getPrivateLayoutsPageCount() == 0)) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="privateLayoutSetPrototypeId">

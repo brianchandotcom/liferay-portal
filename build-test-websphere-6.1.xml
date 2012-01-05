@@ -8,6 +8,10 @@
 			<param name="vm.vmdk.suffix" value="websphere-6.1.0.27" />
 		</antcall>
 
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
+		</exec>
+
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>

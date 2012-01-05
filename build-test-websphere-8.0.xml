@@ -8,6 +8,10 @@
 			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
 		</antcall>
 
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
+		</exec>
+
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
@@ -19,7 +23,7 @@
 		<copy todir="${tstamp.value}">
 			<fileset
 				dir="lib/development"
-				includes="hsql.jar,jtds.jar,mysql.jar,persistence.jar,postgresql.jar"
+				includes="hsql.jar,jtds.jar,mysql.jar,persistence.jar,postgresql.jar,servlet-api.jar"
 			/>
 		</copy>
 
@@ -43,6 +47,10 @@
 
 		<exec executable="${plink.executable}">
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\Progra~1\IBM\WebSphere\AppServer\lib\ext\portlet.jar C:\Progra~1\IBM\WebSphere\AppServer\java\jre\lib\ext" />
+		</exec>
+
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\Progra~1\IBM\WebSphere\AppServer\lib\ext\servlet-api.jar C:\Progra~1\IBM\WebSphere\AppServer\java\jre\lib\ext" />
 		</exec>
 
 		<exec executable="${pscp.executable}">

@@ -8,6 +8,10 @@
 			<param name="vm.vmdk.suffix" value="weblogic-10.3.2" />
 		</antcall>
 
+		<exec executable="${plink.executable}">
+			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\oracle\middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd" />
+		</exec>
+
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>

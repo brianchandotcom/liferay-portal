@@ -314,8 +314,8 @@ public class JournalTemplateLocalServiceImpl
 	public void deleteTemplate(JournalTemplate template)
 		throws PortalException, SystemException {
 
-		if (journalArticlePersistence.countByG_C_T(
-				template.getGroupId(), 0, template.getTemplateId()) > 0) {
+		if (journalArticlePersistence.countByTemplateId(
+				template.getTemplateId()) > 0) {
 
 			throw new RequiredTemplateException();
 		}

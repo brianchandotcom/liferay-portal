@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -80,13 +81,8 @@ import org.im4java.process.ProcessStarter;
 public class PDFProcessorImpl
 	extends DefaultPreviewableProcessor implements PDFProcessor {
 
-	public PDFProcessorImpl() {
-		super();
-
-		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
-		_initializedReadLock = readWriteLock.readLock();
-		_initializedWriteLock = readWriteLock.writeLock();
+	public static PDFProcessorImpl getInstance() {
+		return _instance;
 	}
 
 	public void generateImages(FileVersion fileVersion) throws Exception {
@@ -302,6 +298,15 @@ public class PDFProcessorImpl
 		finally {
 			_initializedWriteLock.unlock();
 		}
+	}
+
+	private PDFProcessorImpl() {
+		super();
+
+		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+		_initializedReadLock = readWriteLock.readLock();
+		_initializedWriteLock = readWriteLock.writeLock();
 	}
 
 	private void _generateImages(FileVersion fileVersion)
@@ -757,6 +762,12 @@ public class PDFProcessorImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessorImpl.class);
+
+	private static final PDFProcessorImpl _instance = new PDFProcessorImpl();
+
+	static {
+		InstancePool.put(PDFProcessorImpl.class.getName(), _instance);
+	}
 
 	private ConvertCmd _convertCmd;
 	private List<Long> _fileVersionIds = new Vector<Long>();

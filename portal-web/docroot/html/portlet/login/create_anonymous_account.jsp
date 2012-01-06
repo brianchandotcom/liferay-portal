@@ -39,7 +39,7 @@
 		%>
 
 		<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.POSSIBLE_DUPLICATE %>">
-			<liferay-ui:message key="the-friendly-url-may-conflict-with-another-page" />
+			<liferay-ui:message key="the-friendly-url-generated-by-the-email-address-you-requested-may-conflict-with-an-existing-friendly-url" />
 		</c:if>
 	</liferay-ui:error>
 

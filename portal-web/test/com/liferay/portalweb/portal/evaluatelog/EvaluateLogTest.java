@@ -69,6 +69,18 @@ public class EvaluateLogTest extends BaseTestCase {
 				if (line.contains("[com.google.inject.internal.Finalizer]")) {
 					continue;
 				}
+
+				if (line.contains(
+					"[MultiThreadedHttpConnectionManager cleanup]")) {
+
+					continue;
+				}
+			}
+
+			// LPS-17639
+
+			if (line.contains("Table \'lportal.lock_\' doesn't exist")) {
+				continue;
 			}
 
 			// LPS-23351

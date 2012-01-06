@@ -55,8 +55,8 @@ public class ViewFolderImageSlideShowTest extends BaseTestCase {
 			selenium.getText("//span[@class='image-title']"));
 		assertEquals(RuntimeVariables.replace("View Slide Show"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[9]/a"));
-		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[9]/a",
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[8]/a",
 			RuntimeVariables.replace("View Slide Show"));
 		selenium.waitForPopUp("slideShow", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=slideShow");

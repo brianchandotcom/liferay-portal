@@ -80,10 +80,8 @@ AUI.add(
 									themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
 									{
 										data: {
-											p_l_id: themeDisplay.getPlid(),
-											t: Math.random()
+											p_l_id: themeDisplay.getPlid()
 										},
-										method: 'GET',
 										on: {
 											failure: function(event, id, obj) {
 												layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page'));

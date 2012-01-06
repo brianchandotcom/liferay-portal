@@ -231,16 +231,19 @@ AUI.add(
 
 						settings.delegate(
 							'click',
-							function(event) {
-								var currentTarget = event.currentTarget;
+							A.throttle(
+								function(event) {
+									var currentTarget = event.currentTarget;
 
-								if (currentTarget.test(SELECTOR_SOCIAL_ACTIVITY_ITEM) && !event.target.test('input')) {
-									instance._revealSection(currentTarget, getSocialActivitySettingMappingCallback);
-								}
-								else if (currentTarget.test(SELECTOR_FIELD_INPUT_CHOICE)) {
-									instance._updateCheckboxStatus(event);
-								}
-							},
+									if (currentTarget.test(SELECTOR_SOCIAL_ACTIVITY_ITEM) && !event.target.test('input')) {
+										instance._revealSection(currentTarget, getSocialActivitySettingMappingCallback);
+									}
+									else if (currentTarget.test(SELECTOR_FIELD_INPUT_CHOICE)) {
+										instance._updateCheckboxStatus(event);
+									}
+								},
+								250
+							),
 							[SELECTOR_SOCIAL_ACTIVITY_ITEM, SELECTOR_FIELD_INPUT_CHOICE].join()
 						);
 
@@ -280,13 +283,7 @@ AUI.add(
 					_revealSection: function(menuItem, getSocialActivitySettingMappingCallback) {
 						var instance = this;
 
-						var settingsDisplay = instance._contentBox.one(SELECTOR_SETTINGS_DISPLAY);
-
 						var modelName = menuItem.attr(STR_DATA_MODEL_NAME);
-
-						if (settingsDisplay) {
-							settingsDisplay.remove();
-						}
 
 						menuItem.radioClass(STR_SELECTED);
 
@@ -302,7 +299,7 @@ AUI.add(
 					_addSettingsDisplay: function(config) {
 						var instance = this;
 
-						instance.settingsDisplay = new SettingsDisplay(config).render(instance._contentBox);
+						instance.settingsDisplay = new SettingsDisplay(config).render(instance._contentBox.empty());
 					},
 
 					_getItemByName: function(currentForm, name, ignoreNamespace) {
@@ -358,12 +355,12 @@ AUI.add(
 						var modelName = currentTarget.ancestor(SELECTOR_SOCIAL_ACTIVITY_ITEM).attr(STR_DATA_MODEL_NAME);
 
 						Liferay.Service.Social.SocialActivitySetting.updateActivitySetting(
-								{
-									groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
-									modelName: modelName,
-									value: currentTarget.attr('checked')
-								}
-							);
+							{
+								groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
+								modelName: modelName,
+								value: currentTarget.attr('checked')
+							}
+						);
 					},
 
 					_updateSocialActivitySettings: function(form) {
@@ -775,7 +772,7 @@ AUI.add(
 
 						return instance.getAttrs(
 							[
-							 	STR_ACTIVE,
+								STR_ACTIVE,
 								STR_ACTIVITY_TYPE,
 								STR_CONTRIBUTION_INCREMENT,
 								STR_CONTRIBUTION_LIMIT_ENABLED,

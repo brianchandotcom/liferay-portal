@@ -91,20 +91,15 @@ public class SecureFilter extends BasePortalFilter {
 		String remoteAddr = request.getRemoteAddr();
 		String serverIp = PortalUtil.getComputerAddress();
 
-		if ((_hostsAllowed.size() > 0) &&
-			(!_hostsAllowed.contains(remoteAddr))) {
-
-			if ((serverIp.equals(remoteAddr)) &&
-				(_hostsAllowed.contains(_SERVER_IP))) {
-
-				return true;
-			}
-
-			return false;
-		}
-		else {
+		if (_hostsAllowed.isEmpty() || _hostsAllowed.contains(remoteAddr)) {
 			return true;
 		}
+
+		if (serverIp.equals(remoteAddr) && _hostsAllowed.contains(_SERVER_IP)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

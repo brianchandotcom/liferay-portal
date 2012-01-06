@@ -548,6 +548,7 @@
 			<finder-column name="modifiedDate" comparator="&gt;=" />
 			<finder-column name="repositoryId" />
 		</finder>
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<tx-required>getFileDeltaAsStream</tx-required>
 	</entity>
 	<exceptions>

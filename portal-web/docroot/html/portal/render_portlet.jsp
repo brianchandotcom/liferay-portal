@@ -321,8 +321,17 @@ if (Validator.isNotNull(layout.getLayoutPrototypeUuid()) && layout.getLayoutProt
 
 // Deny access to edit mode if you do not have permission
 
-if (access && !PropsValues.TCK_URL && portletMode.equals(PortletMode.EDIT) && !PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
-	access = false;
+if (access && !PropsValues.TCK_URL && portletMode.equals(PortletMode.EDIT)) {
+	if (group.isControlPanel()) {
+		if (!PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), null, portletId, ActionKeys.PREFERENCES)) {
+			access = false;
+		}
+	}
+	else {
+		if (!PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
+			access = false;
+		}
+	}
 }
 
 // Deny access

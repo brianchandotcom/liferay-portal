@@ -62,6 +62,12 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 		return region;
 	}
 
+	public Region getRegion(long regionId)
+		throws PortalException, SystemException {
+
+		return regionPersistence.findByPrimaryKey(regionId);
+	}
+
 	public List<Region> getRegions() throws SystemException {
 		return regionPersistence.findAll();
 	}
@@ -78,12 +84,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 		throws SystemException {
 
 		return regionPersistence.findByC_A(countryId, active);
-	}
-
-	public Region getRegion(long regionId)
-		throws PortalException, SystemException {
-
-		return regionPersistence.findByPrimaryKey(regionId);
 	}
 
 }

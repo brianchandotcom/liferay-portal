@@ -74,6 +74,55 @@ import org.springframework.web.context.ContextLoaderListener;
 public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
+	public void contextDestroyed(ServletContextEvent event) {
+		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
+
+		ThreadLocalCacheManager.destroy();
+
+		try {
+			ClearThreadLocalUtil.clearThreadLocal();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
+			ClearTimerThreadUtil.clearTimerThread();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
+			ClearEhcacheThreadUtil.clearEhcacheReplicationThread();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
+			OSGiServiceUtil.stopRuntime();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
+			super.contextDestroyed(event);
+
+			try {
+				OSGiServiceUtil.stopFramework();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+		finally {
+			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);
+		}
+	}
+
+	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		HotDeployUtil.reset();
 		InstancePool.reset();
@@ -162,55 +211,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-	}
-
-	@Override
-	public void contextDestroyed(ServletContextEvent event) {
-		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
-
-		ThreadLocalCacheManager.destroy();
-
-		try {
-			ClearThreadLocalUtil.clearThreadLocal();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
-			ClearTimerThreadUtil.clearTimerThread();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
-			ClearEhcacheThreadUtil.clearEhcacheReplicationThread();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
-			OSGiServiceUtil.stopRuntime();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
-			super.contextDestroyed(event);
-
-			try {
-				OSGiServiceUtil.stopFramework();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-		finally {
-			PortalContextLoaderLifecycleThreadLocal.setDestroying(false);
 		}
 	}
 

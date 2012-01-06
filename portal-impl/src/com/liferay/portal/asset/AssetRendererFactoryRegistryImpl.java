@@ -29,6 +29,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AssetRendererFactoryRegistryImpl
 	implements AssetRendererFactoryRegistry {
 
+	public List<AssetRendererFactory> getAssetRendererFactories() {
+		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
+	}
+
 	public AssetRendererFactory getAssetRendererFactoryByClassName(
 		String className) {
 
@@ -37,10 +41,6 @@ public class AssetRendererFactoryRegistryImpl
 
 	public AssetRendererFactory getAssetRendererFactoryByType(String type) {
 		return _assetRenderFactoriesMapByClassType.get(type);
-	}
-
-	public List<AssetRendererFactory> getAssetRendererFactories() {
-		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
 	}
 
 	public long[] getClassNameIds() {

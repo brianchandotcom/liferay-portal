@@ -38,6 +38,11 @@ public class LayoutListener extends BaseModelListener<Layout> {
 	}
 
 	@Override
+	public void onAfterUpdate(Layout layout) {
+		clearCache(layout);
+	}
+
+	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
 			if (!LayoutStagingUtil.isBranchingLayout(layout)) {
@@ -59,11 +64,6 @@ public class LayoutListener extends BaseModelListener<Layout> {
 		catch (SystemException se) {
 			throw new ModelListenerException(se);
 		}
-	}
-
-	@Override
-	public void onAfterUpdate(Layout layout) {
-		clearCache(layout);
 	}
 
 	protected void clearCache(Layout layout) {

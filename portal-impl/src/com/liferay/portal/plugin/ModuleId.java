@@ -47,6 +47,17 @@ public class ModuleId implements Serializable {
 			version + StringPool.SLASH + type;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ModuleId)) {
+			return false;
+		}
+
+		ModuleId moduleId = (ModuleId)obj;
+
+		return toString().equals(moduleId.toString());
+	}
+
 	public String getGroupId() {
 		return _groupId;
 	}
@@ -78,6 +89,11 @@ public class ModuleId implements Serializable {
 			StringPool.PERIOD + _type;
 	}
 
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+
 	public boolean isLaterVersionThan(String version) {
 		return _pluginVersion.isLaterVersionThan(version);
 	}
@@ -88,22 +104,6 @@ public class ModuleId implements Serializable {
 
 	public boolean isSameVersionAs(String version) {
 		return _pluginVersion.isSameVersionAs(version);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof ModuleId)) {
-			return false;
-		}
-
-		ModuleId moduleId = (ModuleId)obj;
-
-		return toString().equals(moduleId.toString());
-	}
-
-	@Override
-	public int hashCode() {
-		return toString().hashCode();
 	}
 
 	@Override

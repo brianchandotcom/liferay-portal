@@ -180,6 +180,14 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		return _dlFolder.isLocked();
 	}
 
+	public boolean isMountPoint() {
+		return _dlFolder.isMountPoint();
+	}
+
+	public boolean isRoot() {
+		return _dlFolder.isRoot();
+	}
+
 	public boolean isSupportsLocking() {
 		if (isMountPoint()) {
 			return false;
@@ -205,14 +213,6 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		else {
 			return true;
 		}
-	}
-
-	public boolean isMountPoint() {
-		return _dlFolder.isMountPoint();
-	}
-
-	public boolean isRoot() {
-		return _dlFolder.isRoot();
 	}
 
 	public boolean isSupportsShortcuts() {

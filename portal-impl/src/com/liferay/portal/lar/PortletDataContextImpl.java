@@ -1264,12 +1264,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_sourceGroupId = sourceGroupId;
 	}
 
-	public String toXML(Object object) {
-		return _xStream.toXML(object);
-	}
-
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
+	}
+
+	public String toXML(Object object) {
+		return _xStream.toXML(object);
 	}
 
 	protected ServiceContext createServiceContext(

@@ -111,20 +111,6 @@ public class LocalPluginPackageRepository {
 			pluginPackages, new PluginPackageNameAndContextComparator());
 	}
 
-	public void removePluginPackage(PluginPackage pluginPackage)
-		throws PortalException {
-
-		_pluginPackages.remove(pluginPackage.getContext());
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(PluginPackage.class);
-
-		indexer.delete(pluginPackage);
-	}
-
-	public void removePluginPackage(String context) {
-		_pluginPackages.remove(context);
-	}
-
 	public void registerPluginPackageInstallation(PluginPackage pluginPackage) {
 		if (pluginPackage.getContext() != null) {
 			PluginPackage previousPluginPackage = _pluginPackages.get(
@@ -160,6 +146,20 @@ public class LocalPluginPackageRepository {
 		}
 
 		registerPluginPackageInstallation(pluginPackage);
+	}
+
+	public void removePluginPackage(PluginPackage pluginPackage)
+		throws PortalException {
+
+		_pluginPackages.remove(pluginPackage.getContext());
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(PluginPackage.class);
+
+		indexer.delete(pluginPackage);
+	}
+
+	public void removePluginPackage(String context) {
+		_pluginPackages.remove(context);
 	}
 
 	public void unregisterPluginPackageInstallation(String context) {

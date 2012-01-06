@@ -31,27 +31,6 @@ String chooseCallback = (String)request.getAttribute("record_set_action.jsp-choo
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= ((selRecordSet == null) || (selRecordSet.getRecordSetId() != recordSet.getRecordSetId())) && Validator.isNotNull(chooseCallback) %>">
-
-		<%
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("javascript:");
-		sb.append(chooseCallback);
-		sb.append("('");
-		sb.append(recordSet.getRecordSetId());
-		sb.append("', '");
-		sb.append(HtmlUtil.escapeJS(recordSet.getName(locale)));
-		sb.append("');");
-		%>
-
-		<liferay-ui:icon
-			image="checked"
-			message="choose"
-			url="<%= sb.toString() %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />

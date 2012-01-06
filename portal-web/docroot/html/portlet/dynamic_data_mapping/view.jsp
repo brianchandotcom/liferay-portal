@@ -60,9 +60,9 @@ portletURL.setParameter("tabs1", tabs1);
 		if (Validator.isNotNull(chooseCallback)) {
 			StringBundler sb = new StringBundler(7);
 
-			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(chooseCallback);
-			sb.append("('");
+			sb.append("javascript:Liferay.Util.getOpener()['");
+			sb.append(HtmlUtil.escapeJS(chooseCallback));
+			sb.append("']('");
 			sb.append(structure.getStructureId());
 			sb.append("', '");
 			sb.append(HtmlUtil.escape(structure.getName(locale)));

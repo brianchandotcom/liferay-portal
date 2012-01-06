@@ -147,6 +147,6 @@ if (Validator.isNotNull(script)) {
 	);
 
 	<c:if test="<%= Validator.isNotNull(saveCallback) && (structureId != 0) %>">
-		window.parent.<%= HtmlUtil.escapeJS(saveCallback) %>('<%= structureId %>', '<%= HtmlUtil.escape(structure.getName(locale)) %>');
+		window.parent['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= structureId %>', '<%= HtmlUtil.escape(structure.getName(locale)) %>');
 	</c:if>
 </aui:script>

@@ -76,9 +76,9 @@ portletURL.setParameter("structureId", String.valueOf(structureId));
 		if (Validator.isNotNull(chooseCallback)) {
 			StringBundler sb = new StringBundler(7);
 
-			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(chooseCallback);
-			sb.append("('");
+			sb.append("javascript:Liferay.Util.getOpener()['");
+			sb.append(HtmlUtil.escapeJS(chooseCallback));
+			sb.append("']('");
 			sb.append(template.getTemplateId());
 			sb.append("', '");
 			sb.append(HtmlUtil.escapeJS(template.getName(locale)));

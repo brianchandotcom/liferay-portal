@@ -64,6 +64,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -181,6 +182,17 @@ public class DLIndexer extends BaseIndexer {
 			}
 		}
 
+		Group group = GroupLocalServiceUtil.getCompanyGroup(
+			searchContext.getCompanyId());
+
+		DDMStructure tikaRawMetadataStructure =
+			DDMStructureLocalServiceUtil.fetchStructure(
+				group.getGroupId(), "TikaRawMetadata");
+
+		if (tikaRawMetadataStructure != null) {
+			ddmStructuresSet.add(tikaRawMetadataStructure);
+		}
+
 		for (DDMStructure ddmStructure : ddmStructuresSet) {
 			addSearchDDMStruture(searchQuery, searchContext, ddmStructure);
 		}
@@ -212,6 +224,19 @@ public class DLIndexer extends BaseIndexer {
 				dlFileVersion.getFileEntryTypeId());
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		Group group = GroupLocalServiceUtil.getCompanyGroup(
+			dlFileVersion.getCompanyId());
+
+		DDMStructure tikaRawMetadataStructure =
+			DDMStructureLocalServiceUtil.fetchStructure(
+				group.getGroupId(), "TikaRawMetadata");
+
+		if (tikaRawMetadataStructure != null) {
+			ddmStructures = ListUtil.copy(ddmStructures);
+
+			ddmStructures.add(tikaRawMetadataStructure);
+		}
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Fields fields = null;
@@ -381,9 +406,7 @@ public class DLIndexer extends BaseIndexer {
 
 			ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
 
-			if (dlFileEntry.getFileEntryTypeId() > 0) {
-				addFileEntryTypeAttributes(document, dlFileVersion);
-			}
+			addFileEntryTypeAttributes(document, dlFileVersion);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Document " + dlFileEntry + " indexed successfully");

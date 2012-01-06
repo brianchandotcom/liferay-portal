@@ -31,7 +31,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
-	<td></td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -89,10 +94,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>DMLDocumentNotPresent</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no documents or media files in this folder.</td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

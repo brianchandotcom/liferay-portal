@@ -104,9 +104,6 @@ public class AddDLFolderImageTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_image.jpg"));
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\projects\\trunk-portal\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentlibrary\\dependencies\\test_image.jpg"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Folder Image Title"));
 		selenium.type("//textarea[@id='_20_description']",

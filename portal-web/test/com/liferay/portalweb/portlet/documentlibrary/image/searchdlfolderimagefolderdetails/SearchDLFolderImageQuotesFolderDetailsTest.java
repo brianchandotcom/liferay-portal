@@ -101,8 +101,8 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Search in every folder.']",
-			RuntimeVariables.replace("Search in every folder."));
+		selenium.clickAt("//input[@value='Search Everywhere']",
+			RuntimeVariables.replace("Search Everywhere"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,7 +111,7 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for \"DL Folder Image Title\" in every folder.")
+							"Searched for \"DL Folder Image Title\" everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -124,7 +124,7 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Searched for \"DL Folder Image Title\" in every folder."),
+				"Searched for \"DL Folder Image Title\" everywhere."),
 			selenium.getText("//span[@class='keywords']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image Title"),
 			selenium.getText(
@@ -160,8 +160,8 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Search in every folder.']",
-			RuntimeVariables.replace("Search in every folder."));
+		selenium.clickAt("//input[@value='Search Everywhere']",
+			RuntimeVariables.replace("Search Everywhere"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -170,7 +170,7 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for \"DL1 Folder1 Image1 Title1\" in every folder.")
+							"Searched for \"DL1 Folder1 Image1 Title1\" everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -183,7 +183,7 @@ public class SearchDLFolderImageQuotesFolderDetailsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Searched for \"DL1 Folder1 Image1 Title1\" in every folder."),
+				"Searched for \"DL1 Folder1 Image1 Title1\" everywhere."),
 			selenium.getText("//span[@class='keywords']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

@@ -57,7 +57,7 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for \"DL Folder Image Title\" in every folder.")
+							"Searched for \"DL Folder Image Title\" everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -69,6 +69,9 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"DL Folder Image Title\" everywhere."),
+			selenium.getText("//span[@class='keywords']"));
 		assertEquals(RuntimeVariables.replace("DL Folder Image Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -84,7 +87,7 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Searched for \"DL1 Folder1 Image1 Title1\" in every folder.")
+							"Searched for \"DL1 Folder1 Image1 Title1\" everywhere.")
 										.equals(selenium.getText(
 								"//span[@class='keywords']"))) {
 					break;
@@ -96,6 +99,9 @@ public class SearchDLFolderImageQuotesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"Searched for \"DL1 Folder1 Image1 Title1\" everywhere."),
+			selenium.getText("//span[@class='keywords']"));
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}

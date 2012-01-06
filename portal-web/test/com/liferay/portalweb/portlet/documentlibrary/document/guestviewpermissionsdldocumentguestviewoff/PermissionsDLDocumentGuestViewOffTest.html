@@ -44,23 +44,33 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Guest View</td>
+	<td>waitForText</td>
+	<td>//tr[3]/td[1]</td>
+	<td>Guest</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]</td>
+	<td>Guest</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//th[8]</td>
+	<td>View</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//tr[3]/td[8]/input</td>
 	<td>Guest View</td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//tr[3]/td[8]/input</td>
 	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//tr[3]/td[8]/input</td>
 	<td>Guest View</td>
 </tr>
 <tr>
@@ -75,7 +85,7 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>//tr[3]/td[8]/input</td>
 	<td>Guest View</td>
 </tr>
 

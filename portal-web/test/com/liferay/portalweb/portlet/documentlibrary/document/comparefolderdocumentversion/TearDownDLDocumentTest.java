@@ -71,6 +71,9 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertTrue(selenium.isVisible(
+						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
+
 				boolean dmlDocumentPresent = selenium.isElementPresent(
 						"//div[1]/a/span[1]/img");
 
@@ -118,8 +121,15 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"There are no documents or media files in this folder."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
 			case 100:
 				label = -1;
 			}

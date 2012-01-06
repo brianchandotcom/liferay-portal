@@ -67,7 +67,7 @@ public class SearchFolderDocumentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Searched for DL Folder Document Title in every folder."),
+				"Searched for DL Folder Document Title everywhere."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
 		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
 			selenium.getText(
@@ -117,7 +117,7 @@ public class SearchFolderDocumentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Searched for DL1 Folder1 Document1 Title1 in every folder."),
+				"Searched for DL1 Folder1 Document1 Title1 everywhere."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
 		assertFalse(selenium.isElementPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

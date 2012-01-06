@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -29,6 +31,8 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.WebDAVPropsLocalService;
 import com.liferay.portal.service.base.PrincipalBean;
+import com.liferay.portal.service.persistence.GroupFinder;
+import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.ResourceFinder;
 import com.liferay.portal.service.persistence.ResourcePersistence;
@@ -520,6 +524,78 @@ public abstract class JournalTemplateServiceBaseImpl extends PrincipalBean
 	}
 
 	/**
+	 * Returns the group local service.
+	 *
+	 * @return the group local service
+	 */
+	public GroupLocalService getGroupLocalService() {
+		return groupLocalService;
+	}
+
+	/**
+	 * Sets the group local service.
+	 *
+	 * @param groupLocalService the group local service
+	 */
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		this.groupLocalService = groupLocalService;
+	}
+
+	/**
+	 * Returns the group remote service.
+	 *
+	 * @return the group remote service
+	 */
+	public GroupService getGroupService() {
+		return groupService;
+	}
+
+	/**
+	 * Sets the group remote service.
+	 *
+	 * @param groupService the group remote service
+	 */
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+	/**
+	 * Returns the group persistence.
+	 *
+	 * @return the group persistence
+	 */
+	public GroupPersistence getGroupPersistence() {
+		return groupPersistence;
+	}
+
+	/**
+	 * Sets the group persistence.
+	 *
+	 * @param groupPersistence the group persistence
+	 */
+	public void setGroupPersistence(GroupPersistence groupPersistence) {
+		this.groupPersistence = groupPersistence;
+	}
+
+	/**
+	 * Returns the group finder.
+	 *
+	 * @return the group finder
+	 */
+	public GroupFinder getGroupFinder() {
+		return groupFinder;
+	}
+
+	/**
+	 * Sets the group finder.
+	 *
+	 * @param groupFinder the group finder
+	 */
+	public void setGroupFinder(GroupFinder groupFinder) {
+		this.groupFinder = groupFinder;
+	}
+
+	/**
 	 * Returns the image local service.
 	 *
 	 * @return the image local service
@@ -909,6 +985,14 @@ public abstract class JournalTemplateServiceBaseImpl extends PrincipalBean
 	protected JournalTemplateFinder journalTemplateFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
+	@BeanReference(type = GroupLocalService.class)
+	protected GroupLocalService groupLocalService;
+	@BeanReference(type = GroupService.class)
+	protected GroupService groupService;
+	@BeanReference(type = GroupPersistence.class)
+	protected GroupPersistence groupPersistence;
+	@BeanReference(type = GroupFinder.class)
+	protected GroupFinder groupFinder;
 	@BeanReference(type = ImageLocalService.class)
 	protected ImageLocalService imageLocalService;
 	@BeanReference(type = ImageService.class)

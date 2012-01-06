@@ -160,8 +160,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Reply"),
 					selenium.getText("//td[2]/div/div/span[1]"));
-				selenium.clickAt("//td[2]/div/div/span[1]",
-					RuntimeVariables.replace("Reply"));
+				selenium.click("//td[2]/div/div/span[1]");
 				Thread.sleep(5000);
 				selenium.selectFrame("//iframe[@id='canvas_frame']");
 				selenium.selectFrame("//iframe[@class='Am Al editable']");

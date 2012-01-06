@@ -66,8 +66,7 @@ public class ViewMBThreadMessageGmailTest extends BaseTestCase {
 			RuntimeVariables.replace("MB Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Re: [MB Category Name] MB Message Subject"),
+		assertEquals(RuntimeVariables.replace("Re: MB Message Subject"),
 			selenium.getText("xpath=(//div[@class='subject']/a/strong)[2]"));
 		assertTrue(selenium.isPartialText(
 				"xpath=(//div[@class='thread-body'])[2]",

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,6 +47,10 @@ import java.util.Vector;
  */
 public class ImageProcessorImpl
 	extends DLPreviewableProcessor implements ImageProcessor {
+
+	public static ImageProcessorImpl getInstance() {
+		return _instance;
+	}
 
 	public void cleanUp(FileEntry fileEntry) {
 		deleteFiles(fileEntry, null);
@@ -145,6 +150,9 @@ public class ImageProcessorImpl
 		}
 
 		return type;
+	}
+
+	private ImageProcessorImpl() {
 	}
 
 	private void _generateImages(FileVersion fileVersion) {
@@ -267,7 +275,12 @@ public class ImageProcessorImpl
 
 	private static Log _log = LogFactoryUtil.getLog(ImageProcessorImpl.class);
 
-	private static ImageProcessorImpl _instance = new ImageProcessorImpl();
+	private static final ImageProcessorImpl _instance =
+		new ImageProcessorImpl();
+
+	static {
+		InstancePool.put(ImageProcessorImpl.class.getName(), _instance);
+	}
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 	private Set<String> _imageMimeTypes = SetUtil.fromArray(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -57,6 +58,10 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class AudioProcessorImpl
 	extends DefaultPreviewableProcessor implements AudioProcessor {
+
+	public static AudioProcessorImpl getInstance() {
+		return _instance;
+	}
 
 	public void generateAudio(FileVersion fileVersion) throws Exception {
 		_instance._generateAudio(fileVersion);
@@ -103,10 +108,6 @@ public class AudioProcessorImpl
 		return _instance.isSupported(mimeType);
 	}
 
-	public AudioProcessorImpl() {
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-	}
-
 	public boolean isSupported(String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return false;
@@ -137,6 +138,10 @@ public class AudioProcessorImpl
 	@Override
 	protected String getThumbnailType(FileVersion fileVersion) {
 		return null;
+	}
+
+	private AudioProcessorImpl() {
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 	}
 
 	private void _generateAudio(FileVersion fileVersion) throws Exception {
@@ -329,7 +334,12 @@ public class AudioProcessorImpl
 
 	private static Log _log = LogFactoryUtil.getLog(AudioProcessorImpl.class);
 
-	private static AudioProcessorImpl _instance = new AudioProcessorImpl();
+	private static final AudioProcessorImpl _instance =
+		new AudioProcessorImpl();
+
+	static {
+		InstancePool.put(AudioProcessorImpl.class.getName(), _instance);
+	}
 
 	private Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);

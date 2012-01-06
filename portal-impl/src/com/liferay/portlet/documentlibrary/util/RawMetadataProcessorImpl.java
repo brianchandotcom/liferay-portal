@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -48,6 +49,10 @@ import java.util.Map;
  */
 public class RawMetadataProcessorImpl
 	implements DLProcessor, RawMetadataProcessor {
+
+	public static RawMetadataProcessorImpl getInstance() {
+		return _instance;
+	}
 
 	public void cleanUp(FileEntry fileEntry) {
 	}
@@ -140,10 +145,17 @@ public class RawMetadataProcessorImpl
 		}
 	}
 
+	private RawMetadataProcessorImpl() {
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		RawMetadataProcessorImpl.class);
 
-	private static RawMetadataProcessorImpl _instance =
+	private static final RawMetadataProcessorImpl _instance =
 		new RawMetadataProcessorImpl();
+
+	static {
+		InstancePool.put(RawMetadataProcessorImpl.class.getName(), _instance);
+	}
 
 }

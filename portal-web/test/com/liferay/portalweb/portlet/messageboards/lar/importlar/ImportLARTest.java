@@ -33,7 +33,8 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//div[4]/div/ul/li[6]/a")) {
+				if (selenium.isElementPresent(
+							"//a[@title='Manage Site Content']")) {
 					break;
 				}
 			}
@@ -43,8 +44,8 @@ public class ImportLARTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[4]/div/ul/li[6]/a",
-			RuntimeVariables.replace("Manage Content"));
+		selenium.clickAt("//a[@title='Manage Site Content']",
+			RuntimeVariables.replace("Site Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -81,7 +82,8 @@ public class ImportLARTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[@id='_162_xafr']")) {
+				if (selenium.isVisible(
+							"//li[@class='portlet-export-import portlet-export-import-icon last']/a")) {
 					break;
 				}
 			}
@@ -92,8 +94,9 @@ public class ImportLARTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Export / Import"),
-			selenium.getText("//a[@id='_162_xafr']"));
-		selenium.clickAt("//a[@id='_162_xafr']",
+			selenium.getText(
+				"//li[@class='portlet-export-import portlet-export-import-icon last']/a"));
+		selenium.clickAt("//li[@class='portlet-export-import portlet-export-import-icon last']/a",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

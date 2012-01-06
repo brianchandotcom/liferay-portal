@@ -157,7 +157,8 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 					}
 
 					try {
-						if (selenium.isVisible("//td/a/span")) {
+						if (selenium.isVisible(
+									"//div[@title='My groups']/a/span")) {
 							break;
 						}
 					}
@@ -168,8 +169,8 @@ public class Gmail_ViewMBThreadMessageGmailMailingListTest extends BaseTestCase 
 				}
 
 				assertEquals(RuntimeVariables.replace("My groups"),
-					selenium.getText("//td/a/span"));
-				selenium.click("//td/a/span");
+					selenium.getText("//div[@title='My groups']/a/span"));
+				selenium.click("//div[@title='My groups']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

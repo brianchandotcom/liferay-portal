@@ -113,8 +113,8 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("liferay.qa.server.trunk"),
-					selenium.getText("//td[3]/div/span"));
-				selenium.clickAt("//td[3]/div/span",
+					selenium.getText("//td[5]/div/span"));
+				selenium.clickAt("//td[5]/div/span",
 					RuntimeVariables.replace("liferay.qa.server.trunk"));
 				Thread.sleep(5000);
 
@@ -148,8 +148,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//div[7]/div/table/tbody/tr/td[1]/div/span")) {
+						if (selenium.isVisible("//td[2]/div/div/span[1]")) {
 							break;
 						}
 					}
@@ -159,7 +158,9 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div[7]/div/table/tbody/tr/td[1]/div/span",
+				assertEquals(RuntimeVariables.replace("Reply"),
+					selenium.getText("//td[2]/div/div/span[1]"));
+				selenium.clickAt("//td[2]/div/div/span[1]",
 					RuntimeVariables.replace("Reply"));
 				Thread.sleep(5000);
 				selenium.selectFrame("//iframe[@id='canvas_frame']");

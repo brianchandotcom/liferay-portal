@@ -49,13 +49,13 @@ public class AssertImportLARTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("2"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("2"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("4"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//tr[3]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory Edit\u00e9d\nThis is a t\u00e9st cat\u00e9gory edited!"),
 			selenium.getText("//tr[4]/td[1]/a"));
@@ -65,26 +65,26 @@ public class AssertImportLARTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//tr[4]/td[4]/a"));
-		selenium.clickAt("//td[1]/a[1]",
+		selenium.clickAt("//tr[3]/td[1]/a[1]",
 			RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("2"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("4"),
 			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//a/strong",
+		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
@@ -94,14 +94,14 @@ public class AssertImportLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 Edited"),
 			selenium.getText(
-				"//div[2]/div[2]/div/div[1]/table/tbody/tr[3]/td[1]/a"));
+				"//div[2]/div[2]/div/div[1]/div/table/tbody/tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
-				"//div[2]/div[2]/div/div[1]/table/tbody/tr[3]/td[3]/a"));
+				"//div[2]/div[2]/div/div[1]/div/table/tbody/tr[3]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText(
-				"//div[2]/div[2]/div/div[1]/table/tbody/tr[3]/td[4]/a"));
-		selenium.clickAt("//div[2]/div[2]/div/div[1]/table/tbody/tr[3]/td[1]/a",
+				"//div[2]/div[2]/div/div[1]/div/table/tbody/tr[3]/td[4]/a"));
+		selenium.clickAt("//div[2]/div[2]/div/div[1]/div/table/tbody/tr[3]/td[1]/a",
 			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9 Edited"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

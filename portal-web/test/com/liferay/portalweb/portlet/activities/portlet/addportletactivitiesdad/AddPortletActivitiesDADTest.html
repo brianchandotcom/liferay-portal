@@ -1,0 +1,98 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddPortletActivitiesDADTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddPortletActivitiesDADTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/group/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>Liferay.fire('initDockbar');</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Activities Test Page</td>
+	<td>Activities Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Activities Test Page</td>
+	<td>Activities Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>ac</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@title='Activities']/p</td>
+	<td>Activities</td>
+</tr>
+<tr>
+	<td>dragAndDropToObject</td>
+	<td>//div[@title='Activities']/p</td>
+	<td>//div[@id='column-1']</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+</tbody></table>
+</body>
+</html>

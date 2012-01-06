@@ -16,7 +16,9 @@ package com.liferay.portalweb.portlet.activities.portlet;
 
 import com.liferay.portalweb.portal.BaseTests;
 import com.liferay.portalweb.portlet.activities.portlet.addportletactivities.AddPortletActivitiesTests;
+import com.liferay.portalweb.portlet.activities.portlet.addportletactivitiesdad.AddPortletActivitiesDADTests;
 import com.liferay.portalweb.portlet.activities.portlet.addportletactivitiesduplicate.AddPortletActivitiesDuplicateTests;
+import com.liferay.portalweb.portlet.activities.portlet.draganddropportletactivities.DragAndDropPortletActivitiesTests;
 import com.liferay.portalweb.portlet.activities.portlet.removeportletactivities.RemovePortletActivitiesTests;
 import com.liferay.portalweb.portlet.activities.portlet.viewportletlookandfeel.ViewPortletLookAndFeelTests;
 
@@ -32,7 +34,9 @@ public class PortletTests extends BaseTests {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddPortletActivitiesTests.suite());
+		testSuite.addTest(AddPortletActivitiesDADTests.suite());
 		testSuite.addTest(AddPortletActivitiesDuplicateTests.suite());
+		testSuite.addTest(DragAndDropPortletActivitiesTests.suite());
 		testSuite.addTest(RemovePortletActivitiesTests.suite());
 		testSuite.addTest(ViewPortletLookAndFeelTests.suite());
 

@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
+import com.liferay.portalweb.portal.util.TestPropsValues;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,6 +43,12 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		String className = clazz.getName();
 
 		if (className.contains(".sampledata523.")) {
+			return;
+		}
+
+		String location = selenium.getLocation();
+
+		if (!location.contains(TestPropsValues.PORTAL_URL)) {
 			return;
 		}
 

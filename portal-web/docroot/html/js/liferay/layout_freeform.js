@@ -39,7 +39,7 @@ AUI.add(
 					}
 				},
 
-				EXTENDS: A.PortalLayout,
+				EXTENDS: Layout.ColumnLayout,
 
 				NAME: 'FreeFormLayout',
 
@@ -106,7 +106,7 @@ AUI.add(
 						var activeDrop = instance.activeDrop;
 
 						if (activeDrop) {
-							Layout._positionNode(event);
+							FreeFormLayout.superclass._positionNode.apply(this, arguments);
 						}
 
 						dragNode.setStyle('display', 'block');
@@ -191,6 +191,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-portal-layout', 'aui-resize']
+		requires: ['aui-resize', 'liferay-layout-column']
 	}
 );

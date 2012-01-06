@@ -16,38 +16,6 @@ AUI.add(
 			return portlets.item(lastIndex);
 		};
 
-		Layout.findReferencePortlet = function(dropColumn) {
-			var portletBoundary = Layout.options.portletBoundary;
-			var portlets = dropColumn.all('>' + portletBoundary);
-			var firstPortlet = portlets.item(0);
-			var referencePortlet = null;
-
-			if (firstPortlet) {
-				var lastStatic = null;
-				var firstPortletStatic = firstPortlet.isStatic;
-
-				if (!firstPortletStatic || (firstPortletStatic == 'end')) {
-					referencePortlet = firstPortlet;
-				}
-				else {
-					portlets.each(
-						function(item) {
-							var isStatic = item.isStatic;
-
-							if (!isStatic ||
-								(lastStatic && isStatic && (isStatic != lastStatic))) {
-								referencePortlet = item;
-							}
-
-							lastStatic = isStatic;
-						}
-					);
-				}
-			}
-
-			return referencePortlet;
-		};
-
 		Layout.findSiblingPortlet = function(portletNode, siblingPos) {
 			var dragNodes = Layout.options.dragNodes;
 			var sibling = portletNode.get(siblingPos);
@@ -182,7 +150,25 @@ AUI.add(
 				prototype: {
 					dragItem: 0,
 
-					_positionNode: Layout._positionNode,
+					_positionNode: function(event) {
+						var instance = this;
+
+						var portalLayout = event.currentTarget;
+						var activeDrop = portalLayout.lastAlignDrop || portalLayout.activeDrop;
+
+						if (activeDrop) {
+							var dropNode = activeDrop.get('node');
+							var isStatic = dropNode.isStatic;
+
+							if (isStatic) {
+								var start = (isStatic == 'start');
+
+								portalLayout.quadrant = (start ? 4 : 1);
+							}
+
+							ColumnLayout.superclass._positionNode.apply(this, arguments);
+						}
+					},
 
 					_syncProxyNodeSize: function() {
 						var instance = this;

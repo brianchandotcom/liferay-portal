@@ -80,6 +80,38 @@ AUI.add(
 				return parentNode.all('> ' + options.portletBoundary).indexOf(node);
 			},
 
+			findReferencePortlet: function(dropColumn) {
+				var portletBoundary = Layout.options.portletBoundary;
+				var portlets = dropColumn.all('>' + portletBoundary);
+				var firstPortlet = portlets.item(0);
+				var referencePortlet = null;
+
+				if (firstPortlet) {
+					var lastStatic = null;
+					var firstPortletStatic = firstPortlet.isStatic;
+
+					if (!firstPortletStatic || (firstPortletStatic == 'end')) {
+						referencePortlet = firstPortlet;
+					}
+					else {
+						portlets.each(
+							function(item) {
+								var isStatic = item.isStatic;
+
+								if (!isStatic ||
+									(lastStatic && isStatic && (isStatic != lastStatic))) {
+									referencePortlet = item;
+								}
+
+								lastStatic = isStatic;
+							}
+						);
+					}
+				}
+
+				return referencePortlet;
+			},
+
 			fire: function() {
 				var layoutHandler = Layout.getLayoutHandler();
 
@@ -310,24 +342,6 @@ AUI.add(
 				var dragNode = event.target.get('node');
 
 				Layout.updateCurrentPortletInfo(dragNode);
-			},
-
-			_positionNode: function(event) {
-				var portalLayout = event.currentTarget;
-				var activeDrop = portalLayout.lastAlignDrop || portalLayout.activeDrop;
-
-				if (activeDrop) {
-					var dropNode = activeDrop.get('node');
-					var isStatic = dropNode.isStatic;
-
-					if (isStatic) {
-						var start = (isStatic == 'start');
-
-						portalLayout.quadrant = (start ? 4 : 1);
-					}
-
-					portalLayout.constructor.superclass._positionNode.apply(portalLayout, arguments);
-				}
 			}
 		};
 

@@ -17,7 +17,7 @@
 
 				var url = themeDisplay.getPathMain() + '/portal/render_portlet';
 
-				var dialog = new A.Dialog(
+				dialog = new A.Dialog(
 					{
 						on: {
 							visibleChange: function(event) {
@@ -322,7 +322,7 @@
 							on: Layout.DEFAULT_LAYOUT_OPTIONS.on
 						};
 
-						if (layoutOptions.freeForm) {
+						if (themeDisplay.isFreeformLayout()) {
 							portletItem = new Layout.FreeFormPortletItem(portletItemOptions);
 						}
 						else {

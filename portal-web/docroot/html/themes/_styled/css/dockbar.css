@@ -257,6 +257,8 @@ html > .lfr-dockbar-pinned {
 
 .my-sites-menu ul {
 	list-style: none;
+	max-height: 300px;
+	overflow: auto;
 }
 
 .my-sites-menu ul, .my-sites-menu li {

@@ -1019,8 +1019,6 @@ public class SourceFormatter {
 
 		int lineToSkipIfEmpty = 0;
 
-		List<String> publicMethodNamesList = new ArrayList<String>();
-
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -1043,17 +1041,6 @@ public class SourceFormatter {
 				fileName, line, lineCount);
 
 			String trimmedLine = StringUtil.trimLeading(line);
-
-			if (line.startsWith(StringPool.TAB + "public ") &&
-				!line.startsWith(StringPool.TAB + "public static ") &&
-				line.contains(StringPool.OPEN_PARENTHESIS)) {
-
-				String publicMethodName = _getMethodName(trimmedLine);
-
-				if (Validator.isNotNull(publicMethodName)) {
-					publicMethodNamesList.add(_getMethodName(trimmedLine));
-				}
-			}
 
 			if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
 				!trimmedLine.startsWith(StringPool.STAR)) {
@@ -1191,9 +1178,6 @@ public class SourceFormatter {
 
 				previousLine = line;
 			}
-		}
-
-		if (!_isMethodsNamesAlphabetical(fileName, publicMethodNamesList)) {
 		}
 
 		sb.append(previousLine);
@@ -1899,21 +1883,6 @@ public class SourceFormatter {
 		return lineLength;
 	}
 
-	private static String _getMethodName(String line) {
-		int posParenthesis = line.indexOf(StringPool.OPEN_PARENTHESIS);
-
-		String trimmedLine = line.substring(0, posParenthesis);
-
-		if (StringUtil.count(trimmedLine, StringPool.SPACE) < 2) {
-			return null;
-		}
-
-		int posLastSpace = line.substring(0, posParenthesis).lastIndexOf(
-			StringPool.SPACE);
-
-		return line.substring(posLastSpace + 1, posParenthesis);
-	}
-
 	private static String _getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
@@ -2180,61 +2149,6 @@ public class SourceFormatter {
 		}
 
 		return false;
-	}
-
-	private static boolean _isMethodsNamesAlphabetical(
-		String fileName, List<String> methodNamesList) {
-
-		String previousMethodName = null;
-
-		if (fileName.contains("model" + StringPool.BACK_SLASH + "impl")) {
-			return true;
-		}
-
-		for (String methodName : methodNamesList) {
-			if (Validator.isNotNull(previousMethodName) &&
-				(previousMethodName.compareToIgnoreCase(methodName) > 0)) {
-
-				if (previousMethodName.startsWith("set") &&
-					(methodName.startsWith("get") ||
-					 methodName.startsWith("is"))) {
-
-					previousMethodName = methodName;
-
-					continue;
-				}
-
-				if (previousMethodName.startsWith("get") &&
-					methodName.startsWith("get")) {
-
-					previousMethodName = methodName;
-
-					continue;
-				}
-
-				if (fileName.contains("persistence") &&
-					(previousMethodName.startsWith("count") &&
-					 methodName.startsWith("count")) ||
-					(previousMethodName.startsWith("find") &&
-					 methodName.startsWith("find"))) {
-
-					previousMethodName = methodName;
-
-					continue;
-				}
-
-				_sourceFormatterHelper.printError(
-					fileName,
-					fileName + " sort " + previousMethodName + " - " +
-					methodName);
-
-				return false;
-			}
-
-			previousMethodName = methodName;
-		}
-
-		return true;
 	}
 
 	private static void _readExclusions() throws IOException {

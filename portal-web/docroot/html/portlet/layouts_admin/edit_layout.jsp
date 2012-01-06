@@ -206,9 +206,9 @@ String[][] categorySections = {mainSections};
 										<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) %>">
 											{
 												handler: function(event) {
-													if (!popup) {
-														var content = A.one('#<portlet:namespace />addLayout');
+													var content = A.one('#<portlet:namespace />addLayout');
 
+													if (!popup) {
 														popup = new A.Dialog(
 															{
 																bodyContent: content.show(),

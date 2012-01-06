@@ -219,6 +219,7 @@ if (folder != null) {
 			foldersTotal: <%= foldersTotal %>,
 			mainUrl: '<%= mainURL %>',
 			namespace: '<portlet:namespace />',
+			portletId: '<%= portletId %>',
 			strutsAction: '/document_library/view'
 		}
 	);

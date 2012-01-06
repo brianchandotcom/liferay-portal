@@ -163,6 +163,8 @@ AUI.add(
 						instance._displayStyle = instance.ns('displayStyle');
 						instance._folderId = instance.ns('folderId');
 
+						var eventHandles = [];
+
 						var entryPage = 0;
 
 						if (config.entriesTotal > 0) {
@@ -210,12 +212,12 @@ AUI.add(
 
 						folderPaginator.on('changeRequest', instance._onFolderPaginatorChangeRequest, instance);
 
-						Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance);
-						Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance);
-						Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance);
-						Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance);
+						eventHandles.push(Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance));
+						eventHandles.push(Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance));
+						eventHandles.push(Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance));
+						eventHandles.push(Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance));
 
-						Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance);
+						eventHandles.push(Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance));
 
 						var folderContainer = instance.byId(STR_FOLDER_CONTAINER);
 
@@ -239,9 +241,9 @@ AUI.add(
 							formatSelectorNS(instance.NS, '#documentContainer a[data-folder=true], #breadcrumbContainer a')
 						);
 
-						History.after('stateChange', instance._afterStateChange, instance);
+						eventHandles.push(History.after('stateChange', instance._afterStateChange, instance));
 
-						Liferay.on('showTab', instance._onShowTab, instance);
+						eventHandles.push(Liferay.on('showTab', instance._onShowTab, instance));
 
 						documentLibraryContainer.plug(A.LoadingMask);
 
@@ -251,6 +253,8 @@ AUI.add(
 
 						instance._entryPaginator = entryPaginator;
 						instance._folderPaginator = folderPaginator;
+
+						instance._eventHandles = eventHandles;
 
 						instance._initHover();
 
@@ -264,7 +268,27 @@ AUI.add(
 
 						instance._repositoriesData = {};
 
+						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
+
 						instance._restoreState();
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						instance._entryPaginator.destroy();
+						instance._folderPaginator.destroy();
+						instance._listView.destroy();
+						instance._ddHandler.destroy();
+
+						A.each(
+							instance._eventHandles,
+							function (handle) {
+								handle.detach();
+							}
+						);
+
+						instance._documentLibraryContainer.purge(true);
 					},
 
 					_addHistoryState: function(data) {

@@ -82,7 +82,6 @@ AUI.add(
 										data: {
 											p_l_id: themeDisplay.getPlid()
 										},
-										method: 'GET',
 										on: {
 											failure: function(event, id, obj) {
 												layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error-please-refresh-the-current-page'));

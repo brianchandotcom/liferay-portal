@@ -69,6 +69,12 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
+		</finder>
+		<finder name="TemplateId" return-type="Collection">
+			<finder-column name="templateId" />
+		</finder>
 		<finder name="SmallImageId" return-type="Collection">
 			<finder-column name="smallImageId" />
 		</finder>
@@ -392,6 +398,9 @@
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
 		</finder>
+		<finder name="ParentStructureId" return-type="Collection">
+			<finder-column name="parentStructureId" />
+		</finder>
 		<finder name="G_S" return-type="JournalStructure" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="structureId" />
@@ -452,6 +461,9 @@
 		<finder name="TemplateId" return-type="Collection">
 			<finder-column name="templateId" />
 		</finder>
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
+		</finder>
 		<finder name="SmallImageId" return-type="JournalTemplate">
 			<finder-column name="smallImageId" />
 		</finder>
@@ -466,6 +478,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />

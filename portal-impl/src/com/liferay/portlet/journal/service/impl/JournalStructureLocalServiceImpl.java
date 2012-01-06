@@ -258,25 +258,53 @@ public class JournalStructureLocalServiceImpl
 	public void deleteStructure(JournalStructure structure)
 		throws PortalException, SystemException {
 
-		if (journalArticlePersistence.countByG_C_S(
-				structure.getGroupId(), 0, structure.getStructureId()) > 0) {
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			structure.getCompanyId());
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_WEB_CONTENT);
+		if (companyGroup.getGroupId() == structure.getGroupId()) {
+			if (journalArticlePersistence.countByStructureId(
+					structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_WEB_CONTENT);
+			}
+
+			if (journalStructurePersistence.countByParentStructureId(
+					structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_STRUCTURE);
+			}
+
+			if (journalTemplatePersistence.countByStructureId(
+					structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_TEMPLATE);
+			}
 		}
+		else {
+			if (journalArticlePersistence.countByG_C_S(
+					structure.getGroupId(), 0,
+					structure.getStructureId()) > 0) {
 
-		if (journalStructurePersistence.countByG_P(
-				structure.getGroupId(), structure.getStructureId()) > 0) {
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_WEB_CONTENT);
+			}
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_STRUCTURE);
-		}
+			if (journalStructurePersistence.countByG_P(
+					structure.getGroupId(), structure.getStructureId()) > 0) {
 
-		if (journalTemplatePersistence.countByG_S(
-				structure.getGroupId(), structure.getStructureId()) > 0) {
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_STRUCTURE);
+			}
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_TEMPLATE);
+			if (journalTemplatePersistence.countByG_S(
+					structure.getGroupId(), structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_TEMPLATE);
+			}
 		}
 
 		// WebDAVProps

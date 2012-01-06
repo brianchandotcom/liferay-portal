@@ -84,22 +84,6 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public int hashCode() {
-		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
-
-		hashCode.append(getCompanyId());
-		hashCode.append(getOwnerId());
-		hashCode.append(getOwnerType());
-		hashCode.append(getPreferences());
-
-		return hashCode.toHashCode();
-	}
-
-	public boolean isSignedIn() {
-		return _signedIn;
-	}
-
-	@Override
 	public String getValue(String namespace, String key) {
 		return getValue(namespace, key, null);
 	}
@@ -120,6 +104,22 @@ public class PortalPreferencesImpl
 		key = _encodeKey(namespace, key);
 
 		return super.getValues(key, defaultValue);
+	}
+
+	@Override
+	public int hashCode() {
+		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+
+		hashCode.append(getCompanyId());
+		hashCode.append(getOwnerId());
+		hashCode.append(getOwnerType());
+		hashCode.append(getPreferences());
+
+		return hashCode.toHashCode();
+	}
+
+	public boolean isSignedIn() {
+		return _signedIn;
 	}
 
 	@Override

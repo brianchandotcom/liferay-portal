@@ -50,12 +50,12 @@ public class RenderResponseImpl
 		return _useDefaultTemplate;
 	}
 
-	public void setResourceName(String resourceName) {
-		_resourceName = resourceName;
-	}
-
 	public void setNextPossiblePortletModes(
 		Collection<PortletMode> portletModes) {
+	}
+
+	public void setResourceName(String resourceName) {
+		_resourceName = resourceName;
 	}
 
 	public void setTitle(String title) {

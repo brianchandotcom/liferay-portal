@@ -54,6 +54,22 @@ public class AmazonRankings
 		_availability = availability;
 	}
 
+	public int compareTo(AmazonRankings amazonRankings) {
+		if (amazonRankings == null) {
+			return -1;
+		}
+
+		if (getSalesRank() > amazonRankings.getSalesRank()) {
+			return 1;
+		}
+		else if (getSalesRank() < amazonRankings.getSalesRank()) {
+			return -1;
+		}
+		else {
+			return getReleaseDate().compareTo(amazonRankings.getReleaseDate());
+		}
+	}
+
 	public String getISBN() {
 		return _isbn;
 	}
@@ -196,22 +212,6 @@ public class AmazonRankings
 
 	public void setAvailability(String availability) {
 		_availability = availability;
-	}
-
-	public int compareTo(AmazonRankings amazonRankings) {
-		if (amazonRankings == null) {
-			return -1;
-		}
-
-		if (getSalesRank() > amazonRankings.getSalesRank()) {
-			return 1;
-		}
-		else if (getSalesRank() < amazonRankings.getSalesRank()) {
-			return -1;
-		}
-		else {
-			return getReleaseDate().compareTo(amazonRankings.getReleaseDate());
-		}
 	}
 
 	private String _isbn;

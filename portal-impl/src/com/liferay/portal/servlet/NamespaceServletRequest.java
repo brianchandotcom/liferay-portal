@@ -106,6 +106,16 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 	}
 
 	@Override
+	public void removeAttribute(String name) {
+		if (_isReservedParam(name)) {
+			super.removeAttribute(name);
+		}
+		else {
+			super.removeAttribute(_attrNamespace + name);
+		}
+	}
+
+	@Override
 	public void setAttribute(String name, Object value) {
 		if (_isReservedParam(name)) {
 			super.setAttribute(name, value);
@@ -123,16 +133,6 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 		}
 		else {
 			setAttribute(name, value);
-		}
-	}
-
-	@Override
-	public void removeAttribute(String name) {
-		if (_isReservedParam(name)) {
-			super.removeAttribute(name);
-		}
-		else {
-			super.removeAttribute(_attrNamespace + name);
 		}
 	}
 

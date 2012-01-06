@@ -40,6 +40,25 @@ public class PortletPreferencesWrapper
 		_lifecycle = lifecycle;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		PortletPreferencesWrapper portletPreferencesWrapper =
+			(PortletPreferencesWrapper)obj;
+
+		if (this == portletPreferencesWrapper) {
+			return true;
+		}
+
+		if (getPortletPreferencesImpl().equals(
+				portletPreferencesWrapper.getPortletPreferencesImpl())) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public Map<String, String[]> getMap() {
 		return _portletPreferences.getMap();
 	}
@@ -48,22 +67,28 @@ public class PortletPreferencesWrapper
 		return _portletPreferences.getNames();
 	}
 
-	public String getValue(String key, String def) {
-		return _portletPreferences.getValue(key, def);
+	public PortletPreferencesImpl getPortletPreferencesImpl() {
+		return (PortletPreferencesImpl)_portletPreferences;
 	}
 
-	public void setValue(String key, String value) throws ReadOnlyException {
-		_portletPreferences.setValue(key, value);
+	/**
+	 * @deprecated {@link #getPortletPreferencesImpl}
+	 */
+	public PortletPreferencesImpl getPreferencesImpl() {
+		return getPortletPreferencesImpl();
+	}
+
+	public String getValue(String key, String def) {
+		return _portletPreferences.getValue(key, def);
 	}
 
 	public String[] getValues(String key, String[] def) {
 		return _portletPreferences.getValues(key, def);
 	}
 
-	public void setValues(String key, String[] values)
-		throws ReadOnlyException {
-
-		_portletPreferences.setValues(key, values);
+	@Override
+	public int hashCode() {
+		return _portletPreferences.hashCode();
 	}
 
 	public boolean isReadOnly(String key) {
@@ -72,6 +97,16 @@ public class PortletPreferencesWrapper
 
 	public void reset(String key) throws ReadOnlyException {
 		_portletPreferences.reset(key);
+	}
+
+	public void setValue(String key, String value) throws ReadOnlyException {
+		_portletPreferences.setValue(key, value);
+	}
+
+	public void setValues(String key, String[] values)
+		throws ReadOnlyException {
+
+		_portletPreferences.setValues(key, values);
 	}
 
 	public void store() throws IOException, ValidatorException {
@@ -93,41 +128,6 @@ public class PortletPreferencesWrapper
 
 			_portletPreferences.store();
 		}
-	}
-
-	public PortletPreferencesImpl getPortletPreferencesImpl() {
-		return (PortletPreferencesImpl)_portletPreferences;
-	}
-
-	/**
-	 * @deprecated {@link #getPortletPreferencesImpl}
-	 */
-	public PortletPreferencesImpl getPreferencesImpl() {
-		return getPortletPreferencesImpl();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		PortletPreferencesWrapper portletPreferencesWrapper =
-			(PortletPreferencesWrapper)obj;
-
-		if (this == portletPreferencesWrapper) {
-			return true;
-		}
-
-		if (getPortletPreferencesImpl().equals(
-				portletPreferencesWrapper.getPortletPreferencesImpl())) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		return _portletPreferences.hashCode();
 	}
 
 	private String _lifecycle;

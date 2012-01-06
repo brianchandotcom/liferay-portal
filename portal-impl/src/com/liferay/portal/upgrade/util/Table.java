@@ -140,6 +140,96 @@ public class Table {
 		appendColumn(sb, value, last);
 	}
 
+	public String generateTempFile() throws Exception {
+		Connection con = DataAccess.getConnection();
+
+		try {
+			return generateTempFile(con);
+		}
+		finally {
+			DataAccess.cleanUp(con);
+		}
+	}
+
+	public String generateTempFile(Connection con) throws Exception {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		boolean empty = true;
+
+		String tempFileName =
+			SystemProperties.get(SystemProperties.TMP_DIR) + "/temp-db-" +
+				_tableName + "-" + System.currentTimeMillis();
+
+		StopWatch stopWatch = null;
+
+		if (_log.isInfoEnabled()) {
+			stopWatch = new StopWatch();
+
+			stopWatch.start();
+
+			_log.info(
+				"Starting backup of " + _tableName + " to " + tempFileName);
+		}
+
+		String selectSQL = getSelectSQL();
+
+		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
+			new FileWriter(tempFileName));
+
+		try {
+			ps = con.prepareStatement(selectSQL);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String data = null;
+
+				try {
+					data = getExportedData(rs);
+
+					unsyncBufferedWriter.write(data);
+
+					_totalRows++;
+
+					empty = false;
+				}
+				catch (StagnantRowException sre) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Skipping stagnant data in " + _tableName + ": " +
+								sre.getMessage());
+					}
+				}
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Finished backup of " + _tableName + " to " +
+						tempFileName + " in " + stopWatch.getTime() + " ms");
+			}
+		}
+		catch (Exception e) {
+			FileUtil.delete(tempFileName);
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(null, ps, rs);
+
+			unsyncBufferedWriter.close();
+		}
+
+		if (!empty) {
+			return tempFileName;
+		}
+		else {
+			FileUtil.delete(tempFileName);
+
+			return null;
+		}
+	}
+
 	public Object[][] getColumns() {
 		return _columns;
 	}
@@ -344,96 +434,6 @@ public class Table {
 		}
 
 		return value;
-	}
-
-	public String generateTempFile() throws Exception {
-		Connection con = DataAccess.getConnection();
-
-		try {
-			return generateTempFile(con);
-		}
-		finally {
-			DataAccess.cleanUp(con);
-		}
-	}
-
-	public String generateTempFile(Connection con) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		boolean empty = true;
-
-		String tempFileName =
-			SystemProperties.get(SystemProperties.TMP_DIR) + "/temp-db-" +
-				_tableName + "-" + System.currentTimeMillis();
-
-		StopWatch stopWatch = null;
-
-		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-
-			_log.info(
-				"Starting backup of " + _tableName + " to " + tempFileName);
-		}
-
-		String selectSQL = getSelectSQL();
-
-		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
-			new FileWriter(tempFileName));
-
-		try {
-			ps = con.prepareStatement(selectSQL);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				String data = null;
-
-				try {
-					data = getExportedData(rs);
-
-					unsyncBufferedWriter.write(data);
-
-					_totalRows++;
-
-					empty = false;
-				}
-				catch (StagnantRowException sre) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Skipping stagnant data in " + _tableName + ": " +
-								sre.getMessage());
-					}
-				}
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Finished backup of " + _tableName + " to " +
-						tempFileName + " in " + stopWatch.getTime() + " ms");
-			}
-		}
-		catch (Exception e) {
-			FileUtil.delete(tempFileName);
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
-
-			unsyncBufferedWriter.close();
-		}
-
-		if (!empty) {
-			return tempFileName;
-		}
-		else {
-			FileUtil.delete(tempFileName);
-
-			return null;
-		}
 	}
 
 	public void populateTable(String tempFileName) throws Exception {

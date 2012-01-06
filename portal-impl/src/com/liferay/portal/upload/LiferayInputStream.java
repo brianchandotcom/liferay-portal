@@ -46,6 +46,17 @@ public class LiferayInputStream extends ServletInputStreamWrapper {
 		_totalSize = request.getContentLength();
 	}
 
+	public ServletInputStream getCachedInputStream() {
+		if (_totalSize < THRESHOLD_SIZE) {
+			return this;
+		}
+		else {
+			return new UnsyncByteArrayInputStreamWrapper(
+				new UnsyncByteArrayInputStream(
+					_cachedBytes.unsafeGetByteArray(), 0, _cachedBytes.size()));
+		}
+	}
+
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
 		int bytesRead = super.read(b, off, len);
@@ -76,17 +87,6 @@ public class LiferayInputStream extends ServletInputStreamWrapper {
 		}
 
 		return bytesRead;
-	}
-
-	public ServletInputStream getCachedInputStream() {
-		if (_totalSize < THRESHOLD_SIZE) {
-			return this;
-		}
-		else {
-			return new UnsyncByteArrayInputStreamWrapper(
-				new UnsyncByteArrayInputStream(
-					_cachedBytes.unsafeGetByteArray(), 0, _cachedBytes.size()));
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayInputStream.class);

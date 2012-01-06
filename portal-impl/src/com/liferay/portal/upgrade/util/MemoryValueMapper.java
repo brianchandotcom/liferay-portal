@@ -38,6 +38,14 @@ public class MemoryValueMapper implements ValueMapper {
 		_exceptions = exceptions;
 	}
 
+	public void appendException(Object exception) {
+		_exceptions.add(exception);
+	}
+
+	public Map<Object, Object> getMap() {
+		return _map;
+	}
+
 	public Object getNewValue(Object oldValue) throws Exception {
 		Object value = _map.get(oldValue);
 
@@ -53,24 +61,16 @@ public class MemoryValueMapper implements ValueMapper {
 		return value;
 	}
 
-	public void mapValue(Object oldValue, Object newValue) throws Exception {
-		_map.put(oldValue, newValue);
-	}
-
-	public void appendException(Object exception) {
-		_exceptions.add(exception);
-	}
-
 	public Iterator<Object> iterator() throws Exception {
 		return _map.keySet().iterator();
 	}
 
-	public int size() throws Exception {
-		return _map.size();
+	public void mapValue(Object oldValue, Object newValue) throws Exception {
+		_map.put(oldValue, newValue);
 	}
 
-	public Map<Object, Object> getMap() {
-		return _map;
+	public int size() throws Exception {
+		return _map.size();
 	}
 
 	private Map<Object, Object> _map;

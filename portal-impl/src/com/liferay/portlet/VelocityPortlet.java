@@ -50,6 +50,51 @@ import org.apache.velocity.util.SimplePool;
 public class VelocityPortlet extends GenericPortlet {
 
 	@Override
+	public void doEdit(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (renderRequest.getPreferences() == null) {
+			super.doEdit(renderRequest, renderResponse);
+
+			return;
+		}
+
+		try {
+			mergeTemplate(_editTemplateId, renderRequest, renderResponse);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
+
+	@Override
+	public void doHelp(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			mergeTemplate(_helpTemplateId, renderRequest, renderResponse);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
+
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			mergeTemplate(_viewTemplateId, renderRequest, renderResponse);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
+
+	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
 		super.init(portletConfig);
 
@@ -100,51 +145,6 @@ public class VelocityPortlet extends GenericPortlet {
 		try {
 			mergeTemplate(
 				_resourceTemplateId, resourceRequest, resourceResponse);
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-	}
-
-	@Override
-	public void doEdit(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (renderRequest.getPreferences() == null) {
-			super.doEdit(renderRequest, renderResponse);
-
-			return;
-		}
-
-		try {
-			mergeTemplate(_editTemplateId, renderRequest, renderResponse);
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-	}
-
-	@Override
-	public void doHelp(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			mergeTemplate(_helpTemplateId, renderRequest, renderResponse);
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-	}
-
-	@Override
-	public void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			mergeTemplate(_viewTemplateId, renderRequest, renderResponse);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);

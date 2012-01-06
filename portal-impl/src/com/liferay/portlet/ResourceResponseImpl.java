@@ -102,10 +102,6 @@ public class ResourceResponseImpl
 		_response.setCharacterEncoding(charset);
 	}
 
-	public void setLocale(Locale locale) {
-		_response.setLocale(locale);
-	}
-
 	public void setContentLength(int length) {
 		_response.setContentLength(length);
 	}
@@ -130,6 +126,10 @@ public class ResourceResponseImpl
 	@Override
 	public void setIntHeader(String name, int value) {
 		_response.setIntHeader(name, value);
+	}
+
+	public void setLocale(Locale locale) {
+		_response.setLocale(locale);
 	}
 
 	@Override

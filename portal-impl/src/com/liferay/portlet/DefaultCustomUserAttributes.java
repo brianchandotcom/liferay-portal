@@ -32,6 +32,11 @@ import java.util.Map;
  */
 public class DefaultCustomUserAttributes implements CustomUserAttributes {
 
+	@Override
+	public Object clone() {
+		return new DefaultCustomUserAttributes();
+	}
+
 	public String getValue(String name, Map<String, String> userInfo) {
 		if (name == null) {
 			return null;
@@ -53,11 +58,6 @@ public class DefaultCustomUserAttributes implements CustomUserAttributes {
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	public Object clone() {
-		return new DefaultCustomUserAttributes();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

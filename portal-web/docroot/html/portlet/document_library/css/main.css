@@ -846,6 +846,14 @@
 	}
 }
 
+.ie7 {
+	.portlet-document-library {
+		.lfr-actions .lfr-trigger strong {
+			min-width: 0px;
+		}
+	}
+}
+
 .ie6 {
 	.portlet-document-library {
 		.taglib-ratings.stars {
@@ -874,18 +882,6 @@
 					.aui-field-input-text {
 						width: 95%;
 					}
-				}
-			}
-		}
-	}
-}
-
-.ie7 {
-	.portlet-document-library {
-		.lfr-actions {
-			.lfr-trigger {
-				strong {
-					min-width: 0px;
 				}
 			}
 		}

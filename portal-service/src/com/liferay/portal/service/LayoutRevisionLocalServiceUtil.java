@@ -310,6 +310,12 @@ public class LayoutRevisionLocalServiceUtil {
 		getService().deleteLayoutSetBranchLayoutRevisions(layoutSetBranchId);
 	}
 
+	public static com.liferay.portal.model.LayoutRevision fetchLastLayoutRevision(
+		long plid, boolean head)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLastLayoutRevision(plid, head);
+	}
+
 	public static java.util.List<com.liferay.portal.model.LayoutRevision> getChildLayoutRevisions(
 		long layoutSetBranchId, long parentLayoutRevisionId, long plid)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -334,12 +340,6 @@ public class LayoutRevisionLocalServiceUtil {
 		return getService()
 				   .getChildLayoutRevisionsCount(layoutSetBranchId,
 			parentLayoutRevision, plid);
-	}
-
-	public static com.liferay.portal.model.LayoutRevision fetchLastLayoutRevision(
-		long plid, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchLastLayoutRevision(plid, head);
 	}
 
 	public static com.liferay.portal.model.LayoutRevision getLayoutRevision(

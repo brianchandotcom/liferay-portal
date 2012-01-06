@@ -36,6 +36,12 @@ public class RegionServiceWrapper implements RegionService,
 		return _regionService.addRegion(countryId, regionCode, name, active);
 	}
 
+	public com.liferay.portal.model.Region getRegion(long regionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _regionService.getRegion(regionId);
+	}
+
 	public java.util.List<com.liferay.portal.model.Region> getRegions()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _regionService.getRegions();
@@ -57,12 +63,6 @@ public class RegionServiceWrapper implements RegionService,
 		long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _regionService.getRegions(countryId, active);
-	}
-
-	public com.liferay.portal.model.Region getRegion(long regionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _regionService.getRegion(regionId);
 	}
 
 	/**

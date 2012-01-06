@@ -304,8 +304,8 @@ Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Region",
 	{
 		addRegion: true,
-		getRegions: true,
-		getRegion: true
+		getRegion: true,
+		getRegions: true
 	}
 );
 
@@ -407,8 +407,8 @@ Liferay.Service.registerClass(
 		addRoleUsers: true,
 		addTeamUsers: true,
 		addUser: true,
-		addUserWithWorkflow: true,
 		addUserGroupUsers: true,
+		addUserWithWorkflow: true,
 		deletePortrait: true,
 		deleteRoleUser: true,
 		deleteUser: true,
@@ -423,7 +423,6 @@ Liferay.Service.registerClass(
 		getUserIdByScreenName: true,
 		hasGroupUser: true,
 		hasRoleUser: true,
-		updateIncompleteUser: true,
 		setRoleUsers: true,
 		setUserGroupUsers: true,
 		unsetGroupUsers: true,
@@ -434,6 +433,7 @@ Liferay.Service.registerClass(
 		unsetUserGroupUsers: true,
 		updateAgreedToTermsOfUse: true,
 		updateEmailAddress: true,
+		updateIncompleteUser: true,
 		updateLockoutById: true,
 		updateOpenId: true,
 		updateOrganizations: true,

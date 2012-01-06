@@ -181,7 +181,7 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("DL Folder Name")
 										.equals(selenium.getText(
-								"//span[@id='_20_breadcrumb']/ul/li[2]/span/a"))) {
+								"//div[@class='document-library-breadcrumb']/ul/li[2]/span/a"))) {
 					break;
 				}
 			}
@@ -191,6 +191,9 @@ public class ConfigurePortletHideDocumentColumnsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("DL Folder Name"),
+			selenium.getText(
+				"//div[@class='document-library-breadcrumb']/ul/li[2]/span/a"));
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
 

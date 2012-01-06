@@ -72,11 +72,12 @@ public class AssertLockFolderDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertTrue(selenium.isVisible("//img[@class='locked-icon']"));
-		assertEquals(RuntimeVariables.replace("DL Folder Document Title"),
+		assertEquals(RuntimeVariables.replace(
+				"DL Folder Document Title (Draft)"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DL Folder Document Title"));
+			RuntimeVariables.replace("DL Folder Document Title (Draft)"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

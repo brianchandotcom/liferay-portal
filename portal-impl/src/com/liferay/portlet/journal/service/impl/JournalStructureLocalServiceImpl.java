@@ -258,22 +258,22 @@ public class JournalStructureLocalServiceImpl
 	public void deleteStructure(JournalStructure structure)
 		throws PortalException, SystemException {
 
-		if (journalArticlePersistence.countByG_C_S(
-				structure.getGroupId(), 0, structure.getStructureId()) > 0) {
+		if (journalArticlePersistence.countByStructureId(
+				structure.getStructureId()) > 0) {
 
 			throw new RequiredStructureException(
 				RequiredStructureException.REFERENCED_WEB_CONTENT);
 		}
 
-		if (journalStructurePersistence.countByG_P(
-				structure.getGroupId(), structure.getStructureId()) > 0) {
+		if (journalStructurePersistence.countByParentStructureId(
+				structure.getStructureId()) > 0) {
 
 			throw new RequiredStructureException(
 				RequiredStructureException.REFERENCED_STRUCTURE);
 		}
 
-		if (journalTemplatePersistence.countByG_S(
-				structure.getGroupId(), structure.getStructureId()) > 0) {
+		if (journalTemplatePersistence.countByStructureId(
+				structure.getStructureId()) > 0) {
 
 			throw new RequiredStructureException(
 				RequiredStructureException.REFERENCED_TEMPLATE);

@@ -55,9 +55,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.imageio.ImageIO;
 
@@ -86,9 +83,7 @@ public class PDFProcessorImpl
 	}
 
 	public void generateImages(FileVersion fileVersion) throws Exception {
-		initialize();
-
-		_generateImages(fileVersion);
+		Initializer._initializedInstance._generateImages(fileVersion);
 	}
 
 	public String getGlobalSearchPath() throws Exception {
@@ -120,16 +115,14 @@ public class PDFProcessorImpl
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
-		initialize();
-
-		return doGetPreviewAsStream(fileVersion, index);
+		return Initializer._initializedInstance.doGetPreviewAsStream(
+			fileVersion, index);
 	}
 
 	public int getPreviewFileCount(FileVersion fileVersion) {
-		initialize();
-
 		try {
-			return doGetPreviewFileCount(fileVersion);
+			return Initializer._initializedInstance.doGetPreviewFileCount(
+				fileVersion);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -141,9 +134,8 @@ public class PDFProcessorImpl
 	public long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		initialize();
-
-		return doGetPreviewFileSize(fileVersion, index);
+		return Initializer._initializedInstance.doGetPreviewFileSize(
+			fileVersion, index);
 	}
 
 	public InputStream getThumbnailAsStream(
@@ -161,15 +153,13 @@ public class PDFProcessorImpl
 	}
 
 	public boolean hasImages(FileVersion fileVersion) {
-		initialize();
-
 		boolean hasImages = false;
 
 		try {
 			hasImages = _hasImages(fileVersion);
 
 			if (!hasImages && isSupported(fileVersion)) {
-				_queueGeneration(fileVersion);
+				Initializer._initializedInstance._queueGeneration(fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -180,15 +170,11 @@ public class PDFProcessorImpl
 	}
 
 	public boolean isDocumentSupported(FileVersion fileVersion) {
-		initialize();
-
-		return isSupported(fileVersion);
+		return Initializer._initializedInstance.isSupported(fileVersion);
 	}
 
 	public boolean isDocumentSupported(String mimeType) {
-		initialize();
-
-		return isSupported(mimeType);
+		return Initializer._initializedInstance.isSupported(mimeType);
 	}
 
 	public boolean isImageMagickEnabled() throws Exception {
@@ -255,9 +241,7 @@ public class PDFProcessorImpl
 	}
 
 	public void trigger(FileVersion fileVersion) {
-		initialize();
-
-		_queueGeneration(fileVersion);
+		Initializer._initializedInstance._queueGeneration(fileVersion);
 	}
 
 	@Override
@@ -271,42 +255,18 @@ public class PDFProcessorImpl
 	}
 
 	protected void initialize() {
-		_initializedReadLock.lock();
-
-		try {
-			if (_initialized) {
-				return;
-			}
-		}
-		finally {
-			_initializedReadLock.unlock();
-		}
-
-		_initializedWriteLock.lock();
-
 		try {
 			FileUtil.mkdirs(PREVIEW_TMP_PATH);
 			FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 
 			reset();
-
-			_initialized = true;
 		}
 		catch (Exception e) {
 			_log.warn(e, e);
 		}
-		finally {
-			_initializedWriteLock.unlock();
-		}
 	}
 
 	private PDFProcessorImpl() {
-		super();
-
-		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
-		_initializedReadLock = readWriteLock.readLock();
-		_initializedWriteLock = readWriteLock.writeLock();
 	}
 
 	private void _generateImages(FileVersion fileVersion)
@@ -772,9 +732,6 @@ public class PDFProcessorImpl
 	private ConvertCmd _convertCmd;
 	private List<Long> _fileVersionIds = new Vector<Long>();
 	private String _globalSearchPath;
-	private boolean _initialized;
-	private Lock _initializedReadLock;
-	private Lock _initializedWriteLock;
 	private boolean _warned;
 
 	private static class ImageMagickProcessCallable
@@ -801,6 +758,16 @@ public class PDFProcessorImpl
 		private LinkedList<String> _commandArguments;
 		private String _globalSearchPath;
 
+	}
+
+	private static class Initializer {
+
+		private static final PDFProcessorImpl _initializedInstance;
+
+		static {
+			_instance.initialize();
+			_initializedInstance = _instance;
+		}
 	}
 
 }

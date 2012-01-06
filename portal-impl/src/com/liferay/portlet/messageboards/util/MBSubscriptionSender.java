@@ -92,26 +92,6 @@ public class MBSubscriptionSender extends SubscriptionSender {
 		return subject.concat(StringPool.SPACE).concat(mailId);
 	}
 
-	@Override
-	protected void processMailMessage(MailMessage mailMessage, Locale locale)
-		throws Exception {
-
-		super.processMailMessage(mailMessage, locale);
-
-		if (htmlFormat) {
-			try {
-				String processedBody = BBCodeTranslatorUtil.getHTML(
-					mailMessage.getBody());
-
-				mailMessage.setBody(processedBody);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Could not parse message " + mailId + " " + e.getMessage());
-			}
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(MBSubscriptionSender.class);
 
 	private boolean _calledAddMailingListSubscriber;

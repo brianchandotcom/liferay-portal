@@ -156,8 +156,12 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 
 		<copy todir="${tstamp.value}/dist">
 			<fileset
+				dir="lib/portal"
+				includes="portal-client.jar"
+			/>
+			<fileset
 				dir="portal-client"
-				includes="portal-client.jar,portal-client-javadoc.jar,portal-client-sources.jar"
+				includes="portal-client-javadoc.jar,portal-client-sources.jar"
 			/>
 			<fileset
 				dir="portal-impl"

@@ -69,8 +69,8 @@ public class AddFolderImageNameDuplicateTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Image")
-										.equals(selenium.getText("//tr[4]/td/a"))) {
+				if (RuntimeVariables.replace("Basic Document")
+										.equals(selenium.getText("//tr[3]/td/a"))) {
 					break;
 				}
 			}
@@ -80,10 +80,11 @@ public class AddFolderImageNameDuplicateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText("//tr[4]/td/a"));
+		assertEquals(RuntimeVariables.replace("Basic Document"),
+			selenium.getText("//tr[3]/td/a"));
 		Thread.sleep(5000);
-		selenium.clickAt("//tr[4]/td/a", RuntimeVariables.replace("Image"));
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_31_file']",

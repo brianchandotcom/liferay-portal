@@ -80,8 +80,8 @@ public class AddSubfolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Image")
-										.equals(selenium.getText("//tr[4]/td/a"))) {
+				if (RuntimeVariables.replace("Basic Document")
+										.equals(selenium.getText("//tr[3]/td/a"))) {
 					break;
 				}
 			}
@@ -91,15 +91,16 @@ public class AddSubfolderImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText("//tr[4]/td/a"));
+		assertEquals(RuntimeVariables.replace("Basic Document"),
+			selenium.getText("//tr[3]/td/a"));
 		Thread.sleep(5000);
-		selenium.clickAt("//tr[4]/td/a", RuntimeVariables.replace("Image"));
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_31_file']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\imagegallery\\image\\editsubfolderimage\\dependencies\\test_image.jpg"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\imagegallery\\image\\addsubfolderimage\\dependencies\\test_image.jpg"));
 		selenium.type("//input[@id='_31_title']",
 			RuntimeVariables.replace("MG Subfolder Image Title"));
 		selenium.type("//textarea[@id='_31_description']",

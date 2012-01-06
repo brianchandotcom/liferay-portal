@@ -30,7 +30,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-buttonitem-focused')]</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
 	<td>Icon View Selected</td>
 </tr>
 <tr>
@@ -79,7 +84,7 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Delete</td>
 </tr>
@@ -87,6 +92,11 @@
 	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete the selected entries?</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -98,6 +108,7 @@
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>There are no documents or media files in this folder.</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

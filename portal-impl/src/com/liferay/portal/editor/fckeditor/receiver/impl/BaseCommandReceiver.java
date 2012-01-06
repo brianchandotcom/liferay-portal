@@ -128,36 +128,6 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		_writeDocument(document, response);
 	}
 
-	public void getFolders(
-		CommandArgument commandArgument, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		Document document = _createDocument();
-
-		Node rootNode = _createRoot(
-			document, commandArgument.getCommand(), commandArgument.getType(),
-			commandArgument.getCurrentFolder(), getPath(commandArgument));
-
-		getFolders(commandArgument, document, rootNode);
-
-		_writeDocument(document, response);
-	}
-
-	public void getFoldersAndFiles(
-		CommandArgument commandArgument, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		Document document = _createDocument();
-
-		Node rootNode = _createRoot(
-			document, commandArgument.getCommand(), commandArgument.getType(),
-			commandArgument.getCurrentFolder(), getPath(commandArgument));
-
-		getFoldersAndFiles(commandArgument, document, rootNode);
-
-		_writeDocument(document, response);
-	}
-
 	public void fileUpload(
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {
@@ -275,6 +245,36 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		}
 
 		_writeUploadResponse(returnValue, response);
+	}
+
+	public void getFolders(
+		CommandArgument commandArgument, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		Document document = _createDocument();
+
+		Node rootNode = _createRoot(
+			document, commandArgument.getCommand(), commandArgument.getType(),
+			commandArgument.getCurrentFolder(), getPath(commandArgument));
+
+		getFolders(commandArgument, document, rootNode);
+
+		_writeDocument(document, response);
+	}
+
+	public void getFoldersAndFiles(
+		CommandArgument commandArgument, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		Document document = _createDocument();
+
+		Node rootNode = _createRoot(
+			document, commandArgument.getCommand(), commandArgument.getType(),
+			commandArgument.getCurrentFolder(), getPath(commandArgument));
+
+		getFoldersAndFiles(commandArgument, document, rootNode);
+
+		_writeDocument(document, response);
 	}
 
 	protected abstract String createFolder(CommandArgument commandArgument);

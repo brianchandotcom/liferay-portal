@@ -313,32 +313,6 @@ public class SAXReaderImpl implements SAXReader {
 		return createXPath(xPathExpression, namespaceContextMap);
 	}
 
-	public List<Node> selectNodes(
-		String xPathFilterExpression, List<Node> nodes) {
-
-		return toNewNodes(
-			DocumentHelper.selectNodes(
-				xPathFilterExpression, toOldNodes(nodes)));
-	}
-
-	public List<Node> selectNodes(String xPathFilterExpression, Node node) {
-		NodeImpl nodeImpl = (NodeImpl)node;
-
-		return toNewNodes(
-			DocumentHelper.selectNodes(
-				xPathFilterExpression, nodeImpl.getWrappedNode()));
-	}
-
-	public void sort(List<Node> nodes, String xPathExpression) {
-		DocumentHelper.sort(toOldNodes(nodes), xPathExpression);
-	}
-
-	public void sort(
-		List<Node> nodes, String xPathExpression, boolean distinct) {
-
-		DocumentHelper.sort(toOldNodes(nodes), xPathExpression, distinct);
-	}
-
 	public Document read(File file) throws DocumentException {
 		return read(file, false);
 	}
@@ -485,6 +459,32 @@ public class SAXReaderImpl implements SAXReader {
 		throws DocumentException, MalformedURLException {
 
 		return read(new URL(url), validate);
+	}
+
+	public List<Node> selectNodes(
+		String xPathFilterExpression, List<Node> nodes) {
+
+		return toNewNodes(
+			DocumentHelper.selectNodes(
+				xPathFilterExpression, toOldNodes(nodes)));
+	}
+
+	public List<Node> selectNodes(String xPathFilterExpression, Node node) {
+		NodeImpl nodeImpl = (NodeImpl)node;
+
+		return toNewNodes(
+			DocumentHelper.selectNodes(
+				xPathFilterExpression, nodeImpl.getWrappedNode()));
+	}
+
+	public void sort(List<Node> nodes, String xPathExpression) {
+		DocumentHelper.sort(toOldNodes(nodes), xPathExpression);
+	}
+
+	public void sort(
+		List<Node> nodes, String xPathExpression, boolean distinct) {
+
+		DocumentHelper.sort(toOldNodes(nodes), xPathExpression, distinct);
 	}
 
 	protected org.dom4j.io.SAXReader getSAXReader(boolean validate) {

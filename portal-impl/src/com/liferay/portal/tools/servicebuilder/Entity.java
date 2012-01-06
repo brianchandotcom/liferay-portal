@@ -270,17 +270,6 @@ public class Entity {
 		return _persistenceClass;
 	}
 
-	public String getPKDBName() {
-		if (hasCompoundPK()) {
-			return getVarName() + "PK";
-		}
-		else {
-			EntityColumn col = _getPKColumn();
-
-			return col.getDBName();
-		}
-	}
-
 	public String getPKClassName() {
 		if (hasCompoundPK()) {
 			return _name + "PK";
@@ -289,6 +278,17 @@ public class Entity {
 			EntityColumn col = _getPKColumn();
 
 			return col.getType();
+		}
+	}
+
+	public String getPKDBName() {
+		if (hasCompoundPK()) {
+			return getVarName() + "PK";
+		}
+		else {
+			EntityColumn col = _getPKColumn();
+
+			return col.getDBName();
 		}
 	}
 
@@ -412,20 +412,6 @@ public class Entity {
 		}
 	}
 
-	public boolean hasFinderClass() {
-		if (Validator.isNull(_finderClass)) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		return _name.hashCode();
-	}
-
 	public boolean hasEagerBlobColumn() {
 		if ((_blobList == null) || _blobList.isEmpty()) {
 			return false;
@@ -438,6 +424,20 @@ public class Entity {
 		}
 
 		return false;
+	}
+
+	public boolean hasFinderClass() {
+		if (Validator.isNull(_finderClass)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return _name.hashCode();
 	}
 
 	public boolean hasLazyBlobColumn() {

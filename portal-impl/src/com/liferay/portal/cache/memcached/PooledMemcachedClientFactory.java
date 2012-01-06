@@ -23,10 +23,6 @@ import org.apache.commons.pool.ObjectPool;
  */
 public class PooledMemcachedClientFactory implements MemcachedClientFactory {
 
-	public MemcachedClientIF getMemcachedClient() throws Exception {
-		return (MemcachedClientIF)_memcachedClientPool.borrowObject();
-	}
-
 	public void clear() throws Exception {
 		_memcachedClientPool.clear();
 	}
@@ -41,6 +37,10 @@ public class PooledMemcachedClientFactory implements MemcachedClientFactory {
 		}
 		catch (Exception e) {
 		}
+	}
+
+	public MemcachedClientIF getMemcachedClient() throws Exception {
+		return (MemcachedClientIF)_memcachedClientPool.borrowObject();
 	}
 
 	public int getNumActive() {

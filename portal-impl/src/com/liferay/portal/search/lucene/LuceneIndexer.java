@@ -46,10 +46,6 @@ public class LuceneIndexer implements Runnable {
 		return _finished;
 	}
 
-	public void run() {
-		reindex(PropsValues.INDEX_ON_STARTUP_DELAY);
-	}
-
 	public void reindex() {
 		reindex(0);
 	}
@@ -63,6 +59,10 @@ public class LuceneIndexer implements Runnable {
 		finally {
 			ShardUtil.popCompanyService();
 		}
+	}
+
+	public void run() {
+		reindex(PropsValues.INDEX_ON_STARTUP_DELAY);
 	}
 
 	protected void doReIndex(int delay) {

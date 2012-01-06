@@ -59,10 +59,6 @@ public class MessageListenerWrapper implements MessageListener {
 		_listener.deliver(from, recipient, message);
 	}
 
-	public String getId() {
-		return _listener.getId();
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -81,6 +77,10 @@ public class MessageListenerWrapper implements MessageListener {
 		String id = listener.getId();
 
 		return getId().equals(id);
+	}
+
+	public String getId() {
+		return _listener.getId();
 	}
 
 	@Override

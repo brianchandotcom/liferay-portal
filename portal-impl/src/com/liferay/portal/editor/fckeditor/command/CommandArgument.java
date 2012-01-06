@@ -49,28 +49,12 @@ public class CommandArgument {
 		return _command;
 	}
 
-	public String getType() {
-		return _type;
+	public long getCompanyId() {
+		return _themeDisplay.getCompanyId();
 	}
 
 	public String getCurrentFolder() {
 		return _currentFolder;
-	}
-
-	public String getNewFolder() {
-		return _newFolder;
-	}
-
-	public ThemeDisplay getThemeDisplay() {
-		return _themeDisplay;
-	}
-
-	public HttpServletRequest getHttpServletRequest() {
-		return _request;
-	}
-
-	public long getCompanyId() {
-		return _themeDisplay.getCompanyId();
 	}
 
 	public Group getCurrentGroup() throws Exception {
@@ -103,8 +87,12 @@ public class CommandArgument {
 		}
 	}
 
-	public long getUserId() {
-		return _themeDisplay.getUserId();
+	public HttpServletRequest getHttpServletRequest() {
+		return _request;
+	}
+
+	public String getNewFolder() {
+		return _newFolder;
 	}
 
 	public long getPlid() throws Exception {
@@ -119,6 +107,18 @@ public class CommandArgument {
 		}
 
 		return plid;
+	}
+
+	public ThemeDisplay getThemeDisplay() {
+		return _themeDisplay;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public long getUserId() {
+		return _themeDisplay.getUserId();
 	}
 
 	private String _command;

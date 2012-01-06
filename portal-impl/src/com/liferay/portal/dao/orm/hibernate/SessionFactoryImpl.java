@@ -40,14 +40,14 @@ public class SessionFactoryImpl implements SessionFactory {
 		return portletSessionFactories;
 	}
 
-	public void destroy() {
-		portletSessionFactories.clear();
-	}
-
 	public void closeSession(Session session) throws ORMException {
 		if (!PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
 			session.close();
 		}
+	}
+
+	public void destroy() {
+		portletSessionFactories.clear();
 	}
 
 	public Dialect getDialect() throws ORMException {

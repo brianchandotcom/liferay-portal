@@ -34,6 +34,14 @@ import com.liferay.portal.verify.VerifyProcessUtil;
  */
 public class StartupHelper {
 
+	public boolean isUpgraded() {
+		return _upgraded;
+	}
+
+	public boolean isVerified() {
+		return _verified;
+	}
+
 	public void setDropIndexes(boolean dropIndexes) {
 		_dropIndexes = dropIndexes;
 	}
@@ -77,14 +85,6 @@ public class StartupHelper {
 
 	public void verifyProcess(boolean verified) throws VerifyException {
 		_verified = VerifyProcessUtil.verifyProcess(_upgraded, verified);
-	}
-
-	public boolean isUpgraded() {
-		return _upgraded;
-	}
-
-	public boolean isVerified() {
-		return _verified;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(StartupHelper.class);

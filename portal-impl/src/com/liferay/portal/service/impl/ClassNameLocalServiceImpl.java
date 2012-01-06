@@ -37,13 +37,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ClassNameLocalServiceImpl
 	extends ClassNameLocalServiceBaseImpl implements CacheRegistryItem {
 
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		CacheRegistryUtil.register(this);
-	}
-
 	public ClassName addClassName(String value) throws SystemException {
 		ClassName className = classNamePersistence.fetchByValue(value);
 
@@ -58,6 +51,13 @@ public class ClassNameLocalServiceImpl
 		}
 
 		return className;
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		CacheRegistryUtil.register(this);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

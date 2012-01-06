@@ -31,14 +31,14 @@ public class PooledMemcachePortalCacheManager implements PortalCacheManager {
 	public void afterPropertiesSet() {
 	}
 
+	public void clearAll() {
+		_portalCaches.clear();
+	}
+
 	public void destroy() throws Exception {
 		for (PortalCache portalCache : _portalCaches.values()) {
 			portalCache.destroy();
 		}
-	}
-
-	public void clearAll() {
-		_portalCaches.clear();
 	}
 
 	public PortalCache getCache(String name) {

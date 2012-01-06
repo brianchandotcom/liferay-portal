@@ -104,6 +104,10 @@ public class ElementImpl extends BranchImpl implements Element {
 		return new ElementImpl(_element.addEntity(name, text));
 	}
 
+	public List<Namespace> additionalNamespaces() {
+		return SAXReaderImpl.toNewNamespaces(_element.additionalNamespaces());
+	}
+
 	public Element addNamespace(String prefix, String uri) {
 		return new ElementImpl(_element.addNamespace(prefix, uri));
 	}
@@ -120,10 +124,6 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	public Element addText(String text) {
 		return new ElementImpl(_element.addText(text));
-	}
-
-	public List<Namespace> additionalNamespaces() {
-		return SAXReaderImpl.toNewNamespaces(_element.additionalNamespaces());
 	}
 
 	public void appendAttributes(Element element) {
@@ -176,6 +176,10 @@ public class ElementImpl extends BranchImpl implements Element {
 		return attributes().iterator();
 	}
 
+	public List<Attribute> attributes() {
+		return SAXReaderImpl.toNewAttributes(_element.attributes());
+	}
+
 	public String attributeValue(QName qName) {
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
@@ -195,10 +199,6 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	public String attributeValue(String name, String defaultValue) {
 		return _element.attributeValue(name, defaultValue);
-	}
-
-	public List<Attribute> attributes() {
-		return SAXReaderImpl.toNewAttributes(_element.attributes());
 	}
 
 	public Element createCopy() {
@@ -257,6 +257,21 @@ public class ElementImpl extends BranchImpl implements Element {
 		return elements(name).iterator();
 	}
 
+	public List<Element> elements() {
+		return SAXReaderImpl.toNewElements(_element.elements());
+	}
+
+	public List<Element> elements(QName qName) {
+		QNameImpl qNameImpl = (QNameImpl)qName;
+
+		return SAXReaderImpl.toNewElements(
+			_element.elements(qNameImpl.getWrappedQName()));
+	}
+
+	public List<Element> elements(String name) {
+		return SAXReaderImpl.toNewElements(_element.elements(name));
+	}
+
 	public String elementText(QName qName) {
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
@@ -275,21 +290,6 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	public String elementTextTrim(String name) {
 		return _element.elementTextTrim(name);
-	}
-
-	public List<Element> elements() {
-		return SAXReaderImpl.toNewElements(_element.elements());
-	}
-
-	public List<Element> elements(QName qName) {
-		QNameImpl qNameImpl = (QNameImpl)qName;
-
-		return SAXReaderImpl.toNewElements(
-			_element.elements(qNameImpl.getWrappedQName()));
-	}
-
-	public List<Element> elements(String name) {
-		return SAXReaderImpl.toNewElements(_element.elements(name));
 	}
 
 	@Override

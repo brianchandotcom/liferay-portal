@@ -209,6 +209,18 @@ public class LayoutRevisionLocalServiceImpl
 		}
 	}
 
+	public LayoutRevision fetchLastLayoutRevision(long plid, boolean head)
+		throws SystemException {
+
+		try {
+			return layoutRevisionPersistence.findByH_P_Last(
+				head, plid, new LayoutRevisionCreateDateComparator(true));
+		}
+		catch (NoSuchLayoutRevisionException nslre) {
+			return null;
+		}
+	}
+
 	public List<LayoutRevision> getChildLayoutRevisions(
 			long layoutSetBranchId, long parentLayoutRevisionId, long plid)
 		throws SystemException {
@@ -233,18 +245,6 @@ public class LayoutRevisionLocalServiceImpl
 
 		return layoutRevisionPersistence.countByL_P_P(
 			layoutSetBranchId, parentLayoutRevision, plid);
-	}
-
-	public LayoutRevision fetchLastLayoutRevision(long plid, boolean head)
-		throws SystemException {
-
-		try {
-			return layoutRevisionPersistence.findByH_P_Last(
-				head, plid, new LayoutRevisionCreateDateComparator(true));
-		}
-		catch (NoSuchLayoutRevisionException nslre) {
-			return null;
-		}
 	}
 
 	@Override

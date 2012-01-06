@@ -82,18 +82,6 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 		return new CriterionImpl(_property.eqProperty(other));
 	}
 
-	public Property getProperty(String propertyName) {
-		return new PropertyImpl(_property.getProperty(propertyName));
-	}
-
-	public org.hibernate.criterion.Property getWrappedProperty() {
-		return _property;
-	}
-
-	public Projection group() {
-		return new ProjectionImpl(_property.group());
-	}
-
 	public Criterion ge(DynamicQuery subselect) {
 		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
 
@@ -128,6 +116,18 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 		return new CriterionImpl(
 			_property.geSome(dynamicQueryImpl.getDetachedCriteria()));
+	}
+
+	public Property getProperty(String propertyName) {
+		return new PropertyImpl(_property.getProperty(propertyName));
+	}
+
+	public org.hibernate.criterion.Property getWrappedProperty() {
+		return _property;
+	}
+
+	public Projection group() {
+		return new ProjectionImpl(_property.group());
 	}
 
 	public Criterion gt(DynamicQuery subselect) {

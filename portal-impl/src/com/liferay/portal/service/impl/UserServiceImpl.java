@@ -365,6 +365,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
+	 * Adds the users to the user group.
+	 *
+	 * @param  userGroupId the primary key of the user group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a user group or user with the primary could
+	 *         could not be found, or if the current user did not have
+	 *         permission to assign group members
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void addUserGroupUsers(long userGroupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		UserGroupPermissionUtil.check(
+			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
+
+		userLocalService.addUserGroupUsers(userGroupId, userIds);
+	}
+
+	/**
 	 * Adds a user with workflow and additional parameters.
 	 *
 	 * <p>
@@ -550,25 +569,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-	}
-
-	/**
-	 * Adds the users to the user group.
-	 *
-	 * @param  userGroupId the primary key of the user group
-	 * @param  userIds the primary keys of the users
-	 * @throws PortalException if a user group or user with the primary could
-	 *         could not be found, or if the current user did not have
-	 *         permission to assign group members
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void addUserGroupUsers(long userGroupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		UserGroupPermissionUtil.check(
-			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
-
-		userLocalService.addUserGroupUsers(userGroupId, userIds);
 	}
 
 	/**
@@ -850,74 +850,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a user account that was automatically created when a guest user
-	 * participated in an action (e.g. posting a comment) and only provided his
-	 * name and email address.
-	 *
-	 * @param  companyId the primary key of the user's company
-	 * @param  autoPassword whether a password should be automatically generated
-	 *         for the user
-	 * @param  password1 the user's password
-	 * @param  password2 the user's password confirmation
-	 * @param  autoScreenName whether a screen name should be automatically
-	 *         generated for the user
-	 * @param  screenName the user's screen name
-	 * @param  emailAddress the user's email address
-	 * @param  facebookId the user's facebook ID
-	 * @param  openId the user's OpenID
-	 * @param  locale the user's locale
-	 * @param  firstName the user's first name
-	 * @param  middleName the user's middle name
-	 * @param  lastName the user's last name
-	 * @param  prefixId the user's name prefix ID
-	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
-	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
-	 *         January)
-	 * @param  birthdayDay the user's birthday day
-	 * @param  birthdayYear the user's birthday year
-	 * @param  jobTitle the user's job title
-	 * @param  updateUserInformation whether to update the user's information
-	 * @param  sendEmail whether to send the user an email notification about
-	 *         their new account
-	 * @param  serviceContext the user's service context (optionally
-	 *         <code>null</code>). Can set the expando bridge attributes for the
-	 *         user.
-	 * @return the user
-	 * @throws PortalException if the user's information was invalid or if the
-	 *         email address was reserved
-	 * @throws SystemException if a system exception occurred
-	 */
-	public User updateIncompleteUser(
-			long companyId, boolean autoPassword, String password1,
-			String password2, boolean autoScreenName, String screenName,
-			String emailAddress, long facebookId, String openId, Locale locale,
-			String firstName, String middleName, String lastName, int prefixId,
-			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, boolean updateUserInformation,
-			boolean sendEmail, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		long creatorUserId = 0;
-
-		try {
-			creatorUserId = getUserId();
-		}
-		catch (PrincipalException pe) {
-		}
-
-		checkAddUserPermission(
-			creatorUserId, companyId, emailAddress, null, serviceContext);
-
-		return userLocalService.updateIncompleteUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			updateUserInformation, sendEmail, serviceContext);
-	}
-
-	/**
 	 * Sets the users in the role, removing and adding users to the role as
 	 * necessary.
 	 *
@@ -1142,6 +1074,74 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		return userLocalService.updateEmailAddress(
 			userId, password, emailAddress1, emailAddress2, serviceContext);
+	}
+
+	/**
+	 * Updates a user account that was automatically created when a guest user
+	 * participated in an action (e.g. posting a comment) and only provided his
+	 * name and email address.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically generated
+	 *         for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  updateUserInformation whether to update the user's information
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the user's service context (optionally
+	 *         <code>null</code>). Can set the expando bridge attributes for the
+	 *         user.
+	 * @return the user
+	 * @throws PortalException if the user's information was invalid or if the
+	 *         email address was reserved
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updateIncompleteUser(
+			long companyId, boolean autoPassword, String password1,
+			String password2, boolean autoScreenName, String screenName,
+			String emailAddress, long facebookId, String openId, Locale locale,
+			String firstName, String middleName, String lastName, int prefixId,
+			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, String jobTitle, boolean updateUserInformation,
+			boolean sendEmail, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long creatorUserId = 0;
+
+		try {
+			creatorUserId = getUserId();
+		}
+		catch (PrincipalException pe) {
+		}
+
+		checkAddUserPermission(
+			creatorUserId, companyId, emailAddress, null, serviceContext);
+
+		return userLocalService.updateIncompleteUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			updateUserInformation, sendEmail, serviceContext);
 	}
 
 	/**

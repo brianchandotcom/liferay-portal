@@ -38,12 +38,12 @@ public class CacheControlImpl implements CacheControl {
 		return _eTag;
 	}
 
-	public boolean isPublicScope() {
-		return _publicScope;
-	}
-
 	public int getExpirationTime() {
 		return _expirationTime;
+	}
+
+	public boolean isPublicScope() {
+		return _publicScope;
 	}
 
 	public void setETag(String eTag) {

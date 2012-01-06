@@ -30,10 +30,6 @@ public class RepositoryReport {
 
 	public static final String SUCCESS = "success";
 
-	public void addSuccess(String repositoryURL) {
-		_reportMap.put(repositoryURL, SUCCESS);
-	}
-
 	public void addError(String repositoryURL, PluginPackageException ppe) {
 		StringBundler sb = new StringBundler(3);
 
@@ -52,6 +48,10 @@ public class RepositoryReport {
 		}
 
 		_reportMap.put(repositoryURL, sb.toString());
+	}
+
+	public void addSuccess(String repositoryURL) {
+		_reportMap.put(repositoryURL, SUCCESS);
 	}
 
 	public Set<String> getRepositoryURLs() {

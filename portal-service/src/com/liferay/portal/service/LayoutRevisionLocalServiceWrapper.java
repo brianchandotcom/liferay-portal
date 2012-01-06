@@ -304,6 +304,12 @@ public class LayoutRevisionLocalServiceWrapper
 		_layoutRevisionLocalService.deleteLayoutSetBranchLayoutRevisions(layoutSetBranchId);
 	}
 
+	public com.liferay.portal.model.LayoutRevision fetchLastLayoutRevision(
+		long plid, boolean head)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutRevisionLocalService.fetchLastLayoutRevision(plid, head);
+	}
+
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getChildLayoutRevisions(
 		long layoutSetBranchId, long parentLayoutRevisionId, long plid)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -325,12 +331,6 @@ public class LayoutRevisionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layoutRevisionLocalService.getChildLayoutRevisionsCount(layoutSetBranchId,
 			parentLayoutRevision, plid);
-	}
-
-	public com.liferay.portal.model.LayoutRevision fetchLastLayoutRevision(
-		long plid, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutRevisionLocalService.fetchLastLayoutRevision(plid, head);
 	}
 
 	public com.liferay.portal.model.LayoutRevision getLayoutRevision(

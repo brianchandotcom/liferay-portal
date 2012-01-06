@@ -57,10 +57,6 @@ public class DeploymentHandler {
 		}
 	}
 
-	public DeploymentManager getDeploymentManager() {
-		return _deploymentManager;
-	}
-
 	public void deploy(File warDir, String warContext) throws Exception {
 		setStarted(false);
 
@@ -94,6 +90,10 @@ public class DeploymentHandler {
 		if (_error) {
 			throw new Exception("Failed to deploy " + warDir);
 		}
+	}
+
+	public DeploymentManager getDeploymentManager() {
+		return _deploymentManager;
 	}
 
 	public void releaseDeploymentManager() {

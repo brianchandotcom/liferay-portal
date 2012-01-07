@@ -30,13 +30,13 @@ public class PhoneNumberConverterTag extends ConverterTag {
 		setConverterId(PhoneNumberConverter.class.getName());
 	}
 
-	public void setUnitedStatesFormat(String unitedStatesFormat) {
-		_unitedStatesFormat = unitedStatesFormat;
-	}
-
 	@Override
 	public void release() {
 		_unitedStatesFormat = null;
+	}
+
+	public void setUnitedStatesFormat(String unitedStatesFormat) {
+		_unitedStatesFormat = unitedStatesFormat;
 	}
 
 	@Override

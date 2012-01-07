@@ -197,6 +197,10 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
+	public String getMailId() {
+		return this.mailId;
+	}
+
 	public void initialize() throws Exception {
 		if (_initialized) {
 			return;
@@ -229,10 +233,6 @@ public class SubscriptionSender implements Serializable {
 
 		mailId = PortalUtil.getMailId(
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
-	}
-
-	public String getMailId() {
-		return this.mailId;
 	}
 
 	public void setBody(String body) {

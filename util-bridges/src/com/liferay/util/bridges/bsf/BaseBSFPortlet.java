@@ -50,22 +50,6 @@ import org.apache.bsf.BSFManager;
 public abstract class BaseBSFPortlet extends GenericPortlet {
 
 	@Override
-	public void init() {
-		editFile = getInitParameter("edit-file");
-		helpFile = getInitParameter("help-file");
-		viewFile = getInitParameter("view-file");
-		actionFile = getInitParameter("action-file");
-		resourceFile = getInitParameter("resource-file");
-		globalFiles = StringUtil.split(getInitParameter("global-files"));
-
-		BSFManager.registerScriptingEngine(
-			getScriptingEngineLanguage(), getScriptingEngineClassName(),
-			new String[] {getScriptingEngineExtension()});
-
-		bsfManager = new BSFManager();
-	}
-
-	@Override
 	public void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -107,6 +91,22 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 		throws IOException {
 
 		include(viewFile, renderRequest, renderResponse);
+	}
+
+	@Override
+	public void init() {
+		editFile = getInitParameter("edit-file");
+		helpFile = getInitParameter("help-file");
+		viewFile = getInitParameter("view-file");
+		actionFile = getInitParameter("action-file");
+		resourceFile = getInitParameter("resource-file");
+		globalFiles = StringUtil.split(getInitParameter("global-files"));
+
+		BSFManager.registerScriptingEngine(
+			getScriptingEngineLanguage(), getScriptingEngineClassName(),
+			new String[] {getScriptingEngineExtension()});
+
+		bsfManager = new BSFManager();
 	}
 
 	@Override

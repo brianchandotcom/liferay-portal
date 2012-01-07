@@ -28,10 +28,6 @@ public class QueryPos {
 		return new QueryPos(query);
 	}
 
-	public int getPos() {
-		return _pos;
-	}
-
 	public void add(boolean value) {
 		_query.setBoolean(_pos++, value);
 	}
@@ -128,6 +124,10 @@ public class QueryPos {
 
 	public void add(Timestamp value) {
 		_query.setTimestamp(_pos++, value);
+	}
+
+	public int getPos() {
+		return _pos;
 	}
 
 	private QueryPos(Query query) {

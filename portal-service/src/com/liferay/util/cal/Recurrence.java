@@ -524,6 +524,65 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Method getCandidateStartTime
+	 *
+	 * @return Calendar
+	 */
+	public Calendar getCandidateStartTime(Calendar current) {
+		if (dtStart.getTime().getTime() > current.getTime().getTime()) {
+			throw new IllegalArgumentException("Current time before DtStart");
+		}
+
+		int minInterval = getMinimumInterval();
+		Calendar candidate = (Calendar)current.clone();
+
+		if (true) {
+
+			// This block is only needed while this function is public...
+
+			candidate.clear(Calendar.ZONE_OFFSET);
+			candidate.clear(Calendar.DST_OFFSET);
+			candidate.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
+			candidate.setMinimalDaysInFirstWeek(4);
+			candidate.setFirstDayOfWeek(dtStart.getFirstDayOfWeek());
+		}
+
+		if (frequency == NO_RECURRENCE) {
+			candidate.setTime(dtStart.getTime());
+
+			return candidate;
+		}
+
+		reduce_constant_length_field(Calendar.SECOND, dtStart, candidate);
+		reduce_constant_length_field(Calendar.MINUTE, dtStart, candidate);
+		reduce_constant_length_field(Calendar.HOUR_OF_DAY, dtStart, candidate);
+
+		switch (minInterval) {
+
+			case DAILY :
+
+				/* No more adjustments needed */
+
+				break;
+
+			case WEEKLY :
+				reduce_constant_length_field(Calendar.DAY_OF_WEEK, dtStart,
+											 candidate);
+				break;
+
+			case MONTHLY :
+				reduce_day_of_month(dtStart, candidate);
+				break;
+
+			case YEARLY :
+				reduce_day_of_year(dtStart, candidate);
+				break;
+		}
+
+		return candidate;
+	}
+
+	/**
 	 * Method isInRecurrence
 	 *
 	 * @return boolean
@@ -591,6 +650,90 @@ public class Recurrence implements Serializable {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Method toString
+	 *
+	 * @return String
+	 */
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append(getClass().getName());
+		sb.append("[dtStart=");
+		sb.append((dtStart != null) ? dtStart.toString() : "null");
+		sb.append(",duration=");
+		sb.append((duration != null) ? duration.toString() : "null");
+		sb.append(",frequency=");
+		sb.append(frequency);
+		sb.append(",interval=");
+		sb.append(interval);
+		sb.append(",until=");
+		sb.append((until != null) ? until.toString() : "null");
+		sb.append(",byDay=");
+
+		if (byDay == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < byDay.length; i++) {
+				if (i != 0) {
+					sb.append(",");
+				}
+
+				if (byDay[i] != null) {
+					sb.append(byDay[i].toString());
+				}
+				else {
+					sb.append("null");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(",byMonthDay=");
+		sb.append(stringizeIntArray(byMonthDay));
+		sb.append(",byYearDay=");
+		sb.append(stringizeIntArray(byYearDay));
+		sb.append(",byWeekNo=");
+		sb.append(stringizeIntArray(byWeekNo));
+		sb.append(",byMonth=");
+		sb.append(stringizeIntArray(byMonth));
+		sb.append(']');
+
+		return sb.toString();
+	}
+
+	/**
+	 * Method stringizeIntArray
+	 *
+	 * @return String
+	 */
+	private String stringizeIntArray(int[] a) {
+		if (a == null) {
+			return "null";
+		}
+
+		StringBundler sb = new StringBundler(2 * a.length + 1);
+
+		sb.append("[");
+
+		for (int i = 0; i < a.length; i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+
+			sb.append(a[i]);
+		}
+
+		sb.append("]");
+
+		return sb.toString();
 	}
 
 	/**
@@ -677,65 +820,6 @@ public class Recurrence implements Serializable {
 			throw new IllegalStateException(
 				"Internal error: Unknown frequency value");
 		}
-	}
-
-	/**
-	 * Method getCandidateStartTime
-	 *
-	 * @return Calendar
-	 */
-	public Calendar getCandidateStartTime(Calendar current) {
-		if (dtStart.getTime().getTime() > current.getTime().getTime()) {
-			throw new IllegalArgumentException("Current time before DtStart");
-		}
-
-		int minInterval = getMinimumInterval();
-		Calendar candidate = (Calendar)current.clone();
-
-		if (true) {
-
-			// This block is only needed while this function is public...
-
-			candidate.clear(Calendar.ZONE_OFFSET);
-			candidate.clear(Calendar.DST_OFFSET);
-			candidate.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
-			candidate.setMinimalDaysInFirstWeek(4);
-			candidate.setFirstDayOfWeek(dtStart.getFirstDayOfWeek());
-		}
-
-		if (frequency == NO_RECURRENCE) {
-			candidate.setTime(dtStart.getTime());
-
-			return candidate;
-		}
-
-		reduce_constant_length_field(Calendar.SECOND, dtStart, candidate);
-		reduce_constant_length_field(Calendar.MINUTE, dtStart, candidate);
-		reduce_constant_length_field(Calendar.HOUR_OF_DAY, dtStart, candidate);
-
-		switch (minInterval) {
-
-			case DAILY :
-
-				/* No more adjustments needed */
-
-				break;
-
-			case WEEKLY :
-				reduce_constant_length_field(Calendar.DAY_OF_WEEK, dtStart,
-											 candidate);
-				break;
-
-			case MONTHLY :
-				reduce_day_of_month(dtStart, candidate);
-				break;
-
-			case YEARLY :
-				reduce_day_of_year(dtStart, candidate);
-				break;
-		}
-
-		return candidate;
 	}
 
 	/**
@@ -1040,90 +1124,6 @@ public class Recurrence implements Serializable {
 	 */
 	protected boolean matchesByMonth(Calendar candidate) {
 		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
-	}
-
-	/**
-	 * Method toString
-	 *
-	 * @return String
-	 */
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler();
-
-		sb.append(getClass().getName());
-		sb.append("[dtStart=");
-		sb.append((dtStart != null) ? dtStart.toString() : "null");
-		sb.append(",duration=");
-		sb.append((duration != null) ? duration.toString() : "null");
-		sb.append(",frequency=");
-		sb.append(frequency);
-		sb.append(",interval=");
-		sb.append(interval);
-		sb.append(",until=");
-		sb.append((until != null) ? until.toString() : "null");
-		sb.append(",byDay=");
-
-		if (byDay == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("[");
-
-			for (int i = 0; i < byDay.length; i++) {
-				if (i != 0) {
-					sb.append(",");
-				}
-
-				if (byDay[i] != null) {
-					sb.append(byDay[i].toString());
-				}
-				else {
-					sb.append("null");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		sb.append(",byMonthDay=");
-		sb.append(stringizeIntArray(byMonthDay));
-		sb.append(",byYearDay=");
-		sb.append(stringizeIntArray(byYearDay));
-		sb.append(",byWeekNo=");
-		sb.append(stringizeIntArray(byWeekNo));
-		sb.append(",byMonth=");
-		sb.append(stringizeIntArray(byMonth));
-		sb.append(']');
-
-		return sb.toString();
-	}
-
-	/**
-	 * Method stringizeIntArray
-	 *
-	 * @return String
-	 */
-	private String stringizeIntArray(int[] a) {
-		if (a == null) {
-			return "null";
-		}
-
-		StringBundler sb = new StringBundler(2 * a.length + 1);
-
-		sb.append("[");
-
-		for (int i = 0; i < a.length; i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
-			sb.append(a[i]);
-		}
-
-		sb.append("]");
-
-		return sb.toString();
 	}
 
 }

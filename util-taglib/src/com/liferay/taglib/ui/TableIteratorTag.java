@@ -33,43 +33,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class TableIteratorTag extends TagSupport {
 
 	@Override
-	public int doStartTag() throws JspException {
-		try {
-			if (_list.size() > 0) {
-				HttpServletRequest request =
-					(HttpServletRequest)pageContext.getRequest();
-
-				request.setAttribute("liferay-ui:table-iterator:list", _list);
-				request.setAttribute(
-					"liferay-ui:table-iterator:rowLength",
-					String.valueOf(_rowLength));
-				request.setAttribute(
-					"liferay-ui:table-iterator:rowPadding", _rowPadding);
-				request.setAttribute(
-					"liferay-ui:table-iterator:rowValign", _rowValign);
-				request.setAttribute(
-					"liferay-ui:table-iterator:rowBreak", _rowBreak);
-				request.setAttribute("liferay-ui:table-iterator:width", _width);
-
-				PortalIncludeUtil.include(pageContext, getStartPage());
-
-				pageContext.setAttribute(
-					"tableIteratorObj", _list.get(_listPos));
-				pageContext.setAttribute(
-					"tableIteratorPos", new Integer(_listPos));
-
-				return EVAL_BODY_INCLUDE;
-			}
-			else {
-				return SKIP_BODY;
-			}
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
-	@Override
 	public int doAfterBody() throws JspException {
 		try {
 			HttpServletRequest request =
@@ -126,17 +89,41 @@ public class TableIteratorTag extends TagSupport {
 		}
 	}
 
-	protected String getStartPage() {
-		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
-		}
-		else {
-			return _startPage;
-		}
-	}
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			if (_list.size() > 0) {
+				HttpServletRequest request =
+					(HttpServletRequest)pageContext.getRequest();
 
-	public void setStartPage(String startPage) {
-		_startPage = startPage;
+				request.setAttribute("liferay-ui:table-iterator:list", _list);
+				request.setAttribute(
+					"liferay-ui:table-iterator:rowLength",
+					String.valueOf(_rowLength));
+				request.setAttribute(
+					"liferay-ui:table-iterator:rowPadding", _rowPadding);
+				request.setAttribute(
+					"liferay-ui:table-iterator:rowValign", _rowValign);
+				request.setAttribute(
+					"liferay-ui:table-iterator:rowBreak", _rowBreak);
+				request.setAttribute("liferay-ui:table-iterator:width", _width);
+
+				PortalIncludeUtil.include(pageContext, getStartPage());
+
+				pageContext.setAttribute(
+					"tableIteratorObj", _list.get(_listPos));
+				pageContext.setAttribute(
+					"tableIteratorPos", new Integer(_listPos));
+
+				return EVAL_BODY_INCLUDE;
+			}
+			else {
+				return SKIP_BODY;
+			}
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
 	}
 
 	public String getBodyPage() {
@@ -152,15 +139,6 @@ public class TableIteratorTag extends TagSupport {
 		_bodyPage = bodyPage;
 	}
 
-	protected String getEndPage() {
-		if (Validator.isNull(_endPage)) {
-			return _END_PAGE;
-		}
-		else {
-			return _endPage;
-		}
-	}
-
 	public void setEndPage(String endPage) {
 		_endPage = endPage;
 	}
@@ -170,6 +148,10 @@ public class TableIteratorTag extends TagSupport {
 	}
 
 	public void setListType(String listType) {
+	}
+
+	public void setRowBreak(String rowBreak) {
+		_rowBreak = HtmlUtil.unescape(rowBreak);
 	}
 
 	public void setRowLength(String rowLength) {
@@ -184,12 +166,30 @@ public class TableIteratorTag extends TagSupport {
 		_rowValign = rowValign;
 	}
 
-	public void setRowBreak(String rowBreak) {
-		_rowBreak = HtmlUtil.unescape(rowBreak);
+	public void setStartPage(String startPage) {
+		_startPage = startPage;
 	}
 
 	public void setWidth(String width) {
 		_width = width;
+	}
+
+	protected String getEndPage() {
+		if (Validator.isNull(_endPage)) {
+			return _END_PAGE;
+		}
+		else {
+			return _endPage;
+		}
+	}
+
+	protected String getStartPage() {
+		if (Validator.isNull(_startPage)) {
+			return _START_PAGE;
+		}
+		else {
+			return _startPage;
+		}
 	}
 
 	private static final String _START_PAGE =

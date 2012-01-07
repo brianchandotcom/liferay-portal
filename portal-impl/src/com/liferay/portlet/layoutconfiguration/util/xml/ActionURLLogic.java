@@ -40,13 +40,17 @@ public class ActionURLLogic extends RuntimeLogic {
 	}
 
 	@Override
-	public String getOpenTag() {
-		return OPEN_TAG;
+	public String getClose1Tag() {
+		return CLOSE_1_TAG;
+	}
+
+	public String getLifecycle() {
+		return _lifecycle;
 	}
 
 	@Override
-	public String getClose1Tag() {
-		return CLOSE_1_TAG;
+	public String getOpenTag() {
+		return OPEN_TAG;
 	}
 
 	@Override
@@ -78,10 +82,6 @@ public class ActionURLLogic extends RuntimeLogic {
 		}
 
 		return liferayPortletURL.toString();
-	}
-
-	public String getLifecycle() {
-		return _lifecycle;
 	}
 
 	private RenderResponseImpl _renderResponseImpl;

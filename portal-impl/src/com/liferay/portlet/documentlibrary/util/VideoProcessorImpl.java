@@ -134,14 +134,6 @@ public class VideoProcessorImpl
 		return hasVideo;
 	}
 
-	public boolean isVideoSupported(FileVersion fileVersion) {
-		return _instance.isSupported(fileVersion);
-	}
-
-	public boolean isVideoSupported(String mimeType) {
-		return _instance.isSupported(mimeType);
-	}
-
 	public boolean isSupported(String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return false;
@@ -158,6 +150,14 @@ public class VideoProcessorImpl
 		}
 
 		return false;
+	}
+
+	public boolean isVideoSupported(FileVersion fileVersion) {
+		return _instance.isSupported(fileVersion);
+	}
+
+	public boolean isVideoSupported(String mimeType) {
+		return _instance.isSupported(mimeType);
 	}
 
 	public void trigger(FileVersion fileVersion) {

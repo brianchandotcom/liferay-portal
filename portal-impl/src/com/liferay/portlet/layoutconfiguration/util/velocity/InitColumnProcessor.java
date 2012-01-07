@@ -27,16 +27,16 @@ public class InitColumnProcessor {
 		_columns = new ArrayList<String>();
 	}
 
+	public List<String> getColumns() {
+		return _columns;
+	}
+
 	public void processColumn(String columnId) {
 		_columns.add(columnId);
 	}
 
 	public void processColumn(String columnId, String classNames) {
 		_columns.add(columnId);
-	}
-
-	public List<String> getColumns() {
-		return _columns;
 	}
 
 	private List<String> _columns;

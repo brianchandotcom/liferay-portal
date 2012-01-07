@@ -32,11 +32,6 @@ import javax.portlet.RenderResponse;
 public class HelloWorldPortlet extends GenericPortlet {
 
 	@Override
-	public void processAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-	}
-
-	@Override
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
@@ -48,6 +43,11 @@ public class HelloWorldPortlet extends GenericPortlet {
 		writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ".");
 
 		writer.close();
+	}
+
+	@Override
+	public void processAction(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 	}
 
 }

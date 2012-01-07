@@ -155,14 +155,6 @@ public class SocialActivityCounterDefinition implements Serializable {
 		_ownerType = ownerType;
 	}
 
-	public void setPeriodLength(int periodLength) {
-		_periodLength = periodLength;
-	}
-
-	public void setTransient(boolean transientCounter) {
-		_transient = transientCounter;
-	}
-
 	public void setOwnerType(String ownerType) {
 		if (ownerType.equalsIgnoreCase("actor")) {
 			setOwnerType(SocialActivityCounterConstants.TYPE_ACTOR);
@@ -173,6 +165,14 @@ public class SocialActivityCounterDefinition implements Serializable {
 		else if (ownerType.equalsIgnoreCase("creator")) {
 			setOwnerType(SocialActivityCounterConstants.TYPE_CREATOR);
 		}
+	}
+
+	public void setPeriodLength(int periodLength) {
+		_periodLength = periodLength;
+	}
+
+	public void setTransient(boolean transientCounter) {
+		_transient = transientCounter;
 	}
 
 	private boolean _enabled = true;

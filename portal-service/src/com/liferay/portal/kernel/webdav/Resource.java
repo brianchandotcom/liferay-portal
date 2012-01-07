@@ -30,10 +30,6 @@ public interface Resource {
 
 	public Lock getLock();
 
-	public boolean isCollection();
-
-	public boolean isLocked();
-
  	public String getCreateDate();
 
  	public String getModifiedDate();
@@ -55,5 +51,9 @@ public interface Resource {
 	public String getContentType();
 
 	public InputStream getContentAsStream() throws WebDAVException ;
+
+	public boolean isCollection();
+
+	public boolean isLocked();
 
 }

@@ -47,22 +47,6 @@ public class DiffResult {
 		_changedLines.add(changedLine);
 	}
 
-	public List<String> getChangedLines() {
-		return _changedLines;
-	}
-
-	public void setChangedLines(List<String> changedLines) {
-		_changedLines = changedLines;
-	}
-
-	public int getLineNumber() {
-		return _lineNumber;
-	}
-
-	public void setLineNumber(int lineNumber) {
-		_lineNumber = lineNumber;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		DiffResult diffResult = (DiffResult)obj;
@@ -76,6 +60,14 @@ public class DiffResult {
 		return false;
 	}
 
+	public List<String> getChangedLines() {
+		return _changedLines;
+	}
+
+	public int getLineNumber() {
+		return _lineNumber;
+	}
+
 	@Override
 	public int hashCode() {
 		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
@@ -84,6 +76,14 @@ public class DiffResult {
 		hashCode.append(_changedLines);
 
 		return hashCode.toHashCode();
+	}
+
+	public void setChangedLines(List<String> changedLines) {
+		_changedLines = changedLines;
+	}
+
+	public void setLineNumber(int lineNumber) {
+		_lineNumber = lineNumber;
 	}
 
 	@Override

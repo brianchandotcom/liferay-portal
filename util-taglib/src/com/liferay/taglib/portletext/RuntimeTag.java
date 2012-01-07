@@ -160,16 +160,16 @@ public class RuntimeTag extends TagSupport {
 		}
 	}
 
+	public void setDefaultPreferences(String defaultPreferences) {
+		_defaultPreferences = defaultPreferences;
+	}
+
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
 	}
 
 	public void setQueryString(String queryString) {
 		_queryString = queryString;
-	}
-
-	public void setDefaultPreferences(String defaultPreferences) {
-		_defaultPreferences = defaultPreferences;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeTag.class);

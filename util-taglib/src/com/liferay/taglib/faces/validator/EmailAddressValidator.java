@@ -34,11 +34,19 @@ import org.apache.commons.validator.EmailValidator;
 public class EmailAddressValidator
 	implements StateHolder, javax.faces.validator.Validator {
 
+	public boolean isTransient() {
+		return _transient;
+	}
+
 	public void restoreState(FacesContext facesContext, Object obj) {
 	}
 
 	public Object saveState(FacesContext facesContext) {
 		return null;
+	}
+
+	public void setTransient(boolean value) {
+		_transient = value;
 	}
 
 	public void validate(
@@ -75,14 +83,6 @@ public class EmailAddressValidator
 
 			throw new ValidatorException(facesMessage);
 		}
-	}
-
-	public boolean isTransient() {
-		return _transient;
-	}
-
-	public void setTransient(boolean value) {
-		_transient = value;
 	}
 
 	private boolean _transient;

@@ -27,18 +27,18 @@ public class PrimitiveLongList {
 		_elements = new long[capacity];
 	}
 
+	public void add(long value) {
+		_checkCapacity(_elementsSize + 1);
+
+		_elements[_elementsSize++] = value;
+	}
+
 	public void addAll(long[] values) {
 		_checkCapacity(_elementsSize + values.length);
 
 		System.arraycopy(values, 0, _elements, _elementsSize, values.length);
 
 		_elementsSize += values.length;
-	}
-
-	public void add(long value) {
-		_checkCapacity(_elementsSize + 1);
-
-		_elements[_elementsSize++] = value;
 	}
 
 	public long[] getArray() {

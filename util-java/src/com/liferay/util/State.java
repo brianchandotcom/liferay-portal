@@ -27,14 +27,6 @@ public class State {
 		_name = name;
 	}
 
-	public String getId() {
-		return _id;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
 	public int compareTo(Object obj) {
 		State state = (State)obj;
 
@@ -63,6 +55,14 @@ public class State {
 		else {
 			return false;
 		}
+	}
+
+	public String getId() {
+		return _id;
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	@Override

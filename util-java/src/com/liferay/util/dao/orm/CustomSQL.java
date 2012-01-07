@@ -411,6 +411,46 @@ public class CustomSQL {
 		return sql;
 	}
 
+	public String replaceGroupBy(String sql, String groupBy) {
+		if (groupBy == null) {
+			return sql;
+		}
+
+		int x = sql.indexOf(_GROUP_BY_CLAUSE);
+
+		if (x != -1) {
+			int y = sql.indexOf(_ORDER_BY_CLAUSE);
+
+			if (y == -1) {
+				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
+					groupBy);
+			}
+			else {
+				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
+					groupBy).concat(sql.substring(y));
+			}
+		}
+		else {
+			int y = sql.indexOf(_ORDER_BY_CLAUSE);
+
+			if (y == -1) {
+				sql = sql.concat(_GROUP_BY_CLAUSE).concat(groupBy);
+			}
+			else {
+				StringBundler sb = new StringBundler();
+
+				sb.append(sql.substring(0, y));
+				sb.append(_GROUP_BY_CLAUSE);
+				sb.append(groupBy);
+				sb.append(sql.substring(y));
+
+				sql = sb.toString();
+			}
+		}
+
+		return sql;
+	}
+
 	public String replaceIsNull(String sql) {
 		if (Validator.isNotNull(_functionIsNull)) {
 			sql = StringUtil.replace(
@@ -558,46 +598,6 @@ public class CustomSQL {
 		}
 
 		return StringUtil.replace(sql, oldSql.toString(), newSql.toString());
-	}
-
-	public String replaceGroupBy(String sql, String groupBy) {
-		if (groupBy == null) {
-			return sql;
-		}
-
-		int x = sql.indexOf(_GROUP_BY_CLAUSE);
-
-		if (x != -1) {
-			int y = sql.indexOf(_ORDER_BY_CLAUSE);
-
-			if (y == -1) {
-				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
-					groupBy);
-			}
-			else {
-				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
-					groupBy).concat(sql.substring(y));
-			}
-		}
-		else {
-			int y = sql.indexOf(_ORDER_BY_CLAUSE);
-
-			if (y == -1) {
-				sql = sql.concat(_GROUP_BY_CLAUSE).concat(groupBy);
-			}
-			else {
-				StringBundler sb = new StringBundler();
-
-				sb.append(sql.substring(0, y));
-				sb.append(_GROUP_BY_CLAUSE);
-				sb.append(groupBy);
-				sb.append(sql.substring(y));
-
-				sql = sb.toString();
-			}
-		}
-
-		return sql;
 	}
 
 	public String replaceOrderBy(String sql, OrderByComparator obc) {

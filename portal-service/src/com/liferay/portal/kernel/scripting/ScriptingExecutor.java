@@ -27,8 +27,6 @@ public interface ScriptingExecutor {
 
 	public void clearCache();
 
-	public String getLanguage();
-
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, File scriptFile)
@@ -38,5 +36,7 @@ public interface ScriptingExecutor {
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String script)
 		throws ScriptingException;
+
+	public String getLanguage();
 
 }

@@ -25,10 +25,6 @@ public class Tuple implements Serializable {
 		_array = array;
 	}
 
-	public Object getObject(int i) {
-		return _array[i];
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Tuple)) {
@@ -53,6 +49,10 @@ public class Tuple implements Serializable {
 		}
 
 		return true;
+	}
+
+	public Object getObject(int i) {
+		return _array[i];
 	}
 
 	@Override

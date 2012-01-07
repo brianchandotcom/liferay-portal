@@ -45,6 +45,20 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class EncryptTag extends TagSupport {
 
 	@Override
+	public int doEndTag() throws JspException {
+		try {
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write("</a>");
+
+			return EVAL_PAGE;
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
+	}
+
+	@Override
 	public int doStartTag() throws JspException {
 		try {
 			StringBundler sb = new StringBundler();
@@ -148,30 +162,20 @@ public class EncryptTag extends TagSupport {
 		}
 	}
 
-	@Override
-	public int doEndTag() throws JspException {
-		try {
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write("</a>");
-
-			return EVAL_PAGE;
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setProtocol(String protocol) {
+		_protocol = protocol;
 	}
 
 	public void setStyle(String style) {
 		_style = style;
 	}
 
-	public void setProtocol(String protocol) {
-		_protocol = protocol;
+	public void setTarget(String target) {
+		_target = target;
 	}
 
 	public void setUnencryptedParams(String unencryptedParams) {
@@ -186,10 +190,6 @@ public class EncryptTag extends TagSupport {
 
 	public void setUrl(String url) {
 		_url = url;
-	}
-
-	public void setTarget(String target) {
-		_target = target;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(EncryptTag.class);

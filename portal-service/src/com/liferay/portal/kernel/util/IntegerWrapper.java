@@ -46,20 +46,20 @@ public class IntegerWrapper
 		}
 	}
 
-	public int getValue() {
-		return _value;
+	public int decrement() {
+		return --_value;
 	}
 
-	public void setValue(int value) {
-		_value = value;
+	public int getValue() {
+		return _value;
 	}
 
 	public int increment() {
 		return ++_value;
 	}
 
-	public int decrement() {
-		return --_value;
+	public void setValue(int value) {
+		_value = value;
 	}
 
 	private int _value;

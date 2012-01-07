@@ -37,24 +37,24 @@ public class ThemeCompanyLimit implements Serializable {
 		return _includes;
 	}
 
-	public void setIncludes(List<? extends ThemeCompanyId> includes) {
-		_includes = (List<ThemeCompanyId>)includes;
-	}
-
 	public boolean isIncluded(long companyId) {
 		return _matches(_includes, companyId);
+	}
+
+	public void setIncludes(List<? extends ThemeCompanyId> includes) {
+		_includes = (List<ThemeCompanyId>)includes;
 	}
 
 	public List<ThemeCompanyId> getExcludes() {
 		return _excludes;
 	}
 
-	public void setExcludes(List<? extends ThemeCompanyId> excludes) {
-		_excludes = (List<ThemeCompanyId>)excludes;
-	}
-
 	public boolean isExcluded(long companyId) {
 		return _matches(_excludes, companyId);
+	}
+
+	public void setExcludes(List<? extends ThemeCompanyId> excludes) {
+		_excludes = (List<ThemeCompanyId>)excludes;
 	}
 
 	private boolean _matches(

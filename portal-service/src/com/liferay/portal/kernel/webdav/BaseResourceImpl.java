@@ -98,14 +98,6 @@ public class BaseResourceImpl implements Resource {
 		return null;
 	}
 
-	public boolean isCollection() {
-		return true;
-	}
-
-	public boolean isLocked() {
-		return false;
-	}
-
 	public String getCreateDate() {
 		return _createDateFormatter.format(_createDate);
 	}
@@ -149,6 +141,14 @@ public class BaseResourceImpl implements Resource {
 	@SuppressWarnings("unused")
 	public InputStream getContentAsStream() throws WebDAVException {
 		return null;
+	}
+
+	public boolean isCollection() {
+		return true;
+	}
+
+	public boolean isLocked() {
+		return false;
 	}
 
 	private static Format _createDateFormatter =

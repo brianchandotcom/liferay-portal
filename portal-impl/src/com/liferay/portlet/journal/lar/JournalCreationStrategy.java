@@ -43,6 +43,28 @@ public interface JournalCreationStrategy {
 	public static final String ARTICLE_CONTENT_UNCHANGED = null;
 
 	/**
+	 * Returns <code>true</code> if the default group permissions should be
+	 * added when the specified journalObj is created.
+	 *
+	 * @return <code>true</code> if default group permissions should be added to
+	 *         the specified journalObj
+	 */
+	public boolean addGroupPermissions(
+			PortletDataContext context, Object journalObj)
+		throws Exception;
+
+	/**
+	 * Returns <code>true</code> if the default guest permissions should be
+	 * added when the specified journalObj is created.
+	 *
+	 * @return <code>true</code> if default guest permissions should be added to
+	 *         the specified journalObj
+	 */
+	public boolean addGuestPermissions(
+			PortletDataContext context, Object journalObj)
+		throws Exception;
+
+	/**
 	 * Returns the author's user ID to assign to newly created content. If zero
 	 * is returned, the default user ID import strategy will determine the
 	 * author ID.
@@ -67,28 +89,6 @@ public interface JournalCreationStrategy {
 	 */
 	public String getTransformedContent(
 			PortletDataContext context, JournalArticle newArticle)
-		throws Exception;
-
-	/**
-	 * Returns <code>true</code> if the default group permissions should be
-	 * added when the specified journalObj is created.
-	 *
-	 * @return <code>true</code> if default group permissions should be added to
-	 *         the specified journalObj
-	 */
-	public boolean addGroupPermissions(
-			PortletDataContext context, Object journalObj)
-		throws Exception;
-
-	/**
-	 * Returns <code>true</code> if the default guest permissions should be
-	 * added when the specified journalObj is created.
-	 *
-	 * @return <code>true</code> if default guest permissions should be added to
-	 *         the specified journalObj
-	 */
-	public boolean addGuestPermissions(
-			PortletDataContext context, Object journalObj)
 		throws Exception;
 
 }

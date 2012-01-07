@@ -38,38 +38,6 @@ public class PermissionDisplay
 		_actionLabel = actionLabel;
 	}
 
-	public Permission getPermission() {
-		return _permission;
-	}
-
-	public Resource getResource() {
-		return _resource;
-	}
-
-	public String getPortletName() {
-		return _portletName;
-	}
-
-	public String getPortletLabel() {
-		return _portletLabel;
-	}
-
-	public String getModelName() {
-		return _modelName;
-	}
-
-	public String getModelLabel() {
-		return _modelLabel;
-	}
-
-	public String getActionId() {
-		return _actionId;
-	}
-
-	public String getActionLabel() {
-		return _actionLabel;
-	}
-
 	public int compareTo(PermissionDisplay permissionDisplay) {
 		int value = getPortletLabel().compareTo(
 			permissionDisplay.getPortletLabel());
@@ -108,6 +76,38 @@ public class PermissionDisplay
 		else {
 			return false;
 		}
+	}
+
+	public Permission getPermission() {
+		return _permission;
+	}
+
+	public Resource getResource() {
+		return _resource;
+	}
+
+	public String getPortletName() {
+		return _portletName;
+	}
+
+	public String getPortletLabel() {
+		return _portletLabel;
+	}
+
+	public String getModelName() {
+		return _modelName;
+	}
+
+	public String getModelLabel() {
+		return _modelLabel;
+	}
+
+	public String getActionId() {
+		return _actionId;
+	}
+
+	public String getActionLabel() {
+		return _actionLabel;
 	}
 
 	@Override

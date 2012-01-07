@@ -59,17 +59,13 @@ public interface LayoutTemplate
 
 	public void setContent(String content);
 
-	public boolean hasSetContent();
-
 	public String getUncachedContent() throws IOException;
+
+	public String getUncachedWapContent() throws IOException;
 
 	public String getWapContent();
 
 	public void setWapContent(String wapContent);
-
-	public boolean hasSetWapContent();
-
-	public String getUncachedWapContent() throws IOException;
 
 	public List<String> getColumns();
 
@@ -83,10 +79,14 @@ public interface LayoutTemplate
 
 	public boolean getWARFile();
 
-	public boolean isWARFile();
-
 	public String getContextPath();
 
 	public String getStaticResourcePath();
+
+	public boolean hasSetContent();
+
+	public boolean hasSetWapContent();
+
+	public boolean isWARFile();
 
 }

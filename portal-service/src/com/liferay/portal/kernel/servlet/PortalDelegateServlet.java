@@ -31,6 +31,11 @@ import javax.servlet.http.HttpServlet;
 public class PortalDelegateServlet extends HttpServlet {
 
 	@Override
+	public void destroy() {
+		PortalDelegatorServlet.removeDelegate(_subContext);
+	}
+
+	@Override
 	public void init(ServletConfig servletConfig) {
 		String servletClass = servletConfig.getInitParameter("servlet-class");
 
@@ -56,11 +61,6 @@ public class PortalDelegateServlet extends HttpServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-	}
-
-	@Override
-	public void destroy() {
-		PortalDelegatorServlet.removeDelegate(_subContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

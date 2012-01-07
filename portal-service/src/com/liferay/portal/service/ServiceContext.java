@@ -605,19 +605,6 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	/**
 	 * Returns <code>true</code> if this service context is being passed as a
-	 * parameter to a method which manipulates a resource to which default guest
-	 * permissions apply.
-	 *
-	 * @return <code>true</code> if this service context is being passed as a
-	 *         parameter to a method which manipulates a resource to which
-	 *         default guest permissions apply; <code>false</code> otherwise
-	 */
-	public boolean isAddGuestPermissions() {
-		return _addGuestPermissions;
-	}
-
-	/**
-	 * Returns <code>true</code> if this service context is being passed as a
 	 * parameter to a method which manipulates a resource to which default group
 	 * permissions apply.
 	 *
@@ -627,6 +614,19 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public boolean isAddGroupPermissions() {
 		return _addGroupPermissions;
+	}
+
+	/**
+	 * Returns <code>true</code> if this service context is being passed as a
+	 * parameter to a method which manipulates a resource to which default guest
+	 * permissions apply.
+	 *
+	 * @return <code>true</code> if this service context is being passed as a
+	 *         parameter to a method which manipulates a resource to which
+	 *         default guest permissions apply; <code>false</code> otherwise
+	 */
+	public boolean isAddGuestPermissions() {
+		return _addGuestPermissions;
 	}
 
 	public boolean isAssetEntryVisible() {

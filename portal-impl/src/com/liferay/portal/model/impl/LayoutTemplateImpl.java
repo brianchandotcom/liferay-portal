@@ -160,20 +160,6 @@ public class LayoutTemplateImpl
 		return content;
 	}
 
-	public String getWapContent() {
-		return _wapContent;
-	}
-
-	public void setWapContent(String wapContent) {
-		_setWapContent = true;
-
-		_wapContent = wapContent;
-	}
-
-	public boolean hasSetWapContent() {
-		return _setWapContent;
-	}
-
 	public String getUncachedWapContent() {
 		if (_servletContext == null) {
 			if (_log.isDebugEnabled()) {
@@ -207,6 +193,20 @@ public class LayoutTemplateImpl
 		setWapContent(wapContent);
 
 		return wapContent;
+	}
+
+	public String getWapContent() {
+		return _wapContent;
+	}
+
+	public void setWapContent(String wapContent) {
+		_setWapContent = true;
+
+		_wapContent = wapContent;
+	}
+
+	public boolean hasSetWapContent() {
+		return _setWapContent;
 	}
 
 	public List<String> getColumns() {

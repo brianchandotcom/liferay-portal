@@ -46,33 +46,6 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 	}
 
 	@Override
-	public boolean isCollection() {
-		return false;
-	}
-
-	@Override
-	public Lock getLock() {
-		try {
-			return _fileEntry.getLock();
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
-	@Override
-	public boolean isLocked() {
-		try {
-			return _fileEntry.hasLock();
-		}
-		catch (Exception e) {
-		}
-
-		return false;
-	}
-
-	@Override
 	public String getContentType() {
 		return _fileEntry.getMimeType();
 	}
@@ -87,6 +60,33 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
+	}
+
+	@Override
+	public Lock getLock() {
+		try {
+			return _fileEntry.getLock();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	public boolean isCollection() {
+		return false;
+	}
+
+	@Override
+	public boolean isLocked() {
+		try {
+			return _fileEntry.hasLock();
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private FileEntry _fileEntry;

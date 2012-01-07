@@ -27,17 +27,6 @@ import javax.servlet.ServletContextListener;
  */
 public class LayoutTemplateContextListener implements ServletContextListener {
 
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext = servletContextEvent.getServletContext();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		HotDeployUtil.fireDeployEvent(
-			new HotDeployEvent(servletContext, contextClassLoader));
-	}
-
 	public void contextDestroyed(ServletContextEvent event) {
 		ServletContext servletContext = event.getServletContext();
 
@@ -46,6 +35,17 @@ public class LayoutTemplateContextListener implements ServletContextListener {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		HotDeployUtil.fireUndeployEvent(
+			new HotDeployEvent(servletContext, contextClassLoader));
+	}
+
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		ServletContext servletContext = servletContextEvent.getServletContext();
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		HotDeployUtil.fireDeployEvent(
 			new HotDeployEvent(servletContext, contextClassLoader));
 	}
 

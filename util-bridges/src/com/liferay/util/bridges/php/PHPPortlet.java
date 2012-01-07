@@ -51,30 +51,9 @@ import javax.servlet.http.HttpServletResponse;
 public class PHPPortlet extends GenericPortlet {
 
 	@Override
-	public void init(PortletConfig portletConfig) throws PortletException {
-		super.init(portletConfig);
-
-		editUri = getInitParameter("edit-uri");
-		helpUri = getInitParameter("help-uri");
-		viewUri = getInitParameter("view-uri");
-
-		addPortletParams = GetterUtil.getBoolean(
-			portletConfig.getInitParameter("add-portlet-params"), true);
-
-		String servletObjectsFactoryName = GetterUtil.getString(
-			getInitParameter("servlet-objects-factory"),
-			PortletServletObjectsFactory.class.getName());
-
-		try {
-			Class<?> servletObjectsFactoryClass = Class.forName(
-				servletObjectsFactoryName);
-
-			servletObjectsFactory =
-				(ServletObjectsFactory)servletObjectsFactoryClass.newInstance();
-		}
-		catch (Exception e) {
-			throw new PortletException(
-				"Unable to instantiate factory" + servletObjectsFactoryName, e);
+	public void destroy() {
+		if (quercusServlet != null) {
+			quercusServlet.destroy();
 		}
 	}
 
@@ -121,19 +100,40 @@ public class PHPPortlet extends GenericPortlet {
 	}
 
 	@Override
+	public void init(PortletConfig portletConfig) throws PortletException {
+		super.init(portletConfig);
+
+		editUri = getInitParameter("edit-uri");
+		helpUri = getInitParameter("help-uri");
+		viewUri = getInitParameter("view-uri");
+
+		addPortletParams = GetterUtil.getBoolean(
+			portletConfig.getInitParameter("add-portlet-params"), true);
+
+		String servletObjectsFactoryName = GetterUtil.getString(
+			getInitParameter("servlet-objects-factory"),
+			PortletServletObjectsFactory.class.getName());
+
+		try {
+			Class<?> servletObjectsFactoryClass = Class.forName(
+				servletObjectsFactoryName);
+
+			servletObjectsFactory =
+				(ServletObjectsFactory)servletObjectsFactoryClass.newInstance();
+		}
+		catch (Exception e) {
+			throw new PortletException(
+				"Unable to instantiate factory" + servletObjectsFactoryName, e);
+		}
+	}
+
+	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse) {
 		String phpURI = actionRequest.getParameter(_PHP_URI_PARAM);
 
 		if (phpURI != null) {
 			actionResponse.setRenderParameter(_PHP_URI_PARAM, phpURI);
-		}
-	}
-
-	@Override
-	public void destroy() {
-		if (quercusServlet != null) {
-			quercusServlet.destroy();
 		}
 	}
 

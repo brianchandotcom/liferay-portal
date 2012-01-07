@@ -33,6 +33,10 @@ public class SandboxDeployScanner extends Thread {
 		setPriority(MIN_PRIORITY);
 	}
 
+	public void pause() {
+		_started = false;
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -50,10 +54,6 @@ public class SandboxDeployScanner extends Thread {
 
 			_sandboxDeployDir.scanDirectory();
 		}
-	}
-
-	public void pause() {
-		_started = false;
 	}
 
 	private SandboxDeployDir _sandboxDeployDir;

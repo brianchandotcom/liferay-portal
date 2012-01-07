@@ -46,20 +46,20 @@ public class DoubleWrapper
 		}
 	}
 
-	public double getValue() {
-		return _value;
+	public double decrement() {
+		return --_value;
 	}
 
-	public void setValue(double value) {
-		_value = value;
+	public double getValue() {
+		return _value;
 	}
 
 	public double increment() {
 		return ++_value;
 	}
 
-	public double decrement() {
-		return --_value;
+	public void setValue(double value) {
+		_value = value;
 	}
 
 	private double _value;

@@ -32,8 +32,29 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 		_oldColumnType = oldColumnType;
 	}
 
+	public Integer getNewColumnType(Integer defaultType) {
+		return defaultType;
+	}
+
 	public String getName() {
 		return _name;
+	}
+
+	public Object getNewValue() {
+		return _newValue;
+	}
+
+	public Integer getOldColumnType(Integer defaultType) {
+		if (_oldColumnType == null) {
+			return defaultType;
+		}
+		else {
+			return _oldColumnType;
+		}
+	}
+
+	public Object getOldValue() {
+		return _oldValue;
 	}
 
 	public long increment() throws SystemException {
@@ -51,33 +72,12 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 		}
 	}
 
-	public Integer getOldColumnType(Integer defaultType) {
-		if (_oldColumnType == null) {
-			return defaultType;
-		}
-		else {
-			return _oldColumnType;
-		}
-	}
-
-	public Object getOldValue() {
-		return _oldValue;
+	public void setNewValue(Object newValue) {
+		_newValue = newValue;
 	}
 
 	public void setOldValue(Object oldValue) {
 		_oldValue = oldValue;
-	}
-
-	public Integer getNewColumnType(Integer defaultType) {
-		return defaultType;
-	}
-
-	public Object getNewValue() {
-		return _newValue;
-	}
-
-	public void setNewValue(Object newValue) {
-		_newValue = newValue;
 	}
 
 	private String _name;

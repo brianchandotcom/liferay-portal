@@ -29,36 +29,6 @@ import javax.servlet.jsp.JspWriter;
 public class ToggleAreaTag extends IncludeTag {
 
 	@Override
-	public int doStartTag() throws JspException {
-		try {
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
-
-			request.setAttribute("liferay-ui:toggle-area:id", _id);
-			request.setAttribute(
-				"liferay-ui:toggle-area:showImage", _showImage);
-			request.setAttribute(
-				"liferay-ui:toggle-area:hideImage", _hideImage);
-			request.setAttribute(
-				"liferay-ui:toggle-area:showMessage", _showMessage);
-			request.setAttribute(
-				"liferay-ui:toggle-area:hideMessage", _hideMessage);
-			request.setAttribute(
-				"liferay-ui:toggle-area:defaultShowContent",
-				String.valueOf(_defaultShowContent));
-			request.setAttribute("liferay-ui:toggle-area:stateVar", _stateVar);
-			request.setAttribute("liferay-ui:toggle-area:align", _align);
-
-			include(getStartPage());
-
-			return EVAL_BODY_INCLUDE;
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
-	@Override
 	public int doEndTag() throws JspException {
 		try {
 			if (!FileAvailabilityUtil.isAvailable(
@@ -91,12 +61,54 @@ public class ToggleAreaTag extends IncludeTag {
 		}
 	}
 
-	public void setStartPage(String startPage) {
-		_startPage = startPage;
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
+			request.setAttribute("liferay-ui:toggle-area:id", _id);
+			request.setAttribute(
+				"liferay-ui:toggle-area:showImage", _showImage);
+			request.setAttribute(
+				"liferay-ui:toggle-area:hideImage", _hideImage);
+			request.setAttribute(
+				"liferay-ui:toggle-area:showMessage", _showMessage);
+			request.setAttribute(
+				"liferay-ui:toggle-area:hideMessage", _hideMessage);
+			request.setAttribute(
+				"liferay-ui:toggle-area:defaultShowContent",
+				String.valueOf(_defaultShowContent));
+			request.setAttribute("liferay-ui:toggle-area:stateVar", _stateVar);
+			request.setAttribute("liferay-ui:toggle-area:align", _align);
+
+			include(getStartPage());
+
+			return EVAL_BODY_INCLUDE;
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
+	}
+
+	public void setAlign(String align) {
+		_align = align;
+	}
+
+	public void setDefaultShowContent(boolean defaultShowContent) {
+		_defaultShowContent = defaultShowContent;
 	}
 
 	public void setEndPage(String endPage) {
 		_endPage = endPage;
+	}
+
+	public void setHideImage(String hideImage) {
+		_hideImage = hideImage;
+	}
+
+	public void setHideMessage(String hideMessage) {
+		_hideMessage = hideMessage;
 	}
 
 	public void setId(String id) {
@@ -107,28 +119,16 @@ public class ToggleAreaTag extends IncludeTag {
 		_showImage = showImage;
 	}
 
-	public void setHideImage(String hideImage) {
-		_hideImage = hideImage;
-	}
-
 	public void setShowMessage(String showMessage) {
 		_showMessage = showMessage;
 	}
 
-	public void setHideMessage(String hideMessage) {
-		_hideMessage = hideMessage;
-	}
-
-	public void setDefaultShowContent(boolean defaultShowContent) {
-		_defaultShowContent = defaultShowContent;
+	public void setStartPage(String startPage) {
+		_startPage = startPage;
 	}
 
 	public void setStateVar(String stateVar) {
 		_stateVar = stateVar;
-	}
-
-	public void setAlign(String align) {
-		_align = align;
 	}
 
 	@Override

@@ -48,14 +48,14 @@ public abstract class BaseCometRequest implements CometRequest {
 		_companyId = companyId;
 	}
 
+	public void setPathInfo(String pathInfo) {
+		_pathInfo = pathInfo;
+	}
+
 	public void setRequest(HttpServletRequest request) {
 		setCompanyId(PortalUtil.getCompanyId(request));
 		setPathInfo(request.getPathInfo());
 		setUserId(PortalUtil.getUserId(request));
-	}
-
-	public void setPathInfo(String pathInfo) {
-		_pathInfo = pathInfo;
 	}
 
 	public void setTimestamp(long timestamp) {

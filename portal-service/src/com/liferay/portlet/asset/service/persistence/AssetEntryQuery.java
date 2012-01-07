@@ -178,14 +178,6 @@ public class AssetEntryQuery {
 		return _classTypeIds;
 	}
 
-	public Layout getLayout() {
-		return _layout;
-	}
-
-	public long getLinkedAssetEntryId() {
-		return _linkedAssetEntryId;
-	}
-
 	public int getEnd() {
 		return _end;
 	}
@@ -196,6 +188,14 @@ public class AssetEntryQuery {
 
 	public long[] getGroupIds() {
 		return _groupIds;
+	}
+
+	public Layout getLayout() {
+		return _layout;
+	}
+
+	public long getLinkedAssetEntryId() {
+		return _linkedAssetEntryId;
 	}
 
 	public long[] getNotAllCategoryIds() {
@@ -306,18 +306,6 @@ public class AssetEntryQuery {
 		_enablePermissions = enablePermissions;
 	}
 
-	public void setLayout(Layout layout) {
-		_layout = layout;
-
-		_toString = null;
-	}
-
-	public void setLinkedAssetEntryId(long linkedAssetEntryId) {
-		_linkedAssetEntryId = linkedAssetEntryId;
-
-		_toString = null;
-	}
-
 	public void setEnd(int end) {
 		_end = end;
 
@@ -338,6 +326,18 @@ public class AssetEntryQuery {
 
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
+
+		_toString = null;
+	}
+
+	public void setLayout(Layout layout) {
+		_layout = layout;
+
+		_toString = null;
+	}
+
+	public void setLinkedAssetEntryId(long linkedAssetEntryId) {
+		_linkedAssetEntryId = linkedAssetEntryId;
 
 		_toString = null;
 	}

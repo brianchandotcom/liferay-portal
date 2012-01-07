@@ -30,6 +30,10 @@ import java.util.List;
  */
 public class ContentHits {
 
+	public boolean isShowListed() {
+		return _showListed;
+	}
+
 	public void recordHits(
 			Hits hits, long groupId, boolean privateLayout, int start, int end)
 		throws Exception {
@@ -79,10 +83,6 @@ public class ContentHits {
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - hits.getStart()) /
 				Time.SECOND);
-	}
-
-	public boolean isShowListed() {
-		return _showListed;
 	}
 
 	public void setShowListed(boolean showListed) {

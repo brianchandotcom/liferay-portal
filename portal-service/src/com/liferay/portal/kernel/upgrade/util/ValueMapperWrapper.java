@@ -25,24 +25,24 @@ public class ValueMapperWrapper implements ValueMapper {
 		_valueMapper = valueMapper;
 	}
 
-	public ValueMapper getValueMapper() {
-		return _valueMapper;
+	public void appendException(Object exception) {
+		_valueMapper.appendException(exception);
 	}
 
 	public Object getNewValue(Object oldValue) throws Exception {
 		return _valueMapper.getNewValue(oldValue);
 	}
 
-	public void mapValue(Object oldValue, Object newValue) throws Exception {
-		_valueMapper.mapValue(oldValue, newValue);
-	}
-
-	public void appendException(Object exception) {
-		_valueMapper.appendException(exception);
+	public ValueMapper getValueMapper() {
+		return _valueMapper;
 	}
 
 	public Iterator<Object> iterator() throws Exception {
 		return _valueMapper.iterator();
+	}
+
+	public void mapValue(Object oldValue, Object newValue) throws Exception {
+		_valueMapper.mapValue(oldValue, newValue);
 	}
 
 	public int size() throws Exception {

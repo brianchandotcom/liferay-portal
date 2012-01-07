@@ -30,12 +30,11 @@ public interface BaseRepository extends Repository {
 
 	public LocalRepository getLocalRepository();
 
-	public void initRepository()
-		throws PortalException, SystemException;
-
 	public String[] getSupportedConfigurations();
 
 	public String[][] getSupportedParameters();
+
+	public void initRepository() throws PortalException, SystemException;
 
 	public void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService);

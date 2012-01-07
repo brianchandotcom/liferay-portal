@@ -31,30 +31,6 @@ import javax.servlet.jsp.tagext.BodyTag;
 public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 	@Override
-	public int doStartTag() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		if (Validator.isNull(_id)) {
-			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
-		}
-
-		request.setAttribute("liferay-ui:panel-container:id", _id);
-		request.setAttribute(
-			"liferay-ui:panel-container:accordion", String.valueOf(_accordion));
-		request.setAttribute(
-			"liferay-ui:panel-container:persistState",
-			String.valueOf(_persistState));
-		request.setAttribute("liferay-ui:panel-container:extended", _extended);
-		request.setAttribute("liferay-ui:panel-container:cssClass", _cssClass);
-		request.setAttribute(
-			"liferay-ui:panel-container:panelCount" + _id,
-			new IntegerWrapper());
-
-		return EVAL_BODY_BUFFERED;
-	}
-
-	@Override
 	public int doAfterBody() {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
@@ -108,17 +84,56 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		}
 	}
 
+	@Override
+	public int doStartTag() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		if (Validator.isNull(_id)) {
+			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+		}
+
+		request.setAttribute("liferay-ui:panel-container:id", _id);
+		request.setAttribute(
+			"liferay-ui:panel-container:accordion", String.valueOf(_accordion));
+		request.setAttribute(
+			"liferay-ui:panel-container:persistState",
+			String.valueOf(_persistState));
+		request.setAttribute("liferay-ui:panel-container:extended", _extended);
+		request.setAttribute("liferay-ui:panel-container:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-ui:panel-container:panelCount" + _id,
+			new IntegerWrapper());
+
+		return EVAL_BODY_BUFFERED;
+	}
+
 	public String getId() {
 		return _id;
 	}
 
-	protected String getStartPage() {
-		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
-		}
-		else {
-			return _startPage;
-		}
+	public void setAccordion(boolean accordion) {
+		_accordion = accordion;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
+	public void setEndPage(String endPage) {
+		_endPage = endPage;
+	}
+
+	public void setExtended(Boolean extended) {
+		_extended = extended;
+	}
+
+	public void setId(String id) {
+		_id = id;
+	}
+
+	public void setPersistState(boolean persistState) {
+		_persistState = persistState;
 	}
 
 	public void setStartPage(String startPage) {
@@ -134,28 +149,13 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		}
 	}
 
-	public void setEndPage(String endPage) {
-		_endPage = endPage;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
-	public void setAccordion(boolean accordion) {
-		_accordion = accordion;
-	}
-
-	public void setPersistState(boolean persistState) {
-		_persistState = persistState;
-	}
-
-	public void setExtended(Boolean extended) {
-		_extended = extended;
-	}
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
+	protected String getStartPage() {
+		if (Validator.isNull(_startPage)) {
+			return _START_PAGE;
+		}
+		else {
+			return _startPage;
+		}
 	}
 
 	private static final String _START_PAGE =

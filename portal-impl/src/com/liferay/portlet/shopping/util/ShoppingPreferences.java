@@ -108,10 +108,6 @@ public class ShoppingPreferences {
 		_portletPreferences.setValue("paypalEmailAddress", payPalEmailAddress);
 	}
 
-	public boolean usePayPal() {
-		return Validator.isNotNull(getPayPalEmailAddress());
-	}
-
 	public String getCurrencyId() {
 		return _portletPreferences.getValue("currencyId", "USD");
 	}
@@ -224,24 +220,6 @@ public class ShoppingPreferences {
 		}
 
 		_portletPreferences.setValue("alternativeShipping", sb.toString());
-	}
-
-	public boolean useAlternativeShipping() {
-		String[][] alternativeShipping = getAlternativeShipping();
-
-		try {
-			for (int i = 0; i < 10; i++) {
-				if (Validator.isNotNull(alternativeShipping[0][i]) &&
-					Validator.isNotNull(alternativeShipping[1][i])) {
-
-					return true;
-				}
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return false;
 	}
 
 	public String getAlternativeShippingName(int altShipping) {
@@ -440,6 +418,28 @@ public class ShoppingPreferences {
 
 	public void store() throws IOException, ValidatorException {
 		_portletPreferences.store();
+	}
+
+	public boolean useAlternativeShipping() {
+		String[][] alternativeShipping = getAlternativeShipping();
+
+		try {
+			for (int i = 0; i < 10; i++) {
+				if (Validator.isNotNull(alternativeShipping[0][i]) &&
+					Validator.isNotNull(alternativeShipping[1][i])) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
+
+	public boolean usePayPal() {
+		return Validator.isNotNull(getPayPalEmailAddress());
 	}
 
 	protected ShoppingPreferences(long companyId, long groupId)

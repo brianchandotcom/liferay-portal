@@ -79,6 +79,10 @@ public class PortletColumnLogic extends RuntimeLogic {
 		}
 	}
 
+	public Map<Portlet, Object[]> getPortletsMap() {
+		return _portletsMap;
+	}
+
 	@Override
 	public String processContent(Map<String, String> attributes)
 		throws Exception {
@@ -152,10 +156,6 @@ public class PortletColumnLogic extends RuntimeLogic {
 		sb.append("</div>");
 
 		return sb.toString();
-	}
-
-	public Map<Portlet, Object[]> getPortletsMap() {
-		return _portletsMap;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletColumnLogic.class);

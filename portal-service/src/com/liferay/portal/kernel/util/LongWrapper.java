@@ -46,20 +46,20 @@ public class LongWrapper
 		}
 	}
 
-	public long getValue() {
-		return _value;
+	public long decrement() {
+		return --_value;
 	}
 
-	public void setValue(long value) {
-		_value = value;
+	public long getValue() {
+		return _value;
 	}
 
 	public long increment() {
 		return ++_value;
 	}
 
-	public long decrement() {
-		return --_value;
+	public void setValue(long value) {
+		_value = value;
 	}
 
 	private long _value;

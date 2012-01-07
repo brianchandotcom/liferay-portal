@@ -34,16 +34,16 @@ public class PortletSessionListenerLoader implements ServletContextListener {
 		_httpSessionListener = httpSessionListener;
 	}
 
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		PortletSessionListenerManager.addHttpSessionListener(
-			_httpSessionListener);
-	}
-
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		PortletSessionListenerManager.removeHttpSessionListener(
 			_httpSessionListener);
 
 		_httpSessionListener = null;
+	}
+
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		PortletSessionListenerManager.addHttpSessionListener(
+			_httpSessionListener);
 	}
 
 	private HttpSessionListener _httpSessionListener;

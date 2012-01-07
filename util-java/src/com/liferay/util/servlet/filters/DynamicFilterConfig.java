@@ -45,16 +45,12 @@ public class DynamicFilterConfig implements FilterConfig {
 		_servletContext = servletContext;
 	}
 
-	public String getFilterName() {
-		return _filterName;
-	}
-
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	public void addInitParameter(String name, String value) {
 		_parameters.put(name, value);
+	}
+
+	public String getFilterName() {
+		return _filterName;
 	}
 
 	public String getInitParameter(String name) {
@@ -63,6 +59,10 @@ public class DynamicFilterConfig implements FilterConfig {
 
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(_parameters.keySet());
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	private String _filterName;

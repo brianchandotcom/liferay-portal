@@ -46,7 +46,8 @@ public interface DLSyncService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
 		long companyId, long repositoryId, java.util.Date lastAccessDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.io.InputStream getFileDeltaAsStream(long fileEntryId,
 		java.lang.String sourceVersion, java.lang.String destinationVersion)

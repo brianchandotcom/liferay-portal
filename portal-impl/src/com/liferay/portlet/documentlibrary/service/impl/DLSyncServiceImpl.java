@@ -32,12 +32,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
-
 import java.util.Date;
 import java.util.List;
 
@@ -48,8 +46,12 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 
 	public DLSyncUpdate getDLSyncUpdate(
 			long companyId, long repositoryId, Date lastAccessDate)
-		throws SystemException {
+		throws PortalException, SystemException {
 
+		// Make sure we have permission to access this site
+
+		groupService.getGroup(repositoryId);
+		
 		Date now = new Date();
 
 		List<DLSync> dlSyncs = null;

@@ -57,7 +57,8 @@ public class DLSyncServiceHttp {
 	public static com.liferay.portlet.documentlibrary.model.DLSyncUpdate getDLSyncUpdate(
 		HttpPrincipal httpPrincipal, long companyId, long repositoryId,
 		java.util.Date lastAccessDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
 					"getDLSyncUpdate", _getDLSyncUpdateParameterTypes0);
@@ -71,6 +72,10 @@ public class DLSyncServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}

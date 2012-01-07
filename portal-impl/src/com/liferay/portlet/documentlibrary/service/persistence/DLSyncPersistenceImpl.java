@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
+import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -1408,6 +1409,8 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLSyncPersistence.class)
 	protected DLSyncPersistence dlSyncPersistence;
+	@BeanReference(type = GroupPersistence.class)
+	protected GroupPersistence groupPersistence;
 	@BeanReference(type = ResourcePersistence.class)
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)

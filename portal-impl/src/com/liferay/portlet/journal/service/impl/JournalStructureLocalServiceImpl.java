@@ -261,7 +261,7 @@ public class JournalStructureLocalServiceImpl
 		Group companyGroup = groupLocalService.getCompanyGroup(
 			structure.getCompanyId());
 
-		if (companyGroup.getGroupId() == structure.getGroupId()) {
+		if (structure.getGroupId() == companyGroup.getGroupId()) {
 			if (journalArticlePersistence.countByStructureId(
 					structure.getStructureId()) > 0) {
 

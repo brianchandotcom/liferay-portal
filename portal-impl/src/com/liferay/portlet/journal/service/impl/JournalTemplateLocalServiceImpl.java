@@ -318,9 +318,9 @@ public class JournalTemplateLocalServiceImpl
 		Group companyGroup = groupLocalService.getCompanyGroup(
 			template.getCompanyId());
 
-		if (companyGroup.getGroupId() == template.getGroupId()) {
+		if (template.getGroupId() == companyGroup.getGroupId()) {
 			if (journalArticlePersistence.countByTemplateId(
-				template.getTemplateId()) > 0) {
+					template.getTemplateId()) > 0) {
 
 				throw new RequiredTemplateException();
 			}

@@ -46,20 +46,20 @@ public class FloatWrapper
 		}
 	}
 
-	public float getValue() {
-		return _value;
+	public float decrement() {
+		return --_value;
 	}
 
-	public void setValue(float value) {
-		_value = value;
+	public float getValue() {
+		return _value;
 	}
 
 	public float increment() {
 		return ++_value;
 	}
 
-	public float decrement() {
-		return --_value;
+	public void setValue(float value) {
+		_value = value;
 	}
 
 	private float _value;

@@ -82,15 +82,15 @@ public interface Folder extends RepositoryModel<Folder> {
 
 	public boolean isLocked();
 
+	public boolean isMountPoint();
+
+	public boolean isRoot();
+
 	public boolean isSupportsLocking();
 
 	public boolean isSupportsMetadata();
 
 	public boolean isSupportsMultipleUpload();
-
-	public boolean isMountPoint();
-
-	public boolean isRoot();
 
 	public boolean isSupportsShortcuts();
 

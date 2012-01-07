@@ -27,6 +27,10 @@ public class XMLElementComparator extends ElementComparator {
 		_descriptor = descriptor;
 	}
 
+	public boolean canJoinChildren(Element element) {
+		return _descriptor.canJoinChildren(element);
+	}
+
 	@Override
 	public int compare(Element el1, Element el2) {
 		if (_descriptor.areEqual(el1, el2)) {
@@ -35,10 +39,6 @@ public class XMLElementComparator extends ElementComparator {
 		else {
 			return -1;
 		}
-	}
-
-	public boolean canJoinChildren(Element element) {
-		return _descriptor.canJoinChildren(element);
 	}
 
 	private XMLDescriptor _descriptor;

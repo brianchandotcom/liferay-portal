@@ -50,6 +50,19 @@ public class DiffResult {
 		_changedLines.add(changedLine);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		DiffResult diffResult = (DiffResult)obj;
+
+		if ((diffResult.getLineNumber() == _lineNumber) &&
+			(diffResult.getChangedLines().equals(_changedLines))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public List<String> getChangedLines() {
 		return _changedLines;
 	}
@@ -64,19 +77,6 @@ public class DiffResult {
 
 	public void setLineNumber(int lineNumber) {
 		_lineNumber = lineNumber;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		DiffResult diffResult = (DiffResult)obj;
-
-		if ((diffResult.getLineNumber() == _lineNumber) &&
-			(diffResult.getChangedLines().equals(_changedLines))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

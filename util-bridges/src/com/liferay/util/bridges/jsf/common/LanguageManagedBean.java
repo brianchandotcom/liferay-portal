@@ -47,10 +47,6 @@ public class LanguageManagedBean implements Map<String, String> {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isEmpty() {
-		throw new UnsupportedOperationException();
-	}
-
 	public Set<Entry<String, String>> entrySet() {
 		throw new UnsupportedOperationException();
 	}
@@ -76,6 +72,10 @@ public class LanguageManagedBean implements Map<String, String> {
 		}
 
 		return value;
+	}
+
+	public boolean isEmpty() {
+		throw new UnsupportedOperationException();
 	}
 
 	public Set<String> keySet() {

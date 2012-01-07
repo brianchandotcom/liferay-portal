@@ -24,6 +24,20 @@ import org.apache.tools.ant.Task;
  */
 public class XMLMergerTask extends Task {
 
+	@Override
+	public void execute() throws BuildException {
+		_validateAttributes();
+
+		try {
+			XMLMergerRunner runner = new XMLMergerRunner(_type);
+
+			runner.mergeAndSave(_masterFile, _slaveFile, _outputFile);
+		}
+		catch (Exception e) {
+			throw new BuildException(e);
+		}
+	}
+
 	public void setMasterFile(File masterFile) {
 		_masterFile = masterFile;
 	}
@@ -38,20 +52,6 @@ public class XMLMergerTask extends Task {
 
 	public void setType(String type) {
 		_type = type;
-	}
-
-	@Override
-	public void execute() throws BuildException {
-		_validateAttributes();
-
-		try {
-			XMLMergerRunner runner = new XMLMergerRunner(_type);
-
-			runner.mergeAndSave(_masterFile, _slaveFile, _outputFile);
-		}
-		catch (Exception e) {
-			throw new BuildException(e);
-		}
 	}
 
 	private void _validateAttributes() {

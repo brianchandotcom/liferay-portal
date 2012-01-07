@@ -249,25 +249,6 @@ public class CMISStore extends BaseStore {
 		return document.getContentStreamLength();
 	}
 
-	@Override
-	public boolean hasDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		Folder folder = getRepositoryFolder(companyId, repositoryId);
-
-		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
-
-		for (String subdirName : dirNames) {
-			Folder subfolder = getFolder(folder, subdirName);
-
-			if (subfolder == null) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	public String getHeadVersionLabel(
 			long companyId, long repositoryId, String dirName)
 		throws NoSuchFileException {
@@ -292,6 +273,25 @@ public class CMISStore extends BaseStore {
 		}
 
 		return headVersionLabel;
+	}
+
+	@Override
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
+
+		Folder folder = getRepositoryFolder(companyId, repositoryId);
+
+		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
+
+		for (String subdirName : dirNames) {
+			Folder subfolder = getFolder(folder, subdirName);
+
+			if (subfolder == null) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override

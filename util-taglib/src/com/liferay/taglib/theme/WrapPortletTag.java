@@ -84,11 +84,6 @@ public class WrapPortletTag
 	}
 
 	@Override
-	public int doStartTag() {
-		return EVAL_BODY_BUFFERED;
-	}
-
-	@Override
 	public int doEndTag() throws JspException {
 		try {
 			ServletContext servletContext = getServletContext();
@@ -121,12 +116,17 @@ public class WrapPortletTag
 		}
 	}
 
-	protected String getPage() {
-		return _page;
+	@Override
+	public int doStartTag() {
+		return EVAL_BODY_BUFFERED;
 	}
 
 	public void setPage(String page) {
 		_page = page;
+	}
+
+	protected String getPage() {
+		return _page;
 	}
 
 	private static final String _CONTENT_WRAPPER_PRE =

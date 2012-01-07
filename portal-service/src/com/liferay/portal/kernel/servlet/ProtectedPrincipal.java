@@ -33,10 +33,6 @@ public class ProtectedPrincipal implements Principal, Serializable {
 		_name = name;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -60,6 +56,10 @@ public class ProtectedPrincipal implements Principal, Serializable {
 		else {
 			return false;
 		}
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	@Override

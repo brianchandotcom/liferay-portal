@@ -98,43 +98,23 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method getDayOfWeek
+	 * Method clone
 	 *
-	 * @return int
+	 * @return Object
 	 */
-	public int getDayOfWeek() {
-		return day;
-	}
+	@Override
+	public Object clone() {
+		try {
+			DayAndPosition other = (DayAndPosition)super.clone();
 
-	/**
-	 * Method setDayOfWeek
-	 */
-	public void setDayOfWeek(int d) {
-		if (!isValidDayOfWeek(d)) {
-			throw new IllegalArgumentException("Invalid day of week");
+			other.day = day;
+			other.position = position;
+
+			return other;
 		}
-
-		day = d;
-	}
-
-	/**
-	 * Method getDayPosition
-	 *
-	 * @return int
-	 */
-	public int getDayPosition() {
-		return position;
-	}
-
-	/**
-	 * Method setDayPosition
-	 */
-	public void setDayPosition(int p) {
-		if (!isValidDayPosition(p)) {
-			throw new IllegalArgumentException();
+		catch (CloneNotSupportedException e) {
+			throw new InternalError();
 		}
-
-		position = p;
 	}
 
 	/**
@@ -162,6 +142,24 @@ public class DayAndPosition implements Cloneable, Serializable {
 			   && (getDayPosition() == that.getDayPosition());
 	}
 
+	/**
+	 * Method getDayOfWeek
+	 *
+	 * @return int
+	 */
+	public int getDayOfWeek() {
+		return day;
+	}
+
+	/**
+	 * Method getDayPosition
+	 *
+	 * @return int
+	 */
+	public int getDayPosition() {
+		return position;
+	}
+
 	@Override
 	public int hashCode() {
 		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
@@ -170,6 +168,47 @@ public class DayAndPosition implements Cloneable, Serializable {
 		hashCode.append(position);
 
 		return hashCode.toHashCode();
+	}
+
+	/**
+	 * Method setDayOfWeek
+	 */
+	public void setDayOfWeek(int d) {
+		if (!isValidDayOfWeek(d)) {
+			throw new IllegalArgumentException("Invalid day of week");
+		}
+
+		day = d;
+	}
+
+	/**
+	 * Method setDayPosition
+	 */
+	public void setDayPosition(int p) {
+		if (!isValidDayPosition(p)) {
+			throw new IllegalArgumentException();
+		}
+
+		position = p;
+	}
+
+	/**
+	 * Method toString
+	 *
+	 * @return String
+	 */
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(getClass().getName());
+		sb.append("[day=");
+		sb.append(day);
+		sb.append(",position=");
+		sb.append(position);
+		sb.append("]");
+
+		return sb.toString();
 	}
 
 	/**
@@ -202,45 +241,6 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 */
 	public static boolean isValidDayPosition(int p) {
 		return ((p >= -53) && (p <= 53));
-	}
-
-	/**
-	 * Method clone
-	 *
-	 * @return Object
-	 */
-	@Override
-	public Object clone() {
-		try {
-			DayAndPosition other = (DayAndPosition)super.clone();
-
-			other.day = day;
-			other.position = position;
-
-			return other;
-		}
-		catch (CloneNotSupportedException e) {
-			throw new InternalError();
-		}
-	}
-
-	/**
-	 * Method toString
-	 *
-	 * @return String
-	 */
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(getClass().getName());
-		sb.append("[day=");
-		sb.append(day);
-		sb.append(",position=");
-		sb.append(position);
-		sb.append("]");
-
-		return sb.toString();
 	}
 
 }

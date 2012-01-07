@@ -53,12 +53,12 @@ public class GetUrlTag extends TagSupport {
 		}
 	}
 
-	public void setUrl(String url) {
-		_url = url;
-	}
-
 	public void setExpires(long expires) {
 		_expires = expires;
+	}
+
+	public void setUrl(String url) {
+		_url = url;
 	}
 
 	public void setVar(String var) {

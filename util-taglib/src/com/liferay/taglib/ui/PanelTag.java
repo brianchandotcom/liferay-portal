@@ -75,18 +75,44 @@ public class PanelTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
-	protected String getStartPage() {
-		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
-		}
-		else {
-			return _startPage;
-		}
+	public void setCollapsible(boolean collapsible) {
+		_collapsible = collapsible;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
+	public void setDefaultState(String defaultState) {
+		_defaultState = defaultState;
+	}
+
+	public void setEndPage(String endPage) {
+		_endPage = endPage;
+	}
+
+	public void setExtended(boolean extended) {
+		_extended = extended;
+	}
+
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
+	public void setId(String id) {
+		_id = id;
+	}
+
+	public void setPersistState(boolean persistState) {
+		_persistState = persistState;
 	}
 
 	public void setStartPage(String startPage) {
 		_startPage = startPage;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	@Override
@@ -99,40 +125,14 @@ public class PanelTag extends IncludeTag {
 		}
 	}
 
-	public void setEndPage(String endPage) {
-		_endPage = endPage;
-	}
-
-	public void setHelpMessage(String helpMessage) {
-		_helpMessage = helpMessage;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
- 	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public void setCollapsible(boolean collapsible) {
-		_collapsible = collapsible;
-	}
-
- 	public void setDefaultState(String defaultState) {
-		_defaultState = defaultState;
-	}
-
-	public void setPersistState(boolean persistState) {
-		_persistState = persistState;
-	}
-
-	public void setExtended(boolean extended) {
-		_extended = extended;
-	}
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
+	@Override
+	protected String getStartPage() {
+		if (Validator.isNull(_startPage)) {
+			return _START_PAGE;
+		}
+		else {
+			return _startPage;
+		}
 	}
 
 	private static final String _START_PAGE = "/html/taglib/ui/panel/start.jsp";

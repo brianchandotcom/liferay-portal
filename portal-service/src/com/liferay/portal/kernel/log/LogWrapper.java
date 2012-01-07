@@ -23,10 +23,6 @@ public class LogWrapper implements Log {
 		_log = log;
 	}
 
-	public void setLog(Log log) {
-		_log = log;
-	}
-
 	public void debug(Object msg) {
 		try {
 			_log.debug(msg);
@@ -157,6 +153,10 @@ public class LogWrapper implements Log {
 
 	public boolean isWarnEnabled() {
 		return _log.isWarnEnabled();
+	}
+
+	public void setLog(Log log) {
+		_log = log;
 	}
 
 	public void trace(Object msg) {

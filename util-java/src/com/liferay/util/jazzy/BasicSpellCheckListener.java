@@ -33,6 +33,10 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 		_invalidWords = new ArrayList<InvalidWord>();
 	}
 
+	public List<InvalidWord> getInvalidWords() {
+		return _invalidWords;
+	}
+
 	public void spellingError(SpellCheckEvent event) {
 		List<String> suggestions = new ArrayList<String>();
 
@@ -60,10 +64,6 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 						event.getWordContext(), pos));
 			}
 		}
-	}
-
-	public List<InvalidWord> getInvalidWords() {
-		return _invalidWords;
 	}
 
 	private boolean _isInsideHtmlTag(int pos) {

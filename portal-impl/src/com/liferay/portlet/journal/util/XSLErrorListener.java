@@ -55,12 +55,24 @@ public class XSLErrorListener implements ErrorListener {
 		throw exception;
 	}
 
-	public void warning(TransformerException exception)
-		throws TransformerException {
+	public String getLocation() {
+		return _location;
+	}
 
-		setLocation(exception);
+	public String getMessage() {
+		return _message;
+	}
 
-		throw exception;
+	public String getMessageAndLocation() {
+		return _message + " " + _location;
+	}
+
+	public int getLineNumber() {
+		return _lineNumber;
+	}
+
+	public int getColumnNumber() {
+		return _columnNumber;
 	}
 
 	public void setLocation(Throwable exception) {
@@ -121,24 +133,12 @@ public class XSLErrorListener implements ErrorListener {
 		}
 	}
 
-	public String getLocation() {
-		return _location;
-	}
+	public void warning(TransformerException exception)
+		throws TransformerException {
 
-	public String getMessage() {
-		return _message;
-	}
+		setLocation(exception);
 
-	public String getMessageAndLocation() {
-		return _message + " " + _location;
-	}
-
-	public int getLineNumber() {
-		return _lineNumber;
-	}
-
-	public int getColumnNumber() {
-		return _columnNumber;
+		throw exception;
 	}
 
 	private Locale _locale;

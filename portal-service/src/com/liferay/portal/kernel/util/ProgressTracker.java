@@ -38,6 +38,20 @@ public class ProgressTracker {
 		_progressId = progressId;
 	}
 
+	public void finish() {
+		if (_request != null) {
+			HttpSession session = _request.getSession();
+
+			session.removeAttribute(PERCENT + _progressId);
+		}
+		else {
+			PortletSession portletSession = _portletRequest.getPortletSession();
+
+			portletSession.removeAttribute(
+				PERCENT + _progressId, PortletSession.APPLICATION_SCOPE);
+		}
+	}
+
 	public int getProgress() {
 		if (_request != null) {
 			HttpSession session = _request.getSession();
@@ -68,20 +82,6 @@ public class ProgressTracker {
 			portletSession.setAttribute(
 				PERCENT + _progressId, new Integer(percentage),
 				PortletSession.APPLICATION_SCOPE);
-		}
-	}
-
-	public void finish() {
-		if (_request != null) {
-			HttpSession session = _request.getSession();
-
-			session.removeAttribute(PERCENT + _progressId);
-		}
-		else {
-			PortletSession portletSession = _portletRequest.getPortletSession();
-
-			portletSession.removeAttribute(
-				PERCENT + _progressId, PortletSession.APPLICATION_SCOPE);
 		}
 	}
 

@@ -139,6 +139,18 @@ public class ToggleTag extends IncludeTag {
 		}
 	}
 
+	public void setDefaultShowContent(boolean defaultShowContent) {
+		_defaultShowContent = defaultShowContent;
+	}
+
+	public void setHideImage(String hideImage) {
+		_hideImage = hideImage;
+	}
+
+	public void setHideMessage(String hideMessage) {
+		_hideMessage = hideMessage;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -147,20 +159,8 @@ public class ToggleTag extends IncludeTag {
 		_showImage = showImage;
 	}
 
-	public void setHideImage(String hideImage) {
-		_hideImage = hideImage;
-	}
-
 	public void setShowMessage(String showMessage) {
 		_showMessage = showMessage;
-	}
-
-	public void setHideMessage(String hideMessage) {
-		_hideMessage = hideMessage;
-	}
-
-	public void setDefaultShowContent(boolean defaultShowContent) {
-		_defaultShowContent = defaultShowContent;
 	}
 
 	public void setStateVar(String stateVar) {

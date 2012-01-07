@@ -34,6 +34,15 @@ import org.apache.struts.action.ActionMapping;
 public class SearchAction extends PortletAction {
 
 	@Override
+	public ActionForward render(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		return mapping.findForward("portlet.document_library.view");
+	}
+
+	@Override
 	public void serveResource(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -46,15 +55,6 @@ public class SearchAction extends PortletAction {
 				"/html/portlet/document_library/search_resources.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
-
-		return mapping.findForward("portlet.document_library.view");
 	}
 
 }

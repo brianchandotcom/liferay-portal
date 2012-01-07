@@ -81,14 +81,6 @@ public class MulticastTransport extends Thread implements Transport {
 		_socket.close();
 	}
 
-	public synchronized void sendMessage(String msg) throws IOException {
-		_outboundPacket.setData(msg.getBytes());
-		_outboundPacket.setAddress(_address);
-		_outboundPacket.setPort(_port);
-
-		_socket.send(_outboundPacket);
-	}
-
 	public boolean isConnected() {
 		return _connected;
 	}
@@ -110,6 +102,14 @@ public class MulticastTransport extends Thread implements Transport {
 
 			_handler.errorReceived(e);
 		}
+	}
+
+	public synchronized void sendMessage(String msg) throws IOException {
+		_outboundPacket.setData(msg.getBytes());
+		_outboundPacket.setAddress(_address);
+		_outboundPacket.setPort(_port);
+
+		_socket.send(_outboundPacket);
 	}
 
 	private static Log _log = LogFactory.getLog(MulticastTransport.class);

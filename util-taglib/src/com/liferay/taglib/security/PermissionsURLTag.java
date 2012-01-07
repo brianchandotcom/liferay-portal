@@ -127,16 +127,16 @@ public class PermissionsURLTag extends TagSupport {
 		return EVAL_PAGE;
 	}
 
-	public void setRedirect(String redirect) {
-		_redirect = redirect;
-	}
-
 	public void setModelResource(String modelResource) {
 		_modelResource = modelResource;
 	}
 
 	public void setModelResourceDescription(String modelResourceDescription) {
 		_modelResourceDescription = modelResourceDescription;
+	}
+
+	public void setRedirect(String redirect) {
+		_redirect = redirect;
 	}
 
 	public void setResourcePrimKey(String resourcePrimKey) {

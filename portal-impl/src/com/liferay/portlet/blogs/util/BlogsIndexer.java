@@ -63,11 +63,6 @@ public class BlogsIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public boolean isPermissionAware() {
-		return _PERMISSION_AWARE;
-	}
-
-	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long entryClassPK,
 			String actionId)
@@ -80,6 +75,11 @@ public class BlogsIndexer extends BaseIndexer {
 	@Override
 	public boolean isFilterSearch() {
 		return _FILTER_SEARCH;
+	}
+
+	@Override
+	public boolean isPermissionAware() {
+		return _PERMISSION_AWARE;
 	}
 
 	@Override

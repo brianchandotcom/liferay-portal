@@ -33,6 +33,10 @@ public class AssetTagsSummaryTag extends IncludeTag {
 		return _portletURL;
 	}
 
+	public void setAssetTagNames(String assetTagNames) {
+		_assetTagNames = assetTagNames;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -43,10 +47,6 @@ public class AssetTagsSummaryTag extends IncludeTag {
 
 	public void setMessage(String message) {
 		_message = message;
-	}
-
-	public void setAssetTagNames(String assetTagNames) {
-		_assetTagNames = assetTagNames;
 	}
 
 	public void setPortletURL(PortletURL portletURL) {

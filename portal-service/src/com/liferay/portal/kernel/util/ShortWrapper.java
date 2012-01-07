@@ -46,20 +46,20 @@ public class ShortWrapper
 		}
 	}
 
-	public short getValue() {
-		return _value;
+	public short decrement() {
+		return --_value;
 	}
 
-	public void setValue(short value) {
-		_value = value;
+	public short getValue() {
+		return _value;
 	}
 
 	public short increment() {
 		return ++_value;
 	}
 
-	public short decrement() {
-		return --_value;
+	public void setValue(short value) {
+		_value = value;
 	}
 
 	private short _value;

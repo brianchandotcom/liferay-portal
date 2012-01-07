@@ -57,18 +57,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return new PortletDataHandlerControl[0];
 	}
 
-	public boolean isAlwaysExportable() {
-		return _ALWAYS_EXPORTABLE;
-	}
-
-	public boolean isAlwaysStaged() {
-		return _ALWAYS_STAGED;
-	}
-
-	public boolean isPublishToLiveByDefault() {
-		return _PUBLISH_TO_LIVE_BY_DEFAULT;
-	}
-
 	public PortletPreferences importData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
@@ -81,6 +69,18 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
+	}
+
+	public boolean isAlwaysExportable() {
+		return _ALWAYS_EXPORTABLE;
+	}
+
+	public boolean isAlwaysStaged() {
+		return _ALWAYS_STAGED;
+	}
+
+	public boolean isPublishToLiveByDefault() {
+		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
 
 	protected PortletPreferences doDeleteData(

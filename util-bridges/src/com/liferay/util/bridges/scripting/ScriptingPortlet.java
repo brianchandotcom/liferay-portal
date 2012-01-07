@@ -58,18 +58,6 @@ import javax.portlet.ResourceResponse;
 public class ScriptingPortlet extends GenericPortlet {
 
 	@Override
-	public void init() {
-		actionFile = getInitParameter("action-file");
-		editFile = getInitParameter("edit-file");
-		helpFile = getInitParameter("help-file");
-		resourceFile = getInitParameter("resource-file");
-		viewFile = getInitParameter("view-file");
-
-		language = getInitParameter("scripting-language");
-		globalFiles = StringUtil.split(getInitParameter("global-files"));
-	}
-
-	@Override
 	public void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -111,6 +99,18 @@ public class ScriptingPortlet extends GenericPortlet {
 		throws IOException {
 
 		include(viewFile, renderRequest, renderResponse);
+	}
+
+	@Override
+	public void init() {
+		actionFile = getInitParameter("action-file");
+		editFile = getInitParameter("edit-file");
+		helpFile = getInitParameter("help-file");
+		resourceFile = getInitParameter("resource-file");
+		viewFile = getInitParameter("view-file");
+
+		language = getInitParameter("scripting-language");
+		globalFiles = StringUtil.split(getInitParameter("global-files"));
 	}
 
 	@Override

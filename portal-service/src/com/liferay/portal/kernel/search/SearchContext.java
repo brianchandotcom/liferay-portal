@@ -254,16 +254,16 @@ public class SearchContext implements Serializable {
 		_nodeIds = nodeIds;
 	}
 
-	public void setQueryConfig(QueryConfig queryConfig) {
-		_queryConfig = queryConfig;
-	}
-
 	public void setOwnerUserId(long ownerUserId) {
 		_ownerUserId = ownerUserId;
 	}
 
 	public void setPortletIds(String[] portletIds) {
 		_portletIds = portletIds;
+	}
+
+	public void setQueryConfig(QueryConfig queryConfig) {
+		_queryConfig = queryConfig;
 	}
 
 	public void setScopeStrict(boolean scopeStrict) {

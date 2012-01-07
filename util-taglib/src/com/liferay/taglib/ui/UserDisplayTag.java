@@ -30,6 +30,18 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class UserDisplayTag extends TagSupport {
 
 	@Override
+	public int doEndTag() throws JspException {
+		try {
+			PortalIncludeUtil.include(pageContext, getEndPage());
+
+			return EVAL_PAGE;
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
+	}
+
+	@Override
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest request =
@@ -78,29 +90,28 @@ public class UserDisplayTag extends TagSupport {
 		}
 	}
 
-	@Override
-	public int doEndTag() throws JspException {
-		try {
-			PortalIncludeUtil.include(pageContext, getEndPage());
-
-			return EVAL_PAGE;
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
+	public void setDisplayStyle(int displayStyle) {
+		_displayStyle = displayStyle;
 	}
 
-	protected String getStartPage() {
-		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
-		}
-		else {
-			return _startPage;
-		}
+	public void setEndPage(String endPage) {
+		_endPage = endPage;
 	}
 
 	public void setStartPage(String startPage) {
 		_startPage = startPage;
+	}
+
+	public void setUrl(String url) {
+		_url = url;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	protected String getEndPage() {
@@ -112,24 +123,13 @@ public class UserDisplayTag extends TagSupport {
 		}
 	}
 
-	public void setEndPage(String endPage) {
-		_endPage = endPage;
-	}
-
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
-	public void setUserName(String userName) {
-		_userName = userName;
-	}
-
-	public void setUrl(String url) {
-		_url = url;
-	}
-
-	public void setDisplayStyle(int displayStyle) {
-		_displayStyle = displayStyle;
+	protected String getStartPage() {
+		if (Validator.isNull(_startPage)) {
+			return _START_PAGE;
+		}
+		else {
+			return _startPage;
+		}
 	}
 
 	private static final String _START_PAGE =

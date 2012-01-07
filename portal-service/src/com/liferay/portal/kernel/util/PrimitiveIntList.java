@@ -27,18 +27,18 @@ public class PrimitiveIntList {
 		_elements = new int[capacity];
 	}
 
+	public void add(int value) {
+		_checkCapacity(_elementsSize + 1);
+
+		_elements[_elementsSize++] = value;
+	}
+
 	public void addAll(int[] values) {
 		_checkCapacity(_elementsSize + values.length);
 
 		System.arraycopy(values, 0, _elements, _elementsSize, values.length);
 
 		_elementsSize += values.length;
-	}
-
-	public void add(int value) {
-		_checkCapacity(_elementsSize + 1);
-
-		_elements[_elementsSize++] = value;
 	}
 
 	public int[] getArray() {

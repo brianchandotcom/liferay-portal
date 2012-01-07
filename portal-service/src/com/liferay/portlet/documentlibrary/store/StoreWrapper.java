@@ -61,13 +61,6 @@ public class StoreWrapper implements Store {
 		_store.checkRoot(companyId);
 	}
 
-	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException, SystemException {
-
-		_store.deleteDirectory(companyId, repositoryId, dirName);
-	}
-
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
@@ -76,6 +69,13 @@ public class StoreWrapper implements Store {
 		_store.copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
 			toVersionLabel);
+	}
+
+	public void deleteDirectory(
+			long companyId, long repositoryId, String dirName)
+		throws PortalException, SystemException {
+
+		_store.deleteDirectory(companyId, repositoryId, dirName);
 	}
 
 	public void deleteFile(long companyId, long repositoryId, String fileName)

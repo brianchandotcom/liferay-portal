@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public interface CustomUserAttributes extends Cloneable {
 
-	public String getValue(String name, Map<String, String> userInfo);
-
 	public Object clone();
+
+	public String getValue(String name, Map<String, String> userInfo);
 
 }

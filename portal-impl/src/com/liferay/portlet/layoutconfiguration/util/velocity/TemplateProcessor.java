@@ -46,6 +46,10 @@ public class TemplateProcessor implements ColumnProcessor {
 			new PortletRenderWeightComparator());
 	}
 
+	public Map<Portlet, Object[]> getPortletsMap() {
+		return _portletsMap;
+	}
+
 	public String processColumn(String columnId) throws Exception {
 		return processColumn(columnId, StringPool.BLANK);
 	}
@@ -96,10 +100,6 @@ public class TemplateProcessor implements ColumnProcessor {
 		finally {
 			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 		}
-	}
-
-	public Map<Portlet, Object[]> getPortletsMap() {
-		return _portletsMap;
 	}
 
 	private ServletContext _servletContext;

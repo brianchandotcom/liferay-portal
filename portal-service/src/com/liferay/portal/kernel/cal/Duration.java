@@ -170,6 +170,29 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Method clone
+	 *
+	 * @return Object
+	 */
+	@Override
+	public Object clone() {
+		try {
+			Duration other = (Duration)super.clone();
+
+			other.weeks = weeks;
+			other.days = days;
+			other.hours = hours;
+			other.minutes = minutes;
+			other.seconds = seconds;
+
+			return other;
+		}
+		catch (CloneNotSupportedException e) {
+			throw new InternalError();
+		}
+	}
+
+	/**
 	 * Method getWeeks
 	 *
 	 * @return int
@@ -315,6 +338,31 @@ public class Duration implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Method toString
+	 *
+	 * @return String
+	 */
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(getClass().getName());
+		sb.append("[weeks=");
+		sb.append(weeks);
+		sb.append(",days=");
+		sb.append(days);
+		sb.append(",hours=");
+		sb.append(hours);
+		sb.append(",minutes=");
+		sb.append(minutes);
+		sb.append(",seconds=");
+		sb.append(seconds);
+		sb.append("]");
+
+		return sb.toString();
+	}
+
+	/**
 	 * Method normalize
 	 */
 	protected void normalize() {
@@ -346,54 +394,6 @@ public class Duration implements Cloneable, Serializable {
 			throw new IllegalStateException(
 				"Weeks and non-weeks are incompatible");
 		}
-	}
-
-	/**
-	 * Method clone
-	 *
-	 * @return Object
-	 */
-	@Override
-	public Object clone() {
-		try {
-			Duration other = (Duration)super.clone();
-
-			other.weeks = weeks;
-			other.days = days;
-			other.hours = hours;
-			other.minutes = minutes;
-			other.seconds = seconds;
-
-			return other;
-		}
-		catch (CloneNotSupportedException e) {
-			throw new InternalError();
-		}
-	}
-
-	/**
-	 * Method toString
-	 *
-	 * @return String
-	 */
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(getClass().getName());
-		sb.append("[weeks=");
-		sb.append(weeks);
-		sb.append(",days=");
-		sb.append(days);
-		sb.append(",hours=");
-		sb.append(hours);
-		sb.append(",minutes=");
-		sb.append(minutes);
-		sb.append(",seconds=");
-		sb.append(seconds);
-		sb.append("]");
-
-		return sb.toString();
 	}
 
 }

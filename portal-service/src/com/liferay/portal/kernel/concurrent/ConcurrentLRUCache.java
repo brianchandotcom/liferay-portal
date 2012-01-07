@@ -69,6 +69,10 @@ public class ConcurrentLRUCache<K, V> {
 		return _evictCount.get();
 	}
 
+	public int expectedSize() {
+		return _expectedSize;
+	}
+
 	public V get(K key) {
 		_readLock.lock();
 
@@ -90,10 +94,6 @@ public class ConcurrentLRUCache<K, V> {
 		_missCount.getAndIncrement();
 
 		return null;
-	}
-
-	public int expectedSize() {
-		return _expectedSize;
 	}
 
 	public long hitCount() {

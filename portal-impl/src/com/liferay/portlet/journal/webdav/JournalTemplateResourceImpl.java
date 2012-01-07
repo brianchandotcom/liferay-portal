@@ -44,11 +44,6 @@ public class JournalTemplateResourceImpl extends BaseResourceImpl {
 	}
 
 	@Override
-	public boolean isCollection() {
-		return false;
-	}
-
-	@Override
 	public String getContentType() {
 		return ContentTypes.TEXT_XML;
 	}
@@ -62,6 +57,11 @@ public class JournalTemplateResourceImpl extends BaseResourceImpl {
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
+	}
+
+	@Override
+	public boolean isCollection() {
+		return false;
 	}
 
 	private JournalTemplate _template;

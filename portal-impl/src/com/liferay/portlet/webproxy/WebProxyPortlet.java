@@ -42,27 +42,6 @@ import org.portletbridge.portlet.PortletBridgePortlet;
 public class WebProxyPortlet extends PortletBridgePortlet {
 
 	@Override
-	public void init() {
-		try {
-			super.init();
-
-			_enabled = true;
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
-
-		if (!_enabled && ServerDetector.isWebLogic() && _log.isInfoEnabled()) {
-			_log.info(
-				"WebProxyPortlet will not be enabled unless Liferay's " +
-					"serializer.jar and xalan.jar files are copied to the " +
-						"JDK's endorsed directory");
-		}
-	}
-
-	@Override
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -98,6 +77,27 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 			output = StringUtil.replace(output, "//pbhs/", "/pbhs/");
 
 			stringResponse.setString(output);
+		}
+	}
+
+	@Override
+	public void init() {
+		try {
+			super.init();
+
+			_enabled = true;
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
+
+		if (!_enabled && ServerDetector.isWebLogic() && _log.isInfoEnabled()) {
+			_log.info(
+				"WebProxyPortlet will not be enabled unless Liferay's " +
+					"serializer.jar and xalan.jar files are copied to the " +
+						"JDK's endorsed directory");
 		}
 	}
 

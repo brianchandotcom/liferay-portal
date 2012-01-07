@@ -340,7 +340,7 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		try {
 			file = FileUtil.createTempFile(extension);
 
-			FileUtil.write(file, request.getInputStream());
+			FileUtil.write(file, sharepointRequest.getBytes());
 
 			if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
 				contentType = MimeTypesUtil.getContentType(file, title);

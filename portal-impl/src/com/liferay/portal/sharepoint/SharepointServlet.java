@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -28,6 +29,7 @@ import com.liferay.portal.sharepoint.methods.Method;
 import com.liferay.portal.sharepoint.methods.MethodFactory;
 import com.liferay.portal.util.WebKeys;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -105,8 +107,16 @@ public class SharepointServlet extends HttpServlet {
 		try {
 			InputStream is = request.getInputStream();
 
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+
+			StreamUtil.transfer(is, unsyncByteArrayOutputStream);
+
+			byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
+
 			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(is));
+				new UnsyncBufferedReader(new InputStreamReader(
+					new ByteArrayInputStream(bytes)));
 
 			String url = unsyncBufferedReader.readLine();
 
@@ -125,13 +135,9 @@ public class SharepointServlet extends HttpServlet {
 				sharepointRequest.addParam(key, value);
 			}
 
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
+			bytes = ArrayUtil.subset(bytes, url.length() + 1, bytes.length);
 
-			StreamUtil.transfer(is, unsyncByteArrayOutputStream);
-
-			sharepointRequest.setBytes(
-				unsyncByteArrayOutputStream.toByteArray());
+			sharepointRequest.setBytes(bytes);
 		}
 		catch (Exception e) {
 			throw new SharepointException(e);

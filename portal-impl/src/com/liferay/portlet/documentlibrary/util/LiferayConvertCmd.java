@@ -14,7 +14,15 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.LinkedList;
+import java.util.Properties;
+
+import jodd.util.StringPool;
 
 import org.im4java.core.ConvertCmd;
 
@@ -24,7 +32,8 @@ import org.im4java.core.ConvertCmd;
 public class LiferayConvertCmd extends ConvertCmd {
 
 	public static void run(
-			String globalSearchPath, LinkedList<String> commandArguments)
+			String globalSearchPath, Properties resourceLimits,
+			LinkedList<String> commandArguments)
 		throws Exception {
 
 		setGlobalSearchPath(globalSearchPath);
@@ -32,10 +41,34 @@ public class LiferayConvertCmd extends ConvertCmd {
 		LinkedList<String> arguments = new LinkedList<String>();
 
 		arguments.addAll(_instance.getCommand());
+
+		for (Object key : resourceLimits.keySet()) {
+			String value = (String)resourceLimits.get(key);
+
+			if (Validator.isNotNull(value)) {
+				arguments.add("-limit");
+				arguments.add((String)key);
+				arguments.add(value);
+			}
+		}
+
 		arguments.addAll(commandArguments);
+
+		if (_log.isInfoEnabled()) {
+			StringBundler sb = new StringBundler(arguments.size() * 2);
+
+			for (String argument : arguments) {
+				sb.append(argument);
+				sb.append(StringPool.SPACE);
+			}
+
+			_log.info("Excecuting command '" + sb.toString() + "'");
+		}
 
 		_instance.run(arguments);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(LiferayConvertCmd.class);
 
 	private static LiferayConvertCmd _instance = new LiferayConvertCmd();
 

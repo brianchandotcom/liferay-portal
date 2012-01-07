@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
 
+import java.util.Properties;
+
 /**
  * @author Sergio González
  */
@@ -52,6 +54,10 @@ public class PDFProcessorUtil {
 		throws Exception {
 
 		return getPDFProcessor().getPreviewFileSize(fileVersion, index);
+	}
+
+	public static Properties getResourceLimits() throws Exception {
+		return getPDFProcessor().getResourceLimits();
 	}
 
 	public static InputStream getThumbnailAsStream(

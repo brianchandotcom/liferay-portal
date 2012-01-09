@@ -47,10 +47,14 @@ public class SearchEngineUtil {
 
 	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
 
+	/**
+	 * @deprecated Use {@link
+	 *             addDocument(String searchEngineId, long companyId, Document document)}.
+	 */
 	public static void addDocument(long companyId, Document document)
 		throws SearchException {
 
-		addDocument(SYSTEM_ENGINE_ID, companyId, document);
+		addDocument(getSearchEngine(document), companyId, document);
 	}
 
 	public static void addDocument(
@@ -79,11 +83,14 @@ public class SearchEngineUtil {
 		indexWriter.addDocument(searchContext, document);
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *     addDocuments(String searchEngineId, long companyId,Collection<Document> documents)}.
+	 */
 	public static void addDocuments(
 			long companyId, Collection<Document> documents)
 		throws SearchException {
-
-		addDocuments(SYSTEM_ENGINE_ID, companyId, documents);
+		addDocuments(getSearchEngine(documents), companyId, documents);
 	}
 
 	public static void addDocuments(
@@ -119,10 +126,17 @@ public class SearchEngineUtil {
 		_searchEngines.put(searchEngine.getName(), searchEngine);
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *     deleteDocument(String searchEngineId, long companyId, String uid)}.
+	 */
 	public static void deleteDocument(long companyId, String uid)
 		throws SearchException {
 
-		deleteDocument(SYSTEM_ENGINE_ID, companyId, uid);
+		//TODO. Dirty fix so delete in unknown searchEngineID goes to all engines.
+		for (String searchEngineId:_searchEngines.keySet()) {
+			deleteDocument(searchEngineId, companyId, uid);
+		}
 	}
 
 	public static void deleteDocument(
@@ -145,10 +159,17 @@ public class SearchEngineUtil {
 		indexWriter.deleteDocument(searchContext, uid);
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *     deleteDocuments(String searchEngineId, long companyId, Collection<String> uids)}.
+	 */
 	public static void deleteDocuments(long companyId, Collection<String> uids)
 		throws SearchException {
 
-		deleteDocuments(SYSTEM_ENGINE_ID, companyId, uids);
+		//TODO. Dirty fix so delete in unknown searchEngineID goes to all engines.
+		for (String searchEngineId:_searchEngines.keySet()) {
+			deleteDocuments(searchEngineId, companyId, uids);
+		}
 	}
 
 	public static void deleteDocuments(
@@ -171,10 +192,17 @@ public class SearchEngineUtil {
 		indexWriter.deleteDocuments(searchContext, uids);
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *     deletePortletDocuments(String searchEngineId, long companyId, String portletId)}.
+	 */
 	public static void deletePortletDocuments(long companyId, String portletId)
 		throws SearchException {
 
-		deletePortletDocuments(SYSTEM_ENGINE_ID, companyId, portletId);
+		//TODO. Dirty fix so delete in unknown searchEngineID goes to all engines.
+		for (String searchEngineId:_searchEngines.keySet()) {
+			deletePortletDocuments(searchEngineId, companyId, portletId);
+		}
 	}
 
 	public static void deletePortletDocuments(
@@ -216,8 +244,36 @@ public class SearchEngineUtil {
 			new String[assetEntryClassNames.size()]);
 	}
 
+	/**
+ 	 * @deprecated Search Engine Selection needs a searchEngineId. Use {@link
+ 	 *     getSearchEngine(String searchEngineId)}.
+	 */
 	public static SearchEngine getSearchEngine() {
 		return getSearchEngine(SYSTEM_ENGINE_ID);
+	}
+
+	private static String getSearchEngine(Document document) {
+	    String documentClassName = document.get("entryClassName");
+
+	    Indexer indexer = IndexerRegistryUtil.getIndexer(documentClassName);
+
+		String searchEngineId = indexer.getSearchEngineId();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("SearchEngineId for ["+indexer.getClass()+"] is: " + searchEngineId);
+		}
+
+		return searchEngineId;
+	}
+
+ 	private static String getSearchEngine(Collection<Document> documents) {
+		if (!documents.isEmpty()) {
+			Document document = documents.iterator().next();
+
+			return getSearchEngine(document);
+		} else {
+			return SYSTEM_ENGINE_ID;
+		}
 	}
 
 	public static SearchEngine getSearchEngine(String searchEngineId) {
@@ -242,18 +298,19 @@ public class SearchEngineUtil {
 		return _indexReadOnly;
 	}
 
-	public static SearchEngine removeSearchEngine(String searchEngineName) {
+        public static SearchEngine removeSearchEngine(String searchEngineName) {
 		return _searchEngines.remove(searchEngineName);
 	}
 
+	@Deprecated
 	public static Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			Query query, int start, int end)
 		throws SearchException {
 
+                //TODO should get the searchEngineID based on what?
 		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+                searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
 
 		if (userId > 0) {
 			query = _searchPermissionChecker.getPermissionQuery(
@@ -264,14 +321,15 @@ public class SearchEngineUtil {
 			companyId, query, SortFactoryUtil.getDefaultSorts(), start, end);
 	}
 
+	@Deprecated
 	public static Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			Query query, Sort sort, int start, int end)
 		throws SearchException {
 
+                //TODO should get the searchEngineID based on what?
 		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
+                searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
 
 		if (userId > 0) {
 			query = _searchPermissionChecker.getPermissionQuery(
@@ -281,13 +339,14 @@ public class SearchEngineUtil {
 		return search(companyId, query, sort, start, end);
 	}
 
+	@Deprecated
 	public static Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			Query query, Sort[] sorts, int start, int end)
 		throws SearchException {
 
+                //TODO should get the searchEngineID based on what?
 		SearchContext searchContext = new SearchContext();
-
 		searchContext.setSearchEngineId(SearchEngineUtil.SYSTEM_ENGINE_ID);
 
 		if (userId > 0) {
@@ -298,12 +357,14 @@ public class SearchEngineUtil {
 		return search(companyId, query, sorts, start, end);
 	}
 
+	@Deprecated
 	public static Hits search(long companyId, Query query, int start, int end)
 		throws SearchException {
 
 		return search(SYSTEM_ENGINE_ID, companyId, query, start, end);
 	}
 
+	@Deprecated
 	public static Hits search(
 			long companyId, Query query, Sort sort, int start, int end)
 		throws SearchException {
@@ -311,6 +372,7 @@ public class SearchEngineUtil {
 		return search(SYSTEM_ENGINE_ID, companyId, query, sort, start, end);
 	}
 
+	@Deprecated
 	public static Hits search(
 			long companyId, Query query, Sort[] sorts, int start, int end)
 		throws SearchException {
@@ -389,10 +451,14 @@ public class SearchEngineUtil {
 		_indexReadOnly = indexReadOnly;
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *     updateDocument(String searchEngineId, long companyId, Document document)}.
+	 */
 	public static void updateDocument(long companyId, Document document)
 		throws SearchException {
 
-		updateDocument(SYSTEM_ENGINE_ID, companyId, document);
+		updateDocument(getSearchEngine(document), companyId, document);
 	}
 
 	public static void updateDocument(
@@ -421,11 +487,14 @@ public class SearchEngineUtil {
 		indexWriter.updateDocument(searchContext, document);
 	}
 
+	/**
+	 * @deprecated Use {@link
+	 *     updateDocuments(String searchEngineId, long companyId,Collection<Document> documents)}.
+	 */
 	public static void updateDocuments(
 			long companyId, Collection<Document> documents)
 		throws SearchException {
-
-		updateDocuments(SYSTEM_ENGINE_ID, companyId, documents);
+		updateDocuments(getSearchEngine(documents), companyId, documents);
 	}
 
 	public static void updateDocuments(
@@ -479,8 +548,18 @@ public class SearchEngineUtil {
 		_excludedEntryClassNames.addAll(excludedEntryClassNames);
 	}
 
+	@Deprecated
 	public void setSearchEngine(SearchEngine searchEngine) {
+        //TODO Might need some vodoo in case no engines is specified.
 		_searchEngines.put(SYSTEM_ENGINE_ID, searchEngine);
+	}
+
+	public void setSearchEngine(String searchEngineId, SearchEngine searchEngine) {
+		if (_searchEngines.containsKey(searchEngineId)) {
+			//TODO throw execption like "SearchEngineAllreadyRegistered"
+		} else {
+			_searchEngines.put(searchEngineId, searchEngine);
+		}
 	}
 
 	public void setSearchEngines(Map<String, SearchEngine> searchEngines) {

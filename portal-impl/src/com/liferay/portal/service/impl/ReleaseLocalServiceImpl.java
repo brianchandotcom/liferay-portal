@@ -173,8 +173,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 				"Servlet context name cannot be null");
 		}
 
-		servletContextName = servletContextName.toLowerCase();
-
 		Release release = null;
 
 		if (servletContextName.equals(

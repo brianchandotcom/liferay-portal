@@ -1480,7 +1480,7 @@
 		<!-- Finder methods -->
 
 		<finder name="ServletContextName" return-type="Release">
-			<finder-column name="servletContextName" />
+			<finder-column name="servletContextName" case-sensitive="false"/>
 		</finder>
 	</entity>
 	<entity name="Repository" uuid="true" local-service="true" remote-service="true">

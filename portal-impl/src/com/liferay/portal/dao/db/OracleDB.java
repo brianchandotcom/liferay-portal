@@ -294,6 +294,13 @@ public class OracleDB extends BaseDB {
 		sb.append("\n");
 	}
 
+	private String _postBuildSQL(String template) throws IOException {
+		template = removeLongInserts(template);
+		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
+
+		return template;
+	}
+
 	private String _preBuildSQL(String template) throws IOException {
 		template = convertTimestamp(template);
 		template = replaceTemplate(template, getTemplate());
@@ -303,13 +310,6 @@ public class OracleDB extends BaseDB {
 			template,
 			new String[] {"\\\\", "\\'", "\\\""},
 			new String[] {"\\", "''", "\""});
-
-		return template;
-	}
-
-	private String _postBuildSQL(String template) throws IOException {
-		template = removeLongInserts(template);
-		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
 
 		return template;
 	}

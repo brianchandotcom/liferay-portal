@@ -74,46 +74,6 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		}
 	}
 
-	private Layout _getLayout(String layoutName, Layout layout)
-		throws Exception {
-
-		String friendlyURL = layout.getFriendlyURL();
-
-		if (layoutName.equals(friendlyURL)) {
-			return layout;
-		}
-
-		List<Layout> layoutChildren = layout.getChildren();
-
-		if (layoutChildren.size() == 0) {
-			return null;
-		}
-		else {
-			for (Layout layoutChild : layoutChildren) {
-				Layout currentLayout = _getLayout(layoutName, layoutChild);
-
-				if (currentLayout != null) {
-					return currentLayout;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	private String _getLayoutName(Layout layout) {
-		return layout.getFriendlyURL();
-	}
-
-	private String _getLayoutName(String folderName) {
-		String layoutName = folderName.substring(
-			folderName.lastIndexOf('~') + 1, folderName.length() - 1);
-
-		layoutName = layoutName.replace('>', '/');
-
-		return layoutName;
-	}
-
 	private void _getFiles(
 			CommandArgument commandArgument, Document document, Node rootNode)
 		throws Exception {
@@ -249,6 +209,46 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				}
 			}
 		}
+	}
+
+	private Layout _getLayout(String layoutName, Layout layout)
+		throws Exception {
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		if (layoutName.equals(friendlyURL)) {
+			return layout;
+		}
+
+		List<Layout> layoutChildren = layout.getChildren();
+
+		if (layoutChildren.size() == 0) {
+			return null;
+		}
+		else {
+			for (Layout layoutChild : layoutChildren) {
+				Layout currentLayout = _getLayout(layoutName, layoutChild);
+
+				if (currentLayout != null) {
+					return currentLayout;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private String _getLayoutName(Layout layout) {
+		return layout.getFriendlyURL();
+	}
+
+	private String _getLayoutName(String folderName) {
+		String layoutName = folderName.substring(
+			folderName.lastIndexOf('~') + 1, folderName.length() - 1);
+
+		layoutName = layoutName.replace('>', '/');
+
+		return layoutName;
 	}
 
 }

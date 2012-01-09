@@ -76,7 +76,7 @@ public class ImageImpl extends ImageBaseImpl {
 		super.setText(Base64.objectToString(textObj));
 	}
 
-	private String getFileName() {
+	protected String getFileName() {
 		return getImageId() + StringPool.PERIOD + getType();
 	}
 

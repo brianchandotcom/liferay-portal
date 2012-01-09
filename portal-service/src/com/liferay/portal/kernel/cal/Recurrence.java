@@ -1103,7 +1103,7 @@ public class Recurrence implements Serializable {
 	 *
 	 * @return String
 	 */
-	private String stringizeIntArray(int[] a) {
+	protected String stringizeIntArray(int[] a) {
 		if (a == null) {
 			return "null";
 		}

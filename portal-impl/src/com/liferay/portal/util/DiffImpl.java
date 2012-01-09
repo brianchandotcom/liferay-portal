@@ -388,18 +388,6 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 		return margin;
 	}
 
-	private static boolean _isMaxLineLengthExceeded(
-		String sourceString, String targetString) {
-
-		if ((sourceString.length() > _DIFF_MAX_LINE_LENGTH) ||
-			(targetString.length() > _DIFF_MAX_LINE_LENGTH)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private static void _highlightChars(
 		List<String> stringList, String markerStart, String markerEnd,
 		int startPos, int endPos) {
@@ -420,6 +408,18 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 		for (int i = startPos; i <= endPos; i++) {
 			stringList.set(i, markerStart + stringList.get(i) + markerEnd);
 		}
+	}
+
+	private static boolean _isMaxLineLengthExceeded(
+		String sourceString, String targetString) {
+
+		if ((sourceString.length() > _DIFF_MAX_LINE_LENGTH) ||
+			(targetString.length() > _DIFF_MAX_LINE_LENGTH)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _lineDiff(

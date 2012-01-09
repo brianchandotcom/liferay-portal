@@ -145,13 +145,13 @@ public class EditArchivedSetupsAction extends EditConfigurationAction {
 			"portlet.portlet_configuration.edit_archived_setups"));
 	}
 
-	private void deleteSetup(ActionRequest actionRequest) throws Exception {
+	protected void deleteSetup(ActionRequest actionRequest) throws Exception {
 		long portletItemId = ParamUtil.getLong(actionRequest, "portletItemId");
 
 		PortletPreferencesServiceUtil.deleteArchivedPreferences(portletItemId);
 	}
 
-	private void restoreSetup(ActionRequest actionRequest, Portlet portlet)
+	protected void restoreSetup(ActionRequest actionRequest, Portlet portlet)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

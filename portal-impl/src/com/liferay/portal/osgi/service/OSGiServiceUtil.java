@@ -542,27 +542,6 @@ public class OSGiServiceUtil {
 		}
 	}
 
-	private void _stopFramework() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		_framework.stop();
-	}
-
-	private void _stopRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.OSGI_FRAMEWORK_BEGINNING_START_LEVEL,
-			(FrameworkListener[])null);
-	}
-
 	private void _stopBundle(long bundleId) throws PortalException {
 		_checkPermission();
 
@@ -601,6 +580,27 @@ public class OSGiServiceUtil {
 
 			throw new OSGiException(be);
 		}
+	}
+
+	private void _stopFramework() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		_framework.stop();
+	}
+
+	private void _stopRuntime() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.OSGI_FRAMEWORK_BEGINNING_START_LEVEL,
+			(FrameworkListener[])null);
 	}
 
 	private void _uninstallBundle(long bundleId) throws PortalException {

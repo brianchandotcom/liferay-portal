@@ -128,7 +128,7 @@ public class MapBackedSet<E> extends AbstractSet<E> implements Serializable {
 		return _backedMapKeySet.toString();
 	}
 
-	private void readObject(ObjectInputStream objectInputStream)
+	protected void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {
 
 		objectInputStream.defaultReadObject();

@@ -710,33 +710,6 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method stringizeIntArray
-	 *
-	 * @return String
-	 */
-	private String stringizeIntArray(int[] a) {
-		if (a == null) {
-			return "null";
-		}
-
-		StringBundler sb = new StringBundler(2 * a.length + 1);
-
-		sb.append("[");
-
-		for (int i = 0; i < a.length; i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
-			sb.append(a[i]);
-		}
-
-		sb.append("]");
-
-		return sb.toString();
-	}
-
-	/**
 	 * Method candidateIsInRecurrence
 	 *
 	 * @return boolean
@@ -1124,6 +1097,33 @@ public class Recurrence implements Serializable {
 	 */
 	protected boolean matchesByMonth(Calendar candidate) {
 		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	}
+
+	/**
+	 * Method stringizeIntArray
+	 *
+	 * @return String
+	 */
+	protected String stringizeIntArray(int[] a) {
+		if (a == null) {
+			return "null";
+		}
+
+		StringBundler sb = new StringBundler(2 * a.length + 1);
+
+		sb.append("[");
+
+		for (int i = 0; i < a.length; i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+
+			sb.append(a[i]);
+		}
+
+		sb.append("]");
+
+		return sb.toString();
 	}
 
 }

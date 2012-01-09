@@ -108,6 +108,20 @@ public class TransactionInterceptor implements MethodInterceptor {
 		_platformTransactionManager = platformTransactionManager;
 	}
 
+	protected void invokeCallbacks() {
+		List<Callable<?>> callables =
+			TransactionCommitCallbackUtil.popCallbackList();
+
+		for (Callable<?> callable : callables) {
+			try {
+				callable.call();
+			}
+			catch (Exception e) {
+				_log.error("Failed to execute transaction commit callback", e);
+			}
+		}
+	}
+
 	protected void processThrowable(
 			Throwable throwable, TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus)
@@ -193,20 +207,6 @@ public class TransactionInterceptor implements MethodInterceptor {
 		}
 
 		throw throwable;
-	}
-
-	private void invokeCallbacks() {
-		List<Callable<?>> callables =
-			TransactionCommitCallbackUtil.popCallbackList();
-
-		for (Callable<?> callable : callables) {
-			try {
-				callable.call();
-			}
-			catch (Exception e) {
-				_log.error("Failed to execute transaction commit callback", e);
-			}
-		}
 	}
 
 	protected TransactionAttributeSource transactionAttributeSource;

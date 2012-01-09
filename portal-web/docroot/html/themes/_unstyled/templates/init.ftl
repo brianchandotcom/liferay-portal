@@ -293,7 +293,9 @@
 	<#assign the_title = page_group.getDescriptiveName() />
 </#if>
 
-<#assign the_title = htmlUtil.escape(the_title) />
+<#if (tilesTitle == "")>
+	<#assign the_title = htmlUtil.escape(the_title) />
+</#if>
 
 <#if layouts??>
 	<#assign pages = layouts />

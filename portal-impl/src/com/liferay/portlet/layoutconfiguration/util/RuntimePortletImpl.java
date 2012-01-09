@@ -330,6 +330,12 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			return StringPool.BLANK;
 		}
 
+		int index = content.indexOf(runtimeLogic.getOpenTag());
+
+		if (index == -1) {
+			return content;
+		}
+
 		Portlet renderPortlet = (Portlet)request.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
@@ -347,10 +353,10 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
-			StringBuilder sb = new StringBuilder();
+			StringBundler sb = new StringBundler();
 
 			int x = 0;
-			int y = content.indexOf(runtimeLogic.getOpenTag());
+			int y = index;
 
 			while (y != -1) {
 				sb.append(content.substring(x, y));

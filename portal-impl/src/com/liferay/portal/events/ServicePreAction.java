@@ -447,7 +447,7 @@ public class ServicePreAction extends Action {
 						   permissionChecker, layout, false,
 						   ActionKeys.VIEW)))) {
 
-				if (user.isDefaultUser()) {
+				if (user.isDefaultUser() && group.isControlPanel()) {
 					throw new PrincipalException("User is not authenticated");
 				}
 

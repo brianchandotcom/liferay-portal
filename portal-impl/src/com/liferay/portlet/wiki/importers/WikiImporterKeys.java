@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.importers;
 
 /**
  * @author Jorge Ferrer
+ * @author Daniel Kocsis
  */
 public class WikiImporterKeys {
 
@@ -23,5 +24,8 @@ public class WikiImporterKeys {
 
 	public static final String OPTIONS_IMPORT_LATEST_VERSION =
 		"OPTIONS_IMPORT_LATEST_VERSION";
+
+	public static final String OPTIONS_STRICT_IMPORT_MODE =
+		"OPTIONS_STRICT_IMPORT_MODE";
 
 }

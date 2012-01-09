@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -22,7 +24,9 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
@@ -60,7 +64,16 @@ public class GetPageAttachmentAction extends PortletAction {
 			return null;
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			if (e instanceof NoSuchPageException ||
+				e instanceof NoSuchFileException) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(e);
+				}
+			}
+			else {
+				PortalUtil.sendError(e, request, response);
+			}
 
 			return null;
 		}
@@ -123,5 +136,8 @@ public class GetPageAttachmentAction extends PortletAction {
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		GetPageAttachmentAction.class);
 
 }

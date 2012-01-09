@@ -152,7 +152,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 	protected void importPage(
 			long userId, String author, WikiNode node, String title,
-			String content, String summary, Map<String, String> usersMap)
+			String content, String summary, Map<String, String> usersMap,
+			boolean strictImportMode)
 		throws PortalException {
 
 		try {
@@ -168,6 +169,7 @@ public class MediaWikiImporter implements WikiImporter {
 				readAssetTagNames(userId, node, content));
 
 			if (Validator.isNull(redirectTitle)) {
+				_translator.setStrictImportMode(strictImportMode);
 				content = _translator.translate(content);
 			}
 			else {
@@ -412,6 +414,9 @@ public class MediaWikiImporter implements WikiImporter {
 		boolean importLatestVersion = MapUtil.getBoolean(
 			options, WikiImporterKeys.OPTIONS_IMPORT_LATEST_VERSION);
 
+		boolean strictImportMode = MapUtil.getBoolean(
+			options, WikiImporterKeys.OPTIONS_STRICT_IMPORT_MODE);
+
 		ProgressTracker progressTracker =
 			ProgressTrackerThreadLocal.getProgressTracker();
 
@@ -468,7 +473,7 @@ public class MediaWikiImporter implements WikiImporter {
 				try {
 					importPage(
 						userId, author, node, title, content, summary,
-						usersMap);
+						usersMap, strictImportMode);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

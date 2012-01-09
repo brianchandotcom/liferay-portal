@@ -30,4 +30,6 @@
 	<aui:input label='<%= WikiPageConstants.FRONT_PAGE + "(" + LanguageUtil.get(pageContext, "optional") + ")" %>' name="<%= WikiImporterKeys.OPTIONS_FRONT_PAGE %>" type="text" size="40" value="Main Page" />
 
 	<aui:input checked="<%= true %>" inlineLabel="left" label="import-only-the-latest-version-and-not-the-full-history" name="<%= WikiImporterKeys.OPTIONS_IMPORT_LATEST_VERSION %>" type="checkbox" />
+
+	<aui:input checked="<%= true %>" helpMessage="import-wiki-strict-mode-help" inlineLabel="left" label="strict-mode" name="<%= WikiImporterKeys.OPTIONS_STRICT_IMPORT_MODE %>" type="checkbox" />
 </aui:fieldset>

@@ -59,6 +59,7 @@ import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -448,6 +449,11 @@ public class EditFileEntryAction extends PortletAction {
 			errorMessage = LanguageUtil.format(
 				themeDisplay.getLocale(),
 				"file-size-is-larger-than-x-megabytes", maxSizeMB);
+		}
+		else if (e instanceof InvalidFileEntryTypeException) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-document-type-you-selected-is-not-valid-for-this-folder");
 		}
 		else {
 			errorMessage = LanguageUtil.get(

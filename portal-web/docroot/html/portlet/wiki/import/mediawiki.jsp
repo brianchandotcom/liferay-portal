@@ -31,5 +31,5 @@
 
 	<aui:input checked="<%= true %>" inlineLabel="left" label="import-only-the-latest-version-and-not-the-full-history" name="<%= WikiImporterKeys.OPTIONS_IMPORT_LATEST_VERSION %>" type="checkbox" />
 
-	<aui:input checked="<%= true %>" helpMessage="import-wiki-strict-mode-help" inlineLabel="left" label="import-strict-mode" name="<%= WikiImporterKeys.OPTIONS_STRICT_IMPORT_MODE %>" type="checkbox" />
+	<aui:input checked="<%= true %>" helpMessage="import-wiki-strict-mode-help" inlineLabel="left" label="strict-mode" name="<%= WikiImporterKeys.OPTIONS_STRICT_IMPORT_MODE %>" type="checkbox" />
 </aui:fieldset>

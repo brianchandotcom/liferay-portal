@@ -63,20 +63,17 @@ public class GetPageAttachmentAction extends PortletAction {
 
 			return null;
 		}
-		catch (NoSuchPageException e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e);
-			}
-			return null;
-		}
-		catch (NoSuchFileException e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e);
-			}
-			return null;
-		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			if (e instanceof NoSuchPageException ||
+				e instanceof NoSuchFileException) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(e);
+				}
+			}
+			else {
+				PortalUtil.sendError(e, request, response);
+			}
 
 			return null;
 		}
@@ -140,6 +137,7 @@ public class GetPageAttachmentAction extends PortletAction {
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
-	private static Log _log = LogFactoryUtil.getLog(PortletAction.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		GetPageAttachmentAction.class);
 
 }

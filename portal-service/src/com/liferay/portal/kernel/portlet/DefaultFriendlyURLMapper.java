@@ -210,12 +210,25 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 			routeParameters.put("p_p_id", portletId);
 
 			if (Validator.isNotNull(portletId)) {
-				String[] parts = portletId.split(
+				int index1 = portletId.indexOf(
 					PortletConstants.INSTANCE_SEPARATOR);
 
-				if (parts.length > 1) {
-					routeParameters.put("instanceId", parts[1]);
+				if (index1 != -1) {
+					int start = index1 +
+						PortletConstants.INSTANCE_SEPARATOR.length();
+
+					int index2 = portletId.indexOf(portletId, start);
+
+					if (index2 != -1) {
+						routeParameters.put("instanceId",
+							portletId.substring(start, index2));
+					}
+					else {
+						routeParameters.put("instanceId",
+							portletId.substring(start));
+					}
 				}
+
 			}
 		}
 

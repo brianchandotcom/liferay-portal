@@ -1100,18 +1100,6 @@ public class GroupFinderImpl
 		return join;
 	}
 
-	private String _removeWhere(String join) {
-		if (Validator.isNotNull(join)) {
-			int pos = join.indexOf("WHERE");
-
-			if (pos != -1) {
-				join = join.substring(0, pos);
-			}
-		}
-
-		return join;
-	}
-
 	private long[] _getGroupOrganizationClassNameIds() {
 		if (_groupOrganizationClassNameIds == null) {
 			_groupOrganizationClassNameIds = new long[] {
@@ -1217,6 +1205,18 @@ public class GroupFinderImpl
 		_whereMap = whereMap;
 
 		return _whereMap;
+	}
+
+	private String _removeWhere(String join) {
+		if (Validator.isNotNull(join)) {
+			int pos = join.indexOf("WHERE");
+
+			if (pos != -1) {
+				join = join.substring(0, pos);
+			}
+		}
+
+		return join;
 	}
 
 	private LinkedHashMap<String, Object> _emptyLinkedHashMap =

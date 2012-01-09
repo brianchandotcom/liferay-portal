@@ -545,6 +545,34 @@ public class LayoutTemplateLocalServiceImpl
 		}
 	}
 
+	private Map<String, LayoutTemplate> _getThemesCustom(String themeId) {
+		String key = themeId.concat(LayoutTemplateConstants.CUSTOM_SEPARATOR);
+
+		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
+
+		if (layoutTemplates == null) {
+			layoutTemplates = new LinkedHashMap<String, LayoutTemplate>();
+
+			_themes.put(key, layoutTemplates);
+		}
+
+		return layoutTemplates;
+	}
+
+	private Map<String, LayoutTemplate> _getThemesStandard(String themeId) {
+		String key = themeId + LayoutTemplateConstants.STANDARD_SEPARATOR;
+
+		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
+
+		if (layoutTemplates == null) {
+			layoutTemplates = new LinkedHashMap<String, LayoutTemplate>();
+
+			_themes.put(key, layoutTemplates);
+		}
+
+		return layoutTemplates;
+	}
+
 	private Set<ObjectValuePair<String, Boolean>> _readLayoutTemplates(
 			String servletContextName, ServletContext servletContext,
 			String xml, PluginPackage pluginPackage)
@@ -578,34 +606,6 @@ public class LayoutTemplateLocalServiceImpl
 		}
 
 		return layoutTemplateIds;
-	}
-
-	private Map<String, LayoutTemplate> _getThemesCustom(String themeId) {
-		String key = themeId.concat(LayoutTemplateConstants.CUSTOM_SEPARATOR);
-
-		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
-
-		if (layoutTemplates == null) {
-			layoutTemplates = new LinkedHashMap<String, LayoutTemplate>();
-
-			_themes.put(key, layoutTemplates);
-		}
-
-		return layoutTemplates;
-	}
-
-	private Map<String, LayoutTemplate> _getThemesStandard(String themeId) {
-		String key = themeId + LayoutTemplateConstants.STANDARD_SEPARATOR;
-
-		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
-
-		if (layoutTemplates == null) {
-			layoutTemplates = new LinkedHashMap<String, LayoutTemplate>();
-
-			_themes.put(key, layoutTemplates);
-		}
-
-		return layoutTemplates;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

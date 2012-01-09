@@ -441,6 +441,30 @@ public class IndexAccessorImpl implements IndexAccessor {
 		return _LUCENE_TABLE_PREFIX + _companyId;
 	}
 
+	private void _initCleanupJdbcScheduler() {
+		if (!PropsValues.LUCENE_STORE_TYPE.equals(_LUCENE_STORE_TYPE_JDBC) ||
+			!PropsValues.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED) {
+
+			return;
+		}
+
+		ScheduledExecutorService scheduledExecutorService =
+			Executors.newSingleThreadScheduledExecutor();
+
+		Runnable runnable = new Runnable() {
+
+			public void run() {
+				_cleanUpJdbcDirectories();
+			}
+
+		};
+
+		scheduledExecutorService.scheduleWithFixedDelay(
+			runnable, 0,
+			PropsValues.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL * 60L,
+			TimeUnit.SECONDS);
+	}
+
 	private void _initCommitScheduler() {
 		if ((PropsValues.LUCENE_COMMIT_BATCH_SIZE <= 0) ||
 			(PropsValues.LUCENE_COMMIT_TIME_INTERVAL <= 0)) {
@@ -469,30 +493,6 @@ public class IndexAccessorImpl implements IndexAccessor {
 		scheduledExecutorService.scheduleWithFixedDelay(
 			runnable, 0, PropsValues.LUCENE_COMMIT_TIME_INTERVAL,
 			TimeUnit.MILLISECONDS);
-	}
-
-	private void _initCleanupJdbcScheduler() {
-		if (!PropsValues.LUCENE_STORE_TYPE.equals(_LUCENE_STORE_TYPE_JDBC) ||
-			!PropsValues.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_ENABLED) {
-
-			return;
-		}
-
-		ScheduledExecutorService scheduledExecutorService =
-			Executors.newSingleThreadScheduledExecutor();
-
-		Runnable runnable = new Runnable() {
-
-			public void run() {
-				_cleanUpJdbcDirectories();
-			}
-
-		};
-
-		scheduledExecutorService.scheduleWithFixedDelay(
-			runnable, 0,
-			PropsValues.LUCENE_STORE_JDBC_AUTO_CLEAN_UP_INTERVAL * 60L,
-			TimeUnit.SECONDS);
 	}
 
 	private void _initDialect() {

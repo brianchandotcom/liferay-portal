@@ -258,7 +258,7 @@ public class ExportImportAction extends EditConfigurationAction {
 				_log.debug(e, e);
 			}
 
-			SessionErrors.add(actionRequest, e.getClass().getName());
+			SessionErrors.add(actionRequest, e.getClass().getName(), e);
 		}
 	}
 

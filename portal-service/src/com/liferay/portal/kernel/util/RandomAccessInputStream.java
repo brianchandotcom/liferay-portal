@@ -124,7 +124,7 @@ public class RandomAccessInputStream extends InputStream {
 		close();
 	}
 
-	private long readUntil(long position) throws IOException {
+	protected long readUntil(long position) throws IOException {
 		if (position < _length) {
 			return position;
 		}

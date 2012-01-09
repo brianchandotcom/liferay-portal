@@ -123,7 +123,7 @@ public class GAuthenticator {
 		_initTime = System.currentTimeMillis();
 	}
 
-	private boolean isStale() {
+	protected boolean isStale() {
 		if ((_initTime + Time.HOUR) > System.currentTimeMillis()) {
 			return false;
 		}

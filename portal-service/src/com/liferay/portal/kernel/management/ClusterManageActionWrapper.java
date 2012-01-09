@@ -48,7 +48,7 @@ public class ClusterManageActionWrapper
 		}
 	}
 
-	private FutureClusterResponses doAction()
+	protected FutureClusterResponses doAction()
 		throws ManageActionException, SystemException {
 
 		MethodHandler manageActionMethodHandler =
@@ -71,7 +71,7 @@ public class ClusterManageActionWrapper
 		return ClusterExecutorUtil.execute(clusterRequest);
 	}
 
-	private void verifyClusterGroup() throws ManageActionException {
+	protected void verifyClusterGroup() throws ManageActionException {
 		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 
 		String[] requiredClusterNodesIds =

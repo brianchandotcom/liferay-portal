@@ -84,7 +84,7 @@ public class ImportEventsAction extends PortletAction {
 		}
 	}
 
-	private void validate(String fileName) throws ImportEventsException {
+	protected void validate(String fileName) throws ImportEventsException {
 		String fileNameExtension = FileUtil.getExtension(fileName);
 
 		if (!fileNameExtension.equals(CalendarUtil.ICAL_EXTENSION)) {

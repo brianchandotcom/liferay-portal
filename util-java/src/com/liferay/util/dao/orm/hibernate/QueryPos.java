@@ -134,7 +134,7 @@ public class QueryPos {
 		_query = query;
 	}
 
-	private void addNull() {
+	protected void addNull() {
 		_query.setSerializable(_pos++, null);
 	}
 

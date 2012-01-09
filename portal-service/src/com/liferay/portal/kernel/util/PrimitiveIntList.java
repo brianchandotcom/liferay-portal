@@ -42,25 +42,13 @@ public class PrimitiveIntList {
 	}
 
 	public int[] getArray() {
-		trim();
+		_trim();
 
 		return _elements;
 	}
 
 	public int size() {
 		return _elementsSize;
-	}
-
-	private void trim() {
-		int oldSize = _elements.length;
-
-		if (_elementsSize < oldSize) {
-			int[] previousElements = _elements;
-
-			_elements = new int[_elementsSize];
-
-			System.arraycopy(previousElements, 0, _elements, 0, _elementsSize);
-		}
 	}
 
 	private void _checkCapacity(int minSize) {
@@ -76,6 +64,18 @@ public class PrimitiveIntList {
 			}
 
 			_elements = new int[newCapacity];
+
+			System.arraycopy(previousElements, 0, _elements, 0, _elementsSize);
+		}
+	}
+
+	private void _trim() {
+		int oldSize = _elements.length;
+
+		if (_elementsSize < oldSize) {
+			int[] previousElements = _elements;
+
+			_elements = new int[_elementsSize];
 
 			System.arraycopy(previousElements, 0, _elements, 0, _elementsSize);
 		}

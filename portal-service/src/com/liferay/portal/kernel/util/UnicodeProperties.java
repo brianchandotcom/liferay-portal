@@ -121,7 +121,7 @@ public class UnicodeProperties extends HashMap<String, String> {
 		}
 	}
 
-	private void put(String line) {
+	public void put(String line) {
 		line = line.trim();
 
 		if (!_isComment(line)) {

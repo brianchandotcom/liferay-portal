@@ -82,7 +82,7 @@ for (int i = 0; i < results.size(); i++) {
 
 <%
 boolean showAddEventButtonButton = CalendarPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_EVENT);
-boolean showPermissionsButton = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+boolean showPermissionsButton = CalendarPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 %>
 
 <c:if test="<%= showAddEventButtonButton || showPermissionsButton %>">

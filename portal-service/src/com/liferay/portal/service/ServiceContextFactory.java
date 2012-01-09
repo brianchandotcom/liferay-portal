@@ -191,6 +191,10 @@ public class ServiceContextFactory {
 		serviceContext.setRemoteAddr(request.getRemoteAddr());
 		serviceContext.setRemoteHost(request.getRemoteHost());
 
+		// This field is volatile and will be discarded on serialization
+
+		serviceContext.setRequest(request);
+
 		// Asset
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
@@ -355,6 +359,10 @@ public class ServiceContextFactory {
 
 		serviceContext.setRemoteAddr(request.getRemoteAddr());
 		serviceContext.setRemoteHost(request.getRemoteHost());
+
+		// This field is volatile and will be discarded on serialization
+
+		serviceContext.setRequest(request);
 
 		// Asset
 

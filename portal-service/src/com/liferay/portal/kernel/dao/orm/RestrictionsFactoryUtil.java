@@ -152,12 +152,6 @@ public class RestrictionsFactoryUtil {
 		return getRestrictionsFactory().or(lhs, rhs);
 	}
 
-	public void setRestrictionsFactory(
-		RestrictionsFactory restrictionsFactory) {
-
-		_restrictionsFactory = restrictionsFactory;
-	}
-
 	public static Criterion sizeEq(String propertyName, int size) {
 		return getRestrictionsFactory().sizeEq(propertyName, size);
 	}
@@ -180,6 +174,12 @@ public class RestrictionsFactoryUtil {
 
 	public static Criterion sizeNe(String propertyName, int size) {
 		return getRestrictionsFactory().sizeNe(propertyName, size);
+	}
+
+	public void setRestrictionsFactory(
+		RestrictionsFactory restrictionsFactory) {
+
+		_restrictionsFactory = restrictionsFactory;
 	}
 
 	private static RestrictionsFactory _restrictionsFactory;

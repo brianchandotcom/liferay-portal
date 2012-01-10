@@ -98,6 +98,38 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Method isValidDayOfWeek
+	 *
+	 * @return boolean
+	 */
+	public static boolean isValidDayOfWeek(int d) {
+		switch (d) {
+
+			case NO_WEEKDAY :
+			case Calendar.SUNDAY :
+			case Calendar.MONDAY :
+			case Calendar.TUESDAY :
+			case Calendar.WEDNESDAY :
+			case Calendar.THURSDAY :
+			case Calendar.FRIDAY :
+			case Calendar.SATURDAY :
+				return true;
+
+			default :
+				return false;
+		}
+	}
+
+	/**
+	 * Method isValidDayPosition
+	 *
+	 * @return boolean
+	 */
+	public static boolean isValidDayPosition(int p) {
+		return ((p >= -53) && (p <= 53));
+	}
+
+	/**
 	 * Method clone
 	 *
 	 * @return Object
@@ -209,38 +241,6 @@ public class DayAndPosition implements Cloneable, Serializable {
 		sb.append("]");
 
 		return sb.toString();
-	}
-
-	/**
-	 * Method isValidDayOfWeek
-	 *
-	 * @return boolean
-	 */
-	public static boolean isValidDayOfWeek(int d) {
-		switch (d) {
-
-			case NO_WEEKDAY :
-			case Calendar.SUNDAY :
-			case Calendar.MONDAY :
-			case Calendar.TUESDAY :
-			case Calendar.WEDNESDAY :
-			case Calendar.THURSDAY :
-			case Calendar.FRIDAY :
-			case Calendar.SATURDAY :
-				return true;
-
-			default :
-				return false;
-		}
-	}
-
-	/**
-	 * Method isValidDayPosition
-	 *
-	 * @return boolean
-	 */
-	public static boolean isValidDayPosition(int p) {
-		return ((p >= -53) && (p <= 53));
 	}
 
 }

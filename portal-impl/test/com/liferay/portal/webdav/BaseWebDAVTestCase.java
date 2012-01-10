@@ -78,66 +78,6 @@ public class BaseWebDAVTestCase extends TestCase {
 		assertEquals(statusCode, returnedStatusCode);
 	}
 
-	protected static String getDepth(int depth) {
-		String depthString = "infinity";
-
-		if (depth == 0) {
-			depthString = "0";
-		}
-
-		return depthString;
-	}
-
-	protected static Map<String, String> getHeaders(Tuple tuple) {
-		return (Map<String, String>)tuple.getObject(2);
-	}
-
-	protected static String getLock(Tuple tuple) {
-		String token = "";
-
-		Map<String, String> headers = getHeaders(tuple);
-
-		String value = GetterUtil.getString(headers.get("Lock-Token"));
-
-		int beg = value.indexOf(WebDAVUtil.TOKEN_PREFIX);
-
-		if (beg >= 0) {
-			beg += WebDAVUtil.TOKEN_PREFIX.length();
-
-			if (beg < value.length()) {
-				int end = value.indexOf(">", beg);
-
-				token = GetterUtil.getString(value.substring(beg, end));
-			}
-		}
-
-		return token;
-	}
-
-	protected static String getOverwrite(boolean overwrite) {
-		String overwriteString = "F";
-
-		if (overwrite) {
-			overwriteString = "T";
-		}
-
-		return overwriteString;
-	}
-
-	protected static byte[] getResponseBody(Tuple tuple) {
-		return (byte[])tuple.getObject(1);
-	}
-
-	protected static String getResponseBodyString(Tuple tuple) {
-		byte[] data = getResponseBody(tuple);
-
-		return new String(data);
-	}
-
-	protected static int getStatusCode(Tuple tuple) {
-		return (Integer)tuple.getObject(0);
-	}
-
 	public Tuple service(
 		String method, String path, Map<String, String> headers, byte[] data) {
 
@@ -331,6 +271,66 @@ public class BaseWebDAVTestCase extends TestCase {
 		}
 
 		return service(Method.UNLOCK, path, headers, null);
+	}
+
+	protected static String getDepth(int depth) {
+		String depthString = "infinity";
+
+		if (depth == 0) {
+			depthString = "0";
+		}
+
+		return depthString;
+	}
+
+	protected static Map<String, String> getHeaders(Tuple tuple) {
+		return (Map<String, String>)tuple.getObject(2);
+	}
+
+	protected static String getLock(Tuple tuple) {
+		String token = "";
+
+		Map<String, String> headers = getHeaders(tuple);
+
+		String value = GetterUtil.getString(headers.get("Lock-Token"));
+
+		int beg = value.indexOf(WebDAVUtil.TOKEN_PREFIX);
+
+		if (beg >= 0) {
+			beg += WebDAVUtil.TOKEN_PREFIX.length();
+
+			if (beg < value.length()) {
+				int end = value.indexOf(">", beg);
+
+				token = GetterUtil.getString(value.substring(beg, end));
+			}
+		}
+
+		return token;
+	}
+
+	protected static String getOverwrite(boolean overwrite) {
+		String overwriteString = "F";
+
+		if (overwrite) {
+			overwriteString = "T";
+		}
+
+		return overwriteString;
+	}
+
+	protected static byte[] getResponseBody(Tuple tuple) {
+		return (byte[])tuple.getObject(1);
+	}
+
+	protected static String getResponseBodyString(Tuple tuple) {
+		byte[] data = getResponseBody(tuple);
+
+		return new String(data);
+	}
+
+	protected static int getStatusCode(Tuple tuple) {
+		return (Integer)tuple.getObject(0);
 	}
 
 	protected String getUserAgent() {

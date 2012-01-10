@@ -48,12 +48,12 @@ public class CustomJspRegistryUtil {
 		getCustomJspRegistry().unregisterServletContextName(servletContextName);
 	}
 
-	public void setCustomJspRegistry(CustomJspRegistry customJspRegistry) {
-		_customJspRegistry = customJspRegistry;
-	}
-
 	public static CustomJspRegistry getCustomJspRegistry() {
 		return _customJspRegistry;
+	}
+
+	public void setCustomJspRegistry(CustomJspRegistry customJspRegistry) {
+		_customJspRegistry = customJspRegistry;
 	}
 
 	private static CustomJspRegistry _customJspRegistry;

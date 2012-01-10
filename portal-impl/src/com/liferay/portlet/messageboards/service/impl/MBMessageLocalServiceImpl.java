@@ -1737,7 +1737,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	protected String getBody(String subject, String body) {
 		if (Validator.isNull(body)) {
-			return subject;
+			if (!subject.equals("...") ) {
+				return subject;
+			}
+			else {
+				return StringPool.BLANK;
+			}
 		}
 
 		return body;

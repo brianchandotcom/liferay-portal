@@ -367,7 +367,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									</c:when>
 									<c:when test="<%= hasAudio || hasVideo %>">
 										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
-											<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
+											<div class="lfr-preview-file-content lfr-preview-video-content">
+												<div class="lfr-preview-file-video-current-column">
+													<div id="<portlet:namespace />previewFileContent">
+													</div>
+												</div>
+											</div>
 										</div>
 
 										<liferay-util:include page="/html/portlet/document_library/player.jsp" />

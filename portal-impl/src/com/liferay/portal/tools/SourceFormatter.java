@@ -1966,6 +1966,7 @@ public class SourceFormatter {
 			"**\\portal-service\\**\\model\\*Wrapper.java",
 			"**\\portal-web\\classes\\**\\*.java",
 			"**\\portal-web\\test\\**\\*Test.java",
+			"**\\portal-web\\test\\**\\*Tests.java",
 			"**\\portlet\\**\\service\\**", "**\\tmp\\**", "**\\tools\\tck\\**"
 		};
 

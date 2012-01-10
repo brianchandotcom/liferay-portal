@@ -29,6 +29,10 @@ if (repositoryId == 0) {
 
 long searchRepositoryId = ParamUtil.getLong(request, "searchRepositoryId");
 
+if (searchRepositoryId == 0) {
+	searchRepositoryId = scopeGroupId;
+}
+
 long folderId = ParamUtil.getLong(request, "folderId");
 
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");

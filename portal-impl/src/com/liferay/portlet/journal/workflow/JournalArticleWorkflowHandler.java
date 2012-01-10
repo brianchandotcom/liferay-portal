@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
@@ -64,8 +66,11 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
 			classPK);
 
+		String articleURL = PortalUtil.getControlPanelFullURL(
+				serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null);
+
 		return JournalArticleLocalServiceUtil.updateStatus(
-			userId, article, status, null, serviceContext);
+			userId, article, status, articleURL, serviceContext);
 	}
 
 	@Override

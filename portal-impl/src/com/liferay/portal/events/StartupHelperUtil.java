@@ -28,6 +28,14 @@ public class StartupHelperUtil {
 		return _startupHelper;
 	}
 
+	public static boolean isUpgraded() {
+		return getStartupHelper().isUpgraded();
+	}
+
+	public static boolean isVerified() {
+		return getStartupHelper().isVerified();
+	}
+
 	public static void setDropIndexes(boolean dropIndexes) {
 		getStartupHelper().setDropIndexes(dropIndexes);
 	}
@@ -42,14 +50,6 @@ public class StartupHelperUtil {
 
 	public static void verifyProcess(boolean verified) throws VerifyException {
 		getStartupHelper().verifyProcess(verified);
-	}
-
-	public static boolean isUpgraded() {
-		return getStartupHelper().isUpgraded();
-	}
-
-	public static boolean isVerified() {
-		return getStartupHelper().isVerified();
 	}
 
 	public void setStartupHelper(StartupHelper startupHelper) {

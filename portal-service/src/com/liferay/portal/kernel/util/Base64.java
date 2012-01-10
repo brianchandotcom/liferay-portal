@@ -27,23 +27,6 @@ import java.io.ObjectOutputStream;
  */
 public class Base64 {
 
-	public static String encode(byte raw[]) {
-		return encode(raw, 0, raw.length);
-	}
-
-	public static String encode(byte raw[], int offset, int length) {
-		int lastIndex = Math.min(raw.length, offset + length);
-
-		StringBuilder sb = new StringBuilder(
-			((lastIndex - offset) / 3 + 1) * 4);
-
-		for (int i = offset; i < lastIndex; i += 3) {
-			sb.append(encodeBlock(raw, i, lastIndex));
-		}
-
-		return sb.toString();
-	}
-
 	public static byte[] decode(String base64) {
 		if (Validator.isNull(base64)) {
 			return new byte[0];
@@ -75,6 +58,23 @@ public class Base64 {
 		}
 
 		return raw;
+	}
+
+	public static String encode(byte raw[]) {
+		return encode(raw, 0, raw.length);
+	}
+
+	public static String encode(byte raw[], int offset, int length) {
+		int lastIndex = Math.min(raw.length, offset + length);
+
+		StringBuilder sb = new StringBuilder(
+			((lastIndex - offset) / 3 + 1) * 4);
+
+		for (int i = offset; i < lastIndex; i += 3) {
+			sb.append(encodeBlock(raw, i, lastIndex));
+		}
+
+		return sb.toString();
 	}
 
 	public static String fromURLSafe(String base64) {

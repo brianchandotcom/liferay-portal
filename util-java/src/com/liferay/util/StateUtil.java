@@ -91,8 +91,8 @@ public class StateUtil {
 		new State("WY", "Wyoming")
 	};
 
-	public static boolean isStateId(String stateId) {
-		if (Arrays.binarySearch(STATE_IDS_ORDERED, stateId) >= 0) {
+	public static boolean isState(String state) {
+		if (Arrays.binarySearch(STATES, state) >= 0) {
 			return true;
 		}
 		else {
@@ -100,8 +100,8 @@ public class StateUtil {
 		}
 	}
 
-	public static boolean isState(String state) {
-		if (Arrays.binarySearch(STATES, state) >= 0) {
+	public static boolean isStateId(String stateId) {
+		if (Arrays.binarySearch(STATE_IDS_ORDERED, stateId) >= 0) {
 			return true;
 		}
 		else {

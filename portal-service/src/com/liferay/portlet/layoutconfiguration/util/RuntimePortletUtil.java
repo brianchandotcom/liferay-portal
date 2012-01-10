@@ -33,6 +33,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class RuntimePortletUtil {
 
+	public static RuntimePortlet getRuntimePortlet() {
+		return _runtimePortlet;
+	}
+
 	public static String processCustomizationSettings(
 			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, PageContext pageContext,
@@ -126,10 +130,6 @@ public class RuntimePortletUtil {
 		throws Exception {
 
 		return getRuntimePortlet().processXML(request, content, runtimeLogic);
-	}
-
-	public static RuntimePortlet getRuntimePortlet() {
-		return _runtimePortlet;
 	}
 
 	public void setRuntimePortlet(RuntimePortlet runtimePortlet) {

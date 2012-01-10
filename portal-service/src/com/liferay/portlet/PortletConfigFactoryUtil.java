@@ -31,12 +31,12 @@ public class PortletConfigFactoryUtil {
 		return getPortletConfigFactory().create(portlet, servletContext);
 	}
 
-	public static PortletConfigFactory getPortletConfigFactory() {
-		return _portletConfigFactory;
-	}
-
 	public static void destroy(Portlet portlet) {
 		getPortletConfigFactory().destroy(portlet);
+	}
+
+	public static PortletConfigFactory getPortletConfigFactory() {
+		return _portletConfigFactory;
 	}
 
 	public static PortletConfig update(Portlet portlet) {

@@ -34,23 +34,6 @@ import javax.sql.DataSource;
  */
 public class DataAccess {
 
-	public static Connection getConnection() throws SQLException {
-		DataSource dataSource = InfrastructureUtil.getDataSource();
-
-		return dataSource.getConnection();
-	}
-
-	public static Connection getConnection(String location)
-		throws NamingException, SQLException {
-
-		InitialContext initialContext = new InitialContext();
-
-		DataSource dataSource = (DataSource)JNDIUtil.lookup(
-			initialContext, location);
-
-		return dataSource.getConnection();
-	}
-
 	public static void cleanUp(Connection connection) {
 		try {
 			if (connection != null) {
@@ -101,6 +84,23 @@ public class DataAccess {
 				_log.warn(sqle.getMessage());
 			}
 		}
+	}
+
+	public static Connection getConnection() throws SQLException {
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		return dataSource.getConnection();
+	}
+
+	public static Connection getConnection(String location)
+		throws NamingException, SQLException {
+
+		InitialContext initialContext = new InitialContext();
+
+		DataSource dataSource = (DataSource)JNDIUtil.lookup(
+			initialContext, location);
+
+		return dataSource.getConnection();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DataAccess.class);

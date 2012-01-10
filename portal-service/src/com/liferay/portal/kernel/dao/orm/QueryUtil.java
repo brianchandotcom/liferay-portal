@@ -33,6 +33,115 @@ public class QueryUtil {
 
 	public static final int ALL_POS = -1;
 
+	public static Comparable<?>[] getPrevAndNext(
+		Query query, int count, OrderByComparator obc,
+		Comparable<?> comparable) {
+
+		int pos = count;
+		int boundary = 0;
+
+		Comparable<?>[] array = new Comparable[3];
+
+		DB db = DBFactoryUtil.getDB();
+
+		if (!db.isSupportsScrollableResults()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Database does not support scrollable results");
+			}
+
+			return array;
+		}
+
+		ScrollableResults sr = query.scroll();
+
+		if (sr.first()) {
+			while (true) {
+				Object obj = sr.get(0);
+
+				if (obj == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Object is null");
+					}
+
+					break;
+				}
+
+				Comparable<?> curComparable = (Comparable<?>)obj;
+
+				int value = obc.compare(comparable, curComparable);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Comparison result is " + value);
+				}
+
+				if (value == 0) {
+					if (!comparable.equals(curComparable)) {
+						break;
+					}
+
+					array[1] = curComparable;
+
+					if (sr.previous()) {
+						array[0] = (Comparable<?>)sr.get(0);
+					}
+
+					sr.next();
+
+					if (sr.next()) {
+						array[2] = (Comparable<?>)sr.get(0);
+					}
+
+					break;
+				}
+
+				if (pos == 1) {
+					break;
+				}
+
+				pos = (int)Math.ceil(pos / 2.0);
+
+				int scrollPos = pos;
+
+				if (value < 0) {
+					scrollPos = scrollPos * -1;
+				}
+
+				boundary += scrollPos;
+
+				if (boundary < 0) {
+					scrollPos = scrollPos + (boundary * -1) + 1;
+
+					boundary = 0;
+				}
+
+				if (boundary > count) {
+					scrollPos = scrollPos - (boundary - count);
+
+					boundary = scrollPos;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Scroll " + scrollPos);
+				}
+
+				if (!sr.scroll(scrollPos)) {
+					if (value < 0) {
+						if (!sr.next()) {
+							break;
+						}
+					}
+					else {
+						if (!sr.previous()) {
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		return array;
+	}
+
 	public static Iterator<?> iterate(
 		Query query, Dialect dialect, int start, int end) {
 
@@ -164,115 +273,6 @@ public class QueryUtil {
 		else {
 			return list;
 		}
-	}
-
-	public static Comparable<?>[] getPrevAndNext(
-		Query query, int count, OrderByComparator obc,
-		Comparable<?> comparable) {
-
-		int pos = count;
-		int boundary = 0;
-
-		Comparable<?>[] array = new Comparable[3];
-
-		DB db = DBFactoryUtil.getDB();
-
-		if (!db.isSupportsScrollableResults()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Database does not support scrollable results");
-			}
-
-			return array;
-		}
-
-		ScrollableResults sr = query.scroll();
-
-		if (sr.first()) {
-			while (true) {
-				Object obj = sr.get(0);
-
-				if (obj == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Object is null");
-					}
-
-					break;
-				}
-
-				Comparable<?> curComparable = (Comparable<?>)obj;
-
-				int value = obc.compare(comparable, curComparable);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Comparison result is " + value);
-				}
-
-				if (value == 0) {
-					if (!comparable.equals(curComparable)) {
-						break;
-					}
-
-					array[1] = curComparable;
-
-					if (sr.previous()) {
-						array[0] = (Comparable<?>)sr.get(0);
-					}
-
-					sr.next();
-
-					if (sr.next()) {
-						array[2] = (Comparable<?>)sr.get(0);
-					}
-
-					break;
-				}
-
-				if (pos == 1) {
-					break;
-				}
-
-				pos = (int)Math.ceil(pos / 2.0);
-
-				int scrollPos = pos;
-
-				if (value < 0) {
-					scrollPos = scrollPos * -1;
-				}
-
-				boundary += scrollPos;
-
-				if (boundary < 0) {
-					scrollPos = scrollPos + (boundary * -1) + 1;
-
-					boundary = 0;
-				}
-
-				if (boundary > count) {
-					scrollPos = scrollPos - (boundary - count);
-
-					boundary = scrollPos;
-				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Scroll " + scrollPos);
-				}
-
-				if (!sr.scroll(scrollPos)) {
-					if (value < 0) {
-						if (!sr.next()) {
-							break;
-						}
-					}
-					else {
-						if (!sr.previous()) {
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		return array;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(QueryUtil.class);

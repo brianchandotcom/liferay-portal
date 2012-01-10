@@ -29,6 +29,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IconPortletTag extends IconTag {
 
+	public void setPortlet(Portlet portlet) {
+		_portlet = portlet;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -41,10 +45,6 @@ public class IconPortletTag extends IconTag {
 		super.setAttributes(request);
 
 		request.setAttribute("liferay-portlet:icon_portlet:portlet", _portlet);
-	}
-
-	public void setPortlet(Portlet portlet) {
-		_portlet = portlet;
 	}
 
 	@Override

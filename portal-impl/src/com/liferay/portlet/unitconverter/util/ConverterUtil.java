@@ -25,6 +25,28 @@ public class ConverterUtil {
 
 	public static int TEMPERATURE_FAHRENHEIHT = 2;
 
+	public static double convertArea(int fromId, int toId, double fromValue) {
+		return (fromValue / _AREA[fromId]) * _AREA[toId];
+	}
+
+	public static double convertLength(int fromId, int toId, double fromValue) {
+		return (fromValue / _LENGTH[fromId]) * _LENGTH[toId];
+	}
+
+	public static double convertMass(int fromId, int toId, double fromValue) {
+		return (fromValue / _MASS[fromId]) * _MASS[toId];
+	}
+
+	public static double convertTemperature(
+		int fromId, int toId, double fromValue) {
+
+		return _fromTemperature(toId, _toTemperature(fromId, fromValue));
+	}
+
+	public static double convertVolume(int fromId, int toId, double fromValue) {
+		return (fromValue / _VOLUME[fromId]) * _VOLUME[toId];
+	}
+
 	public static Conversion getConversion(
 		int type, int fromId, int toId, double fromValue) {
 
@@ -47,28 +69,6 @@ public class ConverterUtil {
 		}
 
 		return new Conversion(type, fromId, toId, fromValue, toValue);
-	}
-
-	public static double convertArea(int fromId, int toId, double fromValue) {
-		return (fromValue / _AREA[fromId]) * _AREA[toId];
-	}
-
-	public static double convertLength(int fromId, int toId, double fromValue) {
-		return (fromValue / _LENGTH[fromId]) * _LENGTH[toId];
-	}
-
-	public static double convertMass(int fromId, int toId, double fromValue) {
-		return (fromValue / _MASS[fromId]) * _MASS[toId];
-	}
-
-	public static double convertTemperature(
-		int fromId, int toId, double fromValue) {
-
-		return _fromTemperature(toId, _toTemperature(fromId, fromValue));
-	}
-
-	public static double convertVolume(int fromId, int toId, double fromValue) {
-		return (fromValue / _VOLUME[fromId]) * _VOLUME[toId];
 	}
 
 	private final static double _fromTemperature(int toId, double fromValue) {

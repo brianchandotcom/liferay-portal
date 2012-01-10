@@ -36,13 +36,6 @@ import java.util.List;
  */
 public class VerifyDocumentLibrary extends VerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
-		checkFileEntryType();
-		removeOrphanedFileEntries();
-		updateAssets();
-	}
-
 	protected void checkFileEntryType() throws Exception {
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
@@ -63,6 +56,13 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(
 			dlFileEntryType, false);
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		checkFileEntryType();
+		removeOrphanedFileEntries();
+		updateAssets();
 	}
 
 	protected void removeOrphanedFileEntries() throws Exception {

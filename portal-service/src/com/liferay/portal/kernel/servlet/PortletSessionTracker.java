@@ -44,12 +44,12 @@ public class PortletSessionTracker
 		_instance._add(session);
 	}
 
-	public static void invalidate(HttpSession session) {
-		_instance._invalidate(session.getId());
-	}
-
 	public static HttpSessionBindingListener getInstance() {
 		return _instance;
+	}
+
+	public static void invalidate(HttpSession session) {
+		_instance._invalidate(session.getId());
 	}
 
 	public static void invalidate(String sessionId) {

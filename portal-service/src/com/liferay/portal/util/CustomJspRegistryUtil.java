@@ -29,6 +29,10 @@ public class CustomJspRegistryUtil {
 			servletContextName, fileName);
 	}
 
+	public static CustomJspRegistry getCustomJspRegistry() {
+		return _customJspRegistry;
+	}
+
 	public static String getDisplayName(String servletContextName) {
 		return getCustomJspRegistry().getDisplayName(servletContextName);
 	}
@@ -50,10 +54,6 @@ public class CustomJspRegistryUtil {
 
 	public void setCustomJspRegistry(CustomJspRegistry customJspRegistry) {
 		_customJspRegistry = customJspRegistry;
-	}
-
-	public static CustomJspRegistry getCustomJspRegistry() {
-		return _customJspRegistry;
 	}
 
 	private static CustomJspRegistry _customJspRegistry;

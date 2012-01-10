@@ -235,6 +235,28 @@ public class PortletAction extends Action {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
+	protected boolean redirectToLogin(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		if (actionRequest.getRemoteUser() == null) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			SessionErrors.add(request, PrincipalException.class.getName());
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			actionResponse.sendRedirect(themeDisplay.getURLSignIn());
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
@@ -306,28 +328,6 @@ public class PortletAction extends Action {
 			if (Validator.isNotNull(redirect)) {
 				actionResponse.sendRedirect(redirect);
 			}
-		}
-	}
-
-	protected boolean redirectToLogin(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		if (actionRequest.getRemoteUser() == null) {
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-
-			SessionErrors.add(request, PrincipalException.class.getName());
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			actionResponse.sendRedirect(themeDisplay.getURLSignIn());
-
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 

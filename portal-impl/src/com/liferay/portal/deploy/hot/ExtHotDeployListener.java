@@ -94,36 +94,6 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		StreamUtil.transfer(is, new FileOutputStream(new File(newJarFullName)));
 	}
 
-	protected void installExt(
-			ServletContext servletContext, ClassLoader portletClassLoader)
-		throws Exception {
-
-		String servletContextName = servletContext.getServletContextName();
-
-		String globalLibDir = PortalUtil.getGlobalLibDir();
-		String portalWebDir = PortalUtil.getPortalWebDir();
-		String portalLibDir = PortalUtil.getPortalLibDir();
-		String pluginWebDir = WebDirDetector.getRootDir(portletClassLoader);
-
-		copyJar(servletContext, globalLibDir, "ext-service");
-		copyJar(servletContext, portalLibDir, "ext-impl");
-		copyJar(servletContext, portalLibDir, "ext-util-bridges");
-		copyJar(servletContext, portalLibDir, "ext-util-java");
-		copyJar(servletContext, portalLibDir, "ext-util-taglib");
-
-		mergeWebXml(portalWebDir, pluginWebDir);
-
-		CopyTask.copyDirectory(
-			pluginWebDir + "WEB-INF/ext-web/docroot", portalWebDir,
-			StringPool.BLANK, "**/WEB-INF/web.xml", true, false);
-
-		FileUtil.copyFile(
-			pluginWebDir + "WEB-INF/ext-" + servletContextName + ".xml",
-			portalWebDir + "WEB-INF/ext-" + servletContextName + ".xml");
-
-		ExtRegistry.registerExt(servletContext);
-	}
-
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
 		throws Exception {
 
@@ -225,6 +195,36 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 				"Extension environment for " +
 					servletContextName + " will not be undeployed");
 		}
+	}
+
+	protected void installExt(
+			ServletContext servletContext, ClassLoader portletClassLoader)
+		throws Exception {
+
+		String servletContextName = servletContext.getServletContextName();
+
+		String globalLibDir = PortalUtil.getGlobalLibDir();
+		String portalWebDir = PortalUtil.getPortalWebDir();
+		String portalLibDir = PortalUtil.getPortalLibDir();
+		String pluginWebDir = WebDirDetector.getRootDir(portletClassLoader);
+
+		copyJar(servletContext, globalLibDir, "ext-service");
+		copyJar(servletContext, portalLibDir, "ext-impl");
+		copyJar(servletContext, portalLibDir, "ext-util-bridges");
+		copyJar(servletContext, portalLibDir, "ext-util-java");
+		copyJar(servletContext, portalLibDir, "ext-util-taglib");
+
+		mergeWebXml(portalWebDir, pluginWebDir);
+
+		CopyTask.copyDirectory(
+			pluginWebDir + "WEB-INF/ext-web/docroot", portalWebDir,
+			StringPool.BLANK, "**/WEB-INF/web.xml", true, false);
+
+		FileUtil.copyFile(
+			pluginWebDir + "WEB-INF/ext-" + servletContextName + ".xml",
+			portalWebDir + "WEB-INF/ext-" + servletContextName + ".xml");
+
+		ExtRegistry.registerExt(servletContext);
 	}
 
 	protected void logRegistration(String servletContextName) {

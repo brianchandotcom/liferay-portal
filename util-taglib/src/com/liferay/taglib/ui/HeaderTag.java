@@ -25,50 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HeaderTag extends IncludeTag {
 
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:header:backLabel", _backLabel);
-
-		String redirect = ParamUtil.getString(request, "redirect");
-
-		if (Validator.isNull(_backURL) && Validator.isNotNull(redirect)) {
-			request.setAttribute("liferay-ui:header:backURL", redirect);
-		}
-		else {
-			request.setAttribute("liferay-ui:header:backURL", _backURL);
-		}
-
-		request.setAttribute("liferay-ui:header:cssClass", _cssClass);
-		request.setAttribute(
-			"liferay-ui:header:escapeXml", String.valueOf(_escapeXml));
-		request.setAttribute(
-			"liferay-ui:header:localizeTitle", String.valueOf(_localizeTitle));
-		request.setAttribute(
-			"liferay-ui:header:showBackURL", String.valueOf(_showBackURL));
-		request.setAttribute("liferay-ui:header:title", _title);
-	}
-
-	@Override
-	protected void cleanUp() {
-		_backLabel = null;
-		_backURL = null;
-		_cssClass = null;
-		_escapeXml = true;
-		_localizeTitle = true;
-		_showBackURL = true;
-		_title = null;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected boolean isCleanUpSetAttributes() {
-		return _CLEAN_UP_SET_ATTRIBUTES;
-	}
-
 	public void setBackLabel(String backLabel) {
 		_backLabel = backLabel;
 	}
@@ -95,6 +51,50 @@ public class HeaderTag extends IncludeTag {
 
 	public void setTitle(String title) {
 		_title = title;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_backLabel = null;
+		_backURL = null;
+		_cssClass = null;
+		_escapeXml = true;
+		_localizeTitle = true;
+		_showBackURL = true;
+		_title = null;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-ui:header:backLabel", _backLabel);
+
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		if (Validator.isNull(_backURL) && Validator.isNotNull(redirect)) {
+			request.setAttribute("liferay-ui:header:backURL", redirect);
+		}
+		else {
+			request.setAttribute("liferay-ui:header:backURL", _backURL);
+		}
+
+		request.setAttribute("liferay-ui:header:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-ui:header:escapeXml", String.valueOf(_escapeXml));
+		request.setAttribute(
+			"liferay-ui:header:localizeTitle", String.valueOf(_localizeTitle));
+		request.setAttribute(
+			"liferay-ui:header:showBackURL", String.valueOf(_showBackURL));
+		request.setAttribute("liferay-ui:header:title", _title);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

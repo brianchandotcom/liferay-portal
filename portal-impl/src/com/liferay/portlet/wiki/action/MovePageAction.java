@@ -130,6 +130,11 @@ public class MovePageAction extends PortletAction {
 			nodeId, title, newParentTitle, serviceContext);
 	}
 
+	@Override
+	protected boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
 	protected void renamePage(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -139,11 +144,6 @@ public class MovePageAction extends PortletAction {
 			WikiPage.class.getName(), actionRequest);
 
 		WikiPageServiceUtil.movePage(nodeId, title, newTitle, serviceContext);
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

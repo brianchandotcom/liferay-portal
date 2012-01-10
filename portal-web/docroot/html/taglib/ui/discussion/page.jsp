@@ -377,7 +377,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														/>
 												</li>
 
-												<c:if test="<%= (message.getUserId() == user.getUserId()) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
+												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
 
 													<%
 													String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');";
@@ -392,7 +392,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													</li>
 												</c:if>
 
-												<c:if test="<%= ((message.getUserId() == user.getUserId()) || permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.DELETE_DISCUSSION) %>">
+												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.DELETE_DISCUSSION) %>">
 
 													<%
 													String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + i + ");";

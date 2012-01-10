@@ -386,6 +386,14 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/da/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/da_DK/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/de/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -531,6 +539,14 @@
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/ko_KR/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/lo/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/lo_LA/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
@@ -902,6 +918,8 @@
 			<url-pattern>/ca_ES/c/portal/protected</url-pattern>
 			<url-pattern>/cs/c/portal/protected</url-pattern>
 			<url-pattern>/cs_CZ/c/portal/protected</url-pattern>
+			<url-pattern>/da/c/portal/protected</url-pattern>
+			<url-pattern>/da_DK/c/portal/protected</url-pattern>
 			<url-pattern>/de/c/portal/protected</url-pattern>
 			<url-pattern>/de_DE/c/portal/protected</url-pattern>
 			<url-pattern>/el/c/portal/protected</url-pattern>
@@ -939,6 +957,8 @@
 			<url-pattern>/ja_JP/c/portal/protected</url-pattern>
 			<url-pattern>/ko/c/portal/protected</url-pattern>
 			<url-pattern>/ko_KR/c/portal/protected</url-pattern>
+			<url-pattern>/lo/c/portal/protected</url-pattern>
+			<url-pattern>/lo_LA/c/portal/protected</url-pattern>
 			<url-pattern>/nb/c/portal/protected</url-pattern>
 			<url-pattern>/nb_NO/c/portal/protected</url-pattern>
 			<url-pattern>/nl/c/portal/protected</url-pattern>

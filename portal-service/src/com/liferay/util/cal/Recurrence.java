@@ -709,6 +709,70 @@ public class Recurrence implements Serializable {
 		return sb.toString();
 	}
 
+	/**
+	 * Method getDayNumber
+	 *
+	 * @return long
+	 */
+	protected static long getDayNumber(Calendar cal) {
+		Calendar tempCal = (Calendar)cal.clone();
+
+		// Set to midnight, GMT
+
+		tempCal.set(Calendar.MILLISECOND, 0);
+		tempCal.set(Calendar.SECOND, 0);
+		tempCal.set(Calendar.MINUTE, 0);
+		tempCal.set(Calendar.HOUR_OF_DAY, 0);
+
+		return tempCal.getTime().getTime() / (24 * 60 * 60 * 1000);
+	}
+
+	/**
+	 * Method getWeekNumber
+	 *
+	 * @return long
+	 */
+	protected static long getWeekNumber(Calendar cal) {
+		Calendar tempCal = (Calendar)cal.clone();
+
+		// Set to midnight, GMT
+
+		tempCal.set(Calendar.MILLISECOND, 0);
+		tempCal.set(Calendar.SECOND, 0);
+		tempCal.set(Calendar.MINUTE, 0);
+		tempCal.set(Calendar.HOUR_OF_DAY, 0);
+
+		// Roll back to the first day of the week
+
+		int delta = tempCal.getFirstDayOfWeek()
+					- tempCal.get(Calendar.DAY_OF_WEEK);
+
+		if (delta > 0) {
+			delta -= 7;
+		}
+
+		// tempCal now points to the first instant of this week.
+
+		// Calculate the "week epoch" -- the weekstart day closest to January 1,
+		// 1970 (which was a Thursday)
+
+		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
+						 * 60 * 60 * 1000L;
+
+		return (tempCal.getTime().getTime() - weekEpoch)
+			   / (7 * 24 * 60 * 60 * 1000);
+	}
+
+	/**
+	 * Method getMonthNumber
+	 *
+	 * @return long
+	 */
+	protected static long getMonthNumber(Calendar cal) {
+		return (cal.get(Calendar.YEAR) - 1970) * 12L
+			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
+	}
+
 	protected static void reduce_constant_length_field(int field,
 													   Calendar start,
 													   Calendar candidate) {
@@ -774,70 +838,6 @@ public class Recurrence implements Serializable {
 			candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
 			candidate.set(Calendar.DATE, start.get(Calendar.DATE));
 		}
-	}
-
-	/**
-	 * Method getDayNumber
-	 *
-	 * @return long
-	 */
-	protected static long getDayNumber(Calendar cal) {
-		Calendar tempCal = (Calendar)cal.clone();
-
-		// Set to midnight, GMT
-
-		tempCal.set(Calendar.MILLISECOND, 0);
-		tempCal.set(Calendar.SECOND, 0);
-		tempCal.set(Calendar.MINUTE, 0);
-		tempCal.set(Calendar.HOUR_OF_DAY, 0);
-
-		return tempCal.getTime().getTime() / (24 * 60 * 60 * 1000);
-	}
-
-	/**
-	 * Method getWeekNumber
-	 *
-	 * @return long
-	 */
-	protected static long getWeekNumber(Calendar cal) {
-		Calendar tempCal = (Calendar)cal.clone();
-
-		// Set to midnight, GMT
-
-		tempCal.set(Calendar.MILLISECOND, 0);
-		tempCal.set(Calendar.SECOND, 0);
-		tempCal.set(Calendar.MINUTE, 0);
-		tempCal.set(Calendar.HOUR_OF_DAY, 0);
-
-		// Roll back to the first day of the week
-
-		int delta = tempCal.getFirstDayOfWeek()
-					- tempCal.get(Calendar.DAY_OF_WEEK);
-
-		if (delta > 0) {
-			delta -= 7;
-		}
-
-		// tempCal now points to the first instant of this week.
-
-		// Calculate the "week epoch" -- the weekstart day closest to January 1,
-		// 1970 (which was a Thursday)
-
-		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
-						 * 60 * 60 * 1000L;
-
-		return (tempCal.getTime().getTime() - weekEpoch)
-			   / (7 * 24 * 60 * 60 * 1000);
-	}
-
-	/**
-	 * Method getMonthNumber
-	 *
-	 * @return long
-	 */
-	protected static long getMonthNumber(Calendar cal) {
-		return (cal.get(Calendar.YEAR) - 1970) * 12L
-			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
 	}
 
 	/**

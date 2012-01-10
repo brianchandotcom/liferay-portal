@@ -535,6 +535,43 @@ public class DLUtil {
 		return sb.toString();
 	}
 
+	public static String getWebDavURL(
+			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		StringBuilder sb = new StringBuilder();
+
+		if (folder != null) {
+			Folder curFolder = folder;
+
+			while (true) {
+				sb.insert(0, HttpUtil.encodeURL(curFolder.getName(), true));
+				sb.insert(0, StringPool.SLASH);
+
+				if (curFolder.getParentFolderId() ==
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					break;
+				}
+				else {
+					curFolder = DLAppLocalServiceUtil.getFolder(
+						curFolder.getParentFolderId());
+				}
+			}
+		}
+
+		if (fileEntry != null) {
+			sb.append(StringPool.SLASH);
+			sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
+		}
+
+		Group group = themeDisplay.getScopeGroup();
+
+		return themeDisplay.getPortalURL() + themeDisplay.getPathContext() +
+			"/api/secure/webdav" + group.getFriendlyURL() +
+			"/document_library" + sb.toString();
+	}
+
 	private static long _getDefaultFolderId(HttpServletRequest request)
 		throws Exception {
 

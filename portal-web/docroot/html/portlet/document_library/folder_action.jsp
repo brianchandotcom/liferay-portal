@@ -410,30 +410,8 @@ if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || 
 		<div class="file-entry-field">
 			<label><liferay-ui:message key="webdav-url" /></label>
 
-			<%
-			StringBuilder sb = new StringBuilder();
-
-			if (folder != null) {
-				Folder curFolder = folder;
-
-				while (true) {
-					sb.insert(0, HttpUtil.encodeURL(curFolder.getName(), true));
-					sb.insert(0, StringPool.SLASH);
-
-					if (curFolder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-						break;
-					}
-					else {
-						curFolder = DLAppLocalServiceUtil.getFolder(curFolder.getParentFolderId());
-					}
-				}
-			}
-
-			Group group = themeDisplay.getScopeGroup();
-			%>
-
 			<liferay-ui:input-resource
-				url='<%= themeDisplay.getPortalURL() + "/api/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString() %>'
+				url='<%= DLUtil.getWebDavURL(themeDisplay, folder, null) %>'
 			/>
 		</div>
 	</div>

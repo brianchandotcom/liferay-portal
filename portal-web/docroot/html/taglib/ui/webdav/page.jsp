@@ -32,7 +32,7 @@ String path = (String)request.getAttribute("liferay-ui:webdav:path");
 			</td>
 			<td>
 				<liferay-ui:input-resource
-					url='<%= themeDisplay.getPortalURL() + "/api/secure/webdav/" + company.getWebId() + themeDisplay.getScopeGroup().getFriendlyURL() + path %>'
+					url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/api/secure/webdav" + themeDisplay.getScopeGroup().getFriendlyURL() + path %>'
 				/>
 			</td>
 		</tr>

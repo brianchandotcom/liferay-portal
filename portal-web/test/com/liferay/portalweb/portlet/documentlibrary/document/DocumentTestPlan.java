@@ -43,6 +43,7 @@ import com.liferay.portalweb.portlet.documentlibrary.document.movefolderdocument
 import com.liferay.portalweb.portlet.documentlibrary.document.movefolderdocumenttofolder.MoveFolderDocumentToFolderTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.searchfolderdocument.SearchFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.unlockfolderdocument.UnlockFolderDocumentTests;
+import com.liferay.portalweb.portlet.documentlibrary.document.viewfolderdocumentactions.ViewFolderDocumentActionsTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.viewfolderdocumentmydocuments.ViewFolderDocumentMyDocumentsTests;
 import com.liferay.portalweb.portlet.documentlibrary.document.viewfolderdocumentrecentdocuments.ViewFolderDocumentRecentDocumentsTests;
 
@@ -86,6 +87,7 @@ public class DocumentTestPlan extends BaseTestSuite {
 		testSuite.addTest(MoveFolderDocumentToFolderTests.suite());
 		testSuite.addTest(SearchFolderDocumentTests.suite());
 		testSuite.addTest(UnlockFolderDocumentTests.suite());
+		testSuite.addTest(ViewFolderDocumentActionsTests.suite());
 		testSuite.addTest(ViewFolderDocumentMyDocumentsTests.suite());
 		testSuite.addTest(ViewFolderDocumentRecentDocumentsTests.suite());
 

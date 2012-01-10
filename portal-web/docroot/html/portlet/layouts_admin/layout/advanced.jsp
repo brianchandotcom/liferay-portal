@@ -38,7 +38,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		String queryString = GetterUtil.getString(layoutTypeSettings.getProperty("query-string"));
 		%>
 
-		<aui:input helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value="<%= HtmlUtil.escape(queryString) %>" />
+		<aui:input helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value="<%= queryString %>" />
 	</c:if>
 
 	<%

@@ -80,30 +80,8 @@ String fileUrl = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "
 String webDavUrl = StringPool.BLANK;
 
 if (portletDisplay.isWebDAVEnabled()) {
-	StringBuilder sb = new StringBuilder();
 
-	if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-		Folder curFolder = DLAppLocalServiceUtil.getFolder(folderId);
-
-		while (true) {
-			sb.insert(0, HttpUtil.encodeURL(curFolder.getName(), true));
-			sb.insert(0, StringPool.SLASH);
-
-			if (curFolder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				break;
-			}
-			else {
-				curFolder = DLAppLocalServiceUtil.getFolder(curFolder.getParentFolderId());
-			}
-		}
-	}
-
-	sb.append(StringPool.SLASH);
-	sb.append(HttpUtil.encodeURL(fileEntry.getTitle(), true));
-
-	Group group = themeDisplay.getScopeGroup();
-
-	webDavUrl = themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/api/secure/webdav" + group.getFriendlyURL() + "/document_library" + sb.toString();
+	webDavUrl = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
 }
 
 boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);

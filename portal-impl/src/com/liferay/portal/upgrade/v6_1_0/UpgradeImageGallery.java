@@ -41,7 +41,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -554,7 +553,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 						StringPool.BLANK, "1.0", size, 0, smallImageId,
 						largeImageId, custom1ImageId, custom2ImageId);
 				}
-				catch (SQLException sqle) {
+				catch (Exception e) {
 					title = title.concat(StringPool.SPACE).concat(
 						String.valueOf(imageId));
 

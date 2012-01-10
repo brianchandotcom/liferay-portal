@@ -1028,21 +1028,21 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Method matchesByMonth
+	 *
+	 * @return boolean
+	 */
+	protected boolean matchesByMonth(Calendar candidate) {
+		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	}
+
+	/**
 	 * Method matchesByMonthDay
 	 *
 	 * @return boolean
 	 */
 	protected boolean matchesByMonthDay(Calendar candidate) {
 		return matchesByField(byMonthDay, Calendar.DATE, candidate, true);
-	}
-
-	/**
-	 * Method matchesByYearDay
-	 *
-	 * @return boolean
-	 */
-	protected boolean matchesByYearDay(Calendar candidate) {
-		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
 	}
 
 	/**
@@ -1055,12 +1055,12 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method matchesByMonth
+	 * Method matchesByYearDay
 	 *
 	 * @return boolean
 	 */
-	protected boolean matchesByMonth(Calendar candidate) {
-		return matchesByField(byMonth, Calendar.MONTH, candidate, false);
+	protected boolean matchesByYearDay(Calendar candidate) {
+		return matchesByField(byYearDay, Calendar.DAY_OF_YEAR, candidate, true);
 	}
 
 	/**

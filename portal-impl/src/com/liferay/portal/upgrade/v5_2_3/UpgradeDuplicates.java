@@ -104,14 +104,6 @@ public class UpgradeDuplicates extends UpgradeProcess {
 			});
 	}
 
-	protected void deleteDuplicateGroup() throws Exception {
-		deleteDuplicates(
-			"Group_", "groupId",
-			new Object[][] {
-				{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
-			});
-	}
-
 	protected void deleteDuplicateExpando() throws Exception {
 		DependencyManager expandoTableDependencyManager =
 			new ExpandoTableDependencyManager();
@@ -155,6 +147,14 @@ public class UpgradeDuplicates extends UpgradeProcess {
 			new Object[][] {
 				{"tableId", Types.BIGINT}, {"columnId", Types.BIGINT},
 				{"classPK", Types.BIGINT}
+			});
+	}
+
+	protected void deleteDuplicateGroup() throws Exception {
+		deleteDuplicates(
+			"Group_", "groupId",
+			new Object[][] {
+				{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
 			});
 	}
 
@@ -294,14 +294,6 @@ public class UpgradeDuplicates extends UpgradeProcess {
 				{"scope", Types.INTEGER}
 			},
 			resourceCodeDependencyManager);
-	}
-
-	protected void deleteDuplicateUser() throws Exception {
-		deleteDuplicates(
-			"User_", "userId",
-			new Object[][] {
-				{"companyId", Types.BIGINT}, {"screenName", Types.VARCHAR}
-			});
 	}
 
 	protected void deleteDuplicates(
@@ -536,6 +528,14 @@ public class UpgradeDuplicates extends UpgradeProcess {
 			new Object[][] {
 				{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 				{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
+			});
+	}
+
+	protected void deleteDuplicateUser() throws Exception {
+		deleteDuplicates(
+			"User_", "userId",
+			new Object[][] {
+				{"companyId", Types.BIGINT}, {"screenName", Types.VARCHAR}
 			});
 	}
 

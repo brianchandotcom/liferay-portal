@@ -272,6 +272,11 @@ public class EditPageAction extends PortletAction {
 		return portletURL.toString();
 	}
 
+	@Override
+	protected boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
 	protected void revertPage(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -332,11 +337,6 @@ public class EditPageAction extends PortletAction {
 		}
 
 		return page;
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

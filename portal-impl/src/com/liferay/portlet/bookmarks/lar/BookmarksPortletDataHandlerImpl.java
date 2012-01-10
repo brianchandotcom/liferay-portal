@@ -177,6 +177,30 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		return null;
 	}
 
+	protected void exportEntry(
+			PortletDataContext portletDataContext, Element foldersElement,
+			Element entriesElement, BookmarksEntry entry)
+		throws Exception {
+
+		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
+			return;
+		}
+
+		if (foldersElement != null) {
+			exportParentFolder(
+				portletDataContext, foldersElement, entry.getFolderId());
+		}
+
+		String path = getEntryPath(portletDataContext, entry);
+
+		if (portletDataContext.isPathNotProcessed(path)) {
+			Element entryElement = entriesElement.addElement("entry");
+
+			portletDataContext.addClassedModel(
+				entryElement, path, entry, _NAMESPACE);
+		}
+	}
+
 	protected void exportFolder(
 			PortletDataContext portletDataContext, Element foldersElement,
 			Element entriesElement, BookmarksFolder folder)
@@ -202,30 +226,6 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 		for (BookmarksEntry entry : entries) {
 			exportEntry(
 				portletDataContext, foldersElement, entriesElement, entry);
-		}
-	}
-
-	protected void exportEntry(
-			PortletDataContext portletDataContext, Element foldersElement,
-			Element entriesElement, BookmarksEntry entry)
-		throws Exception {
-
-		if (!portletDataContext.isWithinDateRange(entry.getModifiedDate())) {
-			return;
-		}
-
-		if (foldersElement != null) {
-			exportParentFolder(
-				portletDataContext, foldersElement, entry.getFolderId());
-		}
-
-		String path = getEntryPath(portletDataContext, entry);
-
-		if (portletDataContext.isPathNotProcessed(path)) {
-			Element entryElement = entriesElement.addElement("entry");
-
-			portletDataContext.addClassedModel(
-				entryElement, path, entry, _NAMESPACE);
 		}
 	}
 

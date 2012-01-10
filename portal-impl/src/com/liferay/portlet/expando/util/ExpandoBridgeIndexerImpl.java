@@ -67,53 +67,6 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		return sb.toString();
 	}
 
-	protected void doAddAttributes(
-			Document document, ExpandoBridge expandoBridge)
-		throws SystemException {
-
-		List<ExpandoColumn> expandoColumns =
-			ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
-				expandoBridge.getCompanyId(), expandoBridge.getClassName());
-
-		if ((expandoColumns == null) || expandoColumns.isEmpty()) {
-			return;
-		}
-
-		List<ExpandoColumn> indexedColumns = new ArrayList<ExpandoColumn>();
-
-		for (ExpandoColumn expandoColumn : expandoColumns) {
-			UnicodeProperties properties =
-				expandoColumn.getTypeSettingsProperties();
-
-			int indexType = GetterUtil.getInteger(
-				properties.get(ExpandoColumnConstants.INDEX_TYPE));
-
-			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
-				indexedColumns.add(expandoColumn);
-			}
-		}
-
-		if (indexedColumns.isEmpty()) {
-			return;
-		}
-
-		List<ExpandoValue> expandoValues =
-			ExpandoValueLocalServiceUtil.getRowValues(
-				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME,
-				expandoBridge.getClassPK(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (ExpandoColumn expandoColumn : indexedColumns) {
-			try {
-				addAttribute(document, expandoColumn, expandoValues);
-			}
-			catch (Exception e) {
-				_log.error("Indexing " + expandoColumn.getName(), e);
-			}
-		}
-	}
-
 	protected void addAttribute(
 			Document document, ExpandoColumn expandoColumn,
 			List<ExpandoValue> expandoValues)
@@ -244,6 +197,53 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 				else {
 					document.addText(fieldName, StringPool.BLANK);
 				}
+			}
+		}
+	}
+
+	protected void doAddAttributes(
+			Document document, ExpandoBridge expandoBridge)
+		throws SystemException {
+
+		List<ExpandoColumn> expandoColumns =
+			ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
+				expandoBridge.getCompanyId(), expandoBridge.getClassName());
+
+		if ((expandoColumns == null) || expandoColumns.isEmpty()) {
+			return;
+		}
+
+		List<ExpandoColumn> indexedColumns = new ArrayList<ExpandoColumn>();
+
+		for (ExpandoColumn expandoColumn : expandoColumns) {
+			UnicodeProperties properties =
+				expandoColumn.getTypeSettingsProperties();
+
+			int indexType = GetterUtil.getInteger(
+				properties.get(ExpandoColumnConstants.INDEX_TYPE));
+
+			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
+				indexedColumns.add(expandoColumn);
+			}
+		}
+
+		if (indexedColumns.isEmpty()) {
+			return;
+		}
+
+		List<ExpandoValue> expandoValues =
+			ExpandoValueLocalServiceUtil.getRowValues(
+				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME,
+				expandoBridge.getClassPK(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (ExpandoColumn expandoColumn : indexedColumns) {
+			try {
+				addAttribute(document, expandoColumn, expandoValues);
+			}
+			catch (Exception e) {
+				_log.error("Indexing " + expandoColumn.getName(), e);
 			}
 		}
 	}

@@ -266,55 +266,42 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	protected boolean isLegacyImageGalleryImageId(
-		HttpServletRequest request, HttpServletResponse response) {
+	protected Image convertFileEntry(boolean smallImage, FileEntry fileEntry)
+		throws PortalException, SystemException {
 
 		try {
-			long imageId = getImageId(request);
+			Image image = new ImageImpl();
 
-			if (imageId == 0) {
-				return false;
+			image.setModifiedDate(fileEntry.getModifiedDate());
+
+			InputStream is = null;
+
+			if (smallImage) {
+				is = ImageProcessorUtil.getThumbnailAsStream(
+					fileEntry.getFileVersion(),
+					ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
+			}
+			else {
+				is = fileEntry.getContentStream();
 			}
 
-			DLFileEntry dlFileEntry =
-				DLFileEntryServiceUtil.fetchFileEntryByImageId(imageId);
+			byte[] bytes = FileUtil.getBytes(is);
 
-			if (dlFileEntry == null) {
-				return false;
-			}
+			image.setTextObj(bytes);
 
-			StringBundler sb = new StringBundler(9);
+			image.setType(fileEntry.getExtension());
 
-			sb.append("/documents/");
-			sb.append(dlFileEntry.getGroupId());
-			sb.append(StringPool.SLASH);
-			sb.append(dlFileEntry.getFolderId());
-			sb.append(StringPool.SLASH);
-			sb.append(
-				HttpUtil.encodeURL(
-					HtmlUtil.unescape(dlFileEntry.getTitle()), true));
-			sb.append("?version=");
-			sb.append(dlFileEntry.getVersion());
-
-			if (imageId == dlFileEntry.getSmallImageId()) {
-				sb.append("&imageThumbnail=1");
-			}
-			else if (imageId == dlFileEntry.getSmallImageId()) {
-				sb.append("&imageThumbnail=2");
-			}
-			else if (imageId == dlFileEntry.getSmallImageId()) {
-				sb.append("&imageThumbnail=3");
-			}
-
-			response.setHeader(HttpHeaders.LOCATION, sb.toString());
-			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-
-			return true;
+			return image;
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
 		}
 		catch (Exception e) {
+			throw new SystemException(e);
 		}
-
-		return false;
 	}
 
 	protected Image getDefaultImage(HttpServletRequest request, long imageId) {
@@ -422,44 +409,6 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return image;
-	}
-
-	protected Image convertFileEntry(boolean smallImage, FileEntry fileEntry)
-		throws PortalException, SystemException {
-
-		try {
-			Image image = new ImageImpl();
-
-			image.setModifiedDate(fileEntry.getModifiedDate());
-
-			InputStream is = null;
-
-			if (smallImage) {
-				is = ImageProcessorUtil.getThumbnailAsStream(
-					fileEntry.getFileVersion(),
-					ImageProcessorImpl.THUMBNAIL_INDEX_DEFAULT);
-			}
-			else {
-				is = fileEntry.getContentStream();
-			}
-
-			byte[] bytes = FileUtil.getBytes(is);
-
-			image.setTextObj(bytes);
-
-			image.setType(fileEntry.getExtension());
-
-			return image;
-		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 	}
 
 	protected byte[] getImageBytes(HttpServletRequest request, Image image) {
@@ -627,6 +576,57 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return image;
+	}
+
+	protected boolean isLegacyImageGalleryImageId(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			long imageId = getImageId(request);
+
+			if (imageId == 0) {
+				return false;
+			}
+
+			DLFileEntry dlFileEntry =
+				DLFileEntryServiceUtil.fetchFileEntryByImageId(imageId);
+
+			if (dlFileEntry == null) {
+				return false;
+			}
+
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("/documents/");
+			sb.append(dlFileEntry.getGroupId());
+			sb.append(StringPool.SLASH);
+			sb.append(dlFileEntry.getFolderId());
+			sb.append(StringPool.SLASH);
+			sb.append(
+				HttpUtil.encodeURL(
+					HtmlUtil.unescape(dlFileEntry.getTitle()), true));
+			sb.append("?version=");
+			sb.append(dlFileEntry.getVersion());
+
+			if (imageId == dlFileEntry.getSmallImageId()) {
+				sb.append("&imageThumbnail=1");
+			}
+			else if (imageId == dlFileEntry.getSmallImageId()) {
+				sb.append("&imageThumbnail=2");
+			}
+			else if (imageId == dlFileEntry.getSmallImageId()) {
+				sb.append("&imageThumbnail=3");
+			}
+
+			response.setHeader(HttpHeaders.LOCATION, sb.toString());
+			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+
+			return true;
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	protected void processPrincipalException(

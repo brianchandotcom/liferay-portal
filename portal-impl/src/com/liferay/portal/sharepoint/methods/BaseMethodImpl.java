@@ -43,10 +43,6 @@ public abstract class BaseMethodImpl implements Method {
 		}
 	}
 
-	protected abstract List<ResponseElement> getElements(
-			SharepointRequest sharepointRequest)
-		throws Exception;
-
 	protected void doProcess(SharepointRequest sharepointRequest)
 		throws Exception {
 
@@ -54,6 +50,10 @@ public abstract class BaseMethodImpl implements Method {
 			sharepointRequest.getHttpServletResponse(),
 			getResponseBuffer(sharepointRequest).toString());
 	}
+
+	protected abstract List<ResponseElement> getElements(
+			SharepointRequest sharepointRequest)
+		throws Exception;
 
 	protected StringBuilder getResponseBuffer(
 			SharepointRequest sharepointRequest)

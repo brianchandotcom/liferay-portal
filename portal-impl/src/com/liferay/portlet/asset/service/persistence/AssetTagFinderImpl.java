@@ -263,29 +263,6 @@ public class AssetTagFinderImpl
 		}
 	}
 
-	protected String getJoin(String[] tagProperties) {
-		if (tagProperties.length == 0) {
-			return StringPool.BLANK;
-		}
-		else {
-			StringBundler sb = new StringBundler(tagProperties.length * 3 + 1);
-
-			sb.append(" INNER JOIN AssetTagProperty ON ");
-			sb.append(" (AssetTagProperty.tagId = AssetTag.tagId) AND ");
-
-			for (int i = 0; i < tagProperties.length; i++) {
-				sb.append("(AssetTagProperty.key_ = ? AND ");
-				sb.append("AssetTagProperty.value = ?) ");
-
-				if ((i + 1) < tagProperties.length) {
-					sb.append(" AND ");
-				}
-			}
-
-			return sb.toString();
-		}
-	}
-
 	protected int doCountByG_N(
 			long groupId, String name, boolean inlineSQLHelper)
 		throws SystemException {
@@ -561,6 +538,29 @@ public class AssetTagFinderImpl
 		}
 		finally {
 			closeSession(session);
+		}
+	}
+
+	protected String getJoin(String[] tagProperties) {
+		if (tagProperties.length == 0) {
+			return StringPool.BLANK;
+		}
+		else {
+			StringBundler sb = new StringBundler(tagProperties.length * 3 + 1);
+
+			sb.append(" INNER JOIN AssetTagProperty ON ");
+			sb.append(" (AssetTagProperty.tagId = AssetTag.tagId) AND ");
+
+			for (int i = 0; i < tagProperties.length; i++) {
+				sb.append("(AssetTagProperty.key_ = ? AND ");
+				sb.append("AssetTagProperty.value = ?) ");
+
+				if ((i + 1) < tagProperties.length) {
+					sb.append(" AND ");
+				}
+			}
+
+			return sb.toString();
 		}
 	}
 

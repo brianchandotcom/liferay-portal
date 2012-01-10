@@ -140,6 +140,32 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 		}
 	}
 
+	protected String getTitle(Map<Locale, String> titleMap) {
+		if (titleMap == null) {
+			return null;
+		}
+
+		String value = StringPool.BLANK;
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+			String title = titleMap.get(locale);
+
+			if (Validator.isNotNull(title)) {
+				value = LocalizationUtil.updateLocalization(
+					value, "Title", title, languageId);
+			}
+			else {
+				value = LocalizationUtil.removeLocalization(
+					value, "Title", languageId);
+			}
+		}
+
+		return value;
+	}
+
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
@@ -190,32 +216,6 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 			StreamUtil.cleanUp(inputStream);
 		}
 
-	}
-
-	protected String getTitle(Map<Locale, String> titleMap) {
-		if (titleMap == null) {
-			return null;
-		}
-
-		String value = StringPool.BLANK;
-
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			String languageId = LocaleUtil.toLanguageId(locale);
-			String title = titleMap.get(locale);
-
-			if (Validator.isNotNull(title)) {
-				value = LocalizationUtil.updateLocalization(
-					value, "Title", title, languageId);
-			}
-			else {
-				value = LocalizationUtil.removeLocalization(
-					value, "Title", languageId);
-			}
-		}
-
-		return value;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

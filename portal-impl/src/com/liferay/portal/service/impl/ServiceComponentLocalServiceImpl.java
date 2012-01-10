@@ -318,6 +318,28 @@ public class ServiceComponentLocalServiceImpl
 		return models;
 	}
 
+	protected void removeOldServiceComponents(String buildNamespace)
+		throws SystemException {
+
+		int serviceComponentsCount =
+			serviceComponentPersistence.countByBuildNamespace(buildNamespace);
+
+		if (serviceComponentsCount < _MAX_SERVICE_COMPONENTS) {
+			return;
+		}
+
+		List<ServiceComponent> serviceComponents =
+			serviceComponentPersistence.findByBuildNamespace(
+				buildNamespace, _MAX_SERVICE_COMPONENTS,
+				serviceComponentsCount);
+
+		for (int i = 0; i < serviceComponents.size(); i++) {
+			ServiceComponent serviceComponent = serviceComponents.get(i);
+
+			serviceComponentPersistence.remove(serviceComponent);
+		}
+	}
+
 	protected void upgradeModels(ClassLoader classLoader) throws Exception {
 		List<String> models = getModels(classLoader);
 
@@ -350,28 +372,6 @@ public class ServiceComponentLocalServiceImpl
 			upgradeTable.setCreateSQL(tableSQLCreate);
 
 			upgradeTable.updateTable();
-		}
-	}
-
-	protected void removeOldServiceComponents(String buildNamespace)
-		throws SystemException {
-
-		int serviceComponentsCount =
-			serviceComponentPersistence.countByBuildNamespace(buildNamespace);
-
-		if (serviceComponentsCount < _MAX_SERVICE_COMPONENTS) {
-			return;
-		}
-
-		List<ServiceComponent> serviceComponents =
-			serviceComponentPersistence.findByBuildNamespace(
-				buildNamespace, _MAX_SERVICE_COMPONENTS,
-				serviceComponentsCount);
-
-		for (int i = 0; i < serviceComponents.size(); i++) {
-			ServiceComponent serviceComponent = serviceComponents.get(i);
-
-			serviceComponentPersistence.remove(serviceComponent);
 		}
 	}
 

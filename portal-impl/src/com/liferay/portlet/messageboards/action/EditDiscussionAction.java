@@ -160,6 +160,27 @@ public class EditDiscussionAction extends PortletAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
+	protected void subscribeToComments(
+			ActionRequest actionRequest, boolean subscribe)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String className = ParamUtil.getString(actionRequest, "className");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+
+		if (subscribe) {
+			SubscriptionLocalServiceUtil.addSubscription(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				className, classPK);
+		}
+		else {
+			SubscriptionLocalServiceUtil.deleteSubscription(
+				themeDisplay.getUserId(), className, classPK);
+		}
+	}
+
 	protected MBMessage updateMessage(ActionRequest actionRequest)
 		throws Exception {
 
@@ -248,27 +269,6 @@ public class EditDiscussionAction extends PortletAction {
 		}
 
 		return message;
-	}
-
-	protected void subscribeToComments(
-			ActionRequest actionRequest, boolean subscribe)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		if (subscribe) {
-			SubscriptionLocalServiceUtil.addSubscription(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				className, classPK);
-		}
-		else {
-			SubscriptionLocalServiceUtil.deleteSubscription(
-				themeDisplay.getUserId(), className, classPK);
-		}
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

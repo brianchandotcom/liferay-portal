@@ -143,6 +143,11 @@ public class EditWorkflowInstanceAction extends PortletAction {
 			companyId, groupId, className, classPK);
 	}
 
+	@Override
+	protected boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
 	protected void signalInstance(ActionRequest actionRequest)
 		throws Exception {
 
@@ -158,11 +163,6 @@ public class EditWorkflowInstanceAction extends PortletAction {
 		WorkflowInstanceManagerUtil.signalWorkflowInstance(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowInstanceId, transitionName, null);
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

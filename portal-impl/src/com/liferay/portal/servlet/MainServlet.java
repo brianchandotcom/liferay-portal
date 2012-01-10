@@ -1055,6 +1055,19 @@ public class MainServlet extends ActionServlet {
 		return true;
 	}
 
+	protected void processGlobalShutdownEvents() throws Exception {
+		EventsProcessorUtil.process(
+			PropsKeys.GLOBAL_SHUTDOWN_EVENTS,
+			PropsValues.GLOBAL_SHUTDOWN_EVENTS);
+
+		super.destroy();
+	}
+
+	protected void processGlobalStartupEvents() throws Exception {
+		EventsProcessorUtil.process(
+			PropsKeys.GLOBAL_STARTUP_EVENTS, PropsValues.GLOBAL_STARTUP_EVENTS);
+	}
+
 	protected boolean processGroupInactiveRequest(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, PortalException, SystemException {
@@ -1078,19 +1091,6 @@ public class MainServlet extends ActionServlet {
 			"this-site-is-inactive-please-contact-the-administrator");
 
 		return true;
-	}
-
-	protected void processGlobalShutdownEvents() throws Exception {
-		EventsProcessorUtil.process(
-			PropsKeys.GLOBAL_SHUTDOWN_EVENTS,
-			PropsValues.GLOBAL_SHUTDOWN_EVENTS);
-
-		super.destroy();
-	}
-
-	protected void processGlobalStartupEvents() throws Exception {
-		EventsProcessorUtil.process(
-			PropsKeys.GLOBAL_STARTUP_EVENTS, PropsValues.GLOBAL_STARTUP_EVENTS);
 	}
 
 	protected void processInactiveRequest(

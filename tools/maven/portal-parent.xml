@@ -7,6 +7,8 @@
 	<packaging>pom</packaging>
 	<name>Liferay Portal Parent</name>
 	<version>@version@</version>
+	<description>Liferay Portal Parent</description>
+	<url>http://www.liferay.com</url>
 	<organization>
 		<name>Liferay, Inc.</name>
 		<url>http://www.liferay.com</url>

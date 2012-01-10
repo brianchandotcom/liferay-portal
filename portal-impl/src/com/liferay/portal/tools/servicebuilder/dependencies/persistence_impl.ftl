@@ -152,6 +152,39 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 
 				);
+
+			<#if finder.hasArrayableOperator()>
+				public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}_ARGS = new FinderPath(
+					${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+					${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+					Object[].class,
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBy${finder.name}_ARGS",
+					new String[] {
+						<#list finderColsList as finderCol>
+							${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName()
+
+							<#if finderCol_has_next>
+								,
+							</#if>
+						</#list>
+					}
+
+					<#if columnBitmaskEnabled>
+						,
+
+						<#list finderColsList as finderCol>
+							${entity.name}ModelImpl.${finderCol.name?upper_case}_COLUMN_BITMASK
+
+							<#if finderCol_has_next>
+								|
+							</#if>
+						</#list>
+					</#if>
+
+					);
+			</#if>
+
 		<#else>
 			public static final FinderPath FINDER_PATH_FETCH_BY_${finder.name?upper_case} = new FinderPath(
 				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
@@ -622,6 +655,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
 							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
 
+							<#if finder.hasArrayableOperator()>
+								args = (Object[])FinderCacheUtil.getResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}_ARGS, args, this);
+
+								if (args != null) {
+									FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+									FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+								}
+							</#if>
+
 							args = new Object[] {
 								<#list finder.getColumns() as finderCol>
 									<#if finderCol.isPrimitiveType()>
@@ -642,6 +684,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
 							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+
+							<#if finder.hasArrayableOperator()>
+								args = (Object[])FinderCacheUtil.getResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}_ARGS, args, this);
+
+								if (args != null) {
+									FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+									FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+								}
+							</#if>
+
 						}
 					</#list>
 				}
@@ -1496,6 +1548,32 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 								cacheResult(list);
 
 								FinderCacheUtil.putResult(finderPath, finderArgs, list);
+
+								if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
+									<#list finderColsList as finderCol>
+										<#if finderCol.hasArrayableOperator()>
+											Object[] arrayableFinderArgs;
+											for (${finderCol.type} finderColName : ${finderCol.names}) {
+
+												arrayableFinderArgs = new Object[] {
+													<#list finderColsList as subFinderCol>
+														<#if subFinderCol.hasArrayableOperator()>
+															finderColName
+														<#else>
+															${subFinderCol.name}
+														</#if>
+
+														<#if subFinderCol_has_next>
+															,
+														</#if>
+													</#list>
+												};
+
+												FinderCacheUtil.putResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}_ARGS, arrayableFinderArgs, finderArgs);
+											}
+										</#if>
+									</#list>
+								}
 							}
 
 							closeSession(session);
@@ -2731,6 +2809,30 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						}
 
 						FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
+
+						<#list finderColsList as finderCol>
+							<#if finderCol.hasArrayableOperator()>
+								Object[] arrayableFinderArgs;
+								for (${finderCol.type} finderColName : ${finderCol.names}) {
+
+									arrayableFinderArgs = new Object[] {
+										<#list finderColsList as subFinderCol>
+											<#if subFinderCol.hasArrayableOperator()>
+												finderColName
+											<#else>
+												${subFinderCol.name}
+											</#if>
+
+											<#if subFinderCol_has_next>
+												,
+											</#if>
+										</#list>
+									};
+
+									FinderCacheUtil.putResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}_ARGS, arrayableFinderArgs, finderArgs);
+								}
+							</#if>
+						</#list>
 
 						closeSession(session);
 					}

@@ -34,10 +34,11 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class PortletSessionImpl implements LiferayPortletSession {
 
-	public static final String getPortletScope(String portletName, long plid) {
+	public static String getPortletScope(String portletName, long plid) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(PORTLET_SCOPE_NAMESPACE);
@@ -48,23 +49,31 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return sb.toString();
 	}
 
-	public static final String getPortletScopeName(
+	public static String getPortletScopeName(
 		String portletName, long plid, String name) {
 
-		return getPortletScope(portletName, plid).concat(
-			StringPool.QUESTION).concat(name);
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(PORTLET_SCOPE_NAMESPACE);
+		sb.append(portletName);
+		sb.append(LAYOUT_SEPARATOR);
+		sb.append(plid);
+		sb.append(StringPool.QUESTION);
+		sb.append(name);
+
+		return sb.toString();
 	}
 
 	public PortletSessionImpl(
 		HttpServletRequest request, String portletName,
 		PortletContext portletContext, String portalSessionId, long plid) {
 
-		_request = request;
+		_session = request.getSession();
 		_portletName = portletName;
 		_portletContext = portletContext;
 		_creationTime = System.currentTimeMillis();
 		_lastAccessedTime = _creationTime;
-		_interval = getHttpSession().getMaxInactiveInterval();
+		_interval = _session.getMaxInactiveInterval();
 		_new = true;
 		_invalid = false;
 		_portalSessionId = portalSessionId;
@@ -80,7 +89,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			throw new IllegalStateException();
 		}
 
-		return getAttribute(name, PortletSession.PORTLET_SCOPE);
+		return _session.getAttribute(_getPortletScopeName(name));
 	}
 
 	public Object getAttribute(String name, int scope) {
@@ -93,11 +102,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		}
 
 		if (scope == PortletSession.PORTLET_SCOPE) {
-			return getHttpSession().getAttribute(_getPortletScopeName(name));
+			name = _getPortletScopeName(name);
 		}
-		else {
-			return getHttpSession().getAttribute(name);
-		}
+
+		return _session.getAttribute(name);
 	}
 
 	public Map<String, Object> getAttributeMap() {
@@ -107,60 +115,29 @@ public class PortletSessionImpl implements LiferayPortletSession {
 	public Map<String, Object> getAttributeMap(int scope) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		Enumeration<String> enu = getAttributeNames(scope);
+		Enumeration<String> enu = _getAttributeNames(scope, false);
+
+		String portletScope = getPortletScope(_portletName, _plid);
+
+		int portletScopeLength = portletScope.length();
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
-			Object value = getAttribute(name, scope);
+			Object value = _session.getAttribute(name);
 
-			map.put(name, value);
+			map.put(name.substring(portletScopeLength + 1), value);
 		}
 
 		return map;
 	}
 
 	public Enumeration<String> getAttributeNames() {
-		if (_invalid) {
-			throw new IllegalStateException();
-		}
-
-		return getAttributeNames(PortletSession.PORTLET_SCOPE);
+		return _getAttributeNames(PortletSession.PORTLET_SCOPE, true);
 	}
 
 	public Enumeration<String> getAttributeNames(int scope) {
-		if (_invalid) {
-			throw new IllegalStateException();
-		}
-
-		if (scope == PortletSession.PORTLET_SCOPE) {
-			List<String> attributeNames = new ArrayList<String>();
-
-			String portletScope = getPortletScope(_portletName, _plid);
-
-			int portletScopeLength = portletScope.length();
-
-			Enumeration<String> enu = getHttpSession().getAttributeNames();
-
-			while (enu.hasMoreElements()) {
-				String name = enu.nextElement();
-
-				if ((name.length() > (portletScopeLength + 1)) &&
-					(name.charAt(portletScopeLength) == CharPool.QUESTION) &&
-					name.startsWith(portletScope)) {
-
-					String attributeName = name.substring(
-						portletScopeLength + 1);
-
-					attributeNames.add(attributeName);
-				}
-			}
-
-			return Collections.enumeration(attributeNames);
-		}
-		else {
-			return getHttpSession().getAttributeNames();
-		}
+		return _getAttributeNames(scope, true);
 	}
 
 	public long getCreationTime() {
@@ -172,16 +149,11 @@ public class PortletSessionImpl implements LiferayPortletSession {
 	}
 
 	public HttpSession getHttpSession() {
-		if (_session == null) {
-			return _request.getSession();
-		}
-		else {
-			return _session;
-		}
+		return _session;
 	}
 
 	public String getId() {
-		return getHttpSession().getId();
+		return _session.getId();
 	}
 
 	public long getLastAccessedTime() {
@@ -205,7 +177,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			throw new IllegalStateException();
 		}
 
-		getHttpSession().invalidate();
+		_session.invalidate();
 
 		_invalid = true;
 	}
@@ -231,7 +203,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			throw new IllegalStateException();
 		}
 
-		removeAttribute(name, PortletSession.PORTLET_SCOPE);
+		_session.removeAttribute(_getPortletScopeName(name));
 	}
 
 	public void removeAttribute(String name, int scope) {
@@ -244,11 +216,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		}
 
 		if (scope == PortletSession.PORTLET_SCOPE) {
-			getHttpSession().removeAttribute(_getPortletScopeName(name));
+			name = _getPortletScopeName(name);
 		}
-		else {
-			getHttpSession().removeAttribute(name);
-		}
+
+		_session.removeAttribute(name);
 	}
 
 	public void setAttribute(String name, Object value) {
@@ -260,7 +231,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			throw new IllegalStateException();
 		}
 
-		setAttribute(name, value, PortletSession.PORTLET_SCOPE);
+		_session.setAttribute(_getPortletScopeName(name), value);
 	}
 
 	public void setAttribute(String name, Object value, int scope) {
@@ -273,11 +244,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		}
 
 		if (scope == PortletSession.PORTLET_SCOPE) {
-			getHttpSession().setAttribute(_getPortletScopeName(name), value);
+			name = _getPortletScopeName(name);
 		}
-		else {
-			getHttpSession().setAttribute(name, value);
-		}
+
+		_session.setAttribute(name, value);
 	}
 
 	public void setHttpSession(HttpSession session) {
@@ -293,11 +263,48 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		_interval = interval;
 	}
 
+	private Enumeration<String> _getAttributeNames(
+		int scope, boolean removePrefix) {
+
+		if (_invalid) {
+			throw new IllegalStateException();
+		}
+
+		if (scope == PortletSession.PORTLET_SCOPE) {
+			List<String> attributeNames = new ArrayList<String>();
+
+			String portletScope = getPortletScope(_portletName, _plid);
+
+			int portletScopeLength = portletScope.length();
+
+			Enumeration<String> enu = _session.getAttributeNames();
+
+			while (enu.hasMoreElements()) {
+				String name = enu.nextElement();
+
+				if ((name.length() > (portletScopeLength + 1)) &&
+					(name.charAt(portletScopeLength) == CharPool.QUESTION) &&
+					name.startsWith(portletScope)) {
+
+					if (removePrefix) {
+						name = name.substring(portletScopeLength + 1);
+					}
+
+					attributeNames.add(name);
+				}
+			}
+
+			return Collections.enumeration(attributeNames);
+		}
+		else {
+			return _session.getAttributeNames();
+		}
+	}
+
 	private String _getPortletScopeName(String name) {
 		return getPortletScopeName(_portletName, _plid, name);
 	}
 
-	private HttpServletRequest _request;
 	private HttpSession _session;
 	private String _portletName;
 	private PortletContext _portletContext;

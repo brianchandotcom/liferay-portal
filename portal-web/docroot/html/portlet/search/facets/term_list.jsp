@@ -25,87 +25,43 @@ int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 int maxTerms = dataJSONObject.getInt("maxTerms");
 %>
 
-<div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
+<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<aui:field-wrapper cssClass='<%= randomNamespace + "term_list term_list" %>' label="" name="<%= facet.getFieldName() %>">
-		<ul class="term-list">
-			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-				<a href="#" data-value=""><liferay-ui:message key="any-term" /></a>
-			</li>
+	<ul class="lfr-component term-list">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+			<a href="javascript:;" data-value=""><liferay-ui:message key="any-term" /></a>
+		</li>
 
-			<%
-			for (int i = 0; i < termCollectors.size(); i++) {
-				TermCollector termCollector = termCollectors.get(i);
+		<%
+		for (int i = 0; i < termCollectors.size(); i++) {
+			TermCollector termCollector = termCollectors.get(i);
+		%>
 
-				if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
-					break;
-				}
-			%>
-
-				<li class="facet-value" <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-					<a href="#"><%= termCollector.getTerm() %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-				</li>
-
-			<%
-			}
-			%>
-
-		</ul>
-	</aui:field-wrapper>
-
-	<liferay-ui:message key="<%= facetConfiguration.getLabel() %>" />: <aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "clearFacet();" %>'><liferay-ui:message key="clear" /></aui:a>
-</div>
-
-<aui:script position="inline" use="aui-base">
-	var container = A.one('<%= cssClassSelector %> .<%= randomNamespace %>term_list');
-
-	if (container) {
-		container.delegate(
-			'click',
-			function(event) {
-				var term = event.currentTarget;
-
-				var wasSelfSelected = false;
-
-				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
-
-				var currentTerms = A.all('<%= cssClassSelector %> .<%= randomNamespace %>term_list .facet-value.current-term a');
-
-				if (currentTerms) {
-					currentTerms.each(
-						function(item, index, collection) {
-							item.ancestor('.facet-value').removeClass('current-term');
-
-							if (item == term) {
-								wasSelfSelected = true;
-							}
+			<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
+				<aui:script use="liferay-token-list">
+					Liferay.Search.tokenList.add(
+						{
+							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
+							text: '<%= UnicodeFormatter.toString(termCollector.getTerm()) %>'
 						}
 					);
+				</aui:script>
+			</c:if>
 
-					field.value = '';
-				}
+		<%
+			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
+				break;
+			}
+		%>
 
-				if (!wasSelfSelected) {
-					term.ancestor('.facet-value').addClass('current-term');
+			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
+				<a href="javascript:;" data-value="<%= termCollector.getTerm() %>"><%= termCollector.getTerm() %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+			</li>
 
-					field.value = term.text();
-				}
+		<%
+		}
+		%>
 
-				submitForm(document.<portlet:namespace />fm);
-			},
-			'.facet-value a'
-		);
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>clearFacet',
-		function() {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = '';
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
-</aui:script>
+	</ul>
+</div>

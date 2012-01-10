@@ -30,17 +30,41 @@ cal.setTime(now);
 DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss", timeZone);
 
 String nowString = dateFormat.format(cal.getTime());
+
+String modifiedLabel = StringPool.BLANK;
+
+if (fieldParamSelection.equals("0")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "any-time");
+}
+else if (fieldParamSelection.equals("1")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "past-hour");
+}
+else if (fieldParamSelection.equals("2")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "past-24-hours");
+}
+else if (fieldParamSelection.equals("3")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "past-week");
+}
+else if (fieldParamSelection.equals("4")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "past-month");
+}
+else if (fieldParamSelection.equals("5")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "past-year");
+}
+else if (fieldParamSelection.equals("6")) {
+	modifiedLabel = LanguageUtil.get(pageContext, "custom-range");
+}
 %>
 
-<div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
+<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 	<aui:input name='<%= facet.getFieldName() + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
 
 	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= facet.getFieldName() %>">
 		<ul class="modified">
 			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " current-term" : StringPool.BLANK) %>">
-				<aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "clearFacet(0);" %>'>
-					<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/time.png" %>' /> <liferay-ui:message key="any-time" />
+				<aui:a href="javascript:;" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "clearFacet(0);" %>'>
+					<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/time.png" %>' /><liferay-ui:message key="any-time" />
 				</aui:a>
 			</li>
 			<li class="facet-value<%= fieldParamSelection.equals("1") ? " current-term" : StringPool.BLANK %>">
@@ -48,10 +72,10 @@ String nowString = dateFormat.format(cal.getTime());
 				<%
 				cal.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY) - 1);
 
-				String taglibSetRange = "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "setRange(1, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
+				String taglibSetRange = renderResponse.getNamespace() + facet.getFieldName() + "setRange(1, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
 				%>
 
-				<aui:a href="<%= taglibSetRange %>">
+				<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
 					<liferay-ui:message key="past-hour" />
 				</aui:a>
 			</li>
@@ -62,10 +86,10 @@ String nowString = dateFormat.format(cal.getTime());
 
 				cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) - 1);
 
-				taglibSetRange = "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "setRange(2, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
+				taglibSetRange = renderResponse.getNamespace() + facet.getFieldName() + "setRange(2, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
 				%>
 
-				<aui:a href="<%= taglibSetRange %>">
+				<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
 					<liferay-ui:message key="past-24-hours" />
 				</aui:a>
 			</li>
@@ -76,10 +100,10 @@ String nowString = dateFormat.format(cal.getTime());
 
 				cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) - 7);
 
-				taglibSetRange = "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "setRange(3, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
+				taglibSetRange = renderResponse.getNamespace() + facet.getFieldName() + "setRange(3, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
 				%>
 
-				<aui:a href="<%= taglibSetRange %>">
+				<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
 					<liferay-ui:message key="past-week" />
 				</aui:a>
 			</li>
@@ -90,10 +114,10 @@ String nowString = dateFormat.format(cal.getTime());
 
 				cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) - 1);
 
-				taglibSetRange = "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "setRange(4, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
+				taglibSetRange = renderResponse.getNamespace() + facet.getFieldName() + "setRange(4, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
 				%>
 
-				<aui:a href="<%= taglibSetRange %>">
+				<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
 					<liferay-ui:message key="past-month" />
 				</aui:a>
 			</li>
@@ -104,25 +128,26 @@ String nowString = dateFormat.format(cal.getTime());
 
 				cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
 
-				taglibSetRange = "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "setRange(5, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
+				taglibSetRange = renderResponse.getNamespace() + facet.getFieldName() + "setRange(5, '[" + dateFormat.format(cal.getTime()) + " TO " + nowString + "]');";
 				%>
 
-				<aui:a href="<%= taglibSetRange %>">
+				<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
 					<liferay-ui:message key="past-year" />
 				</aui:a>
 			</li>
 			<li class="facet-value<%= fieldParamSelection.equals("6") ? " current-term" : StringPool.BLANK %>">
-				<aui:a href='<%= "javascript:" + renderResponse.getNamespace() + facet.getFieldName() + "customRange();" %>'>
-					<liferay-ui:message key="custom-range" />...
+				<aui:a href="javascript:;" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "customRange();" %>'>
+					<liferay-ui:message key="custom-range" />&hellip;
 				</aui:a>
 			</li>
 
 			<div class="<%= !fieldParamSelection.equals("6") ? "aui-helper-hidden" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">
 				<div id="<%= randomNamespace %>custom-range-from">
-					<aui:input inlineField="<%= true %>" inlineLabel="left" label="from" name='<%= facet.getFieldName() + "from" %>' size="14" />
+					<aui:input label="from" name='<%= facet.getFieldName() + "from" %>' size="14" />
 				</div>
+
 				<div id="<%= randomNamespace %>custom-range-to">
-					<aui:input inlineField="<%= true %>" inlineLabel="left" label="to" name='<%= facet.getFieldName() + "to" %>' size="14" />
+					<aui:input label="to" name='<%= facet.getFieldName() + "to" %>' size="14" />
 				</div>
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(6);" %>' value="search" />
@@ -131,49 +156,34 @@ String nowString = dateFormat.format(cal.getTime());
 	</aui:field-wrapper>
 </div>
 
-<aui:script position="inline" use="aui-calendar,aui-datepicker">
-	var fromDatepicker = new A.DatePicker(
-		{
-			calendar: {
-				dateFormat: '%Y-%m-%d',
-				dates: [
-					<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamFrom) %>'>
+<c:if test='<%= !fieldParamSelection.equals("0") %>'>
+	<%
+		String fieldName = renderResponse.getNamespace() + facet.getFieldName();
+	%>
 
-						<%
-						String[] fieldParamFromParts = StringUtil.split(fieldParamFrom, "-");
-						%>
+	<aui:script use="liferay-token-list">
+		<%
+		String tokenLabel = modifiedLabel;
 
-						new Date(<%= fieldParamFromParts[0] %>,<%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>,<%= fieldParamFromParts[2] %>)
-					</c:if>
-				],
-				selectMultipleDates: false
-			},
-			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>from'
+		if (fieldParamSelection.equals("6")) {
+			String fromDateLabel = fieldParamFrom;
+			String toDateLabel = fieldParamTo;
+
+			tokenLabel = LanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"});
 		}
-	)
-	.render('#<%= randomNamespace %>custom-range-from');
+		%>
 
-	var toDatepicker = new A.DatePicker(
-		{
-			calendar: {
-				dateFormat: '%Y-%m-%d',
-				dates: [
-					<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamTo) %>'>
+		Liferay.Search.tokenList.add(
+			{
+				clearFields: '<%= UnicodeFormatter.toString(fieldName) %>',
+				fieldValues: '<%= UnicodeFormatter.toString(fieldName + "selection|0") %>',
+				text: '<%= UnicodeFormatter.toString(tokenLabel) %>'
+			}
+		);
+	</aui:script>
+</c:if>
 
-						<%
-						String[] fieldParamToParts = StringUtil.split(fieldParamTo, "-");
-						%>
-
-						new Date(<%= fieldParamToParts[0] %>,<%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>,<%= fieldParamToParts[2] %>)
-					</c:if>
-				],
-				selectMultipleDates: false
-			},
-			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>to'
-		}
-	)
-	.render('#<%= randomNamespace %>custom-range-to');
-
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace /><%= facet.getFieldName() %>clearFacet',
@@ -202,24 +212,22 @@ String nowString = dateFormat.format(cal.getTime());
 			var fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value;
 			var toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value;
 
-			if (!fromDate || !toDate) {
-				return;
+			if (fromDate && toDate) {
+				if (fromDate > toDate) {
+					fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value;
+					toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value;
+
+					document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value = toDate;
+					document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value = fromDate;
+				}
+
+				var range = '[' + fromDate.replace(/-/g, '') + '000000 TO ' + toDate.replace(/-/g, '') + '000000]';
+
+				document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = range;
+				document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>selection'].value = selection;
+
+				submitForm(document.<portlet:namespace />fm);
 			}
-
-			if (fromDate > toDate) {
-				fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value;
-				toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value;
-
-				document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value = toDate;
-				document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value = fromDate;
-			}
-
-			var range = '[' + fromDate.replace(/-/g, '') + '000000 TO ' + toDate.replace(/-/g, '') + '000000]';
-
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = range;
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>selection'].value = selection;
-
-			submitForm(document.<portlet:namespace />fm);
 		},
 		['aui-base']
 	);
@@ -235,4 +243,46 @@ String nowString = dateFormat.format(cal.getTime());
 		},
 		['aui-base']
 	);
+</aui:script>
+
+<aui:script use="aui-datepicker">
+	var fromDatepicker = new A.DatePicker(
+		{
+			calendar: {
+				dateFormat: '%Y-%m-%d',
+				dates: [
+					<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamFrom) %>'>
+
+						<%
+						String[] fieldParamFromParts = StringUtil.split(fieldParamFrom, "-");
+						%>
+
+						new Date(<%= fieldParamFromParts[0] %>,<%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>,<%= fieldParamFromParts[2] %>)
+					</c:if>
+				],
+				selectMultipleDates: false
+			},
+			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>from'
+		}
+	).render('#<%= randomNamespace %>custom-range-from');
+
+	var toDatepicker = new A.DatePicker(
+		{
+			calendar: {
+				dateFormat: '%Y-%m-%d',
+				dates: [
+					<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamTo) %>'>
+
+						<%
+						String[] fieldParamToParts = StringUtil.split(fieldParamTo, "-");
+						%>
+
+						new Date(<%= fieldParamToParts[0] %>,<%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>,<%= fieldParamToParts[2] %>)
+					</c:if>
+				],
+				selectMultipleDates: false
+			},
+			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>to'
+		}
+	).render('#<%= randomNamespace %>custom-range-to');
 </aui:script>

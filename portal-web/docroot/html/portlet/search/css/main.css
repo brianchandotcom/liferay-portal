@@ -40,7 +40,7 @@
 			}
 
 			.search-facet {
-				border-top: 1px #CCC solid;
+				border-top: 1px solid #CCC;
 				padding: 8px 0;
 
 				.aui-field-wrapper-content {
@@ -48,27 +48,35 @@
 				}
 
 				.facet-value {
-					font-size: 1.2em;
+					font-size: 1.1em;
+					padding: 3px;
+					padding-right: 0;
 
 					a {
 						text-decoration: none;
 
 						img {
-							position: relative;
-							top: 0.2em;
+							margin-right: 8px;
+							vertical-align: middle;
 						}
 					}
 
 					&.current-term {
-						font-weight: bolder;
+						background: #5B677D;
+						font-weight: bold;
+						margin-bottom: 2px;
+
+						a {
+							color: #FFF;
+
+							img {
+								margin-right: 8px;
+							}
+						}
 
 						.frequency {
 							display: none;
 						}
-					}
-
-					&.default {
-						font-size: 1.4em;
 					}
 				}
 
@@ -82,9 +90,11 @@
 				}
 
 				.modified-custom-range {
-					font-size: 0.8em;
-					padding-right: 10px;
-					text-align: right;
+					padding-left: 10px;
+
+					.aui-field-content {
+						margin: 5px 0;
+					}
 
 					.aui-button {
 						margin-right: 5px;
@@ -119,8 +129,13 @@
 			width: 100%;
 
 			.asset-entry {
+				.asset-entry-content {
+					margin-top: 0.8em;
+				}
+
 				.asset-entry-categories, .asset-entry-tags {
 					float: left;
+					margin-bottom: 0.5em;
 					padding-right: 6px;
 				}
 
@@ -165,7 +180,7 @@
 					color: #5B677D;
 					display: block;
 					font-size: 1.5em;
-					font-weight: bolder;
+					font-weight: bold;
 
 					a {
 						text-decoration: none;
@@ -178,10 +193,9 @@
 				}
 
 				.asset-entry-type {
-					/*display: block;*/
 					float: right;
 					font-size: 0.8em;
-					color: #5B677D;
+					color: #777;
 				}
 
 				.toggle-details {

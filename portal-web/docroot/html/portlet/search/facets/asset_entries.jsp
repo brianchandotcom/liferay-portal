@@ -32,107 +32,65 @@ if (dataJSONObject.has("values")) {
 }
 %>
 
-<div class="<%= cssClass %>" id="<%= randomNamespace %>facet">
+<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<aui:field-wrapper cssClass="asset-entries" label="" name="<%= fieldParam %>">
-		<ul class="asset-type">
-			<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-				<a href="#" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/search.png" /><liferay-ui:message key="everything" /></a>
-			</li>
+	<ul class="asset-type lfr-component">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+			<a href="javascript:;" data-value=""><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/common/search.png" /><liferay-ui:message key="everything" /></a>
+		</li>
 
-			<%
-			List<String> assetTypes = new SortedArrayList<String>(new ModelResourceComparator(locale));
+		<%
+		List<String> assetTypes = new SortedArrayList<String>(new ModelResourceComparator(locale));
 
-			for (String className : values) {
-				if (assetTypes.contains(className)) {
-					continue;
-				}
-
-				if (!ArrayUtil.contains(values, className)) {
-					continue;
-				}
-
-				assetTypes.add(className);
+		for (String className : values) {
+			if (assetTypes.contains(className)) {
+				continue;
 			}
 
-			for (String assetType : assetTypes) {
-				TermCollector termCollector = facetCollector.getTermCollector(assetType);
-
-				int frequency = 0;
-
-				if (termCollector != null) {
-					frequency = termCollector.getFrequency();
-				}
-
-				if (frequencyThreshold > frequency) {
-					continue;
-				}
-
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetType);
-			%>
-
-				<li class="facet-value" <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-					<a href="#" data-value="<%= HtmlUtil.escapeAttribute(assetType) %>"><c:if test="<%= assetRendererFactory != null %>"><img alt="" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" /></c:if><%= ResourceActionsUtil.getModelResource(locale, assetType) %></a> <span class="frequency">(<%= frequency %>)</span>
-				</li>
-
-			<%
+			if (!ArrayUtil.contains(values, className)) {
+				continue;
 			}
-			%>
 
-		</ul>
-	</aui:field-wrapper>
-</div>
+			assetTypes.add(className);
+		}
 
-<aui:script position="inline" use="aui-base">
-	var container = A.one('<%= cssClassSelector %> .asset-entries');
+		for (String assetType : assetTypes) {
+			TermCollector termCollector = facetCollector.getTermCollector(assetType);
+		%>
 
-	if (container) {
-		container.delegate(
-			'click',
-			function(event) {
-				var term = event.currentTarget;
-
-				var wasSelfSelected = false;
-
-				var field = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'];
-
-				var currentTerms = A.all('<%= cssClassSelector %> .asset-entries .facet-value.current-term a');
-
-				if (currentTerms) {
-					currentTerms.each(
-						function(item, index, collection) {
-							item.ancestor('.facet-value').removeClass('current-term');
-
-							if (item == term) {
-								wasSelfSelected = true;
-							}
+			<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
+				<aui:script use="liferay-token-list">
+					Liferay.Search.tokenList.add(
+						{
+							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
+							text: '<%= UnicodeFormatter.toString(ResourceActionsUtil.getModelResource(locale, assetType)) %>'
 						}
 					);
+				</aui:script>
+			</c:if>
 
-					field.value = '';
-				}
+		<%
+			int frequency = 0;
 
-				if (!wasSelfSelected) {
-					term.ancestor('.facet-value').addClass('current-term');
+			if (termCollector != null) {
+				frequency = termCollector.getFrequency();
+			}
 
-					field.value = term.attr('data-value');
-				}
+			if (frequencyThreshold > frequency) {
+				continue;
+			}
 
-				submitForm(document.<portlet:namespace />fm);
-			},
-			'.facet-value a'
-		);
-	}
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetType);
+		%>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>clearFacet',
-		function() {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = '';
+			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
+				<a href="javascript:;" data-value="<%= HtmlUtil.escapeAttribute(assetType) %>"><c:if test="<%= assetRendererFactory != null %>"><img alt="" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" /></c:if><%= ResourceActionsUtil.getModelResource(locale, assetType) %></a> <span class="frequency">(<%= frequency %>)</span>
+			</li>
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base']
-	);
-</aui:script>
+		<%
+		}
+		%>
+
+	</ul>
+</div>

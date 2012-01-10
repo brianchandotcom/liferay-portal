@@ -82,6 +82,7 @@
 			'staging': ['aui-dialog', 'aui-io-plugin'],
 			'staging-branch': ['liferay-staging'],
 			'staging-version': ['aui-button-item', 'liferay-staging'],
+			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],
 			'upload': ['aui-base', 'aui-swf', 'collection', 'swfupload'],

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
@@ -68,9 +69,54 @@ public class DLFileEntryTypeFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_G_N_D_S(
+		return doCountByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType);
+			includeBasicFileEntryType, false);
+	}
+
+	public int filterCountByKeywords(
+			long companyId, long[] groupIds, String keywords,
+			boolean includeBasicFileEntryType)
+		throws SystemException {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_G_N_D_S(
+			companyId, groupIds, names, descriptions, andOperator,
+			includeBasicFileEntryType, true);
+	}
+
+	public List<DLFileEntryType> filterFindByKeywords(
+		long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, int start, int end,
+		OrderByComparator orderByComparator)
+		throws SystemException {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doFindByC_G_N_D_S(
+			companyId, groupIds, names, descriptions, andOperator,
+			includeBasicFileEntryType, start, end, orderByComparator, true);
 	}
 
 	public List<DLFileEntryType> findByKeywords(
@@ -91,15 +137,15 @@ public class DLFileEntryTypeFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_G_N_D_S(
+		return doFindByC_G_N_D_S(
 			companyId, groupIds, names, descriptions, andOperator,
-			includeBasicFileEntryType, start, end, orderByComparator);
+			includeBasicFileEntryType, start, end, orderByComparator, false);
 	}
 
-	protected int countByC_G_N_D_S(
+	protected int doCountByC_G_N_D_S(
 			long companyId, long[] groupIds, String[] names,
 			String[] descriptions, boolean andOperator,
-			boolean includeBasicFileEntryType)
+			boolean includeBasicFileEntryType, boolean inlineSQLHelper)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
@@ -111,6 +157,12 @@ public class DLFileEntryTypeFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D_S);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DLFileEntryType.class.getName(),
+					"DLFileEntryType.fileEntryTypeId", groupIds);
+			}
 
 			sql = StringUtil.replace(
 				sql, "[$WHERE$]", getWhere(includeBasicFileEntryType));
@@ -158,11 +210,11 @@ public class DLFileEntryTypeFinderImpl
 		}
 	}
 
-	protected List<DLFileEntryType> findByC_G_N_D_S(
+	protected List<DLFileEntryType> doFindByC_G_N_D_S(
 			long companyId, long[] groupIds, String[] names,
 			String[] descriptions, boolean andOperator,
 			boolean includeBasicFileEntryType, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator orderByComparator, boolean inlineSQLHelper)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
@@ -174,6 +226,12 @@ public class DLFileEntryTypeFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D_S);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DLFileEntryType.class.getName(),
+					"DLFileEntryType.fileEntryTypeId", groupIds);
+			}
 
 			sql = StringUtil.replace(
 				sql, "[$WHERE$]", getWhere(includeBasicFileEntryType));

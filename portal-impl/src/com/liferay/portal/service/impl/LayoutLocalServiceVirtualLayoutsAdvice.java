@@ -332,8 +332,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		throws Exception {
 
 		if (!layout.isLayoutPrototypeLinkActive() ||
-			group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
-			group.hasStagingGroup()) {
+			group.isLayoutPrototype() || group.hasStagingGroup()) {
 
 			return;
 		}

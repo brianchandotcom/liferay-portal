@@ -27,9 +27,8 @@ String formName = (String)request.getAttribute("liferay-ui:input-localized:formN
 boolean ignoreRequestValue = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-localized:ignoreRequestValue"));
 String languageId = (String)request.getAttribute("liferay-ui:input-localized:languageId");
 String name = (String)request.getAttribute("liferay-ui:input-localized:name");
-String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
-
+String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 
 Locale defaultLocale = null;
 
@@ -150,13 +149,13 @@ if (Validator.isNull(mainLanguageValue)) {
 
 								<%
 								String languageValue = StringPool.BLANK;
-								
-								if (!ignoreRequestValue){
-									languageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId);
+
+								if (Validator.isNotNull(xml)) {
+									languageValue = LocalizationUtil.getLocalization(xml, curLanguageId, false);
 								}
 
-								if (Validator.isNotNull(xml) && Validator.isNull(languageValue)) {
-									languageValue = LocalizationUtil.getLocalization(xml, curLanguageId, false);
+								if (!ignoreRequestValue){
+									languageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId, languageValue);
 								}
 								%>
 

@@ -39,7 +39,7 @@ public class InputLocalizedTag extends IncludeTag {
 	public void setFormName(String formName) {
 		_formName = formName;
 	}
-	
+
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
 	}

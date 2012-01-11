@@ -61,6 +61,10 @@ public class InputFieldTag extends IncludeTag {
 		_formName = formName;
 	}
 
+	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
+		_ignoreRequestValue = ignoreRequestValue;
+	}
+
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
 	}
@@ -84,6 +88,7 @@ public class InputFieldTag extends IncludeTag {
 		_fieldParam = null;
 		_format = null;
 		_formName = "fm";
+		_ignoreRequestValue = false;
 		_languageId = null;
 		_model = null;
 		_placeholder = null;
@@ -108,6 +113,9 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-field:fieldParam", _fieldParam);
 		request.setAttribute("liferay-ui:input-field:format", _format);
 		request.setAttribute("liferay-ui:input-field:formName", _formName);
+		request.setAttribute(
+			"liferay-ui:input-field:ignoreRequestValue",
+			String.valueOf(_ignoreRequestValue));
 		request.setAttribute("liferay-ui:input-field:languageId", _languageId);
 		request.setAttribute("liferay-ui:input-field:model", _model.getName());
 		request.setAttribute(
@@ -125,6 +133,7 @@ public class InputFieldTag extends IncludeTag {
 	private String _fieldParam;
 	private Format _format;
 	private String _formName = "fm";
+	private boolean _ignoreRequestValue;
 	private String _languageId;
 	private Class<?> _model;
 	private String _placeholder;

@@ -106,7 +106,8 @@ public class SitemapImpl implements Sitemap {
 			sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 			sb.append(journalArticle.getUrlTitle());
 
-			String articleURL = sb.toString();
+			String articleURL = PortalUtil.getCanonicalURL(
+				sb.toString(), themeDisplay, layout);
 
 			Element urlElement = element.addElement("url");
 
@@ -137,6 +138,9 @@ public class SitemapImpl implements Sitemap {
 
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay);
+
+		layoutFullURL = PortalUtil.getCanonicalURL(
+					layoutFullURL, themeDisplay, layout);
 
 		Element locElement = urlElement.addElement("loc");
 

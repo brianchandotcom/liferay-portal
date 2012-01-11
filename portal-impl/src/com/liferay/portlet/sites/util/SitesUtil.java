@@ -168,8 +168,6 @@ public class SitesUtil {
 			targetLayout.getLayoutId(),
 			layoutPrototypeLayout.getTypeSettings());
 
-		copyLayoutPrototypePermissions(targetLayout, layoutPrototype);
-
 		copyPortletPermissions(targetLayout, layoutPrototypeLayout);
 
 		copyPortletSetups(layoutPrototypeLayout, targetLayout);
@@ -780,42 +778,6 @@ public class SitesUtil {
 		updateLayoutSetPrototypeLink(
 			group.getGroupId(), false, publicLayoutSetPrototypeId,
 			serviceContext);
-	}
-
-	protected static void copyLayoutPrototypePermissions(
-			Layout targetLayout,
-			LayoutPrototype sourceLayoutPrototype)
-		throws Exception {
-
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			targetLayout.getCompanyId());
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-				continue;
-			}
-
-			List<String> actionIds = ResourceActionsUtil.getResourceActions(
-				LayoutPrototype.class.getName());
-
-			List<String> actions =
-				ResourcePermissionLocalServiceUtil.
-					getAvailableResourcePermissionActionIds(
-						targetLayout.getCompanyId(),
-						LayoutPrototype.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(
-							sourceLayoutPrototype.getLayoutPrototypeId()),
-						role.getRoleId(), actionIds);
-
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				targetLayout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(targetLayout.getPlid()), role.getRoleId(),
-				actions.toArray(new String[actions.size()]));
-		}
 	}
 
 	protected static void setLayoutSetPrototypeLinkEnabledParameter(

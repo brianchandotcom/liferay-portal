@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
@@ -35,12 +37,16 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		DB db = DBFactoryUtil.getDB();
+
+		if (db.isSupportsAlterColumnType()) {
 			runSQL("alter_column_type Group_ name VARCHAR(150) null");
 		}
-		catch (Exception e) {
-			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-				GroupTable.TABLE_NAME, GroupTable.TABLE_COLUMNS);
+		else
+		{
+			UpgradeTable upgradeTable =
+				UpgradeTableFactoryUtil.getUpgradeTable(
+					GroupTable.TABLE_NAME, GroupTable.TABLE_COLUMNS);
 
 			upgradeTable.setCreateSQL(GroupTable.TABLE_SQL_CREATE);
 			upgradeTable.setIndexesSQL(GroupTable.TABLE_SQL_ADD_INDEXES);

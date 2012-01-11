@@ -262,8 +262,49 @@ public interface LayoutSetLocalService extends PersistedModelLocalService {
 		java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Update the state of the layout set prototype link.
+	*
+	* Since deprecation this method can only be used to set
+	* layoutSetPrototypeLinkEnabled to true if the current value of
+	* layoutSetPrototypeUuid is not null. Otherwise it can only set it to
+	* false since it cannot pass a value for layoutSetPrototypeUuid. Setting
+	* the layoutSetPrototypeLinkEnabled to true in that case will result in an
+	* <code>java.lang.IllegalStateException</code>.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param layoutSetPrototypeLinkEnabled is the layout set prototype
+	link enabled
+	* @throws PortalException the portal exception
+	* @throws SystemException the system exception
+	* @deprecated Use {@link #updateLayoutSetPrototypeLinkEnabled(long,
+	boolean, boolean, String)}
+	*/
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Update the state of the layout set prototype link.
+	*
+	* Setting the layoutSetPrototypeLinkEnabled to true while setting the
+	* layoutSetPrototypeUuid = null will result in an
+	* <code>java.lang.IllegalStateException</code>.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param layoutSetPrototypeLinkEnabled is the layout set prototype
+	link enabled
+	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	link with
+	* @throws PortalException the portal exception
+	* @throws SystemException the system exception
+	*/
+	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

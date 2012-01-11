@@ -61,6 +61,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
@@ -148,8 +149,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
-		if (Validator.isNull(subject)) {
+		if (Validator.isNull(subject) && Validator.isNotNull(body)) {
 			subject = body.substring(0, Math.min(body.length(), 50)) + "...";
+		}
+		else {
+			throw new MessageBodyException();
 		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
@@ -1737,12 +1741,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	protected String getBody(String subject, String body) {
 		if (Validator.isNull(body)) {
-			if (!subject.equals("...") ) {
-				return subject;
-			}
-			else {
-				return StringPool.BLANK;
-			}
+			return subject;
 		}
 
 		return body;

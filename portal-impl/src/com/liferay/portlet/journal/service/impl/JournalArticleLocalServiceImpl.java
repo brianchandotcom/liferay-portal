@@ -3190,7 +3190,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			article.getTitle(), "[$ARTICLE_URL$]", articleURL,
+			article.getTitle(serviceContext.getLanguageId()),
+			"[$ARTICLE_URL$]", articleURL,
 			"[$ARTICLE_USER_NAME$]", article.getUserName(),
 			"[$ARTICLE_VERSION$]", article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");

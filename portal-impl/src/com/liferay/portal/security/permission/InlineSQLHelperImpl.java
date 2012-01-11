@@ -26,7 +26,9 @@ import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -429,7 +431,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("(InlineSQLResourcePermission.scope = ");
+		sb.append("((InlineSQLResourcePermission.scope = ");
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
 		sb.append(" AND ");
 		sb.append("InlineSQLResourcePermission.primKey = CAST_TEXT(");
@@ -437,6 +439,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append(") AND (");
 
 		long userId = getUserId();
+		List<Long> accessibleGroupIds = new ArrayList<Long>();
 
 		boolean hasPreviousViewableGroup = false;
 
@@ -494,6 +497,23 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					}
 				}
 
+				sb.append(")");
+			}
+			else {
+				accessibleGroupIds.add(groupId);
+			}
+		}
+
+		sb.append(")");
+
+		if (!accessibleGroupIds.isEmpty()) {
+			for (Long accessibleGroupId : accessibleGroupIds) {
+				sb.append(" OR (");
+				sb.append(
+					classPKField.substring(
+						0, classPKField.lastIndexOf(CharPool.PERIOD)));
+				sb.append(".groupId = ");
+				sb.append(accessibleGroupId);
 				sb.append(")");
 			}
 		}

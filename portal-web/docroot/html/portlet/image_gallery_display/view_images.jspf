@@ -131,31 +131,67 @@
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>
 
-				<a class="image-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+                <c:choose>
+                    <c:when test="<%= curFolder.isMountPoint() %>">
 
-					<%
-					int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+                        <%
+                        try {
+                            int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
 
-					int curImagesCount = 0;
+                            String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/drive.png";
+                        %>
 
-					if (mediaGalleryMimeTypes != null) {
-						curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, mediaGalleryMimeTypes);
-					}
-					else {
-						curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
-					}
+                            <a class="image-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+                                <img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 
-					String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";
+                                <span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+                            </a>
 
-					if ((curFoldersCount + curImagesCount) > 0) {
-						folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_image.png";
-					}
-					%>
+                        <%
+                        }
+                        catch (Exception e) {
+                            String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/drive_error.png";
+                        %>
 
-					<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+                            <span class="image-thumbnail error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+                                <img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 
-					<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
-				</a>
+                                <span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+                            </span>
+
+                        <%
+                        }
+                        %>
+
+                    </c:when>
+                    <c:otherwise>
+                        <a class="image-thumbnail" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+
+                            <%
+                                int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+
+                                int curImagesCount = 0;
+
+                                if (mediaGalleryMimeTypes != null) {
+                                    curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, mediaGalleryMimeTypes);
+                                }
+                                else {
+                                    curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
+                                }
+
+                                String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";
+
+                                if ((curFoldersCount + curImagesCount) > 0) {
+                                    folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_image.png";
+                                }
+                            %>
+
+                            <img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+
+                            <span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
 			</c:when>
 			<c:otherwise>
 				<div style="float: left; margin: 100px 10px 0px;">

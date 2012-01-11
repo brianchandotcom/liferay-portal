@@ -494,7 +494,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
 			List<ResourcePermission> resourcePermissions =
-				resourcePermissionFinder.findByC_P(
+				resourcePermissionPersistence.findByC_P(
 					layout.getCompanyId(), primKey);
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {

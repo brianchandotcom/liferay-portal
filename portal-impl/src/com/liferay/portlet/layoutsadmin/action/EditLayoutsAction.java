@@ -205,6 +205,9 @@ public class EditLayoutsAction extends PortletAction {
 					layoutTypePortlet.resetUserPreferences();
 				}
 			}
+			else if (cmd.equals("reset_prototype")) {
+				SitesUtil.resetPrototype(themeDisplay.getLayout());
+			}
 			else if (cmd.equals("schedule_copy_from_live")) {
 				StagingUtil.scheduleCopyFromLive(actionRequest);
 			}

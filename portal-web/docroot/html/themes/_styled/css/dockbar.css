@@ -478,3 +478,8 @@ html > .lfr-dockbar-pinned {
 	font-size: 0.8em;
 	padding: 0 1em;
 }
+
+.page-customization-bar .reset-prototype-form {
+	display: inline;
+	padding-left: 1em;
+}

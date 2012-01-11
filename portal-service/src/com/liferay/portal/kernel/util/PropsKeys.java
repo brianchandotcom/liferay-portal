@@ -1257,6 +1257,8 @@ public interface PropsKeys {
 
 	public static final String MAIL_AUDIT_TRAIL = "mail.audit.trail";
 
+	public static final String MAIL_BATCH_SIZE = "mail.batch.size";
+
 	public static final String MAIL_HOOK_CYRUS_ADD_USER = "mail.hook.cyrus.add.user";
 
 	public static final String MAIL_HOOK_CYRUS_DELETE_USER = "mail.hook.cyrus.delete.user";

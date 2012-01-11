@@ -66,6 +66,22 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 		return _dlFileEntryTypeService.getFileEntryTypesCount(groupIds);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
+		long companyId, long[] groupIds, java.lang.String keywords,
+		boolean includeBasicFileEntryType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryTypeService.search(companyId, groupIds, keywords,
+			includeBasicFileEntryType, start, end, orderByComparator);
+	}
+
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords, boolean includeBasicFileEntryType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryTypeService.searchCount(companyId, groupIds,
+			keywords, includeBasicFileEntryType);
+	}
+
 	public void updateFileEntryType(long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds,

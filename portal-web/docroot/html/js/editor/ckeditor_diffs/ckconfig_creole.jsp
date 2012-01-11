@@ -76,7 +76,7 @@ CKEDITOR.config.toolbar_creole = [
 
 CKEDITOR.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
 
-CKEDITOR.config.bodyClass = 'html-editor <%= cssClasses %>';
+CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 CKEDITOR.config.decodeLinks = true;
 

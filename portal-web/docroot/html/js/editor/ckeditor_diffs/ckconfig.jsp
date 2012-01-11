@@ -51,7 +51,7 @@ if (!CKEDITOR.stylesSet.get('liferayStyles')) {
 	);
 }
 
-CKEDITOR.config.bodyClass = 'html-editor <%= cssClasses %>';
+CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 CKEDITOR.config.contentsCss = '<%= HtmlUtil.escape(cssPath) %>/main.css';
 

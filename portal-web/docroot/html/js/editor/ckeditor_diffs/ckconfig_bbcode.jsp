@@ -60,7 +60,7 @@ CKEDITOR.config.toolbar_bbcode = [
 	['Font', 'FontSize', '-', 'Format', '-', 'Table', '-', 'Undo', 'Redo', '-', 'Source']
 ];
 
-CKEDITOR.config.bodyClass = 'html-editor <%= cssClasses %>';
+CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 CKEDITOR.config.contentsCss = '<%= HtmlUtil.escape(cssPath) %>/main.css';
 

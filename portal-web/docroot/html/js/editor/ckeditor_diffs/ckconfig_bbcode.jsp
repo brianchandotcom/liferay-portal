@@ -60,9 +60,9 @@ CKEDITOR.config.toolbar_bbcode = [
 	['Font', 'FontSize', '-', 'Format', '-', 'Table', '-', 'Undo', 'Redo', '-', 'Source']
 ];
 
-CKEDITOR.config.bodyClass = 'html-editor <%= cssClasses %>';
+CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-CKEDITOR.config.contentsCss = '<%= HtmlUtil.escape(cssPath) %>/main.css';
+CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
 
@@ -82,9 +82,9 @@ CKEDITOR.config.fontSize_sizes = '10/10px;12/12px;16/16px;18/18px;24/24px;32/32p
 
 CKEDITOR.config.format_tags = 'p;pre';
 
-CKEDITOR.config.imagesPath = '<%= HtmlUtil.escape(imagesPath) %>/message_boards/';
+CKEDITOR.config.imagesPath = '<%= HtmlUtil.escapeJS(imagesPath) %>/message_boards/';
 
-CKEDITOR.config.language = '<%= HtmlUtil.escape(languageId) %>';
+CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
 
 CKEDITOR.config.newThreadURL = '<%= BBCodeTranslatorUtil.NEW_THREAD_URL %>';
 
@@ -92,6 +92,6 @@ CKEDITOR.config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeTranslatorUti
 
 CKEDITOR.config.smiley_images = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonFiles(), "','") %>'];
 
-CKEDITOR.config.smiley_path = '<%= HtmlUtil.escape(emoticonsPath) %>' + '/';
+CKEDITOR.config.smiley_path = '<%= HtmlUtil.escapeJS(emoticonsPath) %>' + '/';
 
 CKEDITOR.config.smiley_symbols = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonSymbols(), "','") %>'];

@@ -51,15 +51,15 @@ if (!CKEDITOR.stylesSet.get('liferayStyles')) {
 	);
 }
 
-CKEDITOR.config.bodyClass = 'html-editor <%= cssClasses %>';
+CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-CKEDITOR.config.contentsCss = '<%= HtmlUtil.escape(cssPath) %>/main.css';
+CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.entities = false;
 
 CKEDITOR.config.height = 265;
 
-CKEDITOR.config.language = '<%= HtmlUtil.escape(languageId) %>';
+CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
 
 CKEDITOR.config.stylesCombo_stylesSet = 'liferayStyles';
 

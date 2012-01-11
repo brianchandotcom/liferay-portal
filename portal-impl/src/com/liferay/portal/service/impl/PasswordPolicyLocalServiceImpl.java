@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.DuplicatePasswordPolicyException;
-import com.liferay.portal.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.PasswordPolicyNameException;
 import com.liferay.portal.RequiredPasswordPolicyException;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
@@ -207,20 +206,20 @@ public class PasswordPolicyLocalServiceImpl
 			return getDefaultPasswordPolicy(companyId);
 		}
 
+		long classNameId = classNameLocalService.getClassNameId(
+			Organization.class.getName());
+
 		PasswordPolicyRel passwordPolicyRel = null;
 
 		for (int i = 0; i < organizationIds.length; i++) {
 			long organizationId = organizationIds[i];
 
-			try {
-				passwordPolicyRel =
-					passwordPolicyRelLocalService.getPasswordPolicyRel(
-						Organization.class.getName(), organizationId);
+			passwordPolicyRel = passwordPolicyRelPersistence.fetchByC_C(
+				classNameId, organizationId);
 
-				return getPasswordPolicy(
+			if (passwordPolicyRel != null) {
+				return passwordPolicyPersistence.findByPrimaryKey(
 					passwordPolicyRel.getPasswordPolicyId());
-			}
-			catch (NoSuchPasswordPolicyRelException nsppre) {
 			}
 		}
 
@@ -237,15 +236,29 @@ public class PasswordPolicyLocalServiceImpl
 			return null;
 		}
 
+		long classNameId = classNameLocalService.getClassNameId(
+			User.class.getName());
+
 		PasswordPolicyRel passwordPolicyRel =
-			passwordPolicyRelLocalService.fetchPasswordPolicyRel(
-				User.class.getName(), userId);
+			passwordPolicyRelPersistence.fetchByC_C(classNameId, userId);
 
 		if (passwordPolicyRel != null) {
 			return getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
 		}
 		else {
-			long[] organizationIds = user.getOrganizationIds();
+			List<Organization> organizations = userPersistence.getOrganizations(
+				userId);
+
+			if (organizations.isEmpty()) {
+				return passwordPolicyPersistence.findByC_DP(
+					user.getCompanyId(), true);
+			}
+
+			long[] organizationIds = new long[organizations.size()];
+
+			for (int i = 0; i < organizationIds.length; i++) {
+				organizationIds[i] = organizations.get(i).getOrganizationId();
+			}
 
 			return getPasswordPolicy(user.getCompanyId(), organizationIds);
 		}

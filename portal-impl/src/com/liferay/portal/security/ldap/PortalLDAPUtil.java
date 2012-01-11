@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -98,11 +99,10 @@ public class PortalLDAPUtil {
 			Context.REFERRAL,
 			PrefsPropsUtil.getString(companyId, PropsKeys.LDAP_REFERRAL));
 
-		// Enable pooling
+		Properties ldapConnectionProperties = PropsUtil.getProperties(
+			"ldap.connection.", true);
 
-		env.put("com.sun.jndi.ldap.connect.pool", "true");
-		env.put("com.sun.jndi.ldap.connect.pool.maxsize","50");
-		env.put("com.sun.jndi.ldap.connect.pool.timeout", "10000");
+		PropertiesUtil.merge(env, ldapConnectionProperties);
 
 		LogUtil.debug(_log, env);
 

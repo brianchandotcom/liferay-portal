@@ -199,6 +199,24 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#if>
 				</#list>
 			});
+
+		<#if finder.hasArrayableOperator()>
+			public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case} = new FinderPath(
+				${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+				${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+				Long.class,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"countBy${finder.name}",
+				new String[] {
+					<#list finderColsList as finderCol>
+						${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.class.getName()
+
+						<#if finderCol_has_next>
+							,
+						</#if>
+					</#list>
+				});
+		</#if>
 	</#list>
 
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(
@@ -1431,11 +1449,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#list>
 
 				int start, int end, OrderByComparator orderByComparator) throws SystemException {
-					FinderPath finderPath = null;
+					FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case};
 					Object[] finderArgs = null;
 
 					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-						finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case};
 						finderArgs = new Object[] {
 							<#list finderColsList as finderCol>
 								<#if finderCol.hasArrayableOperator()>
@@ -1451,7 +1468,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						};
 					}
 					else {
-						finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case};
 						finderArgs = new Object[] {
 							<#list finderColsList as finderCol>
 								<#if finderCol.hasArrayableOperator()>
@@ -2702,7 +2718,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#list>
 				};
 
-				Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, finderArgs, this);
+				Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, this);
 
 				if (count == null) {
 					<#include "persistence_impl_count_by_arrayable_query.ftl">
@@ -2730,7 +2746,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							count = Long.valueOf(0);
 						}
 
-						FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
+						FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
 
 						closeSession(session);
 					}

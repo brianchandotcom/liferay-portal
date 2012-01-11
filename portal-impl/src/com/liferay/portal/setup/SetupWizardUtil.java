@@ -17,10 +17,12 @@ package com.liferay.portal.setup;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
 import com.liferay.portal.events.StartupAction;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -53,6 +55,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.QuartzLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -65,6 +68,7 @@ import java.io.IOException;
 import java.sql.Connection;
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -81,6 +85,7 @@ import org.apache.struts.Globals;
  * @author Manuel de la Peña
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
 public class SetupWizardUtil {
 
@@ -311,6 +316,22 @@ public class SetupWizardUtil {
 		}
 	}
 
+	private static void _reconfigurePersistenceBeans() throws Exception {
+
+		Map<String, BasePersistenceImpl> persistenceBeans =
+				PortalBeanLocatorUtil.locate(BasePersistenceImpl.class);
+
+		SessionFactory sessionFactory =
+				(SessionFactory) PortalBeanLocatorUtil.locate(
+						"liferaySessionFactory");
+
+		for (String beanName : persistenceBeans.keySet()) {
+			BasePersistenceImpl bean = persistenceBeans.get(beanName);
+
+			bean.setSessionFactory(sessionFactory);
+		}
+	}
+
 	private static void _reloadServletContext(
 			HttpServletRequest request, UnicodeProperties unicodeProperties)
 		throws Exception {
@@ -333,6 +354,10 @@ public class SetupWizardUtil {
 		MultiVMPoolUtil.clear();
 		WebCachePoolUtil.clear();
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
+
+		// Persistence beans
+
+		_reconfigurePersistenceBeans();
 
 		// Quartz
 

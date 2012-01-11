@@ -243,6 +243,16 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
+	 * Returns an array with the alternate locales, considering if the page is
+	 * showing just a content and the translations of this content.
+	 *
+	 * @param  request the servlet request for the page
+	 * @return the array of alternate locales
+	 */
+	public Locale[] getAlternateLocales(HttpServletRequest request)
+			throws SystemException, PortalException;
+
+	/**
 	 * Returns the alternate URL of the page, to distinguish it from its
 	 * canonical URL.
 	 *

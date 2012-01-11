@@ -46,7 +46,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 		boolean showAlternateLinks = GetterUtil.getBoolean(layout.getTypeSettingsProperty("show-alternate-links"), true);
 
 		if (showAlternateLinks) {
-			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+			Locale[] availableLocales = PortalUtil.getAlternateLocales(request);
 
 			if (availableLocales.length > 1) {
 				for (Locale curLocale : availableLocales) {

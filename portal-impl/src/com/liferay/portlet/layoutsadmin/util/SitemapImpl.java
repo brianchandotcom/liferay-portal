@@ -117,20 +117,17 @@ public class SitemapImpl implements Sitemap {
 
 			generateSitemapTag(element, articleURL, null);
 			
-			String defaultLocale = journalArticle.getDefaultLocale();
-			String[] availableLocales = journalArticle.getAvailableLocales();
+			Locale defaultLocale = LocaleUtil.getDefault();
+			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
 			if (availableLocales.length > 1) {
-				for (String curLocale : availableLocales) {
-					if (curLocale.equals(defaultLocale)) {
-						continue;
-					}
+				for (Locale curLocale : availableLocales) {
+					if (!curLocale.equals(defaultLocale)) {
+						String alternateURL = PortalUtil.getAlternateURL(
+							articleURL, themeDisplay, curLocale);
 
-					String alternateURL = PortalUtil.getAlternateURL(
-						articleURL, themeDisplay,
-						LocaleUtil.fromLanguageId(curLocale));
-						
-					generateSitemapTag(element, alternateURL, null);
+						generateSitemapTag(element, alternateURL, null);
+					}
 				}
 			}
 
@@ -172,7 +169,7 @@ public class SitemapImpl implements Sitemap {
 
 				String alternateURL = PortalUtil.getAlternateURL(
 					layoutFullURL, themeDisplay, curLocale);
-					
+
 				generateSitemapTag(element, alternateURL, null);
 			}
 		}

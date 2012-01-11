@@ -51,6 +51,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -192,48 +193,6 @@ public class SitesUtil {
 		prototypeTypeSettingsProperties.setProperty("merge-fail-count", "0");
 
 		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout, false);
-	}
-
-	public static void applyLayoutSetPrototypes(
-			Group group, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId, ServiceContext serviceContext)
-		throws Exception {
-
-		Group sourceGroup = null;
-
-		if (publicLayoutSetPrototypeId > 0) {
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-					publicLayoutSetPrototypeId);
-
-			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-			copyLayoutSet(
-				layoutSetPrototype.getLayoutSet(), publicLayoutSet,
-				serviceContext);
-
-			sourceGroup = layoutSetPrototype.getGroup();
-		}
-
-		if (privateLayoutSetPrototypeId > 0) {
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-					privateLayoutSetPrototypeId);
-
-			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-
-			copyLayoutSet(
-				layoutSetPrototype.getLayoutSet(), privateLayoutSet,
-				serviceContext);
-
-			if (sourceGroup == null) {
-				sourceGroup = layoutSetPrototype.getGroup();
-			}
-		}
-
-		if (sourceGroup != null) {
-			copyTypeSettings(sourceGroup, group);
-		}
 	}
 
 	public static void copyLayout(
@@ -810,6 +769,20 @@ public class SitesUtil {
 		}
 	}
 
+	public static void updateLayoutSetPrototypesLinks(
+			Group group, long publicLayoutSetPrototypeId,
+			long privateLayoutSetPrototypeId, ServiceContext serviceContext)
+		throws Exception {
+
+		updateLayoutSetPrototypeLink(
+			group.getGroupId(), true, privateLayoutSetPrototypeId,
+			serviceContext);
+
+		updateLayoutSetPrototypeLink(
+			group.getGroupId(), false, publicLayoutSetPrototypeId,
+			serviceContext);
+	}
+
 	protected static void copyLayoutPrototypePermissions(
 			Layout targetLayout,
 			LayoutPrototype sourceLayoutPrototype)
@@ -890,6 +863,35 @@ public class SitesUtil {
 					String.valueOf(publicLayoutSetPrototypeLinkEnabled)
 				});
 		}
+	}
+
+	protected static void updateLayoutSetPrototypeLink(
+			long groupId, boolean privateLayout, long layoutSetPrototypeId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String layoutSetPrototypeUuid = null;
+
+		String parameterName = "privateLayoutSetPrototypeLinkEnabled";
+
+		if (!privateLayout) {
+			parameterName = "publicLayoutSetPrototypeLinkEnabled";
+		}
+
+		boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			serviceContext, parameterName, (layoutSetPrototypeId > 0));
+
+		if (layoutSetPrototypeLinkEnabled) {
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+					layoutSetPrototypeId);
+
+			layoutSetPrototypeUuid = layoutSetPrototype.getUuid();
+		}
+
+		LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
+			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
+			layoutSetPrototypeUuid);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SitesUtil.class);

@@ -30,11 +30,12 @@ public class LayoutSetServiceWrapper implements LayoutSetService,
 	}
 
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutSetService.updateLayoutSetPrototypeLinkEnabled(groupId,
-			privateLayout, layoutSetPrototypeLinkEnabled);
+			privateLayout, layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
 	}
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,

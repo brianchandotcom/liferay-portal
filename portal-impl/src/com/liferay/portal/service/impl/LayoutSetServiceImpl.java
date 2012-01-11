@@ -31,12 +31,15 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
-			boolean layoutSetPrototypeLinkEnabled)
+			boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
 		throws PortalException, SystemException {
 
 		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
-			groupId, privateLayout, layoutSetPrototypeLinkEnabled);
+			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
+			layoutSetPrototypeUuid);
 	}
+
 	public void updateLogo(
 			long groupId, boolean privateLayout, boolean logo,
 			InputStream inputStream)

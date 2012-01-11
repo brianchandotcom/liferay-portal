@@ -33,36 +33,36 @@ LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = true;
 
 if (showPrototypes && (group != null)) {
-	if (group.getPrivateLayoutsPageCount() > 0) {
-		try {
-			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
+	try {
+		LayoutLocalServiceUtil.getLayouts(liveGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
+		privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
 
-			String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
+		privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
-			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-				privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
-			}
-		}
-		catch (Exception e) {
+		String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
+
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
 		}
 	}
+	catch (Exception e) {
+	}
 
-	if (group.getPublicLayoutsPageCount() > 0) {
-		try {
-			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
+	try {
+		LayoutLocalServiceUtil.getLayouts(liveGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
+		publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
 
-			String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
+		publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
-			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-				publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
-			}
+		String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
+
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuid(layoutSetPrototypeUuid);
 		}
-		catch (Exception e) {
-		}
+	}
+	catch (Exception e) {
 	}
 }
 %>

@@ -259,7 +259,7 @@ public class EditOrganizationAction extends PortletAction {
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
 
-		SitesUtil.applyLayoutSetPrototypes(
+		SitesUtil.updateLayoutSetPrototypesLinks(
 			organization.getGroup(), publicLayoutSetPrototypeId,
 			privateLayoutSetPrototypeId, serviceContext);
 

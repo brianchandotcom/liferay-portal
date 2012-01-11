@@ -416,7 +416,7 @@ public class EditUserAction extends PortletAction {
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
 
-		SitesUtil.applyLayoutSetPrototypes(
+		SitesUtil.updateLayoutSetPrototypesLinks(
 			user.getGroup(), publicLayoutSetPrototypeId,
 			privateLayoutSetPrototypeId, serviceContext);
 
@@ -673,7 +673,7 @@ public class EditUserAction extends PortletAction {
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
 
-		SitesUtil.applyLayoutSetPrototypes(
+		SitesUtil.updateLayoutSetPrototypesLinks(
 			user.getGroup(), publicLayoutSetPrototypeId,
 			privateLayoutSetPrototypeId, serviceContext);
 

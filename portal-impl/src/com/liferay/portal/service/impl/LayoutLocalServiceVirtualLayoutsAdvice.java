@@ -80,7 +80,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (permissionChecker == null) {
+		if ((permissionChecker == null) ||
+			MergeLayoutPrototypesThreadLocal.isInProgress()) {
+
 			return methodInvocation.proceed();
 		}
 
@@ -480,8 +482,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			if (!owner.equals(lock.getOwner())) {
 				Date createDate = lock.getCreateDate();
 
-				if (((System.currentTimeMillis() - createDate.getTime()) >=
-						PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_LOCK_MAX_TIME)) {
+				if ((System.currentTimeMillis() - createDate.getTime()) >=
+						PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_LOCK_MAX_TIME) {
 
 					// Acquire lock if the lock is older than the lock max time
 
@@ -520,8 +522,13 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				layoutSetPrototype, layoutSet.getGroupId(),
 				layoutSet.isPrivateLayout(), parameterMap);
 
+			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+
+			settingsProperties = layoutSet.getSettingsProperties();
+
 			settingsProperties.setProperty(
-				"last-merge-time", String.valueOf(modifiedDate.getTime()));
+				"last-merge-time", String.valueOf(System.currentTimeMillis()));
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
 		}

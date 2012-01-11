@@ -54,7 +54,8 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
 public class LayoutSetServiceHttp {
 	public static void updateLayoutSetPrototypeLinkEnabled(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		boolean layoutSetPrototypeLinkEnabled)
+		boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -63,7 +64,8 @@ public class LayoutSetServiceHttp {
 					_updateLayoutSetPrototypeLinkEnabledParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, layoutSetPrototypeLinkEnabled);
+					privateLayout, layoutSetPrototypeLinkEnabled,
+					layoutSetPrototypeUuid);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -271,7 +273,9 @@ public class LayoutSetServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetServiceHttp.class);
 	private static final Class<?>[] _updateLayoutSetPrototypeLinkEnabledParameterTypes0 =
-		new Class[] { long.class, boolean.class, boolean.class };
+		new Class[] {
+			long.class, boolean.class, boolean.class, java.lang.String.class
+		};
 	private static final Class<?>[] _updateLogoParameterTypes1 = new Class[] {
 			long.class, boolean.class, boolean.class, java.io.InputStream.class
 		};

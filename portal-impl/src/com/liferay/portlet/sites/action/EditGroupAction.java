@@ -461,38 +461,9 @@ public class EditGroupAction extends PortletAction {
 				}
 			}
 
-			if ((publicLayoutSetPrototypeId > 0) ||
-				(privateLayoutSetPrototypeId > 0)) {
-
-				SitesUtil.applyLayoutSetPrototypes(
-					liveGroup, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId, serviceContext);
-			}
-			else {
-				boolean privateLayoutSetPrototypeLinkEnabled =
-					ParamUtil.getBoolean(
-						serviceContext, "privateLayoutSetPrototypeLinkEnabled");
-
-				if (privateLayoutSetPrototypeLinkEnabled !=
-						privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) {
-
-					LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-						liveGroupId, true,
-						privateLayoutSetPrototypeLinkEnabled);
-				}
-
-				boolean publicLayoutSetPrototypeLinkEnabled =
-					ParamUtil.getBoolean(
-						serviceContext, "publicLayoutSetPrototypeLinkEnabled");
-
-				if (publicLayoutSetPrototypeLinkEnabled !=
-						publicLayoutSet.isLayoutSetPrototypeLinkEnabled()) {
-
-					LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-						liveGroupId, false,
-						publicLayoutSetPrototypeLinkEnabled);
-				}
-			}
+			SitesUtil.updateLayoutSetPrototypesLinks(
+				liveGroup, publicLayoutSetPrototypeId,
+				privateLayoutSetPrototypeId, serviceContext);
 		}
 
 		// Staging

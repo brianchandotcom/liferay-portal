@@ -164,7 +164,7 @@ public class EditUserGroupAction extends PortletAction {
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
 
-		SitesUtil.applyLayoutSetPrototypes(
+		SitesUtil.updateLayoutSetPrototypesLinks(
 			userGroup.getGroup(), publicLayoutSetPrototypeId,
 			privateLayoutSetPrototypeId, serviceContext);
 	}

@@ -65,11 +65,12 @@ import java.rmi.RemoteException;
  */
 public class LayoutSetServiceSoap {
 	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
-		throws RemoteException {
+		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid) throws RemoteException {
 		try {
 			LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(groupId,
-				privateLayout, layoutSetPrototypeLinkEnabled);
+				privateLayout, layoutSetPrototypeLinkEnabled,
+				layoutSetPrototypeUuid);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

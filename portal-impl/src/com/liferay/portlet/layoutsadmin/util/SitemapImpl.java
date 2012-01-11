@@ -104,7 +104,10 @@ public class SitemapImpl implements Sitemap {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(portalURL);
+			if (!groupFriendlyURL.startsWith(portalURL)) {
+				sb.append(portalURL);
+			}
+
 			sb.append(groupFriendlyURL);
 			sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 			sb.append(journalArticle.getUrlTitle());

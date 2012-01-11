@@ -73,6 +73,14 @@ import javax.servlet.jsp.PageContext;
  */
 public class DDMXSDImpl implements DDMXSD {
 
+	public static final String TYPE_CHECKBOX = "checkbox";
+
+	public static final String TYPE_DDM_FILEUPLOAD = "ddm-fileupload";
+
+	public static final String TYPE_RADIO = "radio";
+
+	public static final String TYPE_SELECT = "select";
+
 	public String getHTML(
 			PageContext pageContext, DDMStructure ddmStructure, Fields fields,
 			String namespace, boolean readOnly, Locale locale)
@@ -290,11 +298,11 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String type = jsonObject.getString("type");
 
-			if (type.equals(_TYPE_CHECKBOX)) {
+			if (type.equals(TYPE_CHECKBOX)) {
 				hiddenAttributesJSONArray.put("required");
 			}
 
-			if (type.equals(_TYPE_DDM_FILEUPLOAD)) {
+			if (type.equals(TYPE_DDM_FILEUPLOAD)) {
 				hiddenAttributesJSONArray.put("predefinedValue");
 			}
 
@@ -304,7 +312,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String key = "fields";
 
-			if (type.equals(_TYPE_RADIO) || type.equals(_TYPE_SELECT)) {
+			if (type.equals(TYPE_RADIO) || type.equals(TYPE_SELECT)) {
 				key = "options";
 
 				String predefinedValue = jsonObject.getString(
@@ -484,13 +492,5 @@ public class DDMXSDImpl implements DDMXSD {
 
 	private static final String _TPL_PATH =
 		"com/liferay/portlet/dynamicdatamapping/dependencies/";
-
-	private static final String _TYPE_CHECKBOX = "checkbox";
-
-	private static final String _TYPE_DDM_FILEUPLOAD = "ddm-fileupload";
-
-	private static final String _TYPE_RADIO = "radio";
-
-	private static final String _TYPE_SELECT = "select";
 
 }

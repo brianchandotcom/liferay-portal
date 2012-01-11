@@ -57,6 +57,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXSDImpl;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.util.portlet.PortletRequestUtil;
 
@@ -143,7 +144,9 @@ public class DDLImpl implements DDL {
 				continue;
 			}
 
-			if (fieldType.equals("radio") || fieldType.equals("select")) {
+			if (fieldType.equals(DDMXSDImpl.TYPE_RADIO) ||
+				fieldType.equals(DDMXSDImpl.TYPE_SELECT)) {
+
 				String[] fieldValues = ParamUtil.getParameterValues(
 					uploadPortletRequest, fieldName);
 
@@ -212,8 +215,8 @@ public class DDLImpl implements DDL {
 			if (fieldValue instanceof Date) {
 				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
 			}
-			else if ((fieldType.equals("radio") ||
-					  fieldType.equals("select")) &&
+			else if ((fieldType.equals(DDMXSDImpl.TYPE_RADIO) ||
+					  fieldType.equals(DDMXSDImpl.TYPE_SELECT)) &&
 					 Validator.isNotNull(fieldValue)) {
 
 				fieldValue = JSONFactoryUtil.createJSONArray(

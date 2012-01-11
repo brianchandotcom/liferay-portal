@@ -246,10 +246,10 @@ public class PortalUtil {
 	}
 
 	public static String getCanonicalURL(
-			String completeURL, ThemeDisplay themeDisplay)
+			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException{
 
-		return getPortal().getCanonicalURL(completeURL, themeDisplay);
+		return getPortal().getCanonicalURL(completeURL, themeDisplay, layout);
 	}
 
 	/**

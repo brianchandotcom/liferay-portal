@@ -1010,7 +1010,8 @@ public class PortalImpl implements Portal {
 		return userId;
 	}
 
-	public String getCanonicalURL(String completeURL, ThemeDisplay themeDisplay)
+	public String getCanonicalURL(
+			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException {
 
 		completeURL = removeRedirectParameter(completeURL);
@@ -1031,7 +1032,9 @@ public class PortalImpl implements Portal {
 			parametersURL = completeURL.substring(pos);
 		}
 
-		Layout layout = themeDisplay.getLayout();
+		if (layout == null) {
+			layout = themeDisplay.getLayout();
+		}
 
 		String layoutFriendlyURL = StringPool.BLANK;
 

@@ -55,6 +55,7 @@ import com.liferay.portal.search.lucene.messaging.CleanUpMessageListener;
 import com.liferay.portal.security.auth.TransientTokenUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.lucene.KeywordsUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -194,6 +195,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 		try {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, getAnalyzer());
+
+			value = KeywordsUtil.escape(value);
 
 			Query query = queryParser.parse(value);
 

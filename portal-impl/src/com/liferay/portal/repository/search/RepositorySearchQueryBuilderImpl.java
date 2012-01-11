@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.util.lucene.KeywordsUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -170,6 +171,8 @@ public class RepositorySearchQueryBuilderImpl
 
 			queryParser.setAllowLeadingWildcard(true);
 			queryParser.setLowercaseExpandedTerms(false);
+
+			value = KeywordsUtil.escape(value);
 
 			org.apache.lucene.search.Query query = queryParser.parse(value);
 

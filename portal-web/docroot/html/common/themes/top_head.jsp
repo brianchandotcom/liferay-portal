@@ -53,7 +53,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 					if (!curLocale.equals(defaultLocale)) {
 		%>
 
-						<link href="<%= PortalUtil.getAlternateURL(request, canonicalURL, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
+						<link href="<%= PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
 
 		<%
 					}

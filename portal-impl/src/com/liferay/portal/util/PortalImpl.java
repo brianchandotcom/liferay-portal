@@ -822,10 +822,7 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getAlternateURL(
-		HttpServletRequest request, String canonicalURL, Locale locale) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 

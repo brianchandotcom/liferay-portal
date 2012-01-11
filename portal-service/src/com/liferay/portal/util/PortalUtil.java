@@ -200,9 +200,9 @@ public class PortalUtil {
 	}
 
 	public static String getAlternateURL(
-		HttpServletRequest request, String canonicalURL, Locale locale) {
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
 
-		return getPortal().getAlternateURL(request, canonicalURL, locale);
+		return getPortal().getAlternateURL(canonicalURL, themeDisplay, locale);
 	}
 
 	public static Set<String> getAuthTokenIgnoreActions() {

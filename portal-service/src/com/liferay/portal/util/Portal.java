@@ -246,14 +246,13 @@ public interface Portal {
 	 * Returns the alternate URL of the page, to distinguish it from its
 	 * canonical URL.
 	 *
-	 * @param  request the servlet request to retrieve its parameters and remove
-	 *         those which are not relevant
 	 * @param  canonicalURL the canonical URL previously obtained
+	 * @param  themeDisplay the theme display
 	 * @param  locale the locale of the translated page
 	 * @return the alternate URL
 	 */
 	public String getAlternateURL(
-		HttpServletRequest request, String canonicalURL, Locale locale);
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale);
 
 	/**
 	 * Returns the set of struts actions that should not be checked for an

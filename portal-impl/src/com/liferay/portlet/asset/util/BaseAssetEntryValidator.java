@@ -102,7 +102,9 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		if (!assetRendererFactory.isCategorizable()) {
+		if ((assetRendererFactory == null) ||
+			(!assetRendererFactory.isCategorizable())) {
+
 			return;
 		}
 

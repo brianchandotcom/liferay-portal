@@ -99,10 +99,7 @@ public class PortalLDAPUtil {
 			Context.REFERRAL,
 			PrefsPropsUtil.getString(companyId, PropsKeys.LDAP_REFERRAL));
 
-		Properties ldapConnectionProperties = PropsUtil.getProperties(
-			"ldap.connection.", true);
-
-		PropertiesUtil.merge(env, ldapConnectionProperties);
+		PropertiesUtil.merge(env, PropsValues.LDAP_CONNECTION);
 
 		LogUtil.debug(_log, env);
 

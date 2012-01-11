@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import java.util.Properties;
+
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -803,6 +805,8 @@ public class PropsValues {
 	public static final String LDAP_ATTRS_TRANSFORMER_IMPL = PropsUtil.get(PropsKeys.LDAP_ATTRS_TRANSFORMER_IMPL);
 
 	public static final boolean LDAP_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LDAP_AUTH_ENABLED));
+
+	public static final Properties LDAP_CONNECTION = PropsUtil.getProperties(PropsKeys.LDAP_CONNECTION, true);
 
 	public static final boolean LDAP_EXPORT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LDAP_EXPORT_ENABLED));
 

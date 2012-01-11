@@ -1107,6 +1107,8 @@ public interface PropsKeys {
 
 	public static final String LDAP_BASE_PROVIDER_URL = "ldap.base.provider.url";
 
+	public static final String LDAP_CONNECTION = "ldap.connection.";
+
 	public static final String LDAP_CONTACT_CUSTOM_MAPPINGS = "ldap.contact.custom.mappings";
 
 	public static final String LDAP_CONTACT_MAPPINGS = "ldap.contact.mappings";

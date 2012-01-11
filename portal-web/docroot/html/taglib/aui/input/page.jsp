@@ -71,6 +71,7 @@
 			fieldParam='<%= fieldParam %>'
 			format='<%= (Format)dynamicAttributes.get("format") %>'
 			formName="<%= formName %>"
+			ignoreRequestValue="<%= ignoreRequestValue %>"
 			languageId="<%= languageId %>"
 			model="<%= model %>"
 			placeholder="<%= placeholder %>"

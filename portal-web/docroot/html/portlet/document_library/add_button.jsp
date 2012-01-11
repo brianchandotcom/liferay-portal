@@ -53,7 +53,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 		<liferay-ui:icon image="add_instance" message="shortcut" url="<%= editFileShortcutURL %>" />
 	</c:if>
 
-	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER)) %>">
+	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY)) %>">
 		<portlet:renderURL var="addRepositoryURL">
 			<portlet:param name="struts_action" value="/document_library/edit_repository" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

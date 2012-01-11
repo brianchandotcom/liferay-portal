@@ -572,19 +572,6 @@ public class DLUtil {
 				"/document_library" + sb.toString();
 	}
 
-	private static long _getDefaultFolderId(HttpServletRequest request)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				request, PortalUtil.getPortletId(request));
-
-		return GetterUtil.getLong(
-			portletPreferences.getValue(
-				"rootFolderId",
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
-	}
-
 	private DLUtil() {
 		_allMediaGalleryMimeTypes.addAll(
 			SetUtil.fromArray(
@@ -635,6 +622,19 @@ public class DLUtil {
 		for (String genericName : genericNames) {
 			_populateGenericNamesMap(genericName);
 		}
+	}
+
+	private static long _getDefaultFolderId(HttpServletRequest request)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, PortalUtil.getPortletId(request));
+
+		return GetterUtil.getLong(
+			portletPreferences.getValue(
+				"rootFolderId",
+				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
 	}
 
 	private String _getFileIcon(String extension) {

@@ -74,7 +74,7 @@ public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 		}
 	}
 
-	private static boolean _ACTIVE = true;
+	private static final boolean _ACTIVE = true;
 
 	private static final String _ANTIVIRUS_EXTENSION = "avs";
 

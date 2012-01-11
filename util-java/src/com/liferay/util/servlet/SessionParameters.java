@@ -64,25 +64,6 @@ public class SessionParameters {
 		return newParameter;
 	}
 
-	private static Map<String, String> _getParameters(HttpSession session) {
-		Map<String, String> parameters = null;
-
-		try {
-			parameters = (Map<String, String>)session.getAttribute(KEY);
-
-			if (parameters == null) {
-				parameters = new HashMap<String, String>();
-
-				session.setAttribute(KEY, parameters);
-			}
-		}
-		catch (IllegalStateException ise) {
-			parameters = new HashMap<String, String>();
-		}
-
-		return parameters;
-	}
-
 	// Portlet Request
 
 	public static String get(PortletRequest portletRequest, String parameter) {
@@ -107,6 +88,29 @@ public class SessionParameters {
 
 		return newParameter;
 	}
+
+	// Servlet Request
+
+	private static Map<String, String> _getParameters(HttpSession session) {
+		Map<String, String> parameters = null;
+
+		try {
+			parameters = (Map<String, String>)session.getAttribute(KEY);
+
+			if (parameters == null) {
+				parameters = new HashMap<String, String>();
+
+				session.setAttribute(KEY, parameters);
+			}
+		}
+		catch (IllegalStateException ise) {
+			parameters = new HashMap<String, String>();
+		}
+
+		return parameters;
+	}
+
+	// Portlet Request
 
 	private static Map<String, String> _getParameters(
 		PortletSession portletSession) {

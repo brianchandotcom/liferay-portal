@@ -59,19 +59,41 @@ import java.util.Calendar;
 public class DayAndPosition implements Cloneable, Serializable {
 
 	/**
-	 * Field day
-	 */
-	private int day;
-
-	/**
-	 * Field position
-	 */
-	private int position;
-
-	/**
 	 * Field NO_WEEKDAY
 	 */
 	public static final int NO_WEEKDAY = 0;
+
+	/**
+	 * Method isValidDayOfWeek
+	 *
+	 * @return boolean
+	 */
+	public static boolean isValidDayOfWeek(int d) {
+		switch (d) {
+
+			case NO_WEEKDAY :
+			case Calendar.SUNDAY :
+			case Calendar.MONDAY :
+			case Calendar.TUESDAY :
+			case Calendar.WEDNESDAY :
+			case Calendar.THURSDAY :
+			case Calendar.FRIDAY :
+			case Calendar.SATURDAY :
+				return true;
+
+			default :
+				return false;
+		}
+	}
+
+	/**
+	 * Method isValidDayPosition
+	 *
+	 * @return boolean
+	 */
+	public static boolean isValidDayPosition(int p) {
+		return ((p >= -53) && (p <= 53));
+	}
 
 	/**
 	 * Constructor DayAndPosition
@@ -212,35 +234,13 @@ public class DayAndPosition implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Method isValidDayOfWeek
-	 *
-	 * @return boolean
+	 * Field day
 	 */
-	public static boolean isValidDayOfWeek(int d) {
-		switch (d) {
-
-			case NO_WEEKDAY :
-			case Calendar.SUNDAY :
-			case Calendar.MONDAY :
-			case Calendar.TUESDAY :
-			case Calendar.WEDNESDAY :
-			case Calendar.THURSDAY :
-			case Calendar.FRIDAY :
-			case Calendar.SATURDAY :
-				return true;
-
-			default :
-				return false;
-		}
-	}
+	private int day;
 
 	/**
-	 * Method isValidDayPosition
-	 *
-	 * @return boolean
+	 * Field position
 	 */
-	public static boolean isValidDayPosition(int p) {
-		return ((p >= -53) && (p <= 53));
-	}
+	private int position;
 
 }

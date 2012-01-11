@@ -125,24 +125,6 @@ public class ErrorTag extends TagSupport {
 		}
 	}
 
-	protected String getEndPage() {
-		if (Validator.isNull(_endPage)) {
-			return _END_PAGE;
-		}
-		else {
-			return _endPage;
-		}
-	}
-
-	protected String getStartPage() {
-		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
-		}
-		else {
-			return _startPage;
-		}
-	}
-
 	public void setEndPage(String endPage) {
 		_endPage = endPage;
 	}
@@ -173,6 +155,24 @@ public class ErrorTag extends TagSupport {
 
 	public void setTranslateMessage(boolean translateMessage) {
 		_translateMessage = translateMessage;
+	}
+
+	protected String getEndPage() {
+		if (Validator.isNull(_endPage)) {
+			return _END_PAGE;
+		}
+		else {
+			return _endPage;
+		}
+	}
+
+	protected String getStartPage() {
+		if (Validator.isNull(_startPage)) {
+			return _START_PAGE;
+		}
+		else {
+			return _startPage;
+		}
 	}
 
 	private static final String _END_PAGE = "/html/taglib/ui/error/end.jsp";

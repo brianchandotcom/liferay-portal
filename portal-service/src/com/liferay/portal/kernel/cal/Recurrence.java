@@ -85,61 +85,6 @@ public class Recurrence implements Serializable {
 	public static final int NO_RECURRENCE = 7;
 
 	/**
-	 * Field dtStart
-	 */
-	protected Calendar dtStart;
-
-	/**
-	 * Field duration
-	 */
-	protected Duration duration;
-
-	/**
-	 * Field frequency
-	 */
-	protected int frequency;
-
-	/**
-	 * Field interval
-	 */
-	protected int interval;
-
-	/**
-	 * Field interval
-	 */
-	protected int occurrence = 0;
-
-	/**
-	 * Field until
-	 */
-	protected Calendar until;
-
-	/**
-	 * Field byDay
-	 */
-	protected DayAndPosition[] byDay;
-
-	/**
-	 * Field byMonthDay
-	 */
-	protected int[] byMonthDay;
-
-	/**
-	 * Field byYearDay
-	 */
-	protected int[] byYearDay;
-
-	/**
-	 * Field byWeekNo
-	 */
-	protected int[] byWeekNo;
-
-	/**
-	 * Field byMonth
-	 */
-	protected int[] byMonth;
-
-	/**
 	 * Constructor Recurrence
 	 */
 	public Recurrence() {
@@ -709,6 +654,140 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
+	 * Method reduce_constant_length_field
+	 */
+	protected static void reduce_constant_length_field(int field,
+													   Calendar start,
+													   Calendar candidate) {
+		if ((start.getMaximum(field) != start.getLeastMaximum(field))
+			|| (start.getMinimum(field) != start.getGreatestMinimum(field))) {
+			throw new IllegalArgumentException("Not a constant length field");
+		}
+
+		int fieldLength = (start.getMaximum(field) - start.getMinimum(field)
+						   + 1);
+		int delta = start.get(field) - candidate.get(field);
+
+		if (delta > 0) {
+			delta -= fieldLength;
+		}
+
+		candidate.add(field, delta);
+	}
+
+	/**
+	 * Method reduce_day_of_month
+	 */
+	protected static void reduce_day_of_month(Calendar start,
+											  Calendar candidate) {
+		Calendar tempCal = (Calendar)candidate.clone();
+
+		tempCal.add(Calendar.MONTH, -1);
+
+		int delta = start.get(Calendar.DATE) - candidate.get(Calendar.DATE);
+
+		if (delta > 0) {
+			delta -= tempCal.getActualMaximum(Calendar.DATE);
+		}
+
+		candidate.add(Calendar.DATE, delta);
+
+		while (start.get(Calendar.DATE) != candidate.get(Calendar.DATE)) {
+			tempCal.add(Calendar.MONTH, -1);
+			candidate.add(Calendar.DATE,
+						  -tempCal.getActualMaximum(Calendar.DATE));
+		}
+	}
+
+	/**
+	 * Method reduce_day_of_year
+	 */
+	protected static void reduce_day_of_year(Calendar start,
+											 Calendar candidate) {
+		if ((start.get(Calendar.MONTH) > candidate.get(Calendar.MONTH))
+			|| ((start.get(Calendar.MONTH) == candidate.get(Calendar.MONTH))
+				&& (start.get(Calendar.DATE) > candidate.get(Calendar.DATE)))) {
+			candidate.add(Calendar.YEAR, -1);
+		}
+
+		/* Set the candidate date to the start date. */
+
+		candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
+		candidate.set(Calendar.DATE, start.get(Calendar.DATE));
+
+		while ((start.get(Calendar.MONTH) != candidate.get(Calendar.MONTH))
+			   || (start.get(Calendar.DATE) != candidate.get(Calendar.DATE))) {
+			candidate.add(Calendar.YEAR, -1);
+			candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
+			candidate.set(Calendar.DATE, start.get(Calendar.DATE));
+		}
+	}
+
+	/**
+	 * Method getDayNumber
+	 *
+	 * @return long
+	 */
+	protected static long getDayNumber(Calendar cal) {
+		Calendar tempCal = (Calendar)cal.clone();
+
+		// Set to midnight, GMT
+
+		tempCal.set(Calendar.MILLISECOND, 0);
+		tempCal.set(Calendar.SECOND, 0);
+		tempCal.set(Calendar.MINUTE, 0);
+		tempCal.set(Calendar.HOUR_OF_DAY, 0);
+
+		return tempCal.getTime().getTime() / (24 * 60 * 60 * 1000);
+	}
+
+	/**
+	 * Method getWeekNumber
+	 *
+	 * @return long
+	 */
+	protected static long getWeekNumber(Calendar cal) {
+		Calendar tempCal = (Calendar)cal.clone();
+
+		// Set to midnight, GMT
+
+		tempCal.set(Calendar.MILLISECOND, 0);
+		tempCal.set(Calendar.SECOND, 0);
+		tempCal.set(Calendar.MINUTE, 0);
+		tempCal.set(Calendar.HOUR_OF_DAY, 0);
+
+		// Roll back to the first day of the week
+
+		int delta = tempCal.getFirstDayOfWeek()
+					- tempCal.get(Calendar.DAY_OF_WEEK);
+
+		if (delta > 0) {
+			delta -= 7;
+		}
+
+		// tempCal now points to the first instant of this week.
+
+		// Calculate the "week epoch" -- the weekstart day closest to January 1,
+		// 1970 (which was a Thursday)
+
+		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
+						 * 60 * 60 * 1000;
+
+		return (tempCal.getTime().getTime() - weekEpoch)
+			   / (7 * 24 * 60 * 60 * 1000);
+	}
+
+	/**
+	 * Method getMonthNumber
+	 *
+	 * @return long
+	 */
+	protected static long getMonthNumber(Calendar cal) {
+		return (cal.get(Calendar.YEAR) - 1970) * 12L
+			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
+	}
+
+	/**
 	 * Method candidateIsInRecurrence
 	 *
 	 * @return boolean
@@ -795,76 +874,6 @@ public class Recurrence implements Serializable {
 	}
 
 	/**
-	 * Method reduce_constant_length_field
-	 */
-	protected void reduce_constant_length_field(int field,
-													   Calendar start,
-													   Calendar candidate) {
-		if ((start.getMaximum(field) != start.getLeastMaximum(field))
-			|| (start.getMinimum(field) != start.getGreatestMinimum(field))) {
-			throw new IllegalArgumentException("Not a constant length field");
-		}
-
-		int fieldLength = (start.getMaximum(field) - start.getMinimum(field)
-						   + 1);
-		int delta = start.get(field) - candidate.get(field);
-
-		if (delta > 0) {
-			delta -= fieldLength;
-		}
-
-		candidate.add(field, delta);
-	}
-
-	/**
-	 * Method reduce_day_of_month
-	 */
-	protected static void reduce_day_of_month(Calendar start,
-											  Calendar candidate) {
-		Calendar tempCal = (Calendar)candidate.clone();
-
-		tempCal.add(Calendar.MONTH, -1);
-
-		int delta = start.get(Calendar.DATE) - candidate.get(Calendar.DATE);
-
-		if (delta > 0) {
-			delta -= tempCal.getActualMaximum(Calendar.DATE);
-		}
-
-		candidate.add(Calendar.DATE, delta);
-
-		while (start.get(Calendar.DATE) != candidate.get(Calendar.DATE)) {
-			tempCal.add(Calendar.MONTH, -1);
-			candidate.add(Calendar.DATE,
-						  -tempCal.getActualMaximum(Calendar.DATE));
-		}
-	}
-
-	/**
-	 * Method reduce_day_of_year
-	 */
-	protected static void reduce_day_of_year(Calendar start,
-											 Calendar candidate) {
-		if ((start.get(Calendar.MONTH) > candidate.get(Calendar.MONTH))
-			|| ((start.get(Calendar.MONTH) == candidate.get(Calendar.MONTH))
-				&& (start.get(Calendar.DATE) > candidate.get(Calendar.DATE)))) {
-			candidate.add(Calendar.YEAR, -1);
-		}
-
-		/* Set the candidate date to the start date. */
-
-		candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
-		candidate.set(Calendar.DATE, start.get(Calendar.DATE));
-
-		while ((start.get(Calendar.MONTH) != candidate.get(Calendar.MONTH))
-			   || (start.get(Calendar.DATE) != candidate.get(Calendar.DATE))) {
-			candidate.add(Calendar.YEAR, -1);
-			candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
-			candidate.set(Calendar.DATE, start.get(Calendar.DATE));
-		}
-	}
-
-	/**
 	 * Method getRecurrenceCount
 	 *
 	 * @return int
@@ -896,70 +905,6 @@ public class Recurrence implements Serializable {
 			default :
 				throw new IllegalStateException("bad frequency internally...");
 		}
-	}
-
-	/**
-	 * Method getDayNumber
-	 *
-	 * @return long
-	 */
-	protected static long getDayNumber(Calendar cal) {
-		Calendar tempCal = (Calendar)cal.clone();
-
-		// Set to midnight, GMT
-
-		tempCal.set(Calendar.MILLISECOND, 0);
-		tempCal.set(Calendar.SECOND, 0);
-		tempCal.set(Calendar.MINUTE, 0);
-		tempCal.set(Calendar.HOUR_OF_DAY, 0);
-
-		return tempCal.getTime().getTime() / (24 * 60 * 60 * 1000);
-	}
-
-	/**
-	 * Method getWeekNumber
-	 *
-	 * @return long
-	 */
-	protected static long getWeekNumber(Calendar cal) {
-		Calendar tempCal = (Calendar)cal.clone();
-
-		// Set to midnight, GMT
-
-		tempCal.set(Calendar.MILLISECOND, 0);
-		tempCal.set(Calendar.SECOND, 0);
-		tempCal.set(Calendar.MINUTE, 0);
-		tempCal.set(Calendar.HOUR_OF_DAY, 0);
-
-		// Roll back to the first day of the week
-
-		int delta = tempCal.getFirstDayOfWeek()
-					- tempCal.get(Calendar.DAY_OF_WEEK);
-
-		if (delta > 0) {
-			delta -= 7;
-		}
-
-		// tempCal now points to the first instant of this week.
-
-		// Calculate the "week epoch" -- the weekstart day closest to January 1,
-		// 1970 (which was a Thursday)
-
-		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
-						 * 60 * 60 * 1000;
-
-		return (tempCal.getTime().getTime() - weekEpoch)
-			   / (7 * 24 * 60 * 60 * 1000);
-	}
-
-	/**
-	 * Method getMonthNumber
-	 *
-	 * @return long
-	 */
-	protected static long getMonthNumber(Calendar cal) {
-		return (cal.get(Calendar.YEAR) - 1970) * 12L
-			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
 	}
 
 	/**
@@ -1124,5 +1069,60 @@ public class Recurrence implements Serializable {
 
 		return sb.toString();
 	}
+
+	/**
+	 * Field dtStart
+	 */
+	protected Calendar dtStart;
+
+	/**
+	 * Field duration
+	 */
+	protected Duration duration;
+
+	/**
+	 * Field frequency
+	 */
+	protected int frequency;
+
+	/**
+	 * Field interval
+	 */
+	protected int interval;
+
+	/**
+	 * Field interval
+	 */
+	protected int occurrence = 0;
+
+	/**
+	 * Field until
+	 */
+	protected Calendar until;
+
+	/**
+	 * Field byDay
+	 */
+	protected DayAndPosition[] byDay;
+
+	/**
+	 * Field byMonthDay
+	 */
+	protected int[] byMonthDay;
+
+	/**
+	 * Field byYearDay
+	 */
+	protected int[] byYearDay;
+
+	/**
+	 * Field byWeekNo
+	 */
+	protected int[] byWeekNo;
+
+	/**
+	 * Field byMonth
+	 */
+	protected int[] byMonth;
 
 }

@@ -47,6 +47,6 @@ public class DDLExporterFactory {
 		}
 	}
 
-	public static Map<DDLExportFormat, DDLExporter> _exporters;
+	private static Map<DDLExportFormat, DDLExporter> _exporters;
 
 }

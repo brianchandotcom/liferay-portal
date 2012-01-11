@@ -171,42 +171,6 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		}
 	}
 
-	private static LiferayPortletURL _getLiferayPortletURL(
-		HttpServletRequest request, long plid, String portletName,
-		String lifecycle) {
-
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		if (portletRequest == null) {
-			return null;
-		}
-
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(portletResponse);
-
-		return liferayPortletResponse.createLiferayPortletURL(
-			plid, portletName, lifecycle);
-	}
-
-	private static String _getPortletName(HttpServletRequest request) {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		if (portletRequest == null) {
-			return null;
-		}
-
-		LiferayPortletConfig liferayPortletConfig =
-			(LiferayPortletConfig)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		return liferayPortletConfig.getPortletId();
-	}
-
 	@Override
 	public int doEndTag() throws JspException {
 		try {
@@ -312,6 +276,42 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 
 	public void setWindowState(String windowState) {
 		_windowState = windowState;
+	}
+
+	private static LiferayPortletURL _getLiferayPortletURL(
+		HttpServletRequest request, long plid, String portletName,
+		String lifecycle) {
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequest == null) {
+			return null;
+		}
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		return liferayPortletResponse.createLiferayPortletURL(
+			plid, portletName, lifecycle);
+	}
+
+	private static String _getPortletName(HttpServletRequest request) {
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequest == null) {
+			return null;
+		}
+
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		return liferayPortletConfig.getPortletId();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ActionURLTag.class);

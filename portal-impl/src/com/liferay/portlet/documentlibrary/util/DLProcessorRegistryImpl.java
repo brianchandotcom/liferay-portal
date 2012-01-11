@@ -118,11 +118,11 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		_dlProcessors.remove(dlProcessor);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DLProcessorRegistryImpl.class);
-
 	private static final String[] _DL_FILE_ENTRY_PROCESSORS =
 		PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PROCESSORS);
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DLProcessorRegistryImpl.class);
 
 	private List<DLProcessor> _dlProcessors =
 		new CopyOnWriteArrayList<DLProcessor>();

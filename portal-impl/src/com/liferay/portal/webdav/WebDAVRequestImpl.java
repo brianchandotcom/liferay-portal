@@ -120,7 +120,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 			"Microsoft Data Access Internet Publishing Provider");
 	}
 
-	public static final String _APPLE_DOUBLE_PREFIX = "._";
+	private static final String _APPLE_DOUBLE_PREFIX = "._";
 
 	private WebDAVStorage _storage;
 	private HttpServletRequest _request;

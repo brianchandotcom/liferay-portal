@@ -293,10 +293,6 @@ public class ScriptingPortlet extends GenericPortlet {
 		PortletResponseUtil.write(renderResponse, sb.toString());
 	}
 
-	private static final String _ERROR = ScriptingPortlet.class + ".ERROR";
-
-	private static Log _log = LogFactoryUtil.getLog(ScriptingPortlet.class);
-
 	protected String actionFile;
 	protected String editFile;
 	protected String helpFile;
@@ -305,5 +301,9 @@ public class ScriptingPortlet extends GenericPortlet {
 	protected String resourceFile;
 	protected String language;
 	protected String viewFile;
+
+	private static final String _ERROR = ScriptingPortlet.class + ".ERROR";
+
+	private static Log _log = LogFactoryUtil.getLog(ScriptingPortlet.class);
 
 }

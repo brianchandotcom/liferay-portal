@@ -35,6 +35,6 @@ public class FieldRendererFactory {
 		_fieldRenderers = fieldRenderers;
 	}
 
-	public static Map<String, FieldRenderer> _fieldRenderers;
+	private static Map<String, FieldRenderer> _fieldRenderers;
 
 }

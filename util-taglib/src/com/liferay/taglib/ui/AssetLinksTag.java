@@ -40,6 +40,25 @@ public class AssetLinksTag extends IncludeTag {
 		return _classPK;
 	}
 
+	public void setAssetEntryId(long assetEntryId) {
+		_assetEntryId = assetEntryId;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_assetEntryId = 0;
+		_className = StringPool.BLANK;
+		_classPK = 0;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -63,25 +82,6 @@ public class AssetLinksTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:asset-links:assetEntryId",
 			String.valueOf(_assetEntryId));
-	}
-
-	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryId = assetEntryId;
-	}
-
-	public void setClassName(String className) {
-		_className = className;
-	}
-
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
-	@Override
-	protected void cleanUp() {
-		_assetEntryId = 0;
-		_className = StringPool.BLANK;
-		_classPK = 0;
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/asset_links/page.jsp";

@@ -41,10 +41,6 @@ public class OpenSearchUtil {
 
 	public static final int RELEVANCE_NAMESPACE = 2;
 
-	private static Format _dateFormat =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:sszzz");
-
 	public static Element addElement(
 		Element el, String name, int namespaceType) {
 
@@ -131,5 +127,9 @@ public class OpenSearchUtil {
 			return SAXReaderUtil.createQName(name, getNamespace(namespaceType));
 		}
 	}
+
+	private static Format _dateFormat =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:sszzz");
 
 }

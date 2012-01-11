@@ -21,13 +21,13 @@ public enum CMISSimpleExpressionOperator {
 
 	EQ("="), GE(">="), GT(">"), LE("<="), LIKE("LIKE"), LT("<"), NE("<>");
 
-	private CMISSimpleExpressionOperator(String value) {
-		_value = value;
-	}
-
 	@Override
 	public String toString() {
 		return _value;
+	}
+
+	private CMISSimpleExpressionOperator(String value) {
+		_value = value;
 	}
 
 	private String _value;

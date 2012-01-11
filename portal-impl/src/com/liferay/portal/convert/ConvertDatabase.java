@@ -252,8 +252,6 @@ public class ConvertDatabase extends ConvertProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ConvertDatabase.class);
-
 	private static final Tuple[] _UNMAPPED_TABLES = new Tuple[] {
 		new Tuple(
 			CyrusUser.TABLE_NAME, CyrusUser.TABLE_COLUMNS,
@@ -262,5 +260,7 @@ public class ConvertDatabase extends ConvertProcess {
 			CyrusVirtual.TABLE_NAME, CyrusVirtual.TABLE_COLUMNS,
 			CyrusVirtual.TABLE_SQL_CREATE)
 	};
+
+	private static Log _log = LogFactoryUtil.getLog(ConvertDatabase.class);
 
 }

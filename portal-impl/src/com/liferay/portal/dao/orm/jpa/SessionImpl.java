@@ -224,6 +224,9 @@ public class SessionImpl implements Session {
 
 	}
 
+	@PersistenceContext
+	protected EntityManager _entityManager;
+
 	private javax.persistence.Query _getExecutableQuery(
 		String queryString, Map<Integer, Object> positionalParameterMap,
 		Map<String, Object> namedParameterMap, boolean strictName,
@@ -317,8 +320,5 @@ public class SessionImpl implements Session {
 			}
 		}
 	}
-
-	@PersistenceContext
-	protected EntityManager _entityManager;
 
 }

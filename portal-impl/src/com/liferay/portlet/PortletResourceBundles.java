@@ -70,8 +70,6 @@ public class PortletResourceBundles {
 		_instance._remove(servletContextName);
 	}
 
-	private Map<String, Map<String, ResourceBundle>> _resourceBundles;
-
 	private PortletResourceBundles() {
 		_resourceBundles =
 			new ConcurrentHashMap<String, Map<String, ResourceBundle>>(
@@ -183,5 +181,7 @@ public class PortletResourceBundles {
 
 	private static PortletResourceBundles _instance =
 		new PortletResourceBundles();
+
+	private Map<String, Map<String, ResourceBundle>> _resourceBundles;
 
 }

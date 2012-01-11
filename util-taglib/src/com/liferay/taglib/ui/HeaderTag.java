@@ -25,6 +25,34 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HeaderTag extends IncludeTag {
 
+	public void setBackLabel(String backLabel) {
+		_backLabel = backLabel;
+	}
+
+	public void setBackURL(String backURL) {
+		_backURL = backURL;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
+	public void setEscapeXml(boolean escapeXml) {
+		_escapeXml = escapeXml;
+	}
+
+	public void setLocalizeTitle(boolean localizeTitle) {
+		_localizeTitle = localizeTitle;
+	}
+
+	public void setShowBackURL(boolean showBackURL) {
+		_showBackURL = showBackURL;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:header:backLabel", _backLabel);
@@ -67,34 +95,6 @@ public class HeaderTag extends IncludeTag {
 	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
-	}
-
-	public void setBackLabel(String backLabel) {
-		_backLabel = backLabel;
-	}
-
-	public void setBackURL(String backURL) {
-		_backURL = backURL;
-	}
-
-	public void setCssClass(String cssClass) {
-		_cssClass = cssClass;
-	}
-
-	public void setEscapeXml(boolean escapeXml) {
-		_escapeXml = escapeXml;
-	}
-
-	public void setLocalizeTitle(boolean localizeTitle) {
-		_localizeTitle = localizeTitle;
-	}
-
-	public void setShowBackURL(boolean showBackURL) {
-		_showBackURL = showBackURL;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

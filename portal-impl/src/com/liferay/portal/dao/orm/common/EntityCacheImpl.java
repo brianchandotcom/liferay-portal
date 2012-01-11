@@ -321,13 +321,17 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
-
 	private static final String _GROUP_KEY_PREFIX = CACHE_NAME.concat(
 		StringPool.PERIOD);
 
+	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
+
 	private static ThreadLocal<LRUMap> _localCache;
 	private static boolean _localCacheAvailable;
+
+	private MultiVMPool _multiVMPool;
+	private ConcurrentMap<String, PortalCache> _portalCaches =
+		new ConcurrentHashMap<String, PortalCache>();
 
 	private static class CacheKey implements Serializable {
 
@@ -404,10 +408,6 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		private final String _shardName;
 
 	}
-
-	private MultiVMPool _multiVMPool;
-	private ConcurrentMap<String, PortalCache> _portalCaches =
-		new ConcurrentHashMap<String, PortalCache>();
 
 	static {
 		if (PropsValues.VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {

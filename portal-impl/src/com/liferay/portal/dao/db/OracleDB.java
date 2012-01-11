@@ -314,7 +314,7 @@ public class OracleDB extends BaseDB {
 		return template;
 	}
 
-	private static String[] _ORACLE = {
+	private static final String[] _ORACLE = {
 		"--", "1", "0",
 		"to_date('1970-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')", "sysdate",
 		" blob", " blob", " number(1, 0)", " timestamp",

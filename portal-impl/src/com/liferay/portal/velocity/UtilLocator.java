@@ -29,9 +29,6 @@ public class UtilLocator {
 		return _instance;
 	}
 
-	private UtilLocator() {
-	}
-
 	public Object findUtil(String utilName) {
 		Object bean = null;
 
@@ -57,6 +54,9 @@ public class UtilLocator {
 		}
 
 		return bean;
+	}
+
+	private UtilLocator() {
 	}
 
 	private String _getUtilName(String utilName) {

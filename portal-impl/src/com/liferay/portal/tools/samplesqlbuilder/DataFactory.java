@@ -1186,7 +1186,7 @@ public class DataFactory {
 		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
 	}
 
-	public IntegerWrapper newInteger() {
+	protected IntegerWrapper newInteger() {
 		return new IntegerWrapper();
 	}
 

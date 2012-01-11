@@ -16,7 +16,9 @@ package com.liferay.portlet.layoutsadmin.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,6 +40,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
@@ -109,11 +112,24 @@ public class SitemapImpl implements Sitemap {
 			String articleURL = PortalUtil.getCanonicalURL(
 				sb.toString(), themeDisplay, layout);
 
-			Element urlElement = element.addElement("url");
+			generateSitemapTag(element, articleURL, null);
+			
+			String defaultLocale = journalArticle.getDefaultLocale();
+			String[] availableLocales = journalArticle.getAvailableLocales();
 
-			Element locElement = urlElement.addElement("loc");
+			if (availableLocales.length > 1) {
+				for (String curLocale : availableLocales) {
+					if (curLocale.equals(defaultLocale)) {
+						continue;
+					}
 
-			locElement.addText(encodeXML(articleURL));
+					String alternateURL = PortalUtil.getAlternateURL(
+						articleURL, themeDisplay,
+						LocaleUtil.fromLanguageId(curLocale));
+						
+					generateSitemapTag(element, alternateURL, null);
+				}
+			}
 
 			processedArticleIds.add(journalArticle.getArticleId());
 		}
@@ -134,34 +150,28 @@ public class SitemapImpl implements Sitemap {
 			return;
 		}
 
-		Element urlElement = element.addElement("url");
-
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay);
 
 		layoutFullURL = PortalUtil.getCanonicalURL(
 					layoutFullURL, themeDisplay, layout);
 
-		Element locElement = urlElement.addElement("loc");
+		generateSitemapTag(element, layoutFullURL, typeSettingsProperties);
+		
+		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
-		locElement.addText(encodeXML(layoutFullURL));
+		if (availableLocales.length > 1) {
+			for (Locale curLocale : availableLocales) {
+				if (curLocale.equals(defaultLocale)) {
+					continue;
+				}
 
-		String changefreq = typeSettingsProperties.getProperty(
-			"sitemap-changefreq");
-
-		if (Validator.isNotNull(changefreq)) {
-			Element changefreqElement = urlElement.addElement("changefreq");
-
-			changefreqElement.addText(changefreq);
-		}
-
-		String priority = typeSettingsProperties.getProperty(
-			"sitemap-priority");
-
-		if (Validator.isNotNull(priority)) {
-			Element priorityElement = urlElement.addElement("priority");
-
-			priorityElement.addText(priority);
+				String alternateURL = PortalUtil.getAlternateURL(
+					layoutFullURL, themeDisplay, curLocale);
+					
+				generateSitemapTag(element, alternateURL, null);
+			}
 		}
 
 		visitArticles(element, layout, themeDisplay);
@@ -169,6 +179,36 @@ public class SitemapImpl implements Sitemap {
 		List<Layout> children = layout.getChildren();
 
 		visitLayouts(element, children, themeDisplay);
+	}
+	
+	protected void generateSitemapTag(
+		Element element, String url, UnicodeProperties typeSettingsProperties) {
+		
+		Element urlElement = element.addElement("url");
+
+		Element locElement = urlElement.addElement("loc");
+
+		locElement.addText(encodeXML(url));
+
+		if(typeSettingsProperties != null) {
+			String changefreq = typeSettingsProperties.getProperty(
+				"sitemap-changefreq");
+
+			if (Validator.isNotNull(changefreq)) {
+				Element changefreqElement = urlElement.addElement("changefreq");
+
+				changefreqElement.addText(changefreq);
+			}
+
+			String priority = typeSettingsProperties.getProperty(
+				"sitemap-priority");
+
+			if (Validator.isNotNull(priority)) {
+				Element priorityElement = urlElement.addElement("priority");
+
+				priorityElement.addText(priority);
+			}
+		}
 	}
 
 	protected void visitLayouts(

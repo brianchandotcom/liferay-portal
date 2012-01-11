@@ -30,10 +30,6 @@ public interface ResourcePermissionFinder {
 		java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.ResourcePermission> findByC_P(
-		long companyId, java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(
 		long roleId, int[] scopes, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;

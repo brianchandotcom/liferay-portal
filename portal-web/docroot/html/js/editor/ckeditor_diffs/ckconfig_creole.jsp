@@ -84,4 +84,4 @@ CKEDITOR.config.extraPlugins = 'creole,wikilink';
 
 CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 
-CKEDITOR.config.language = '<%= HtmlUtil.escape(languageId) %>';
+CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';

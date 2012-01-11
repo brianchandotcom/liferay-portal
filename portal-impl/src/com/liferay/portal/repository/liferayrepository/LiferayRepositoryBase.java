@@ -16,9 +16,14 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
@@ -35,10 +40,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,8 +172,36 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 					field.setName(name);
 
-					String value = ParamUtil.getString(
-						serviceContext, namespace + name);
+					String fieldType = ddmStructure.getFieldType(
+						field.getName());
+
+					String value = StringPool.BLANK;
+
+					if (fieldType.equals("radio") ||
+							fieldType.equals("select")) {
+
+						JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+						Serializable serializedValue =
+							serviceContext.getAttribute(namespace + name);
+
+						if (Validator.isNotNull(serializedValue)) {
+							if (fieldType.equals("select")) {
+								jsonArray = getSelect(
+									jsonArray, ddmStructure, name,
+									serializedValue);
+							}
+							else {
+								jsonArray.put((String) serializedValue);
+							}
+						}
+
+						value = jsonArray.toString();
+					}
+					else {
+						value = ParamUtil.getString(
+							serviceContext, namespace + name);
+					}
 
 					field.setValue(value);
 
@@ -182,6 +217,32 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 	protected long getGroupId() {
 		return _groupId;
+	}
+
+	protected JSONArray getSelect(JSONArray jsonArray,
+			DDMStructure ddmStructure, String name, Serializable value)
+		throws StructureFieldException {
+
+		boolean isMultiple = GetterUtil.getBoolean(
+				ddmStructure.getFieldProperty(name, "multiple"));
+
+			if (isMultiple) {
+				if (value.getClass().equals(String.class)) {
+					jsonArray.put((String)value);
+				}
+				else {
+					String[] values = (String[]) value;
+
+					for (int i = 0; i < values.length; i++) {
+						jsonArray.put(values[i]);
+					}
+				}
+			}
+			else {
+				jsonArray.put((String) value);
+			}
+
+		return jsonArray;
 	}
 
 	protected SortedArrayList<Long> getLongList(

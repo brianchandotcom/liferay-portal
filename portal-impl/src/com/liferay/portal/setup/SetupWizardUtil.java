@@ -317,13 +317,12 @@ public class SetupWizardUtil {
 	}
 
 	private static void _reconfigurePersistenceBeans() throws Exception {
-
 		Map<String, BasePersistenceImpl> persistenceBeans =
-				PortalBeanLocatorUtil.locate(BasePersistenceImpl.class);
+			PortalBeanLocatorUtil.locate(BasePersistenceImpl.class);
 
 		SessionFactory sessionFactory =
-				(SessionFactory) PortalBeanLocatorUtil.locate(
-						"liferaySessionFactory");
+			(SessionFactory)PortalBeanLocatorUtil.locate(
+				"liferaySessionFactory");
 
 		for (String beanName : persistenceBeans.keySet()) {
 			BasePersistenceImpl bean = persistenceBeans.get(beanName);

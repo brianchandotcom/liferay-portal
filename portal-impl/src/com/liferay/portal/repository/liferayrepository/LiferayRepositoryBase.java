@@ -44,8 +44,10 @@ import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXSDImpl;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,13 +174,12 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 
 					field.setName(name);
 
-					String fieldType = ddmStructure.getFieldType(
-						field.getName());
+					String fieldType = ddmStructure.getFieldType(name);
 
 					String value = StringPool.BLANK;
 
-					if (fieldType.equals("radio") ||
-							fieldType.equals("select")) {
+					if (fieldType.equals(DDMXSDImpl.TYPE_RADIO) ||
+						fieldType.equals(DDMXSDImpl.TYPE_SELECT)) {
 
 						JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -186,7 +187,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 							serviceContext.getAttribute(namespace + name);
 
 						if (Validator.isNotNull(serializedValue)) {
-							if (fieldType.equals("select")) {
+							if (fieldType.equals(DDMXSDImpl.TYPE_SELECT)) {
 								jsonArray = getSelect(
 									jsonArray, ddmStructure, name,
 									serializedValue);
@@ -219,32 +220,6 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		return _groupId;
 	}
 
-	protected JSONArray getSelect(JSONArray jsonArray,
-			DDMStructure ddmStructure, String name, Serializable value)
-		throws StructureFieldException {
-
-		boolean isMultiple = GetterUtil.getBoolean(
-				ddmStructure.getFieldProperty(name, "multiple"));
-
-			if (isMultiple) {
-				if (value.getClass().equals(String.class)) {
-					jsonArray.put((String)value);
-				}
-				else {
-					String[] values = (String[]) value;
-
-					for (int i = 0; i < values.length; i++) {
-						jsonArray.put(values[i]);
-					}
-				}
-			}
-			else {
-				jsonArray.put((String) value);
-			}
-
-		return jsonArray;
-	}
-
 	protected SortedArrayList<Long> getLongList(
 		ServiceContext serviceContext, String name) {
 
@@ -263,6 +238,32 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		}
 
 		return longList;
+	}
+
+	protected JSONArray getSelect(JSONArray jsonArray,
+			DDMStructure ddmStructure, String name, Serializable value)
+		throws StructureFieldException {
+
+		boolean isMultiple = GetterUtil.getBoolean(
+			ddmStructure.getFieldProperty(name, "multiple"));
+
+		if (isMultiple) {
+			if (value.getClass().equals(String.class)) {
+				jsonArray.put((String)value);
+			}
+			else {
+				String[] values = (String[])value;
+
+				for (String itemValue : values) {
+					jsonArray.put(itemValue);
+				}
+			}
+		}
+		else {
+			jsonArray.put((String)value);
+		}
+
+		return jsonArray;
 	}
 
 	protected abstract void initByFileEntryId(long fileEntryId);

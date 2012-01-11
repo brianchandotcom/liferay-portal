@@ -444,6 +444,12 @@ public class EditGroupAction extends PortletAction {
 				actionRequest, "privateLayoutSetPrototypeId");
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
+			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
+				(privateLayoutSetPrototypeId > 0));
+			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
+				(publicLayoutSetPrototypeId > 0));
 
 			if ((privateLayoutSetPrototypeId == 0) &&
 				(publicLayoutSetPrototypeId == 0)) {
@@ -452,18 +458,29 @@ public class EditGroupAction extends PortletAction {
 					actionRequest, "layoutSetPrototypeId");
 				int layoutSetVisibility = ParamUtil.getInteger(
 					actionRequest, "layoutSetVisibility");
+				boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					actionRequest, "layoutSetPrototypeLinkEnabled",
+					(layoutSetPrototypeId > 0));
 
 				if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
 					privateLayoutSetPrototypeId = layoutSetPrototypeId;
+
+					privateLayoutSetPrototypeLinkEnabled =
+						layoutSetPrototypeLinkEnabled;
 				}
 				else {
 					publicLayoutSetPrototypeId = layoutSetPrototypeId;
+
+					publicLayoutSetPrototypeLinkEnabled =
+						layoutSetPrototypeLinkEnabled;
 				}
 			}
 
 			SitesUtil.updateLayoutSetPrototypesLinks(
 				liveGroup, publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId, serviceContext);
+				privateLayoutSetPrototypeId,
+				publicLayoutSetPrototypeLinkEnabled,
+				privateLayoutSetPrototypeLinkEnabled);
 		}
 
 		// Staging

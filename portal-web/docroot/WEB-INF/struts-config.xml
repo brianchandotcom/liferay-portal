@@ -2213,6 +2213,11 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
 
+		<action path="/wiki_display/edit_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
+			<forward name="portlet.wiki.edit_node" path="portlet.wiki.edit_node" />
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+		</action>
+
 		<action path="/wiki_display/edit_page" type="com.liferay.portlet.wiki.action.EditPageAction">
 			<forward name="portlet.wiki.edit_page" path="portlet.wiki.edit_page" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />

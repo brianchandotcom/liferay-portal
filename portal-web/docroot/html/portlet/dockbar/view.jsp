@@ -379,7 +379,7 @@ for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
 			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
 		</liferay-portlet:actionURL>
 
-		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype-form" name="resetFm">
+		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
 			<aui:button name="submit" type="submit" value="reset" />
 		</aui:form>
 	</div>

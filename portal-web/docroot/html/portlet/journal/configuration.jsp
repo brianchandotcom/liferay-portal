@@ -73,6 +73,12 @@ else if (tabs2.equals("web-content-updated-email")) {
 	editorParam = "emailArticleUpdatedBody";
 	editorContent = emailArticleUpdatedBody;
 }
+
+String availableTabs = "email-from,web-content-added-email,web-content-updated-email";
+
+if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
+	availableTabs = availableTabs.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email,web-content-review-email");
+}
 %>
 
 <liferay-portlet:renderURL var="portletURL" portletConfiguration="true">
@@ -88,7 +94,7 @@ else if (tabs2.equals("web-content-updated-email")) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:tabs
-		names="email-from,web-content-added-email,web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email,web-content-review-email,web-content-updated-email"
+		names="<%= availableTabs %>"
 		param="tabs2"
 		url="<%= portletURL %>"
 	/>

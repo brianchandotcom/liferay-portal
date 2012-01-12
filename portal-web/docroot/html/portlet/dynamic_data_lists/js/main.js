@@ -61,21 +61,22 @@ AUI.add(
 					_handleChooseEvent: function() {
 						var instance = this;
 
-						var portletURL = Liferay.PortletURL.createRenderURL();
+						var uri = themeDisplay.getURLControlPanel();
 
-						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-						portletURL.setParameter('struts_action', '/journal/select_document_library');
-
-						portletURL.setPlid(themeDisplay.getPlid());
-
-						portletURL.setPortletId('15');
-
-						portletURL.setWindowState('pop_up');
+						uri = Liferay.Util.addParams(
+							{
+								groupId: themeDisplay.getScopeGroupId(),
+								p_p_id: '15',
+								p_p_state: 'pop_up',
+								struts_action: '/journal/select_document_library'
+							}, 
+							uri
+						);
 
 						Liferay.Util.openWindow(
 							{
 								title: Liferay.Language.get('javax.portlet.title.20'),
-								uri: portletURL.toString()
+								uri: uri
 							}
 						);
 					},

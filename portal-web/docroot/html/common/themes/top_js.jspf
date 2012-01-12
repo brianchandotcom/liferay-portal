@@ -206,6 +206,9 @@
 				getPathThemeRoot: function() {
 					return "<%= themeDisplay.getPathThemeRoot() %>";
 				},
+				getURLControlPanel: function() {
+					return "<%= themeDisplay.getURLControlPanel() %>";
+				},
 				getURLHome: function() {
 					return "<%= themeDisplay.getURLHome() %>";
 				},
